@@ -100,7 +100,7 @@ unlock стоит после callback, поэтому устойчивость �
 
 | Критерий | Текущий генератор | dasClangBind / CppGenBind |
 | --- | --- | --- |
-| Уже работает | 50 функций, allowlist, structs/opaque handles, api.json, freshness test | Выборка 3 функций/9 structs с interpreter/AOT; также 50 функций и прежние interpreter-сценарии при общих type/constant annotations (см. clangbind-parity.md) |
+| Уже работает | 50 функций, allowlist, structs/opaque handles, api.json, freshness test | 50 функций; самостоятельные policy annotations/константы; прежние interpreter/AOT-сценарии. 33 теста, локальный обход pinned AOT recover (см. clangbind-types-aot.md) |
 | Комплексность типов | Нужны расширения enum/flags/macros/platform census, callbacks policy, AOT | Есть инфраструктура aliases/enums/structs/preprocessor и AOT, hooks и разбиение функций по TU |
 | Среда | Python stdlib + Clang 16.0.5 в текущей проверенной конфигурации | Закреплённый CMake ищет Clang 22.1, libclang и корректную CRT-конфигурацию |
 | Семантика SDL | Ручная policy нужна | Ручная policy всё равно нужна; AST не знает ownership и thread affinity |

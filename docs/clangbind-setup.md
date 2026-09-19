@@ -67,8 +67,9 @@ consumer прошли. Ниже перечислены оставшиеся ус
 
 50 exports и существующие interpreter-сценарии теперь проверены в
 [parity-проекте](clangbind-parity.md) с общими аннотациями типов/констант.
-Остаётся перенести их policy, расширить enum/flags, ABI и resource AOT,
-проверить platform policy. Только после этого выбирать
+Policy текущих типов/констант и [ресурсный AOT](clangbind-types-aot.md) теперь
+проверены (33 теста). Остаётся штатно подключить backend, проверить consumer
+без LLVM и расширить enum/flags, ABI и platform policy. Только после этого выбирать
 backend по gates из binding-design-review.md. Полная миграция и
 кроссплатформенность пока не проверены. Публичные SDL bindings и boost не менялись.
 

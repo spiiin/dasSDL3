@@ -89,6 +89,7 @@ libclang.lib. Наш pinned `modules/dasClangBind/CMakeLists.txt` ищет Clang
 Теперь отдельная выборка rect/pixels/GPU сгенерирована, собрана и проверена
 в interpreter/AOT: [clangbind-experiment.md](clangbind-experiment.md).
 Эквивалентность 50 functions и interpreter-сценариев проверена отдельно:
-[clangbind-parity.md](clangbind-parity.md). Впереди самостоятельная генерация
-аннотаций/констант и расширение ABI/AOT-сценариев.
+[clangbind-parity.md](clangbind-parity.md). Затем выполнены самостоятельная
+генерация текущих аннотаций/констант и [ресурсный AOT](clangbind-types-aot.md).
+Впереди штатный выбор backend и расширение platform/ABI coverage.
 Работающий Python backend и публичные bindings в этой итерации сохранены.

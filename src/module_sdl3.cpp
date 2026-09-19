@@ -3,7 +3,11 @@
 #include "sdl3_adapters.h"
 #include "sdl3_input.h"
 #include "sdl3_audio.h"
+#ifdef DASSDL3_TYPES_INCLUDE
+#include DASSDL3_TYPES_INCLUDE
+#else
 #include "generated/sdl3_types.inc"
+#endif
 #include "sdl3_scopes.h"
 #ifdef DASSDL3_TESTING
 #include "../tests/resource_probe.h"
@@ -15,6 +19,12 @@ static_assert(SDL_VERSION == 3002018, "Regenerate and test bindings when updatin
 namespace das {
 class Module_dasSDL3 : public Module {
 public:
+    #ifdef DASSDL3_AOT_HEADER
+    ModuleAotType aotRequire(TextWriter & tw) const override {
+        tw << "#include \"" << DASSDL3_AOT_HEADER << "\"\n";
+        return ModuleAotType::cpp;
+    }
+    #endif
     Module_dasSDL3() : Module("sdl3") {
         ModuleLibrary lib(this);
         lib.addBuiltInModule();

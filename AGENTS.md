@@ -11,8 +11,11 @@ LLVM SDK installation and the dasClangBind preflight are documented in
 The bounded CppGenBind/interpreter/AOT experiment is in `docs/clangbind-experiment.md`.
 Run its standalone `tests/clangbind` CMake project before expanding the selection;
 50-function interpreter parity is now covered by `tests/clangbind_parity` and
-`docs/clangbind-parity.md`. That experiment shares existing type/constant
-annotations; full type generation and resource AOT remain open gates. Do not
+`docs/clangbind-parity.md`. Its extension now generates type/constant policy
+independently and runs resource AOT: read `docs/clangbind-types-aot.md`.
+The pinned AOT try/recover ordering needs a local generator workaround; preserve
+the negative missing-AOT test and panic-message regressions. Production backend
+selection and LLVM-free consumer packaging remain open gates. Do not
 treat its borrowed pointer fixture as a safe public GPU builder.
 Regenerate `docs/generated/api-*` with `tools/inventory_api.py`; do not edit
 snapshots by hand. Keep inactive-platform and manual-adapter coverage explicit.

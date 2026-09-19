@@ -142,8 +142,10 @@ SDL.h разбирается, проверка активной ветки пр�
 Ограниченная выборка (3 функции, 9 структур) скомпилирована и проверена в
 interpreter/строгом AOT, см. [clangbind-experiment.md](clangbind-experiment.md).
 Прежние 50 exports и текущие interpreter-сценарии проверены в отдельном
-[parity-проекте](clangbind-parity.md). Он сохраняет общие аннотации/константы;
-генерация типов, расширение ABI и ресурсный AOT остаются открытыми.
+[parity-проекте](clangbind-parity.md). Следом выполнены независимая генерация
+текущих аннотаций/констант и [ресурсный AOT](clangbind-types-aot.md) с локальным
+обходом ошибки pinned try/recover. Впереди штатное подключение backend,
+consumer без LLVM, platform policy и расширение ABI/GPU coverage.
 Это не завершение gate выбора backend.
 
 1. Зафиксировать полный census 3.2.18 и схему policy, не менять публичный API.

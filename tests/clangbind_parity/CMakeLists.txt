@@ -13,11 +13,11 @@ set(LLVM_SDK "" CACHE PATH "LLVM 22.1 SDK")
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
 set(GEN "${CMAKE_CURRENT_BINARY_DIR}/generated")
 file(GLOB SDL_HEADERS CONFIGURE_DEPENDS "${SDL_INCLUDE}/SDL3/*.h")
-add_custom_command(OUTPUT "${GEN}/parity_functions.inc" "${GEN}/parity-api.json"
+add_custom_command(OUTPUT "${GEN}/parity_functions.inc" "${GEN}/parity-api.json" "${GEN}/parity_types.inc" "${GEN}/parity-contract.tsv"
     COMMAND ${Python3_EXECUTABLE} "${ROOT}/tools/run_clangbind_parity.py"
         --daslang "${DAS}/bin/daslang.exe" --sdl-include "${SDL_INCLUDE}" --sdk "${LLVM_SDK}" --output "${GEN}"
     DEPENDS "${ROOT}/tools/clangbind_parity.das" "${ROOT}/tools/run_clangbind_parity.py"
-        "${ROOT}/tools/bindings.json" "${ROOT}/src/generated/api.json" "${ROOT}/src/generated/sdl3_functions.inc" ${SDL_HEADERS}
+        "${ROOT}/tools/bindings.json" "${ROOT}/tools/api-policy.json" "${ROOT}/src/generated/api.json" ${SDL_HEADERS}
     VERBATIM)
 add_custom_target(generate_parity DEPENDS "${GEN}/parity_functions.inc")
 foreach(backend baseline cppgenbind)
@@ -35,19 +35,48 @@ foreach(backend baseline cppgenbind)
     target_link_libraries(${backend}_metadata PRIVATE ${backend}_module)
 endforeach()
 add_dependencies(cppgenbind_module generate_parity)
-target_compile_definitions(cppgenbind_module PRIVATE DASSDL3_REGISTRATION_INCLUDE="parity_functions.inc")
+target_compile_definitions(cppgenbind_module PRIVATE DASSDL3_REGISTRATION_INCLUDE="parity_functions.inc" DASSDL3_TYPES_INCLUDE="parity_types.inc")
+target_compile_definitions(cppgenbind_module PRIVATE DASSDL3_AOT_HEADER="sdl3_parity_aot.h")
+target_include_directories(cppgenbind_module PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}" "${ROOT}/tests")
+add_executable(parity_aot_tool aot_tool.cpp)
+target_link_libraries(parity_aot_tool PRIVATE cppgenbind_module)
+set(AOT_SCRIPTS tests/bindings tests/boost tests/textures tests/input tests/audio examples/square examples/textures examples/input examples/audio tests/clangbind_parity/recover)
+set(AOT_MODULES dassdl3/sdl3_boost dassdl3/sdl3_audio_boost)
+foreach(script IN LISTS AOT_SCRIPTS AOT_MODULES)
+    string(REPLACE "/" "_" name "${script}")
+    set(output "${CMAKE_CURRENT_BINARY_DIR}/${name}.aot.cpp")
+    add_custom_command(OUTPUT "${output}"
+        COMMAND parity_aot_tool "${ROOT}/${script}.das" "${output}"
+        DEPENDS parity_aot_tool "${ROOT}/${script}.das" "${ROOT}/dassdl3/sdl3_boost.das" "${ROOT}/dassdl3/sdl3_audio_boost.das"
+        VERBATIM)
+    list(APPEND AOT_OUTPUTS "${output}")
+endforeach()
+add_executable(parity_aot_runner aot_runner.cpp ${AOT_OUTPUTS})
+target_link_libraries(parity_aot_runner PRIVATE cppgenbind_module)
+add_executable(parity_missing_aot aot_runner.cpp)
+target_link_libraries(parity_missing_aot PRIVATE cppgenbind_module)
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/assets")
 configure_file("${ROOT}/examples/assets/checker.bmp" "${CMAKE_CURRENT_BINARY_DIR}/assets/checker.bmp" COPYONLY)
 configure_file("${ROOT}/examples/assets/tone.wav" "${CMAKE_CURRENT_BINARY_DIR}/assets/tone.wav" COPYONLY)
 enable_testing()
+add_test(NAME sdl3_parity_missing_aot COMMAND ${Python3_EXECUTABLE}
+    "${ROOT}/tests/clangbind/expect_aot_failure.py" $<TARGET_FILE:parity_missing_aot> "${ROOT}/tests/bindings.das")
+foreach(script IN LISTS AOT_SCRIPTS)
+    string(REPLACE "/" "_" name "${script}")
+    add_test(NAME aot_${name} COMMAND parity_aot_runner "${ROOT}/${script}.das")
+    set_tests_properties(aot_${name} PROPERTIES TIMEOUT 30)
+    if(script MATCHES "audio$")
+        set_tests_properties(aot_${name} PROPERTIES ENVIRONMENT "SDL_AUDIO_DRIVER=dummy")
+    endif()
+endforeach()
 add_test(NAME sdl3_parity_generation_errors COMMAND ${Python3_EXECUTABLE}
     "${CMAKE_CURRENT_SOURCE_DIR}/test_generation_errors.py"
-    "${ROOT}/tools/run_clangbind_parity.py" "${DAS}/bin/daslang.exe" "${LLVM_SDK}")
+    "${ROOT}/tools/run_clangbind_parity.py" "${DAS}/bin/daslang.exe" "${LLVM_SDK}" "${SDL_INCLUDE}")
 set_tests_properties(sdl3_parity_generation_errors PROPERTIES TIMEOUT 30)
 add_test(NAME sdl3_parity_metadata COMMAND ${Python3_EXECUTABLE} "${CMAKE_CURRENT_SOURCE_DIR}/compare_metadata.py"
     $<TARGET_FILE:baseline_metadata> $<TARGET_FILE:cppgenbind_metadata>)
 foreach(backend baseline cppgenbind)
-    foreach(script tests/bindings tests/boost tests/textures tests/input tests/audio examples/square examples/textures examples/input examples/audio)
+    foreach(script IN LISTS AOT_SCRIPTS)
         string(REPLACE "/" "_" name "${script}")
         add_test(NAME ${backend}_${name} COMMAND ${backend}_runner "${ROOT}/${script}.das" --smoke-test)
         set_tests_properties(${backend}_${name} PROPERTIES TIMEOUT 30)

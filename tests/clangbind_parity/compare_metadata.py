@@ -9,4 +9,7 @@ if len(outputs) != 2 or not outputs[0].strip():
 if outputs[0] != outputs[1]:
     raise SystemExit(''.join(difflib.unified_diff(outputs[0].splitlines(True), outputs[1].splitlines(True),
                                               fromfile='baseline', tofile='CppGenBind')))
-print(f'Registered signatures, names, side effects and unsafe flags match ({len(outputs[0].splitlines())} functions)')
+rows = outputs[0].splitlines()
+counts = {kind: sum(row.startswith(kind + '\t') for row in rows) for kind in ('TYPE', 'FIELD', 'CONST')}
+functions = len(rows) - sum(counts.values())
+print(f'Contract matches: {functions} functions, {counts["TYPE"]} types, {counts["FIELD"]} fields, {counts["CONST"]} constants')
