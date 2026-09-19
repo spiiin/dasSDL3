@@ -18,7 +18,11 @@ public:
     Module_dasSDL3() : Module("sdl3") {
         ModuleLibrary lib(this);
         lib.addBuiltInModule();
+        #ifdef DASSDL3_REGISTRATION_INCLUDE
+        #include DASSDL3_REGISTRATION_INCLUDE
+        #else
         #include "generated/sdl3_functions.inc"
+        #endif
         addExtern<DAS_BIND_FUN(SDL_LoadWavOwned)>(*this, lib, "SDL_LoadWavOwned", SideEffects::worstDefault, "SDL_LoadWavOwned");
         addExtern<DAS_BIND_FUN(SDL_DestroyWav)>(*this, lib, "SDL_DestroyWav", SideEffects::worstDefault, "SDL_DestroyWav");
         addExtern<DAS_BIND_FUN(SDL_WavSpec), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDL_WavSpec", SideEffects::none, "SDL_WavSpec");

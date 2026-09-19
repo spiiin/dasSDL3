@@ -1,5 +1,9 @@
 # Идиомы dasBGFX для будущего слоя sdl3_boost
 
+Повторный аудит 19 сентября 2026: `binding-design-review.md` дополняет этот
+обзор проверкой Result/Option, variants, поведения finalize в контейнерах,
+dasVulkan, dasSpirv и Rust sdl3. План применения shader-идиом — `gpu-roadmap.md`.
+
 Исследованы локальные исходники dasBGFX, коммит
 `a569838d35a2a584946e784d5e013fb2f08ec4c1`, включая examples/01–08,
 hello_bgfx.das, readback.das и модули bgfx_boost, bgfx_boost_internal,

@@ -5,7 +5,27 @@ It records inspected dasBGFX/daScript revisions, source links, idioms and their
 ownership limitations. Read `docs/sdl3-boost.md` for this project's API decisions
 and verified behavior. Keep both documents current when behavior changes.
 Track implemented scenarios and remaining subsystems in `docs/api-coverage.md`.
+The first target-specific census is documented in `docs/api-inventory.md`.
+LLVM SDK installation and the dasClangBind preflight are documented in
+`docs/clangbind-setup.md`; passing this probe does not complete generator/AOT gates.
+The bounded CppGenBind/interpreter/AOT experiment is in `docs/clangbind-experiment.md`.
+Run its standalone `tests/clangbind` CMake project before expanding the selection;
+50-function interpreter parity is now covered by `tests/clangbind_parity` and
+`docs/clangbind-parity.md`. That experiment shares existing type/constant
+annotations; full type generation and resource AOT remain open gates. Do not
+treat its borrowed pointer fixture as a safe public GPU builder.
+Regenerate `docs/generated/api-*` with `tools/inventory_api.py`; do not edit
+snapshots by hand. Keep inactive-platform and manual-adapter coverage explicit.
 Audio contracts and testing limitations are in `docs/audio.md`.
+Before expanding coverage, read `docs/full-binding-roadmap.md` and
+`docs/binding-design-review.md` (research dated 2026-09-19). GPU/shader work is
+planned in `docs/gpu-roadmap.md`, optional libraries in
+`docs/companion-libraries-roadmap.md`, and example/contract selection in
+`docs/porting-matrix.md`. These are plans, not implemented API. Keep the current
+generator until the documented dasClangBind feasibility gates pass. Count API
+coverage against pinned headers, not the moving SDL wiki. Reuse standard
+Result/Option and investigate existing dasSpirv/layout helpers before inventing
+equivalents; source inspection alone does not establish runtime correctness.
 
 - Keep generated bindings in `src/generated/`; change `tools/bindings.json` or
   `tools/generate_bindings.py`, then regenerate. Never hand-edit generated files.

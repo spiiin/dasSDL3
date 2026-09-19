@@ -2,3 +2,4 @@
 /tools/.venv/
 /logs/
 __pycache__/
+/.jitted_scripts/

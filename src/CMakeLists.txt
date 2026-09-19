@@ -33,10 +33,31 @@ if(Python3_FOUND AND DASSDL3_CLANG_EXECUTABLE)
         add_test(NAME bindings_up_to_date
             COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tools/generate_bindings.py
                 --clang ${DASSDL3_CLANG_EXECUTABLE} --sdl-include ${sdl3_SOURCE_DIR}/include --check)
+        if(WIN32)
+            # This committed snapshot deliberately describes one target profile.
+            add_test(NAME sdl3_api_inventory
+                COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tools/inventory_api.py
+                    --clang ${DASSDL3_CLANG_EXECUTABLE} --sdl-include ${sdl3_SOURCE_DIR}/include --check)
+            add_test(NAME sdl3_api_inventory_contracts
+                COMMAND ${Python3_EXECUTABLE} -B ${CMAKE_SOURCE_DIR}/tests/test_api_inventory.py
+                    --clang ${DASSDL3_CLANG_EXECUTABLE})
+            set_tests_properties(sdl3_api_inventory sdl3_api_inventory_contracts PROPERTIES TIMEOUT 60)
+        endif()
     endif()
 endif()
 if(BUILD_TESTING)
     target_compile_definitions(dasSDL3 PRIVATE DASSDL3_TESTING=1)
+    # Optional Windows tooling probe; the production binding generator is unchanged.
+    if(WIN32 AND TARGET dasModuleClangBind AND TARGET daslang AND PATH_TO_LIBCLANG)
+        add_test(NAME sdl3_clangbind_probe
+            COMMAND $<TARGET_FILE:daslang> ${CMAKE_SOURCE_DIR}/tools/clangbind_probe.das
+                -- ${sdl3_SOURCE_DIR}/include ${PATH_TO_LIBCLANG})
+        add_test(NAME sdl3_clangbind_preprocessor
+            COMMAND $<TARGET_FILE:daslang>
+                ${CMAKE_SOURCE_DIR}/third_party/daScript/modules/dasClangBind/tests/test_const_preproc.das)
+        set_tests_properties(sdl3_clangbind_probe sdl3_clangbind_preprocessor
+            PROPERTIES TIMEOUT 60 WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+    endif()
     add_test(NAME sdl3_audio COMMAND dasSDL3_runner ${CMAKE_SOURCE_DIR}/tests/audio.das --smoke-test)
     add_test(NAME sdl3_audio_example COMMAND dasSDL3_runner ${CMAKE_SOURCE_DIR}/examples/audio.das --smoke-test)
     set_tests_properties(sdl3_audio sdl3_audio_example PROPERTIES TIMEOUT 30 ENVIRONMENT "SDL_AUDIO_DRIVER=dummy")

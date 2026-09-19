@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "sdl_version": "3.2.18",
+  "profiles": {
+    "windows-x64-msvc": {
+      "target": "x86_64-pc-windows-msvc",
+      "defines": ["SDL_MAIN_NOIMPL=1"],
+      "entry_headers": ["SDL.h", "SDL_main.h", "SDL_vulkan.h", "SDL_metal.h", "SDL_revision.h"]
+    }
+  },
+  "excluded_headers": {
+    "SDL_oldnames.h": "SDL2 compatibility aliases, not SDL3 API",
+    "SDL_begin_code.h": "ABI/compiler scaffolding",
+    "SDL_close_code.h": "ABI/compiler scaffolding",
+    "SDL_platform_defines.h": "Build-platform detection macros",
+    "SDL_intrin.h": "Compiler intrinsic includes",
+    "SDL_main_impl.h": "Host entry-point implementation, not script exports",
+    "SDL_copying.h": "License text, no API declarations"
+  },
+  "excluded_header_prefixes": {
+    "SDL_test": "Separate SDL test library",
+    "SDL_opengl": "Bundled graphics API headers, not SDL functions",
+    "SDL_egl": "Bundled EGL API headers, not SDL functions"
+  },
+  "project_types": {
+    "SDL_Wav": {
+      "native_header": "src/sdl3_audio.h",
+      "reason": "Project-owned WAV buffer wrapper; not a declaration in SDL headers"
+    }
+  },
+  "symbols": {}
+}
