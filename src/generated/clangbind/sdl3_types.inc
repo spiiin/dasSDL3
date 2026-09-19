@@ -6,6 +6,9 @@ MAKE_TYPE_FACTORY(SDL_Surface, SDL_Surface);
 MAKE_TYPE_FACTORY(SDL_Texture, SDL_Texture);
 MAKE_TYPE_FACTORY(SDL_AudioStream, SDL_AudioStream);
 MAKE_TYPE_FACTORY(SDL_Wav, SDL_Wav);
+MAKE_TYPE_FACTORY(SDL_FPoint, SDL_FPoint);
+MAKE_TYPE_FACTORY(SDL_FColor, SDL_FColor);
+MAKE_TYPE_FACTORY(SDL_Vertex, SDL_Vertex);
 MAKE_TYPE_FACTORY(SDL_FRect, SDL_FRect);
 MAKE_TYPE_FACTORY(SDL_Event, SDL_Event);
 MAKE_TYPE_FACTORY(SDL_KeyboardEvent, SDL_KeyboardEvent);
@@ -20,6 +23,28 @@ static_assert(offsetof(SDL_AudioSpec, channels) == 4);
 addField<DAS_BIND_MANAGED_FIELD(channels)>("channels", "channels");
 static_assert(offsetof(SDL_AudioSpec, freq) == 8);
 addField<DAS_BIND_MANAGED_FIELD(freq)>("freq", "freq");
+}
+}; }
+static_assert(sizeof(SDL_FColor) == 16 && alignof(SDL_FColor) == 4);
+namespace das { struct SDL_FColorAnnotation : ManagedStructureAnnotation<SDL_FColor, false> {
+SDL_FColorAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_FColor", lib) {
+static_assert(offsetof(SDL_FColor, r) == 0);
+addField<DAS_BIND_MANAGED_FIELD(r)>("r", "r");
+static_assert(offsetof(SDL_FColor, g) == 4);
+addField<DAS_BIND_MANAGED_FIELD(g)>("g", "g");
+static_assert(offsetof(SDL_FColor, b) == 8);
+addField<DAS_BIND_MANAGED_FIELD(b)>("b", "b");
+static_assert(offsetof(SDL_FColor, a) == 12);
+addField<DAS_BIND_MANAGED_FIELD(a)>("a", "a");
+}
+}; }
+static_assert(sizeof(SDL_FPoint) == 8 && alignof(SDL_FPoint) == 4);
+namespace das { struct SDL_FPointAnnotation : ManagedStructureAnnotation<SDL_FPoint, false> {
+SDL_FPointAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_FPoint", lib) {
+static_assert(offsetof(SDL_FPoint, x) == 0);
+addField<DAS_BIND_MANAGED_FIELD(x)>("x", "x");
+static_assert(offsetof(SDL_FPoint, y) == 4);
+addField<DAS_BIND_MANAGED_FIELD(y)>("y", "y");
 }
 }; }
 static_assert(sizeof(SDL_FRect) == 16 && alignof(SDL_FRect) == 4);
@@ -126,5 +151,16 @@ namespace das { struct SDL_EventAnnotation : ManagedStructureAnnotation<SDL_Even
 SDL_EventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_Event", lib) {
 static_assert(offsetof(SDL_Event, type) == 0);
 addField<DAS_BIND_MANAGED_FIELD(type)>("event_type", "type");
+}
+}; }
+static_assert(sizeof(SDL_Vertex) == 32 && alignof(SDL_Vertex) == 4);
+namespace das { struct SDL_VertexAnnotation : ManagedStructureAnnotation<SDL_Vertex, false> {
+SDL_VertexAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_Vertex", lib) {
+static_assert(offsetof(SDL_Vertex, position) == 0);
+addField<DAS_BIND_MANAGED_FIELD(position)>("position", "position");
+static_assert(offsetof(SDL_Vertex, color) == 8);
+addField<DAS_BIND_MANAGED_FIELD(color)>("color", "color");
+static_assert(offsetof(SDL_Vertex, tex_coord) == 24);
+addField<DAS_BIND_MANAGED_FIELD(tex_coord)>("tex_coord", "tex_coord");
 }
 }; }

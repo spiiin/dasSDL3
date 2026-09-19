@@ -4,7 +4,7 @@ SDL 3.2.18; profile `windows-x64-msvc`.
 
 Active declarations/macros only; inactive platform branches are NOT counted. Record and typedef entries are distinct declarations.
 
-Generated functions: **52/1226** active non-excluded functions.
+Generated functions: **53/1226** active non-excluded functions.
 Adapted coverage and boost coverage are not inferred from function names.
 
 | Category | Functions | Generated | Adapted | Pending |
@@ -47,7 +47,7 @@ Adapted coverage and boost coverage are not inferred from function names.
 | Process | 9 | 0 | 0 | 9 |
 | Properties | 21 | 0 | 0 | 21 |
 | Rect | 18 | 0 | 0 | 18 |
-| Render | 89 | 13 | 4 | 72 |
+| Render | 89 | 14 | 4 | 71 |
 | Sensor | 14 | 0 | 0 | 14 |
 | SharedObject | 3 | 0 | 0 | 3 |
 | Stdinc | 170 | 1 | 0 | 169 |

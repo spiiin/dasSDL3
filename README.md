@@ -202,6 +202,18 @@ CTest выбирает dummy-драйвер в окружении аудиоте
 Прямой запуск использует устройство по умолчанию. Подробности владения,
 размеров буферов и ограничения определения конца воспроизведения — в docs/audio.md.
 
+## Geometry
+
+```powershell
+./build/ninja/bin/dasSDL3_runner.exe examples/geometry.das
+ctest --test-dir build/ninja -R '^sdl3_geometry' --output-on-failure
+```
+
+`require dassdl3/sdl3_geometry_boost` добавляет `vertex` и `draw_geometry`
+для массивов вершин и индексов. Пример показывает цветной треугольник и
+текстурированный прямоугольник; `--smoke-test` ограничивает его 60 кадрами.
+[Контракты geometry](docs/geometry.md).
+
 ## Пиксели и render target
 
 ```powershell

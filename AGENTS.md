@@ -22,6 +22,7 @@ Regenerate `docs/generated/api-*` with `tools/inventory_api.py`; do not edit
 snapshots by hand. Keep inactive-platform and manual-adapter coverage explicit.
 Audio contracts and testing limitations are in `docs/audio.md`.
 Pixel buffer, streaming texture and render-target contracts are in `docs/pixels.md`.
+Geometry arrays and nested SDL_Vertex ABI are documented in `docs/geometry.md`.
 Use `git --no-optional-locks status` for read-only inspection: automatic index
 refresh can recreate .git/index as CodexSandboxOnline and break sandbox ACL setup.
 Before expanding coverage, read `docs/full-binding-roadmap.md` and
@@ -60,6 +61,10 @@ equivalents; source inspection alone does not establish runtime correctness.
   Keep pixel roundtrip/padding/overflow and nested target cleanup tests in interpreter/AOT.
 - Prefer renderer-first functions for pipe syntax. State component ranges,
   null behavior, error policy, and whether data is borrowed or copied.
+- Geometry lives in `src/sdl3_geometry.h` and `dassdl3/sdl3_geometry_boost.das`.
+  Validate counts before narrowing, all indices before SDL, finite positions and
+  normalized RGBA/UV. Empty indexed draws are no-ops, never sequential fallback.
+  Preserve nested field ABI assertions, image parity and array lifetime tests in AOT.
 - Input adapters live in `src/sdl3_input.h`. Read the event tag before its
   union member; clear outputs on a mismatch. Copy UTF-8 text into the daScript
   heap before the next SDL poll/pump. A copied raw SDL_Event does not own text.

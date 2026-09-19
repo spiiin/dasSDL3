@@ -155,8 +155,9 @@ interpreter/строгом AOT, см. [clangbind-experiment.md](clangbind-experi
 3. Принять решение о генераторе по условиям из design review; закрыть пробелы
    enum/flags/constants и воспроизводимости, затем выбрать обновление SDL.
 4. Первый буферный этап выполнен: copied RGBA8 arrays, streaming texture и
-   render-target/readback, см. `pixels.md`. Далее geometry vertex/index arrays,
-   region upload и расширение форматов; borrowed mapping пока не предоставлен.
+   render-target/readback, см. `pixels.md`. Geometry vertex/index arrays также
+   выполнены (`geometry.md`): nested POD ABI, bounds, interpreter/AOT. Region
+   upload и расширение форматов остаются в backlog; borrowed mapping не предоставлен.
 5. Начать GPU ClearScreen → BasicTriangle с готовыми shader binaries.
    SDL_image/ttf подключать отдельными опциями после фиксации version matrix.
 

@@ -6,6 +6,9 @@ reusable idioms and pinned upstream source links; this one describes our layer.
 - `require dassdl3/sdl3_boost` re-exports the raw `sdl3` API and adds checked
   script functions. The runner mounts the project's `dassdl3/` directory through
   FsFileAccess.addFsRoot, independently of the current working directory.
+- `require dassdl3/sdl3_geometry_boost` adds initialized vertex values and checked
+  vertex/index arrays. Vertex colors are float4 in 0..1; positions are pixels.
+  See `geometry.md` for empty indexed draws, finite values and buffer lifetimes.
 - `require dassdl3/sdl3_pixels_boost` adds copied RGBA8 arrays, streaming/target
   texture scopes, nested target restoration and owned readback scopes.
   See `pixels.md` for pitch/bounds/copy contracts and interpreter/AOT coverage.

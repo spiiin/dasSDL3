@@ -1,5 +1,9 @@
 # Примеры, туториалы и проверки для портирования
 
+Geometry также реализован: цветной triangle, indexed textured quad, точные
+pixel/array проверки в interpreter/AOT — `geometry.md`. Исходный C geometry
+пример собран и выполнен с smoke-wrapper на 60 кадров и нашим checker.bmp.
+
 Обновление: streaming_texture и собственный render_target/readback уже
 реализованы; contracts и 42 interpreter/AOT-проверки — в `pixels.md`.
 Первый lock API использует owned staging array и синхронный native upload;

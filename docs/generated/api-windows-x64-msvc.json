@@ -30198,8 +30198,13 @@
       ],
       "id": "function:SDL_RenderGeometry",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "checked-arrays",
+      "adapter": "SDL_RenderGeometryVertices / SDL_RenderGeometryIndices",
+      "tests": [
+        "tests/geometry.das"
+      ],
+      "contract": "docs/geometry.md"
     },
     {
       "name": "SDL_RenderGeometryRaw",
@@ -62806,8 +62811,14 @@
       ],
       "id": "record:SDL_FColor",
       "category": "Pixels",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "r",
+        "g",
+        "b",
+        "a"
+      ]
     },
     {
       "name": "SDL_FPoint",
@@ -62828,8 +62839,12 @@
       ],
       "id": "record:SDL_FPoint",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "x",
+        "y"
+      ]
     },
     {
       "name": "SDL_FRect",
@@ -67099,8 +67114,13 @@
       ],
       "id": "record:SDL_Vertex",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "position",
+        "color",
+        "tex_coord"
+      ]
     },
     {
       "name": "SDL_VirtualJoystickDesc",
@@ -68341,8 +68361,14 @@
       "callback": false,
       "id": "typedef:SDL_FColor",
       "category": "Pixels",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "r",
+        "g",
+        "b",
+        "a"
+      ]
     },
     {
       "name": "SDL_FPoint",
@@ -68353,8 +68379,12 @@
       "callback": false,
       "id": "typedef:SDL_FPoint",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "x",
+        "y"
+      ]
     },
     {
       "name": "SDL_FRect",
@@ -71220,8 +71250,13 @@
       "callback": false,
       "id": "typedef:SDL_Vertex",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "position",
+        "color",
+        "tex_coord"
+      ]
     },
     {
       "name": "SDL_VirtualJoystickDesc",

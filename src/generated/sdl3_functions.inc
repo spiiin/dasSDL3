@@ -5,6 +5,9 @@ addAnnotation(new DummyTypeAnnotation("SDL_Surface", "SDL_Surface", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Texture", "SDL_Texture", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_AudioStream", "SDL_AudioStream", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Wav", "SDL_Wav", 1, 1));
+addAnnotation(new SDL_FPointAnnotation(lib));
+addAnnotation(new SDL_FColorAnnotation(lib));
+addAnnotation(new SDL_VertexAnnotation(lib));
 addAnnotation(new SDL_FRectAnnotation(lib));
 addAnnotation(new SDL_EventAnnotation(lib));
 addAnnotation(new SDL_KeyboardEventAnnotation(lib));
@@ -158,3 +161,5 @@ addExtern<DAS_BIND_FUN(SDL_AudioStreamDevicePaused)>(*this, lib, "SDL_AudioStrea
 addExtern<DAS_BIND_FUN(SDL_GetRenderTarget)>(*this, lib, "SDL_GetRenderTarget", SideEffects::worstDefault, "SDL_GetRenderTarget")->args({"renderer"});
 // bool (SDL_Renderer *, SDL_Texture *) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_SetRenderTarget)>(*this, lib, "SDL_SetRenderTarget", SideEffects::worstDefault, "SDL_SetRenderTarget")->args({"renderer", "texture"});
+// bool (SDL_Renderer *, SDL_Texture *, const SDL_Vertex *, int, const int *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RenderGeometry)>(*this, lib, "SDL_RenderGeometry", SideEffects::worstDefault, "SDL_RenderGeometry")->args({"renderer", "texture", "vertices", "num_vertices", "indices", "num_indices"});

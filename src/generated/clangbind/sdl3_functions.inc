@@ -5,12 +5,15 @@ addAnnotation(new DummyTypeAnnotation("SDL_Texture", "SDL_Texture", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_AudioStream", "SDL_AudioStream", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Wav", "SDL_Wav", 1, 1));
 addAnnotation(new SDL_AudioSpecAnnotation(lib));
+addAnnotation(new SDL_FColorAnnotation(lib));
+addAnnotation(new SDL_FPointAnnotation(lib));
 addAnnotation(new SDL_FRectAnnotation(lib));
 addAnnotation(new SDL_KeyboardEventAnnotation(lib));
 addAnnotation(new SDL_MouseMotionEventAnnotation(lib));
 addAnnotation(new SDL_MouseButtonEventAnnotation(lib));
 addAnnotation(new SDL_MouseWheelEventAnnotation(lib));
 addAnnotation(new SDL_EventAnnotation(lib));
+addAnnotation(new SDL_VertexAnnotation(lib));
 static_assert(static_cast<uint32_t>(SDL_INIT_VIDEO) == static_cast<uint32_t>(0x20ULL));
 addConstant(*this, "SDL_INIT_VIDEO", static_cast<uint32_t>(0x20ULL));
 static_assert(static_cast<uint64_t>(SDL_WINDOW_RESIZABLE) == static_cast<uint64_t>(0x20ULL));
@@ -274,6 +277,10 @@ addConstant(*this, "SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK", static_cast<uint32_t>(0x
 // from SDL3/SDL_render.h:2113:34
 	makeExtern< bool (*)(struct SDL_Renderer *,struct SDL_Texture *,const struct SDL_FRect *,const struct SDL_FRect *) , SDL_RenderTexture , SimNode_ExtFuncCall >(lib,"SDL_RenderTexture","SDL_RenderTexture")
 		->args({"renderer","texture","srcrect","dstrect"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2259:34
+	makeExtern< bool (*)(struct SDL_Renderer *,struct SDL_Texture *,const struct SDL_Vertex *,int,const int *,int) , SDL_RenderGeometry , SimNode_ExtFuncCall >(lib,"SDL_RenderGeometry","SDL_RenderGeometry")
+		->args({"renderer","texture","vertices","num_vertices","indices","num_indices"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_render.h:2374:34
 	makeExtern< bool (*)(struct SDL_Renderer *) , SDL_RenderPresent , SimNode_ExtFuncCall >(lib,"SDL_RenderPresent","SDL_RenderPresent")

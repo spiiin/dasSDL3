@@ -5,8 +5,8 @@
   "inputs_sha256": {
     "tools/run_clangbind_parity.py": "89ef14d813b069ce19d987833b34f441c1b2d750d78293e223097e6a6c096f52",
     "tools/clangbind_parity.das": "c3506a333de799767c404a8a9a8ae1c40540a39be669627f351d0e16fb6c87c1",
-    "tools/bindings.json": "efe16822723f721d2aefbd2398a644ef2d0588e93d09327e86c4220f551e63ac",
-    "tools/api-policy.json": "41c3f76bc699e3b00f851bbed9dcec0ca187df802606c66e2b3790f731842187"
+    "tools/bindings.json": "ab0eed2f9264ac8cef20c3d07cc667a42a1526640e9abf754e638591375f21d6",
+    "tools/api-policy.json": "06acf908d2810707e1808ee287a09b445beca27604665dfadc2c76b4b05522d6"
   },
   "headers_sha256": {
     "SDL.h": "b264fdd1b52eecd52cc7fc58fdeeec9f9436b51caecf0ec8cf34cd90cee94b95",

@@ -5,6 +5,7 @@
 #include "sdl3_input.h"
 #include "sdl3_audio.h"
 #include "sdl3_pixels.h"
+#include "sdl3_geometry.h"
 #include "parity_types.inc"
 #include "sdl3_scopes.h"
 #include "aot_recover.h"
@@ -12,4 +13,5 @@
 #include "resource_probe.h"
 #include "input_probe.h"
 #include "audio_probe.h"
+#include "geometry_probe.h"
 #endif

@@ -51,7 +51,8 @@
     "SDL_PauseAudioStreamDevice",
     "SDL_AudioStreamDevicePaused",
     "SDL_GetRenderTarget",
-    "SDL_SetRenderTarget"
+    "SDL_SetRenderTarget",
+    "SDL_RenderGeometry"
   ],
   "opaque_types": [
     "SDL_Window",
@@ -62,6 +63,9 @@
     "SDL_Wav"
   ],
   "structs": {
+    "SDL_FPoint": ["x", "y"],
+    "SDL_FColor": ["r", "g", "b", "a"],
+    "SDL_Vertex": ["position", "color", "tex_coord"],
     "SDL_FRect": [
       "x",
       "y",

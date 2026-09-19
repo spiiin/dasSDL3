@@ -29,6 +29,11 @@
     }
   },
   "symbols": {
+    "function:SDL_RenderGeometry": {
+      "boost_status": "checked-arrays",
+      "adapter": "SDL_RenderGeometryVertices / SDL_RenderGeometryIndices",
+      "tests": ["tests/geometry.das"], "contract": "docs/geometry.md"
+    },
     "function:SDL_CreateTexture": {
       "raw_status": "adapted", "boost_status": "partial",
       "reason": "Only RGBA32 streaming and target textures; no general format/access binding",

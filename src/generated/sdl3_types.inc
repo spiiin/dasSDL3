@@ -5,6 +5,9 @@ MAKE_TYPE_FACTORY(SDL_Surface, SDL_Surface);
 MAKE_TYPE_FACTORY(SDL_Texture, SDL_Texture);
 MAKE_TYPE_FACTORY(SDL_AudioStream, SDL_AudioStream);
 MAKE_TYPE_FACTORY(SDL_Wav, SDL_Wav);
+MAKE_TYPE_FACTORY(SDL_FPoint, SDL_FPoint);
+MAKE_TYPE_FACTORY(SDL_FColor, SDL_FColor);
+MAKE_TYPE_FACTORY(SDL_Vertex, SDL_Vertex);
 MAKE_TYPE_FACTORY(SDL_FRect, SDL_FRect);
 MAKE_TYPE_FACTORY(SDL_Event, SDL_Event);
 MAKE_TYPE_FACTORY(SDL_KeyboardEvent, SDL_KeyboardEvent);
@@ -13,6 +16,27 @@ MAKE_TYPE_FACTORY(SDL_MouseButtonEvent, SDL_MouseButtonEvent);
 MAKE_TYPE_FACTORY(SDL_MouseWheelEvent, SDL_MouseWheelEvent);
 MAKE_TYPE_FACTORY(SDL_AudioSpec, SDL_AudioSpec);
 namespace das {
+struct SDL_FPointAnnotation : ManagedStructureAnnotation<SDL_FPoint, false> {
+    SDL_FPointAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_FPoint", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(x)>("x", "x");
+        addField<DAS_BIND_MANAGED_FIELD(y)>("y", "y");
+    }
+};
+struct SDL_FColorAnnotation : ManagedStructureAnnotation<SDL_FColor, false> {
+    SDL_FColorAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_FColor", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(r)>("r", "r");
+        addField<DAS_BIND_MANAGED_FIELD(g)>("g", "g");
+        addField<DAS_BIND_MANAGED_FIELD(b)>("b", "b");
+        addField<DAS_BIND_MANAGED_FIELD(a)>("a", "a");
+    }
+};
+struct SDL_VertexAnnotation : ManagedStructureAnnotation<SDL_Vertex, false> {
+    SDL_VertexAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_Vertex", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(position)>("position", "position");
+        addField<DAS_BIND_MANAGED_FIELD(color)>("color", "color");
+        addField<DAS_BIND_MANAGED_FIELD(tex_coord)>("tex_coord", "tex_coord");
+    }
+};
 struct SDL_FRectAnnotation : ManagedStructureAnnotation<SDL_FRect, false> {
     SDL_FRectAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_FRect", lib) {
         addField<DAS_BIND_MANAGED_FIELD(x)>("x", "x");
