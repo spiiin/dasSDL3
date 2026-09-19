@@ -1,0 +1,15 @@
+{
+  "entrypoint": "main",
+  "resources": "vertex uniform 0: MVP and normal columns, 112 bytes; fragment uniform 0: light direction/ambient, 16 bytes; fragment sampler 0",
+  "vertex_inputs": "float4 location0 position; float4 location1 normal; float2 location2 uv; stride48",
+  "compiler": "dxcompiler.dll: 1.8 - 1.8.0.4739 (d9a5e97d0)",
+  "spirv_target": "vulkan1.0",
+  "files": {
+    "lit.vert.hlsl": "97f8674c2982055999b14823c27c726418bdf963395d232c4b66da5c2f8e3ae1",
+    "lit.vert.spv": "5bc1b38a52e339c73d5f2589dbab6067e38588172aeb1f77beb25446b784e10c",
+    "lit.vert.dxil": "9187163a032d6b6e89fa1b30b934087398ad9ba3d19fa7092ff1622d9014f1ea",
+    "lit.frag.hlsl": "316028b55636d3db69c865f22fc311a2b5c2cde2819e84428863a9362a5907ca",
+    "lit.frag.spv": "3c2c7e0923e30be8c4201ec6364ba0a6ffa984509ac8c802aee0c3e326672aa4",
+    "lit.frag.dxil": "7b7dd77c0d1edfc52d424823b1fe8e9640c58ef6380c5cfe58e14492161a7dac"
+  }
+}

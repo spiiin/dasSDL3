@@ -69,9 +69,9 @@ struct SDL_GPUMeshBuild {
         SDL_SetError("%s", error.c_str());
     }
 };
-// Same bounded trusted-asset contract as triangle; fragment has exactly one sampler.
+// Bounded trusted-asset loader; callers supply their fixed shader resource counts.
 inline SDL_GPUShader * SDL_LoadGPUMeshShader(SDL_GPUDevice * device, const char * path,
-                                            uint32_t format, SDL_GPUShaderStage stage, bool transform = false, uint32_t fragmentSamplers = 1) {
+                                            uint32_t format, SDL_GPUShaderStage stage, bool transform = false, uint32_t fragmentSamplers = 1, uint32_t fragmentUniforms = 0) {
     if (!path || !*path) { SDL_SetError("GPU mesh shader: empty path"); return nullptr; }
     auto * stream = SDL_IOFromFile(path, "rb");
     if (!stream) return nullptr;
@@ -88,7 +88,7 @@ inline SDL_GPUShader * SDL_LoadGPUMeshShader(SDL_GPUDevice * device, const char 
     SDL_GPUShaderCreateInfo info{};
     info.code = code.get(); info.code_size = size_t(length); info.entrypoint = "main";
     info.format = format; info.stage = stage; info.num_samplers = stage == SDL_GPU_SHADERSTAGE_FRAGMENT ? fragmentSamplers : 0;
-    info.num_uniform_buffers = transform && stage == SDL_GPU_SHADERSTAGE_VERTEX ? 1 : 0;
+    info.num_uniform_buffers = stage == SDL_GPU_SHADERSTAGE_VERTEX ? (transform ? 1 : 0) : fragmentUniforms;
     auto * shader = SDL_CreateGPUShader(device, &info);
 #ifdef DASSDL3_TESTING
     if (shader) ++SDL_TestGPULiveShaders;

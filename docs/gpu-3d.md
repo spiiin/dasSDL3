@@ -87,8 +87,9 @@ Mock отдельно подтверждает submit без cancel при от�
 устройства остаются failures. Interpreter и strict AOT имеют Vulkan/D3D12 tests.
 
 Это один opaque mesh за pass, без управления общей сценой и общего render-pass
-builder. Lighting/normals, текстурированная 3D-геометрия, depth sampling,
-MSAA, instancing, fragment uniforms, device-loss recovery и Metal/Linux впереди.
+builder. Textured geometry, normals и fixed fragment light uniform реализованы
+отдельным ABI в `gpu-lit.md`. Depth sampling, MSAA, instancing, general uniforms,
+device-loss recovery и Metal/Linux впереди.
 Существующий RGBA8 texture adapter описан в `gpu-mesh.md`; 2D uniforms — в
 `gpu-transform.md`. Подсистемы не считаются полностью покрытыми.
 

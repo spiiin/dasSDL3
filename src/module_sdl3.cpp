@@ -8,6 +8,9 @@
 #include "sdl3_gpu.h"
 #include "sdl3_gpu_mesh.h"
 #include "sdl3_gpu_3d.h"
+#include "sdl3_gpu_lit.h"
+#include "sdl3_gpu_scene.h"
+#include "sdl3_gpu_instancing.h"
 #ifdef DASSDL3_TYPES_INCLUDE
 #include DASSDL3_TYPES_INCLUDE
 #else
@@ -23,6 +26,9 @@
 #include "../tests/gpu_triangle_probe.h"
 #include "../tests/gpu_mesh_probe.h"
 #include "../tests/gpu_3d_probe.h"
+#include "../tests/gpu_lit_probe.h"
+#include "../tests/gpu_scene_probe.h"
+#include "../tests/gpu_instancing_probe.h"
 #endif
 static_assert(SDL_VERSION == 3002018, "Regenerate and test bindings when updating SDL3");
 
@@ -44,6 +50,14 @@ public:
         #include "generated/sdl3_functions.inc"
         #endif
         addExtern<DAS_BIND_FUN(SDL_CreateGPUDeviceScoped)>(*this, lib, "SDL_CreateGPUDeviceScoped", SideEffects::worstDefault, "SDL_CreateGPUDeviceScoped");
+        addExtern<DAS_BIND_FUN(SDL_CreateGPUInstancedMesh)>(*this, lib, "SDL_CreateGPUInstancedMesh", SideEffects::worstDefault, "SDL_CreateGPUInstancedMesh");
+        addExtern<DAS_BIND_FUN(SDL_DrawGPUInstancedMesh)>(*this, lib, "SDL_DrawGPUInstancedMesh", SideEffects::worstDefault, "SDL_DrawGPUInstancedMesh");
+        addExtern<DAS_BIND_FUN(SDL_CreateGPULitScene)>(*this, lib, "SDL_CreateGPULitScene", SideEffects::worstDefault, "SDL_CreateGPULitScene");
+        addExtern<DAS_BIND_FUN(SDL_DrawGPULitScene)>(*this, lib, "SDL_DrawGPULitScene", SideEffects::worstDefault, "SDL_DrawGPULitScene");
+        addExtern<DAS_BIND_FUN(SDL_ReleaseGPULitScene)>(*this, lib, "SDL_ReleaseGPULitScene", SideEffects::worstDefault, "SDL_ReleaseGPULitScene");
+        addExtern<DAS_BIND_FUN(SDL_CreateGPULitMesh)>(*this, lib, "SDL_CreateGPULitMesh", SideEffects::worstDefault, "SDL_CreateGPULitMesh");
+        addExtern<DAS_BIND_FUN(SDL_DrawGPULitMesh)>(*this, lib, "SDL_DrawGPULitMesh", SideEffects::worstDefault, "SDL_DrawGPULitMesh");
+        addExtern<DAS_BIND_FUN(SDL_ReleaseGPULitMesh)>(*this, lib, "SDL_ReleaseGPULitMesh", SideEffects::worstDefault, "SDL_ReleaseGPULitMesh");
         addExtern<DAS_BIND_FUN(SDL_CreateGPU3DMesh)>(*this, lib, "SDL_CreateGPU3DMesh", SideEffects::worstDefault, "SDL_CreateGPU3DMesh");
         addExtern<DAS_BIND_FUN(SDL_ReleaseGPU3DMesh)>(*this, lib, "SDL_ReleaseGPU3DMesh", SideEffects::worstDefault, "SDL_ReleaseGPU3DMesh");
         addExtern<DAS_BIND_FUN(SDL_DrawGPU3DMesh)>(*this, lib, "SDL_DrawGPU3DMesh", SideEffects::worstDefault, "SDL_DrawGPU3DMesh");
@@ -105,6 +119,21 @@ public:
 #ifdef DASSDL3_TESTING
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_state_contracts)>(*this, lib, "SDLTestGPUStateContracts", SideEffects::worstDefault, "sdl3_test::gpu_state_contracts");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_meshes)>(*this, lib, "SDLTestGPUMeshes", SideEffects::worstDefault, "sdl3_test::gpu_meshes");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_instances_offscreen)>(*this, lib, "SDLTestGPUInstancesOffscreen", SideEffects::worstDefault, "sdl3_test::gpu_instances_offscreen");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_instances_pixels)>(*this, lib, "SDLTestGPUInstancesPixels", SideEffects::worstDefault, "sdl3_test::gpu_instances_pixels");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_instances_preflight)>(*this, lib, "SDLTestGPUInstancesPreflight", SideEffects::worstDefault, "sdl3_test::gpu_instances_preflight");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_scenes)>(*this, lib, "SDLTestGPUScenes", SideEffects::worstDefault, "sdl3_test::gpu_scenes");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_scene_offscreen)>(*this, lib, "SDLTestGPUSceneOffscreen", SideEffects::worstDefault, "sdl3_test::gpu_scene_offscreen");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_scene_sizes)>(*this, lib, "SDLTestGPUSceneSizes", SideEffects::worstDefault, "sdl3_test::gpu_scene_sizes");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_scene_depth)>(*this, lib, "SDLTestGPUSceneDepth", SideEffects::worstDefault, "sdl3_test::gpu_scene_depth");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_scene_depth_failure)>(*this, lib, "SDLTestGPUSceneDepthFailure", SideEffects::worstDefault, "sdl3_test::gpu_scene_depth_failure");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_scene_preflight)>(*this, lib, "SDLTestGPUScenePreflight", SideEffects::worstDefault, "sdl3_test::gpu_scene_preflight");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_scene_pixels)>(*this, lib, "SDLTestGPUScenePixels", SideEffects::worstDefault, "sdl3_test::gpu_scene_pixels");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_lit_meshes)>(*this, lib, "SDLTestGPULitMeshes", SideEffects::worstDefault, "sdl3_test::gpu_lit_meshes");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_lit_guards)>(*this, lib, "SDLTestGPULitGuards", SideEffects::worstDefault, "sdl3_test::gpu_lit_guards");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_lit_offscreen)>(*this, lib, "SDLTestGPUCreateLitOffscreen", SideEffects::worstDefault, "sdl3_test::gpu_lit_offscreen");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_lit_depth)>(*this, lib, "SDLTestGPULitDepth", SideEffects::worstDefault, "sdl3_test::gpu_lit_depth");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_lit_pixels)>(*this, lib, "SDLTestGPULitPixels", SideEffects::worstDefault, "sdl3_test::gpu_lit_pixels");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_3d_meshes)>(*this, lib, "SDLTestGPU3DMeshes", SideEffects::worstDefault, "sdl3_test::gpu_3d_meshes");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_3d_depths)>(*this, lib, "SDLTestGPU3DDepths", SideEffects::worstDefault, "sdl3_test::gpu_3d_depths");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_3d_guards)>(*this, lib, "SDLTestGPU3DGuards", SideEffects::worstDefault, "sdl3_test::gpu_3d_guards");

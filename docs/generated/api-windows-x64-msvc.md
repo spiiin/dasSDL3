@@ -23,7 +23,7 @@ Adapted coverage and boost coverage are not inferred from function names.
 | Error | 5 | 1 | 0 | 4 |
 | Events | 19 | 3 | 0 | 16 |
 | Filesystem | 11 | 1 | 0 | 10 |
-| GPU | 92 | 7 | 33 | 52 |
+| GPU | 92 | 7 | 34 | 51 |
 | GUID | 2 | 0 | 0 | 2 |
 | Gamepad | 73 | 0 | 0 | 73 |
 | HIDAPI | 22 | 0 | 0 | 22 |

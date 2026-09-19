@@ -9,6 +9,9 @@
 #include "sdl3_gpu.h"
 #include "sdl3_gpu_mesh.h"
 #include "sdl3_gpu_3d.h"
+#include "sdl3_gpu_lit.h"
+#include "sdl3_gpu_scene.h"
+#include "sdl3_gpu_instancing.h"
 #include "parity_types.inc"
 #include "sdl3_scopes.h"
 #include "aot_recover.h"
@@ -21,4 +24,7 @@
 #include "gpu_triangle_probe.h"
 #include "gpu_mesh_probe.h"
 #include "gpu_3d_probe.h"
+#include "gpu_lit_probe.h"
+#include "gpu_scene_probe.h"
+#include "gpu_instancing_probe.h"
 #endif

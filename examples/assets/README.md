@@ -23,7 +23,15 @@ shares the mesh sampler ABI. Rebuild with tools/build_triangle_shaders.py
 transform-manifest.json records source/binary hashes and the DXC version.
 
 shaders/scene3d.* are project-authored color-vertex shaders for example 14.
+shaders/lit.* are project-authored textured Lambert shaders for example 15.
+They use a 112-byte MVP/normal vertex uniform and 16-byte fragment light uniform;
+`python tools/build_triangle_shaders.py --lit` regenerates binaries and manifest.
 The vertex shader consumes four explicit MVP columns (64 bytes); the fragment
 shader returns interpolated RGBA without samplers. Rebuild/check with
 tools/build_triangle_shaders.py --scene3d [--check]. Depth state belongs to the
 native pipeline. The manifest records DXC and source/binary hashes.
+
+`shaders/instances.*` uses vertex stride48 + instance stride112 (4 model and
+3 normal columns), camera uniform64, light uniform16 and one fragment sampler.
+Regenerate with `python tools/build_triangle_shaders.py --instancing`; binaries
+and hashes ship with the source, so consumer builds need no shader compiler.

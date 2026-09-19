@@ -1,0 +1,15 @@
+{
+  "entrypoint": "main",
+  "resources": "vertex uniform 0: camera columns, 64 bytes; fragment uniform 0: light direction/ambient, 16 bytes; fragment sampler 0",
+  "vertex_inputs": "buffer0 stride48: position4 normal4 uv2; buffer1 stride112 instance-rate: model4x4 normal3x4; locations0..9",
+  "compiler": "dxcompiler.dll: 1.8 - 1.8.0.4739 (d9a5e97d0)",
+  "spirv_target": "vulkan1.0",
+  "files": {
+    "instances.vert.hlsl": "26a7293ebdc386803d4b9da1044239490f619fb4680a142e8d8a5ec7b340daef",
+    "instances.vert.spv": "aeabef5174048d5b0bbd33b44099618615ce2daa65e706068757fc16e35acda8",
+    "instances.vert.dxil": "833e6d818e09e121140ff4287e874ffcf4084883b8c218382694ac186fc1f98a",
+    "instances.frag.hlsl": "316028b55636d3db69c865f22fc311a2b5c2cde2819e84428863a9362a5907ca",
+    "instances.frag.spv": "3c2c7e0923e30be8c4201ec6364ba0a6ffa984509ac8c802aee0c3e326672aa4",
+    "instances.frag.dxil": "7b7dd77c0d1edfc52d424823b1fe8e9640c58ef6380c5cfe58e14492161a7dac"
+  }
+}

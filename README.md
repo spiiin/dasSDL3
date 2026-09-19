@@ -3,7 +3,7 @@
 Минимальные привязки SDL3 к daScript / daslang. В первой версии покрывается
 пример с окном, движущимся квадратом и выходом по Escape или закрытию окна.
 
-[Порядок изучения примеров: 01–14](examples/README.md).
+[Порядок изучения примеров: 01–16](examples/README.md).
 
 Новый GPU-пример с vertex buffer, RGBA8 texture и sampler:
 
@@ -19,6 +19,14 @@
 [2D transforms и shader ABI](docs/gpu-transform.md).
 `examples/14_gpu_cube.das` показывает вращающийся цветной куб:
 [3D-матрицы, камера и depth buffer](docs/gpu-3d.md).
+`examples/15_gpu_lit_cube.das` добавляет текстуру и направленный свет:
+[Нормали, освещение и fragment uniforms](docs/gpu-lit.md).
+`examples/17_gpu_instancing.das` рисует 64 освещённых куба одним indexed draw;
+матрицы экземпляров загружаются один раз, камера вращается вокруг сцены.
+Контракт: [GPU instancing](docs/gpu-instancing.md).
+
+`examples/16_gpu_scene.das` рисует несколько объектов за один кадр:
+[Draw list и общий depth buffer](docs/gpu-scene.md).
 
 Несколько scoped GPU devices поддерживаются. При конфликте с установленным
 FPS Monitor добавьте `--disable-vulkan-layer=VK_LAYER_RENDERDOC_Capture` к команде

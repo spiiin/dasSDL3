@@ -9,6 +9,10 @@ sampler и pixel reference проверены на Vulkan/D3D12 в interpreter �
 проверки transforms и layout описаны в `gpu-transform.md`.
 `14_gpu_cube.das` — собственный 3D color/depth сценарий со стандартными матрицами
 daScript; pixel reference и порядок треугольников проверяются в `gpu-3d.md`.
+`15_gpu_lit_cube.das` добавляет собственные texture/normal/light shaders;
+CPU reference перспективных UV и Lambert lighting описан в `gpu-lit.md`.
+`16_gpu_scene.das` переиспользует lit mesh для трёх объектов в одном pass;
+`gpu-scene.md` описывает общий depth, draw list и cross-object pixel reference.
 
 Geometry также реализован: цветной triangle, indexed textured quad, точные
 pixel/array проверки в interpreter/AOT — `geometry.md`. Исходный C geometry
@@ -141,3 +145,7 @@ Startup tutorial: [SDL main functions](https://wiki.libsdl.org/SDL3/README-main-
 Не требуется копировать весь чужой test suite. Нужны небольшие интеграционные
 регрессии именно на границе язык↔SDL: исключение, контейнер, handle, callback,
 buffer и AOT. Запуск upstream-тестов не заменяет проверку native adapter.
+
+`17_gpu_instancing.das`: 64 copies of a lit cube in one indexed draw, separate
+instance-rate model/normal buffer and orbiting camera. This is the bounded
+InstancedIndexed learning step; ComputeSpriteBatch/indirect/dynamic updates remain.

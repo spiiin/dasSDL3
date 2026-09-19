@@ -14596,12 +14596,13 @@
       "category": "GPU",
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Closed color pass, optionally a selected depth target with clear=1, LESS/write and resize; no general render pass API",
-      "adapter": "SDL_ClearGPUWindow / SDL_BeginGPU3DPass",
+      "reason": "Closed color/depth pass with resize; lit scene validates a bounded draw list before acquisition and records multiple objects against one shared depth target; no general render pass API",
+      "adapter": "SDL_ClearGPUWindow / SDL_BeginGPU3DPass / SDL_GPUSceneFrame",
       "tests": [
         "tests/gpu_state.das",
         "tests/gpu.das",
-        "tests/gpu_3d.das"
+        "tests/gpu_3d.das",
+        "tests/gpu_scene.das"
       ],
       "contract": "docs/gpu-3d.md"
     },
@@ -14950,12 +14951,13 @@
       "category": "GPU",
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "reason": "Fixed vertex layouts including a second immutable instance-rate buffer: model/normal columns, stride112, reserved step rate zero",
+      "adapter": "SDL_RecordGPUMesh / SDL_RecordGPUInstances",
       "tests": [
-        "tests/gpu_mesh.das"
+        "tests/gpu_mesh.das",
+        "tests/gpu_instancing.das"
       ],
-      "contract": "docs/gpu-mesh.md"
+      "contract": "docs/gpu-instancing.md"
     },
     {
       "name": "SDL_BindGPUVertexSamplers",
@@ -17912,12 +17914,13 @@
       "category": "GPU",
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Checked immutable indexed mesh; one instance, offsets zero; no general draw API",
-      "adapter": "SDL_RecordGPUMesh",
+      "reason": "Checked immutable indexed mesh; 1..4096 instances via fixed model/normal instance buffer, offsets zero; no general draw API",
+      "adapter": "SDL_RecordGPUMesh / SDL_RecordGPUInstances",
       "tests": [
-        "tests/gpu_indexed_mesh.das"
+        "tests/gpu_indexed_mesh.das",
+        "tests/gpu_instancing.das"
       ],
-      "contract": "docs/gpu-indexed-mesh.md"
+      "contract": "docs/gpu-instancing.md"
     },
     {
       "name": "SDL_DrawGPUIndexedPrimitivesIndirect",
@@ -18201,13 +18204,14 @@
       "category": "GPU",
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Native clear pass only; no script callback during recording",
-      "adapter": "SDL_ClearGPUWindow",
+      "reason": "Closed native color/depth passes, including lit scene draw lists; no script callback during recording",
+      "adapter": "SDL_GPUFrameWithTarget",
       "tests": [
         "tests/gpu_state.das",
-        "tests/gpu.das"
+        "tests/gpu.das",
+        "tests/gpu_scene.das"
       ],
-      "contract": "docs/gpu-clear.md"
+      "contract": "docs/gpu-scene.md"
     },
     {
       "name": "SDL_EnterAppMainCallbacks",
@@ -28866,8 +28870,14 @@
       ],
       "id": "function:SDL_PushGPUFragmentUniformData",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Fixed 16-byte world-space light direction and ambient at fragment slot zero; no general uniform layout API",
+      "adapter": "SDL_RecordGPULit",
+      "tests": [
+        "tests/gpu_lit.das"
+      ],
+      "contract": "docs/gpu-lit.md"
     },
     {
       "name": "SDL_PushGPUVertexUniformData",
@@ -28898,11 +28908,12 @@
       "category": "GPU",
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Fixed 2D rows (32 bytes) or 3D MVP columns (64 bytes), std140 vertex slot zero; no general uniform layout API",
-      "adapter": "SDL_PushGPUTransform / SDL_RecordGPU3D",
+      "reason": "Fixed 2D rows (32 bytes), 3D MVP (64 bytes), or MVP/normal columns (112 bytes), std140 vertex slot zero; no general uniform layout API",
+      "adapter": "SDL_PushGPUTransform / SDL_RecordGPU3D / SDL_RecordGPULit",
       "tests": [
         "tests/gpu_transform.das",
-        "tests/gpu_3d.das"
+        "tests/gpu_3d.das",
+        "tests/gpu_lit.das"
       ],
       "contract": "docs/gpu-3d.md"
     },

@@ -46,6 +46,16 @@ in `docs/gpu-3d.md`. Use math_boost perspective_rh_0_to_1, not its deprecated
 perspective_rh/opengl variants. Depth dimensions come from acquired swapchain;
 prepare failure must submit, never cancel. Preserve order-independent depth pixel
 tests, resize/cache failure tests and device-specific depth cleanup.
+Textured Lambert meshes use `sdl3_gpu_lit_boost`; see `docs/gpu-lit.md`.
+Preserve stride48, 112-byte MVP/normal vertex uniform and 16-byte fragment light.
+Use inverse-transpose normals for affine nonuniform/negative scale; reject
+singular/nonfinite transforms before command acquisition. Keep independent
+CPU normal/UV/lighting pixel references and the separate mesh registry.
+Lit draw lists and scene-owned shared depth are documented in `docs/gpu-scene.md`.
+Validate the entire bounded list before command acquisition; no script callbacks
+while recording. Lists own values, not meshes; resolve IDs on every draw.
+Empty lists clear/present. Preserve cross-object depth, per-object uniforms,
+late-invalid-item rejection and scene/mesh independent cleanup tests.
 Keep GPU scopes separate from SDL_Renderer. Never cancel after a non-null
 swapchain texture; submit consumes the command even on failure. Keep recording
 native-only until general GPU handle/state contracts are implemented and tested.
@@ -122,3 +132,9 @@ equivalents; source inspection alone does not establish runtime correctness.
 - Do not commit or publish unless asked. Preserve unrelated user changes.
 - Keep example filenames numbered in learning order (01_, 02_, ...), documented
   in examples/README.md. Update CMake/AOT lists and documentation when renaming.
+
+Immutable instancing uses sdl3_gpu_instancing_boost; see docs/gpu-instancing.md.
+Keep per-vertex stride48 and per-instance stride112 (model4 + normal3 columns),
+64-byte camera and 16-byte light uniforms. SDL instance_step_rate is reserved
+and must be zero. Reject instanced IDs in ordinary lit/scene draws. Validate all
+1..4096 models before allocation; copy arrays; keep one indexed draw per frame.

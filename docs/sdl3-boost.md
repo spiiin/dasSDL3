@@ -125,3 +125,15 @@ draw accepting translation/scale/angle. Native uniform rows have an explicit
 are copied to a 64-byte uniform; indexed position/color arrays are copied into
 native vertex storage. Depth format selection, resize and failure contracts live
 in `gpu-3d.md`. Keep the old textured/2D shader ABIs separate.
+`sdl3_gpu_lit_boost` adds copied position/normal/UV/RGBA8 data and Lambert light.
+`gpu_draw_lit_mesh` takes camera and affine model separately; native code computes
+inverse-transpose normals. See `gpu-lit.md` for shader ABI, validation and limits.
+`sdl3_gpu_scene_boost` adds a value-only `GpuLitDrawList` and scoped scene depth
+owner. List validation precedes acquisition; recording multiple lit objects is
+native-only. Draw lists never own meshes. See `gpu-scene.md` for empty lists,
+limits, failure paths and shared-depth pixel tests.
+
+`sdl3_gpu_instancing_boost` adds value-only `GpuInstanceList`,
+`gpu_instance_add`, `with_gpu_instanced_mesh`, and `gpu_draw_instanced_mesh`.
+Creation copies all models; clearing the input list does not change instances.
+One indexed draw renders the entire immutable buffer. See `gpu-instancing.md`.

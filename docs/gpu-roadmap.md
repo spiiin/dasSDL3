@@ -8,12 +8,14 @@ RGBA8 upload и sampler: `gpu-mesh.md`; несколько устройств п
 (`gpu-multidevice.md`). Общая модель command/pass handles, произвольные layouts,
 dynamic updates, compute и DSL ещё не реализованы; G2/G3 частичны.
 Immutable UINT32 index buffers добавлены в `gpu-indexed-mesh.md`; произвольные
-draw ranges, UINT16 и instancing остаются следующими расширениями G2.
+draw ranges и UINT16 остаются следующими расширениями G2; immutable instancing — пример 17.
 Vertex uniforms для 2D transforms добавлены с фиксированным 32-byte ABI:
-`gpu-transform.md`. Общие matrices/layouts и fragment uniforms ещё впереди.
+`gpu-transform.md`. Общие layouts и произвольные uniform blocks ещё впереди.
 Добавлен фиксированный 3D color-vertex ABI с float4x4 MVP, стандартной RH camera
-и depth target, обновляемым при resize: `gpu-3d.md`. G4 начат; lighting, MSAA,
-текстурированная 3D-геометрия и общее управление несколькими draw в pass впереди.
+и depth target, обновляемым при resize: `gpu-3d.md`. Textured 3D и Lambert light
+с inverse-transpose normals и fixed fragment uniform добавлены в `gpu-lit.md`.
+Несколько lit draw в одном pass с общей глубиной реализованы в `gpu-scene.md`.
+G4 начат; MSAA, general layouts и произвольные pass builders ещё впереди.
 Оконные сценарии G1 проверены на Vulkan: resize, два claimed окна,
 minimize/restore и независимый cleanup при panic. Свёрнутое окно в этом backend
 продолжало получать drawable; NULL-путь проверен отдельно через mock.
@@ -165,3 +167,8 @@ triangle, uploads/downloads, integer compute, uniforms, resize/minimize,
 ошибка до/после acquisition, shutdown с pending work. Проверять validation
 messages, а не только картинку. Integer данные сравнивать точно; float/image
 использовать заданный tolerance и фиксированные assets/seeds.
+
+G2/G4 instancing slice: example 17 uses immutable model/normal instance buffers
+and one indexed draw for 64 lit cubes. Camera/light remain per-frame; dynamic
+instance updates, indirect drawing and arbitrary vertex layouts remain pending.
+Contract and verification: [gpu-instancing.md](gpu-instancing.md).

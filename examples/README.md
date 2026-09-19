@@ -16,6 +16,9 @@
 | `12_gpu_indexed_quad.das` | SDL GPU: index buffer; четыре вершины и шесть индексов |
 | `13_gpu_transform_quad.das` | SDL GPU: vertex uniforms; перенос, масштаб и поворот |
 | `14_gpu_cube.das` | SDL GPU: 3D-камера, MVP-матрица и depth buffer |
+| `15_gpu_lit_cube.das` | SDL GPU: текстура, нормали, направленный свет и nonuniform scale |
+| `16_gpu_scene.das` | SDL GPU: общий depth, orbit-камера, пауза и смена порядка draw; стрелки/колесо, Space, Enter, Backspace |
+| `17_gpu_instancing.das` | SDL GPU: 64 куба одним indexed draw, буфер экземпляров, вращающаяся камера |
 
 Из корня проекта:
 
