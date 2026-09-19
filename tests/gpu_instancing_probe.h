@@ -33,7 +33,8 @@ inline bool gpu_instances_preflight(SDL_GPUDevice * device,uint64_t id) {
 }
 inline bool gpu_instances_reference(const std::array<Uint8,64*64*4> & pixels,
         const das::TArray<das::float4> & columns,const SDL_GPU3DMatrix & camera,
-        const das::TArray<das::float4> * colors=nullptr) {
+        const das::TArray<das::float4> * colors=nullptr,
+        const std::array<std::array<int,4>,3> * textures=nullptr) {
     // Three copies of one triangle: independent CPU transform, inverse and depth reference.
     const double vertices[3][4]={{-.8,-.7,0,1},{.8,-.7,0,1},{0,.8,0,1}};
     double projected[3][3][3]{},illumination[3]{};
@@ -81,7 +82,7 @@ inline bool gpu_instances_reference(const std::array<Uint8,64*64*4> & pixels,
             float tint[4]={1,1,1,1};
             if (colors) std::memcpy(tint,colors->data+size_t(hit)*16,16);
             const int texel[4]={160,210,96,192}; // Colored fixture: nonwhite RGBA, including nonopaque alpha.
-            for (int k=0;k<4;++k) expected[k]=int(std::round((colors?texel[k]:255)*tint[k]*(k==3?1:illumination[hit])));
+            for (int k=0;k<4;++k) expected[k]=int(std::round((textures?(*textures)[hit][k]:(colors?texel[k]:255))*tint[k]*(k==3?1:illumination[hit])));
             ++covered;
         }
         for (int channel=0;channel<4;++channel) {
@@ -112,11 +113,12 @@ inline bool gpu_instances_submit(GPUReadback & r,SDL_GPULitEntry & mesh,const SD
     return r.fence!=nullptr;
 }
 inline bool gpu_instances_check(GPUReadback & r,const das::TArray<das::float4> & columns,const SDL_GPU3DMatrix & camera,
-        const das::TArray<das::float4> * colors=nullptr) {
+        const das::TArray<das::float4> * colors=nullptr,
+        const std::array<std::array<int,4>,3> * textures=nullptr) {
     if (!r.fence || !SDL_WaitForGPUFences(r.device,true,&r.fence,1)) return false;
     auto * bytes=static_cast<const Uint8 *>(SDL_MapGPUTransferBuffer(r.device,r.transfer,false)); if (!bytes) return false;
     std::array<Uint8,64*64*4> pixels{}; std::memcpy(pixels.data(),bytes,pixels.size()); SDL_UnmapGPUTransferBuffer(r.device,r.transfer);
-    return gpu_instances_reference(pixels,columns,camera,colors);
+    return gpu_instances_reference(pixels,columns,camera,colors,textures);
 }
 inline bool gpu_instances_pixels(SDL_GPUDevice * device,uint64_t id,const das::TArray<das::float4> & columns,
         das::float4 a,das::float4 b,das::float4 c,das::float4 d) {

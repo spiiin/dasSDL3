@@ -158,3 +158,36 @@ twelve queued snapshots after submission without per-frame fence waits.
 `19_gpu_instance_colors.das`: 64 animated transforms and RGBA colors in one
 indexed draw. CPU references verify texture modulation, alpha, depth and queued
 color updates on both backends; transparency blending is not implemented.
+
+`20_gpu_material_batches.das`: 64 animated cubes / two textures / two indexed
+draws in one shared-depth pass. Exact mesh ID grouping, variable list counts,
+queued-buffer cycling and independent CPU-reference tests are covered in
+`gpu-material-batches.md`. Separate material resources and transparency remain future work.
+
+`21_gpu_frustum_culling.das`: 2304 cubes, local sphere visibility filtering before
+batch upload, C toggle / Space pause and visible/submitted/draw counters. Tests
+compare full/culled pixels, plane boundaries, shear and all-outside frames;
+see `gpu-frustum-culling.md`.
+
+`22_gpu_shared_geometry.das`: example 21's culled grid now shares one vertex/index
+allocation across two materials, without seed instance buffers. Parent lifetime,
+pair coalescing, native buffer identity and CPU pixels: `gpu-shared-resources.md`.
+
+Example 23 (`23_gpu_copy_readback.das`) is a small public buffer copy/readback
+scenario, not a literal upstream tutorial port. Exact byte comparison, both
+backends and ownership tests: `gpu-transfer.md`. General texture transfers and
+compute still need independent examples.
+
+Example 24 (`24_gpu_texture_transfers.das`) verifies RGBA8 rectangular upload
+with odd byte pitch, copy into a mip/layer of a texture array, and exact readback.
+No window/shader or visual-only success criterion; an independent binding
+contract example, not a literal upstream tutorial port. See `gpu-texture-transfer.md`.
+
+Example 25 (`25_gpu_formats.das`) queries compressed format metadata and verifies
+a one-byte R8 upload/readback. Additional tests exercise 1/2/4/8/16-byte color
+formats and backend rejection without treating unsupported as successful upload.
+
+Пакеты 26–29: примеры BC blocks, cube faces, driver discovery, resource names.
+Новые сценарии проверяются общим interpreter/AOT и Vulkan/D3D12 прогоном;
+контракты и CPU byte oracle — `gpu-texture-types.md`. Это API-примеры без окна,
+не новые scene helpers и не демонстрация сэмплирования cubemap.

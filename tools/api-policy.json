@@ -29,6 +29,178 @@
     }
   },
   "symbols": {
+    "function:SDL_GetNumGPUDrivers": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Main-thread compiled driver enumeration, not physical adapters",
+      "adapter": "SDL_GPUDriverCountChecked / gpu_driver_names",
+      "tests": [
+        "tests/gpu_utilities.das"
+      ],
+      "contract": "docs/gpu-texture-types.md"
+    },
+    "function:SDL_GetGPUDriver": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Validated index, copied script-owned names",
+      "adapter": "SDL_GPUDriverNameCopy / gpu_driver_names",
+      "tests": [
+        "tests/gpu_utilities.das"
+      ],
+      "contract": "docs/gpu-texture-types.md"
+    },
+    "function:SDL_GPUSupportsShaderFormats": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Validated mask, SDL driver-hint precedence preserved, no device created",
+      "adapter": "SDL_GPUShaderSupportChecked / gpu_supports_shaders",
+      "tests": [
+        "tests/gpu_utilities.das"
+      ],
+      "contract": "docs/gpu-texture-types.md"
+    },
+    "function:SDL_SetGPUBufferName": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Only checked public data buffers; bounded names, void SDL setter",
+      "adapter": "SDL_SetGPUDataBufferNameChecked / gpu_buffer_name",
+      "tests": [
+        "tests/gpu_utilities.das"
+      ],
+      "contract": "docs/gpu-texture-types.md"
+    },
+    "function:SDL_SetGPUTextureName": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Only checked public transfer textures; bounded names, void SDL setter",
+      "adapter": "SDL_SetGPUTransferTextureNameChecked / gpu_texture_name",
+      "tests": [
+        "tests/gpu_utilities.das"
+      ],
+      "contract": "docs/gpu-texture-types.md"
+    },
+    "function:SDL_GPUTextureFormatTexelBlockSize": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Validated pinned format values; bytes per texel/block, not allocation size",
+      "adapter": "SDL_GPUFormatBlockSizeChecked / gpu_format_block_bytes",
+      "tests": [
+        "tests/gpu_formats.das"
+      ],
+      "contract": "docs/gpu-formats.md"
+    },
+    "function:SDL_CalculateGPUTextureFormatSize": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Bounded dimensions, exact SDL block rounding, checked Uint32 product",
+      "adapter": "SDL_GPUFormatSizeChecked / gpu_format_bytes",
+      "tests": [
+        "tests/gpu_formats.das"
+      ],
+      "contract": "docs/gpu-formats.md"
+    },
+    "function:SDL_GPUTextureSupportsSampleCount": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Live scoped device, validated format/sample enums, unsupported separate from invalid",
+      "adapter": "SDL_GPUSampleCountSupportedChecked / gpu_supports_samples",
+      "tests": [
+        "tests/gpu_formats.das"
+      ],
+      "contract": "docs/gpu-formats.md"
+    },
+    "function:SDL_CopyGPUTextureToTexture": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Distinct checked RGBA8 2D/array textures, mip/layer regions, no scaling/cycling; uncompressed color formats and validated capability queries (docs/gpu-formats.md); BC block and cube/array transfers (docs/gpu-texture-types.md)",
+      "adapter": "SDL_CopyGPUTextureRegion / gpu_copy_texture / SDL_CreateGPUColorTransferTexture / SDL_GPUFormatSupportedChecked / SDL_CreateGPUTypedTransferTexture",
+      "tests": [
+        "tests/gpu_texture_transfer.das",
+        "tests/gpu_formats.das",
+        "tests/gpu_texture_types.das"
+      ],
+      "contract": "docs/gpu-texture-transfer.md"
+    },
+    "function:SDL_DownloadFromGPUTexture": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Checked RGBA8 regions, aligned staging and tightly packed owned output after fence; uncompressed color formats and validated capability queries (docs/gpu-formats.md); BC block and cube/array transfers (docs/gpu-texture-types.md)",
+      "adapter": "SDL_RequestGPUTextureReadback / with_gpu_texture_readback / SDL_CreateGPUColorTransferTexture / SDL_GPUFormatSupportedChecked / SDL_CreateGPUTypedTransferTexture",
+      "tests": [
+        "tests/gpu_texture_transfer.das",
+        "tests/gpu_formats.das",
+        "tests/gpu_texture_types.das"
+      ],
+      "contract": "docs/gpu-texture-transfer.md"
+    },
+    "function:SDL_CopyGPUBufferToBuffer": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Distinct checked data buffers; 4-aligned byte ranges, no cycling or raw copy pass",
+      "adapter": "SDL_CopyGPUDataBuffer",
+      "tests": [
+        "tests/gpu_transfer.das"
+      ],
+      "contract": "docs/gpu-transfer.md"
+    },
+    "function:SDL_DownloadFromGPUBuffer": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Checked 4-aligned buffer range to owned readback snapshot; textures remain pending",
+      "adapter": "SDL_RequestGPUBufferReadback",
+      "tests": [
+        "tests/gpu_transfer.das"
+      ],
+      "contract": "docs/gpu-transfer.md"
+    },
+    "function:SDL_SubmitGPUCommandBufferAndAcquireFence": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Closed native buffer download submission; fence owned by readback ticket",
+      "adapter": "SDL_RequestGPUBufferReadback",
+      "tests": [
+        "tests/gpu_transfer.das"
+      ],
+      "contract": "docs/gpu-transfer.md"
+    },
+    "function:SDL_QueryGPUFence": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Single checked readback ticket; pending is not an error",
+      "adapter": "SDL_PollGPUReadback / gpu_readback_ready",
+      "tests": [
+        "tests/gpu_transfer.das"
+      ],
+      "contract": "docs/gpu-transfer.md"
+    },
+    "function:SDL_WaitForGPUFences": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Wait for one checked readback ticket, not arbitrary fence arrays",
+      "adapter": "SDL_WaitGPUReadback / gpu_wait_readback",
+      "tests": [
+        "tests/gpu_transfer.das"
+      ],
+      "contract": "docs/gpu-transfer.md"
+    },
+    "function:SDL_ReleaseGPUFence": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Readback ticket owns fence; no raw fence pointer escapes",
+      "adapter": "SDL_ReleaseGPUReadback / with_gpu_readback",
+      "tests": [
+        "tests/gpu_transfer.das"
+      ],
+      "contract": "docs/gpu-transfer.md"
+    },
+    "function:SDL_OpenAudioDeviceStream": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Default playback device only, null callback/userdata; scoped device-stream ownership, not general capture or callback support",
+      "adapter": "SDL_OpenPlaybackStream / with_playback",
+      "tests": ["tests/audio.das"],
+      "contract": "docs/audio.md"
+    },
     "function:SDL_GetWindowSizeInPixels": {
       "raw_status": "adapted",
       "boost_status": "partial",
@@ -42,53 +214,65 @@
     "function:SDL_GPUTextureSupportsFormat": {
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Depth format selection for fixed 3D color mesh; D32/D24/D16 depth-target usage only",
-      "adapter": "SDL_GPU3DDepthFormat",
+      "reason": "Depth format selection for fixed 3D color mesh; D32/D24/D16 depth-target usage only; independent initialized RGBA8 2D/array mip/layer texture transfers (docs/gpu-texture-transfer.md); uncompressed color formats and validated capability queries (docs/gpu-formats.md)",
+      "adapter": "SDL_GPU3DDepthFormat / SDL_CreateGPUTransferTexture / SDL_UploadGPUTextureRegion / SDL_CreateGPUColorTransferTexture / SDL_GPUFormatSupportedChecked",
       "tests": [
-        "tests/gpu_3d.das"
+        "tests/gpu_3d.das",
+        "tests/gpu_texture_transfer.das",
+        "tests/gpu_formats.das"
       ],
       "contract": "docs/gpu-3d.md"
     },
     "function:SDL_CreateGPUBuffer": {
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "reason": "Immutable checked stride48 geometry and UINT32 indices can be owned separately from materials; fixed instance buffers remain supported; public copied data buffers and scoped asynchronous readback tickets (docs/gpu-transfer.md)",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh / SDL_CreateGPUGeometry / SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
       "tests": [
-        "tests/gpu_mesh.das"
+        "tests/gpu_mesh.das",
+        "tests/gpu_resources.das",
+        "tests/gpu_transfer.das"
       ],
-      "contract": "docs/gpu-mesh.md"
+      "contract": "docs/gpu-shared-resources.md"
     },
     "function:SDL_ReleaseGPUBuffer": {
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "reason": "Checked separate geometry ownership, scoped/device cleanup and SDL deferred destruction for submitted work; public copied data buffers and scoped asynchronous readback tickets (docs/gpu-transfer.md)",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh / SDL_ReleaseGPUGeometry / SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
       "tests": [
-        "tests/gpu_mesh.das"
+        "tests/gpu_mesh.das",
+        "tests/gpu_resources.das",
+        "tests/gpu_transfer.das"
       ],
-      "contract": "docs/gpu-mesh.md"
+      "contract": "docs/gpu-shared-resources.md"
     },
     "function:SDL_CreateGPUTexture": {
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Bounded RGBA8 sampled textures and per-mesh cached depth targets sized to acquired swapchain; no general texture builder",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_EnsureGPU3DDepth",
+      "reason": "Copied bounded RGBA8 material textures and existing depth/mesh targets; no general texture descriptor API; independent initialized RGBA8 2D/array mip/layer texture transfers (docs/gpu-texture-transfer.md); uncompressed color formats and validated capability queries (docs/gpu-formats.md); BC block and cube/array transfers (docs/gpu-texture-types.md)",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_EnsureGPU3DDepth / SDL_CreateGPUMaterial / SDL_CreateGPUTransferTexture / SDL_UploadGPUTextureRegion / SDL_CreateGPUColorTransferTexture / SDL_GPUFormatSupportedChecked / SDL_CreateGPUTypedTransferTexture",
       "tests": [
         "tests/gpu_mesh.das",
-        "tests/gpu_3d.das"
+        "tests/gpu_3d.das",
+        "tests/gpu_resources.das",
+        "tests/gpu_texture_transfer.das",
+        "tests/gpu_formats.das",
+        "tests/gpu_texture_types.das"
       ],
-      "contract": "docs/gpu-3d.md"
+      "contract": "docs/gpu-shared-resources.md"
     },
     "function:SDL_ReleaseGPUTexture": {
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "reason": "Scoped material texture ownership and existing mesh/depth cleanup; device-specific release; independent initialized RGBA8 2D/array mip/layer texture transfers (docs/gpu-texture-transfer.md)",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh / SDL_ReleaseGPUMaterial / SDL_CreateGPUTransferTexture / SDL_UploadGPUTextureRegion",
       "tests": [
-        "tests/gpu_mesh.das"
+        "tests/gpu_mesh.das",
+        "tests/gpu_resources.das",
+        "tests/gpu_texture_transfer.das"
       ],
-      "contract": "docs/gpu-mesh.md"
+      "contract": "docs/gpu-shared-resources.md"
     },
     "function:SDL_CreateGPUSampler": {
       "raw_status": "adapted",
@@ -113,40 +297,45 @@
     "function:SDL_CreateGPUTransferBuffer": {
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed; public copied data buffers and scoped asynchronous readback tickets (docs/gpu-transfer.md)",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh / SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
       "tests": [
-        "tests/gpu_mesh.das"
+        "tests/gpu_mesh.das",
+        "tests/gpu_transfer.das"
       ],
       "contract": "docs/gpu-mesh.md"
     },
     "function:SDL_ReleaseGPUTransferBuffer": {
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed; public copied data buffers and scoped asynchronous readback tickets (docs/gpu-transfer.md)",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh / SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
       "tests": [
-        "tests/gpu_mesh.das"
+        "tests/gpu_mesh.das",
+        "tests/gpu_transfer.das"
       ],
       "contract": "docs/gpu-mesh.md"
     },
     "function:SDL_MapGPUTransferBuffer": {
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Copied immutable mesh uploads and fixed-count full instance updates; staging and destination cycling; no borrowed mapped pointers or general update API",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_UpdateGPUInstances",
+      "reason": "Copied immutable mesh uploads and fixed-count full instance updates; staging and destination cycling; no borrowed mapped pointers or general update API; public copied data buffers and scoped asynchronous readback tickets (docs/gpu-transfer.md)",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_UpdateGPUInstances / SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
       "tests": [
-        "tests/gpu_mesh.das", "tests/gpu_instancing.das"
+        "tests/gpu_mesh.das",
+        "tests/gpu_instancing.das",
+        "tests/gpu_transfer.das"
       ],
       "contract": "docs/gpu-dynamic-instances.md"
     },
     "function:SDL_UnmapGPUTransferBuffer": {
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed; public copied data buffers and scoped asynchronous readback tickets (docs/gpu-transfer.md)",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh / SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
       "tests": [
-        "tests/gpu_mesh.das"
+        "tests/gpu_mesh.das",
+        "tests/gpu_transfer.das"
       ],
       "contract": "docs/gpu-mesh.md"
     },
@@ -173,30 +362,35 @@
     "function:SDL_UploadToGPUBuffer": {
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Copied immutable mesh uploads and fixed-count full instance updates; staging and destination cycling; no borrowed mapped pointers or general update API",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_UpdateGPUInstances",
+      "reason": "Copied immutable mesh uploads and fixed-count full instance updates; staging and destination cycling; no borrowed mapped pointers or general update API; public copied data buffers and scoped asynchronous readback tickets (docs/gpu-transfer.md)",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_UpdateGPUInstances / SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
       "tests": [
-        "tests/gpu_mesh.das", "tests/gpu_instancing.das"
+        "tests/gpu_mesh.das",
+        "tests/gpu_instancing.das",
+        "tests/gpu_transfer.das"
       ],
       "contract": "docs/gpu-dynamic-instances.md"
     },
     "function:SDL_UploadToGPUTexture": {
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed; independent initialized RGBA8 2D/array mip/layer texture transfers (docs/gpu-texture-transfer.md); uncompressed color formats and validated capability queries (docs/gpu-formats.md); BC block and cube/array transfers (docs/gpu-texture-types.md)",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh / SDL_CreateGPUTransferTexture / SDL_UploadGPUTextureRegion / SDL_CreateGPUColorTransferTexture / SDL_GPUFormatSupportedChecked / SDL_CreateGPUTypedTransferTexture",
       "tests": [
-        "tests/gpu_mesh.das"
+        "tests/gpu_mesh.das",
+        "tests/gpu_texture_transfer.das",
+        "tests/gpu_formats.das",
+        "tests/gpu_texture_types.das"
       ],
       "contract": "docs/gpu-mesh.md"
     },
     "function:SDL_BindGPUVertexBuffers": {
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Fixed vertex layouts including a second immutable instance-rate buffer: model/normal columns stride112 or model/normal/RGBA stride128, reserved step rate zero",
-      "adapter": "SDL_RecordGPUMesh / SDL_RecordGPUInstances",
+      "reason": "Fixed vertex layouts with cycled instance buffers: model/normal stride112 or RGBA stride128; material batches bind checked byte slices, reserved step rate zero",
+      "adapter": "SDL_RecordGPUMesh / SDL_RecordGPUInstances / SDL_RecordGPUBatches",
       "tests": [
-        "tests/gpu_mesh.das", "tests/gpu_instancing.das", "tests/gpu_instance_colors.das"
+        "tests/gpu_mesh.das", "tests/gpu_instancing.das", "tests/gpu_instance_colors.das", "tests/gpu_batches.das"
       ],
       "contract": "docs/gpu-instance-colors.md"
     },
@@ -227,10 +421,17 @@
       "contract": "docs/gpu-lit.md"
     },
     "function:SDL_DrawGPUIndexedPrimitives": {
-      "raw_status": "adapted", "boost_status": "partial",
-      "reason": "Checked immutable indexed mesh; 1..4096 instances via fixed model/normal instance buffer, offsets zero; no general draw API",
-      "adapter": "SDL_RecordGPUMesh / SDL_RecordGPUInstances",
-      "tests": ["tests/gpu_indexed_mesh.das", "tests/gpu_instancing.das"], "contract": "docs/gpu-instancing.md"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Checked indexed draws; shared geometry/material pairs coalesce, 4096 objects / 64 groups, fixed colored-instance ABI; no general draw API",
+      "adapter": "SDL_RecordGPUMesh / SDL_RecordGPUInstances / SDL_RecordGPUBatches / SDL_ResolveGPUBatchMesh / SDL_RecordGPUBatches",
+      "tests": [
+        "tests/gpu_indexed_mesh.das",
+        "tests/gpu_instancing.das",
+        "tests/gpu_batches.das",
+        "tests/gpu_resources.das"
+      ],
+      "contract": "docs/gpu-shared-resources.md"
     },
     "function:SDL_BindGPUFragmentSamplers": {
       "raw_status": "adapted",
@@ -253,14 +454,26 @@
       "adapter": "SDL_GPUShaderOwner", "tests": ["tests/gpu_triangle.das"], "contract": "docs/gpu-triangle.md"
     },
     "function:SDL_CreateGPUGraphicsPipeline": {
-      "raw_status": "adapted", "boost_status": "partial",
-      "reason": "Vertex-ID triangle or fixed float2 position/UV mesh; one color target, no blending/depth",
-      "adapter": "SDL_CreateGPUVertexIDPipeline", "tests": ["tests/gpu_triangle.das"], "contract": "docs/gpu-triangle.md"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Trusted fixed vertex layouts, including colored instancing with depth test/write; reusable material pipeline, no general pipeline descriptor API",
+      "adapter": "SDL_CreateGPUVertexIDPipeline / SDL_CreateGPUMaterial / SDL_CreateGPULitPipeline",
+      "tests": [
+        "tests/gpu_triangle.das",
+        "tests/gpu_resources.das"
+      ],
+      "contract": "docs/gpu-shared-resources.md"
     },
     "function:SDL_ReleaseGPUGraphicsPipeline": {
-      "raw_status": "adapted", "boost_status": "partial",
-      "reason": "Checked monotonic IDs and device-owned registry; scoped and shutdown cleanup",
-      "adapter": "SDL_ReleaseGPUVertexIDPipeline", "tests": ["tests/gpu_triangle.das"], "contract": "docs/gpu-triangle.md"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Checked material and existing pipeline IDs; scoped/device cleanup and deferred destruction",
+      "adapter": "SDL_ReleaseGPUVertexIDPipeline / SDL_ReleaseGPUMaterial",
+      "tests": [
+        "tests/gpu_triangle.das",
+        "tests/gpu_resources.das"
+      ],
+      "contract": "docs/gpu-shared-resources.md"
     },
     "function:SDL_GetGPUSwapchainTextureFormat": {
       "raw_status": "adapted", "boost_status": "partial",

@@ -150,3 +150,85 @@ one finite 0..1 RGBA per model before GPU work. Plain and colored update APIs
 must reject each other; draw and scoped cleanup are shared. Preserve texture
 modulation/alpha pixel checks and queued color snapshots. Alpha is written, not
 blended: no transparent sorting or blending contract is implied.
+
+Opaque material batches use sdl3_gpu_batches_boost; see docs/gpu-material-batches.md.
+For owned bundles, group by exact colored mesh ID; lists borrow IDs and own values.
+Validate all 0..4096 objects / <=64 groups before GPU work. Shared scene depth
+and cycled scene instance/upload buffers permit changing counts and membership.
+Bind group byte slices with first_instance=0; preserve queued, cross-group-depth
+CPU pixel tests on both backends. No transparent ordering or resource deduplication
+is promised. Template instance readiness/count are irrelevant to scene uploads.
+
+Frustum culling is script-only in sdl3_gpu_culling_boost; see docs/gpu-frustum-culling.md.
+Use local sphere bounds and transpose(model)*plane support, not largest-column
+radius scaling under shear. SDL depth is 0..1 (near plane row2). Keep tangency
+and numerical uncertainty visible; caller bounds must enclose geometry. Rebuild
+frustum on camera/aspect changes. Preserve CPU clip-oracle tests and full/culled
+pixel equality on both backends, including fully culled empty frames. This helper
+is visibility filtering, not resource validation; existing batch lifetime rules apply.
+
+Shared geometry/material resources live in src/sdl3_gpu_shared.h and
+sdl3_gpu_resources_boost; see docs/gpu-shared-resources.md. Do not confuse the
+new header with existing src/sdl3_gpu_resources.h (base pipeline/cleanup helpers).
+Bindings borrow geometry/material IDs; re-resolve parents on every batch draw.
+Group shared bindings by exact parent pair, preserve legacy owned bundle behavior.
+Do not free borrowed plan views. Geometry/material release invalidates future draws
+but SDL defers physical release for pending commands. Preserve pointer-identity,
+CPU pixel, stale-parent and two-device tests. Avoid seed instance buffers here.
+
+User priority after the coverage audit: finish P6 GPU API first (docs/gpu-roadmap.md).
+Properties is deferred. Count public API contracts, not scene features.
+
+Historical audit recommendation (superseded by the user priority above):
+next is P1 typed Properties (15-function scoped slice), then Hints/Init,
+Video/Render, IOStream and Events/Gamepad. Do not automatically add another GPU
+scene feature as the next SDL binding step. Count new SDL contracts, not examples;
+internal implementation calls and test-only helpers do not establish public coverage.
+
+GPU buffer transfers use sdl3_gpu_transfer_boost and src/sdl3_gpu_transfer.h.
+Read docs/gpu-transfer.md: 4-aligned nonempty ranges <=64 MiB, main thread, live
+scoped device, shared monotonic IDs. Cycling/recovery needs a full update; reject
+same-buffer copies. Readback tickets own transfer/fence snapshots; never map for
+reading before completion. No script callbacks during recording and no global
+wait-idle for readback. Preserve interpreter/AOT and both-backend byte tests.
+Pending readback release retires the ticket, never releases an unsignaled fence
+back to SDL: pinned Vulkan otherwise resets an in-use fence (VUID 01123).
+Reclaim on later transfer operations after QueryGPUFence or on device teardown.
+Keep the rapid discard/reacquire regression and validation-error CTest gate.
+
+User authorizes automatic P6 implementation in batches of 5-10 steps without
+asking for another go-ahead after each step/batch. Preserve the documented gates
+and report meaningful results/limitations. No commits or publishing requested.
+
+GPU texture transfers use src/sdl3_gpu_texture_transfer.h and
+sdl3_gpu_texture_transfer_boost. Contract: docs/gpu-texture-transfer.md.
+RGBA8 2D/array mip/layer textures start zeroed; uint2(mip,layer),
+uint4(x,y,width,height) are passed by value. Validate all bounds before SDL.
+Input pitch is bytes (may be odd); repack to private 256-aligned staging rows.
+Readback strips GPU padding; never expose uninitialized transfer bytes.
+Cycling only for a full single-subresource texture. Reject same-texture copies.
+Preserve per-subresource validity, deferred fence retirement and two-backend
+region/pitch/mip/layer tests in interpreter/AOT/LLVM-free consumer.
+
+Format queries/color transfers: docs/gpu-formats.md, sdl3_gpu_formats_boost.
+Format/type/sample/usage constants are generated uint values, not general enum
+annotations. Validate numeric enums before backend table indexing; bounded size
+queries check Uint32 overflow. Unsupported capabilities return false, invalid
+arguments fail. Color transfers use actual bytes/texel and preserve native byte
+representation; copy requires matching formats. Keep RGBA8 wrappers working.
+BC/ASTC/depth transfers remain rejected; metadata queries do not enable upload.
+SDL D3D12 reports RGBA32 UINT unsupported for SAMPLER here: test rejection,
+do not bypass the capability query or claim that roundtrip succeeded.
+
+P6 cadence: user requests implementing 3-4 related packages before running the
+combined regression/AOT/consumer suite; do not ask for each package.
+Packages 26-29: docs/gpu-texture-types.md. New typed transfer factory accepts
+BC and cube/array textures; legacy color factories still reject BC. BC input
+pitch counts encoded block rows, regions count pixels, and mip edge extents
+are rounded only for D3D12 native recording after logical validation. Keep the
+partial-block/1x1 mip regressions on both backends. Single-layer transfers use
+rows_per_layer=0 to avoid pinned D3D12 repacking. ASTC/depth/3D remain pending.
+Discovery returns copied compiled-driver names; SDL_GPU_DRIVER overrides an
+explicit preferred name. Do not label that query physical-device enumeration.
+Resource naming checks ID kind/device and length; SDL void setters cannot
+guarantee debugger visibility. Keep source and shader toolchain work separate.

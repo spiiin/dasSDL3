@@ -16,10 +16,12 @@ target `x86_64-pc-windows-msvc`, C11. Это первый результат P0,
 значений. Это census, не ещё один генератор native bindings и не ABI validator.
 
 Сейчас 1226 активных функций, включая static inline и platform-visible
-декларации; 60 имеют статус generated. Семь пиксельных и тринадцать GPU-операций отмечены
-adapted с ограничениями в `pixels.md`, `gpu-clear.md` и `gpu-triangle.md`; прочие старые адаптеры ещё требуют
-переноса контрактов в машинную policy. Это не число всех экспортов SDL DLL и
-не процент готовности boost. Собственные adapters не выдаются за raw exports.
+декларации: 60 generated, 59 adapted, 1107 pending. Adapted включает 50 GPU,
+семь Render/Surface, одну Video и одну Audio функцию; каждая имеет ограниченный
+контракт. Аудит после примера 22 исправил ранее неучтённый default-playback
+adapter OpenAudioDeviceStream. Внутренние вызовы SDL и test-only helpers не
+считаются автоматически публичными привязками. См. `binding-coverage-audit.md`.
+Это не число всех экспортов SDL DLL и не процент готовности boost.
 Structs с выбранными полями отмечены partial, opaque handles — opaque.
 Собственный wrapper SDL_Wav вынесен в policy `project_types` с местом
 объявления и причиной; он не увеличивает число типов самой SDL.
@@ -87,11 +89,11 @@ libclang.lib. Наш pinned `modules/dasClangBind/CMakeLists.txt` ищет Clang
 Наличие libclang 16 не удовлетворяет этому условию. Теперь полный SDK 22.1.5
 установлен отдельно в C:/src/libclang, dasClangBind собран и загружен.
 Разбор SDL.h и upstream-тест препроцессора прошли; подробности и команды
-в [clangbind-setup.md](clangbind-setup.md). Вывод о миграции не принят.
+в [clangbind-setup.md](clangbind-setup.md). CppGenBind теперь штатный backend Windows x64 (saved snapshots).
 Теперь отдельная выборка rect/pixels/GPU сгенерирована, собрана и проверена
 в interpreter/AOT: [clangbind-experiment.md](clangbind-experiment.md).
 Эквивалентность 50 functions и interpreter-сценариев проверена отдельно:
 [clangbind-parity.md](clangbind-parity.md). Затем выполнены самостоятельная
 генерация текущих аннотаций/констант и [ресурсный AOT](clangbind-types-aot.md).
-Впереди штатный выбор backend и расширение platform/ABI coverage.
+Штатный backend уже выбран; впереди расширение platform/ABI coverage.
 Работающий Python backend и публичные bindings в этой итерации сохранены.

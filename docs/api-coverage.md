@@ -4,6 +4,9 @@
 о полном покрытии подсистем. `tools/bindings.json` задаёт точный перечень
 экспортов; `src/generated/api.json` содержит полученные из Clang сигнатуры.
 Сейчас генерируются 60 функций SDL. Ручные адаптеры перечислены отдельно.
+В актуальной policy: 59 adapted и 1107 pending (1226 функций Windows-профиля).
+[Текущий приоритет](gpu-roadmap.md): завершение P6 GPU API; Properties отложен;
+увеличение числа GPU-примеров не является мерой полноты SDL3.
 
 Первый автоматический реестр активного API Windows x64 и его ограничения:
 `api-inventory.md`, `generated/api-windows-x64-msvc.md`. Он не заменяет
@@ -37,6 +40,9 @@
 | GPU Instancing | Existing partial GPU adapters, second vertex buffer and instance count | GpuInstanceList; scoped copied 1..4096 models, one indexed draw | CPU pixels, depth/order, normal transforms, lifetime/preflight; docs/gpu-instancing.md |
 | GPU Dynamic instances | Existing map/upload adapters with cycling | gpu_update_instances; full replacement, fixed count | 12 queued CPU-reference snapshots, rejected updates preserve data, failed-submit recovery and cleanup; docs/gpu-dynamic-instances.md |
 | GPU Instance RGBA | Existing adapters, explicit stride128 color ABI | GpuColoredInstanceList; copied finite normalized RGBA, full cycled updates | Texture/light/alpha CPU pixels, invalid colors, incompatible updates, queued snapshots and cleanup; docs/gpu-instance-colors.md |
+| GPU Material batches | Existing adapters, checked instance-buffer byte slices | GpuBatchList; exact mesh ID grouping, shared depth, 0..4096 objects / <=64 groups | Cross-group depth/texture pixels, queued variable groups, preflight, recovery and cleanup; docs/gpu-material-batches.md |
+| GPU Frustum culling | No new SDL symbols; script math/filtering | GpuFrustum, gpu_sphere_visible, gpu_batch_add_visible | Clip-space oracle, affine sphere support, full/culled pixels on both backends, empty frame; docs/gpu-frustum-culling.md |
+| GPU Shared resources | Existing SDL symbols, separate geometry/material adapters | with_gpu_geometry/material/shared_mesh; borrowed pair IDs | Buffer identity, pair coalescing, mixed draws, pending release, stale parents and CPU pixels; docs/gpu-shared-resources.md |
 
 Ручные адаптеры: PollEventRef, PushEventRef, RenderFillRectRef,
 GetTextureSizeRef, RenderTextureToRect, RenderTextureRects. Они используют
@@ -62,3 +68,8 @@ RenderReadPixels теперь также доступен через публи�
 Аудио: `docs/audio.md`. OpenAudioDeviceStream пока доступен через ручной
 адаптер без callback. SDL_Wav — собственный непрозрачный тип владения,
 а не структура SDL. Формат SDL_AudioSpec читается через audio_format.
+
+Пакеты 26–29: typed transfers расширены на BC и cube/array, а пять новых
+публичных SDL-контрактов покрывают compiled-driver enumeration, shader-support
+query и naming checked buffer/texture IDs. Итого GPU: 7 generated, 50 adapted,
+35 pending. Границы и проверка: [gpu-texture-types.md](gpu-texture-types.md).

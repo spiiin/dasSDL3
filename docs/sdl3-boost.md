@@ -145,3 +145,43 @@ data. See `gpu-instancing.md` and `gpu-dynamic-instances.md`.
 and `gpu_update_colored_instances`. Draw uses `gpu_draw_instanced_mesh`. Values
 are copied, all colors validated, and updates cycle with the model data. See
 `gpu-instance-colors.md` for the distinct ABI and alpha contract.
+
+`sdl3_gpu_batches_boost` adds value-only GpuBatchList, gpu_batch_add/clear,
+with_gpu_batch_scene and gpu_draw_batches. Objects sharing the exact colored
+mesh bundle ID become one instanced draw with shared scene depth. Lists borrow
+mesh IDs; scenes own cycled instance/upload buffers, support changing counts,
+and validate the complete list before GPU work. See `gpu-material-batches.md`
+for 4096-object/64-group limits, ownership and opaque ordering constraints.
+
+`sdl3_gpu_culling_boost` is a script-only layer: gpu_frustum extracts six 0..1
+clip planes; gpu_sphere_visible tests an affine-transformed local sphere;
+gpu_batch_add_visible appends candidates to GpuBatchList. It borrows no native
+memory and creates no resources. Caller-supplied bounds, conservative numerical
+behavior and renderer validation are distinct; see `gpu-frustum-culling.md`.
+
+`sdl3_gpu_resources_boost` adds protected with_gpu_geometry/material/shared_mesh
+scopes. Geometry owns vertices/indices; material owns texture/sampler/pipeline;
+shared mesh IDs borrow both parents. Batch draws resolve live parents and group
+by their exact pair; different binding IDs for that pair merge. Existing owned
+mesh IDs still work, including mixed lists. See `gpu-shared-resources.md`.
+
+`sdl3_gpu_transfer_boost` adds checked data-buffer IDs and asynchronous readback
+tickets with owned transfer buffers/fences. Arrays are copied, byte ranges are
+validated, full updates may cycle, partial updates preserve other bytes. See
+`gpu-transfer.md` for completion, invalidation and scoped cleanup contracts.
+
+`sdl3_gpu_texture_transfer_boost` adds independent owned RGBA8 2D/array
+textures with initialized mip levels, checked rectangular upload/copy and
+asynchronous tightly packed pixel readback. Reuses the buffer ticket API.
+Pitch, limits, subresource validity and lifecycle: `gpu-texture-transfer.md`.
+
+`sdl3_gpu_formats_boost` exposes checked block/tight-size and capability queries.
+`with_gpu_color_texture` extends existing transfers to supported uncompressed
+color formats using format-native bytes and exact-format copies. RGBA8 scopes
+are compatibility wrappers. See `gpu-formats.md` for limits and unsupported vs
+invalid results; all texture constants are generated but enum types remain work.
+
+`with_gpu_transfer_texture` accepts explicit 2D/array/cube types and BC blocks;
+legacy color scopes keep their contracts. `sdl3_gpu_utilities_boost` adds owned
+compiled-driver names, checked shader-support queries and resource names.
+See `gpu-texture-types.md` for byte/pixel units, hint precedence and limitations.

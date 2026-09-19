@@ -1,5 +1,11 @@
 # План полной привязки SDL3 к daScript
 
+**Текущий приоритет пользователя:** вернуться к P6 и завершать GPU API.
+Предложенная ниже очередь с Properties отложена. Ближайший блок —
+публичные transfers/readback, затем command/pass state, graphics и compute;
+см. [GPU-план](gpu-roadmap.md).
+
+
 Исследование: 19 сентября 2026. Это план, а не перечень реализованных функций.
 Текущее состояние — в `api-coverage.md`; идиомы и выбор генератора — в
 `binding-design-review.md`; GPU — в `gpu-roadmap.md`; дополнения — в
@@ -11,6 +17,15 @@
 Добавлены pixels, geometry, GPU ClearScreen (`gpu-clear.md`) и ограниченный
 BasicTriangle с SPIR-V/DXIL и pipeline IDs (`gpu-triangle.md`).
 Межплатформенный census ещё впереди; P0 и GPU G0/G1 завершены не полностью.
+
+## Актуальная очередь после примера 22
+
+[Аудит покрытия](binding-coverage-audit.md) возвращает работу к подсистемам SDL:
+следующая вертикаль **P1 Properties, 15 функций**, затем Hints/Init, Video/Render,
+IOStream и Events/Gamepad. Последующие GPU-улучшения не имеют автоматического
+приоритета. На Windows: 60 generated, 43 adapted, 1123 pending из 1226 функций;
+это не процент готовности всей библиотеки. Низлежащий раздел «Следующие конкретные
+изменения» описывает исходную очередь; её актуальный преемник — этот аудит.
 
 ## Решение
 

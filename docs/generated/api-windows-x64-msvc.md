@@ -12,7 +12,7 @@ Adapted coverage and boost coverage are not inferred from function names.
 | Assert | 6 | 0 | 0 | 6 |
 | AsyncIO | 11 | 0 | 0 | 11 |
 | Atomic | 15 | 0 | 0 | 15 |
-| Audio | 56 | 14 | 0 | 42 |
+| Audio | 56 | 14 | 1 | 41 |
 | Bits | 2 | 0 | 0 | 2 |
 | Blendmode | 1 | 0 | 0 | 1 |
 | CPUInfo | 18 | 0 | 0 | 18 |
@@ -23,7 +23,7 @@ Adapted coverage and boost coverage are not inferred from function names.
 | Error | 5 | 1 | 0 | 4 |
 | Events | 19 | 3 | 0 | 16 |
 | Filesystem | 11 | 1 | 0 | 10 |
-| GPU | 92 | 7 | 34 | 51 |
+| GPU | 92 | 7 | 50 | 35 |
 | GUID | 2 | 0 | 0 | 2 |
 | Gamepad | 73 | 0 | 0 | 73 |
 | HIDAPI | 22 | 0 | 0 | 22 |

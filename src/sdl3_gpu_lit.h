@@ -124,39 +124,32 @@ struct SDL_GPULitBuild {
         SDL_FreeGPULit(mesh); SDL_SetError("%s",error.c_str());
     }
 };
-inline uint64_t SDL_CreateGPULitForFormat(SDL_GPUDevice * device,SDL_GPUTextureFormat colorFormat,
-        const das::TArray<das::float4> & positions,const das::TArray<das::float4> & normals,const das::TArray<das::float2> & uv,
-        const das::TArray<uint8_t> & pixels,uint32_t width,uint32_t height,
-        const das::TArray<uint32_t> & indices,const char * vertex,const char * fragment,uint32_t format,
-        const das::TArray<das::float4> * models=nullptr,const das::TArray<das::float4> * colors=nullptr) {
-    if (!SDL_IsMainThread() || !device) { SDL_SetError("GPU 3D: main thread and device required"); return 0; }
-    if (!SDL_GPULitSizes(positions.size,normals.size,uv.size,indices.size,pixels.size,width,height)) return 0;
-    if (!positions.data || !normals.data || !uv.data || !pixels.data || !indices.data) { SDL_SetError("GPU 3D: missing array storage"); return 0; }
+inline bool SDL_PackGPULitGeometry(const das::TArray<das::float4> & positions,
+        const das::TArray<das::float4> & normals,const das::TArray<das::float2> & uv,
+        const das::TArray<uint32_t> & indices,std::vector<SDL_GPULitVertex> & packed) {
+    if (!positions.size || positions.size>349525 || positions.size!=normals.size || positions.size!=uv.size || !SDL_GPUIndexCount(indices.size))
+        return SDL_SetError("GPU geometry: matching nonempty arrays and 16 MiB budgets required");
+    if (!positions.data || !normals.data || !uv.data || !indices.data) return SDL_SetError("GPU geometry: missing array storage");
     for (uint32_t i=0;i<indices.size;++i) {
         uint32_t index; std::memcpy(&index,indices.data+size_t(i)*4,4);
-        if (index>=positions.size) { SDL_SetError("GPU 3D: index outside positions"); return 0; }
+        if (index>=positions.size) { SDL_SetError("GPU 3D: index outside positions"); return false; }
     }
-    std::vector<uint8_t> instances;
-    if (colors && !models) { SDL_SetError("GPU instance colors: models required"); return 0; }
-    if (models && !SDL_PackGPUInstances(*models,colors,instances)) return 0;
-    std::vector<SDL_GPULitVertex> packed(positions.size);
+    packed.resize(positions.size);
     for (uint32_t i=0;i<positions.size;++i) {
         auto & v=packed[i]; std::memcpy(v.position,positions.data+size_t(i)*16,16); std::memcpy(v.normal,normals.data+size_t(i)*16,16); std::memcpy(v.uv,uv.data+size_t(i)*8,8);
-        for (float x:v.position) if (!std::isfinite(x)) { SDL_SetError("GPU 3D: finite positions required"); return 0; }
-        if (v.position[3]!=1) { SDL_SetError("GPU 3D: position.w must be 1"); return 0; }
+        for (float x:v.position) if (!std::isfinite(x)) { SDL_SetError("GPU 3D: finite positions required"); return false; }
+        if (v.position[3]!=1) { SDL_SetError("GPU 3D: position.w must be 1"); return false; }
         double length=0;
-        for (float x:v.normal) { if (!std::isfinite(x)) { SDL_SetError("GPU lit: finite normal required"); return 0; } }
+        for (float x:v.normal) { if (!std::isfinite(x)) { SDL_SetError("GPU lit: finite normal required"); return false; } }
         for (int j=0;j<3;++j) length+=double(v.normal[j])*v.normal[j];
-        if (v.normal[3]!=0 || length<1e-12) { SDL_SetError("GPU lit: nonzero normal, w=0 required"); return 0; }
+        if (v.normal[3]!=0 || length<1e-12) { SDL_SetError("GPU lit: nonzero normal, w=0 required"); return false; }
         for (int j=0;j<3;++j) v.normal[j]=float(v.normal[j]/std::sqrt(length));
-        for (float x:v.uv) if (!std::isfinite(x) || x<0 || x>1) { SDL_SetError("GPU lit: UV outside 0..1"); return 0; }
+        for (float x:v.uv) if (!std::isfinite(x) || x<0 || x>1) { SDL_SetError("GPU lit: UV outside 0..1"); return false; }
     }
-    if ((format!=SDL_GPU_SHADERFORMAT_SPIRV && format!=SDL_GPU_SHADERFORMAT_DXIL) || !(SDL_GetGPUShaderFormats(device)&format)) {
-        SDL_SetError("GPU 3D: unsupported shader format"); return 0;
-    }
-    if (SDL_GPUNextPipeline==std::numeric_limits<uint64_t>::max()) { SDL_SetError("GPU 3D: ID space exhausted"); return 0; }
-    SDL_GPULitBuild build; auto & m=build.mesh; m.device=device; m.colorFormat=colorFormat; m.count=indices.size;
-    m.depthFormat=SDL_GPU3DDepthFormat(device); if (m.depthFormat==SDL_GPU_TEXTUREFORMAT_INVALID) return 0;
+    return true;
+}
+inline SDL_GPUGraphicsPipeline * SDL_CreateGPULitPipeline(SDL_GPUDevice * device,SDL_GPUTextureFormat colorFormat,
+        SDL_GPUTextureFormat depthFormat,const char * vertex,const char * fragment,uint32_t format,bool models,bool colors) {
     SDL_GPUShaderOwner vs{device},fs{device};
     vs.shader=SDL_LoadGPUMeshShader(device,vertex,format,SDL_GPU_SHADERSTAGE_VERTEX,true,0); if (!vs.shader) return 0;
     fs.shader=SDL_LoadGPUMeshShader(device,fragment,format,SDL_GPU_SHADERSTAGE_FRAGMENT,false,1,1); if (!fs.shader) return 0;
@@ -182,8 +175,30 @@ inline uint64_t SDL_CreateGPULitForFormat(SDL_GPUDevice * device,SDL_GPUTextureF
     pi.depth_stencil_state.enable_depth_test=true; pi.depth_stencil_state.enable_depth_write=true;
     pi.depth_stencil_state.compare_op=SDL_GPU_COMPAREOP_LESS;
     pi.target_info.color_target_descriptions=&target; pi.target_info.num_color_targets=1;
-    pi.target_info.has_depth_stencil_target=true; pi.target_info.depth_stencil_format=m.depthFormat;
-    m.pipeline=SDL_CreateGPUGraphicsPipeline(device,&pi); if (!m.pipeline) return 0;
+    pi.target_info.has_depth_stencil_target=true; pi.target_info.depth_stencil_format=depthFormat;
+    return SDL_CreateGPUGraphicsPipeline(device,&pi);
+}
+inline uint64_t SDL_CreateGPULitForFormat(SDL_GPUDevice * device,SDL_GPUTextureFormat colorFormat,
+        const das::TArray<das::float4> & positions,const das::TArray<das::float4> & normals,const das::TArray<das::float2> & uv,
+        const das::TArray<uint8_t> & pixels,uint32_t width,uint32_t height,
+        const das::TArray<uint32_t> & indices,const char * vertex,const char * fragment,uint32_t format,
+        const das::TArray<das::float4> * models=nullptr,const das::TArray<das::float4> * colors=nullptr) {
+    if (!SDL_IsMainThread() || !device) { SDL_SetError("GPU 3D: main thread and device required"); return 0; }
+    if (!SDL_GPULitSizes(positions.size,normals.size,uv.size,indices.size,pixels.size,width,height)) return 0;
+    if (!positions.data || !normals.data || !uv.data || !pixels.data || !indices.data) { SDL_SetError("GPU 3D: missing array storage"); return 0; }
+    std::vector<uint8_t> instances;
+    if (colors && !models) { SDL_SetError("GPU instance colors: models required"); return 0; }
+    if (models && !SDL_PackGPUInstances(*models,colors,instances)) return 0;
+    std::vector<SDL_GPULitVertex> packed;
+    if (!SDL_PackGPULitGeometry(positions,normals,uv,indices,packed)) return 0;
+    if ((format!=SDL_GPU_SHADERFORMAT_SPIRV && format!=SDL_GPU_SHADERFORMAT_DXIL) || !(SDL_GetGPUShaderFormats(device)&format)) {
+        SDL_SetError("GPU 3D: unsupported shader format"); return 0;
+    }
+    if (SDL_GPUNextPipeline==std::numeric_limits<uint64_t>::max()) { SDL_SetError("GPU 3D: ID space exhausted"); return 0; }
+    SDL_GPULitBuild build; auto & m=build.mesh; m.device=device; m.colorFormat=colorFormat; m.count=indices.size;
+    m.depthFormat=SDL_GPU3DDepthFormat(device); if (m.depthFormat==SDL_GPU_TEXTUREFORMAT_INVALID) return 0;
+    m.pipeline=SDL_CreateGPULitPipeline(device,colorFormat,m.depthFormat,vertex,fragment,format,models!=nullptr,colors!=nullptr);
+    if (!m.pipeline) return 0;
     const uint32_t vertexBytes=positions.size*48, indexBytes=indices.size*4, instanceBytes=uint32_t(instances.size());
     SDL_GPUBufferCreateInfo bi{}; bi.usage=SDL_GPU_BUFFERUSAGE_VERTEX; bi.size=vertexBytes;
     m.vertices=SDL_CreateGPUBuffer(device,&bi); if (!m.vertices) return 0;

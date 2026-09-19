@@ -21,6 +21,16 @@
 | `17_gpu_instancing.das` | SDL GPU: 64 куба одним indexed draw, буфер экземпляров, вращающаяся камера |
 | `18_gpu_dynamic_instances.das` | SDL GPU: независимая анимация кубов, обновление instance buffer и cycling |
 | `19_gpu_instance_colors.das` | SDL GPU: индивидуальный RGBA, анимация цвета и умножение на текстуру |
+| `20_gpu_material_batches.das` | SDL GPU: группировка по mesh/material, 64 объекта и две текстуры за два draw call |
+| `21_gpu_frustum_culling.das` | SDL GPU: 2304 куба, frustum culling, счётчики, C — переключение, Space — пауза |
+| `22_gpu_shared_geometry.das` | SDL GPU: одна геометрия, два материала, общие буферы и frustum culling |
+| `23_gpu_copy_readback.das` | SDL GPU: копирование буферов, асинхронный readback, fence и точная проверка байтов; без окна |
+| `24_gpu_texture_transfers.das` | SDL GPU: RGBA8 upload с pitch, копирование области в mip/layer, асинхронный readback; без окна |
+| `25_gpu_formats.das` | SDL GPU: format queries, размер BC-блоков, R8 texture upload/readback |
+| `26_gpu_bc_blocks.das` | SDL GPU: BC1 encoded block upload/readback, без CPU-сжатия |
+| `27_gpu_cube_faces.das` | SDL GPU: независимые upload/readback шести граней cubemap |
+| `28_gpu_driver_discovery.das` | SDL GPU: compiled drivers и запрос поддержки shader formats |
+| `29_gpu_resource_names.das` | SDL GPU: имена checked buffer/texture ресурсов для отладки |
 
 Из корня проекта:
 

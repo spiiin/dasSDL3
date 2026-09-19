@@ -1,5 +1,81 @@
 # SDL GPU и шейдеры: отдельный план
 
+## Текущий приоритет: завершить P6
+
+По явному выбору пользователя P6 продолжается раньше Properties/P1.
+Состояние после пакетов 26–29: **92 функции GPU: 7 generated, 50 adapted,
+35 pending** в закреплённом Windows-профиле. Adapted означает ограниченный
+контракт, а не завершённую функцию со всеми вариантами параметров.
+Пример 23 и [gpu-transfer.md](gpu-transfer.md) добавляют публичные byte buffers,
+копирование диапазонов и асинхронные readback tickets с fence. Это часть G3;
+Пример 24 добавляет RGBA8 2D/array texture upload/copy/download с mip/layer
+регионами и pitch; контракт — [gpu-texture-transfer.md](gpu-texture-transfer.md).
+3D/ASTC transfers и произвольные command/pass handles ещё впереди.
+
+Автоматический батч 24 (7 шагов):
+
+- [x] Owned RGBA8 2D/array textures с инициализированными mip/layer.
+- [x] Проверки regions, pitch, размеров и переполнений.
+- [x] Копирующий upload с ограниченным cycling.
+- [x] Texture-to-texture region copy между независимыми ресурсами.
+- [x] Асинхронный texture readback через общий fence ticket.
+- [x] Пример 24 и CPU pixel/reference/lifetime регрессии.
+- [x] Interpreter, strict AOT, Vulkan/D3D12 и LLVM-free consumer.
+
+Авторизация пользователя: продолжать P6 батчами по 5–10 шагов без запроса
+нового подтверждения после каждого шага/батча. Сохранять проверки и явно
+отмечать ограничения; не считать ограниченный срез полной подсистемой.
+
+Батч 25: запросы размера блока/изображения и поддержки формата/sample count,
+121 новая генерируемая константа, несжатые цветовые transfers с 1/2/4/8/16 bytes
+per texel, совместимость RGBA8, пример и проверки — [gpu-formats.md](gpu-formats.md).
+На этапе 25 BC/ASTC/depth были доступны только для queries. Типизированные enum
+annotations не объявляются реализованными наличием enum-констант.
+
+Пакеты 26–29: BC transfers, cubemap/cube arrays, driver/shader support queries,
+checked resource names. Общий прогон после четырёх пакетов — новый согласованный
+порядок работы. Контракты и ограничения: [gpu-texture-types.md](gpu-texture-types.md).
+Обычные 2D/array color transfers и RGBA8 scopes сохраняются.
+
+Очередь закрытия P6:
+
+1. **Остаток G3:** добавить 3D/ASTC transfers;
+   general transfer descriptors/mapping. Срезы примеров 23–29 уже покрывают
+   buffer/texture snapshots, несжатые цветовые и BC форматы, format/sample queries,
+   mip/layer/cube regions, pitch, overflow и completion на Vulkan/D3D12.
+2. **G0/G1/G2 — общие ресурсы и запись:** checked command/pass handles,
+   устройства-владельцы, invalidation после end/submit/cancel, отдельный borrow
+   swapchain, shader/pipeline/create-info ABI, layouts, sampler/texture/buffer
+   bindings. Существующие fixed mesh helpers остаются удобными фасадами.
+3. **G4 — graphics completeness:** viewport/scissor/blend/stencil, независимые
+   color/depth targets, render-to-texture, MSAA/resolve, mipmaps/blit, UINT16
+   и произвольные draw ranges, indirect draw с проверкой bounds/stride.
+4. **G5 — compute:** shader resource layout, storage buffers/textures, direct и
+   indirect dispatch, uniform blocks; integer compute с точным CPU reference
+   и публичным readback на обоих backend. DSL не является условием этой части.
+5. **G6 — остаток:** properties-based device,
+   swapchain modes/frames-in-flight, debug labels/groups; явно ограничить
+   main-thread API либо отдельно доказать разрешённую многопоточную запись.
+6. **Приёмка P6:** разобрать все 92 функции и используемые типы/flags, указать
+   полные/ограниченные/платформенные контракты. Ноль pending сам по себе
+   недостаточен: нужны общие bindings, state/ownership/failure tests,
+   interpreter/strict AOT/LLVM-free builds, Vulkan и D3D12; Linux/Metal остаются
+   непроверенными до реального запуска. S1–S3 shader toolchain/DSL отдельно.
+
+Неподключённые функции сгруппированы для последующих проходов:
+
+| Группа | Pending SDL functions (без префикса SDL_) |
+| --- | --- |
+| Texture data и format helpers | BlitGPUTexture, GenerateMipmapsForGPUTexture |
+| Compute | CreateGPUComputePipeline, ReleaseGPUComputePipeline, BeginGPUComputePass, EndGPUComputePass, BindGPUComputePipeline, BindGPUComputeSamplers, BindGPUComputeStorageBuffers, BindGPUComputeStorageTextures, PushGPUComputeUniformData, DispatchGPUCompute, DispatchGPUComputeIndirect |
+| Graphics state и bindings | BindGPUVertexSamplers, BindGPUVertexStorageBuffers, BindGPUVertexStorageTextures, BindGPUFragmentStorageBuffers, BindGPUFragmentStorageTextures, SetGPUViewport, SetGPUScissor, SetGPUBlendConstants, SetGPUStencilReference, DrawGPUPrimitivesIndirect, DrawGPUIndexedPrimitivesIndirect |
+| Device/window | AcquireGPUSwapchainTexture, WaitForGPUSwapchain, SetGPUSwapchainParameters, SetGPUAllowedFramesInFlight, WindowSupportsGPUPresentMode, WindowSupportsGPUSwapchainComposition, CreateGPUDeviceWithProperties, GPUSupportsProperties |
+| Debug | InsertGPUDebugLabel, PushGPUDebugGroup, PopGPUDebugGroup |
+
+Следующие разделы сохраняют подробный исходный план G0–G6/S1–S3 и историю
+реализованных срезов. Ни один этап не закрывается только числом примеров.
+
+
 19 сентября 2026. Реализован ограниченный ClearScreen: device/window scopes
 и закрытая native clear-команда. Контракт — `gpu-clear.md`; G0/G1 ещё частичны.
 Добавлен ограниченный BasicTriangle с готовыми SPIR-V/DXIL и проверяемыми
@@ -175,8 +251,24 @@ Contract and verification: [gpu-instancing.md](gpu-instancing.md).
 
 Fixed-count full instance updates are implemented in example 18 and
 `gpu-dynamic-instances.md`, with cycling and queued-snapshot pixel tests. General
-dynamic geometry, count changes and partial updates remain future work.
+dynamic geometry, resizing an existing mesh instance buffer and partial updates
+remain future work; scene list counts can vary through example 20.
 
 Example 19 adds per-instance RGBA in a separate stride128 layout, texture/light
 modulation and dynamic full updates. Transparency blending/sorting, per-instance
-textures and material batching remain future stages. See `gpu-instance-colors.md`.
+textures remain future stages. See `gpu-instance-colors.md`.
+
+Example 20 adds opaque grouping by exact colored mesh bundle ID, one indexed draw
+per group, shared depth and cycled scene buffers for variable object counts.
+See `gpu-material-batches.md`. Separate geometry/material ownership is added in
+example 22. Deduplication, transparent sorting/blending and indirect draws remain future work.
+
+Example 21 adds CPU frustum culling with local bounding spheres and exact affine
+plane support before instance packing/upload. Visibility counters, ON/OFF mode,
+clip-oracle math tests and full/culled pixel equality are in `gpu-frustum-culling.md`.
+Occlusion culling, automatic bound extraction and GPU-driven culling remain future work.
+
+Example 22 separates immutable geometry and colored-instance materials, with
+lightweight borrowed bindings and pair-based batches. Existing mesh bundles stay
+supported. See `gpu-shared-resources.md`. Content/pipeline deduplication, standalone
+texture resources, arbitrary material state and transparency remain future work.

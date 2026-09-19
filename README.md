@@ -21,6 +21,15 @@
 [3D-матрицы, камера и depth buffer](docs/gpu-3d.md).
 `examples/15_gpu_lit_cube.das` добавляет текстуру и направленный свет:
 [Нормали, освещение и fragment uniforms](docs/gpu-lit.md).
+`examples/22_gpu_shared_geometry.das` использует одну геометрию куба с двумя
+материалами: [ресурсы и время жизни](docs/gpu-shared-resources.md).
+
+`examples/21_gpu_frustum_culling.das` отсекает невидимые объекты из 2304 кубов:
+[bounding spheres, управление и проверки](docs/gpu-frustum-culling.md).
+
+`examples/20_gpu_material_batches.das` группирует 64 объекта с двумя текстурами
+в два instanced draw: [контракт группировки](docs/gpu-material-batches.md).
+
 `examples/19_gpu_instance_colors.das` добавляет индивидуальные анимированные
 цвета к текстурированным экземплярам: [контракт RGBA](docs/gpu-instance-colors.md).
 
@@ -328,3 +337,36 @@ Clang дополнительно проверяется воспроизводи
 Отдельный тест boost проверяет очистку ресурсов при обычном/раннем выходе,
 panic, неудачном создании renderer и недопустимом цвете, а также сохранение
 сообщения об ошибке. Состояние окна и renderer проверяется до SDL_Quit.
+
+GPU buffer copy and asynchronous fence/readback example (no window):
+
+```powershell
+./build/ninja/bin/dasSDL3_runner.exe examples/23_gpu_copy_readback.das
+```
+
+Contract: [GPU transfers](docs/gpu-transfer.md).
+
+Texture-region upload/copy/readback with mip/layer selection:
+
+```powershell
+./build/ninja/bin/dasSDL3_runner.exe examples/24_gpu_texture_transfers.das
+```
+
+[Texture transfer contract](docs/gpu-texture-transfer.md).
+
+GPU format queries and R8 texture roundtrip:
+
+```powershell
+./build/ninja/bin/dasSDL3_runner.exe examples/25_gpu_formats.das
+```
+
+[Format contracts](docs/gpu-formats.md).
+
+GPU API packages 26–29 add encoded BC transfers, cube faces, driver queries and
+resource names. Contracts: [docs/gpu-texture-types.md](docs/gpu-texture-types.md).
+From the repository root, for example:
+
+```powershell
+./build/ninja/bin/dasSDL3_runner.exe examples/26_gpu_bc_blocks.das
+./build/ninja/bin/dasSDL3_runner.exe examples/27_gpu_cube_faces.das
+```

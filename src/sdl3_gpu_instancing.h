@@ -68,11 +68,12 @@ inline uint64_t SDL_CreateGPUInstancedMesh(SDL_GPUDevice * device,SDL_Window * w
     return SDL_CreateGPULitForFormat(device,SDL_GetGPUSwapchainTextureFormat(device,window),positions,normals,uv,pixels,width,height,indices,vertex,fragment,format,&models);
 }
 inline void SDL_RecordGPUInstances(SDL_GPURenderPass * pass,SDL_GPUCommandBuffer * command,
-        const SDL_GPULitEntry & m,const SDL_GPU3DMatrix & camera,const SDL_GPULight & light) {
+        const SDL_GPULitEntry & m,const SDL_GPU3DMatrix & camera,const SDL_GPULight & light,uint32_t instanceOffset=0) {
     SDL_PushGPUVertexUniformData(command,0,&camera,sizeof(camera));
     SDL_PushGPUFragmentUniformData(command,0,&light,sizeof(light));
     SDL_BindGPUGraphicsPipeline(pass,m.pipeline);
     SDL_GPUBufferBinding buffers[2]{}; buffers[0].buffer=m.vertices; buffers[1].buffer=m.instances;
+    buffers[1].offset=instanceOffset;
     SDL_BindGPUVertexBuffers(pass,0,buffers,2);
     SDL_GPUBufferBinding index{}; index.buffer=m.indices;
     SDL_BindGPUIndexBuffer(pass,&index,SDL_GPU_INDEXELEMENTSIZE_32BIT);
