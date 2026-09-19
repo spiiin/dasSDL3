@@ -7,8 +7,8 @@ reusable idioms and pinned upstream source links; this one describes our layer.
   script functions. The runner mounts the project's `dassdl3/` directory through
   FsFileAccess.addFsRoot, independently of the current working directory.
 - GPU helpers are separate in `dassdl3/sdl3_gpu_boost`: device/window scopes,
-  clear and vertex-ID triangle with checked pipeline IDs. Only one scoped GPU
-  device may be active; multiple windows on it are supported. See `gpu-triangle.md`
+  clear and vertex-ID triangle with checked pipeline IDs. Multiple scoped GPU
+  devices and windows are supported. See `gpu-triangle.md`
   for trusted shader ABI, offline assets and backend/pixel-reference tests.
 - `require dassdl3/sdl3_geometry_boost` adds initialized vertex values and checked
   vertex/index arrays. Vertex colors are float4 in 0..1; positions are pixels.
@@ -116,3 +116,5 @@ the fixed vertex/shader ABI and copied array contract. Multiple scoped devices
 are supported; device-specific cleanup must preserve other devices' resources.
 The former single-device restriction was traced to this machine's FPS Monitor
 Vulkan layer. Diagnosis and opt-in per-process filtering: `gpu-multidevice.md`.
+The indexed scope uses the same owned bundle with copied UINT32 indices;
+`gpu-indexed-mesh.md` describes bounds, empty-array behavior and coverage.

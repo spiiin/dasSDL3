@@ -55,9 +55,13 @@ CPU массивы очищены до draw/readback. Проверки пред�
 shutdown намеренно оставленных IDs не затрагивает ресурсы другого устройства.
 
 Это ограниченный graphics-сценарий: ещё нет отдельного публичного buffer/texture
-builder, dynamic updates, index buffers, arbitrary vertex layouts, mipmaps,
+builder, dynamic updates, arbitrary vertex layouts, mipmaps,
 uniforms, общего resource reflection и device-loss recovery. Readback остаётся
 test-only и не считается публичным API. Не называть этот этап полным GPU binding.
+
+Дополнение: immutable UINT32 index buffer и indexed draw реализованы отдельной
+фабрикой и scope, описанными в `gpu-indexed-mesh.md`. Обычный mesh сохраняет
+свой sequential triangle-list контракт.
 
 Проверено 2026-09-19 на Windows x64/MSVC: основной набор 36/36, parity/strict AOT
 81/81, без SKIP. Consumer с BUILD_TESTING=OFF, отключёнными генераторами и

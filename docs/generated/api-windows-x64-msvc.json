@@ -14911,8 +14911,14 @@
       ],
       "id": "function:SDL_BindGPUIndexBuffer",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Immutable copied uint32 index buffer with checked bounds; offset zero, fixed triangle-list mesh",
+      "adapter": "SDL_CreateGPUIndexedTexturedMesh / SDL_RecordGPUMesh",
+      "tests": [
+        "tests/gpu_indexed_mesh.das"
+      ],
+      "contract": "docs/gpu-indexed-mesh.md"
     },
     {
       "name": "SDL_BindGPUVertexBuffers",
@@ -17902,8 +17908,14 @@
       ],
       "id": "function:SDL_DrawGPUIndexedPrimitives",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Checked immutable indexed mesh; one instance, offsets zero; no general draw API",
+      "adapter": "SDL_RecordGPUMesh",
+      "tests": [
+        "tests/gpu_indexed_mesh.das"
+      ],
+      "contract": "docs/gpu-indexed-mesh.md"
     },
     {
       "name": "SDL_DrawGPUIndexedPrimitivesIndirect",
