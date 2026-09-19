@@ -202,6 +202,29 @@ CTest выбирает dummy-драйвер в окружении аудиоте
 Прямой запуск использует устройство по умолчанию. Подробности владения,
 размеров буферов и ограничения определения конца воспроизведения — в docs/audio.md.
 
+## SDL GPU BasicTriangle
+
+```powershell
+./build/ninja/bin/dasSDL3_runner.exe examples/gpu_triangle.das
+ctest --test-dir build/ninja -R '^sdl3_gpu_triangle' --output-on-failure
+```
+
+Готовые SPIR-V/DXIL shaders копируются при сборке; DXC при запуске не нужен.
+Треугольник использует vertex ID, scoped pipeline handle и GPU render pass.
+`--smoke-test` требует 60 кадров. [Контракт и ограничения](docs/gpu-triangle.md).
+
+## SDL GPU ClearScreen
+
+```powershell
+./build/ninja/bin/dasSDL3_runner.exe examples/gpu_clear.das
+ctest --test-dir build/ninja -R '^sdl3_gpu' --output-on-failure
+```
+
+`require dassdl3/sdl3_gpu_boost` добавляет scopes устройства/окна и `gpu_clear`.
+Пример меняет цвет GPU swapchain без шейдеров; Escape закрывает окно,
+`--smoke-test` требует 60 кадров. Отсутствие backend даёт CTest SKIP.
+[Контракты и ограничения](docs/gpu-clear.md).
+
 ## Geometry
 
 ```powershell

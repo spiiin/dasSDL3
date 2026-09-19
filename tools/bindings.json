@@ -52,7 +52,14 @@
     "SDL_AudioStreamDevicePaused",
     "SDL_GetRenderTarget",
     "SDL_SetRenderTarget",
-    "SDL_RenderGeometry"
+    "SDL_RenderGeometry",
+    "SDL_CreateGPUDevice",
+    "SDL_DestroyGPUDevice",
+    "SDL_GetGPUDeviceDriver",
+    "SDL_GetGPUShaderFormats",
+    "SDL_ClaimWindowForGPUDevice",
+    "SDL_ReleaseWindowFromGPUDevice",
+    "SDL_WaitForGPUIdle"
   ],
   "opaque_types": [
     "SDL_Window",
@@ -60,7 +67,8 @@
     "SDL_Surface",
     "SDL_Texture",
     "SDL_AudioStream",
-    "SDL_Wav"
+    "SDL_Wav",
+    "SDL_GPUDevice"
   ],
   "structs": {
     "SDL_FPoint": ["x", "y"],
@@ -125,6 +133,11 @@
     "SDL_Event.type": "event_type"
   },
   "constants": {
+    "SDL_GPU_SHADERFORMAT_SPIRV": "uint32_t",
+    "SDL_GPU_SHADERFORMAT_DXBC": "uint32_t",
+    "SDL_GPU_SHADERFORMAT_DXIL": "uint32_t",
+    "SDL_GPU_SHADERFORMAT_MSL": "uint32_t",
+    "SDL_GPU_SHADERFORMAT_METALLIB": "uint32_t",
     "SDL_INIT_VIDEO": "uint32_t",
     "SDL_WINDOW_RESIZABLE": "uint64_t",
     "SDL_WINDOW_HIDDEN": "uint64_t",

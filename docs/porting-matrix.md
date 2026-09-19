@@ -55,6 +55,20 @@ planar-audio примеры включать только после прове�
 
 ## GPU
 
+Добавлен собственный `examples/gpu_triangle.das`: vertex-ID BasicTriangle,
+готовые SPIR-V/DXIL. `tests/gpu_triangle.das` проверяет CPU pixel reference,
+pipeline ID lifetime и partial failure на Vulkan/Direct3D 12. G2 ещё частичен:
+BasicVertexBuffer/TexturedQuad и shader resource bindings остаются впереди.
+
+Добавлен собственный `examples/gpu_clear.das`: 60 clear/submit кадров в smoke,
+scopes устройства/окна и resize в `tests/gpu.das`; ошибки записи кадра —
+`tests/gpu_state.das`. Это реализация сценария, не буквальный порт upstream.
+Minimize/restore и два одновременно claimed окна проверяются в
+`tests/gpu_windows.das`, включая отрисовку внешнего окна после cleanup внутреннего.
+На Vulkan подтверждены переходы состояния окна, но NULL drawable не наблюдался;
+этот путь покрывает mock. Общие command/pass handles остаются до завершения G1.
+Подробности — `gpu-clear.md`.
+
 Источник: [SDL_gpu_examples](https://github.com/TheSpydog/SDL_gpu_examples).
 Перед портом закрепить commit; названия ниже обнаружены в исследованном дереве.
 

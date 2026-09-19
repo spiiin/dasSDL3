@@ -206,6 +206,52 @@
     "signature": "const char *(void)",
     "arguments": []
   },
+  "SDL_CreateGPUDevice": {
+    "signature": "SDL_GPUDevice *(SDL_GPUShaderFormat, bool, const char *)",
+    "arguments": [
+      "format_flags",
+      "debug_mode",
+      "name"
+    ]
+  },
+  "SDL_DestroyGPUDevice": {
+    "signature": "void (SDL_GPUDevice *)",
+    "arguments": [
+      "device"
+    ]
+  },
+  "SDL_GetGPUDeviceDriver": {
+    "signature": "const char *(SDL_GPUDevice *)",
+    "arguments": [
+      "device"
+    ]
+  },
+  "SDL_GetGPUShaderFormats": {
+    "signature": "SDL_GPUShaderFormat (SDL_GPUDevice *)",
+    "arguments": [
+      "device"
+    ]
+  },
+  "SDL_ClaimWindowForGPUDevice": {
+    "signature": "bool (SDL_GPUDevice *, SDL_Window *)",
+    "arguments": [
+      "device",
+      "window"
+    ]
+  },
+  "SDL_ReleaseWindowFromGPUDevice": {
+    "signature": "void (SDL_GPUDevice *, SDL_Window *)",
+    "arguments": [
+      "device",
+      "window"
+    ]
+  },
+  "SDL_WaitForGPUIdle": {
+    "signature": "bool (SDL_GPUDevice *)",
+    "arguments": [
+      "device"
+    ]
+  },
   "SDL_Init": {
     "signature": "bool (SDL_InitFlags)",
     "arguments": [

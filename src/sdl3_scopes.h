@@ -27,3 +27,8 @@ inline void SDL_InvokeScope(const das::TBlock<void> & block,
                             das::Context * context, das::LineInfoArg * at) {
     SDL_InvokeProtected(block, nullptr, context, at);
 }
+inline void SDL_InvokeGPUHandle(const das::TBlock<void, uint64_t> & block, uint64_t handle,
+                                das::Context * context, das::LineInfoArg * at) {
+    vec4f args[] = {das::cast<uint64_t>::from(handle)};
+    SDL_InvokeProtected(block, args, context, at);
+}

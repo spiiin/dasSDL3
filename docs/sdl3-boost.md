@@ -6,6 +6,10 @@ reusable idioms and pinned upstream source links; this one describes our layer.
 - `require dassdl3/sdl3_boost` re-exports the raw `sdl3` API and adds checked
   script functions. The runner mounts the project's `dassdl3/` directory through
   FsFileAccess.addFsRoot, independently of the current working directory.
+- GPU helpers are separate in `dassdl3/sdl3_gpu_boost`: device/window scopes,
+  clear and vertex-ID triangle with checked pipeline IDs. Only one scoped GPU
+  device may be active; multiple windows on it are supported. See `gpu-triangle.md`
+  for trusted shader ABI, offline assets and backend/pixel-reference tests.
 - `require dassdl3/sdl3_geometry_boost` adds initialized vertex values and checked
   vertex/index arrays. Vertex colors are float4 in 0..1; positions are pixels.
   See `geometry.md` for empty indexed draws, finite values and buffer lifetimes.

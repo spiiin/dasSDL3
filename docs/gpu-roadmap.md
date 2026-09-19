@@ -1,6 +1,13 @@
 # SDL GPU и шейдеры: отдельный план
 
-19 сентября 2026. Проектирование; GPU API и DSL ещё не реализованы в dasSDL3.
+19 сентября 2026. Реализован ограниченный ClearScreen: device/window scopes
+и закрытая native clear-команда. Контракт — `gpu-clear.md`; G0/G1 ещё частичны.
+Добавлен ограниченный BasicTriangle с готовыми SPIR-V/DXIL и проверяемыми
+pipeline IDs: `gpu-triangle.md`. Общая модель command/pass handles,
+graphics buffers, compute и DSL ещё не реализованы; G2 частичен.
+Оконные сценарии G1 проверены на Vulkan: resize, два claimed окна,
+minimize/restore и независимый cleanup при panic. Свёрнутое окно в этом backend
+продолжало получать drawable; NULL-путь проверен отдельно через mock.
 Основной roadmap — `full-binding-roadmap.md`, примеры — `porting-matrix.md`.
 
 ## Порядок

@@ -29,6 +29,87 @@
     }
   },
   "symbols": {
+    "function:SDL_CreateGPUShader": {
+      "raw_status": "adapted", "boost_status": "partial",
+      "reason": "Trusted precompiled SPIR-V/DXIL, main entry, vertex/fragment with zero resource bindings only",
+      "adapter": "SDL_LoadGPUZeroResourceShader", "tests": ["tests/gpu_triangle.das"], "contract": "docs/gpu-triangle.md"
+    },
+    "function:SDL_ReleaseGPUShader": {
+      "raw_status": "adapted", "boost_status": "partial",
+      "reason": "Native RAII cleanup of temporary pipeline shaders; no script shader handle",
+      "adapter": "SDL_GPUShaderOwner", "tests": ["tests/gpu_triangle.das"], "contract": "docs/gpu-triangle.md"
+    },
+    "function:SDL_CreateGPUGraphicsPipeline": {
+      "raw_status": "adapted", "boost_status": "partial",
+      "reason": "Vertex-ID trianglelist, one swapchain-format target, no blending/depth/vertex input/resources",
+      "adapter": "SDL_CreateGPUVertexIDPipeline", "tests": ["tests/gpu_triangle.das"], "contract": "docs/gpu-triangle.md"
+    },
+    "function:SDL_ReleaseGPUGraphicsPipeline": {
+      "raw_status": "adapted", "boost_status": "partial",
+      "reason": "Checked monotonic IDs and device-owned registry; scoped and shutdown cleanup",
+      "adapter": "SDL_ReleaseGPUVertexIDPipeline", "tests": ["tests/gpu_triangle.das"], "contract": "docs/gpu-triangle.md"
+    },
+    "function:SDL_GetGPUSwapchainTextureFormat": {
+      "raw_status": "adapted", "boost_status": "partial",
+      "reason": "Internal pipeline creation/draw compatibility check; enum is not yet exposed",
+      "adapter": "SDL_CreateGPUVertexIDPipeline / SDL_DrawGPUVertexIDTriangle", "tests": ["tests/gpu_triangle.das"], "contract": "docs/gpu-triangle.md"
+    },
+    "function:SDL_BindGPUGraphicsPipeline": {
+      "raw_status": "adapted", "boost_status": "partial",
+      "reason": "Closed native vertex-ID triangle frame; no render-pass handle exposed",
+      "adapter": "SDL_DrawGPUVertexIDTriangle", "tests": ["tests/gpu_triangle.das"], "contract": "docs/gpu-triangle.md"
+    },
+    "function:SDL_DrawGPUPrimitives": {
+      "raw_status": "adapted", "boost_status": "partial",
+      "reason": "Exactly 3 vertices, 1 instance, vertex/instance offset zero; no general draw API",
+      "adapter": "SDL_DrawGPUVertexIDTriangle", "tests": ["tests/gpu_triangle.das"], "contract": "docs/gpu-triangle.md"
+    },
+    "function:SDL_CreateGPUDevice": {
+      "boost_status": "scoped", "adapter": "try_with_gpu_device / with_gpu_device",
+      "tests": ["tests/gpu.das"], "contract": "docs/gpu-clear.md"
+    },
+    "function:SDL_DestroyGPUDevice": {
+      "boost_status": "scoped", "adapter": "SDL_DestroyGPUDeviceScoped",
+      "tests": ["tests/gpu.das"], "contract": "docs/gpu-clear.md"
+    },
+    "function:SDL_ClaimWindowForGPUDevice": {
+      "boost_status": "scoped", "adapter": "with_gpu_window",
+      "tests": ["tests/gpu.das"], "contract": "docs/gpu-clear.md"
+    },
+    "function:SDL_ReleaseWindowFromGPUDevice": {
+      "boost_status": "scoped", "adapter": "with_gpu_window",
+      "tests": ["tests/gpu.das"], "contract": "docs/gpu-clear.md"
+    },
+    "function:SDL_AcquireGPUCommandBuffer": {
+      "raw_status": "adapted", "boost_status": "partial",
+      "reason": "Closed native clear frame only; no command handle exposed",
+      "adapter": "SDL_ClearGPUWindow", "tests": ["tests/gpu_state.das", "tests/gpu.das"], "contract": "docs/gpu-clear.md"
+    },
+    "function:SDL_WaitAndAcquireGPUSwapchainTexture": {
+      "raw_status": "adapted", "boost_status": "partial",
+      "reason": "Closed native clear frame only; borrowed swapchain texture never escapes",
+      "adapter": "SDL_ClearGPUWindow", "tests": ["tests/gpu_state.das", "tests/gpu.das"], "contract": "docs/gpu-clear.md"
+    },
+    "function:SDL_BeginGPURenderPass": {
+      "raw_status": "adapted", "boost_status": "partial",
+      "reason": "One clear/store swapchain attachment only; no general render pass API",
+      "adapter": "SDL_ClearGPUWindow", "tests": ["tests/gpu_state.das", "tests/gpu.das"], "contract": "docs/gpu-clear.md"
+    },
+    "function:SDL_EndGPURenderPass": {
+      "raw_status": "adapted", "boost_status": "partial",
+      "reason": "Native clear pass only; no script callback during recording",
+      "adapter": "SDL_ClearGPUWindow", "tests": ["tests/gpu_state.das", "tests/gpu.das"], "contract": "docs/gpu-clear.md"
+    },
+    "function:SDL_SubmitGPUCommandBuffer": {
+      "raw_status": "adapted", "boost_status": "partial",
+      "reason": "Closed native clear frame; command consumed even on submission failure",
+      "adapter": "SDL_ClearGPUWindow", "tests": ["tests/gpu_state.das", "tests/gpu.das"], "contract": "docs/gpu-clear.md"
+    },
+    "function:SDL_CancelGPUCommandBuffer": {
+      "raw_status": "adapted", "boost_status": "partial",
+      "reason": "Native clear cleanup only before a non-null swapchain texture is acquired",
+      "adapter": "SDL_ClearGPUWindow", "tests": ["tests/gpu_state.das"], "contract": "docs/gpu-clear.md"
+    },
     "function:SDL_RenderGeometry": {
       "boost_status": "checked-arrays",
       "adapter": "SDL_RenderGeometryVertices / SDL_RenderGeometryIndices",

@@ -3,7 +3,7 @@
 Целевая версия: SDL 3.2.18. Это список реализованных сценариев, а не заявление
 о полном покрытии подсистем. `tools/bindings.json` задаёт точный перечень
 экспортов; `src/generated/api.json` содержит полученные из Clang сигнатуры.
-Сейчас генерируются 53 функции SDL. Ручные адаптеры перечислены отдельно.
+Сейчас генерируются 60 функций SDL. Ручные адаптеры перечислены отдельно.
 
 Первый автоматический реестр активного API Windows x64 и его ограничения:
 `api-inventory.md`, `generated/api-windows-x64-msvc.md`. Он не заменяет
@@ -25,7 +25,9 @@
 | Текстовый ввод | StartTextInput, StopTextInput, TextInputActive, ClearComposition | text_input_event, text_editing_event, with_text_input | input: копии UTF-8 и вложенные сеансы при panic; реальная IME, кандидаты, область ввода ещё не проверены/не реализованы |
 | Геймпады | Нет | Нет | Отдельный этап |
 | Callbacks, потоки | Нет | Нет | Нужен контракт времени жизни замыканий и потока вызова |
-| GPU, файловый IO, остальные подсистемы | Нет | Нет | Отдельные этапы |
+| GPU ClearScreen | Create/DestroyGPUDevice, driver/formats, claim/release, wait idle; 6 команд кадра через частичный native adapter | with_gpu_device, try_with_gpu_device, with_gpu_window, gpu_clear | gpu_state, gpu, gpu_windows, gpu_clear: resize, minimize/restore, два окна и независимый cleanup; оставшиеся G0/G1 проверки в gpu-clear.md |
+| GPU BasicTriangle | Shader/pipeline create/release, target format, bind и draw через 7 частичных adapters | with_gpu_vertex_id_pipeline, gpu_draw_triangle; checked uint64 IDs | gpu_triangle: SPIR-V/Vulkan и DXIL/D3D12, CPU pixel reference и cleanup; shader resource bindings и buffers впереди; одно scoped device |
+| Файловый IO, остальные подсистемы | Нет | Нет | Отдельные этапы |
 
 Ручные адаптеры: PollEventRef, PushEventRef, RenderFillRectRef,
 GetTextureSizeRef, RenderTextureToRect, RenderTextureRects. Они используют

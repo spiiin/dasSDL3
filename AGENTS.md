@@ -23,13 +23,24 @@ snapshots by hand. Keep inactive-platform and manual-adapter coverage explicit.
 Audio contracts and testing limitations are in `docs/audio.md`.
 Pixel buffer, streaming texture and render-target contracts are in `docs/pixels.md`.
 Geometry arrays and nested SDL_Vertex ABI are documented in `docs/geometry.md`.
+GPU ClearScreen contracts and unfinished gates are in `docs/gpu-clear.md`.
+Triangle, checked pipeline IDs, shader asset ABI and the single-scoped-device
+restriction are documented in `docs/gpu-triangle.md`. Never add Vulkan shader
+Y inversion: SDL already flips its viewport. Keep pixel-reference tests on
+Vulkan and D3D12; test-only readback is not public GPU API coverage.
+Keep GPU scopes separate from SDL_Renderer. Never cancel after a non-null
+swapchain texture; submit consumes the command even on failure. Keep recording
+native-only until general GPU handle/state contracts are implemented and tested.
+GPU window regressions live in tests/gpu_windows.das. Minimized does not imply
+NULL swapchain; assert observed window state, accept submitted or skipped frames,
+and report hardware observations separately from mock coverage.
 Use `git --no-optional-locks status` for read-only inspection: automatic index
 refresh can recreate .git/index as CodexSandboxOnline and break sandbox ACL setup.
 Before expanding coverage, read `docs/full-binding-roadmap.md` and
 `docs/binding-design-review.md` (research dated 2026-09-19). GPU/shader work is
 planned in `docs/gpu-roadmap.md`, optional libraries in
 `docs/companion-libraries-roadmap.md`, and example/contract selection in
-`docs/porting-matrix.md`. These are plans, not implemented API. Keep the current
+`docs/porting-matrix.md`. Unchecked roadmap stages are not implemented API. Keep the current
 generator until the documented dasClangBind feasibility gates pass. Count API
 coverage against pinned headers, not the moving SDL wiki. Reuse standard
 Result/Option and investigate existing dasSpirv/layout helpers before inventing

@@ -4,6 +4,7 @@ addAnnotation(new DummyTypeAnnotation("SDL_Surface", "SDL_Surface", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Texture", "SDL_Texture", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_AudioStream", "SDL_AudioStream", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Wav", "SDL_Wav", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_GPUDevice", "SDL_GPUDevice", 1, 1));
 addAnnotation(new SDL_AudioSpecAnnotation(lib));
 addAnnotation(new SDL_FColorAnnotation(lib));
 addAnnotation(new SDL_FPointAnnotation(lib));
@@ -14,6 +15,16 @@ addAnnotation(new SDL_MouseButtonEventAnnotation(lib));
 addAnnotation(new SDL_MouseWheelEventAnnotation(lib));
 addAnnotation(new SDL_EventAnnotation(lib));
 addAnnotation(new SDL_VertexAnnotation(lib));
+static_assert(static_cast<uint32_t>(SDL_GPU_SHADERFORMAT_SPIRV) == static_cast<uint32_t>(0x2ULL));
+addConstant(*this, "SDL_GPU_SHADERFORMAT_SPIRV", static_cast<uint32_t>(0x2ULL));
+static_assert(static_cast<uint32_t>(SDL_GPU_SHADERFORMAT_DXBC) == static_cast<uint32_t>(0x4ULL));
+addConstant(*this, "SDL_GPU_SHADERFORMAT_DXBC", static_cast<uint32_t>(0x4ULL));
+static_assert(static_cast<uint32_t>(SDL_GPU_SHADERFORMAT_DXIL) == static_cast<uint32_t>(0x8ULL));
+addConstant(*this, "SDL_GPU_SHADERFORMAT_DXIL", static_cast<uint32_t>(0x8ULL));
+static_assert(static_cast<uint32_t>(SDL_GPU_SHADERFORMAT_MSL) == static_cast<uint32_t>(0x10ULL));
+addConstant(*this, "SDL_GPU_SHADERFORMAT_MSL", static_cast<uint32_t>(0x10ULL));
+static_assert(static_cast<uint32_t>(SDL_GPU_SHADERFORMAT_METALLIB) == static_cast<uint32_t>(0x20ULL));
+addConstant(*this, "SDL_GPU_SHADERFORMAT_METALLIB", static_cast<uint32_t>(0x20ULL));
 static_assert(static_cast<uint32_t>(SDL_INIT_VIDEO) == static_cast<uint32_t>(0x20ULL));
 addConstant(*this, "SDL_INIT_VIDEO", static_cast<uint32_t>(0x20ULL));
 static_assert(static_cast<uint64_t>(SDL_WINDOW_RESIZABLE) == static_cast<uint64_t>(0x20ULL));
@@ -226,6 +237,34 @@ addConstant(*this, "SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK", static_cast<uint32_t>(0x
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_filesystem.h:96:42
 	makeExtern< const char * (*)() , SDL_GetBasePath , SimNode_ExtFuncCall >(lib,"SDL_GetBasePath","SDL_GetBasePath")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_gpu.h:2129:45
+	makeExtern< struct SDL_GPUDevice * (*)(unsigned int,bool,const char *) , SDL_CreateGPUDevice , SimNode_ExtFuncCall >(lib,"SDL_CreateGPUDevice","SDL_CreateGPUDevice")
+		->args({"format_flags","debug_mode","name"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_gpu.h:2200:34
+	makeExtern< void (*)(struct SDL_GPUDevice *) , SDL_DestroyGPUDevice , SimNode_ExtFuncCall >(lib,"SDL_DestroyGPUDevice","SDL_DestroyGPUDevice")
+		->args({"device"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_gpu.h:2240:42
+	makeExtern< const char * (*)(struct SDL_GPUDevice *) , SDL_GetGPUDeviceDriver , SimNode_ExtFuncCall >(lib,"SDL_GetGPUDeviceDriver","SDL_GetGPUDeviceDriver")
+		->args({"device"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_gpu.h:2251:49
+	makeExtern< unsigned int (*)(struct SDL_GPUDevice *) , SDL_GetGPUShaderFormats , SimNode_ExtFuncCall >(lib,"SDL_GetGPUShaderFormats","SDL_GetGPUShaderFormats")
+		->args({"device"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_gpu.h:3752:34
+	makeExtern< bool (*)(struct SDL_GPUDevice *,struct SDL_Window *) , SDL_ClaimWindowForGPUDevice , SimNode_ExtFuncCall >(lib,"SDL_ClaimWindowForGPUDevice","SDL_ClaimWindowForGPUDevice")
+		->args({"device","window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_gpu.h:3766:34
+	makeExtern< void (*)(struct SDL_GPUDevice *,struct SDL_Window *) , SDL_ReleaseWindowFromGPUDevice , SimNode_ExtFuncCall >(lib,"SDL_ReleaseWindowFromGPUDevice","SDL_ReleaseWindowFromGPUDevice")
+		->args({"device","window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_gpu.h:4053:34
+	makeExtern< bool (*)(struct SDL_GPUDevice *) , SDL_WaitForGPUIdle , SimNode_ExtFuncCall >(lib,"SDL_WaitForGPUIdle","SDL_WaitForGPUIdle")
+		->args({"device"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_init.h:236:34
 	makeExtern< bool (*)(unsigned int) , SDL_Init , SimNode_ExtFuncCall >(lib,"SDL_Init","SDL_Init")

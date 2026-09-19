@@ -14157,8 +14157,15 @@
       ],
       "id": "function:SDL_AcquireGPUCommandBuffer",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Closed native clear frame only; no command handle exposed",
+      "adapter": "SDL_ClearGPUWindow",
+      "tests": [
+        "tests/gpu_state.das",
+        "tests/gpu.das"
+      ],
+      "contract": "docs/gpu-clear.md"
     },
     {
       "name": "SDL_AcquireGPUSwapchainTexture",
@@ -14581,8 +14588,15 @@
       ],
       "id": "function:SDL_BeginGPURenderPass",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "One clear/store swapchain attachment only; no general render pass API",
+      "adapter": "SDL_ClearGPUWindow",
+      "tests": [
+        "tests/gpu_state.das",
+        "tests/gpu.das"
+      ],
+      "contract": "docs/gpu-clear.md"
     },
     {
       "name": "SDL_BindAudioStream",
@@ -14853,8 +14867,14 @@
       ],
       "id": "function:SDL_BindGPUGraphicsPipeline",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Closed native vertex-ID triangle frame; no render-pass handle exposed",
+      "adapter": "SDL_DrawGPUVertexIDTriangle",
+      "tests": [
+        "tests/gpu_triangle.das"
+      ],
+      "contract": "docs/gpu-triangle.md"
     },
     {
       "name": "SDL_BindGPUIndexBuffer",
@@ -15337,8 +15357,14 @@
       ],
       "id": "function:SDL_CancelGPUCommandBuffer",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Native clear cleanup only before a non-null swapchain texture is acquired",
+      "adapter": "SDL_ClearGPUWindow",
+      "tests": [
+        "tests/gpu_state.das"
+      ],
+      "contract": "docs/gpu-clear.md"
     },
     {
       "name": "SDL_CaptureMouse",
@@ -15377,8 +15403,13 @@
       ],
       "id": "function:SDL_ClaimWindowForGPUDevice",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "scoped",
+      "adapter": "with_gpu_window",
+      "tests": [
+        "tests/gpu.das"
+      ],
+      "contract": "docs/gpu-clear.md"
     },
     {
       "name": "SDL_CleanupTLS",
@@ -16410,8 +16441,13 @@
       ],
       "id": "function:SDL_CreateGPUDevice",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "scoped",
+      "adapter": "try_with_gpu_device / with_gpu_device",
+      "tests": [
+        "tests/gpu.das"
+      ],
+      "contract": "docs/gpu-clear.md"
     },
     {
       "name": "SDL_CreateGPUDeviceWithProperties",
@@ -16450,8 +16486,14 @@
       ],
       "id": "function:SDL_CreateGPUGraphicsPipeline",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Vertex-ID trianglelist, one swapchain-format target, no blending/depth/vertex input/resources",
+      "adapter": "SDL_CreateGPUVertexIDPipeline",
+      "tests": [
+        "tests/gpu_triangle.das"
+      ],
+      "contract": "docs/gpu-triangle.md"
     },
     {
       "name": "SDL_CreateGPUSampler",
@@ -16494,8 +16536,14 @@
       ],
       "id": "function:SDL_CreateGPUShader",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Trusted precompiled SPIR-V/DXIL, main entry, vertex/fragment with zero resource bindings only",
+      "adapter": "SDL_LoadGPUZeroResourceShader",
+      "tests": [
+        "tests/gpu_triangle.das"
+      ],
+      "contract": "docs/gpu-triangle.md"
     },
     {
       "name": "SDL_CreateGPUTexture",
@@ -17374,8 +17422,13 @@
       ],
       "id": "function:SDL_DestroyGPUDevice",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "scoped",
+      "adapter": "SDL_DestroyGPUDeviceScoped",
+      "tests": [
+        "tests/gpu.das"
+      ],
+      "contract": "docs/gpu-clear.md"
     },
     {
       "name": "SDL_DestroyHapticEffect",
@@ -17871,8 +17924,14 @@
       ],
       "id": "function:SDL_DrawGPUPrimitives",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Exactly 3 vertices, 1 instance, vertex/instance offset zero; no general draw API",
+      "adapter": "SDL_DrawGPUVertexIDTriangle",
+      "tests": [
+        "tests/gpu_triangle.das"
+      ],
+      "contract": "docs/gpu-triangle.md"
     },
     {
       "name": "SDL_DrawGPUPrimitivesIndirect",
@@ -18078,8 +18137,15 @@
       ],
       "id": "function:SDL_EndGPURenderPass",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Native clear pass only; no script callback during recording",
+      "adapter": "SDL_ClearGPUWindow",
+      "tests": [
+        "tests/gpu_state.das",
+        "tests/gpu.das"
+      ],
+      "contract": "docs/gpu-clear.md"
     },
     {
       "name": "SDL_EnterAppMainCallbacks",
@@ -20483,7 +20549,7 @@
       ],
       "id": "function:SDL_GetGPUDeviceDriver",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -20519,7 +20585,7 @@
       ],
       "id": "function:SDL_GetGPUShaderFormats",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -20541,8 +20607,14 @@
       ],
       "id": "function:SDL_GetGPUSwapchainTextureFormat",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Internal pipeline creation/draw compatibility check; enum is not yet exposed",
+      "adapter": "SDL_CreateGPUVertexIDPipeline / SDL_DrawGPUVertexIDTriangle",
+      "tests": [
+        "tests/gpu_triangle.das"
+      ],
+      "contract": "docs/gpu-triangle.md"
     },
     {
       "name": "SDL_GetGamepadAppleSFSymbolsNameForAxis",
@@ -29635,8 +29707,14 @@
       ],
       "id": "function:SDL_ReleaseGPUGraphicsPipeline",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Checked monotonic IDs and device-owned registry; scoped and shutdown cleanup",
+      "adapter": "SDL_ReleaseGPUVertexIDPipeline",
+      "tests": [
+        "tests/gpu_triangle.das"
+      ],
+      "contract": "docs/gpu-triangle.md"
     },
     {
       "name": "SDL_ReleaseGPUSampler",
@@ -29679,8 +29757,14 @@
       ],
       "id": "function:SDL_ReleaseGPUShader",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Native RAII cleanup of temporary pipeline shaders; no script shader handle",
+      "adapter": "SDL_GPUShaderOwner",
+      "tests": [
+        "tests/gpu_triangle.das"
+      ],
+      "contract": "docs/gpu-triangle.md"
     },
     {
       "name": "SDL_ReleaseGPUTexture",
@@ -29745,8 +29829,13 @@
       ],
       "id": "function:SDL_ReleaseWindowFromGPUDevice",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "scoped",
+      "adapter": "with_gpu_window",
+      "tests": [
+        "tests/gpu.das"
+      ],
+      "contract": "docs/gpu-clear.md"
     },
     {
       "name": "SDL_ReloadGamepadMappings",
@@ -34866,8 +34955,15 @@
       ],
       "id": "function:SDL_SubmitGPUCommandBuffer",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Closed native clear frame; command consumed even on submission failure",
+      "adapter": "SDL_ClearGPUWindow",
+      "tests": [
+        "tests/gpu_state.das",
+        "tests/gpu.das"
+      ],
+      "contract": "docs/gpu-clear.md"
     },
     {
       "name": "SDL_SubmitGPUCommandBufferAndAcquireFence",
@@ -35936,8 +36032,15 @@
       ],
       "id": "function:SDL_WaitAndAcquireGPUSwapchainTexture",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Closed native clear frame only; borrowed swapchain texture never escapes",
+      "adapter": "SDL_ClearGPUWindow",
+      "tests": [
+        "tests/gpu_state.das",
+        "tests/gpu.das"
+      ],
+      "contract": "docs/gpu-clear.md"
     },
     {
       "name": "SDL_WaitAsyncIOResult",
@@ -36098,7 +36201,7 @@
       ],
       "id": "function:SDL_WaitForGPUIdle",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -47714,7 +47817,7 @@
       "function_like": false,
       "id": "macro:SDL_GPU_SHADERFORMAT_DXBC",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -47726,7 +47829,7 @@
       "function_like": false,
       "id": "macro:SDL_GPU_SHADERFORMAT_DXIL",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -47750,7 +47853,7 @@
       "function_like": false,
       "id": "macro:SDL_GPU_SHADERFORMAT_METALLIB",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -47762,7 +47865,7 @@
       "function_like": false,
       "id": "macro:SDL_GPU_SHADERFORMAT_MSL",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -47786,7 +47889,7 @@
       "function_like": false,
       "id": "macro:SDL_GPU_SHADERFORMAT_SPIRV",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63520,7 +63623,7 @@
       "fields": [],
       "id": "record:SDL_GPUDevice",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -68857,7 +68960,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUDevice",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {

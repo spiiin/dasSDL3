@@ -5,6 +5,7 @@
 #include "sdl3_audio.h"
 #include "sdl3_pixels.h"
 #include "sdl3_geometry.h"
+#include "sdl3_gpu.h"
 #ifdef DASSDL3_TYPES_INCLUDE
 #include DASSDL3_TYPES_INCLUDE
 #else
@@ -16,6 +17,8 @@
 #include "../tests/input_probe.h"
 #include "../tests/audio_probe.h"
 #include "../tests/geometry_probe.h"
+#include "../tests/gpu_probe.h"
+#include "../tests/gpu_triangle_probe.h"
 #endif
 static_assert(SDL_VERSION == 3002018, "Regenerate and test bindings when updating SDL3");
 
@@ -36,6 +39,17 @@ public:
         #else
         #include "generated/sdl3_functions.inc"
         #endif
+        addExtern<DAS_BIND_FUN(SDL_CreateGPUDeviceScoped)>(*this, lib, "SDL_CreateGPUDeviceScoped", SideEffects::worstDefault, "SDL_CreateGPUDeviceScoped");
+        addExtern<DAS_BIND_FUN(SDL_CreateGPUVertexIDPipeline)>(*this, lib, "SDL_CreateGPUVertexIDPipeline", SideEffects::worstDefault, "SDL_CreateGPUVertexIDPipeline");
+        addExtern<DAS_BIND_FUN(SDL_ReleaseGPUVertexIDPipeline)>(*this, lib, "SDL_ReleaseGPUVertexIDPipeline", SideEffects::worstDefault, "SDL_ReleaseGPUVertexIDPipeline");
+        addExtern<DAS_BIND_FUN(SDL_DrawGPUVertexIDTriangle)>(*this, lib, "SDL_DrawGPUVertexIDTriangle", SideEffects::worstDefault, "SDL_DrawGPUVertexIDTriangle");
+        addExtern<DAS_BIND_FUN(SDL_InvokeGPUHandle)>(*this, lib, "SDL_InvokeGPUHandle", SideEffects::invoke, "SDL_InvokeGPUHandle");
+        addExtern<DAS_BIND_FUN(SDL_DestroyGPUDeviceScoped)>(*this, lib, "SDL_DestroyGPUDeviceScoped", SideEffects::worstDefault, "SDL_DestroyGPUDeviceScoped");
+        addExtern<DAS_BIND_FUN(SDL_ClaimGPUWindowScoped)>(*this, lib, "SDL_ClaimGPUWindowScoped", SideEffects::worstDefault, "SDL_ClaimGPUWindowScoped");
+        addExtern<DAS_BIND_FUN(SDL_ReleaseGPUWindowScoped)>(*this, lib, "SDL_ReleaseGPUWindowScoped", SideEffects::worstDefault, "SDL_ReleaseGPUWindowScoped");
+        addExtern<DAS_BIND_FUN(SDL_GPUWindowClaimedBy)>(*this, lib, "SDL_GPUWindowClaimedBy", SideEffects::worstDefault, "SDL_GPUWindowClaimedBy");
+        addExtern<DAS_BIND_FUN(SDL_ClearGPUWindow)>(*this, lib, "SDL_ClearGPUWindow", SideEffects::worstDefault, "SDL_ClearGPUWindow");
+        addExtern<DAS_BIND_FUN(SDL_InvokeResource<SDL_GPUDevice>)>(*this, lib, "SDL_InvokeGPUDevice", SideEffects::invoke, "SDL_InvokeResource<SDL_GPUDevice>");
         addExtern<DAS_BIND_FUN(SDL_MakeVertex), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDL_MakeVertex", SideEffects::none, "SDL_MakeVertex");
         addExtern<DAS_BIND_FUN(SDL_RenderGeometryVertices)>(*this, lib, "SDL_RenderGeometryVertices", SideEffects::worstDefault, "SDL_RenderGeometryVertices");
         addExtern<DAS_BIND_FUN(SDL_RenderGeometryIndices)>(*this, lib, "SDL_RenderGeometryIndices", SideEffects::worstDefault, "SDL_RenderGeometryIndices");
@@ -75,6 +89,16 @@ public:
         addExtern<DAS_BIND_FUN(SDL_InvokeResource<SDL_Surface>)>(*this, lib, "SDL_InvokeSurface", SideEffects::invoke, "SDL_InvokeResource<SDL_Surface>")->args({"block", "surface", "context", "at"});
         addExtern<DAS_BIND_FUN(SDL_InvokeResource<SDL_Texture>)>(*this, lib, "SDL_InvokeTexture", SideEffects::invoke, "SDL_InvokeResource<SDL_Texture>")->args({"block", "texture", "context", "at"});
 #ifdef DASSDL3_TESTING
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_state_contracts)>(*this, lib, "SDLTestGPUStateContracts", SideEffects::worstDefault, "sdl3_test::gpu_state_contracts");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_pipelines)>(*this, lib, "SDLTestGPUPipelines", SideEffects::worstDefault, "sdl3_test::gpu_pipelines");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_shaders)>(*this, lib, "SDLTestGPUShaders", SideEffects::worstDefault, "sdl3_test::gpu_shaders");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_foreign_pipeline)>(*this, lib, "SDLTestGPUForeignPipeline", SideEffects::worstDefault, "sdl3_test::gpu_foreign_pipeline");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_pipeline_failure)>(*this, lib, "SDLTestGPUPipelineFailure", SideEffects::worstDefault, "sdl3_test::gpu_pipeline_failure");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_triangle_pixels)>(*this, lib, "SDLTestGPUTrianglePixels", SideEffects::worstDefault, "sdl3_test::gpu_triangle_pixels");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_devices)>(*this, lib, "SDLTestGPUDevices", SideEffects::worstDefault, "sdl3_test::gpu_devices");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_claims)>(*this, lib, "SDLTestGPUClaims", SideEffects::worstDefault, "sdl3_test::gpu_claims");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_resize)>(*this, lib, "SDLTestGPUResize", SideEffects::worstDefault, "sdl3_test::gpu_resize");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_minimized)>(*this, lib, "SDLTestGPUMinimized", SideEffects::worstDefault, "sdl3_test::gpu_minimized");
         addExtern<DAS_BIND_FUN(sdl3_test::geometry_count_guards)>(*this, lib, "SDLTestGeometryCounts", SideEffects::worstDefault, "sdl3_test::geometry_count_guards");
         addExtern<DAS_BIND_FUN(sdl3_test::nonfinite_vertex), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDLTestNonfiniteVertex", SideEffects::none, "sdl3_test::nonfinite_vertex");
         addExtern<DAS_BIND_FUN(sdl3_test::live_wavs)>(*this, lib, "SDLTestLiveWavs", SideEffects::worstDefault, "sdl3_test::live_wavs");

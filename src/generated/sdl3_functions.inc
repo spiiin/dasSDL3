@@ -5,6 +5,7 @@ addAnnotation(new DummyTypeAnnotation("SDL_Surface", "SDL_Surface", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Texture", "SDL_Texture", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_AudioStream", "SDL_AudioStream", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Wav", "SDL_Wav", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_GPUDevice", "SDL_GPUDevice", 1, 1));
 addAnnotation(new SDL_FPointAnnotation(lib));
 addAnnotation(new SDL_FColorAnnotation(lib));
 addAnnotation(new SDL_VertexAnnotation(lib));
@@ -15,6 +16,11 @@ addAnnotation(new SDL_MouseMotionEventAnnotation(lib));
 addAnnotation(new SDL_MouseButtonEventAnnotation(lib));
 addAnnotation(new SDL_MouseWheelEventAnnotation(lib));
 addAnnotation(new SDL_AudioSpecAnnotation(lib));
+addConstant(*this, "SDL_GPU_SHADERFORMAT_SPIRV", static_cast<uint32_t>(SDL_GPU_SHADERFORMAT_SPIRV));
+addConstant(*this, "SDL_GPU_SHADERFORMAT_DXBC", static_cast<uint32_t>(SDL_GPU_SHADERFORMAT_DXBC));
+addConstant(*this, "SDL_GPU_SHADERFORMAT_DXIL", static_cast<uint32_t>(SDL_GPU_SHADERFORMAT_DXIL));
+addConstant(*this, "SDL_GPU_SHADERFORMAT_MSL", static_cast<uint32_t>(SDL_GPU_SHADERFORMAT_MSL));
+addConstant(*this, "SDL_GPU_SHADERFORMAT_METALLIB", static_cast<uint32_t>(SDL_GPU_SHADERFORMAT_METALLIB));
 addConstant(*this, "SDL_INIT_VIDEO", static_cast<uint32_t>(SDL_INIT_VIDEO));
 addConstant(*this, "SDL_WINDOW_RESIZABLE", static_cast<uint64_t>(SDL_WINDOW_RESIZABLE));
 addConstant(*this, "SDL_WINDOW_HIDDEN", static_cast<uint64_t>(SDL_WINDOW_HIDDEN));
@@ -163,3 +169,17 @@ addExtern<DAS_BIND_FUN(SDL_GetRenderTarget)>(*this, lib, "SDL_GetRenderTarget", 
 addExtern<DAS_BIND_FUN(SDL_SetRenderTarget)>(*this, lib, "SDL_SetRenderTarget", SideEffects::worstDefault, "SDL_SetRenderTarget")->args({"renderer", "texture"});
 // bool (SDL_Renderer *, SDL_Texture *, const SDL_Vertex *, int, const int *, int) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_RenderGeometry)>(*this, lib, "SDL_RenderGeometry", SideEffects::worstDefault, "SDL_RenderGeometry")->args({"renderer", "texture", "vertices", "num_vertices", "indices", "num_indices"});
+// SDL_GPUDevice *(SDL_GPUShaderFormat, bool, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateGPUDevice)>(*this, lib, "SDL_CreateGPUDevice", SideEffects::worstDefault, "SDL_CreateGPUDevice")->args({"format_flags", "debug_mode", "name"});
+// void (SDL_GPUDevice *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_DestroyGPUDevice)>(*this, lib, "SDL_DestroyGPUDevice", SideEffects::worstDefault, "SDL_DestroyGPUDevice")->args({"device"});
+// const char *(SDL_GPUDevice *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGPUDeviceDriver)>(*this, lib, "SDL_GetGPUDeviceDriver", SideEffects::worstDefault, "SDL_GetGPUDeviceDriver")->args({"device"});
+// SDL_GPUShaderFormat (SDL_GPUDevice *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGPUShaderFormats)>(*this, lib, "SDL_GetGPUShaderFormats", SideEffects::worstDefault, "SDL_GetGPUShaderFormats")->args({"device"});
+// bool (SDL_GPUDevice *, SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ClaimWindowForGPUDevice)>(*this, lib, "SDL_ClaimWindowForGPUDevice", SideEffects::worstDefault, "SDL_ClaimWindowForGPUDevice")->args({"device", "window"});
+// void (SDL_GPUDevice *, SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ReleaseWindowFromGPUDevice)>(*this, lib, "SDL_ReleaseWindowFromGPUDevice", SideEffects::worstDefault, "SDL_ReleaseWindowFromGPUDevice")->args({"device", "window"});
+// bool (SDL_GPUDevice *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WaitForGPUIdle)>(*this, lib, "SDL_WaitForGPUIdle", SideEffects::worstDefault, "SDL_WaitForGPUIdle")->args({"device"});

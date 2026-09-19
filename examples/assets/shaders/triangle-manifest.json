@@ -1,0 +1,15 @@
+{
+  "entrypoint": "main",
+  "resources": "none",
+  "vertex_inputs": "SV_VertexID only",
+  "compiler": "dxcompiler.dll: 1.8 - 1.8.0.4739 (d9a5e97d0)",
+  "spirv_target": "vulkan1.0",
+  "files": {
+    "triangle.vert.hlsl": "fed9369a8569e0e02a456765a3b11b88d248f89c0756e6fce56d48942a1fcf25",
+    "triangle.vert.spv": "53e1ee5507cdbd5fd33825497e1710201d252437b33a001bd8070dfef00babc6",
+    "triangle.vert.dxil": "909707609048e9cfe08dba28e92eda9df541fb9edb32f808fff45df0ab4b7f04",
+    "triangle.frag.hlsl": "c00b58857ab157f94dfb5dbb921e400d75948fa63c4acc75b6cb39d9597aeaa8",
+    "triangle.frag.spv": "835fe61370d12b82d4789a09ca3fb7fecbec83735c854e128cba025bafda4736",
+    "triangle.frag.dxil": "77db686f70a32389bce8f18c4bf69c6d82397080fec0bde461dc5b9e9796fa13"
+  }
+}
