@@ -8,7 +8,7 @@ the texture integration test to verify rendered pixels.
 CMake copies it to build/ninja/bin/assets/checker.bmp. The example resolves it
 relative to SDL_GetBasePath(), not the current working directory.
 
-textures.das adapts the public-domain SDL 3.2.18 example:
+04_textures.das adapts the public-domain SDL 3.2.18 example:
 https://github.com/libsdl-org/SDL/blob/release-3.2.18/examples/renderer/06-textures/textures.c
 It replaces callbacks with a scoped event loop and adds scaling and cropping.
 

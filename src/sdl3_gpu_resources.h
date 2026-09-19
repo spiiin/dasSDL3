@@ -6,6 +6,16 @@
 #include <string>
 #include <unordered_map>
 #include <limits>
+#include <vector>
+#include <algorithm>
+
+using SDL_GPUDeviceCleanup = void (*)(SDL_GPUDevice *);
+inline std::vector<SDL_GPUDeviceCleanup> SDL_GPUDeviceCleanups;
+inline bool SDL_RegisterGPUDeviceCleanup(SDL_GPUDeviceCleanup cleanup) {
+    if (std::find(SDL_GPUDeviceCleanups.begin(), SDL_GPUDeviceCleanups.end(), cleanup) == SDL_GPUDeviceCleanups.end())
+        SDL_GPUDeviceCleanups.push_back(cleanup);
+    return true;
+}
 
 // Main-thread-only registry. IDs never repeat within the process, including
 // after device destruction. No native graphics-pipeline pointer reaches script.

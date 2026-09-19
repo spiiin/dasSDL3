@@ -5,6 +5,7 @@
 #include <SDL3/SDL_main.h>
 #include <cstring>
 #include <iostream>
+#include <string>
 
 DECLARE_MODULE(Module_dasSDL3);
 
@@ -37,16 +38,35 @@ static int run_script(const char * path, bool smoke) {
 }
 
 int main(int argc, char ** argv) {
-    if (argc < 2 || argc > 3 || (argc == 3 && std::strcmp(argv[2], "--smoke-test"))) {
-        std::cerr << "Usage: dasSDL3_runner script.das [--smoke-test]\n";
+    bool smoke = false;
+    std::string disabledLayers;
+    const char * layerOption = "--disable-vulkan-layer=";
+    bool valid = argc >= 2;
+    for (int i = 2; i < argc; ++i) {
+        if (!std::strcmp(argv[i], "--smoke-test")) smoke = true;
+        else if (!std::strncmp(argv[i], layerOption, std::strlen(layerOption)) && argv[i][std::strlen(layerOption)]) {
+            if (!disabledLayers.empty()) disabledLayers += ',';
+            disabledLayers += argv[i] + std::strlen(layerOption);
+        } else valid = false;
+    }
+    if (!valid) {
+        std::cerr << "Usage: dasSDL3_runner script.das [--smoke-test] [--disable-vulkan-layer=NAME]\n";
         return 2;
+    }
+    if (!disabledLayers.empty()) {
+        if (const char * existing = SDL_getenv_unsafe("VK_LOADER_LAYERS_DISABLE"); existing && *existing)
+            disabledLayers = std::string(existing) + ',' + disabledLayers;
+        if (SDL_setenv_unsafe("VK_LOADER_LAYERS_DISABLE", disabledLayers.c_str(), 1) != 0) {
+            std::cerr << "Could not set per-process Vulkan layer filter\n"; return 2;
+        }
+        std::cerr << "Vulkan layers disabled for this process: " << disabledLayers << '\n';
     }
     SDL_SetMainReady();
     das::setDasRoot(DASSDL3_DAS_ROOT);
     NEED_ALL_DEFAULT_MODULES;
     NEED_MODULE(Module_dasSDL3);
     das::Module::Initialize();
-    int status = run_script(argv[1], argc == 3);
+    int status = run_script(argv[1], smoke);
     SDL_Quit(); // Also clean up SDL after a script error.
     das::Module::Shutdown();
     return status;

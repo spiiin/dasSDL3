@@ -1,5 +1,10 @@
 # Примеры, туториалы и проверки для портирования
 
+GPU TexturedQuad реализован как собственный ограниченный сценарий:
+`examples/11_gpu_textured_quad.das`, `gpu-mesh.md`. Vertex buffer, RGBA8 upload,
+sampler и pixel reference проверены на Vulkan/D3D12 в interpreter и strict AOT.
+Это не буквальный порт upstream-примера; assets и shaders созданы в проекте.
+
 Geometry также реализован: цветной triangle, indexed textured quad, точные
 pixel/array проверки в interpreter/AOT — `geometry.md`. Исходный C geometry
 пример собран и выполнен с smoke-wrapper на 60 кадров и нашим checker.bmp.
@@ -55,12 +60,12 @@ planar-audio примеры включать только после прове�
 
 ## GPU
 
-Добавлен собственный `examples/gpu_triangle.das`: vertex-ID BasicTriangle,
+Добавлен собственный `examples/10_gpu_triangle.das`: vertex-ID BasicTriangle,
 готовые SPIR-V/DXIL. `tests/gpu_triangle.das` проверяет CPU pixel reference,
 pipeline ID lifetime и partial failure на Vulkan/Direct3D 12. G2 ещё частичен:
 BasicVertexBuffer/TexturedQuad и shader resource bindings остаются впереди.
 
-Добавлен собственный `examples/gpu_clear.das`: 60 clear/submit кадров в smoke,
+Добавлен собственный `examples/09_gpu_clear.das`: 60 clear/submit кадров в smoke,
 scopes устройства/окна и resize в `tests/gpu.das`; ошибки записи кадра —
 `tests/gpu_state.das`. Это реализация сценария, не буквальный порт upstream.
 Minimize/restore и два одновременно claimed окна проверяются в

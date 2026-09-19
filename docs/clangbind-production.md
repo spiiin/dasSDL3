@@ -20,7 +20,7 @@ toolchain; хеши заголовков позволяют обнаружить
 ```bat
 cmake -S . -B build/consumer -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DDAS_CLANG_BIND_DISABLED=ON -DDAS_LLVM_DISABLED=ON
 cmake --build build/consumer --target dasSDL3_runner --parallel 6
-build\consumer\bin\dasSDL3_runner.exe examples/square.das --smoke-test
+build\consumer\bin\dasSDL3_runner.exe examples/02_square.das --smoke-test
 ```
 
 `DASSDL3_ENABLE_GENERATORS` по умолчанию OFF: ни Python, ни Clang, ни LLVM

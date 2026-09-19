@@ -6,6 +6,7 @@
 #include "sdl3_pixels.h"
 #include "sdl3_geometry.h"
 #include "sdl3_gpu.h"
+#include "sdl3_gpu_mesh.h"
 #ifdef DASSDL3_TYPES_INCLUDE
 #include DASSDL3_TYPES_INCLUDE
 #else
@@ -19,6 +20,7 @@
 #include "../tests/geometry_probe.h"
 #include "../tests/gpu_probe.h"
 #include "../tests/gpu_triangle_probe.h"
+#include "../tests/gpu_mesh_probe.h"
 #endif
 static_assert(SDL_VERSION == 3002018, "Regenerate and test bindings when updating SDL3");
 
@@ -40,6 +42,9 @@ public:
         #include "generated/sdl3_functions.inc"
         #endif
         addExtern<DAS_BIND_FUN(SDL_CreateGPUDeviceScoped)>(*this, lib, "SDL_CreateGPUDeviceScoped", SideEffects::worstDefault, "SDL_CreateGPUDeviceScoped");
+        addExtern<DAS_BIND_FUN(SDL_CreateGPUTexturedMesh)>(*this, lib, "SDL_CreateGPUTexturedMesh", SideEffects::worstDefault, "SDL_CreateGPUTexturedMesh");
+        addExtern<DAS_BIND_FUN(SDL_ReleaseGPUTexturedMesh)>(*this, lib, "SDL_ReleaseGPUTexturedMesh", SideEffects::worstDefault, "SDL_ReleaseGPUTexturedMesh");
+        addExtern<DAS_BIND_FUN(SDL_DrawGPUTexturedMesh)>(*this, lib, "SDL_DrawGPUTexturedMesh", SideEffects::worstDefault, "SDL_DrawGPUTexturedMesh");
         addExtern<DAS_BIND_FUN(SDL_CreateGPUVertexIDPipeline)>(*this, lib, "SDL_CreateGPUVertexIDPipeline", SideEffects::worstDefault, "SDL_CreateGPUVertexIDPipeline");
         addExtern<DAS_BIND_FUN(SDL_ReleaseGPUVertexIDPipeline)>(*this, lib, "SDL_ReleaseGPUVertexIDPipeline", SideEffects::worstDefault, "SDL_ReleaseGPUVertexIDPipeline");
         addExtern<DAS_BIND_FUN(SDL_DrawGPUVertexIDTriangle)>(*this, lib, "SDL_DrawGPUVertexIDTriangle", SideEffects::worstDefault, "SDL_DrawGPUVertexIDTriangle");
@@ -90,6 +95,11 @@ public:
         addExtern<DAS_BIND_FUN(SDL_InvokeResource<SDL_Texture>)>(*this, lib, "SDL_InvokeTexture", SideEffects::invoke, "SDL_InvokeResource<SDL_Texture>")->args({"block", "texture", "context", "at"});
 #ifdef DASSDL3_TESTING
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_state_contracts)>(*this, lib, "SDLTestGPUStateContracts", SideEffects::worstDefault, "sdl3_test::gpu_state_contracts");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_meshes)>(*this, lib, "SDLTestGPUMeshes", SideEffects::worstDefault, "sdl3_test::gpu_meshes");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_mesh_guards)>(*this, lib, "SDLTestGPUMeshGuards", SideEffects::worstDefault, "sdl3_test::gpu_mesh_guards");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_mesh_foreign)>(*this, lib, "SDLTestGPUForeignMesh", SideEffects::worstDefault, "sdl3_test::gpu_mesh_foreign");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_mesh_offscreen)>(*this, lib, "SDLTestGPUCreateMeshOffscreen", SideEffects::worstDefault, "sdl3_test::gpu_mesh_offscreen");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_mesh_pixels)>(*this, lib, "SDLTestGPUMeshPixels", SideEffects::worstDefault, "sdl3_test::gpu_mesh_pixels");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_pipelines)>(*this, lib, "SDLTestGPUPipelines", SideEffects::worstDefault, "sdl3_test::gpu_pipelines");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_shaders)>(*this, lib, "SDLTestGPUShaders", SideEffects::worstDefault, "sdl3_test::gpu_shaders");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_foreign_pipeline)>(*this, lib, "SDLTestGPUForeignPipeline", SideEffects::worstDefault, "sdl3_test::gpu_foreign_pipeline");

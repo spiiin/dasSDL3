@@ -2,21 +2,22 @@
 #include <SDL3/SDL.h>
 #include <cmath>
 #include <string>
+#include <unordered_set>
 #include "sdl3_gpu_resources.h"
 
 inline constexpr const char * SDL_GPUClaimKey = "dassdl3.gpu.scoped_claim";
-// Pinned Windows Vulkan backend failed a two-device destroy/draw regression.
-// Keep scoped ownership single-device until that backend gate is resolved.
-inline SDL_GPUDevice * SDL_ScopedGPUDevice = nullptr;
+inline std::unordered_set<SDL_GPUDevice *> SDL_ScopedGPUDevices;
 #ifdef DASSDL3_TESTING
 inline int SDL_TestGPUDevices = 0;
 inline int SDL_TestGPUClaims = 0;
 #endif
 inline SDL_GPUDevice * SDL_CreateGPUDeviceScoped(uint32_t formats, bool debug, const char * driver) {
     if (!SDL_IsMainThread()) { SDL_SetError("GPU device: main thread required"); return nullptr; }
-    if (SDL_ScopedGPUDevice) { SDL_SetError("GPU device: only one scoped device may be active"); return nullptr; }
     auto * device = SDL_CreateGPUDevice(formats, debug, driver && *driver ? driver : nullptr);
-    if (device) SDL_ScopedGPUDevice = device;
+    if (device) {
+        try { SDL_ScopedGPUDevices.insert(device); }
+        catch (...) { SDL_DestroyGPUDevice(device); throw; }
+    }
 #ifdef DASSDL3_TESTING
     if (device) ++SDL_TestGPUDevices;
 #endif
@@ -24,13 +25,14 @@ inline SDL_GPUDevice * SDL_CreateGPUDeviceScoped(uint32_t formats, bool debug, c
 }
 inline bool SDL_DestroyGPUDeviceScoped(SDL_GPUDevice * device) {
     if (!device) return true;
-    if (!SDL_IsMainThread() || device != SDL_ScopedGPUDevice)
-        return SDL_SetError("GPU device: not the active scoped device or wrong thread");
+    if (!SDL_IsMainThread() || !SDL_ScopedGPUDevices.count(device))
+        return SDL_SetError("GPU device: not a live scoped device or wrong thread");
     const bool idle = SDL_WaitForGPUIdle(device);
     const std::string error = idle ? "" : SDL_GetError();
+    for (auto cleanup : SDL_GPUDeviceCleanups) cleanup(device);
     SDL_ReleaseGPUPipelinesForDevice(device);
     SDL_DestroyGPUDevice(device);
-    SDL_ScopedGPUDevice = nullptr;
+    SDL_ScopedGPUDevices.erase(device);
 #ifdef DASSDL3_TESTING
     --SDL_TestGPUDevices;
 #endif

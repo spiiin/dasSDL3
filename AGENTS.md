@@ -24,10 +24,17 @@ Audio contracts and testing limitations are in `docs/audio.md`.
 Pixel buffer, streaming texture and render-target contracts are in `docs/pixels.md`.
 Geometry arrays and nested SDL_Vertex ABI are documented in `docs/geometry.md`.
 GPU ClearScreen contracts and unfinished gates are in `docs/gpu-clear.md`.
-Triangle, checked pipeline IDs, shader asset ABI and the single-scoped-device
-restriction are documented in `docs/gpu-triangle.md`. Never add Vulkan shader
+Triangle, checked pipeline IDs and shader asset ABI are documented in
+`docs/gpu-triangle.md`. Multiple scoped devices and the FPS Monitor Vulkan layer
+conflict are covered in `docs/gpu-multidevice.md`; do not restore a global
+one-device limit or silently disable validation. Never add Vulkan shader
 Y inversion: SDL already flips its viewport. Keep pixel-reference tests on
 Vulkan and D3D12; test-only readback is not public GPU API coverage.
+The immutable vertex-buffer/texture/sampler bundle is documented in
+`docs/gpu-mesh.md`. Mesh and triangle IDs share one monotonic namespace
+(`SDL_GPUNextPipeline`) to reject cross-kind aliases. General layouts, index
+buffers and dynamic updates remain unimplemented. Preserve device-specific
+cleanup: destroying B must not release A's meshes or pipelines.
 Keep GPU scopes separate from SDL_Renderer. Never cancel after a non-null
 swapchain texture; submit consumes the command even on failure. Keep recording
 native-only until general GPU handle/state contracts are implemented and tested.
@@ -51,7 +58,7 @@ equivalents; source inspection alone does not establish runtime correctness.
   `tools/run_clangbind_parity.py --snapshot`, then regenerate. Never hand-edit generated files.
 - Put script helpers in `dassdl3/sdl3_boost.das` and native adapters in
   `src/sdl3_adapters.h`. Keep the raw `sdl3` module available.
-- Keep `examples/square.das` free of unsafe blocks and raw address operations.
+- Keep `examples/02_square.das` free of unsafe blocks and raw address operations.
   Use value/reference helpers and scoped cleanup. Do not weaken pointer checks
   to make code compile. Hidden unsafe operations are not an ownership guarantee.
 - Prefer with_sdl/with_window/with_renderer for ownership scopes. In the pinned
@@ -102,3 +109,5 @@ equivalents; source inspection alone does not establish runtime correctness.
   MSBuild's SDK scan previously hit sandbox permissions. Build with 6 parallel
   jobs. Run the project's CTest filter rather than all upstream tests.
 - Do not commit or publish unless asked. Preserve unrelated user changes.
+- Keep example filenames numbered in learning order (01_, 02_, ...), documented
+  in examples/README.md. Update CMake/AOT lists and documentation when renaming.

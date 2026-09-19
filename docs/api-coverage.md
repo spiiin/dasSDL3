@@ -26,8 +26,9 @@
 | Геймпады | Нет | Нет | Отдельный этап |
 | Callbacks, потоки | Нет | Нет | Нужен контракт времени жизни замыканий и потока вызова |
 | GPU ClearScreen | Create/DestroyGPUDevice, driver/formats, claim/release, wait idle; 6 команд кадра через частичный native adapter | with_gpu_device, try_with_gpu_device, with_gpu_window, gpu_clear | gpu_state, gpu, gpu_windows, gpu_clear: resize, minimize/restore, два окна и независимый cleanup; оставшиеся G0/G1 проверки в gpu-clear.md |
-| GPU BasicTriangle | Shader/pipeline create/release, target format, bind и draw через 7 частичных adapters | with_gpu_vertex_id_pipeline, gpu_draw_triangle; checked uint64 IDs | gpu_triangle: SPIR-V/Vulkan и DXIL/D3D12, CPU pixel reference и cleanup; shader resource bindings и buffers впереди; одно scoped device |
+| GPU BasicTriangle | Shader/pipeline create/release, target format, bind и draw через 7 частичных adapters | with_gpu_vertex_id_pipeline, gpu_draw_triangle; checked uint64 IDs | gpu_triangle/gpu_devices: SPIR-V/Vulkan и DXIL/D3D12, CPU pixel reference, два реальных device и независимый cleanup; диагностика overlay в gpu-multidevice.md |
 | Файловый IO, остальные подсистемы | Нет | Нет | Отдельные этапы |
+| GPU TexturedQuad | Buffer/texture/sampler/transfer create/release, map/unmap, copy/upload, vertex/sampler bind через 16 частичных adapters | with_gpu_textured_mesh, gpu_draw_textured_mesh; immutable packed float4 NDC/UV + RGBA8, checked uint64 IDs | gpu_mesh: copied arrays, bounds, stale/foreign IDs, scopes, два устройства, >3000 reference pixels на Vulkan/D3D12; dynamic/index/general layouts впереди; docs/gpu-mesh.md |
 
 Ручные адаптеры: PollEventRef, PushEventRef, RenderFillRectRef,
 GetTextureSizeRef, RenderTextureToRect, RenderTextureRects. Они используют

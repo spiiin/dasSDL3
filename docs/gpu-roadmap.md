@@ -3,8 +3,10 @@
 19 сентября 2026. Реализован ограниченный ClearScreen: device/window scopes
 и закрытая native clear-команда. Контракт — `gpu-clear.md`; G0/G1 ещё частичны.
 Добавлен ограниченный BasicTriangle с готовыми SPIR-V/DXIL и проверяемыми
-pipeline IDs: `gpu-triangle.md`. Общая модель command/pass handles,
-graphics buffers, compute и DSL ещё не реализованы; G2 частичен.
+pipeline IDs: `gpu-triangle.md`. Добавлен TexturedQuad с immutable vertex buffer,
+RGBA8 upload и sampler: `gpu-mesh.md`; несколько устройств проверяются отдельно
+(`gpu-multidevice.md`). Общая модель command/pass handles, произвольные layouts,
+index buffers, dynamic updates, compute и DSL ещё не реализованы; G2/G3 частичны.
 Оконные сценарии G1 проверены на Vulkan: resize, два claimed окна,
 minimize/restore и независимый cleanup при panic. Свёрнутое окно в этом backend
 продолжало получать drawable; NULL-путь проверен отдельно через mock.

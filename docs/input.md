@@ -1,7 +1,7 @@
 # Ввод: события, состояние и текст
 
 Реализовано для SDL 3.2.18 и закреплённого интерпретатора daScript.
-Подключение: `require dassdl3/sdl3_boost`. Пример: `examples/input.das`.
+Подключение: `require dassdl3/sdl3_boost`. Пример: `examples/03_input.das`.
 
 ## События
 

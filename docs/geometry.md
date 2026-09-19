@@ -64,7 +64,7 @@ recover renderer можно продолжать использовать. Ош�
 
 ## Пример и тесты
 
-`examples/geometry.das`: анимированный цветной треугольник и индексированный
+`examples/07_geometry.das`: анимированный цветной треугольник и индексированный
 текстурированный прямоугольник, собственный checker.bmp. Сценарий адаптирован
 из public-domain `SDL release-3.2.18/examples/renderer/10-geometry/geometry.c`;
 callback loop заменён PollEvent и ресурсными scopes. Пример без unsafe;

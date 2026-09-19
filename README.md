@@ -3,6 +3,22 @@
 Минимальные привязки SDL3 к daScript / daslang. В первой версии покрывается
 пример с окном, движущимся квадратом и выходом по Escape или закрытию окна.
 
+[Порядок изучения примеров: 01–11](examples/README.md).
+
+Новый GPU-пример с vertex buffer, RGBA8 texture и sampler:
+
+```powershell
+./build/ninja/bin/dasSDL3_runner.exe examples/11_gpu_textured_quad.das
+```
+
+Проверяемые mesh IDs, copied arrays и фиксированный shader ABI описаны в
+[gpu-mesh.md](docs/gpu-mesh.md).
+
+Несколько scoped GPU devices поддерживаются. При конфликте с установленным
+FPS Monitor добавьте `--disable-vulkan-layer=VK_LAYER_RENDERDOC_Capture` к команде
+runner. Этот opt-in фильтр действует только в процессе; validation сохраняется.
+[Диагностика и регрессии двух устройств](docs/gpu-multidevice.md).
+
 ## План развития
 
 Исследование от 19 сентября 2026 и план полной привязки:
@@ -41,8 +57,8 @@
 ```powershell
 cmake -S . -B build/ninja -G Ninja -DCMAKE_BUILD_TYPE=Release
 cmake --build build/ninja --target daslang_static dasSDL3_runner --parallel 6
-./third_party/daScript/bin/daslang_static.exe examples/hello.das
-./build/ninja/bin/dasSDL3_runner.exe examples/square.das
+./third_party/daScript/bin/daslang_static.exe examples/01_hello.das
+./build/ninja/bin/dasSDL3_runner.exe examples/02_square.das
 ```
 
 Альтернатива с генератором Visual Studio:
@@ -50,7 +66,7 @@ cmake --build build/ninja --target daslang_static dasSDL3_runner --parallel 6
 ```powershell
 cmake -S . -B build/vs -A x64
 cmake --build build/vs --config Release --target daslang_static dasSDL3_runner --parallel 6
-./build/vs/bin/Release/dasSDL3_runner.exe examples/square.das
+./build/vs/bin/Release/dasSDL3_runner.exe examples/02_square.das
 ```
 
 В этой рабочей копии уже собран `build/ninja/bin/dasSDL3_runner.exe`.
@@ -86,11 +102,11 @@ Runner использует `daslib` из исходников daScript; кат�
 - `src/sdl3_scopes.h` — восстановление аргументов блоков при исключениях.
 - `src/module_sdl3.cpp` — модуль и подключение ручных адаптеров.
 - `dassdl3/sdl3_boost.das` — идиоматичный слой daScript.
-- `examples/square.das` — цикл событий и вся логика отрисовки на daScript.
-- `examples/textures.das` — BMP, текстуры, масштабирование и обрезка изображения.
-- `examples/input.das` — мышь, клавиатура, текстовый ввод и композиция IME.
+- `examples/02_square.das` — цикл событий и вся логика отрисовки на daScript.
+- `examples/04_textures.das` — BMP, текстуры, масштабирование и обрезка изображения.
+- `examples/03_input.das` — мышь, клавиатура, текстовый ввод и композиция IME.
 - `docs/input.md` — API ввода, время жизни текста и ограничения проверок.
-- `examples/audio.das` — WAV и воспроизведение через аудиопоток.
+- `examples/08_audio.das` — WAV и воспроизведение через аудиопоток.
 - `dassdl3/sdl3_audio_boost.das`, `docs/audio.md` — аудиообёртки и их контракты.
 - `docs/api-coverage.md` — покрытие подсистем и оставшаяся работа.
 - `docs/bgfx-idioms.md` — изученные идиомы dasBGFX с источниками.
@@ -145,8 +161,8 @@ Callbacks, varargs, остальные устройства и универса�
 ## Пример с текстурами
 
 ```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/textures.das
-./build/ninja/bin/dasSDL3_runner.exe examples/textures.das --smoke-test
+./build/ninja/bin/dasSDL3_runner.exe examples/04_textures.das
+./build/ninja/bin/dasSDL3_runner.exe examples/04_textures.das --smoke-test
 ```
 
 Основа — public-domain пример SDL 3.2.18 `examples/renderer/06-textures`.
@@ -169,8 +185,8 @@ $(texture) { ... }` загружает BMP, сразу освобождает в
 ## Пример с вводом
 
 ```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/input.das
-./build/ninja/bin/dasSDL3_runner.exe examples/input.das --smoke-test
+./build/ninja/bin/dasSDL3_runner.exe examples/03_input.das
+./build/ninja/bin/dasSDL3_runner.exe examples/03_input.das --smoke-test
 ```
 
 Мышь перемещает квадрат, левый клик меняет цвет, колесо меняет размер;
@@ -187,7 +203,7 @@ $(texture) { ... }` загружает BMP, сразу освобождает в
 ## Пример с аудио
 
 ```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/audio.das
+./build/ninja/bin/dasSDL3_runner.exe examples/08_audio.das
 ctest --test-dir build/ninja -R '^sdl3_audio' --output-on-failure
 ```
 
@@ -205,7 +221,7 @@ CTest выбирает dummy-драйвер в окружении аудиоте
 ## SDL GPU BasicTriangle
 
 ```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/gpu_triangle.das
+./build/ninja/bin/dasSDL3_runner.exe examples/10_gpu_triangle.das
 ctest --test-dir build/ninja -R '^sdl3_gpu_triangle' --output-on-failure
 ```
 
@@ -216,7 +232,7 @@ ctest --test-dir build/ninja -R '^sdl3_gpu_triangle' --output-on-failure
 ## SDL GPU ClearScreen
 
 ```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/gpu_clear.das
+./build/ninja/bin/dasSDL3_runner.exe examples/09_gpu_clear.das
 ctest --test-dir build/ninja -R '^sdl3_gpu' --output-on-failure
 ```
 
@@ -228,7 +244,7 @@ ctest --test-dir build/ninja -R '^sdl3_gpu' --output-on-failure
 ## Geometry
 
 ```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/geometry.das
+./build/ninja/bin/dasSDL3_runner.exe examples/07_geometry.das
 ctest --test-dir build/ninja -R '^sdl3_geometry' --output-on-failure
 ```
 
@@ -240,8 +256,8 @@ ctest --test-dir build/ninja -R '^sdl3_geometry' --output-on-failure
 ## Пиксели и render target
 
 ```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/streaming_texture.das
-./build/ninja/bin/dasSDL3_runner.exe examples/render_target.das
+./build/ninja/bin/dasSDL3_runner.exe examples/05_streaming_texture.das
+./build/ninja/bin/dasSDL3_runner.exe examples/06_render_target.das
 ctest --test-dir build/ninja -R '^sdl3_(pixels|streaming_example|target_example)$' --output-on-failure
 ```
 
@@ -281,7 +297,7 @@ Clang можно задать полным путём. При `-DDASSDL3_ENABLE_
 
 ```powershell
 ctest --test-dir build/ninja -R "^(sdl3_|bindings_up_to_date)" --output-on-failure
-./build/ninja/bin/dasSDL3_runner.exe examples/square.das --smoke-test
+./build/ninja/bin/dasSDL3_runner.exe examples/02_square.das --smoke-test
 ```
 
 Проверяются запуск daScript, версия SDL, чтение/изменение полей,

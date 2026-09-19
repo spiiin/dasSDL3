@@ -110,3 +110,9 @@ reusable idioms and pinned upstream source links; this one describes our layer.
 Build and test commands are in README.md. This file and AGENTS.md are the
 persistent project context for future sessions; no global user settings or
 personal skill installation is required.
+
+GPU mesh scopes are in `dassdl3/sdl3_gpu_mesh_boost.das`; see `gpu-mesh.md` for
+the fixed vertex/shader ABI and copied array contract. Multiple scoped devices
+are supported; device-specific cleanup must preserve other devices' resources.
+The former single-device restriction was traced to this machine's FPS Monitor
+Vulkan layer. Diagnosis and opt-in per-process filtering: `gpu-multidevice.md`.

@@ -70,12 +70,12 @@ SDL_Surface и SDL_Texture остаются opaque. Указатели из бл
 
 ## Примеры и проверки
 
-- `examples/streaming_texture.das`: движущаяся зелёная полоса на CPU, upload,
+- `examples/05_streaming_texture.das`: движущаяся зелёная полоса на CPU, upload,
   отображение текстуры. Сценарий взят из public-domain примера SDL
   release-3.2.18 `examples/renderer/07-streaming-textures/streaming-textures.c`.
   Это адаптация с собственным staging array и PollEvent, не точный порт C
   callback/LockTextureToSurface API. Исходник C изучен; отдельно не запускался.
-- `examples/render_target.das`: собственный пример offscreen render → readback
+- `examples/06_render_target.das`: собственный пример offscreen render → readback
   с проверкой RGB → отображение target texture.
 - Оба примера без unsafe; интерактивно работают до Escape/закрытия окна,
   `--smoke-test` выполняет 60 кадров в скрытом окне.

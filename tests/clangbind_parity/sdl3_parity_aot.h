@@ -7,6 +7,7 @@
 #include "sdl3_pixels.h"
 #include "sdl3_geometry.h"
 #include "sdl3_gpu.h"
+#include "sdl3_gpu_mesh.h"
 #include "parity_types.inc"
 #include "sdl3_scopes.h"
 #include "aot_recover.h"
@@ -17,4 +18,5 @@
 #include "geometry_probe.h"
 #include "gpu_probe.h"
 #include "gpu_triangle_probe.h"
+#include "gpu_mesh_probe.h"
 #endif

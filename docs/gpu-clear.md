@@ -15,8 +15,8 @@ with_sdl() {
 }
 ```
 
-Полный цикл событий — `examples/gpu_clear.das`. Запуск из корня:
-`./build/ninja/bin/dasSDL3_runner.exe examples/gpu_clear.das`.
+Полный цикл событий — `examples/09_gpu_clear.das`. Запуск из корня:
+`./build/ninja/bin/dasSDL3_runner.exe examples/09_gpu_clear.das`.
 `--smoke-test` требует 60 отправленных кадров. При отсутствии GPU backend
 он возвращает 77, который CTest показывает как SKIP, а не успешную GPU-проверку.
 Ошибка claim/recording/submit после создания устройства остаётся ошибкой теста.
@@ -26,8 +26,8 @@ with_sdl() {
 - Все операции выполняются в основном потоке, где создано окно.
 - Устройство и окно должны жить дольше `with_gpu_window`. Release claim
   выполняется до DestroyWindow, а DestroyGPUDevice — до SDL_Quit.
-- Scoped API теперь ограничен одним активным GPU device; повторное создание
-  отклоняется до SDL. Причина и границы проверки — `gpu-triangle.md`.
+- Scoped API поддерживает несколько активных GPU devices; registry и cleanup
+  разделены по device. Диагностика Vulkan overlay — `gpu-multidevice.md`.
 - `try_with_gpu_device(formats, debug, driver, block)` возвращает false только
   при ошибке создания устройства. Пустой driver выбирает автоматически.
   `with_gpu_device` использует debug mode и набор GPU_CLEAR_FORMATS.
@@ -100,7 +100,7 @@ Debug mode само по себе не гарантирует, что validation
 shader binaries и проверяемыми pipeline IDs добавлен в `gpu-triangle.md`.
 DSL остаётся поздним этапом.
 
-Проверено на Windows x64/MSVC 19.38: основной набор 24/24, parity/AOT 60/60,
+После добавления Triangle проверено на Windows x64/MSVC 19.38: основной набор 29/29, parity/AOT 68/68,
 без пропусков. GPU backend при прямом запуске — Vulkan, 60 кадров 640×480.
 Снимки обоих генераторов: 60 функций, 10 records, 49 полей, 7 opaque types,
 47 констант. Это покрытие выборки, а не всего SDL GPU.

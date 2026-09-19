@@ -35,9 +35,6 @@ def main(smoke : bool) : int {
                         verify(SDLTestGPUPipelines() == 1 && SDLTestGPUShaders() == 0)
                         verify(gpu_draw_triangle(device, window, pipeline))
                         verify(SDLTestGPUForeignPipeline(device, pipeline))
-                        verify(!try_with_gpu_device(format, true, "") $(other) {
-                            panic("second scoped GPU device unexpectedly created")
-                        })
                         verify(SDLTestGPUDevices() == 1)
                         verify(gpu_draw_triangle(device, window, pipeline))
                         return

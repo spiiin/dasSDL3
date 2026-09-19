@@ -23,7 +23,7 @@ with_sdl(SDL_INIT_AUDIO) {
 ```
 
 Поток закрывается при выходе из блока: для реального воспроизведения нужно
-дать ему время обработать очередь (см. полный `examples/audio.das`).
+дать ему время обработать очередь (см. полный `examples/08_audio.das`).
 
 ## Владение и форматы
 
@@ -68,14 +68,14 @@ Native адаптеры находятся в `src/sdl3_audio.h`, правила
 
 ## Пример и проверки
 
-`examples/audio.das` основан на public-domain коде SDL 3.2.18
+`examples/08_audio.das` основан на public-domain коде SDL 3.2.18
 `examples/audio/03-load-wav/load-wav.c`. Чужая музыкальная запись не используется:
 `examples/assets/tone.wav` — собственный тихий сигнал 440 Гц, 0.4 секунды,
 mono PCM16 22050 Гц. Генератор: `tools/make_audio_fixture.py`. CMake копирует
 файл в `bin/assets`; путь строится относительно SDL_GetBasePath.
 
 ```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/audio.das
+./build/ninja/bin/dasSDL3_runner.exe examples/08_audio.das
 ctest --test-dir build/ninja -R '^sdl3_audio' --output-on-failure
 ```
 

@@ -14558,8 +14558,14 @@
       ],
       "id": "function:SDL_BeginGPUCopyPass",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "tests": [
+        "tests/gpu_mesh.das"
+      ],
+      "contract": "docs/gpu-mesh.md"
     },
     {
       "name": "SDL_BeginGPURenderPass",
@@ -14785,8 +14791,14 @@
       ],
       "id": "function:SDL_BindGPUFragmentSamplers",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "tests": [
+        "tests/gpu_mesh.das"
+      ],
+      "contract": "docs/gpu-mesh.md"
     },
     {
       "name": "SDL_BindGPUFragmentStorageBuffers",
@@ -14929,8 +14941,14 @@
       ],
       "id": "function:SDL_BindGPUVertexBuffers",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "tests": [
+        "tests/gpu_mesh.das"
+      ],
+      "contract": "docs/gpu-mesh.md"
     },
     {
       "name": "SDL_BindGPUVertexSamplers",
@@ -16393,8 +16411,14 @@
       ],
       "id": "function:SDL_CreateGPUBuffer",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "tests": [
+        "tests/gpu_mesh.das"
+      ],
+      "contract": "docs/gpu-mesh.md"
     },
     {
       "name": "SDL_CreateGPUComputePipeline",
@@ -16488,7 +16512,7 @@
       "category": "GPU",
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Vertex-ID trianglelist, one swapchain-format target, no blending/depth/vertex input/resources",
+      "reason": "Vertex-ID triangle or fixed float2 position/UV mesh; one color target, no blending/depth",
       "adapter": "SDL_CreateGPUVertexIDPipeline",
       "tests": [
         "tests/gpu_triangle.das"
@@ -16514,8 +16538,14 @@
       ],
       "id": "function:SDL_CreateGPUSampler",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "tests": [
+        "tests/gpu_mesh.das"
+      ],
+      "contract": "docs/gpu-mesh.md"
     },
     {
       "name": "SDL_CreateGPUShader",
@@ -16538,7 +16568,7 @@
       "category": "GPU",
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Trusted precompiled SPIR-V/DXIL, main entry, vertex/fragment with zero resource bindings only",
+      "reason": "Trusted precompiled SPIR-V/DXIL: vertex-ID zero-resource triangle or fixed position/UV mesh with one fragment sampler",
       "adapter": "SDL_LoadGPUZeroResourceShader",
       "tests": [
         "tests/gpu_triangle.das"
@@ -16564,8 +16594,14 @@
       ],
       "id": "function:SDL_CreateGPUTexture",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "tests": [
+        "tests/gpu_mesh.das"
+      ],
+      "contract": "docs/gpu-mesh.md"
     },
     {
       "name": "SDL_CreateGPUTransferBuffer",
@@ -16586,8 +16622,14 @@
       ],
       "id": "function:SDL_CreateGPUTransferBuffer",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "tests": [
+        "tests/gpu_mesh.das"
+      ],
+      "contract": "docs/gpu-mesh.md"
     },
     {
       "name": "SDL_CreateHapticEffect",
@@ -17926,7 +17968,7 @@
       "category": "GPU",
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Exactly 3 vertices, 1 instance, vertex/instance offset zero; no general draw API",
+      "reason": "Triangle or immutable checked mesh vertex count; 1 instance, offsets zero; no general draw API",
       "adapter": "SDL_DrawGPUVertexIDTriangle",
       "tests": [
         "tests/gpu_triangle.das"
@@ -18119,8 +18161,14 @@
       ],
       "id": "function:SDL_EndGPUCopyPass",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "tests": [
+        "tests/gpu_mesh.das"
+      ],
+      "contract": "docs/gpu-mesh.md"
     },
     {
       "name": "SDL_EndGPURenderPass",
@@ -27707,8 +27755,14 @@
       ],
       "id": "function:SDL_MapGPUTransferBuffer",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "tests": [
+        "tests/gpu_mesh.das"
+      ],
+      "contract": "docs/gpu-mesh.md"
     },
     {
       "name": "SDL_MapRGB",
@@ -29641,8 +29695,14 @@
       ],
       "id": "function:SDL_ReleaseGPUBuffer",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "tests": [
+        "tests/gpu_mesh.das"
+      ],
+      "contract": "docs/gpu-mesh.md"
     },
     {
       "name": "SDL_ReleaseGPUComputePipeline",
@@ -29735,8 +29795,14 @@
       ],
       "id": "function:SDL_ReleaseGPUSampler",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "tests": [
+        "tests/gpu_mesh.das"
+      ],
+      "contract": "docs/gpu-mesh.md"
     },
     {
       "name": "SDL_ReleaseGPUShader",
@@ -29785,8 +29851,14 @@
       ],
       "id": "function:SDL_ReleaseGPUTexture",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "tests": [
+        "tests/gpu_mesh.das"
+      ],
+      "contract": "docs/gpu-mesh.md"
     },
     {
       "name": "SDL_ReleaseGPUTransferBuffer",
@@ -29807,8 +29879,14 @@
       ],
       "id": "function:SDL_ReleaseGPUTransferBuffer",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "tests": [
+        "tests/gpu_mesh.das"
+      ],
+      "contract": "docs/gpu-mesh.md"
     },
     {
       "name": "SDL_ReleaseWindowFromGPUDevice",
@@ -35523,8 +35601,14 @@
       ],
       "id": "function:SDL_UnmapGPUTransferBuffer",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "tests": [
+        "tests/gpu_mesh.das"
+      ],
+      "contract": "docs/gpu-mesh.md"
     },
     {
       "name": "SDL_UnregisterApp",
@@ -35824,8 +35908,14 @@
       ],
       "id": "function:SDL_UploadToGPUBuffer",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "tests": [
+        "tests/gpu_mesh.das"
+      ],
+      "contract": "docs/gpu-mesh.md"
     },
     {
       "name": "SDL_UploadToGPUTexture",
@@ -35854,8 +35944,14 @@
       ],
       "id": "function:SDL_UploadToGPUTexture",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "tests": [
+        "tests/gpu_mesh.das"
+      ],
+      "contract": "docs/gpu-mesh.md"
     },
     {
       "name": "SDL_Vulkan_CreateSurface",
