@@ -104,8 +104,8 @@ MAIN_BUILD по умолчанию build/ninja; его static SDL и собра�
 Generated output включает parity_types.inc, parity_functions.inc,
 parity-contract.tsv и parity-api.json; AOT .cpp также остаются внутри сборки.
 
-Основной CMake по-прежнему выбирает Python backend. Макросы альтернативных
-include и AOT-header задаются только экспериментальным target. Следующий шаг —
-оформить этот проверенный backend как штатную опцию, обеспечить проверяемые
-generated snapshots и сборку consumer без LLVM. Перед широким расширением
+Обновление: основной CMake теперь выбирает CppGenBind-снимки для MSVC Windows
+x64; штатная опция, обновление snapshots и consumer без LLVM описаны в
+`clangbind-production.md`. AOT-header пока задаётся экспериментальным target.
+Перед широким расширением
 остаются platform policy, nested GPU create-info и новые ownership contracts.

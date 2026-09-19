@@ -14,8 +14,9 @@ Run its standalone `tests/clangbind` CMake project before expanding the selectio
 `docs/clangbind-parity.md`. Its extension now generates type/constant policy
 independently and runs resource AOT: read `docs/clangbind-types-aot.md`.
 The pinned AOT try/recover ordering needs a local generator workaround; preserve
-the negative missing-AOT test and panic-message regressions. Production backend
-selection and LLVM-free consumer packaging remain open gates. Do not
+the negative missing-AOT test and panic-message regressions. Production snapshot
+selection and LLVM-free source builds are described in `docs/clangbind-production.md`.
+Install/export packaging is not yet provided. Do not
 treat its borrowed pointer fixture as a safe public GPU builder.
 Regenerate `docs/generated/api-*` with `tools/inventory_api.py`; do not edit
 snapshots by hand. Keep inactive-platform and manual-adapter coverage explicit.
@@ -31,7 +32,8 @@ Result/Option and investigate existing dasSpirv/layout helpers before inventing
 equivalents; source inspection alone does not establish runtime correctness.
 
 - Keep generated bindings in `src/generated/`; change `tools/bindings.json` or
-  `tools/generate_bindings.py`, then regenerate. Never hand-edit generated files.
+  `tools/generate_bindings.py` (legacy) or `tools/clangbind_parity.das` and
+  `tools/run_clangbind_parity.py --snapshot`, then regenerate. Never hand-edit generated files.
 - Put script helpers in `dassdl3/sdl3_boost.das` and native adapters in
   `src/sdl3_adapters.h`. Keep the raw `sdl3` module available.
 - Keep `examples/square.das` free of unsafe blocks and raw address operations.

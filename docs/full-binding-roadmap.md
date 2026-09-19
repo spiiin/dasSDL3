@@ -144,9 +144,10 @@ interpreter/строгом AOT, см. [clangbind-experiment.md](clangbind-experi
 Прежние 50 exports и текущие interpreter-сценарии проверены в отдельном
 [parity-проекте](clangbind-parity.md). Следом выполнены независимая генерация
 текущих аннотаций/констант и [ресурсный AOT](clangbind-types-aot.md) с локальным
-обходом ошибки pinned try/recover. Впереди штатное подключение backend,
-consumer без LLVM, platform policy и расширение ABI/GPU coverage.
-Это не завершение gate выбора backend.
+обходом ошибки pinned try/recover. Теперь штатный CMake выбирает CppGenBind
+для MSVC Windows x64; выполнена чистая сборка consumer без LLVM
+(см. clangbind-production.md). Старый backend остаётся fallback и baseline.
+Впереди platform policy, расширение ABI/GPU coverage и install/export packaging.
 
 1. Зафиксировать полный census 3.2.18 и схему policy, не менять публичный API.
 2. Проверить dasClangBind на SDL_rect.h / SDL_pixels.h и выбранных структурах

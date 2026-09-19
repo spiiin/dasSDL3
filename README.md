@@ -205,14 +205,17 @@ CTest выбирает dummy-драйвер в окружении аудиоте
 ## Повторная генерация
 
 Установка LLVM SDK и проверка экспериментального dasClangBind описаны в
-[docs/clangbind-setup.md](docs/clangbind-setup.md). Рабочий генератор пока прежний.
+[docs/clangbind-setup.md](docs/clangbind-setup.md). Для MSVC Windows x64 теперь
+по умолчанию используются сохранённые CppGenBind-привязки; обычная сборка не
+требует LLVM/Python. [Выбор backend, генерация и consumer](docs/clangbind-production.md).
 Ограниченная генерация CppGenBind и строгий AOT consumer проверены отдельно:
 [результаты и команды](docs/clangbind-experiment.md).
 Совместимость прежних 50 функций и текущих interpreter-примеров проверяется
 отдельным [parity-проектом](docs/clangbind-parity.md). Теперь он также
 [генерирует типы/константы и проверяет ресурсный AOT](docs/clangbind-types-aot.md).
 
-Укажите папку, в которой находится `SDL3/SDL.h`:
+Для прежнего backend (`-DDASSDL3_BINDING_BACKEND=python`) укажите папку,
+в которой находится `SDL3/SDL.h`:
 
 ```powershell
 python tools/generate_bindings.py --clang clang --sdl-include build/ninja/_deps/sdl3-src/include
@@ -220,7 +223,8 @@ python tools/generate_bindings.py --clang clang --sdl-include build/ninja/_deps/
 ```
 
 При использовании локальной копии SDL укажите её `include` вместо пути выше.
-Clang можно задать полным путём. Если CMake найдёт Python и Clang (либо
+Clang можно задать полным путём. При `-DDASSDL3_ENABLE_GENERATORS=ON`,
+если CMake найдёт Python и Clang (либо
 получит `-DDASSDL3_CLANG_EXECUTABLE=...`), будет доступна цель
 `cmake --build build/ninja --target generate_bindings`.
 После генерации пересоберите runner. Генератор не меняет ручные адаптеры.

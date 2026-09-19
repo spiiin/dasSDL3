@@ -1,0 +1,89 @@
+S	SDL_AudioSpec	12	4
+F	SDL_AudioSpec	channels	channels	4
+F	SDL_AudioSpec	freq	freq	8
+S	SDL_FRect	16	4
+F	SDL_FRect	x	x	0
+F	SDL_FRect	y	y	4
+F	SDL_FRect	w	w	8
+F	SDL_FRect	h	h	12
+S	SDL_KeyboardEvent	40	8
+F	SDL_KeyboardEvent	timestamp	timestamp	8
+F	SDL_KeyboardEvent	windowID	windowID	16
+F	SDL_KeyboardEvent	which	which	20
+F	SDL_KeyboardEvent	key	key	28
+F	SDL_KeyboardEvent	mod	mod	32
+F	SDL_KeyboardEvent	raw	raw	34
+F	SDL_KeyboardEvent	down	down	36
+F	SDL_KeyboardEvent	repeat	repeat	37
+S	SDL_MouseMotionEvent	48	8
+F	SDL_MouseMotionEvent	timestamp	timestamp	8
+F	SDL_MouseMotionEvent	windowID	windowID	16
+F	SDL_MouseMotionEvent	which	which	20
+F	SDL_MouseMotionEvent	state	state	24
+F	SDL_MouseMotionEvent	x	x	28
+F	SDL_MouseMotionEvent	y	y	32
+F	SDL_MouseMotionEvent	xrel	xrel	36
+F	SDL_MouseMotionEvent	yrel	yrel	40
+S	SDL_MouseButtonEvent	40	8
+F	SDL_MouseButtonEvent	timestamp	timestamp	8
+F	SDL_MouseButtonEvent	windowID	windowID	16
+F	SDL_MouseButtonEvent	which	which	20
+F	SDL_MouseButtonEvent	button	button	24
+F	SDL_MouseButtonEvent	down	down	25
+F	SDL_MouseButtonEvent	clicks	clicks	26
+F	SDL_MouseButtonEvent	x	x	28
+F	SDL_MouseButtonEvent	y	y	32
+S	SDL_MouseWheelEvent	56	8
+F	SDL_MouseWheelEvent	timestamp	timestamp	8
+F	SDL_MouseWheelEvent	windowID	windowID	16
+F	SDL_MouseWheelEvent	which	which	20
+F	SDL_MouseWheelEvent	x	x	24
+F	SDL_MouseWheelEvent	y	y	28
+F	SDL_MouseWheelEvent	mouse_x	mouse_x	36
+F	SDL_MouseWheelEvent	mouse_y	mouse_y	40
+F	SDL_MouseWheelEvent	integer_x	integer_x	44
+F	SDL_MouseWheelEvent	integer_y	integer_y	48
+S	SDL_Event	128	8
+F	SDL_Event	type	event_type	0
+K	SDL_INIT_VIDEO	uint32_t	0x20
+K	SDL_WINDOW_RESIZABLE	uint64_t	0x20
+K	SDL_WINDOW_HIDDEN	uint64_t	0x8
+K	SDL_EVENT_QUIT	uint32_t	0x100
+K	SDL_EVENT_KEY_DOWN	uint32_t	0x300
+K	SDL_EVENT_KEY_UP	uint32_t	0x301
+K	SDLK_ESCAPE	uint32_t	0x1b
+K	SDL_EVENT_TEXT_INPUT	uint32_t	0x303
+K	SDL_EVENT_TEXT_EDITING	uint32_t	0x302
+K	SDL_EVENT_MOUSE_MOTION	uint32_t	0x400
+K	SDL_EVENT_MOUSE_BUTTON_DOWN	uint32_t	0x401
+K	SDL_EVENT_MOUSE_BUTTON_UP	uint32_t	0x402
+K	SDL_EVENT_MOUSE_WHEEL	uint32_t	0x403
+K	SDL_EVENT_WINDOW_CLOSE_REQUESTED	uint32_t	0x210
+K	SDL_BUTTON_LEFT	uint32_t	0x1
+K	SDL_BUTTON_MIDDLE	uint32_t	0x2
+K	SDL_BUTTON_RIGHT	uint32_t	0x3
+K	SDL_BUTTON_LMASK	uint32_t	0x1
+K	SDL_BUTTON_MMASK	uint32_t	0x2
+K	SDL_BUTTON_RMASK	uint32_t	0x4
+K	SDL_KMOD_SHIFT	uint32_t	0x3
+K	SDL_KMOD_CTRL	uint32_t	0xc0
+K	SDL_KMOD_ALT	uint32_t	0x300
+K	SDLK_BACKSPACE	uint32_t	0x8
+K	SDLK_RETURN	uint32_t	0xd
+K	SDLK_LEFT	uint32_t	0x40000050
+K	SDLK_RIGHT	uint32_t	0x4000004f
+K	SDLK_UP	uint32_t	0x40000052
+K	SDLK_DOWN	uint32_t	0x40000051
+K	SDL_SCANCODE_A	int32_t	4
+K	SDL_SCANCODE_LEFT	int32_t	80
+K	SDL_SCANCODE_RIGHT	int32_t	79
+K	SDL_SCANCODE_UP	int32_t	82
+K	SDL_SCANCODE_DOWN	int32_t	81
+K	SDL_SCANCODE_ESCAPE	int32_t	41
+K	SDL_SCANCODE_SPACE	int32_t	44
+K	SDL_SCANCODE_COUNT	int32_t	512
+K	SDL_INIT_AUDIO	uint32_t	0x10
+K	SDL_AUDIO_S16	uint32_t	0x8010
+K	SDL_AUDIO_S16LE	uint32_t	0x8010
+K	SDL_AUDIO_F32	uint32_t	0x8120
+K	SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK	uint32_t	0xffffffff

@@ -1,4 +1,22 @@
+set(_binding_default python)
+if(WIN32 AND MSVC AND CMAKE_SIZEOF_VOID_P EQUAL 8 AND CMAKE_CXX_COMPILER_ARCHITECTURE_ID STREQUAL "x64")
+    set(_binding_default clangbind)
+endif()
+set(DASSDL3_BINDING_BACKEND "${_binding_default}" CACHE STRING "Binding snapshots: clangbind or python")
+set_property(CACHE DASSDL3_BINDING_BACKEND PROPERTY STRINGS clangbind python)
+if(NOT DASSDL3_BINDING_BACKEND MATCHES "^(clangbind|python)$")
+    message(FATAL_ERROR "Unknown DASSDL3_BINDING_BACKEND: ${DASSDL3_BINDING_BACKEND}")
+endif()
+if(DASSDL3_BINDING_BACKEND STREQUAL "clangbind" AND NOT _binding_default STREQUAL "clangbind")
+    message(FATAL_ERROR "CppGenBind snapshots currently support only MSVC Windows x64")
+endif()
+message(STATUS "dasSDL3 binding backend: ${DASSDL3_BINDING_BACKEND} (saved snapshots)")
 add_library(dasSDL3 STATIC module_sdl3.cpp)
+if(DASSDL3_BINDING_BACKEND STREQUAL "clangbind")
+    target_compile_definitions(dasSDL3 PRIVATE
+        DASSDL3_TYPES_INCLUDE="generated/clangbind/sdl3_types.inc"
+        DASSDL3_REGISTRATION_INCLUDE="generated/clangbind/sdl3_functions.inc")
+endif()
 target_include_directories(dasSDL3 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_SOURCE_DIR}/third_party/daScript/include
@@ -21,9 +39,27 @@ configure_file(${CMAKE_SOURCE_DIR}/examples/assets/checker.bmp
 configure_file(${CMAKE_SOURCE_DIR}/examples/assets/tone.wav
     ${CMAKE_BINARY_DIR}/bin/assets/tone.wav COPYONLY)
 
-find_package(Python3 COMPONENTS Interpreter)
+option(DASSDL3_ENABLE_GENERATORS "Enable developer binding generation and freshness checks" OFF)
+if(DASSDL3_ENABLE_GENERATORS)
+find_package(Python3 REQUIRED COMPONENTS Interpreter)
+if(DASSDL3_BINDING_BACKEND STREQUAL "clangbind")
+    set(DASSDL3_GENERATOR_DASLANG "" CACHE FILEPATH "daslang executable with dasClangBind module")
+    set(DASSDL3_LLVM_SDK "" CACHE PATH "LLVM SDK for binding generation")
+    if(NOT EXISTS "${DASSDL3_GENERATOR_DASLANG}" OR NOT EXISTS "${DASSDL3_LLVM_SDK}/lib/clang/22/include/stddef.h")
+        message(FATAL_ERROR "Set DASSDL3_GENERATOR_DASLANG and DASSDL3_LLVM_SDK; see docs/clangbind-production.md")
+    endif()
+    set(_generate_command ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tools/run_clangbind_parity.py
+        --snapshot --daslang ${DASSDL3_GENERATOR_DASLANG} --sdk ${DASSDL3_LLVM_SDK}
+        --sdl-include ${sdl3_SOURCE_DIR}/include --output ${CMAKE_CURRENT_SOURCE_DIR}/generated/clangbind)
+    add_custom_target(generate_bindings COMMAND ${_generate_command}
+        COMMENT "Updating saved CppGenBind bindings")
+    if(BUILD_TESTING)
+        add_test(NAME bindings_up_to_date COMMAND ${_generate_command} --check)
+    endif()
+endif()
 find_program(DASSDL3_CLANG_EXECUTABLE NAMES clang)
 if(Python3_FOUND AND DASSDL3_CLANG_EXECUTABLE)
+    if(DASSDL3_BINDING_BACKEND STREQUAL "python")
     add_custom_target(generate_bindings
         COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tools/generate_bindings.py
             --clang ${DASSDL3_CLANG_EXECUTABLE} --sdl-include ${sdl3_SOURCE_DIR}/include
@@ -33,6 +69,9 @@ if(Python3_FOUND AND DASSDL3_CLANG_EXECUTABLE)
         add_test(NAME bindings_up_to_date
             COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tools/generate_bindings.py
                 --clang ${DASSDL3_CLANG_EXECUTABLE} --sdl-include ${sdl3_SOURCE_DIR}/include --check)
+    endif()
+    endif()
+    if(BUILD_TESTING)
         if(WIN32)
             # This committed snapshot deliberately describes one target profile.
             add_test(NAME sdl3_api_inventory
@@ -45,9 +84,10 @@ if(Python3_FOUND AND DASSDL3_CLANG_EXECUTABLE)
         endif()
     endif()
 endif()
+endif()
 if(BUILD_TESTING)
     target_compile_definitions(dasSDL3 PRIVATE DASSDL3_TESTING=1)
-    # Optional Windows tooling probe; the production binding generator is unchanged.
+    # Optional tooling probe; never needed to consume the saved bindings.
     if(WIN32 AND TARGET dasModuleClangBind AND TARGET daslang AND PATH_TO_LIBCLANG)
         add_test(NAME sdl3_clangbind_probe
             COMMAND $<TARGET_FILE:daslang> ${CMAKE_SOURCE_DIR}/tools/clangbind_probe.das

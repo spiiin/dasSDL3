@@ -1,5 +1,6 @@
 """Generate the existing allowlist through CppGenBind and compare Clang metadata."""
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import re
@@ -24,6 +25,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('daslang', 'sdl-include', 'sdk', 'output'):
         parser.add_argument('--' + name, required=True, type=Path)
+    parser.add_argument('--snapshot', action='store_true',
+                        help='Generate production snapshots independently of the legacy manifest')
+    parser.add_argument('--check', action='store_true', help='Check output without modifying it')
     args = parser.parse_args()
     for name in ('daslang', 'sdl_include', 'sdk', 'output'):
         setattr(args, name, getattr(args, name).resolve())
@@ -31,11 +35,11 @@ def main():
         if not path.is_file():
             raise FileNotFoundError(path)
     spec = json.loads((ROOT / 'tools/bindings.json').read_text())
-    baseline = json.loads((ROOT / 'src/generated/api.json').read_text())
+    baseline = {} if args.snapshot else json.loads((ROOT / 'src/generated/api.json').read_text())
     # libclang omits this spelling on x64; the das generator explicitly checks CC.
     for record in baseline.values():
         record['signature'] = record['signature'].replace(' __attribute__((cdecl))', '')
-    if set(spec['functions']) != set(baseline):
+    if not args.snapshot and set(spec['functions']) != set(baseline):
         raise RuntimeError('Baseline manifest and bindings.json differ; regenerate production first')
     with tempfile.TemporaryDirectory(prefix='sdl-parity-') as temp:
         root = Path(temp)
@@ -65,7 +69,7 @@ def main():
         if name in actual:
             raise RuntimeError(f'Duplicate function {name}')
         actual[name] = {'signature': signature.replace('_Bool', 'bool'), 'arguments': arguments}
-    if actual != baseline:
+    if not args.snapshot and actual != baseline:
         differences = {name: {'baseline': baseline.get(name), 'cppgenbind': actual.get(name)}
                        for name in baseline.keys() | actual.keys() if baseline.get(name) != actual.get(name)}
         raise RuntimeError(json.dumps(differences, indent=2))
@@ -81,11 +85,35 @@ def main():
         raise RuntimeError('Fields differ from policy')
     if sorted((row[1], row[2]) for row in rows if row[0] == 'K') != sorted(spec['constants'].items()):
         raise RuntimeError('Constants differ from policy')
-    args.output.mkdir(parents=True, exist_ok=True)
-    (args.output / 'parity_functions.inc').write_text(files['registrations.inc'] + files['functions.inc'], encoding='utf-8')
-    (args.output / 'parity_types.inc').write_text(files['types.inc'], encoding='utf-8')
-    (args.output / 'parity-contract.tsv').write_text(files['contract.tsv'], encoding='utf-8')
-    (args.output / 'parity-api.json').write_text(json.dumps(actual, indent=2) + '\n', encoding='utf-8')
+    outputs = {
+        'parity_functions.inc': files['registrations.inc'] + files['functions.inc'],
+        'parity_types.inc': files['types.inc'],
+        'parity-contract.tsv': files['contract.tsv'],
+        'parity-api.json': json.dumps(actual, indent=2) + '\n',
+    }
+    if args.snapshot:
+        outputs = {name.replace('parity_', 'sdl3_').replace('parity-', ''): value
+                   for name, value in outputs.items()}
+        inputs = {str(path.relative_to(ROOT)).replace('\\', '/'):
+                  hashlib.sha256(path.read_bytes().replace(b'\r\n', b'\n')).hexdigest()
+                  for path in (Path(__file__).resolve(), ROOT / 'tools/clangbind_parity.das',
+                               ROOT / 'tools/bindings.json', ROOT / 'tools/api-policy.json')}
+        headers = {path.name: hashlib.sha256(path.read_bytes().replace(b'\r\n', b'\n')).hexdigest()
+                   for path in sorted((args.sdl_include / 'SDL3').glob('*.h'))}
+        outputs['profile.json'] = json.dumps({
+            'target': 'x86_64-pc-windows-msvc', 'sdl_release': '3.2.18',
+            'llvm_sdk': '22.1.5', 'inputs_sha256': inputs, 'headers_sha256': headers,
+        }, indent=2) + '\n'
+    if args.check:
+        stale = [name for name, value in outputs.items()
+                 if not (args.output / name).is_file()
+                 or (args.output / name).read_text(encoding='utf-8') != value]
+        if stale:
+            raise RuntimeError('Stale generated bindings: ' + ', '.join(stale))
+    else:
+        args.output.mkdir(parents=True, exist_ok=True)
+        for name, value in outputs.items():
+            (args.output / name).write_text(value, encoding='utf-8')
     print(f'CppGenBind parity: {len(actual)} functions, {len(spec["structs"])} records, '
           f'{len(spec["opaque_types"])} opaque types, {len(expected_fields)} fields, '
           f'{len(spec["constants"])} constants; deterministic output PASS')
