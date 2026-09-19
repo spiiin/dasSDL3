@@ -3,7 +3,7 @@
 Целевая версия: SDL 3.2.18. Это список реализованных сценариев, а не заявление
 о полном покрытии подсистем. `tools/bindings.json` задаёт точный перечень
 экспортов; `src/generated/api.json` содержит полученные из Clang сигнатуры.
-Сейчас генерируются 50 функций SDL. Ручные адаптеры перечислены отдельно.
+Сейчас генерируются 52 функции SDL. Ручные адаптеры перечислены отдельно.
 
 Первый автоматический реестр активного API Windows x64 и его ограничения:
 `api-inventory.md`, `generated/api-windows-x64-msvc.md`. Он не заменяет
@@ -18,7 +18,7 @@
 | BMP / поверхности | LoadBMP, DestroySurface | load_bmp, destroy_surface, with_bmp | textures: нормальный/ранний выход, panic, ошибка создания текстуры; пиксельные буферы поверхности не раскрыты |
 | Статические текстуры | CreateTextureFromSurface, DestroyTexture, GetTextureSize, RenderTexture | create_texture, load_texture, destroy_texture, texture_size, with_texture, draw_texture (3 перегрузки) | textures: размеры, чтение пикселей, освобождение до renderer, отсутствующий файл |
 | Путь к ресурсам примера | GetBasePath | пример строит путь к assets рядом с exe | запуск не зависит от текущей папки; универсального файлового слоя ещё нет |
-| Streaming / render-target текстуры | Нет | Нет | Lock/Unlock, UpdateTexture, форматы и буферы требуют следующего этапа |
+| Streaming / render-target текстуры | Get/SetRenderTarget; создание/lock/readback через частичные адаптеры | with_streaming_texture, upload_rgba8, with_target_texture, with_render_target, with_read_pixels, surface_size, copy_surface_rgba8 | pixels: pitch, границы, RGBA roundtrip, cleanup и nested target в interpreter/AOT; region updates и прочие форматы впереди |
 | Аудио | LoadWAV/free, Create/DestroyAudioStream, Put/GetAudioStreamData, GetAvailable/Queued/Format/Device, Flush/Clear, Pause/Resume/DevicePaused | with_wav, with_audio_stream, with_playback; queue_wav, put/read_audio и управление очередью | audio: PCM-копии, ресэмплинг, размеры, очистка и dummy; физическое устройство/микрофон/callbacks впереди |
 | Клавиатура и мышь | GetKeyboardState, GetMouseState; Keyboard/Motion/Button/Wheel структуры | key_event, key_scancode, key_down, mouse_*_event, wheel_delta, mouse_state | input: Down/Up, repeat/mod, координаты, клики, FLIPPED, границы индекса; относительный режим/захват впереди |
 | Текстовый ввод | StartTextInput, StopTextInput, TextInputActive, ClearComposition | text_input_event, text_editing_event, with_text_input | input: копии UTF-8 и вложенные сеансы при panic; реальная IME, кандидаты, область ввода ещё не проверены/не реализованы |
@@ -39,11 +39,12 @@ boost-слоя, а не привязка асинхронных callbacks SDL.
 Тестовые SDLTest* экспортируются только при BUILD_TESTING=ON и не являются
 публичной обвязкой SDL. Cleanup callbacks на SDL properties фиксируют
 уничтожение поверхности/текстуры до очистки renderer; stale pointers не читаются.
-Проверка пикселей использует RenderReadPixels/ReadSurfacePixel только внутри
-тестового C++ адаптера, не добавляя эти API в публичную привязку.
+RenderReadPixels теперь также доступен через публичный адаптер SDL_ReadPixelsOwned
+и scoped helper; ReadSurfacePixel остаётся только внутри тестового C++ адаптера.
 
 При расширении обновлять эту таблицу, спецификацию генератора, boost-слой и
-проверку соответствующего сценария. Пока не проверены AOT/JIT, другие ОС,
+проверку соответствующего сценария. AOT проверен отдельным parity-проектом;
+пока не проверены JIT, другие ОС,
 другие версии SDL, уникальное владение и защита от висячих указателей.
 
 Аудио: `docs/audio.md`. OpenAudioDeviceStream пока доступен через ручной

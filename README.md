@@ -202,6 +202,18 @@ CTest выбирает dummy-драйвер в окружении аудиоте
 Прямой запуск использует устройство по умолчанию. Подробности владения,
 размеров буферов и ограничения определения конца воспроизведения — в docs/audio.md.
 
+## Пиксели и render target
+
+```powershell
+./build/ninja/bin/dasSDL3_runner.exe examples/streaming_texture.das
+./build/ninja/bin/dasSDL3_runner.exe examples/render_target.das
+ctest --test-dir build/ninja -R '^sdl3_(pixels|streaming_example|target_example)$' --output-on-failure
+```
+
+`require dassdl3/sdl3_pixels_boost` добавляет RGBA8 upload из собственного массива,
+scopes streaming/target texture и readback. Примеры не требуют unsafe; для
+ограниченного запуска добавьте `--smoke-test`. [Контракты и проверки](docs/pixels.md).
+
 ## Повторная генерация
 
 Установка LLVM SDK и проверка экспериментального dasClangBind описаны в

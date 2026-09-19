@@ -16,7 +16,9 @@ target `x86_64-pc-windows-msvc`, C11. Это первый результат P0,
 значений. Это census, не ещё один генератор native bindings и не ABI validator.
 
 Сейчас 1226 активных функций, включая static inline и platform-visible
-декларации; 50 имеют статус generated. Это не число всех экспортов SDL DLL и
+декларации; 52 имеют статус generated. Семь пиксельных операций отдельно отмечены
+adapted с ограничениями в `pixels.md`; прочие старые адаптеры ещё требуют
+переноса контрактов в машинную policy. Это не число всех экспортов SDL DLL и
 не процент готовности boost. Собственные adapters не выдаются за raw exports.
 Structs с выбранными полями отмечены partial, opaque handles — opaque.
 Собственный wrapper SDL_Wav вынесен в policy `project_types` с местом

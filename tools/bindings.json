@@ -49,7 +49,9 @@
     "SDL_GetAudioStreamDevice",
     "SDL_ResumeAudioStreamDevice",
     "SDL_PauseAudioStreamDevice",
-    "SDL_AudioStreamDevicePaused"
+    "SDL_AudioStreamDevicePaused",
+    "SDL_GetRenderTarget",
+    "SDL_SetRenderTarget"
   ],
   "opaque_types": [
     "SDL_Window",

@@ -154,3 +154,7 @@ addExtern<DAS_BIND_FUN(SDL_ResumeAudioStreamDevice)>(*this, lib, "SDL_ResumeAudi
 addExtern<DAS_BIND_FUN(SDL_PauseAudioStreamDevice)>(*this, lib, "SDL_PauseAudioStreamDevice", SideEffects::worstDefault, "SDL_PauseAudioStreamDevice")->args({"stream"});
 // bool (SDL_AudioStream *) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_AudioStreamDevicePaused)>(*this, lib, "SDL_AudioStreamDevicePaused", SideEffects::worstDefault, "SDL_AudioStreamDevicePaused")->args({"stream"});
+// SDL_Texture *(SDL_Renderer *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRenderTarget)>(*this, lib, "SDL_GetRenderTarget", SideEffects::worstDefault, "SDL_GetRenderTarget")->args({"renderer"});
+// bool (SDL_Renderer *, SDL_Texture *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetRenderTarget)>(*this, lib, "SDL_SetRenderTarget", SideEffects::worstDefault, "SDL_SetRenderTarget")->args({"renderer", "texture"});

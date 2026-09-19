@@ -1,5 +1,10 @@
 # Примеры, туториалы и проверки для портирования
 
+Обновление: streaming_texture и собственный render_target/readback уже
+реализованы; contracts и 42 interpreter/AOT-проверки — в `pixels.md`.
+Первый lock API использует owned staging array и синхронный native upload;
+borrowed pixel block пока отложен. C-исходник streaming изучен, отдельно не запускался.
+
 19 сентября 2026. Это очередь будущих портов. Уже работающие square/textures/
 input/audio описаны в `api-coverage.md`; приведённые ниже upstream-примеры
 изучены как источники сценариев, но не объявляются запущенными в dasSDL3.

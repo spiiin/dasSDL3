@@ -4,6 +4,7 @@
 #include "sdl3_adapters.h"
 #include "sdl3_input.h"
 #include "sdl3_audio.h"
+#include "sdl3_pixels.h"
 #include "parity_types.inc"
 #include "sdl3_scopes.h"
 #include "aot_recover.h"

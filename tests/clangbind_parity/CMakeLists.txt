@@ -41,13 +41,14 @@ target_include_directories(cppgenbind_module PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}
 add_executable(parity_aot_tool aot_tool.cpp)
 target_link_libraries(parity_aot_tool PRIVATE cppgenbind_module)
 set(AOT_SCRIPTS tests/bindings tests/boost tests/textures tests/input tests/audio examples/square examples/textures examples/input examples/audio tests/clangbind_parity/recover)
-set(AOT_MODULES dassdl3/sdl3_boost dassdl3/sdl3_audio_boost)
+list(APPEND AOT_SCRIPTS tests/pixels examples/streaming_texture examples/render_target)
+set(AOT_MODULES dassdl3/sdl3_boost dassdl3/sdl3_audio_boost dassdl3/sdl3_pixels_boost)
 foreach(script IN LISTS AOT_SCRIPTS AOT_MODULES)
     string(REPLACE "/" "_" name "${script}")
     set(output "${CMAKE_CURRENT_BINARY_DIR}/${name}.aot.cpp")
     add_custom_command(OUTPUT "${output}"
         COMMAND parity_aot_tool "${ROOT}/${script}.das" "${output}"
-        DEPENDS parity_aot_tool "${ROOT}/${script}.das" "${ROOT}/dassdl3/sdl3_boost.das" "${ROOT}/dassdl3/sdl3_audio_boost.das"
+        DEPENDS parity_aot_tool "${ROOT}/${script}.das" "${ROOT}/dassdl3/sdl3_boost.das" "${ROOT}/dassdl3/sdl3_audio_boost.das" "${ROOT}/dassdl3/sdl3_pixels_boost.das"
         VERBATIM)
     list(APPEND AOT_OUTPUTS "${output}")
 endforeach()

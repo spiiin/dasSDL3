@@ -16006,8 +16006,14 @@
       ],
       "id": "function:SDL_ConvertSurface",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "RGBA32 copy only; temporary conversion surface stays native",
+      "adapter": "SDL_CopySurfaceRGBA8",
+      "tests": [
+        "tests/pixels.das"
+      ],
+      "contract": "docs/pixels.md"
     },
     {
       "name": "SDL_ConvertSurfaceAndColorspace",
@@ -16917,8 +16923,14 @@
       ],
       "id": "function:SDL_CreateTexture",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Only RGBA32 streaming and target textures; no general format/access binding",
+      "adapter": "SDL_CreateRGBA8Texture",
+      "tests": [
+        "tests/pixels.das"
+      ],
+      "contract": "docs/pixels.md"
     },
     {
       "name": "SDL_CreateTextureFromSurface",
@@ -23986,8 +23998,12 @@
       ],
       "id": "function:SDL_GetRenderTarget",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "scoped",
+      "tests": [
+        "tests/pixels.das"
+      ],
+      "contract": "docs/pixels.md"
     },
     {
       "name": "SDL_GetRenderVSync",
@@ -27297,8 +27313,14 @@
       ],
       "id": "function:SDL_LockSurface",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Internal lock of converted readback surface; no borrowed pixels exposed",
+      "adapter": "SDL_CopySurfaceRGBA8",
+      "tests": [
+        "tests/pixels.das"
+      ],
+      "contract": "docs/pixels.md"
     },
     {
       "name": "SDL_LockTexture",
@@ -27327,8 +27349,14 @@
       ],
       "id": "function:SDL_LockTexture",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Whole-image synchronous upload from a checked RGBA8 array; no borrowed mapping exposed",
+      "adapter": "SDL_UploadRGBA8",
+      "tests": [
+        "tests/pixels.das"
+      ],
+      "contract": "docs/pixels.md"
     },
     {
       "name": "SDL_LockTextureToSurface",
@@ -30384,8 +30412,14 @@
       ],
       "id": "function:SDL_RenderReadPixels",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Current viewport only; returned surface owned by with_read_pixels",
+      "adapter": "SDL_ReadPixelsOwned",
+      "tests": [
+        "tests/pixels.das"
+      ],
+      "contract": "docs/pixels.md"
     },
     {
       "name": "SDL_RenderRect",
@@ -33042,8 +33076,12 @@
       ],
       "id": "function:SDL_SetRenderTarget",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "scoped",
+      "tests": [
+        "tests/pixels.das"
+      ],
+      "contract": "docs/pixels.md"
     },
     {
       "name": "SDL_SetRenderVSync",
@@ -35332,8 +35370,14 @@
       ],
       "id": "function:SDL_UnlockSurface",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Internal cleanup of converted readback surface",
+      "adapter": "SDL_CopySurfaceRGBA8",
+      "tests": [
+        "tests/pixels.das"
+      ],
+      "contract": "docs/pixels.md"
     },
     {
       "name": "SDL_UnlockTexture",
@@ -35350,8 +35394,14 @@
       ],
       "id": "function:SDL_UnlockTexture",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Native cleanup within synchronous RGBA upload; no script unlock API",
+      "adapter": "SDL_UploadRGBA8",
+      "tests": [
+        "tests/pixels.das"
+      ],
+      "contract": "docs/pixels.md"
     },
     {
       "name": "SDL_UnmapGPUTransferBuffer",

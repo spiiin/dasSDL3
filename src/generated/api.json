@@ -313,5 +313,18 @@
     "arguments": [
       "stream"
     ]
+  },
+  "SDL_GetRenderTarget": {
+    "signature": "SDL_Texture *(SDL_Renderer *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer"
+    ]
+  },
+  "SDL_SetRenderTarget": {
+    "signature": "bool (SDL_Renderer *, SDL_Texture *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "texture"
+    ]
   }
 }

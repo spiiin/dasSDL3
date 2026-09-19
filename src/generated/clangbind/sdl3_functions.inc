@@ -251,6 +251,14 @@ addConstant(*this, "SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK", static_cast<uint32_t>(0x
 	makeExtern< bool (*)(struct SDL_Texture *,float *,float *) , SDL_GetTextureSize , SimNode_ExtFuncCall >(lib,"SDL_GetTextureSize","SDL_GetTextureSize")
 		->args({"texture","w","h"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1343:34
+	makeExtern< bool (*)(struct SDL_Renderer *,struct SDL_Texture *) , SDL_SetRenderTarget , SimNode_ExtFuncCall >(lib,"SDL_SetRenderTarget","SDL_SetRenderTarget")
+		->args({"renderer","texture"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1360:43
+	makeExtern< struct SDL_Texture * (*)(struct SDL_Renderer *) , SDL_GetRenderTarget , SimNode_ExtFuncCall >(lib,"SDL_GetRenderTarget","SDL_GetRenderTarget")
+		->args({"renderer"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_render.h:1782:34
 	makeExtern< bool (*)(struct SDL_Renderer *,unsigned char,unsigned char,unsigned char,unsigned char) , SDL_SetRenderDrawColor , SimNode_ExtFuncCall >(lib,"SDL_SetRenderDrawColor","SDL_SetRenderDrawColor")
 		->args({"renderer","r","g","b","a"})

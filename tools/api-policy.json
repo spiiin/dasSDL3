@@ -28,5 +28,47 @@
       "reason": "Project-owned WAV buffer wrapper; not a declaration in SDL headers"
     }
   },
-  "symbols": {}
+  "symbols": {
+    "function:SDL_CreateTexture": {
+      "raw_status": "adapted", "boost_status": "partial",
+      "reason": "Only RGBA32 streaming and target textures; no general format/access binding",
+      "adapter": "SDL_CreateRGBA8Texture", "tests": ["tests/pixels.das"], "contract": "docs/pixels.md"
+    },
+    "function:SDL_LockTexture": {
+      "raw_status": "adapted", "boost_status": "partial",
+      "reason": "Whole-image synchronous upload from a checked RGBA8 array; no borrowed mapping exposed",
+      "adapter": "SDL_UploadRGBA8", "tests": ["tests/pixels.das"], "contract": "docs/pixels.md"
+    },
+    "function:SDL_UnlockTexture": {
+      "raw_status": "adapted", "boost_status": "partial",
+      "reason": "Native cleanup within synchronous RGBA upload; no script unlock API",
+      "adapter": "SDL_UploadRGBA8", "tests": ["tests/pixels.das"], "contract": "docs/pixels.md"
+    },
+    "function:SDL_RenderReadPixels": {
+      "raw_status": "adapted", "boost_status": "partial",
+      "reason": "Current viewport only; returned surface owned by with_read_pixels",
+      "adapter": "SDL_ReadPixelsOwned", "tests": ["tests/pixels.das"], "contract": "docs/pixels.md"
+    },
+    "function:SDL_ConvertSurface": {
+      "raw_status": "adapted", "boost_status": "partial",
+      "reason": "RGBA32 copy only; temporary conversion surface stays native",
+      "adapter": "SDL_CopySurfaceRGBA8", "tests": ["tests/pixels.das"], "contract": "docs/pixels.md"
+    },
+    "function:SDL_LockSurface": {
+      "raw_status": "adapted", "boost_status": "partial",
+      "reason": "Internal lock of converted readback surface; no borrowed pixels exposed",
+      "adapter": "SDL_CopySurfaceRGBA8", "tests": ["tests/pixels.das"], "contract": "docs/pixels.md"
+    },
+    "function:SDL_UnlockSurface": {
+      "raw_status": "adapted", "boost_status": "partial",
+      "reason": "Internal cleanup of converted readback surface",
+      "adapter": "SDL_CopySurfaceRGBA8", "tests": ["tests/pixels.das"], "contract": "docs/pixels.md"
+    },
+    "function:SDL_GetRenderTarget": {
+      "boost_status": "scoped", "tests": ["tests/pixels.das"], "contract": "docs/pixels.md"
+    },
+    "function:SDL_SetRenderTarget": {
+      "boost_status": "scoped", "tests": ["tests/pixels.das"], "contract": "docs/pixels.md"
+    }
+  }
 }

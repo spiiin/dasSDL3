@@ -21,6 +21,9 @@ treat its borrowed pointer fixture as a safe public GPU builder.
 Regenerate `docs/generated/api-*` with `tools/inventory_api.py`; do not edit
 snapshots by hand. Keep inactive-platform and manual-adapter coverage explicit.
 Audio contracts and testing limitations are in `docs/audio.md`.
+Pixel buffer, streaming texture and render-target contracts are in `docs/pixels.md`.
+Use `git --no-optional-locks status` for read-only inspection: automatic index
+refresh can recreate .git/index as CodexSandboxOnline and break sandbox ACL setup.
 Before expanding coverage, read `docs/full-binding-roadmap.md` and
 `docs/binding-design-review.md` (research dated 2026-09-19). GPU/shader work is
 planned in `docs/gpu-roadmap.md`, optional libraries in
@@ -50,6 +53,11 @@ equivalents; source inspection alone does not establish runtime correctness.
 - Texture scopes must end before their renderer. Surface-to-texture creation
   copies pixels and does not transfer surface ownership. Keep SDL_Surface and
   SDL_Texture opaque until a separately reviewed pixel-buffer API is available.
+- Pixel helpers use `dassdl3/sdl3_pixels_boost.das` and `src/sdl3_pixels.h`.
+  RGBA8 arrays are copied synchronously; no borrowed SDL pixel pointer escapes.
+  Validate pitch and required byte count before locking; retain native unlock guards.
+  Restore the previous render target before destroying target textures, also on panic.
+  Keep pixel roundtrip/padding/overflow and nested target cleanup tests in interpreter/AOT.
 - Prefer renderer-first functions for pipe syntax. State component ranges,
   null behavior, error policy, and whether data is borrowed or copied.
 - Input adapters live in `src/sdl3_input.h`. Read the event tag before its

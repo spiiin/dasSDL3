@@ -208,10 +208,10 @@ def report(data):
     lines = ["# SDL API inventory (generated)", "", f"SDL {data['sdl_version']}; profile `{data['profile']}`.",
              "", data["scope"], "", f"Generated functions: **{generated}/{len(functions)}** active non-excluded functions.",
              "Adapted coverage and boost coverage are not inferred from function names.", "",
-             "| Category | Functions | Generated | Pending |", "| --- | ---: | ---: | ---: |"]
+             "| Category | Functions | Generated | Adapted | Pending |", "| --- | ---: | ---: | ---: | ---: |"]
     for category in sorted({s["category"] for s in functions}):
         group = [s for s in functions if s["category"] == category]
-        lines.append(f"| {category} | {len(group)} | {sum(s['raw_status'] == 'generated' for s in group)} | {sum(s['raw_status'] == 'pending' for s in group)} |")
+        lines.append(f"| {category} | {len(group)} | {sum(s['raw_status'] == 'generated' for s in group)} | {sum(s['raw_status'] == 'adapted' for s in group)} | {sum(s['raw_status'] == 'pending' for s in group)} |")
     lines += ["", "Declaration counts (including explicitly excluded scaffolding):", ""]
     lines += [f"- {kind}: {count}" for kind, count in sorted(Counter(s["kind"] for s in symbols).items())]
     lines += ["", "Unobserved, non-excluded headers (must be reviewed, not silently ignored):", ""]
