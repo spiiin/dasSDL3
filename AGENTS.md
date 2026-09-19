@@ -32,9 +32,20 @@ Y inversion: SDL already flips its viewport. Keep pixel-reference tests on
 Vulkan and D3D12; test-only readback is not public GPU API coverage.
 The immutable vertex-buffer/texture/sampler bundle is documented in
 `docs/gpu-mesh.md`. Mesh and triangle IDs share one monotonic namespace
-(`SDL_GPUNextPipeline`) to reject cross-kind aliases. General layouts, index
-buffers and dynamic updates remain unimplemented. Preserve device-specific
+(`SDL_GPUNextPipeline`) to reject cross-kind aliases. Immutable UINT32 indexed
+meshes are covered in `docs/gpu-indexed-mesh.md`. Validate every index before GPU
+allocation; empty indices must never fall back to sequential drawing.
+General layouts and dynamic updates remain unimplemented. Preserve device-specific
 cleanup: destroying B must not release A's meshes or pipelines.
+Vertex uniform transforms use a separate trusted shader ABI; see
+`docs/gpu-transform.md`. Two float4 rows occupy exactly 32 bytes at offsets 0/16.
+Keep plain and transform mesh draw contracts distinct, validate rows before
+command acquisition, and preserve CPU pixel references for rotation/scale/translation.
+3D color meshes, column-major float4x4 MVP and cached depth targets are covered
+in `docs/gpu-3d.md`. Use math_boost perspective_rh_0_to_1, not its deprecated
+perspective_rh/opengl variants. Depth dimensions come from acquired swapchain;
+prepare failure must submit, never cancel. Preserve order-independent depth pixel
+tests, resize/cache failure tests and device-specific depth cleanup.
 Keep GPU scopes separate from SDL_Renderer. Never cancel after a non-null
 swapchain texture; submit consumes the command even on failure. Keep recording
 native-only until general GPU handle/state contracts are implemented and tested.

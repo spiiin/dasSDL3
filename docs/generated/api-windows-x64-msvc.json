@@ -14596,13 +14596,14 @@
       "category": "GPU",
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "One clear/store swapchain attachment only; no general render pass API",
-      "adapter": "SDL_ClearGPUWindow",
+      "reason": "Closed color pass, optionally a selected depth target with clear=1, LESS/write and resize; no general render pass API",
+      "adapter": "SDL_ClearGPUWindow / SDL_BeginGPU3DPass",
       "tests": [
         "tests/gpu_state.das",
-        "tests/gpu.das"
+        "tests/gpu.das",
+        "tests/gpu_3d.das"
       ],
-      "contract": "docs/gpu-clear.md"
+      "contract": "docs/gpu-3d.md"
     },
     {
       "name": "SDL_BindAudioStream",
@@ -16602,12 +16603,13 @@
       "category": "GPU",
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "reason": "Bounded RGBA8 sampled textures and per-mesh cached depth targets sized to acquired swapchain; no general texture builder",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_EnsureGPU3DDepth",
       "tests": [
-        "tests/gpu_mesh.das"
+        "tests/gpu_mesh.das",
+        "tests/gpu_3d.das"
       ],
-      "contract": "docs/gpu-mesh.md"
+      "contract": "docs/gpu-3d.md"
     },
     {
       "name": "SDL_CreateGPUTransferBuffer",
@@ -18921,8 +18923,14 @@
       ],
       "id": "function:SDL_GPUTextureSupportsFormat",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Depth format selection for fixed 3D color mesh; D32/D24/D16 depth-target usage only",
+      "adapter": "SDL_GPU3DDepthFormat",
+      "tests": [
+        "tests/gpu_3d.das"
+      ],
+      "contract": "docs/gpu-3d.md"
     },
     {
       "name": "SDL_GPUTextureSupportsSampleCount",
@@ -26034,8 +26042,14 @@
       ],
       "id": "function:SDL_GetWindowSizeInPixels",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Main-thread GPU camera aspect ratio from drawable pixel dimensions; zero-size fallback only",
+      "adapter": "SDL_GPU3DWindowAspect",
+      "tests": [
+        "tests/gpu_3d.das"
+      ],
+      "contract": "docs/gpu-3d.md"
     },
     {
       "name": "SDL_GetWindowSurface",
@@ -28882,8 +28896,15 @@
       ],
       "id": "function:SDL_PushGPUVertexUniformData",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Fixed 2D rows (32 bytes) or 3D MVP columns (64 bytes), std140 vertex slot zero; no general uniform layout API",
+      "adapter": "SDL_PushGPUTransform / SDL_RecordGPU3D",
+      "tests": [
+        "tests/gpu_transform.das",
+        "tests/gpu_3d.das"
+      ],
+      "contract": "docs/gpu-3d.md"
     },
     {
       "name": "SDL_PutAudioStreamData",

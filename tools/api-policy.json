@@ -29,6 +29,26 @@
     }
   },
   "symbols": {
+    "function:SDL_GetWindowSizeInPixels": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Main-thread GPU camera aspect ratio from drawable pixel dimensions; zero-size fallback only",
+      "adapter": "SDL_GPU3DWindowAspect",
+      "tests": [
+        "tests/gpu_3d.das"
+      ],
+      "contract": "docs/gpu-3d.md"
+    },
+    "function:SDL_GPUTextureSupportsFormat": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Depth format selection for fixed 3D color mesh; D32/D24/D16 depth-target usage only",
+      "adapter": "SDL_GPU3DDepthFormat",
+      "tests": [
+        "tests/gpu_3d.das"
+      ],
+      "contract": "docs/gpu-3d.md"
+    },
     "function:SDL_CreateGPUBuffer": {
       "raw_status": "adapted",
       "boost_status": "partial",
@@ -52,12 +72,13 @@
     "function:SDL_CreateGPUTexture": {
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "reason": "Bounded RGBA8 sampled textures and per-mesh cached depth targets sized to acquired swapchain; no general texture builder",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_EnsureGPU3DDepth",
       "tests": [
-        "tests/gpu_mesh.das"
+        "tests/gpu_mesh.das",
+        "tests/gpu_3d.das"
       ],
-      "contract": "docs/gpu-mesh.md"
+      "contract": "docs/gpu-3d.md"
     },
     "function:SDL_ReleaseGPUTexture": {
       "raw_status": "adapted",
@@ -179,6 +200,29 @@
       ],
       "contract": "docs/gpu-mesh.md"
     },
+    "function:SDL_BindGPUIndexBuffer": {
+      "raw_status": "adapted", "boost_status": "partial",
+      "reason": "Immutable copied uint32 index buffer with checked bounds; offset zero, fixed triangle-list mesh",
+      "adapter": "SDL_CreateGPUIndexedTexturedMesh / SDL_RecordGPUMesh",
+      "tests": ["tests/gpu_indexed_mesh.das"], "contract": "docs/gpu-indexed-mesh.md"
+    },
+    "function:SDL_PushGPUVertexUniformData": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Fixed 2D rows (32 bytes) or 3D MVP columns (64 bytes), std140 vertex slot zero; no general uniform layout API",
+      "adapter": "SDL_PushGPUTransform / SDL_RecordGPU3D",
+      "tests": [
+        "tests/gpu_transform.das",
+        "tests/gpu_3d.das"
+      ],
+      "contract": "docs/gpu-3d.md"
+    },
+    "function:SDL_DrawGPUIndexedPrimitives": {
+      "raw_status": "adapted", "boost_status": "partial",
+      "reason": "Checked immutable indexed mesh; one instance, offsets zero; no general draw API",
+      "adapter": "SDL_RecordGPUMesh",
+      "tests": ["tests/gpu_indexed_mesh.das"], "contract": "docs/gpu-indexed-mesh.md"
+    },
     "function:SDL_BindGPUFragmentSamplers": {
       "raw_status": "adapted",
       "boost_status": "partial",
@@ -251,9 +295,16 @@
       "adapter": "SDL_ClearGPUWindow", "tests": ["tests/gpu_state.das", "tests/gpu.das"], "contract": "docs/gpu-clear.md"
     },
     "function:SDL_BeginGPURenderPass": {
-      "raw_status": "adapted", "boost_status": "partial",
-      "reason": "One clear/store swapchain attachment only; no general render pass API",
-      "adapter": "SDL_ClearGPUWindow", "tests": ["tests/gpu_state.das", "tests/gpu.das"], "contract": "docs/gpu-clear.md"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Closed color pass, optionally a selected depth target with clear=1, LESS/write and resize; no general render pass API",
+      "adapter": "SDL_ClearGPUWindow / SDL_BeginGPU3DPass",
+      "tests": [
+        "tests/gpu_state.das",
+        "tests/gpu.das",
+        "tests/gpu_3d.das"
+      ],
+      "contract": "docs/gpu-3d.md"
     },
     "function:SDL_EndGPURenderPass": {
       "raw_status": "adapted", "boost_status": "partial",

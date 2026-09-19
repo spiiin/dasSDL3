@@ -7,6 +7,7 @@
 #include "sdl3_geometry.h"
 #include "sdl3_gpu.h"
 #include "sdl3_gpu_mesh.h"
+#include "sdl3_gpu_3d.h"
 #ifdef DASSDL3_TYPES_INCLUDE
 #include DASSDL3_TYPES_INCLUDE
 #else
@@ -21,6 +22,7 @@
 #include "../tests/gpu_probe.h"
 #include "../tests/gpu_triangle_probe.h"
 #include "../tests/gpu_mesh_probe.h"
+#include "../tests/gpu_3d_probe.h"
 #endif
 static_assert(SDL_VERSION == 3002018, "Regenerate and test bindings when updating SDL3");
 
@@ -42,7 +44,14 @@ public:
         #include "generated/sdl3_functions.inc"
         #endif
         addExtern<DAS_BIND_FUN(SDL_CreateGPUDeviceScoped)>(*this, lib, "SDL_CreateGPUDeviceScoped", SideEffects::worstDefault, "SDL_CreateGPUDeviceScoped");
+        addExtern<DAS_BIND_FUN(SDL_CreateGPU3DMesh)>(*this, lib, "SDL_CreateGPU3DMesh", SideEffects::worstDefault, "SDL_CreateGPU3DMesh");
+        addExtern<DAS_BIND_FUN(SDL_ReleaseGPU3DMesh)>(*this, lib, "SDL_ReleaseGPU3DMesh", SideEffects::worstDefault, "SDL_ReleaseGPU3DMesh");
+        addExtern<DAS_BIND_FUN(SDL_DrawGPU3DMesh)>(*this, lib, "SDL_DrawGPU3DMesh", SideEffects::worstDefault, "SDL_DrawGPU3DMesh");
+        addExtern<DAS_BIND_FUN(SDL_GPU3DWindowAspect)>(*this, lib, "SDL_GPU3DWindowAspect", SideEffects::worstDefault, "SDL_GPU3DWindowAspect");
         addExtern<DAS_BIND_FUN(SDL_CreateGPUTexturedMesh)>(*this, lib, "SDL_CreateGPUTexturedMesh", SideEffects::worstDefault, "SDL_CreateGPUTexturedMesh");
+        addExtern<DAS_BIND_FUN(SDL_CreateGPUTransformMesh)>(*this, lib, "SDL_CreateGPUTransformMesh", SideEffects::worstDefault, "SDL_CreateGPUTransformMesh");
+        addExtern<DAS_BIND_FUN(SDL_DrawGPUTransformMesh)>(*this, lib, "SDL_DrawGPUTransformMesh", SideEffects::worstDefault, "SDL_DrawGPUTransformMesh");
+        addExtern<DAS_BIND_FUN(SDL_CreateGPUIndexedTexturedMesh)>(*this, lib, "SDL_CreateGPUIndexedTexturedMesh", SideEffects::worstDefault, "SDL_CreateGPUIndexedTexturedMesh");
         addExtern<DAS_BIND_FUN(SDL_ReleaseGPUTexturedMesh)>(*this, lib, "SDL_ReleaseGPUTexturedMesh", SideEffects::worstDefault, "SDL_ReleaseGPUTexturedMesh");
         addExtern<DAS_BIND_FUN(SDL_DrawGPUTexturedMesh)>(*this, lib, "SDL_DrawGPUTexturedMesh", SideEffects::worstDefault, "SDL_DrawGPUTexturedMesh");
         addExtern<DAS_BIND_FUN(SDL_CreateGPUVertexIDPipeline)>(*this, lib, "SDL_CreateGPUVertexIDPipeline", SideEffects::worstDefault, "SDL_CreateGPUVertexIDPipeline");
@@ -96,9 +105,21 @@ public:
 #ifdef DASSDL3_TESTING
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_state_contracts)>(*this, lib, "SDLTestGPUStateContracts", SideEffects::worstDefault, "sdl3_test::gpu_state_contracts");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_meshes)>(*this, lib, "SDLTestGPUMeshes", SideEffects::worstDefault, "sdl3_test::gpu_meshes");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_3d_meshes)>(*this, lib, "SDLTestGPU3DMeshes", SideEffects::worstDefault, "sdl3_test::gpu_3d_meshes");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_3d_depths)>(*this, lib, "SDLTestGPU3DDepths", SideEffects::worstDefault, "sdl3_test::gpu_3d_depths");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_3d_guards)>(*this, lib, "SDLTestGPU3DGuards", SideEffects::worstDefault, "sdl3_test::gpu_3d_guards");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_3d_offscreen)>(*this, lib, "SDLTestGPUCreate3DOffscreen", SideEffects::worstDefault, "sdl3_test::gpu_3d_offscreen");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_3d_foreign)>(*this, lib, "SDLTestGPU3DForeign", SideEffects::worstDefault, "sdl3_test::gpu_3d_foreign");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_3d_depth_contracts)>(*this, lib, "SDLTestGPU3DDepthContracts", SideEffects::worstDefault, "sdl3_test::gpu_3d_depth_contracts");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_3d_depth_matches)>(*this, lib, "SDLTestGPU3DDepthMatches", SideEffects::worstDefault, "sdl3_test::gpu_3d_depth_matches");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_3d_pixels)>(*this, lib, "SDLTestGPU3DPixels", SideEffects::worstDefault, "sdl3_test::gpu_3d_pixels");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_transform_guards)>(*this, lib, "SDLTestGPUTransformGuards", SideEffects::worstDefault, "sdl3_test::gpu_transform_guards");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_transform_mesh_offscreen)>(*this, lib, "SDLTestGPUCreateTransformMeshOffscreen", SideEffects::worstDefault, "sdl3_test::gpu_transform_mesh_offscreen");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_transform_pixels)>(*this, lib, "SDLTestGPUTransformPixels", SideEffects::worstDefault, "sdl3_test::gpu_transform_pixels");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_mesh_guards)>(*this, lib, "SDLTestGPUMeshGuards", SideEffects::worstDefault, "sdl3_test::gpu_mesh_guards");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_mesh_foreign)>(*this, lib, "SDLTestGPUForeignMesh", SideEffects::worstDefault, "sdl3_test::gpu_mesh_foreign");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_mesh_offscreen)>(*this, lib, "SDLTestGPUCreateMeshOffscreen", SideEffects::worstDefault, "sdl3_test::gpu_mesh_offscreen");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_indexed_mesh_offscreen)>(*this, lib, "SDLTestGPUCreateIndexedMeshOffscreen", SideEffects::worstDefault, "sdl3_test::gpu_indexed_mesh_offscreen");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_mesh_pixels)>(*this, lib, "SDLTestGPUMeshPixels", SideEffects::worstDefault, "sdl3_test::gpu_mesh_pixels");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_pipelines)>(*this, lib, "SDLTestGPUPipelines", SideEffects::worstDefault, "sdl3_test::gpu_pipelines");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_shaders)>(*this, lib, "SDLTestGPUShaders", SideEffects::worstDefault, "sdl3_test::gpu_shaders");

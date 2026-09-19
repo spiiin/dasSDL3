@@ -15,6 +15,7 @@
 | `11_gpu_textured_quad.das` | SDL GPU: vertex buffer, RGBA8 texture и sampler |
 | `12_gpu_indexed_quad.das` | SDL GPU: index buffer; четыре вершины и шесть индексов |
 | `13_gpu_transform_quad.das` | SDL GPU: vertex uniforms; перенос, масштаб и поворот |
+| `14_gpu_cube.das` | SDL GPU: 3D-камера, MVP-матрица и depth buffer |
 
 Из корня проекта:
 

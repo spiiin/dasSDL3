@@ -30,6 +30,8 @@
 | Файловый IO, остальные подсистемы | Нет | Нет | Отдельные этапы |
 | GPU TexturedQuad | Buffer/texture/sampler/transfer create/release, map/unmap, copy/upload, vertex/sampler bind через 16 частичных adapters | with_gpu_textured_mesh, gpu_draw_textured_mesh; immutable packed float4 NDC/UV + RGBA8, checked uint64 IDs | gpu_mesh: copied arrays, bounds, stale/foreign IDs, scopes, два устройства, >3000 reference pixels на Vulkan/D3D12; dynamic/general layouts впереди; docs/gpu-mesh.md |
 | GPU IndexedQuad | BindGPUIndexBuffer, DrawGPUIndexedPrimitives через 2 частичных adapters | with_gpu_indexed_textured_mesh; immutable UINT32 indices, общий mesh draw/release | gpu_indexed_mesh: CPU reference, invalid/empty indices, copied arrays, cleanup, два устройства; UINT16/draw ranges/instancing впереди; docs/gpu-indexed-mesh.md |
+| GPU TransformQuad | PushGPUVertexUniformData через частичный adapter | with_gpu_transform_mesh, gpu_draw_transform_mesh; translation/scale/angle, две float4 строки | gpu_transform: пять CPU pixel references, uniform ABI, invalid/stale/foreign checks, два devices, panic; matrices/fragment uniforms впереди; docs/gpu-transform.md |
+| GPU 3D Cube | TextureSupportsFormat, cached depth texture, pipeline depth state, 64-byte MVP uniform; GetWindowSizeInPixels для aspect | with_gpu_3d_mesh, gpu_draw_3d_mesh, gpu_camera, gpu_window_aspect | gpu_3d: CPU projection/depth pixels, оба порядка треугольников, resize/cache failure, panic и два devices; общий scene/pass builder впереди; docs/gpu-3d.md |
 
 Ручные адаптеры: PollEventRef, PushEventRef, RenderFillRectRef,
 GetTextureSizeRef, RenderTextureToRect, RenderTextureRects. Они используют

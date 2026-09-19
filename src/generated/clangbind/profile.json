@@ -6,7 +6,7 @@
     "tools/run_clangbind_parity.py": "89ef14d813b069ce19d987833b34f441c1b2d750d78293e223097e6a6c096f52",
     "tools/clangbind_parity.das": "c3506a333de799767c404a8a9a8ae1c40540a39be669627f351d0e16fb6c87c1",
     "tools/bindings.json": "0241e4879d3cbdfb9fedf6139f4433cdeff193b421cf81f4acfd9a7d8759cada",
-    "tools/api-policy.json": "89714ed46cbe3b90cb4df0ecf4390f48ecbfe57bea9052d6b35dc9386d819cdd"
+    "tools/api-policy.json": "a3c07444f215c296b0f0c096395cf6a38f8e2653787a8324f59b46c79e460062"
   },
   "headers_sha256": {
     "SDL.h": "b264fdd1b52eecd52cc7fc58fdeeec9f9436b51caecf0ec8cf34cd90cee94b95",

@@ -21,3 +21,9 @@ example 13. The vertex shader uses two float4 uniform rows; the fragment shader
 shares the mesh sampler ABI. Rebuild with tools/build_triangle_shaders.py
 --transform; --check verifies deterministic output and SPIR-V validity.
 transform-manifest.json records source/binary hashes and the DXC version.
+
+shaders/scene3d.* are project-authored color-vertex shaders for example 14.
+The vertex shader consumes four explicit MVP columns (64 bytes); the fragment
+shader returns interpolated RGBA without samplers. Rebuild/check with
+tools/build_triangle_shaders.py --scene3d [--check]. Depth state belongs to the
+native pipeline. The manifest records DXC and source/binary hashes.

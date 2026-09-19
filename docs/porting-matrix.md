@@ -5,6 +5,10 @@ GPU TexturedQuad реализован как собственный ограни
 sampler и pixel reference проверены на Vulkan/D3D12 в interpreter и strict AOT.
 Это не буквальный порт upstream-примера; assets и shaders созданы в проекте.
 Его indexed вариант — `12_gpu_indexed_quad.das`, контракт в `gpu-indexed-mesh.md`.
+`13_gpu_transform_quad.das` добавляет собственный 2D vertex-uniform сценарий;
+проверки transforms и layout описаны в `gpu-transform.md`.
+`14_gpu_cube.das` — собственный 3D color/depth сценарий со стандартными матрицами
+daScript; pixel reference и порядок треугольников проверяются в `gpu-3d.md`.
 
 Geometry также реализован: цветной triangle, indexed textured quad, точные
 pixel/array проверки в interpreter/AOT — `geometry.md`. Исходный C geometry

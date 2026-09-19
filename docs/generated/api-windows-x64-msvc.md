@@ -23,7 +23,7 @@ Adapted coverage and boost coverage are not inferred from function names.
 | Error | 5 | 1 | 0 | 4 |
 | Events | 19 | 3 | 0 | 16 |
 | Filesystem | 11 | 1 | 0 | 10 |
-| GPU | 92 | 7 | 31 | 54 |
+| GPU | 92 | 7 | 33 | 52 |
 | GUID | 2 | 0 | 0 | 2 |
 | Gamepad | 73 | 0 | 0 | 73 |
 | HIDAPI | 22 | 0 | 0 | 22 |
@@ -60,7 +60,7 @@ Adapted coverage and boost coverage are not inferred from function names.
 | Touch | 4 | 0 | 0 | 4 |
 | Tray | 23 | 0 | 0 | 23 |
 | Version | 2 | 1 | 0 | 1 |
-| Video | 109 | 5 | 0 | 104 |
+| Video | 109 | 5 | 1 | 103 |
 | Vulkan | 7 | 0 | 0 | 7 |
 
 Declaration counts (including explicitly excluded scaffolding):

@@ -70,7 +70,7 @@ inline bool gpu_state_contracts() {
             return SDL_SetError("GPU lost original/finalization error in scenario %d", i);
         GPUFake::trace.clear();
         const int recorded = SDL_GPUFrame<GPUFake>(GPUFake::handle<SDL_GPUDevice>(), GPUFake::handle<SDL_Window>(),
-            {0.25f,0.5f,0.75f,1}, w, h, [](SDL_GPURenderPass *) { GPUFake::trace += 'R'; });
+            {0.25f,0.5f,0.75f,1}, w, h, [](SDL_GPURenderPass *, SDL_GPUCommandBuffer *) { GPUFake::trace += 'R'; });
         std::string recordingTrace = expected[i];
         const auto end = recordingTrace.find('E');
         if (end != std::string::npos) recordingTrace.insert(end, "R");

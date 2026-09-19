@@ -23,6 +23,23 @@ def public with_gpu_textured_mesh(device : SDL_GPUDevice?; window : SDL_Window?;
     if (!released) { panic("GPU mesh release: {SDL_GetError()}") }
 }
 
+def public with_gpu_indexed_textured_mesh(device : SDL_GPUDevice?; window : SDL_Window?;
+        vertices : array<float4>; indices : array<uint>; pixels : array<uint8>; width, height : uint;
+        vertex_file, fragment_file : string; format : uint; blk : block<(mesh : uint64) : void>) {
+    let mesh = SDL_CreateGPUIndexedTexturedMesh(device, window, vertices, indices, pixels, width, height, vertex_file, fragment_file, format)
+    if (mesh == 0ul) { panic("GPU mesh: {SDL_GetError()}") }
+    var failed = false
+    var error = ""
+    try { SDL_InvokeGPUHandle(blk, mesh) } recover {
+        failed = true
+        error := rtrim(this_context().last_exception)
+    }
+    let released = SDL_ReleaseGPUTexturedMesh(device, mesh)
+    if (!released && failed) { panic("{error}; {SDL_GetError()}") }
+    if (failed) { panic(error) }
+    if (!released) { panic("GPU mesh release: {SDL_GetError()}") }
+}
+
 def public gpu_draw_textured_mesh(device : SDL_GPUDevice?; window : SDL_Window?; mesh : uint64) : bool {
     let status = SDL_DrawGPUTexturedMesh(device, window, mesh)
     if (status < 0) { panic("GPU mesh draw: {SDL_GetError()}") }

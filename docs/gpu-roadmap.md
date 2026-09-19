@@ -9,6 +9,11 @@ RGBA8 upload и sampler: `gpu-mesh.md`; несколько устройств п
 dynamic updates, compute и DSL ещё не реализованы; G2/G3 частичны.
 Immutable UINT32 index buffers добавлены в `gpu-indexed-mesh.md`; произвольные
 draw ranges, UINT16 и instancing остаются следующими расширениями G2.
+Vertex uniforms для 2D transforms добавлены с фиксированным 32-byte ABI:
+`gpu-transform.md`. Общие matrices/layouts и fragment uniforms ещё впереди.
+Добавлен фиксированный 3D color-vertex ABI с float4x4 MVP, стандартной RH camera
+и depth target, обновляемым при resize: `gpu-3d.md`. G4 начат; lighting, MSAA,
+текстурированная 3D-геометрия и общее управление несколькими draw в pass впереди.
 Оконные сценарии G1 проверены на Vulkan: resize, два claimed окна,
 minimize/restore и независимый cleanup при panic. Свёрнутое окно в этом backend
 продолжало получать drawable; NULL-путь проверен отдельно через mock.

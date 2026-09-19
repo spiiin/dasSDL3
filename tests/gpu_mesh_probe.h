@@ -7,7 +7,9 @@ inline bool gpu_mesh_guards() {
     return SDL_GPUMeshSizes(6,16,2,2) && !SDL_GPUMeshSizes(0,16,2,2) &&
         !SDL_GPUMeshSizes(4,16,2,2) && !SDL_GPUMeshSizes(UINT32_MAX,16,2,2) &&
         !SDL_GPUMeshSizes(6,UINT32_MAX,UINT32_MAX,UINT32_MAX) &&
-        !SDL_GPUMeshSizes(6,15,2,2) && !SDL_GPUMeshSizes(6,0,0,0);
+        !SDL_GPUMeshSizes(6,15,2,2) && !SDL_GPUMeshSizes(6,0,0,0) &&
+        SDL_GPUMeshSizes(4,16,2,2,true) && !SDL_GPUIndexCount(0) &&
+        !SDL_GPUIndexCount(4) && !SDL_GPUIndexCount(UINT32_MAX) && SDL_GPUIndexCount(6);
 }
 inline bool gpu_mesh_foreign(SDL_GPUDevice * device, uint64_t id) {
     static char token;
@@ -20,8 +22,30 @@ inline uint64_t gpu_mesh_offscreen(SDL_GPUDevice * device, const das::TArray<das
     return SDL_CreateGPUTexturedMeshForFormat(device, SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM,
         vertices,pixels,2,2,vertex,fragment,format);
 }
-inline bool gpu_mesh_pixels(SDL_GPUDevice * device, uint64_t id) {
+inline uint64_t gpu_indexed_mesh_offscreen(SDL_GPUDevice * device, const das::TArray<das::float4> & vertices,
+        const das::TArray<uint32_t> & indices, const das::TArray<uint8_t> & pixels,
+        const char * vertex, const char * fragment, uint32_t format) {
+    return SDL_CreateGPUTexturedMeshForFormat(device, SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM,
+        vertices,pixels,2,2,vertex,fragment,format,&indices);
+}
+inline uint64_t gpu_transform_mesh_offscreen(SDL_GPUDevice * device, const das::TArray<das::float4> & vertices,
+        const das::TArray<uint32_t> & indices, const das::TArray<uint8_t> & pixels,
+        const char * vertex, const char * fragment, uint32_t format) {
+    return SDL_CreateGPUTexturedMeshForFormat(device, SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM,
+        vertices,pixels,2,2,vertex,fragment,format,&indices,true);
+}
+inline bool gpu_transform_guards() {
+    SDL_GPUTransform2D t{{1,0,0,0},{0,1,0,0}};
+    if (!SDL_GPUTransformValid(t)) return false;
+    t.x[2]=1; if (SDL_GPUTransformValid(t)) return false; t.x[2]=0;
+    for (float v : {std::numeric_limits<float>::infinity(),std::numeric_limits<float>::quiet_NaN()}) {
+        t.y[3]=v; if (SDL_GPUTransformValid(t)) return false;
+    }
+    return true;
+}
+inline bool gpu_mesh_pixels_impl(SDL_GPUDevice * device, uint64_t id, const SDL_GPUTransform2D * transform = nullptr) {
     const auto * mesh = SDL_FindGPUMesh(device,id); if (!mesh) return false;
+    if (mesh->transform != (transform != nullptr)) return SDL_SetError("mesh fixture: uniform ABI mismatch");
     if (mesh->format != SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM) return SDL_SetError("mesh fixture: target mismatch");
     GPUReadback r{device};
     SDL_GPUTextureCreateInfo texture{};
@@ -35,6 +59,7 @@ inline bool gpu_mesh_pixels(SDL_GPUDevice * device, uint64_t id) {
     SDL_GPUColorTargetInfo target{}; target.texture = r.texture; target.clear_color = {0,0,0,1};
     target.load_op = SDL_GPU_LOADOP_CLEAR; target.store_op = SDL_GPU_STOREOP_STORE;
     auto * pass = SDL_BeginGPURenderPass(r.command,&target,1,nullptr); if (!pass) return false;
+    if (transform) SDL_PushGPUTransform(r.command,*transform);
     SDL_RecordGPUMesh(pass,*mesh); SDL_EndGPURenderPass(pass);
     auto * copy = SDL_BeginGPUCopyPass(r.command); if (!copy) return false;
     SDL_GPUTextureRegion source{}; source.texture = r.texture; source.w = source.h = 64; source.d = 1;
@@ -48,10 +73,24 @@ inline bool gpu_mesh_pixels(SDL_GPUDevice * device, uint64_t id) {
     const int colors[4][4] = {{255,0,0,255},{0,255,0,255},{0,0,255,255},{255,255,0,255}};
     for (int y = 0; y < 64; ++y) for (int x = 0; x < 64; ++x) {
         // Quad NDC +-0.75 -> exact pixel boundaries 8..56. Skip boundary neighbors.
+        bool inside;
+        int quadrant;
+        if (transform) {
+            const auto & t=*transform;
+            const double det=double(t.x[0])*t.y[1]-double(t.x[1])*t.y[0];
+            if (std::abs(det)<1e-8) return SDL_SetError("mesh fixture: singular reference transform");
+            const double px=(x+0.5)/32.0-1-t.x[3], py=1-(y+0.5)/32.0-t.y[3];
+            const double lx=(px*t.y[1]-py*t.x[1])/det, ly=(py*t.x[0]-px*t.y[0])/det;
+            if (std::abs(std::abs(lx)-0.75)<0.025 || std::abs(std::abs(ly)-0.75)<0.025 ||
+                std::abs(lx)<0.025 || std::abs(ly)<0.025) continue;
+            inside=std::abs(lx)<0.75 && std::abs(ly)<0.75;
+            quadrant=(ly<0 ? 2:0)+(lx>=0 ? 1:0);
+        } else {
         if (x == 7 || x == 8 || x == 31 || x == 32 || x == 55 || x == 56 ||
             y == 7 || y == 8 || y == 31 || y == 32 || y == 55 || y == 56) continue;
-        const bool inside = x > 8 && x < 55 && y > 8 && y < 55;
-        const int quadrant = (y >= 32 ? 2 : 0) + (x >= 32 ? 1 : 0);
+        inside = x > 8 && x < 55 && y > 8 && y < 55;
+        quadrant = (y >= 32 ? 2 : 0) + (x >= 32 ? 1 : 0);
+        }
         for (int c = 0; c < 4; ++c) {
             int expected = inside ? colors[quadrant][c] : c == 3 ? 255 : 0;
             int actual = pixels[(y*64+x)*4+c];
@@ -60,5 +99,10 @@ inline bool gpu_mesh_pixels(SDL_GPUDevice * device, uint64_t id) {
         ++checked;
     }
     return checked > 3000 || SDL_SetError("GPU mesh: insufficient checked pixels");
+}
+inline bool gpu_mesh_pixels(SDL_GPUDevice * device, uint64_t id) { return gpu_mesh_pixels_impl(device,id); }
+inline bool gpu_transform_pixels(SDL_GPUDevice * device, uint64_t id, das::float4 x, das::float4 y) {
+    const auto t=SDL_GPUTransformRows(x,y);
+    return SDL_GPUTransformValid(t) && gpu_mesh_pixels_impl(device,id,&t);
 }
 }

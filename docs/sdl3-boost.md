@@ -118,3 +118,10 @@ The former single-device restriction was traced to this machine's FPS Monitor
 Vulkan layer. Diagnosis and opt-in per-process filtering: `gpu-multidevice.md`.
 The indexed scope uses the same owned bundle with copied UINT32 indices;
 `gpu-indexed-mesh.md` describes bounds, empty-array behavior and coverage.
+`sdl3_gpu_transform_boost` adds a separate transform mesh scope and receiver-first
+draw accepting translation/scale/angle. Native uniform rows have an explicit
+32-byte std140 ABI; see `gpu-transform.md`. Do not pass plain shaders to this scope.
+`sdl3_gpu_3d_boost` uses standard float4x4/math_boost camera helpers. Four columns
+are copied to a 64-byte uniform; indexed position/color arrays are copied into
+native vertex storage. Depth format selection, resize and failure contracts live
+in `gpu-3d.md`. Keep the old textured/2D shader ABIs separate.

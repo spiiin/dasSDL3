@@ -86,9 +86,9 @@ struct SDL_GPUClearAPI {
     static bool submit(SDL_GPUCommandBuffer * c) { return SDL_SubmitGPUCommandBuffer(c); }
     static bool cancel(SDL_GPUCommandBuffer * c) { return SDL_CancelGPUCommandBuffer(c); }
 };
-template <typename API, typename Record>
-inline int SDL_GPUFrame(SDL_GPUDevice * device, SDL_Window * window, const SDL_FColor & color,
-                       uint32_t & width, uint32_t & height, Record record) {
+template <typename API, typename Record, typename Begin>
+inline int SDL_GPUFrameWithTarget(SDL_GPUDevice * device, SDL_Window * window, const SDL_FColor & color,
+                       uint32_t & width, uint32_t & height, Record record, Begin begin) {
     width = height = 0;
     if (!device || !window || !std::isfinite(color.r) || !std::isfinite(color.g) ||
         !std::isfinite(color.b) || !std::isfinite(color.a) || color.r < 0 || color.r > 1 ||
@@ -114,7 +114,7 @@ inline int SDL_GPUFrame(SDL_GPUDevice * device, SDL_Window * window, const SDL_F
     target.clear_color = color;
     target.load_op = SDL_GPU_LOADOP_CLEAR;
     target.store_op = SDL_GPU_STOREOP_STORE;
-    auto * pass = API::begin(command, target);
+    auto * pass = begin(command, target, w, h);
     if (!pass) {
         const std::string error = SDL_GetError();
         const bool finished = API::submit(command); // cancel is illegal after acquisition.
@@ -122,17 +122,23 @@ inline int SDL_GPUFrame(SDL_GPUDevice * device, SDL_Window * window, const SDL_F
         SDL_SetError("GPU begin pass: %s%s%s", error.c_str(), finished ? "" : "; submit: ", finishError.c_str());
         return -1;
     }
-    record(pass); // Native, non-throwing commands only; never a script callback.
+    record(pass, command); // Native, non-throwing commands only; never a script callback.
     API::end(pass);
     // Never retry, cancel or reference the command after a submit, even on failure.
     if (!API::submit(command)) return -1;
     width = w; height = h;
     return 1;
 }
+template <typename API, typename Record>
+inline int SDL_GPUFrame(SDL_GPUDevice * device, SDL_Window * window, const SDL_FColor & color,
+                       uint32_t & width, uint32_t & height, Record record) {
+    return SDL_GPUFrameWithTarget<API>(device, window, color, width, height, record,
+        [](SDL_GPUCommandBuffer * c, const SDL_GPUColorTargetInfo & t, uint32_t, uint32_t) { return API::begin(c,t); });
+}
 template <typename API>
 inline int SDL_GPUClearFrame(SDL_GPUDevice * device, SDL_Window * window, const SDL_FColor & color,
                             uint32_t & width, uint32_t & height) {
-    return SDL_GPUFrame<API>(device, window, color, width, height, [](SDL_GPURenderPass *) {});
+    return SDL_GPUFrame<API>(device, window, color, width, height, [](SDL_GPURenderPass *, SDL_GPUCommandBuffer *) {});
 }
 inline int SDL_ClearGPUWindow(SDL_GPUDevice * device, SDL_Window * window,
         float r, float g, float b, float a, uint32_t & width, uint32_t & height) {
@@ -160,7 +166,7 @@ inline int SDL_DrawGPUVertexIDTriangle(SDL_GPUDevice * device, SDL_Window * wind
     }
     auto * pipeline = entry->pipeline;
     return SDL_GPUFrame<SDL_GPUClearAPI>(device, window, {0,0,0,1}, width, height,
-        [pipeline](SDL_GPURenderPass * pass) {
+        [pipeline](SDL_GPURenderPass * pass, SDL_GPUCommandBuffer *) {
             SDL_BindGPUGraphicsPipeline(pass, pipeline);
             SDL_DrawGPUPrimitives(pass, 3, 1, 0, 0);
         });

@@ -13,13 +13,21 @@ parser.add_argument('--spirv-val', default='spirv-val')
 parser.add_argument('--output', type=Path, default=root / 'examples/assets/shaders')
 parser.add_argument('--check', action='store_true')
 parser.add_argument('--mesh', action='store_true', help='Build fixed float2 position/UV + sampled texture shader ABI')
+parser.add_argument('--transform', action='store_true', help='Build indexed mesh with two vec4 vertex uniform rows')
+parser.add_argument('--scene3d', action='store_true', help='Build color-vertex + four-column MVP shader ABI')
 args = parser.parse_args()
+if args.transform: args.mesh = True
 sources = root / 'examples/assets/shaders'
 version = subprocess.check_output([args.dxc, '--version'], text=True).strip()
-prefix = 'mesh' if args.mesh else 'triangle'
+prefix = 'scene3d' if args.scene3d else 'transform' if args.transform else 'mesh' if args.mesh else 'triangle'
 manifest = {'entrypoint': 'main', 'resources': 'fragment sampler 0' if args.mesh else 'none', 'vertex_inputs': 'float2 location0 position; float2 location1 uv; stride16' if args.mesh else 'SV_VertexID only',
             'compiler': version, 'spirv_target': 'vulkan1.0', 'files': {}}
 with tempfile.TemporaryDirectory() as temp:
+    if args.transform:
+        manifest['resources'] = 'vertex uniform 0: two float4 rows, 32 bytes; fragment sampler 0'
+    if args.scene3d:
+        manifest['resources'] = 'vertex uniform 0: four float4 columns, 64 bytes; no samplers'
+        manifest['vertex_inputs'] = 'float4 location0 position; float4 location1 color; stride32'
     for stage, profile in [('vert', 'vs_6_0'), ('frag', 'ps_6_0')]:
         source = sources / f'{prefix}.{stage}.hlsl'
         manifest['files'][source.name] = hashlib.sha256(source.read_bytes()).hexdigest()
