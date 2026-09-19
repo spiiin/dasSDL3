@@ -1,0 +1,317 @@
+{
+  "SDL_GetVersion": {
+    "signature": "int (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_Init": {
+    "signature": "bool (SDL_InitFlags) __attribute__((cdecl))",
+    "arguments": [
+      "flags"
+    ]
+  },
+  "SDL_Quit": {
+    "signature": "void (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetError": {
+    "signature": "const char *(void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_WasInit": {
+    "signature": "SDL_InitFlags (SDL_InitFlags) __attribute__((cdecl))",
+    "arguments": [
+      "flags"
+    ]
+  },
+  "SDL_CreateWindow": {
+    "signature": "SDL_Window *(const char *, int, int, SDL_WindowFlags) __attribute__((cdecl))",
+    "arguments": [
+      "title",
+      "w",
+      "h",
+      "flags"
+    ]
+  },
+  "SDL_DestroyWindow": {
+    "signature": "void (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_CreateRenderer": {
+    "signature": "SDL_Renderer *(SDL_Window *, const char *) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "name"
+    ]
+  },
+  "SDL_DestroyRenderer": {
+    "signature": "void (SDL_Renderer *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer"
+    ]
+  },
+  "SDL_GetWindowID": {
+    "signature": "SDL_WindowID (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetWindowFromID": {
+    "signature": "SDL_Window *(SDL_WindowID) __attribute__((cdecl))",
+    "arguments": [
+      "id"
+    ]
+  },
+  "SDL_GetRenderer": {
+    "signature": "SDL_Renderer *(SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_PollEvent": {
+    "signature": "bool (SDL_Event *) __attribute__((cdecl))",
+    "arguments": [
+      "event"
+    ]
+  },
+  "SDL_PushEvent": {
+    "signature": "bool (SDL_Event *) __attribute__((cdecl))",
+    "arguments": [
+      "event"
+    ]
+  },
+  "SDL_SetRenderDrawColor": {
+    "signature": "bool (SDL_Renderer *, Uint8, Uint8, Uint8, Uint8) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "r",
+      "g",
+      "b",
+      "a"
+    ]
+  },
+  "SDL_RenderClear": {
+    "signature": "bool (SDL_Renderer *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer"
+    ]
+  },
+  "SDL_RenderFillRect": {
+    "signature": "bool (SDL_Renderer *, const SDL_FRect *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "rect"
+    ]
+  },
+  "SDL_RenderPresent": {
+    "signature": "bool (SDL_Renderer *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer"
+    ]
+  },
+  "SDL_GetTicks": {
+    "signature": "Uint64 (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_Delay": {
+    "signature": "void (Uint32) __attribute__((cdecl))",
+    "arguments": [
+      "ms"
+    ]
+  },
+  "SDL_GetBasePath": {
+    "signature": "const char *(void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_LoadBMP": {
+    "signature": "SDL_Surface *(const char *) __attribute__((cdecl))",
+    "arguments": [
+      "file"
+    ]
+  },
+  "SDL_DestroySurface": {
+    "signature": "void (SDL_Surface *) __attribute__((cdecl))",
+    "arguments": [
+      "surface"
+    ]
+  },
+  "SDL_CreateTextureFromSurface": {
+    "signature": "SDL_Texture *(SDL_Renderer *, SDL_Surface *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "surface"
+    ]
+  },
+  "SDL_DestroyTexture": {
+    "signature": "void (SDL_Texture *) __attribute__((cdecl))",
+    "arguments": [
+      "texture"
+    ]
+  },
+  "SDL_GetTextureSize": {
+    "signature": "bool (SDL_Texture *, float *, float *) __attribute__((cdecl))",
+    "arguments": [
+      "texture",
+      "w",
+      "h"
+    ]
+  },
+  "SDL_RenderTexture": {
+    "signature": "bool (SDL_Renderer *, SDL_Texture *, const SDL_FRect *, const SDL_FRect *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "texture",
+      "srcrect",
+      "dstrect"
+    ]
+  },
+  "SDL_StartTextInput": {
+    "signature": "bool (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_StopTextInput": {
+    "signature": "bool (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_TextInputActive": {
+    "signature": "bool (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_ClearComposition": {
+    "signature": "bool (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetKeyboardState": {
+    "signature": "const bool *(int *) __attribute__((cdecl))",
+    "arguments": [
+      "numkeys"
+    ]
+  },
+  "SDL_GetMouseState": {
+    "signature": "SDL_MouseButtonFlags (float *, float *) __attribute__((cdecl))",
+    "arguments": [
+      "x",
+      "y"
+    ]
+  },
+  "SDL_PumpEvents": {
+    "signature": "void (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_SetWindowTitle": {
+    "signature": "bool (SDL_Window *, const char *) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "title"
+    ]
+  },
+  "SDL_LoadWAV": {
+    "signature": "bool (const char *, SDL_AudioSpec *, Uint8 **, Uint32 *) __attribute__((cdecl))",
+    "arguments": [
+      "path",
+      "spec",
+      "audio_buf",
+      "audio_len"
+    ]
+  },
+  "SDL_free": {
+    "signature": "void (void *) __attribute__((cdecl))",
+    "arguments": [
+      "mem"
+    ]
+  },
+  "SDL_CreateAudioStream": {
+    "signature": "SDL_AudioStream *(const SDL_AudioSpec *, const SDL_AudioSpec *) __attribute__((cdecl))",
+    "arguments": [
+      "src_spec",
+      "dst_spec"
+    ]
+  },
+  "SDL_DestroyAudioStream": {
+    "signature": "void (SDL_AudioStream *) __attribute__((cdecl))",
+    "arguments": [
+      "stream"
+    ]
+  },
+  "SDL_PutAudioStreamData": {
+    "signature": "bool (SDL_AudioStream *, const void *, int) __attribute__((cdecl))",
+    "arguments": [
+      "stream",
+      "buf",
+      "len"
+    ]
+  },
+  "SDL_GetAudioStreamData": {
+    "signature": "int (SDL_AudioStream *, void *, int) __attribute__((cdecl))",
+    "arguments": [
+      "stream",
+      "buf",
+      "len"
+    ]
+  },
+  "SDL_GetAudioStreamAvailable": {
+    "signature": "int (SDL_AudioStream *) __attribute__((cdecl))",
+    "arguments": [
+      "stream"
+    ]
+  },
+  "SDL_GetAudioStreamQueued": {
+    "signature": "int (SDL_AudioStream *) __attribute__((cdecl))",
+    "arguments": [
+      "stream"
+    ]
+  },
+  "SDL_FlushAudioStream": {
+    "signature": "bool (SDL_AudioStream *) __attribute__((cdecl))",
+    "arguments": [
+      "stream"
+    ]
+  },
+  "SDL_ClearAudioStream": {
+    "signature": "bool (SDL_AudioStream *) __attribute__((cdecl))",
+    "arguments": [
+      "stream"
+    ]
+  },
+  "SDL_GetAudioStreamFormat": {
+    "signature": "bool (SDL_AudioStream *, SDL_AudioSpec *, SDL_AudioSpec *) __attribute__((cdecl))",
+    "arguments": [
+      "stream",
+      "src_spec",
+      "dst_spec"
+    ]
+  },
+  "SDL_GetAudioStreamDevice": {
+    "signature": "SDL_AudioDeviceID (SDL_AudioStream *) __attribute__((cdecl))",
+    "arguments": [
+      "stream"
+    ]
+  },
+  "SDL_ResumeAudioStreamDevice": {
+    "signature": "bool (SDL_AudioStream *) __attribute__((cdecl))",
+    "arguments": [
+      "stream"
+    ]
+  },
+  "SDL_PauseAudioStreamDevice": {
+    "signature": "bool (SDL_AudioStream *) __attribute__((cdecl))",
+    "arguments": [
+      "stream"
+    ]
+  },
+  "SDL_AudioStreamDevicePaused": {
+    "signature": "bool (SDL_AudioStream *) __attribute__((cdecl))",
+    "arguments": [
+      "stream"
+    ]
+  }
+}

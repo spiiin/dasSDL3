@@ -1,0 +1,4 @@
+/build/
+/tools/.venv/
+/logs/
+__pycache__/
