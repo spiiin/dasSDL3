@@ -13,6 +13,8 @@
 | `09_gpu_clear.das` | SDL GPU: устройство, окно и кадр |
 | `10_gpu_triangle.das` | SDL GPU: готовые шейдеры и pipeline |
 | `11_gpu_textured_quad.das` | SDL GPU: vertex buffer, RGBA8 texture и sampler |
+| `12_gpu_indexed_quad.das` | SDL GPU: index buffer; четыре вершины и шесть индексов |
+| `13_gpu_transform_quad.das` | SDL GPU: vertex uniforms; перенос, масштаб и поворот |
 
 Из корня проекта:
 

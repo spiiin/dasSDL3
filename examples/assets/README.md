@@ -15,3 +15,9 @@ It replaces callbacks with a scoped event loop and adds scaling and cropping.
 Audio: tone.wav is an original quiet 440 Hz, 0.4-second PCM16 mono signal
 at 22050 Hz with short fades. Recreate it with tools/make_audio_fixture.py.
 No music from the upstream example is included. CMake copies it to bin/assets.
+
+shaders/transform.* are project-authored HLSL and offline SPIR-V/DXIL assets for
+example 13. The vertex shader uses two float4 uniform rows; the fragment shader
+shares the mesh sampler ABI. Rebuild with tools/build_triangle_shaders.py
+--transform; --check verifies deterministic output and SPIR-V validity.
+transform-manifest.json records source/binary hashes and the DXC version.
