@@ -29,6 +29,7 @@
 #include "../tests/gpu_lit_probe.h"
 #include "../tests/gpu_scene_probe.h"
 #include "../tests/gpu_instancing_probe.h"
+#include "../tests/gpu_instance_colors_probe.h"
 #endif
 static_assert(SDL_VERSION == 3002018, "Regenerate and test bindings when updating SDL3");
 
@@ -50,6 +51,9 @@ public:
         #include "generated/sdl3_functions.inc"
         #endif
         addExtern<DAS_BIND_FUN(SDL_CreateGPUDeviceScoped)>(*this, lib, "SDL_CreateGPUDeviceScoped", SideEffects::worstDefault, "SDL_CreateGPUDeviceScoped");
+        addExtern<DAS_BIND_FUN(SDL_UpdateGPUColoredInstances)>(*this, lib, "SDL_UpdateGPUColoredInstances", SideEffects::worstDefault, "SDL_UpdateGPUColoredInstances");
+        addExtern<DAS_BIND_FUN(SDL_CreateGPUColoredInstancedMesh)>(*this, lib, "SDL_CreateGPUColoredInstancedMesh", SideEffects::worstDefault, "SDL_CreateGPUColoredInstancedMesh");
+        addExtern<DAS_BIND_FUN(SDL_UpdateGPUInstances)>(*this, lib, "SDL_UpdateGPUInstances", SideEffects::worstDefault, "SDL_UpdateGPUInstances");
         addExtern<DAS_BIND_FUN(SDL_CreateGPUInstancedMesh)>(*this, lib, "SDL_CreateGPUInstancedMesh", SideEffects::worstDefault, "SDL_CreateGPUInstancedMesh");
         addExtern<DAS_BIND_FUN(SDL_DrawGPUInstancedMesh)>(*this, lib, "SDL_DrawGPUInstancedMesh", SideEffects::worstDefault, "SDL_DrawGPUInstancedMesh");
         addExtern<DAS_BIND_FUN(SDL_CreateGPULitScene)>(*this, lib, "SDL_CreateGPULitScene", SideEffects::worstDefault, "SDL_CreateGPULitScene");
@@ -119,6 +123,13 @@ public:
 #ifdef DASSDL3_TESTING
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_state_contracts)>(*this, lib, "SDLTestGPUStateContracts", SideEffects::worstDefault, "sdl3_test::gpu_state_contracts");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_meshes)>(*this, lib, "SDLTestGPUMeshes", SideEffects::worstDefault, "sdl3_test::gpu_meshes");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_instances_failed_submit)>(*this, lib, "SDLTestGPUInstancesFailedSubmit", SideEffects::worstDefault, "sdl3_test::gpu_instances_failed_submit");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_colors_offscreen)>(*this, lib, "SDLTestGPUColorsOffscreen", SideEffects::worstDefault, "sdl3_test::gpu_colors_offscreen");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_colors_pixels)>(*this, lib, "SDLTestGPUColorsPixels", SideEffects::worstDefault, "sdl3_test::gpu_colors_pixels");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_colors_pending)>(*this, lib, "SDLTestGPUColorsPending", SideEffects::worstDefault, "sdl3_test::gpu_colors_pending");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_colors_failure)>(*this, lib, "SDLTestGPUColorsFailure", SideEffects::worstDefault, "sdl3_test::gpu_colors_failure");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_colors_guards)>(*this, lib, "SDLTestGPUColorsGuards", SideEffects::worstDefault, "sdl3_test::gpu_colors_guards");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_instances_pending)>(*this, lib, "SDLTestGPUInstancesPending", SideEffects::worstDefault, "sdl3_test::gpu_instances_pending");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_instances_offscreen)>(*this, lib, "SDLTestGPUInstancesOffscreen", SideEffects::worstDefault, "sdl3_test::gpu_instances_offscreen");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_instances_pixels)>(*this, lib, "SDLTestGPUInstancesPixels", SideEffects::worstDefault, "sdl3_test::gpu_instances_pixels");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_instances_preflight)>(*this, lib, "SDLTestGPUInstancesPreflight", SideEffects::worstDefault, "sdl3_test::gpu_instances_preflight");

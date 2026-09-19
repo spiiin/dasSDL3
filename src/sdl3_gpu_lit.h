@@ -32,15 +32,56 @@ inline bool SDL_PrepareGPULit(const SDL_GPU3DMatrix & mvp,const SDL_GPU3DMatrix 
     return true;
 }
 
+inline bool SDL_PrepareGPUInstances(const das::TArray<das::float4> & models,std::vector<SDL_GPULitUniforms> & instances) {
+    if (!models.data || !models.size || models.size>16384 || models.size%4) {
+        SDL_SetError("GPU instancing: 1..4096 models, four columns each required"); return false;
+    }
+    instances.resize(models.size/4);
+    for (size_t i=0;i<instances.size();++i) {
+        SDL_GPU3DMatrix model; std::memcpy(&model,models.data+i*64,64);
+        SDL_GPULight light{};
+        if (!SDL_PrepareGPULit(model,model,{0,0,1,0},instances[i],light)) return false;
+    }
+    return true;
+}
+
+// Color ABI extends the existing model/normal record without changing its layout.
+struct alignas(16) SDL_GPUColoredInstance { SDL_GPULitUniforms transform; float color[4]; };
+static_assert(sizeof(SDL_GPUColoredInstance)==128 && offsetof(SDL_GPUColoredInstance,color)==112,"colored instance ABI");
+inline bool SDL_PackGPUInstances(const das::TArray<das::float4> & models,
+        const das::TArray<das::float4> * colors,std::vector<uint8_t> & bytes) {
+    if (colors && (!colors->data || models.size%4 || colors->size!=models.size/4))
+        return SDL_SetError("GPU instance colors: one RGBA per model required");
+    std::vector<SDL_GPULitUniforms> transforms;
+    if (!SDL_PrepareGPUInstances(models,transforms)) return false;
+    const size_t stride=colors?128:112;
+    bytes.resize(transforms.size()*stride);
+    for (size_t i=0;i<transforms.size();++i) {
+        std::memcpy(bytes.data()+i*stride,&transforms[i],112);
+        if (colors) {
+            float color[4]; std::memcpy(color,colors->data+i*16,16);
+            for (float x:color) if (!std::isfinite(x) || x<0 || x>1)
+                return SDL_SetError("GPU instance colors: finite RGBA in 0..1 required");
+            std::memcpy(bytes.data()+i*stride+112,color,16);
+        }
+    }
+    return true;
+}
+
 // Independent shader ABI; reuse the depth attachment and frame lifecycle helpers.
 struct SDL_GPULitEntry : SDL_GPU3DEntry {
     SDL_GPUTexture * texture=nullptr;
     SDL_GPUSampler * sampler=nullptr;
     SDL_GPUBuffer * instances=nullptr;
     uint32_t instanceCount=0;
+    SDL_GPUTransferBuffer * instanceUpload=nullptr;
+    bool instancesReady=true;
+    bool instanceColors=false;
 };
 inline std::unordered_map<uint64_t,SDL_GPULitEntry> SDL_GPULitMeshes;
 inline void SDL_FreeGPULit(SDL_GPULitEntry & m) {
+    if (m.instanceUpload) SDL_ReleaseGPUTransferBuffer(m.device,m.instanceUpload);
+    m.instanceUpload=nullptr;
     if (m.instances) SDL_ReleaseGPUBuffer(m.device,m.instances);
     m.instances=nullptr; m.instanceCount=0;
     if (m.texture) SDL_ReleaseGPUTexture(m.device,m.texture);
@@ -87,7 +128,7 @@ inline uint64_t SDL_CreateGPULitForFormat(SDL_GPUDevice * device,SDL_GPUTextureF
         const das::TArray<das::float4> & positions,const das::TArray<das::float4> & normals,const das::TArray<das::float2> & uv,
         const das::TArray<uint8_t> & pixels,uint32_t width,uint32_t height,
         const das::TArray<uint32_t> & indices,const char * vertex,const char * fragment,uint32_t format,
-        const das::TArray<das::float4> * models=nullptr) {
+        const das::TArray<das::float4> * models=nullptr,const das::TArray<das::float4> * colors=nullptr) {
     if (!SDL_IsMainThread() || !device) { SDL_SetError("GPU 3D: main thread and device required"); return 0; }
     if (!SDL_GPULitSizes(positions.size,normals.size,uv.size,indices.size,pixels.size,width,height)) return 0;
     if (!positions.data || !normals.data || !uv.data || !pixels.data || !indices.data) { SDL_SetError("GPU 3D: missing array storage"); return 0; }
@@ -95,18 +136,9 @@ inline uint64_t SDL_CreateGPULitForFormat(SDL_GPUDevice * device,SDL_GPUTextureF
         uint32_t index; std::memcpy(&index,indices.data+size_t(i)*4,4);
         if (index>=positions.size) { SDL_SetError("GPU 3D: index outside positions"); return 0; }
     }
-    std::vector<SDL_GPULitUniforms> instances;
-    if (models) {
-        if (!models->data || !models->size || models->size>16384 || models->size%4) {
-            SDL_SetError("GPU instancing: 1..4096 models, four columns each required"); return 0;
-        }
-        instances.resize(models->size/4);
-        for (size_t i=0;i<instances.size();++i) {
-            SDL_GPU3DMatrix model; std::memcpy(&model,models->data+i*64,64);
-            SDL_GPULight light{};
-            if (!SDL_PrepareGPULit(model,model,{0,0,1,0},instances[i],light)) return 0;
-        }
-    }
+    std::vector<uint8_t> instances;
+    if (colors && !models) { SDL_SetError("GPU instance colors: models required"); return 0; }
+    if (models && !SDL_PackGPUInstances(*models,colors,instances)) return 0;
     std::vector<SDL_GPULitVertex> packed(positions.size);
     for (uint32_t i=0;i<positions.size;++i) {
         auto & v=packed[i]; std::memcpy(v.position,positions.data+size_t(i)*16,16); std::memcpy(v.normal,normals.data+size_t(i)*16,16); std::memcpy(v.uv,uv.data+size_t(i)*8,8);
@@ -130,10 +162,10 @@ inline uint64_t SDL_CreateGPULitForFormat(SDL_GPUDevice * device,SDL_GPUTextureF
     fs.shader=SDL_LoadGPUMeshShader(device,fragment,format,SDL_GPU_SHADERSTAGE_FRAGMENT,false,1,1); if (!fs.shader) return 0;
     SDL_GPUVertexBufferDescription buffers[2]{};
     buffers[0].pitch=48; buffers[0].input_rate=SDL_GPU_VERTEXINPUTRATE_VERTEX;
-    buffers[1].slot=1; buffers[1].pitch=112; buffers[1].input_rate=SDL_GPU_VERTEXINPUTRATE_INSTANCE;
+    buffers[1].slot=1; buffers[1].pitch=colors?128:112; buffers[1].input_rate=SDL_GPU_VERTEXINPUTRATE_INSTANCE;
     // SDL reserves instance_step_rate: it must remain zero, even for instance-rate input.
-    SDL_GPUVertexAttribute attributes[10]{};
-    for (uint32_t i=0;i<7;++i) {
+    SDL_GPUVertexAttribute attributes[11]{};
+    for (uint32_t i=0;i<(colors?8u:7u);++i) {
         attributes[i+3].location=i+3; attributes[i+3].buffer_slot=1;
         attributes[i+3].format=SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4; attributes[i+3].offset=i*16;
     }
@@ -144,7 +176,7 @@ inline uint64_t SDL_CreateGPULitForFormat(SDL_GPUDevice * device,SDL_GPUTextureF
     SDL_GPUGraphicsPipelineCreateInfo pi{}; pi.vertex_shader=vs.shader; pi.fragment_shader=fs.shader;
     pi.primitive_type=SDL_GPU_PRIMITIVETYPE_TRIANGLELIST;
     pi.vertex_input_state.vertex_buffer_descriptions=buffers; pi.vertex_input_state.num_vertex_buffers=models?2:1;
-    pi.vertex_input_state.vertex_attributes=attributes; pi.vertex_input_state.num_vertex_attributes=models?10:3;
+    pi.vertex_input_state.vertex_attributes=attributes; pi.vertex_input_state.num_vertex_attributes=models?(colors?11:10):3;
     pi.rasterizer_state.fill_mode=SDL_GPU_FILLMODE_FILL; pi.rasterizer_state.cull_mode=SDL_GPU_CULLMODE_NONE;
     pi.rasterizer_state.enable_depth_clip=true; pi.multisample_state.sample_count=SDL_GPU_SAMPLECOUNT_1;
     pi.depth_stencil_state.enable_depth_test=true; pi.depth_stencil_state.enable_depth_write=true;
@@ -152,7 +184,7 @@ inline uint64_t SDL_CreateGPULitForFormat(SDL_GPUDevice * device,SDL_GPUTextureF
     pi.target_info.color_target_descriptions=&target; pi.target_info.num_color_targets=1;
     pi.target_info.has_depth_stencil_target=true; pi.target_info.depth_stencil_format=m.depthFormat;
     m.pipeline=SDL_CreateGPUGraphicsPipeline(device,&pi); if (!m.pipeline) return 0;
-    const uint32_t vertexBytes=positions.size*48, indexBytes=indices.size*4, instanceBytes=uint32_t(instances.size())*112;
+    const uint32_t vertexBytes=positions.size*48, indexBytes=indices.size*4, instanceBytes=uint32_t(instances.size());
     SDL_GPUBufferCreateInfo bi{}; bi.usage=SDL_GPU_BUFFERUSAGE_VERTEX; bi.size=vertexBytes;
     m.vertices=SDL_CreateGPUBuffer(device,&bi); if (!m.vertices) return 0;
     bi.usage=SDL_GPU_BUFFERUSAGE_INDEX; bi.size=indexBytes;
@@ -160,7 +192,8 @@ inline uint64_t SDL_CreateGPULitForFormat(SDL_GPUDevice * device,SDL_GPUTextureF
     if (models) {
         bi.usage=SDL_GPU_BUFFERUSAGE_VERTEX; bi.size=instanceBytes;
         m.instances=SDL_CreateGPUBuffer(device,&bi); if (!m.instances) return 0;
-        m.instanceCount=uint32_t(instances.size());
+        m.instanceCount=models->size/4;
+        m.instanceColors=colors!=nullptr;
     }
     SDL_GPUTextureCreateInfo texture{}; texture.type=SDL_GPU_TEXTURETYPE_2D; texture.format=SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM;
     texture.usage=SDL_GPU_TEXTUREUSAGE_SAMPLER; texture.width=width; texture.height=height;

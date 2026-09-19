@@ -35,7 +35,8 @@ The immutable vertex-buffer/texture/sampler bundle is documented in
 (`SDL_GPUNextPipeline`) to reject cross-kind aliases. Immutable UINT32 indexed
 meshes are covered in `docs/gpu-indexed-mesh.md`. Validate every index before GPU
 allocation; empty indices must never fall back to sequential drawing.
-General layouts and dynamic updates remain unimplemented. Preserve device-specific
+General layouts and geometry updates remain unimplemented; fixed-count instance
+updates use cycling (docs/gpu-dynamic-instances.md). Preserve device-specific
 cleanup: destroying B must not release A's meshes or pipelines.
 Vertex uniform transforms use a separate trusted shader ABI; see
 `docs/gpu-transform.md`. Two float4 rows occupy exactly 32 bytes at offsets 0/16.
@@ -133,8 +134,19 @@ equivalents; source inspection alone does not establish runtime correctness.
 - Keep example filenames numbered in learning order (01_, 02_, ...), documented
   in examples/README.md. Update CMake/AOT lists and documentation when renaming.
 
-Immutable instancing uses sdl3_gpu_instancing_boost; see docs/gpu-instancing.md.
+Instancing uses sdl3_gpu_instancing_boost; see docs/gpu-instancing.md.
 Keep per-vertex stride48 and per-instance stride112 (model4 + normal3 columns),
 64-byte camera and 16-byte light uniforms. SDL instance_step_rate is reserved
 and must be zero. Reject instanced IDs in ordinary lit/scene draws. Validate all
 1..4096 models before allocation; copy arrays; keep one indexed draw per frame.
+Dynamic transforms use full fixed-count updates, cycle both staging and instance
+buffers, and never wait for GPU idle in production. A failed upload submission
+blocks draws until a successful full update. Preserve queued snapshot pixel tests
+and upload buffer cleanup on panic/device destruction (gpu-dynamic-instances.md).
+
+Instance colors use a separate stride128 ABI (RGBA float4 at112/location10);
+keep the old stride112 shaders working. See docs/gpu-instance-colors.md. Validate
+one finite 0..1 RGBA per model before GPU work. Plain and colored update APIs
+must reject each other; draw and scoped cleanup are shared. Preserve texture
+modulation/alpha pixel checks and queued color snapshots. Alpha is written, not
+blended: no transparent sorting or blending contract is implied.

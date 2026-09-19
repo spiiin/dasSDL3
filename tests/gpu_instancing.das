@@ -73,7 +73,26 @@ def main(smoke : bool) : int {
             check_gpu(SDLTestGPUInstancesPixels(device,offscreen,instances.model_columns,unit[0],unit[1],unit[2],unit[3]))
             let camera = gpu_camera(float3(0.2,0.1,3.0),float3(0.0),float3(0.0,1.0,0.0),1.0,1.0,0.1,20.0)
             check_gpu(SDLTestGPUInstancesPixels(device,offscreen,instances.model_columns,camera[0],camera[1],camera[2],camera[3]))
+            var changed : GpuInstanceList
+            for (column in instances.model_columns) { push(changed.model_columns,column) }
+            changed.model_columns[0] = float4(0.35,0.08,0.0,0.0)
+            changed.model_columns[1] = float4(0.0,0.65,0.0,0.0)
+            changed.model_columns[3] = float4(0.25,-0.1,0.2,1.0)
+            changed.model_columns[7] = float4(-0.25,0.1,0.65,1.0)
+            changed.model_columns[11] = float4(0.2,0.4,0.1,1.0)
+            device |> gpu_update_instances(offscreen,changed)
+            check_gpu(SDLTestGPUInstancesPixels(device,offscreen,changed.model_columns,unit[0],unit[1],unit[2],unit[3]))
+            verify(!SDL_UpdateGPUInstances(device,offscreen,bad.model_columns))
+            bad.model_columns := changed.model_columns
+            bad.model_columns[8] = float4(0.0) // Late singular item must preserve the previous GPU data.
+            verify(!SDL_UpdateGPUInstances(device,offscreen,bad.model_columns))
+            check_gpu(SDLTestGPUInstancesPixels(device,offscreen,changed.model_columns,unit[0],unit[1],unit[2],unit[3]))
+            check_gpu(SDLTestGPUInstancesPending(device,offscreen,instances.model_columns,changed.model_columns))
+            check_gpu(SDLTestGPUInstancesFailedSubmit(device,offscreen,changed.model_columns))
+            device |> gpu_update_instances(offscreen,changed)
+            check_gpu(SDLTestGPUInstancesPixels(device,offscreen,changed.model_columns,unit[0],unit[1],unit[2],unit[3]))
             check_gpu(SDL_ReleaseGPULitMesh(device,offscreen))
+            verify(!SDL_UpdateGPUInstances(device,offscreen,changed.model_columns))
             positions[0] = saved_position
             texels[0] = uint8(255)
             clear(bad.model_columns)
@@ -92,6 +111,7 @@ def main(smoke : bool) : int {
                     var stale = 0ul
                     device |> with_gpu_instanced_mesh(window,positions,normals,uv,indices,texels,1u,1u,vs,fs,format,instances) $(mesh) {
                         stale = mesh
+                        device |> gpu_update_instances(mesh,instances)
                         draw(device,window,mesh,unit)
                         check_gpu(SDLTestGPULitDepth(device,window,mesh))
                         verify(SDL_DrawGPULitMesh(device,window,mesh,unit[0],unit[1],unit[2],unit[3],unit[0],unit[1],unit[2],unit[3],float4(0.0,0.0,1.0,0.2)) == -1)
@@ -107,6 +127,8 @@ def main(smoke : bool) : int {
                             verify(SDL_DrawGPUInstancedMesh(other,window,mesh,unit[0],unit[1],unit[2],unit[3],float4(0.0,0.0,1.0,0.2)) == -1)
                             let owned_by_other = SDLTestGPUInstancesOffscreen(other,positions,normals,uv,texels,indices,instances.model_columns,vs,fs,format)
                             verify(owned_by_other != 0ul && SDLTestGPULitMeshes() == 2)
+                            verify(!SDL_UpdateGPUInstances(other,mesh,instances.model_columns))
+                            other |> gpu_update_instances(owned_by_other,instances)
                             // Deliberately leave this bundle to device-specific cleanup.
                         }
                         verify(second && SDLTestGPULitMeshes() == 1)
@@ -116,6 +138,7 @@ def main(smoke : bool) : int {
                     var caught = false
                     try {
                         device |> with_gpu_instanced_mesh(window,positions,normals,uv,indices,texels,1u,1u,vs,fs,format,instances) $(mesh) {
+                            device |> gpu_update_instances(mesh,instances)
                             panic("instancing scope sentinel")
                         }
                     } recover { caught = rtrim(this_context().last_exception) == "instancing scope sentinel" }

@@ -1,6 +1,64 @@
 #pragma once
 #include "sdl3_gpu_lit.h"
+#ifdef DASSDL3_TESTING
+inline bool SDL_TestGPUInstancesFailSubmit=false;
+#endif
 
+// Full replacement, fixed count. Both staging and destination cycle so previously
+// submitted frames keep their bound data. No script callbacks or CPU GPU waits.
+inline bool SDL_UpdateGPUInstanceData(SDL_GPUDevice * device,uint64_t id,const das::TArray<das::float4> & models,
+        const das::TArray<das::float4> * colors) {
+    if (!SDL_IsMainThread()) return SDL_SetError("GPU instancing update: main thread required");
+    auto * mesh=SDL_FindGPULit(device,id); if (!mesh) return false;
+    if (!mesh->instances || !mesh->instanceCount || models.size!=mesh->instanceCount*4 || mesh->instanceColors!=(colors!=nullptr))
+        return SDL_SetError("GPU instancing update: matching instance color ABI and unchanged count required");
+    std::vector<uint8_t> packed;
+    if (!SDL_PackGPUInstances(models,colors,packed)) return false;
+    const uint32_t size=uint32_t(packed.size());
+    if (!mesh->instanceUpload) {
+        SDL_GPUTransferBufferCreateInfo info{}; info.usage=SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD; info.size=size;
+        mesh->instanceUpload=SDL_CreateGPUTransferBuffer(device,&info);
+        if (!mesh->instanceUpload) return false;
+    }
+    auto * bytes=SDL_MapGPUTransferBuffer(device,mesh->instanceUpload,true); if (!bytes) return false;
+    std::memcpy(bytes,packed.data(),size);
+    SDL_UnmapGPUTransferBuffer(device,mesh->instanceUpload);
+    auto * command=SDL_AcquireGPUCommandBuffer(device); if (!command) return false;
+    auto * copy=SDL_BeginGPUCopyPass(command);
+    if (!copy) {
+        const std::string error=SDL_GetError(); SDL_CancelGPUCommandBuffer(command);
+        return SDL_SetError("%s",error.c_str());
+    }
+    SDL_GPUTransferBufferLocation source{}; source.transfer_buffer=mesh->instanceUpload;
+    SDL_GPUBufferRegion dest{}; dest.buffer=mesh->instances; dest.size=size;
+    mesh->instancesReady=false; // A failed submit must not expose undefined cycled data.
+    SDL_UploadToGPUBuffer(copy,&source,&dest,true);
+    SDL_EndGPUCopyPass(copy);
+#ifdef DASSDL3_TESTING
+    if (SDL_TestGPUInstancesFailSubmit) {
+        SDL_CancelGPUCommandBuffer(command); // Upload-only command: no swapchain was acquired.
+        return SDL_SetError("injected instance upload submit failure");
+    }
+#endif
+    mesh->instancesReady=SDL_SubmitGPUCommandBuffer(command); // Submit consumes command even on failure.
+    return mesh->instancesReady;
+}
+
+inline bool SDL_UpdateGPUInstances(SDL_GPUDevice * device,uint64_t id,const das::TArray<das::float4> & models) {
+    return SDL_UpdateGPUInstanceData(device,id,models,nullptr);
+}
+inline bool SDL_UpdateGPUColoredInstances(SDL_GPUDevice * device,uint64_t id,
+        const das::TArray<das::float4> & models,const das::TArray<das::float4> & colors) {
+    return SDL_UpdateGPUInstanceData(device,id,models,&colors);
+}
+inline uint64_t SDL_CreateGPUColoredInstancedMesh(SDL_GPUDevice * device,SDL_Window * window,
+        const das::TArray<das::float4> & positions,const das::TArray<das::float4> & normals,const das::TArray<das::float2> & uv,
+        const das::TArray<uint8_t> & pixels,uint32_t width,uint32_t height,
+        const das::TArray<uint32_t> & indices,const das::TArray<das::float4> & models,const das::TArray<das::float4> & colors,
+        const char * vertex,const char * fragment,uint32_t format) {
+    if (!SDL_IsMainThread() || !SDL_GPUWindowClaimedBy(device,window)) { SDL_SetError("GPU instancing: main thread and claimed window required"); return 0; }
+    return SDL_CreateGPULitForFormat(device,SDL_GetGPUSwapchainTextureFormat(device,window),positions,normals,uv,pixels,width,height,indices,vertex,fragment,format,&models,&colors);
+}
 inline uint64_t SDL_CreateGPUInstancedMesh(SDL_GPUDevice * device,SDL_Window * window,
         const das::TArray<das::float4> & positions,const das::TArray<das::float4> & normals,const das::TArray<das::float2> & uv,
         const das::TArray<uint8_t> & pixels,uint32_t width,uint32_t height,
@@ -26,6 +84,7 @@ template<typename API>
 inline int SDL_GPUInstancesFrame(SDL_GPUDevice * device,SDL_Window * window,SDL_GPULitEntry & mesh,
         const SDL_GPU3DMatrix & camera,das::float4 light) {
     if (!mesh.instances || !mesh.instanceCount) { SDL_SetError("GPU instancing: instanced mesh required"); return -1; }
+    if (!mesh.instancesReady) { SDL_SetError("GPU instancing: previous upload failed; a successful full update is required"); return -1; }
     SDL_GPU3DMatrix identity{}; for (int i=0;i<4;++i) identity.c[i][i]=1;
     SDL_GPULitUniforms unused{}; SDL_GPULight lighting{};
     if (!SDL_PrepareGPULit(camera,identity,light,unused,lighting)) return -1;

@@ -6,7 +6,7 @@
 pipeline IDs: `gpu-triangle.md`. Добавлен TexturedQuad с immutable vertex buffer,
 RGBA8 upload и sampler: `gpu-mesh.md`; несколько устройств проверяются отдельно
 (`gpu-multidevice.md`). Общая модель command/pass handles, произвольные layouts,
-dynamic updates, compute и DSL ещё не реализованы; G2/G3 частичны.
+general geometry updates, compute и DSL ещё не реализованы; G2/G3 частичны.
 Immutable UINT32 index buffers добавлены в `gpu-indexed-mesh.md`; произвольные
 draw ranges и UINT16 остаются следующими расширениями G2; immutable instancing — пример 17.
 Vertex uniforms для 2D transforms добавлены с фиксированным 32-byte ABI:
@@ -169,6 +169,14 @@ messages, а не только картинку. Integer данные сравн
 использовать заданный tolerance и фиксированные assets/seeds.
 
 G2/G4 instancing slice: example 17 uses immutable model/normal instance buffers
-and one indexed draw for 64 lit cubes. Camera/light remain per-frame; dynamic
-instance updates, indirect drawing and arbitrary vertex layouts remain pending.
+and one indexed draw for 64 lit cubes. Camera/light remain per-frame; instance
+updates are extended by example 18. Indirect drawing and arbitrary layouts remain pending.
 Contract and verification: [gpu-instancing.md](gpu-instancing.md).
+
+Fixed-count full instance updates are implemented in example 18 and
+`gpu-dynamic-instances.md`, with cycling and queued-snapshot pixel tests. General
+dynamic geometry, count changes and partial updates remain future work.
+
+Example 19 adds per-instance RGBA in a separate stride128 layout, texture/light
+modulation and dynamic full updates. Transparency blending/sorting, per-instance
+textures and material batching remain future stages. See `gpu-instance-colors.md`.

@@ -27,4 +27,5 @@
 #include "gpu_lit_probe.h"
 #include "gpu_scene_probe.h"
 #include "gpu_instancing_probe.h"
+#include "gpu_instance_colors_probe.h"
 #endif

@@ -21,6 +21,13 @@
 [3D-матрицы, камера и depth buffer](docs/gpu-3d.md).
 `examples/15_gpu_lit_cube.das` добавляет текстуру и направленный свет:
 [Нормали, освещение и fragment uniforms](docs/gpu-lit.md).
+`examples/19_gpu_instance_colors.das` добавляет индивидуальные анимированные
+цвета к текстурированным экземплярам: [контракт RGBA](docs/gpu-instance-colors.md).
+
+`examples/18_gpu_dynamic_instances.das` анимирует каждый куб отдельно:
+обновляет матрицы экземпляров с cycling и сохраняет один draw call.
+Контракт: [обновление экземпляров](docs/gpu-dynamic-instances.md).
+
 `examples/17_gpu_instancing.das` рисует 64 освещённых куба одним indexed draw;
 матрицы экземпляров загружаются один раз, камера вращается вокруг сцены.
 Контракт: [GPU instancing](docs/gpu-instancing.md).

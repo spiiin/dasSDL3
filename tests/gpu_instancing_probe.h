@@ -2,6 +2,15 @@
 #include "sdl3_gpu_instancing.h"
 #include "gpu_triangle_probe.h"
 namespace sdl3_test {
+inline bool gpu_instances_failed_submit(SDL_GPUDevice * device,uint64_t id,const das::TArray<das::float4> & columns) {
+    struct Reset { ~Reset() { SDL_TestGPUInstancesFailSubmit=false; } } reset;
+    SDL_TestGPUInstancesFailSubmit=true;
+    if (SDL_UpdateGPUInstances(device,id,columns) || std::string(SDL_GetError())!="injected instance upload submit failure") return false;
+    auto * mesh=SDL_FindGPULit(device,id); if (!mesh || mesh->instancesReady) return false;
+    SDL_GPU3DMatrix camera{}; for (int i=0;i<4;++i) camera.c[i][i]=1;
+    GPUFake::scenario=1; GPUFake::trace.clear();
+    return SDL_GPUInstancesFrame<GPUFake>(device,GPUFake::handle<SDL_Window>(),*mesh,camera,{0,0,1,.2f})==-1 && GPUFake::trace.empty();
+}
 inline uint64_t gpu_instances_offscreen(SDL_GPUDevice * device,const das::TArray<das::float4> & positions,
         const das::TArray<das::float4> & normals,const das::TArray<das::float2> & uv,
         const das::TArray<uint8_t> & pixels,const das::TArray<uint32_t> & indices,const das::TArray<das::float4> & models,
@@ -22,30 +31,9 @@ inline bool gpu_instances_preflight(SDL_GPUDevice * device,uint64_t id) {
     GPUFake::scenario=3; GPUFake::trace.clear(); auto * depth=mesh->depth;
     return SDL_GPUInstancesFrame<GPUFake>(device,GPUFake::handle<SDL_Window>(),*mesh,camera,{0,0,1,.2f})==0 && GPUFake::trace=="AWC" && mesh->depth==depth;
 }
-inline bool gpu_instances_pixels(SDL_GPUDevice * device,uint64_t id,const das::TArray<das::float4> & columns,
-        das::float4 a,das::float4 b,das::float4 c,das::float4 d) {
-    auto * scene=SDL_FindGPULit(device,id);
-    if (!scene || scene->colorFormat!=SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM || scene->instanceCount!=3 || columns.size!=12) return false;
-    const auto camera=SDL_GPU3DColumns(a,b,c,d);
-    const SDL_GPULight lighting{{0,0,1},.2f};
-    GPUReadback r{device};
-    SDL_GPUTextureCreateInfo ti{}; ti.type=SDL_GPU_TEXTURETYPE_2D; ti.format=SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM;
-    ti.usage=SDL_GPU_TEXTUREUSAGE_COLOR_TARGET; ti.width=ti.height=64; ti.layer_count_or_depth=ti.num_levels=1; ti.sample_count=SDL_GPU_SAMPLECOUNT_1;
-    r.texture=SDL_CreateGPUTexture(device,&ti); if (!r.texture) return false;
-    SDL_GPUTransferBufferCreateInfo transfer{}; transfer.usage=SDL_GPU_TRANSFERBUFFERUSAGE_DOWNLOAD; transfer.size=64*64*4;
-    r.transfer=SDL_CreateGPUTransferBuffer(device,&transfer); if (!r.transfer) return false;
-    r.command=SDL_AcquireGPUCommandBuffer(device); if (!r.command) return false;
-    SDL_GPUColorTargetInfo target{}; target.texture=r.texture; target.clear_color={0,0,0,1}; target.load_op=SDL_GPU_LOADOP_CLEAR; target.store_op=SDL_GPU_STOREOP_STORE;
-    auto * pass=SDL_BeginGPU3DPass(r.command,target,*scene,64,64); if (!pass) return false;
-    SDL_RecordGPUInstances(pass,r.command,*scene,camera,lighting); SDL_EndGPURenderPass(pass);
-    auto * copy=SDL_BeginGPUCopyPass(r.command); if (!copy) return false;
-    SDL_GPUTextureRegion source{}; source.texture=r.texture; source.w=source.h=64; source.d=1;
-    SDL_GPUTextureTransferInfo dest{}; dest.transfer_buffer=r.transfer; dest.pixels_per_row=dest.rows_per_layer=64;
-    SDL_DownloadFromGPUTexture(copy,&source,&dest); SDL_EndGPUCopyPass(copy);
-    r.fence=SDL_SubmitGPUCommandBufferAndAcquireFence(r.command); r.command=nullptr; r.submitted=true;
-    if (!r.fence || !SDL_WaitForGPUFences(device,true,&r.fence,1)) return false;
-    auto * bytes=static_cast<const Uint8 *>(SDL_MapGPUTransferBuffer(device,r.transfer,false)); if (!bytes) return false;
-    std::array<Uint8,64*64*4> pixels{}; std::memcpy(pixels.data(),bytes,pixels.size()); SDL_UnmapGPUTransferBuffer(device,r.transfer);
+inline bool gpu_instances_reference(const std::array<Uint8,64*64*4> & pixels,
+        const das::TArray<das::float4> & columns,const SDL_GPU3DMatrix & camera,
+        const das::TArray<das::float4> * colors=nullptr) {
     // Three copies of one triangle: independent CPU transform, inverse and depth reference.
     const double vertices[3][4]={{-.8,-.7,0,1},{.8,-.7,0,1},{0,.8,0,1}};
     double projected[3][3][3]{},illumination[3]{};
@@ -89,7 +77,13 @@ inline bool gpu_instances_pixels(SDL_GPUDevice * device,uint64_t id,const das::T
         }
         if (edge) continue;
         int expected[4]={0,0,0,255};
-        if (hit>=0) { for (int k=0;k<3;++k) expected[k]=int(std::round(255*illumination[hit])); ++covered; }
+        if (hit>=0) {
+            float tint[4]={1,1,1,1};
+            if (colors) std::memcpy(tint,colors->data+size_t(hit)*16,16);
+            const int texel[4]={160,210,96,192}; // Colored fixture: nonwhite RGBA, including nonopaque alpha.
+            for (int k=0;k<4;++k) expected[k]=int(std::round((colors?texel[k]:255)*tint[k]*(k==3?1:illumination[hit])));
+            ++covered;
+        }
         for (int channel=0;channel<4;++channel) {
             const int actual=pixels[(y*64+x)*4+channel];
             if (std::abs(actual-expected[channel])>1) return SDL_SetError("Instancing pixel %d,%d channel%d got%d expected%d",x,y,channel,actual,expected[channel]);
@@ -97,5 +91,57 @@ inline bool gpu_instances_pixels(SDL_GPUDevice * device,uint64_t id,const das::T
         ++checked;
     }
     return (checked>3000 && covered>80) || SDL_SetError("Instancing fixture: insufficient coverage");
+}
+inline bool gpu_instances_submit(GPUReadback & r,SDL_GPULitEntry & mesh,const SDL_GPU3DMatrix & camera) {
+    auto * device=r.device;
+    const SDL_GPULight lighting{{0,0,1},.2f};
+    SDL_GPUTextureCreateInfo ti{}; ti.type=SDL_GPU_TEXTURETYPE_2D; ti.format=SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM;
+    ti.usage=SDL_GPU_TEXTUREUSAGE_COLOR_TARGET; ti.width=ti.height=64; ti.layer_count_or_depth=ti.num_levels=1; ti.sample_count=SDL_GPU_SAMPLECOUNT_1;
+    r.texture=SDL_CreateGPUTexture(device,&ti); if (!r.texture) return false;
+    SDL_GPUTransferBufferCreateInfo transfer{}; transfer.usage=SDL_GPU_TRANSFERBUFFERUSAGE_DOWNLOAD; transfer.size=64*64*4;
+    r.transfer=SDL_CreateGPUTransferBuffer(device,&transfer); if (!r.transfer) return false;
+    r.command=SDL_AcquireGPUCommandBuffer(device); if (!r.command) return false;
+    SDL_GPUColorTargetInfo target{}; target.texture=r.texture; target.clear_color={0,0,0,1}; target.load_op=SDL_GPU_LOADOP_CLEAR; target.store_op=SDL_GPU_STOREOP_STORE;
+    auto * pass=SDL_BeginGPU3DPass(r.command,target,mesh,64,64); if (!pass) return false;
+    SDL_RecordGPUInstances(pass,r.command,mesh,camera,lighting); SDL_EndGPURenderPass(pass);
+    auto * copy=SDL_BeginGPUCopyPass(r.command); if (!copy) return false;
+    SDL_GPUTextureRegion source{}; source.texture=r.texture; source.w=source.h=64; source.d=1;
+    SDL_GPUTextureTransferInfo dest{}; dest.transfer_buffer=r.transfer; dest.pixels_per_row=dest.rows_per_layer=64;
+    SDL_DownloadFromGPUTexture(copy,&source,&dest); SDL_EndGPUCopyPass(copy);
+    r.fence=SDL_SubmitGPUCommandBufferAndAcquireFence(r.command); r.command=nullptr; r.submitted=true;
+    return r.fence!=nullptr;
+}
+inline bool gpu_instances_check(GPUReadback & r,const das::TArray<das::float4> & columns,const SDL_GPU3DMatrix & camera,
+        const das::TArray<das::float4> * colors=nullptr) {
+    if (!r.fence || !SDL_WaitForGPUFences(r.device,true,&r.fence,1)) return false;
+    auto * bytes=static_cast<const Uint8 *>(SDL_MapGPUTransferBuffer(r.device,r.transfer,false)); if (!bytes) return false;
+    std::array<Uint8,64*64*4> pixels{}; std::memcpy(pixels.data(),bytes,pixels.size()); SDL_UnmapGPUTransferBuffer(r.device,r.transfer);
+    return gpu_instances_reference(pixels,columns,camera,colors);
+}
+inline bool gpu_instances_pixels(SDL_GPUDevice * device,uint64_t id,const das::TArray<das::float4> & columns,
+        das::float4 a,das::float4 b,das::float4 c,das::float4 d) {
+    auto * mesh=SDL_FindGPULit(device,id);
+    if (!mesh || mesh->colorFormat!=SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM || mesh->instanceCount!=3 || columns.size!=12) return false;
+    const auto camera=SDL_GPU3DColumns(a,b,c,d);
+    GPUReadback r{device};
+    return gpu_instances_submit(r,*mesh,camera) && gpu_instances_check(r,columns,camera);
+}
+inline bool gpu_instances_pending(SDL_GPUDevice * device,uint64_t id,const das::TArray<das::float4> & first,
+        const das::TArray<das::float4> & second) {
+    auto * mesh=SDL_FindGPULit(device,id);
+    if (!mesh || mesh->colorFormat!=SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM || mesh->instanceCount!=3 || first.size!=12 || second.size!=12) return false;
+    SDL_GPU3DMatrix camera{}; for (int i=0;i<4;++i) camera.c[i][i]=1;
+    std::vector<std::unique_ptr<GPUReadback>> pending;
+    for (int frame=0;frame<12;++frame) {
+        const auto & columns=frame%2?second:first;
+        if (!SDL_UpdateGPUInstances(device,id,columns)) return false;
+        auto readback=std::make_unique<GPUReadback>(); readback->device=device;
+        if (!gpu_instances_submit(*readback,*mesh,camera)) return false;
+        pending.push_back(std::move(readback));
+    }
+    // No fence/idle waits above: both transfer and destination reuse cross submissions.
+    for (int frame=0;frame<12;++frame)
+        if (!gpu_instances_check(*pending[frame],frame%2?second:first,camera)) return false;
+    return true;
 }
 }

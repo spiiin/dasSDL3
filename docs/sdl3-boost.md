@@ -136,4 +136,12 @@ limits, failure paths and shared-depth pixel tests.
 `sdl3_gpu_instancing_boost` adds value-only `GpuInstanceList`,
 `gpu_instance_add`, `with_gpu_instanced_mesh`, and `gpu_draw_instanced_mesh`.
 Creation copies all models; clearing the input list does not change instances.
-One indexed draw renders the entire immutable buffer. See `gpu-instancing.md`.
+One indexed draw renders the entire buffer. `gpu_update_instances` replaces all
+transforms without changing count; it copies arrays and cycles staging and GPU
+data. See `gpu-instancing.md` and `gpu-dynamic-instances.md`.
+
+`sdl3_gpu_instance_colors_boost` adds GpuColoredInstanceList,
+`gpu_colored_instance_add` (default white), `with_gpu_colored_instanced_mesh`,
+and `gpu_update_colored_instances`. Draw uses `gpu_draw_instanced_mesh`. Values
+are copied, all colors validated, and updates cycle with the model data. See
+`gpu-instance-colors.md` for the distinct ABI and alpha contract.

@@ -19,6 +19,8 @@
 | `15_gpu_lit_cube.das` | SDL GPU: текстура, нормали, направленный свет и nonuniform scale |
 | `16_gpu_scene.das` | SDL GPU: общий depth, orbit-камера, пауза и смена порядка draw; стрелки/колесо, Space, Enter, Backspace |
 | `17_gpu_instancing.das` | SDL GPU: 64 куба одним indexed draw, буфер экземпляров, вращающаяся камера |
+| `18_gpu_dynamic_instances.das` | SDL GPU: независимая анимация кубов, обновление instance buffer и cycling |
+| `19_gpu_instance_colors.das` | SDL GPU: индивидуальный RGBA, анимация цвета и умножение на текстуру |
 
 Из корня проекта:
 

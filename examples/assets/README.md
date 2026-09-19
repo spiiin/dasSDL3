@@ -35,3 +35,8 @@ native pipeline. The manifest records DXC and source/binary hashes.
 3 normal columns), camera uniform64, light uniform16 and one fragment sampler.
 Regenerate with `python tools/build_triangle_shaders.py --instancing`; binaries
 and hashes ship with the source, so consumer builds need no shader compiler.
+
+`colored_instances.*` extends the instance vertex record to stride128 with RGBA
+at offset112/location10. Build using `tools/build_triangle_shaders.py
+--colored-instances`; uniform/sampler slots match `instances.*`. Alpha is
+modulated into the output, with pipeline blending disabled.

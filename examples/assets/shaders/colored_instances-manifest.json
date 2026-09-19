@@ -1,0 +1,15 @@
+{
+  "entrypoint": "main",
+  "resources": "vertex uniform 0: camera columns, 64 bytes; fragment uniform 0: light direction/ambient, 16 bytes; fragment sampler 0",
+  "vertex_inputs": "buffer0 stride48: position4 normal4 uv2; buffer1 stride128 instance-rate: model4x4 normal3x4 color4; locations0..10",
+  "compiler": "dxcompiler.dll: 1.8 - 1.8.0.4739 (d9a5e97d0)",
+  "spirv_target": "vulkan1.0",
+  "files": {
+    "colored_instances.vert.hlsl": "e9721994ea302ba11d3a100105948181edbf650234d76e089d2ffb287ef3d2ff",
+    "colored_instances.vert.spv": "299c23e7146d96657dc1a412d38ae0fc06737d8b90595259e39dbfa62fda2817",
+    "colored_instances.vert.dxil": "76ad5b4c743d7b6f91d3299fc98547f84c91d2d68bb1dd52108c8afcf6ea3678",
+    "colored_instances.frag.hlsl": "ea695ba4a07650f3fb0736c0e9de9dc145c3d279a847cde46d7fc3b8affc6a26",
+    "colored_instances.frag.spv": "2091ca73e0263d994475a9bfcf9b286c70fae9f23f17e3442110578530d3a725",
+    "colored_instances.frag.dxil": "81e369da84ea333ee8f28a6f72d2272b2ccdb766653f3d199b45f7024d6de32f"
+  }
+}

@@ -14951,13 +14951,14 @@
       "category": "GPU",
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Fixed vertex layouts including a second immutable instance-rate buffer: model/normal columns, stride112, reserved step rate zero",
+      "reason": "Fixed vertex layouts including a second immutable instance-rate buffer: model/normal columns stride112 or model/normal/RGBA stride128, reserved step rate zero",
       "adapter": "SDL_RecordGPUMesh / SDL_RecordGPUInstances",
       "tests": [
         "tests/gpu_mesh.das",
-        "tests/gpu_instancing.das"
+        "tests/gpu_instancing.das",
+        "tests/gpu_instance_colors.das"
       ],
-      "contract": "docs/gpu-instancing.md"
+      "contract": "docs/gpu-instance-colors.md"
     },
     {
       "name": "SDL_BindGPUVertexSamplers",
@@ -27787,12 +27788,13 @@
       "category": "GPU",
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "reason": "Copied immutable mesh uploads and fixed-count full instance updates; staging and destination cycling; no borrowed mapped pointers or general update API",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_UpdateGPUInstances",
       "tests": [
-        "tests/gpu_mesh.das"
+        "tests/gpu_mesh.das",
+        "tests/gpu_instancing.das"
       ],
-      "contract": "docs/gpu-mesh.md"
+      "contract": "docs/gpu-dynamic-instances.md"
     },
     {
       "name": "SDL_MapRGB",
@@ -35954,12 +35956,13 @@
       "category": "GPU",
       "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "reason": "Copied immutable mesh uploads and fixed-count full instance updates; staging and destination cycling; no borrowed mapped pointers or general update API",
+      "adapter": "SDL_CreateGPUTexturedMesh / SDL_UpdateGPUInstances",
       "tests": [
-        "tests/gpu_mesh.das"
+        "tests/gpu_mesh.das",
+        "tests/gpu_instancing.das"
       ],
-      "contract": "docs/gpu-mesh.md"
+      "contract": "docs/gpu-dynamic-instances.md"
     },
     {
       "name": "SDL_UploadToGPUTexture",

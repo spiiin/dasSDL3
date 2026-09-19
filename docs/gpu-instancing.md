@@ -1,9 +1,11 @@
-# Immutable GPU instancing
+# GPU instancing
 
 Example `17_gpu_instancing.das` draws 64 textured Lambert cubes with one
 `SDL_DrawGPUIndexedPrimitives(indexCount,instanceCount,0,0,0)` per submitted frame.
 Geometry, texture and material are shared. The camera and light can change each
-frame; instance transforms are immutable for the lifetime of the mesh.
+frame. Example 17 uploads transforms once; explicit full updates are available
+through `gpu_update_instances`, demonstrated in example 18. See
+[gpu-dynamic-instances.md](gpu-dynamic-instances.md).
 
 `GpuInstanceList` owns copied matrix columns. Build it with `gpu_instance_add`,
 then pass it to `with_gpu_instanced_mesh`. Creation copies geometry, indices,
@@ -51,7 +53,10 @@ lists/models, missing shaders, incompatible draw APIs, stale/foreign IDs,
 resize, a second device, preflight/NULL drawable, panic and early-return cleanup.
 Example 17 clears all input arrays after upload and runs 60 frames in smoke mode.
 
-Dynamic instance updates, arbitrary layouts, per-instance textures/materials,
+Per-instance RGBA is available through the separate stride128 API in
+[gpu-instance-colors.md](gpu-instance-colors.md).
+
+Arbitrary layouts, variable instance counts, per-instance textures/materials,
 indirect draws, GPU culling and compute batching remain future work. This stage
 does not change the number of raw SDL functions exposed.
 

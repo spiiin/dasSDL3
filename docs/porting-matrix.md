@@ -148,4 +148,13 @@ buffer и AOT. Запуск upstream-тестов не заменяет пров
 
 `17_gpu_instancing.das`: 64 copies of a lit cube in one indexed draw, separate
 instance-rate model/normal buffer and orbiting camera. This is the bounded
-InstancedIndexed learning step; ComputeSpriteBatch/indirect/dynamic updates remain.
+InstancedIndexed learning step; ComputeSpriteBatch/indirect remain. Fixed-count
+instance updates follow in example 18.
+
+`18_gpu_dynamic_instances.das`: CPU animation uploads all instance transforms
+with staging/destination cycling before a single indexed draw. Tests compare
+twelve queued snapshots after submission without per-frame fence waits.
+
+`19_gpu_instance_colors.das`: 64 animated transforms and RGBA colors in one
+indexed draw. CPU references verify texture modulation, alpha, depth and queued
+color updates on both backends; transparency blending is not implemented.

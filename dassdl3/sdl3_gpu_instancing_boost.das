@@ -31,7 +31,14 @@ def public with_gpu_instanced_mesh(device : SDL_GPUDevice?; window : SDL_Window?
     if (!released) { panic("GPU lit release: {SDL_GetError()}") }
 }
 
-// One indexed draw for the complete immutable instance buffer.
+// Copies the entire list; count must match creation. GPU upload is asynchronous.
+def public gpu_update_instances(device : SDL_GPUDevice?; mesh : uint64; instances : GpuInstanceList) {
+    if (!SDL_UpdateGPUInstances(device,mesh,instances.model_columns)) {
+        panic("GPU instancing update: {SDL_GetError()}")
+    }
+}
+
+// One indexed draw for the complete instance buffer.
 def public gpu_draw_instanced_mesh(device : SDL_GPUDevice?; window : SDL_Window?; mesh : uint64;
         camera : float4x4; light_direction : float3; ambient : float = 0.2) : bool {
     let status = SDL_DrawGPUInstancedMesh(device,window,mesh,camera[0],camera[1],camera[2],camera[3],float4(light_direction,ambient))

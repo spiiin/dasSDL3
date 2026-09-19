@@ -17,11 +17,13 @@ parser.add_argument('--transform', action='store_true', help='Build indexed mesh
 parser.add_argument('--scene3d', action='store_true', help='Build color-vertex + four-column MVP shader ABI')
 parser.add_argument('--lit', action='store_true', help='Build textured 3D + inverse-transpose normals and Lambert lighting')
 parser.add_argument('--instancing', action='store_true', help='Build immutable instance model/normal vertex buffer ABI')
+parser.add_argument('--colored-instances', action='store_true', help='Build stride128 instance RGBA ABI')
 args = parser.parse_args()
+if args.colored_instances: args.instancing = True
 if args.transform: args.mesh = True
 sources = root / 'examples/assets/shaders'
 version = subprocess.check_output([args.dxc, '--version'], text=True).strip()
-prefix = 'instances' if args.instancing else 'lit' if args.lit else 'scene3d' if args.scene3d else 'transform' if args.transform else 'mesh' if args.mesh else 'triangle'
+prefix = 'colored_instances' if args.colored_instances else 'instances' if args.instancing else 'lit' if args.lit else 'scene3d' if args.scene3d else 'transform' if args.transform else 'mesh' if args.mesh else 'triangle'
 manifest = {'entrypoint': 'main', 'resources': 'fragment sampler 0' if args.mesh else 'none', 'vertex_inputs': 'float2 location0 position; float2 location1 uv; stride16' if args.mesh else 'SV_VertexID only',
             'compiler': version, 'spirv_target': 'vulkan1.0', 'files': {}}
 with tempfile.TemporaryDirectory() as temp:
@@ -36,6 +38,8 @@ with tempfile.TemporaryDirectory() as temp:
     if args.instancing:
         manifest['resources'] = 'vertex uniform 0: camera columns, 64 bytes; fragment uniform 0: light direction/ambient, 16 bytes; fragment sampler 0'
         manifest['vertex_inputs'] = 'buffer0 stride48: position4 normal4 uv2; buffer1 stride112 instance-rate: model4x4 normal3x4; locations0..9'
+    if args.colored_instances:
+        manifest['vertex_inputs'] = 'buffer0 stride48: position4 normal4 uv2; buffer1 stride128 instance-rate: model4x4 normal3x4 color4; locations0..10'
     for stage, profile in [('vert', 'vs_6_0'), ('frag', 'ps_6_0')]:
         source = sources / f'{prefix}.{stage}.hlsl'
         manifest['files'][source.name] = hashlib.sha256(source.read_bytes()).hexdigest()
