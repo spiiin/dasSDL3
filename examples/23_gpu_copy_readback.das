@@ -1,51 +1,45 @@
 options gen2
 require dassdl3/sdl3_gpu_transfer_boost
 
-var example_failed = false
-
-[export]
-def main(smoke : bool) : int {
-    var available = false
-    let scope_ok_0 = with_sdl() {
-        available = with_gpu_device(GPU_SHADER_FORMATS,true,"") $(device : SDL_GPUDevice?) {
-            var source, zeros, result : array<uint8>
-            resize(source,256)
-            resize(zeros,256)
-            resize(result,256)
-            for (i in 0 .. 256) { source[i] = uint8((i*37+11)%256) }
-            let scope_ok_1 = device |> with_gpu_buffer(source,SDL_GPU_BUFFERUSAGE_VERTEX) $(a : uint64) {
-                let scope_ok_2 = device |> with_gpu_buffer(zeros,SDL_GPU_BUFFERUSAGE_VERTEX) $(b : uint64) {
-                    var operation_result_1 <- device |> gpu_copy_buffer(a,0u,b,0u,256u)
-                    if (is_err(operation_result_1)) { example_failed = true; print("SDL operation: {unwrap_err(operation_result_1).message}\n"); return err(unwrap_err(operation_result_1),type<SdlUnit>) }
-                    let scope_ok_3 = device |> with_gpu_readback(b,0u,256u) $(ticket : uint64) {
-                        // Other CPU work can run here; no mapped GPU pointer escapes.
-                        let state = device |> gpu_poll_readback(ticket)
-                        if (is_err(state)) { return err(unwrap_err(state),type<SdlUnit>) }
-                        let already_ready = unwrap(state)
-                        var operation_result_2 <- device |> gpu_wait_readback(ticket)
-                        if (is_err(operation_result_2)) { example_failed = true; print("SDL operation: {unwrap_err(operation_result_2).message}\n"); return err(unwrap_err(operation_result_2),type<SdlUnit>) }
-                        var operation_result_3 <- device |> gpu_readback_bytes(ticket,result)
-                        if (is_err(operation_result_3)) { example_failed = true; print("SDL operation: {unwrap_err(operation_result_3).message}\n"); return err(unwrap_err(operation_result_3),type<SdlUnit>) }
-                        for (i in 0 .. 256) { verify(result[i] == source[i]) }
-                        print("GPU copy/readback: 256 bytes match; ready at first poll: {already_ready}\n")
-
-                        return sdl_ok()
-                    }
-                    if (is_err(scope_ok_3)) { example_failed = true; print("SDL acquisition: {unwrap_err(scope_ok_3).message}\n") ; return err(unwrap_err(scope_ok_3),type<SdlUnit>) }
-
-                    return sdl_ok()
-                }
-                if (is_err(scope_ok_2)) { example_failed = true; print("SDL acquisition: {unwrap_err(scope_ok_2).message}\n") ; return err(unwrap_err(scope_ok_2),type<SdlUnit>) }
+def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; SdlError> {
+    var source, zeros, result : array<uint8>
+    resize(source,256)
+    resize(zeros,256)
+    resize(result,256)
+    for (i in 0 .. 256) { source[i] = uint8((i*37+11)%256) }
+    return device |> with_gpu_buffer(source,SDL_GPU_BUFFERUSAGE_VERTEX) $(a : uint64) {
+        return device |> with_gpu_buffer(zeros,SDL_GPU_BUFFERUSAGE_VERTEX) $(b : uint64) {
+            var gpu_copy_buffer_result <- device |> gpu_copy_buffer(a,0u,b,0u,256u)
+            if (is_err(gpu_copy_buffer_result)) { return err(unwrap_err(gpu_copy_buffer_result),type<SdlUnit>) }
+            return device |> with_gpu_readback(b,0u,256u) $(ticket : uint64) {
+                // Other CPU work can run here; no mapped GPU pointer escapes.
+                let state = device |> gpu_poll_readback(ticket)
+                if (is_err(state)) { return err(unwrap_err(state),type<SdlUnit>) }
+                let already_ready = unwrap(state)
+                var gpu_wait_readback_result <- device |> gpu_wait_readback(ticket)
+                if (is_err(gpu_wait_readback_result)) { return err(unwrap_err(gpu_wait_readback_result),type<SdlUnit>) }
+                var gpu_readback_bytes_result <- device |> gpu_readback_bytes(ticket,result)
+                if (is_err(gpu_readback_bytes_result)) { return err(unwrap_err(gpu_readback_bytes_result),type<SdlUnit>) }
+                for (i in 0 .. 256) { verify(result[i] == source[i]) }
+                print("GPU copy/readback: 256 bytes match; ready at first poll: {already_ready}\n")
 
                 return sdl_ok()
             }
-            if (is_err(scope_ok_1)) { example_failed = true; print("SDL acquisition: {unwrap_err(scope_ok_1).message}\n") ; return err(unwrap_err(scope_ok_1),type<SdlUnit>) }
-
-            return sdl_ok()
-        } |> is_ok
-
-        return sdl_ok()
+        }
     }
-    if (is_err(scope_ok_0)) { example_failed = true; print("SDL acquisition: {unwrap_err(scope_ok_0).message}\n") }
-    return example_failed ? 1 : (available ? 0 : 77)
+}
+
+[export]
+def main(smoke : bool) : int {
+    let result = with_sdl() {
+        return with_gpu_device(GPU_SHADER_FORMATS,true,"") $(device : SDL_GPUDevice?) {
+            return run_gpu_example(device, smoke)
+        }
+    }
+    if (is_err(result)) {
+        let error = unwrap_err(result)
+        print("{error.operation}: {error.message}\n")
+        return smoke && error.operation=="with_gpu_device" ? 77 : 1
+    }
+    return 0
 }
