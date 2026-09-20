@@ -654,44 +654,36 @@
       "contract": "docs/geometry.md"
     },
     "function:SDL_CreateTexture": {
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Only RGBA32 streaming and target textures; no general format/access binding",
-      "adapter": "SDL_CreateRGBA8Texture",
+      "boost_status": "available",
+      "reason": "Direct SDL texture creation and modulation, scalar output references and defer scopes. No implicit ownership of borrowed renderer or properties.",
+      "contract": "docs/texture-state.md",
       "tests": [
-        "tests/pixels.das"
-      ],
-      "contract": "docs/pixels.md"
+        "tests/texture_state.das"
+      ]
     },
     "function:SDL_LockTexture": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Whole-image synchronous upload from a checked RGBA8 array; no borrowed mapping exposed",
-      "adapter": "SDL_UploadRGBA8",
+      "reason": "Direct texture modulation, blending and transfer APIs. RGBA32 update array adapter and borrowed surface lock scope are limited adapters; native mapped pointer validity remains caller-owned.",
+      "contract": "docs/texture-transfer.md",
       "tests": [
-        "tests/pixels.das"
-      ],
-      "contract": "docs/pixels.md"
+        "tests/texture_transfer.das"
+      ]
     },
     "function:SDL_UnlockTexture": {
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Native cleanup within synchronous RGBA upload; no script unlock API",
-      "adapter": "SDL_UploadRGBA8",
+      "boost_status": "available",
+      "reason": "Direct texture modulation, blending and transfer APIs. RGBA32 update array adapter and borrowed surface lock scope are limited adapters; native mapped pointer validity remains caller-owned.",
+      "contract": "docs/texture-transfer.md",
       "tests": [
-        "tests/pixels.das"
-      ],
-      "contract": "docs/pixels.md"
+        "tests/texture_transfer.das"
+      ]
     },
     "function:SDL_RenderReadPixels": {
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Current viewport only; returned surface owned by with_read_pixels",
-      "adapter": "SDL_ReadPixelsOwned",
+      "boost_status": "available",
+      "reason": "Direct renderer creation/draw/readback/VSync/debug access; ref adapters and explicit ownership scopes preserve SDL results and backend constraints.",
+      "contract": "docs/renderer-operations.md",
       "tests": [
-        "tests/pixels.das"
-      ],
-      "contract": "docs/pixels.md"
+        "tests/renderer_operations.das"
+      ]
     },
     "function:SDL_ConvertSurface": {
       "raw_status": "adapted",
@@ -1967,6 +1959,504 @@
       "contract": "docs/renderer-primitives.md",
       "tests": [
         "tests/renderer_primitives.das"
+      ]
+    },
+    "function:SDL_GetRenderOutputSize": {
+      "boost_status": "available",
+      "reason": "Direct renderer state access with borrowed rect and scalar output reference adapters; preserves SDL results and target-local state.",
+      "contract": "docs/renderer-state.md",
+      "tests": [
+        "tests/renderer_state.das"
+      ]
+    },
+    "function:SDL_GetCurrentRenderOutputSize": {
+      "boost_status": "available",
+      "reason": "Direct renderer state access with borrowed rect and scalar output reference adapters; preserves SDL results and target-local state.",
+      "contract": "docs/renderer-state.md",
+      "tests": [
+        "tests/renderer_state.das"
+      ]
+    },
+    "function:SDL_SetRenderViewport": {
+      "boost_status": "available",
+      "reason": "Direct renderer state access with borrowed rect and scalar output reference adapters; preserves SDL results and target-local state.",
+      "contract": "docs/renderer-state.md",
+      "tests": [
+        "tests/renderer_state.das"
+      ]
+    },
+    "function:SDL_GetRenderViewport": {
+      "boost_status": "available",
+      "reason": "Direct renderer state access with borrowed rect and scalar output reference adapters; preserves SDL results and target-local state.",
+      "contract": "docs/renderer-state.md",
+      "tests": [
+        "tests/renderer_state.das"
+      ]
+    },
+    "function:SDL_RenderViewportSet": {
+      "boost_status": "available",
+      "reason": "Direct renderer state access with borrowed rect and scalar output reference adapters; preserves SDL results and target-local state.",
+      "contract": "docs/renderer-state.md",
+      "tests": [
+        "tests/renderer_state.das"
+      ]
+    },
+    "function:SDL_SetRenderClipRect": {
+      "boost_status": "available",
+      "reason": "Direct renderer state access with borrowed rect and scalar output reference adapters; preserves SDL results and target-local state.",
+      "contract": "docs/renderer-state.md",
+      "tests": [
+        "tests/renderer_state.das"
+      ]
+    },
+    "function:SDL_GetRenderClipRect": {
+      "boost_status": "available",
+      "reason": "Direct renderer state access with borrowed rect and scalar output reference adapters; preserves SDL results and target-local state.",
+      "contract": "docs/renderer-state.md",
+      "tests": [
+        "tests/renderer_state.das"
+      ]
+    },
+    "function:SDL_RenderClipEnabled": {
+      "boost_status": "available",
+      "reason": "Direct renderer state access with borrowed rect and scalar output reference adapters; preserves SDL results and target-local state.",
+      "contract": "docs/renderer-state.md",
+      "tests": [
+        "tests/renderer_state.das"
+      ]
+    },
+    "function:SDL_SetRenderScale": {
+      "boost_status": "available",
+      "reason": "Direct renderer state access with borrowed rect and scalar output reference adapters; preserves SDL results and target-local state.",
+      "contract": "docs/renderer-state.md",
+      "tests": [
+        "tests/renderer_state.das"
+      ]
+    },
+    "function:SDL_GetRenderScale": {
+      "boost_status": "available",
+      "reason": "Direct renderer state access with borrowed rect and scalar output reference adapters; preserves SDL results and target-local state.",
+      "contract": "docs/renderer-state.md",
+      "tests": [
+        "tests/renderer_state.das"
+      ]
+    },
+    "function:SDL_GetNumRenderDrivers": {
+      "boost_status": "available",
+      "reason": "Direct renderer queries and logical presentation; copied names and scalar/rect output references preserve native results and ownership.",
+      "contract": "docs/renderer-presentation.md",
+      "tests": [
+        "tests/renderer_presentation.das"
+      ]
+    },
+    "function:SDL_GetRenderDriver": {
+      "boost_status": "available",
+      "reason": "Direct renderer queries and logical presentation; copied names and scalar/rect output references preserve native results and ownership.",
+      "contract": "docs/renderer-presentation.md",
+      "tests": [
+        "tests/renderer_presentation.das"
+      ]
+    },
+    "function:SDL_GetRendererName": {
+      "boost_status": "available",
+      "reason": "Direct renderer queries and logical presentation; copied names and scalar/rect output references preserve native results and ownership.",
+      "contract": "docs/renderer-presentation.md",
+      "tests": [
+        "tests/renderer_presentation.das"
+      ]
+    },
+    "function:SDL_GetRendererProperties": {
+      "boost_status": "available",
+      "reason": "Direct renderer queries and logical presentation; copied names and scalar/rect output references preserve native results and ownership.",
+      "contract": "docs/renderer-presentation.md",
+      "tests": [
+        "tests/renderer_presentation.das"
+      ]
+    },
+    "function:SDL_GetRenderSafeArea": {
+      "boost_status": "available",
+      "reason": "Direct renderer queries and logical presentation; copied names and scalar/rect output references preserve native results and ownership.",
+      "contract": "docs/renderer-presentation.md",
+      "tests": [
+        "tests/renderer_presentation.das"
+      ]
+    },
+    "function:SDL_SetRenderLogicalPresentation": {
+      "boost_status": "available",
+      "reason": "Direct renderer queries and logical presentation; copied names and scalar/rect output references preserve native results and ownership.",
+      "contract": "docs/renderer-presentation.md",
+      "tests": [
+        "tests/renderer_presentation.das"
+      ]
+    },
+    "function:SDL_GetRenderLogicalPresentation": {
+      "boost_status": "available",
+      "reason": "Direct renderer queries and logical presentation; copied names and scalar/rect output references preserve native results and ownership.",
+      "contract": "docs/renderer-presentation.md",
+      "tests": [
+        "tests/renderer_presentation.das"
+      ]
+    },
+    "function:SDL_GetRenderLogicalPresentationRect": {
+      "boost_status": "available",
+      "reason": "Direct renderer queries and logical presentation; copied names and scalar/rect output references preserve native results and ownership.",
+      "contract": "docs/renderer-presentation.md",
+      "tests": [
+        "tests/renderer_presentation.das"
+      ]
+    },
+    "function:SDL_RenderCoordinatesFromWindow": {
+      "boost_status": "available",
+      "reason": "Direct renderer queries and logical presentation; copied names and scalar/rect output references preserve native results and ownership.",
+      "contract": "docs/renderer-presentation.md",
+      "tests": [
+        "tests/renderer_presentation.das"
+      ]
+    },
+    "function:SDL_RenderCoordinatesToWindow": {
+      "boost_status": "available",
+      "reason": "Direct renderer queries and logical presentation; copied names and scalar/rect output references preserve native results and ownership.",
+      "contract": "docs/renderer-presentation.md",
+      "tests": [
+        "tests/renderer_presentation.das"
+      ]
+    },
+    "function:SDL_CreateTextureWithProperties": {
+      "boost_status": "available",
+      "reason": "Direct SDL texture creation and modulation, scalar output references and defer scopes. No implicit ownership of borrowed renderer or properties.",
+      "contract": "docs/texture-state.md",
+      "tests": [
+        "tests/texture_state.das"
+      ]
+    },
+    "function:SDL_GetTextureProperties": {
+      "boost_status": "available",
+      "reason": "Direct SDL texture creation and modulation, scalar output references and defer scopes. No implicit ownership of borrowed renderer or properties.",
+      "contract": "docs/texture-state.md",
+      "tests": [
+        "tests/texture_state.das"
+      ]
+    },
+    "function:SDL_GetRendererFromTexture": {
+      "boost_status": "available",
+      "reason": "Direct SDL texture creation and modulation, scalar output references and defer scopes. No implicit ownership of borrowed renderer or properties.",
+      "contract": "docs/texture-state.md",
+      "tests": [
+        "tests/texture_state.das"
+      ]
+    },
+    "function:SDL_SetTextureColorModFloat": {
+      "boost_status": "available",
+      "reason": "Direct SDL texture creation and modulation, scalar output references and defer scopes. No implicit ownership of borrowed renderer or properties.",
+      "contract": "docs/texture-state.md",
+      "tests": [
+        "tests/texture_state.das"
+      ]
+    },
+    "function:SDL_GetTextureColorModFloat": {
+      "boost_status": "available",
+      "reason": "Direct SDL texture creation and modulation, scalar output references and defer scopes. No implicit ownership of borrowed renderer or properties.",
+      "contract": "docs/texture-state.md",
+      "tests": [
+        "tests/texture_state.das"
+      ]
+    },
+    "function:SDL_SetTextureAlphaModFloat": {
+      "boost_status": "available",
+      "reason": "Direct SDL texture creation and modulation, scalar output references and defer scopes. No implicit ownership of borrowed renderer or properties.",
+      "contract": "docs/texture-state.md",
+      "tests": [
+        "tests/texture_state.das"
+      ]
+    },
+    "function:SDL_GetTextureAlphaModFloat": {
+      "boost_status": "available",
+      "reason": "Direct SDL texture creation and modulation, scalar output references and defer scopes. No implicit ownership of borrowed renderer or properties.",
+      "contract": "docs/texture-state.md",
+      "tests": [
+        "tests/texture_state.das"
+      ]
+    },
+    "function:SDL_SetTextureScaleMode": {
+      "boost_status": "available",
+      "reason": "Direct SDL texture creation and modulation, scalar output references and defer scopes. No implicit ownership of borrowed renderer or properties.",
+      "contract": "docs/texture-state.md",
+      "tests": [
+        "tests/texture_state.das"
+      ]
+    },
+    "function:SDL_GetTextureScaleMode": {
+      "boost_status": "available",
+      "reason": "Direct SDL texture creation and modulation, scalar output references and defer scopes. No implicit ownership of borrowed renderer or properties.",
+      "contract": "docs/texture-state.md",
+      "tests": [
+        "tests/texture_state.das"
+      ]
+    },
+    "function:SDL_SetTextureColorMod": {
+      "boost_status": "available",
+      "reason": "Direct texture modulation, blending and transfer APIs. RGBA32 update array adapter and borrowed surface lock scope are limited adapters; native mapped pointer validity remains caller-owned.",
+      "contract": "docs/texture-transfer.md",
+      "tests": [
+        "tests/texture_transfer.das"
+      ]
+    },
+    "function:SDL_GetTextureColorMod": {
+      "boost_status": "available",
+      "reason": "Direct texture modulation, blending and transfer APIs. RGBA32 update array adapter and borrowed surface lock scope are limited adapters; native mapped pointer validity remains caller-owned.",
+      "contract": "docs/texture-transfer.md",
+      "tests": [
+        "tests/texture_transfer.das"
+      ]
+    },
+    "function:SDL_SetTextureAlphaMod": {
+      "boost_status": "available",
+      "reason": "Direct texture modulation, blending and transfer APIs. RGBA32 update array adapter and borrowed surface lock scope are limited adapters; native mapped pointer validity remains caller-owned.",
+      "contract": "docs/texture-transfer.md",
+      "tests": [
+        "tests/texture_transfer.das"
+      ]
+    },
+    "function:SDL_GetTextureAlphaMod": {
+      "boost_status": "available",
+      "reason": "Direct texture modulation, blending and transfer APIs. RGBA32 update array adapter and borrowed surface lock scope are limited adapters; native mapped pointer validity remains caller-owned.",
+      "contract": "docs/texture-transfer.md",
+      "tests": [
+        "tests/texture_transfer.das"
+      ]
+    },
+    "function:SDL_SetTextureBlendMode": {
+      "boost_status": "available",
+      "reason": "Direct texture modulation, blending and transfer APIs. RGBA32 update array adapter and borrowed surface lock scope are limited adapters; native mapped pointer validity remains caller-owned.",
+      "contract": "docs/texture-transfer.md",
+      "tests": [
+        "tests/texture_transfer.das"
+      ]
+    },
+    "function:SDL_GetTextureBlendMode": {
+      "boost_status": "available",
+      "reason": "Direct texture modulation, blending and transfer APIs. RGBA32 update array adapter and borrowed surface lock scope are limited adapters; native mapped pointer validity remains caller-owned.",
+      "contract": "docs/texture-transfer.md",
+      "tests": [
+        "tests/texture_transfer.das"
+      ]
+    },
+    "function:SDL_UpdateTexture": {
+      "boost_status": "available",
+      "reason": "Direct texture modulation, blending and transfer APIs. RGBA32 update array adapter and borrowed surface lock scope are limited adapters; native mapped pointer validity remains caller-owned.",
+      "contract": "docs/texture-transfer.md",
+      "tests": [
+        "tests/texture_transfer.das"
+      ]
+    },
+    "function:SDL_LockTextureToSurface": {
+      "boost_status": "available",
+      "reason": "Direct texture modulation, blending and transfer APIs. RGBA32 update array adapter and borrowed surface lock scope are limited adapters; native mapped pointer validity remains caller-owned.",
+      "contract": "docs/texture-transfer.md",
+      "tests": [
+        "tests/texture_transfer.das"
+      ]
+    },
+    "function:SDL_UpdateYUVTexture": {
+      "boost_status": "partial",
+      "reason": "Direct YUV/NV and renderer color/blend APIs. Plane arrays adapt whole-texture updates only; native regions and backend capabilities remain SDL contracts.",
+      "contract": "docs/renderer-yuv-blend.md",
+      "tests": [
+        "tests/renderer_yuv_blend.das"
+      ]
+    },
+    "function:SDL_UpdateNVTexture": {
+      "boost_status": "partial",
+      "reason": "Direct YUV/NV and renderer color/blend APIs. Plane arrays adapt whole-texture updates only; native regions and backend capabilities remain SDL contracts.",
+      "contract": "docs/renderer-yuv-blend.md",
+      "tests": [
+        "tests/renderer_yuv_blend.das"
+      ]
+    },
+    "function:SDL_SetRenderDrawColorFloat": {
+      "boost_status": "available",
+      "reason": "Direct YUV/NV and renderer color/blend APIs. Plane arrays adapt whole-texture updates only; native regions and backend capabilities remain SDL contracts.",
+      "contract": "docs/renderer-yuv-blend.md",
+      "tests": [
+        "tests/renderer_yuv_blend.das"
+      ]
+    },
+    "function:SDL_GetRenderDrawColorFloat": {
+      "boost_status": "available",
+      "reason": "Direct YUV/NV and renderer color/blend APIs. Plane arrays adapt whole-texture updates only; native regions and backend capabilities remain SDL contracts.",
+      "contract": "docs/renderer-yuv-blend.md",
+      "tests": [
+        "tests/renderer_yuv_blend.das"
+      ]
+    },
+    "function:SDL_GetRenderDrawColor": {
+      "boost_status": "available",
+      "reason": "Direct YUV/NV and renderer color/blend APIs. Plane arrays adapt whole-texture updates only; native regions and backend capabilities remain SDL contracts.",
+      "contract": "docs/renderer-yuv-blend.md",
+      "tests": [
+        "tests/renderer_yuv_blend.das"
+      ]
+    },
+    "function:SDL_SetRenderColorScale": {
+      "boost_status": "available",
+      "reason": "Direct YUV/NV and renderer color/blend APIs. Plane arrays adapt whole-texture updates only; native regions and backend capabilities remain SDL contracts.",
+      "contract": "docs/renderer-yuv-blend.md",
+      "tests": [
+        "tests/renderer_yuv_blend.das"
+      ]
+    },
+    "function:SDL_GetRenderColorScale": {
+      "boost_status": "available",
+      "reason": "Direct YUV/NV and renderer color/blend APIs. Plane arrays adapt whole-texture updates only; native regions and backend capabilities remain SDL contracts.",
+      "contract": "docs/renderer-yuv-blend.md",
+      "tests": [
+        "tests/renderer_yuv_blend.das"
+      ]
+    },
+    "function:SDL_SetRenderDrawBlendMode": {
+      "boost_status": "available",
+      "reason": "Direct YUV/NV and renderer color/blend APIs. Plane arrays adapt whole-texture updates only; native regions and backend capabilities remain SDL contracts.",
+      "contract": "docs/renderer-yuv-blend.md",
+      "tests": [
+        "tests/renderer_yuv_blend.das"
+      ]
+    },
+    "function:SDL_GetRenderDrawBlendMode": {
+      "boost_status": "available",
+      "reason": "Direct YUV/NV and renderer color/blend APIs. Plane arrays adapt whole-texture updates only; native regions and backend capabilities remain SDL contracts.",
+      "contract": "docs/renderer-yuv-blend.md",
+      "tests": [
+        "tests/renderer_yuv_blend.das"
+      ]
+    },
+    "function:SDL_ComposeCustomBlendMode": {
+      "boost_status": "available",
+      "reason": "Direct YUV/NV and renderer color/blend APIs. Plane arrays adapt whole-texture updates only; native regions and backend capabilities remain SDL contracts.",
+      "contract": "docs/renderer-yuv-blend.md",
+      "tests": [
+        "tests/renderer_yuv_blend.das"
+      ]
+    },
+    "function:SDL_CreateWindowAndRenderer": {
+      "boost_status": "available",
+      "reason": "Direct renderer creation/draw/readback/VSync/debug access; ref adapters and explicit ownership scopes preserve SDL results and backend constraints.",
+      "contract": "docs/renderer-operations.md",
+      "tests": [
+        "tests/renderer_operations.das"
+      ]
+    },
+    "function:SDL_CreateRendererWithProperties": {
+      "boost_status": "available",
+      "reason": "Direct renderer creation/draw/readback/VSync/debug access; ref adapters and explicit ownership scopes preserve SDL results and backend constraints.",
+      "contract": "docs/renderer-operations.md",
+      "tests": [
+        "tests/renderer_operations.das"
+      ]
+    },
+    "function:SDL_RenderTextureRotated": {
+      "boost_status": "available",
+      "reason": "Direct renderer creation/draw/readback/VSync/debug access; ref adapters and explicit ownership scopes preserve SDL results and backend constraints.",
+      "contract": "docs/renderer-operations.md",
+      "tests": [
+        "tests/renderer_operations.das"
+      ]
+    },
+    "function:SDL_RenderTextureAffine": {
+      "boost_status": "available",
+      "reason": "Direct renderer creation/draw/readback/VSync/debug access; ref adapters and explicit ownership scopes preserve SDL results and backend constraints.",
+      "contract": "docs/renderer-operations.md",
+      "tests": [
+        "tests/renderer_operations.das"
+      ]
+    },
+    "function:SDL_RenderTextureTiled": {
+      "boost_status": "available",
+      "reason": "Direct renderer creation/draw/readback/VSync/debug access; ref adapters and explicit ownership scopes preserve SDL results and backend constraints.",
+      "contract": "docs/renderer-operations.md",
+      "tests": [
+        "tests/renderer_operations.das"
+      ]
+    },
+    "function:SDL_RenderTexture9Grid": {
+      "boost_status": "available",
+      "reason": "Direct renderer creation/draw/readback/VSync/debug access; ref adapters and explicit ownership scopes preserve SDL results and backend constraints.",
+      "contract": "docs/renderer-operations.md",
+      "tests": [
+        "tests/renderer_operations.das"
+      ]
+    },
+    "function:SDL_SetRenderVSync": {
+      "boost_status": "available",
+      "reason": "Direct renderer creation/draw/readback/VSync/debug access; ref adapters and explicit ownership scopes preserve SDL results and backend constraints.",
+      "contract": "docs/renderer-operations.md",
+      "tests": [
+        "tests/renderer_operations.das"
+      ]
+    },
+    "function:SDL_GetRenderVSync": {
+      "boost_status": "available",
+      "reason": "Direct renderer creation/draw/readback/VSync/debug access; ref adapters and explicit ownership scopes preserve SDL results and backend constraints.",
+      "contract": "docs/renderer-operations.md",
+      "tests": [
+        "tests/renderer_operations.das"
+      ]
+    },
+    "function:SDL_RenderDebugText": {
+      "boost_status": "available",
+      "reason": "Direct renderer creation/draw/readback/VSync/debug access; ref adapters and explicit ownership scopes preserve SDL results and backend constraints.",
+      "contract": "docs/renderer-operations.md",
+      "tests": [
+        "tests/renderer_operations.das"
+      ]
+    },
+    "function:SDL_RenderGeometryRaw": {
+      "boost_status": "partial",
+      "reason": "Generated native signature. Geometry arrays and event reference adapters are available; native Metal/Vulkan resources require backend-specific caller ownership.",
+      "contract": "docs/renderer-final-api.md",
+      "tests": [
+        "tests/renderer_final_api.das"
+      ]
+    },
+    "function:SDL_ConvertEventToRenderCoordinates": {
+      "boost_status": "partial",
+      "reason": "Generated native signature. Geometry arrays and event reference adapters are available; native Metal/Vulkan resources require backend-specific caller ownership.",
+      "contract": "docs/renderer-final-api.md",
+      "tests": [
+        "tests/renderer_final_api.das"
+      ]
+    },
+    "function:SDL_GetRenderMetalLayer": {
+      "boost_status": "partial",
+      "reason": "Generated native signature. Geometry arrays and event reference adapters are available; native Metal/Vulkan resources require backend-specific caller ownership.",
+      "contract": "docs/renderer-final-api.md",
+      "tests": [
+        "tests/renderer_final_api.das"
+      ]
+    },
+    "function:SDL_GetRenderMetalCommandEncoder": {
+      "boost_status": "partial",
+      "reason": "Generated native signature. Geometry arrays and event reference adapters are available; native Metal/Vulkan resources require backend-specific caller ownership.",
+      "contract": "docs/renderer-final-api.md",
+      "tests": [
+        "tests/renderer_final_api.das"
+      ]
+    },
+    "function:SDL_AddVulkanRenderSemaphores": {
+      "boost_status": "partial",
+      "reason": "Generated native signature. Geometry arrays and event reference adapters are available; native Metal/Vulkan resources require backend-specific caller ownership.",
+      "contract": "docs/renderer-final-api.md",
+      "tests": [
+        "tests/renderer_final_api.das"
+      ]
+    },
+    "function:SDL_RenderDebugTextFormat": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Fixed %s text adapter only; arbitrary C varargs are not exposed. Format strings are prepared in daScript.",
+      "adapter": "SDL_RenderDebugTextFormatText",
+      "contract": "docs/renderer-final-api.md",
+      "tests": [
+        "tests/renderer_final_api.das"
       ]
     }
   }

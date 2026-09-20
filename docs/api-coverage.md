@@ -1,12 +1,18 @@
 # Покрытие SDL3
 
-Baseline: SDL 3.2.18, Windows x64/MSVC. Generated: 294; adapted: 19;
-pending: 913 of 1226 functions. GPU: 92 generated / 0 adapted / 0 pending.
+Baseline: SDL 3.2.18, Windows x64/MSVC. Generated: 359; adapted: 16;
+pending: 851 of 1226 functions. GPU: 92 generated / 0 adapted / 0 pending.
 `adapted` means a documented partial adapter, not full raw API coverage.
 See [API boundary](gpu-api-boundary.md) and the generated header census.
 
 | Подсистема / сценарий | Raw API | Идиоматичный слой | Проверка / оставшаяся работа |
 | --- | --- | --- | --- |
+| Renderer operations | 10 новых generated; ReadPixels больше не adapted | Ref draw/readback/VSync, creation scopes | Spatial pixels, clipped readback, lifetime; [контракт](renderer-operations.md) |
+| Renderer YUV/color/blend | 10 новых generated, blend enums | Bounded whole-texture plane arrays, scalar refs | Odd/padded YUV pixels, color and blend; [контракт](renderer-yuv-blend.md) |
+| Texture bytes/transfer | 10 новых generated; lock/unlock больше не adapted | uint refs, checked RGBA32 update, borrowed surface lock | Padded region pixels, blending, unlock; [контракт](texture-transfer.md) |
+| Texture creation/state | 10 новых generated; CreateTexture больше не adapted | Format/access + properties scopes, float/enum refs | Creation, modulation pixels; [контракт](texture-state.md) |
+| Renderer queries/presentation | 10 новых generated, 5 enum values | Copied names, enum/scalar/rect refs | Modes, CPU pixels, coordinate conversion; [контракт](renderer-presentation.md) |
+| Renderer state | 10 новых generated | Rect/scalar ref adapters, NULL reset | Full-image pixels, target-local state; [контракт](renderer-state.md) |
 | Software renderer/primitives | 10 новых generated | Surface lifetime scope, array/ref adapters | CPU pixels каждого примитива; [контракт](renderer-primitives.md) |
 | Window fullscreen/surface/IO | 25 Video + 3 Surface новых generated | Mode/ICC/rect/ref adapters; standalone surface defer | CPU pixels, surface lifecycle, native results; [ограничения](window-io.md) |
 | Window state | 27 новых generated; Video суммарно 88/109 | Property/popup defer scopes, ref/out | Constraints, parent/child ownership, early return; [контракт](window-state.md) |

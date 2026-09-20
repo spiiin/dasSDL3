@@ -16,7 +16,22 @@ verified; Properties now has 19 generated functions plus copied enumeration; ret
 cleanup callback remains pending. Read docs/properties.md for the pinned numeric
 string-cache/CopyProperties double-free defect and copied-string adapter. Hints/Init adds 12 generated functions, copied getters and subsystem defer scopes;
 see docs/init-hints.md for pending callbacks and string constants. Next
-library-wide batch: Renderer state (viewport/clip/scale/output), then textures/Surface.
+library-wide batch: Surface. Render has 88 generated signatures and one fixed-text
+variadic adapter; positive native Metal/Vulkan interop remains unverified.
+See docs/renderer-final-api.md. Renderer operations adds 10 raw functions;
+see docs/renderer-operations.md for paired creation, borrowed draw refs, owned
+clipped readback and VSync capability limits. YUV/color/blend adds 10 raw functions;
+see docs/renderer-yuv-blend.md for odd plane sizes, pitch/capacity checks and
+backend-dependent custom blend support. Texture bytes/transfer adds 10 raw
+functions; see docs/texture-transfer.md for byte refs, bounded RGBA32 updates
+and borrowed write-only surface locks. Raw LockTexture requires in-bounds rects. Texture creation/state adds 10 raw
+functions and defer scopes; see docs/texture-state.md. CreateTexture is now raw;
+the existing RGBA8 upload adapter still supports only streaming RGBA32.
+Renderer queries/logical presentation adds 10 raw functions; see
+docs/renderer-presentation.md for borrowed properties, copied names, enum refs
+and main-view coordinate conversion while a texture target is selected.
+Renderer state adds 10 raw functions and scalar/rect ref adapters; see
+docs/renderer-state.md for target-local state, NULL resets and full-image pixel tests.
 Software renderer/primitives adds 10 raw functions; see docs/renderer-primitives.md
 for borrowed surface lifetime, array adapters and CPU pixel tests. Window IO adds 25 Video + 3 Surface
 raw functions; see docs/window-io.md for borrowed surfaces, conditional capabilities
@@ -44,7 +59,8 @@ current boundary overrides old implementation/engine suggestions there.
 Generated files in src/generated and docs/generated must never be edited by hand.
 Edit tools/bindings.json, tools/api-policy.json or the generators, then regenerate.
 CppGenBind saved snapshots are the default on Windows x64/MSVC; normal consumers
-must build without LLVM or a shader compiler. Preserve legacy/CppGenBind metadata
+must build without LLVM or a shader compiler. MSVC module registration requires
+/bigobj (set on dasSDL3), as the expanded bindings exceed standard COFF sections. Preserve legacy/CppGenBind metadata
 parity, deterministic generation, preprocessor checks and missing-AOT negative tests.
 Setup/gates: docs/clangbind-setup.md, clangbind-production.md, clangbind-types-aot.md.
 Nested type annotations must register in field dependency order, not policy order.

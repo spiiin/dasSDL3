@@ -4,7 +4,7 @@ SDL 3.2.18; profile `windows-x64-msvc`.
 
 Active declarations/macros only; inactive platform branches are NOT counted. Record and typedef entries are distinct declarations.
 
-Generated functions: **294/1226** active non-excluded functions.
+Generated functions: **359/1226** active non-excluded functions.
 Adapted coverage and boost coverage are not inferred from function names.
 
 | Category | Functions | Generated | Adapted | Pending |
@@ -14,7 +14,7 @@ Adapted coverage and boost coverage are not inferred from function names.
 | Atomic | 15 | 0 | 0 | 15 |
 | Audio | 56 | 14 | 1 | 41 |
 | Bits | 2 | 0 | 0 | 2 |
-| Blendmode | 1 | 0 | 0 | 1 |
+| Blendmode | 1 | 1 | 0 | 0 |
 | CPUInfo | 18 | 0 | 0 | 18 |
 | Camera | 15 | 0 | 0 | 15 |
 | Clipboard | 11 | 0 | 0 | 11 |
@@ -47,7 +47,7 @@ Adapted coverage and boost coverage are not inferred from function names.
 | Process | 9 | 0 | 0 | 9 |
 | Properties | 21 | 19 | 1 | 1 |
 | Rect | 18 | 0 | 0 | 18 |
-| Render | 89 | 24 | 4 | 61 |
+| Render | 89 | 88 | 1 | 0 |
 | Sensor | 14 | 0 | 0 | 14 |
 | SharedObject | 3 | 0 | 0 | 3 |
 | Stdinc | 170 | 1 | 0 | 169 |

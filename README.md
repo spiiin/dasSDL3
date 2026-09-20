@@ -400,3 +400,38 @@ Software renderer: [contract](docs/renderer-primitives.md), [example 57](example
 ```powershell
 .\build\ninja\bin\dasSDL3_runner.exe examples/57_software_renderer.das
 ```
+
+Renderer state: [contract](docs/renderer-state.md), [example 58](examples/58_renderer_state.das).
+```powershell
+.\build\ninja\bin\dasSDL3_runner.exe examples/58_renderer_state.das
+```
+
+Logical presentation: [contract](docs/renderer-presentation.md), [example 59](examples/59_renderer_presentation.das).
+```powershell
+.\build\ninja\bin\dasSDL3_runner.exe examples/59_renderer_presentation.das
+```
+
+Texture state: [contract](docs/texture-state.md), [example 60](examples/60_texture_state.das).
+```powershell
+.\build\ninja\bin\dasSDL3_runner.exe examples/60_texture_state.das
+```
+
+Texture transfers: [contract](docs/texture-transfer.md), [example 61](examples/61_texture_transfer.das).
+```powershell
+.\build\ninja\bin\dasSDL3_runner.exe examples/61_texture_transfer.das
+```
+
+YUV and blending: [contract](docs/renderer-yuv-blend.md), [example 62](examples/62_renderer_yuv_blend.das).
+```powershell
+.\build\ninja\bin\dasSDL3_runner.exe examples/62_renderer_yuv_blend.das
+```
+
+Renderer operations: [contract](docs/renderer-operations.md), [example 63](examples/63_renderer_operations.das).
+```powershell
+.\build\ninja\bin\dasSDL3_runner.exe examples/63_renderer_operations.das
+```
+
+Renderer raw geometry: [contract](docs/renderer-final-api.md), [example 64](examples/64_renderer_raw_geometry.das).
+```powershell
+.\build\ninja\bin\dasSDL3_runner.exe examples/64_renderer_raw_geometry.das
+```

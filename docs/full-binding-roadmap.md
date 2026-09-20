@@ -60,7 +60,13 @@ Video discovery: 31 raw запроса и copy/ref adapters реализован
 Fullscreen/surfaces и прочие оконные операции реализованы с ограничениями
 [window-io.md](window-io.md). Video: 88/109; GL/EGL и hit-test callbacks отдельно.
 Software renderer/primitives: ещё 10 raw функций; [контракт](renderer-primitives.md).
-Следующий пакет — состояние Renderer (viewport/clip/scale/output), затем текстуры и остаток Surface API.
+Состояние Renderer (viewport/clip/scale/output): 10 raw функций и ref adapters; [контракт](renderer-state.md).
+Renderer queries/logical presentation: 10 raw функций, все режимы и преобразование координат; [контракт](renderer-presentation.md).
+Создание и состояние текстур: 10 raw функций, float modulation, scale mode и scopes; [контракт](texture-state.md).
+Byte modulation/blend modes и texture updates/locking: 10 raw функций, RGBA32 region updates и surface-lock scope; [контракт](texture-transfer.md).
+YUV/NV, renderer color/blend и custom blend composition: 10 raw функций; [контракт](renderer-yuv-blend.md).
+Renderer creation/draw/readback/VSync/debug: 10 raw функций и scopes; [контракт](renderer-operations.md).
+Render: 88 generated / 1 adapted / 0 pending. [GeometryRaw/events/interop](renderer-final-api.md); DebugTextFormat ограничен fixed-text адаптером, положительные Metal/Vulkan interop сценарии не проверены. Далее — Surface API.
 Ниже сохраняются критерии пакета; callback-пункт 5 остаётся открытым.
 
 1. Генерация 19 сигнатур без callbacks, SDL_PropertyType и SDL_PropertiesID;

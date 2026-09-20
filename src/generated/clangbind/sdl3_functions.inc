@@ -19,12 +19,15 @@ addAnnotation(new DummyTypeAnnotation("SDL_GPUComputePass", "SDL_GPUComputePass"
 addAnnotation(new DummyTypeAnnotation("SDL_GPUCopyPass", "SDL_GPUCopyPass", 1, 1));
 addEnumeration(new Enumeration_SDL_PropertyType());
 addAnnotation(new SDL_AudioSpecAnnotation(lib));
+addEnumeration(new Enumeration_SDL_BlendOperation());
+addEnumeration(new Enumeration_SDL_BlendFactor());
 addEnumeration(new Enumeration_SDL_PixelFormat());
 addAnnotation(new SDL_FColorAnnotation(lib));
 addAnnotation(new SDL_PointAnnotation(lib));
 addAnnotation(new SDL_FPointAnnotation(lib));
 addAnnotation(new SDL_RectAnnotation(lib));
 addAnnotation(new SDL_FRectAnnotation(lib));
+addEnumeration(new Enumeration_SDL_ScaleMode());
 addEnumeration(new Enumeration_SDL_FlipMode());
 addEnumeration(new Enumeration_SDL_SystemTheme());
 addAnnotation(new SDL_DisplayModeAnnotation(lib));
@@ -98,6 +101,8 @@ addEnumeration(new Enumeration_SDL_HintPriority());
 addEnumeration(new Enumeration_SDL_LogCategory());
 addEnumeration(new Enumeration_SDL_LogPriority());
 addAnnotation(new SDL_VertexAnnotation(lib));
+addEnumeration(new Enumeration_SDL_TextureAccess());
+addEnumeration(new Enumeration_SDL_RendererLogicalPresentation());
 addAnnotation(new SDL_DateTimeAnnotation(lib));
 addEnumeration(new Enumeration_SDL_DateFormat());
 addEnumeration(new Enumeration_SDL_TimeFormat());
@@ -541,6 +546,26 @@ static_assert(static_cast<int32_t>(SDL_WINDOW_SURFACE_VSYNC_DISABLED) == static_
 addConstant(*this, "SDL_WINDOW_SURFACE_VSYNC_DISABLED", static_cast<int32_t>(0ULL));
 static_assert(static_cast<int32_t>(SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE) == static_cast<int32_t>(-1ULL));
 addConstant(*this, "SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE", static_cast<int32_t>(-1ULL));
+static_assert(static_cast<uint32_t>(SDL_BLENDMODE_NONE) == static_cast<uint32_t>(0x0ULL));
+addConstant(*this, "SDL_BLENDMODE_NONE", static_cast<uint32_t>(0x0ULL));
+static_assert(static_cast<uint32_t>(SDL_BLENDMODE_BLEND) == static_cast<uint32_t>(0x1ULL));
+addConstant(*this, "SDL_BLENDMODE_BLEND", static_cast<uint32_t>(0x1ULL));
+static_assert(static_cast<uint32_t>(SDL_BLENDMODE_BLEND_PREMULTIPLIED) == static_cast<uint32_t>(0x10ULL));
+addConstant(*this, "SDL_BLENDMODE_BLEND_PREMULTIPLIED", static_cast<uint32_t>(0x10ULL));
+static_assert(static_cast<uint32_t>(SDL_BLENDMODE_ADD) == static_cast<uint32_t>(0x2ULL));
+addConstant(*this, "SDL_BLENDMODE_ADD", static_cast<uint32_t>(0x2ULL));
+static_assert(static_cast<uint32_t>(SDL_BLENDMODE_ADD_PREMULTIPLIED) == static_cast<uint32_t>(0x20ULL));
+addConstant(*this, "SDL_BLENDMODE_ADD_PREMULTIPLIED", static_cast<uint32_t>(0x20ULL));
+static_assert(static_cast<uint32_t>(SDL_BLENDMODE_MOD) == static_cast<uint32_t>(0x4ULL));
+addConstant(*this, "SDL_BLENDMODE_MOD", static_cast<uint32_t>(0x4ULL));
+static_assert(static_cast<uint32_t>(SDL_BLENDMODE_MUL) == static_cast<uint32_t>(0x8ULL));
+addConstant(*this, "SDL_BLENDMODE_MUL", static_cast<uint32_t>(0x8ULL));
+static_assert(static_cast<uint32_t>(SDL_BLENDMODE_INVALID) == static_cast<uint32_t>(0x7fffffffULL));
+addConstant(*this, "SDL_BLENDMODE_INVALID", static_cast<uint32_t>(0x7fffffffULL));
+static_assert(static_cast<int32_t>(SDL_RENDERER_VSYNC_DISABLED) == static_cast<int32_t>(0ULL));
+addConstant(*this, "SDL_RENDERER_VSYNC_DISABLED", static_cast<int32_t>(0ULL));
+static_assert(static_cast<int32_t>(SDL_RENDERER_VSYNC_ADAPTIVE) == static_cast<int32_t>(-1ULL));
+addConstant(*this, "SDL_RENDERER_VSYNC_ADAPTIVE", static_cast<int32_t>(-1ULL));
 // from SDL3/SDL_stdinc.h:1405:34
 	makeExtern< void (*)(void *) , SDL_free , SimNode_ExtFuncCall >(lib,"SDL_free","SDL_free")
 		->args({"mem"})
@@ -683,6 +708,10 @@ addConstant(*this, "SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE", static_cast<int32_t>(-1U
 // from SDL3/SDL_audio.h:2096:34
 	makeExtern< bool (*)(const char *,struct SDL_AudioSpec *,unsigned char **,unsigned int *) , SDL_LoadWAV , SimNode_ExtFuncCall >(lib,"SDL_LoadWAV","SDL_LoadWAV")
 		->args({"path","spec","audio_buf","audio_len"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_blendmode.h:189:43
+	makeExtern< unsigned int (*)(enum SDL_BlendFactor,enum SDL_BlendFactor,enum SDL_BlendOperation,enum SDL_BlendFactor,enum SDL_BlendFactor,enum SDL_BlendOperation) , SDL_ComposeCustomBlendMode , SimNode_ExtFuncCall >(lib,"SDL_ComposeCustomBlendMode","SDL_ComposeCustomBlendMode")
+		->args({"srcColorFactor","dstColorFactor","colorOperation","srcAlphaFactor","dstAlphaFactor","alphaOperation"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_surface.h:167:43
 	makeExtern< struct SDL_Surface * (*)(int,int,enum SDL_PixelFormat) , SDL_CreateSurface , SimNode_ExtFuncCall >(lib,"SDL_CreateSurface","SDL_CreateSurface")
@@ -1529,9 +1558,24 @@ addConstant(*this, "SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE", static_cast<int32_t>(-1U
 	makeExtern< bool (*)(enum SDL_LogPriority,const char *) , SDL_SetLogPriorityPrefix , SimNode_ExtFuncCall >(lib,"SDL_SetLogPriorityPrefix","SDL_SetLogPriorityPrefix")
 		->args({"priority","prefix"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:165:33
+	makeExtern< int (*)() , SDL_GetNumRenderDrivers , SimNode_ExtFuncCall >(lib,"SDL_GetNumRenderDrivers","SDL_GetNumRenderDrivers")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:189:42
+	makeExtern< const char * (*)(int) , SDL_GetRenderDriver , SimNode_ExtFuncCall >(lib,"SDL_GetRenderDriver","SDL_GetRenderDriver")
+		->args({"index"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:211:34
+	makeExtern< bool (*)(const char *,int,int,SDL_WindowFlags,struct SDL_Window **,struct SDL_Renderer **) , SDL_CreateWindowAndRenderer , SimNode_ExtFuncCall >(lib,"SDL_CreateWindowAndRenderer","SDL_CreateWindowAndRenderer")
+		->args({"title","width","height","window_flags","window","renderer"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_render.h:246:44
 	makeExtern< struct SDL_Renderer * (*)(struct SDL_Window *,const char *) , SDL_CreateRenderer , SimNode_ExtFuncCall >(lib,"SDL_CreateRenderer","SDL_CreateRenderer")
 		->args({"window","name"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:299:44
+	makeExtern< struct SDL_Renderer * (*)(unsigned int) , SDL_CreateRendererWithProperties , SimNode_ExtFuncCall >(lib,"SDL_CreateRendererWithProperties","SDL_CreateRendererWithProperties")
+		->args({"props"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_render.h:332:44
 	makeExtern< struct SDL_Renderer * (*)(struct SDL_Surface *) , SDL_CreateSoftwareRenderer , SimNode_ExtFuncCall >(lib,"SDL_CreateSoftwareRenderer","SDL_CreateSoftwareRenderer")
@@ -1545,13 +1589,117 @@ addConstant(*this, "SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE", static_cast<int32_t>(-1U
 	makeExtern< struct SDL_Window * (*)(struct SDL_Renderer *) , SDL_GetRenderWindow , SimNode_ExtFuncCall >(lib,"SDL_GetRenderWindow","SDL_GetRenderWindow")
 		->args({"renderer"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:374:42
+	makeExtern< const char * (*)(struct SDL_Renderer *) , SDL_GetRendererName , SimNode_ExtFuncCall >(lib,"SDL_GetRendererName","SDL_GetRendererName")
+		->args({"renderer"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:460:46
+	makeExtern< unsigned int (*)(struct SDL_Renderer *) , SDL_GetRendererProperties , SimNode_ExtFuncCall >(lib,"SDL_GetRendererProperties","SDL_GetRendererProperties")
+		->args({"renderer"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:508:34
+	makeExtern< bool (*)(struct SDL_Renderer *,int *,int *) , SDL_GetRenderOutputSize , SimNode_ExtFuncCall >(lib,"SDL_GetRenderOutputSize","SDL_GetRenderOutputSize")
+		->args({"renderer","w","h"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:531:34
+	makeExtern< bool (*)(struct SDL_Renderer *,int *,int *) , SDL_GetCurrentRenderOutputSize , SimNode_ExtFuncCall >(lib,"SDL_GetCurrentRenderOutputSize","SDL_GetCurrentRenderOutputSize")
+		->args({"renderer","w","h"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:556:43
+	makeExtern< struct SDL_Texture * (*)(struct SDL_Renderer *,enum SDL_PixelFormat,enum SDL_TextureAccess,int,int) , SDL_CreateTexture , SimNode_ExtFuncCall >(lib,"SDL_CreateTexture","SDL_CreateTexture")
+		->args({"renderer","format","access","w","h"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_render.h:584:43
 	makeExtern< struct SDL_Texture * (*)(struct SDL_Renderer *,struct SDL_Surface *) , SDL_CreateTextureFromSurface , SimNode_ExtFuncCall >(lib,"SDL_CreateTextureFromSurface","SDL_CreateTextureFromSurface")
 		->args({"renderer","surface"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:696:43
+	makeExtern< struct SDL_Texture * (*)(struct SDL_Renderer *,unsigned int) , SDL_CreateTextureWithProperties , SimNode_ExtFuncCall >(lib,"SDL_CreateTextureWithProperties","SDL_CreateTextureWithProperties")
+		->args({"renderer","props"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:808:46
+	makeExtern< unsigned int (*)(struct SDL_Texture *) , SDL_GetTextureProperties , SimNode_ExtFuncCall >(lib,"SDL_GetTextureProperties","SDL_GetTextureProperties")
+		->args({"texture"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:848:44
+	makeExtern< struct SDL_Renderer * (*)(struct SDL_Texture *) , SDL_GetRendererFromTexture , SimNode_ExtFuncCall >(lib,"SDL_GetRendererFromTexture","SDL_GetRendererFromTexture")
+		->args({"texture"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_render.h:865:34
 	makeExtern< bool (*)(struct SDL_Texture *,float *,float *) , SDL_GetTextureSize , SimNode_ExtFuncCall >(lib,"SDL_GetTextureSize","SDL_GetTextureSize")
 		->args({"texture","w","h"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:894:34
+	makeExtern< bool (*)(struct SDL_Texture *,unsigned char,unsigned char,unsigned char) , SDL_SetTextureColorMod , SimNode_ExtFuncCall >(lib,"SDL_SetTextureColorMod","SDL_SetTextureColorMod")
+		->args({"texture","r","g","b"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:924:34
+	makeExtern< bool (*)(struct SDL_Texture *,float,float,float) , SDL_SetTextureColorModFloat , SimNode_ExtFuncCall >(lib,"SDL_SetTextureColorModFloat","SDL_SetTextureColorModFloat")
+		->args({"texture","r","g","b"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:945:34
+	makeExtern< bool (*)(struct SDL_Texture *,unsigned char *,unsigned char *,unsigned char *) , SDL_GetTextureColorMod , SimNode_ExtFuncCall >(lib,"SDL_GetTextureColorMod","SDL_GetTextureColorMod")
+		->args({"texture","r","g","b"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:965:34
+	makeExtern< bool (*)(struct SDL_Texture *,float *,float *,float *) , SDL_GetTextureColorModFloat , SimNode_ExtFuncCall >(lib,"SDL_GetTextureColorModFloat","SDL_GetTextureColorModFloat")
+		->args({"texture","r","g","b"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:991:34
+	makeExtern< bool (*)(struct SDL_Texture *,unsigned char) , SDL_SetTextureAlphaMod , SimNode_ExtFuncCall >(lib,"SDL_SetTextureAlphaMod","SDL_SetTextureAlphaMod")
+		->args({"texture","alpha"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1017:34
+	makeExtern< bool (*)(struct SDL_Texture *,float) , SDL_SetTextureAlphaModFloat , SimNode_ExtFuncCall >(lib,"SDL_SetTextureAlphaModFloat","SDL_SetTextureAlphaModFloat")
+		->args({"texture","alpha"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1035:34
+	makeExtern< bool (*)(struct SDL_Texture *,unsigned char *) , SDL_GetTextureAlphaMod , SimNode_ExtFuncCall >(lib,"SDL_GetTextureAlphaMod","SDL_GetTextureAlphaMod")
+		->args({"texture","alpha"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1053:34
+	makeExtern< bool (*)(struct SDL_Texture *,float *) , SDL_GetTextureAlphaModFloat , SimNode_ExtFuncCall >(lib,"SDL_GetTextureAlphaModFloat","SDL_GetTextureAlphaModFloat")
+		->args({"texture","alpha"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1072:34
+	makeExtern< bool (*)(struct SDL_Texture *,unsigned int) , SDL_SetTextureBlendMode , SimNode_ExtFuncCall >(lib,"SDL_SetTextureBlendMode","SDL_SetTextureBlendMode")
+		->args({"texture","blendMode"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1088:34
+	makeExtern< bool (*)(struct SDL_Texture *,unsigned int *) , SDL_GetTextureBlendMode , SimNode_ExtFuncCall >(lib,"SDL_GetTextureBlendMode","SDL_GetTextureBlendMode")
+		->args({"texture","blendMode"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1108:34
+	makeExtern< bool (*)(struct SDL_Texture *,enum SDL_ScaleMode) , SDL_SetTextureScaleMode , SimNode_ExtFuncCall >(lib,"SDL_SetTextureScaleMode","SDL_SetTextureScaleMode")
+		->args({"texture","scaleMode"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1124:34
+	makeExtern< bool (*)(struct SDL_Texture *,enum SDL_ScaleMode *) , SDL_GetTextureScaleMode , SimNode_ExtFuncCall >(lib,"SDL_GetTextureScaleMode","SDL_GetTextureScaleMode")
+		->args({"texture","scaleMode"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1158:34
+	makeExtern< bool (*)(struct SDL_Texture *,const struct SDL_Rect *,const void *,int) , SDL_UpdateTexture , SimNode_ExtFuncCall >(lib,"SDL_UpdateTexture","SDL_UpdateTexture")
+		->args({"texture","rect","pixels","pitch"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1190:34
+	makeExtern< bool (*)(struct SDL_Texture *,const struct SDL_Rect *,const unsigned char *,int,const unsigned char *,int,const unsigned char *,int) , SDL_UpdateYUVTexture , SimNode_ExtFuncCall >(lib,"SDL_UpdateYUVTexture","SDL_UpdateYUVTexture")
+		->args({"texture","rect","Yplane","Ypitch","Uplane","Upitch","Vplane","Vpitch"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1222:34
+	makeExtern< bool (*)(struct SDL_Texture *,const struct SDL_Rect *,const unsigned char *,int,const unsigned char *,int) , SDL_UpdateNVTexture , SimNode_ExtFuncCall >(lib,"SDL_UpdateNVTexture","SDL_UpdateNVTexture")
+		->args({"texture","rect","Yplane","Ypitch","UVplane","UVpitch"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1257:34
+	makeExtern< bool (*)(struct SDL_Texture *,const struct SDL_Rect *,void **,int *) , SDL_LockTexture , SimNode_ExtFuncCall >(lib,"SDL_LockTexture","SDL_LockTexture")
+		->args({"texture","rect","pixels","pitch"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1295:34
+	makeExtern< bool (*)(struct SDL_Texture *,const struct SDL_Rect *,struct SDL_Surface **) , SDL_LockTextureToSurface , SimNode_ExtFuncCall >(lib,"SDL_LockTextureToSurface","SDL_LockTextureToSurface")
+		->args({"texture","rect","surface"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1316:34
+	makeExtern< void (*)(struct SDL_Texture *) , SDL_UnlockTexture , SimNode_ExtFuncCall >(lib,"SDL_UnlockTexture","SDL_UnlockTexture")
+		->args({"texture"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_render.h:1343:34
 	makeExtern< bool (*)(struct SDL_Renderer *,struct SDL_Texture *) , SDL_SetRenderTarget , SimNode_ExtFuncCall >(lib,"SDL_SetRenderTarget","SDL_SetRenderTarget")
@@ -1561,9 +1709,97 @@ addConstant(*this, "SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE", static_cast<int32_t>(-1U
 	makeExtern< struct SDL_Texture * (*)(struct SDL_Renderer *) , SDL_GetRenderTarget , SimNode_ExtFuncCall >(lib,"SDL_GetRenderTarget","SDL_GetRenderTarget")
 		->args({"renderer"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1415:34
+	makeExtern< bool (*)(struct SDL_Renderer *,int,int,enum SDL_RendererLogicalPresentation) , SDL_SetRenderLogicalPresentation , SimNode_ExtFuncCall >(lib,"SDL_SetRenderLogicalPresentation","SDL_SetRenderLogicalPresentation")
+		->args({"renderer","w","h","mode"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1439:34
+	makeExtern< bool (*)(struct SDL_Renderer *,int *,int *,enum SDL_RendererLogicalPresentation *) , SDL_GetRenderLogicalPresentation , SimNode_ExtFuncCall >(lib,"SDL_GetRenderLogicalPresentation","SDL_GetRenderLogicalPresentation")
+		->args({"renderer","w","h","mode"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1464:34
+	makeExtern< bool (*)(struct SDL_Renderer *,struct SDL_FRect *) , SDL_GetRenderLogicalPresentationRect , SimNode_ExtFuncCall >(lib,"SDL_GetRenderLogicalPresentationRect","SDL_GetRenderLogicalPresentationRect")
+		->args({"renderer","rect"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1491:34
+	makeExtern< bool (*)(struct SDL_Renderer *,float,float,float *,float *) , SDL_RenderCoordinatesFromWindow , SimNode_ExtFuncCall >(lib,"SDL_RenderCoordinatesFromWindow","SDL_RenderCoordinatesFromWindow")
+		->args({"renderer","window_x","window_y","x","y"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1521:34
+	makeExtern< bool (*)(struct SDL_Renderer *,float,float,float *,float *) , SDL_RenderCoordinatesToWindow , SimNode_ExtFuncCall >(lib,"SDL_RenderCoordinatesToWindow","SDL_RenderCoordinatesToWindow")
+		->args({"renderer","x","y","window_x","window_y"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1557:34
+	makeExtern< bool (*)(struct SDL_Renderer *,union SDL_Event *) , SDL_ConvertEventToRenderCoordinates , SimNode_ExtFuncCall >(lib,"SDL_ConvertEventToRenderCoordinates","SDL_ConvertEventToRenderCoordinates")
+		->args({"renderer","event"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1584:34
+	makeExtern< bool (*)(struct SDL_Renderer *,const struct SDL_Rect *) , SDL_SetRenderViewport , SimNode_ExtFuncCall >(lib,"SDL_SetRenderViewport","SDL_SetRenderViewport")
+		->args({"renderer","rect"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1604:34
+	makeExtern< bool (*)(struct SDL_Renderer *,struct SDL_Rect *) , SDL_GetRenderViewport , SimNode_ExtFuncCall >(lib,"SDL_GetRenderViewport","SDL_GetRenderViewport")
+		->args({"renderer","rect"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1626:34
+	makeExtern< bool (*)(struct SDL_Renderer *) , SDL_RenderViewportSet , SimNode_ExtFuncCall >(lib,"SDL_RenderViewportSet","SDL_RenderViewportSet")
+		->args({"renderer"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1648:34
+	makeExtern< bool (*)(struct SDL_Renderer *,struct SDL_Rect *) , SDL_GetRenderSafeArea , SimNode_ExtFuncCall >(lib,"SDL_GetRenderSafeArea","SDL_GetRenderSafeArea")
+		->args({"renderer","rect"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1669:34
+	makeExtern< bool (*)(struct SDL_Renderer *,const struct SDL_Rect *) , SDL_SetRenderClipRect , SimNode_ExtFuncCall >(lib,"SDL_SetRenderClipRect","SDL_SetRenderClipRect")
+		->args({"renderer","rect"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1690:34
+	makeExtern< bool (*)(struct SDL_Renderer *,struct SDL_Rect *) , SDL_GetRenderClipRect , SimNode_ExtFuncCall >(lib,"SDL_GetRenderClipRect","SDL_GetRenderClipRect")
+		->args({"renderer","rect"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1709:34
+	makeExtern< bool (*)(struct SDL_Renderer *) , SDL_RenderClipEnabled , SimNode_ExtFuncCall >(lib,"SDL_RenderClipEnabled","SDL_RenderClipEnabled")
+		->args({"renderer"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1737:34
+	makeExtern< bool (*)(struct SDL_Renderer *,float,float) , SDL_SetRenderScale , SimNode_ExtFuncCall >(lib,"SDL_SetRenderScale","SDL_SetRenderScale")
+		->args({"renderer","scaleX","scaleY"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1757:34
+	makeExtern< bool (*)(struct SDL_Renderer *,float *,float *) , SDL_GetRenderScale , SimNode_ExtFuncCall >(lib,"SDL_GetRenderScale","SDL_GetRenderScale")
+		->args({"renderer","scaleX","scaleY"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_render.h:1782:34
 	makeExtern< bool (*)(struct SDL_Renderer *,unsigned char,unsigned char,unsigned char,unsigned char) , SDL_SetRenderDrawColor , SimNode_ExtFuncCall >(lib,"SDL_SetRenderDrawColor","SDL_SetRenderDrawColor")
 		->args({"renderer","r","g","b","a"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1807:34
+	makeExtern< bool (*)(struct SDL_Renderer *,float,float,float,float) , SDL_SetRenderDrawColorFloat , SimNode_ExtFuncCall >(lib,"SDL_SetRenderDrawColorFloat","SDL_SetRenderDrawColorFloat")
+		->args({"renderer","r","g","b","a"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1831:34
+	makeExtern< bool (*)(struct SDL_Renderer *,unsigned char *,unsigned char *,unsigned char *,unsigned char *) , SDL_GetRenderDrawColor , SimNode_ExtFuncCall >(lib,"SDL_GetRenderDrawColor","SDL_GetRenderDrawColor")
+		->args({"renderer","r","g","b","a"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1855:34
+	makeExtern< bool (*)(struct SDL_Renderer *,float *,float *,float *,float *) , SDL_GetRenderDrawColorFloat , SimNode_ExtFuncCall >(lib,"SDL_GetRenderDrawColorFloat","SDL_GetRenderDrawColorFloat")
+		->args({"renderer","r","g","b","a"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1879:34
+	makeExtern< bool (*)(struct SDL_Renderer *,float) , SDL_SetRenderColorScale , SimNode_ExtFuncCall >(lib,"SDL_SetRenderColorScale","SDL_SetRenderColorScale")
+		->args({"renderer","scale"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1895:34
+	makeExtern< bool (*)(struct SDL_Renderer *,float *) , SDL_GetRenderColorScale , SimNode_ExtFuncCall >(lib,"SDL_GetRenderColorScale","SDL_GetRenderColorScale")
+		->args({"renderer","scale"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1913:34
+	makeExtern< bool (*)(struct SDL_Renderer *,unsigned int) , SDL_SetRenderDrawBlendMode , SimNode_ExtFuncCall >(lib,"SDL_SetRenderDrawBlendMode","SDL_SetRenderDrawBlendMode")
+		->args({"renderer","blendMode"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1929:34
+	makeExtern< bool (*)(struct SDL_Renderer *,unsigned int *) , SDL_GetRenderDrawBlendMode , SimNode_ExtFuncCall >(lib,"SDL_GetRenderDrawBlendMode","SDL_GetRenderDrawBlendMode")
+		->args({"renderer","blendMode"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_render.h:1949:34
 	makeExtern< bool (*)(struct SDL_Renderer *) , SDL_RenderClear , SimNode_ExtFuncCall >(lib,"SDL_RenderClear","SDL_RenderClear")
@@ -1605,9 +1841,33 @@ addConstant(*this, "SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE", static_cast<int32_t>(-1U
 	makeExtern< bool (*)(struct SDL_Renderer *,struct SDL_Texture *,const struct SDL_FRect *,const struct SDL_FRect *) , SDL_RenderTexture , SimNode_ExtFuncCall >(lib,"SDL_RenderTexture","SDL_RenderTexture")
 		->args({"renderer","texture","srcrect","dstrect"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2141:34
+	makeExtern< bool (*)(struct SDL_Renderer *,struct SDL_Texture *,const struct SDL_FRect *,const struct SDL_FRect *,double,const struct SDL_FPoint *,enum SDL_FlipMode) , SDL_RenderTextureRotated , SimNode_ExtFuncCall >(lib,"SDL_RenderTextureRotated","SDL_RenderTextureRotated")
+		->args({"renderer","texture","srcrect","dstrect","angle","center","flip"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2172:34
+	makeExtern< bool (*)(struct SDL_Renderer *,struct SDL_Texture *,const struct SDL_FRect *,const struct SDL_FPoint *,const struct SDL_FPoint *,const struct SDL_FPoint *) , SDL_RenderTextureAffine , SimNode_ExtFuncCall >(lib,"SDL_RenderTextureAffine","SDL_RenderTextureAffine")
+		->args({"renderer","texture","srcrect","origin","right","down"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2201:34
+	makeExtern< bool (*)(struct SDL_Renderer *,struct SDL_Texture *,const struct SDL_FRect *,float,const struct SDL_FRect *) , SDL_RenderTextureTiled , SimNode_ExtFuncCall >(lib,"SDL_RenderTextureTiled","SDL_RenderTextureTiled")
+		->args({"renderer","texture","srcrect","scale","dstrect"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2235:34
+	makeExtern< bool (*)(struct SDL_Renderer *,struct SDL_Texture *,const struct SDL_FRect *,float,float,float,float,float,const struct SDL_FRect *) , SDL_RenderTexture9Grid , SimNode_ExtFuncCall >(lib,"SDL_RenderTexture9Grid","SDL_RenderTexture9Grid")
+		->args({"renderer","texture","srcrect","left_width","right_width","top_height","bottom_height","scale","dstrect"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_render.h:2259:34
 	makeExtern< bool (*)(struct SDL_Renderer *,struct SDL_Texture *,const struct SDL_Vertex *,int,const int *,int) , SDL_RenderGeometry , SimNode_ExtFuncCall >(lib,"SDL_RenderGeometry","SDL_RenderGeometry")
 		->args({"renderer","texture","vertices","num_vertices","indices","num_indices"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2291:34
+	makeExtern< bool (*)(struct SDL_Renderer *,struct SDL_Texture *,const float *,int,const struct SDL_FColor *,int,const float *,int,int,const void *,int,int) , SDL_RenderGeometryRaw , SimNode_ExtFuncCall >(lib,"SDL_RenderGeometryRaw","SDL_RenderGeometryRaw")
+		->args({"renderer","texture","xy","xy_stride","color","color_stride","uv","uv_stride","num_vertices","indices","num_indices","size_indices"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2324:43
+	makeExtern< struct SDL_Surface * (*)(struct SDL_Renderer *,const struct SDL_Rect *) , SDL_RenderReadPixels , SimNode_ExtFuncCall >(lib,"SDL_RenderReadPixels","SDL_RenderReadPixels")
+		->args({"renderer","rect"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_render.h:2374:34
 	makeExtern< bool (*)(struct SDL_Renderer *) , SDL_RenderPresent , SimNode_ExtFuncCall >(lib,"SDL_RenderPresent","SDL_RenderPresent")
@@ -1624,6 +1884,30 @@ addConstant(*this, "SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE", static_cast<int32_t>(-1U
 // from SDL3/SDL_render.h:2440:34
 	makeExtern< bool (*)(struct SDL_Renderer *) , SDL_FlushRenderer , SimNode_ExtFuncCall >(lib,"SDL_FlushRenderer","SDL_FlushRenderer")
 		->args({"renderer"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2458:36
+	makeExtern< void * (*)(struct SDL_Renderer *) , SDL_GetRenderMetalLayer , SimNode_ExtFuncCall >(lib,"SDL_GetRenderMetalLayer","SDL_GetRenderMetalLayer")
+		->args({"renderer"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2481:36
+	makeExtern< void * (*)(struct SDL_Renderer *) , SDL_GetRenderMetalCommandEncoder , SimNode_ExtFuncCall >(lib,"SDL_GetRenderMetalCommandEncoder","SDL_GetRenderMetalCommandEncoder")
+		->args({"renderer"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2512:34
+	makeExtern< bool (*)(struct SDL_Renderer *,unsigned int,Sint64,Sint64) , SDL_AddVulkanRenderSemaphores , SimNode_ExtFuncCall >(lib,"SDL_AddVulkanRenderSemaphores","SDL_AddVulkanRenderSemaphores")
+		->args({"renderer","wait_stage_mask","wait_semaphore","signal_semaphore"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2537:34
+	makeExtern< bool (*)(struct SDL_Renderer *,int) , SDL_SetRenderVSync , SimNode_ExtFuncCall >(lib,"SDL_SetRenderVSync","SDL_SetRenderVSync")
+		->args({"renderer","vsync"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2557:34
+	makeExtern< bool (*)(struct SDL_Renderer *,int *) , SDL_GetRenderVSync , SimNode_ExtFuncCall >(lib,"SDL_GetRenderVSync","SDL_GetRenderVSync")
+		->args({"renderer","vsync"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2609:34
+	makeExtern< bool (*)(struct SDL_Renderer *,float,float,const char *) , SDL_RenderDebugText , SimNode_ExtFuncCall >(lib,"SDL_RenderDebugText","SDL_RenderDebugText")
+		->args({"renderer","x","y","str"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_time.h:111:34
 	makeExtern< bool (*)(enum SDL_DateFormat *,enum SDL_TimeFormat *) , SDL_GetDateTimeLocalePreferences , SimNode_ExtFuncCall >(lib,"SDL_GetDateTimeLocalePreferences","SDL_GetDateTimeLocalePreferences")

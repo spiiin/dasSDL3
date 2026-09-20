@@ -23,6 +23,13 @@
 #include "sdl3_window.h"
 #include "sdl3_window_io.h"
 #include "sdl3_renderer_primitives.h"
+#include "sdl3_renderer_state.h"
+#include "sdl3_renderer_presentation.h"
+#include "sdl3_texture_state.h"
+#include "sdl3_texture_transfer.h"
+#include "sdl3_renderer_yuv_blend.h"
+#include "sdl3_renderer_operations.h"
+#include "sdl3_renderer_final_api.h"
 #ifdef DASSDL3_TYPES_INCLUDE
 #include DASSDL3_TYPES_INCLUDE
 #else
@@ -77,7 +84,51 @@ public:
         addExtern<DAS_BIND_FUN(SDL_GetWindowSurfaceVSyncRef)>(*this, lib, "SDL_GetWindowSurfaceVSyncRef", SideEffects::worstDefault, "SDL_GetWindowSurfaceVSyncRef");
         addExtern<DAS_BIND_FUN(SDL_UpdateWindowSurfaceRectsArray)>(*this, lib, "SDL_UpdateWindowSurfaceRectsArray", SideEffects::worstDefault, "SDL_UpdateWindowSurfaceRectsArray");
         addExtern<DAS_BIND_FUN(SDL_GetWindowICCProfileCopy)>(*this, lib, "SDL_GetWindowICCProfileCopy", SideEffects::worstDefault, "SDL_GetWindowICCProfileCopy");
-        addExtern<DAS_BIND_FUN(SDL_RenderPointsArray)>(*this,lib,"SDL_RenderPointsArray",SideEffects::worstDefault,"SDL_RenderPointsArray");
+        addExtern<DAS_BIND_FUN(SDL_GetRenderDriverCopy)>(*this,lib,"SDL_GetRenderDriverCopy",SideEffects::worstDefault,"SDL_GetRenderDriverCopy");
+    addExtern<DAS_BIND_FUN(SDL_ConvertEventToRenderCoordinatesRef)>(*this,lib,"SDL_ConvertEventToRenderCoordinatesRef",SideEffects::worstDefault,"SDL_ConvertEventToRenderCoordinatesRef");
+    addExtern<DAS_BIND_FUN(SDL_WriteMouseMotionEvent)>(*this,lib,"SDL_WriteMouseMotionEvent",SideEffects::worstDefault,"SDL_WriteMouseMotionEvent");
+    addExtern<DAS_BIND_FUN(SDL_WriteMouseButtonEvent)>(*this,lib,"SDL_WriteMouseButtonEvent",SideEffects::worstDefault,"SDL_WriteMouseButtonEvent");
+    addExtern<DAS_BIND_FUN(SDL_WriteMouseWheelEvent)>(*this,lib,"SDL_WriteMouseWheelEvent",SideEffects::worstDefault,"SDL_WriteMouseWheelEvent");
+    addExtern<DAS_BIND_FUN(SDL_RenderDebugTextFormatText)>(*this,lib,"SDL_RenderDebugTextFormatText",SideEffects::worstDefault,"SDL_RenderDebugTextFormatText");
+    addExtern<DAS_BIND_FUN(SDL_RenderGeometryRawArrays)>(*this,lib,"SDL_RenderGeometryRawArrays",SideEffects::worstDefault,"SDL_RenderGeometryRawArrays");
+    addExtern<DAS_BIND_FUN(SDL_RenderGeometryRawIndexedArrays)>(*this,lib,"SDL_RenderGeometryRawIndexedArrays",SideEffects::worstDefault,"SDL_RenderGeometryRawIndexedArrays");
+    addExtern<DAS_BIND_FUN(SDL_CreateWindowAndRendererRef)>(*this,lib,"SDL_CreateWindowAndRendererRef",SideEffects::worstDefault,"SDL_CreateWindowAndRendererRef");
+    addExtern<DAS_BIND_FUN(SDL_GetRenderVSyncRef)>(*this,lib,"SDL_GetRenderVSyncRef",SideEffects::worstDefault,"SDL_GetRenderVSyncRef");
+    addExtern<DAS_BIND_FUN(SDL_RenderReadPixelsRect)>(*this,lib,"SDL_RenderReadPixelsRect",SideEffects::worstDefault,"SDL_RenderReadPixelsRect");
+    addExtern<DAS_BIND_FUN(SDL_RenderTextureRotatedRefs)>(*this,lib,"SDL_RenderTextureRotatedRefs",SideEffects::worstDefault,"SDL_RenderTextureRotatedRefs");
+    addExtern<DAS_BIND_FUN(SDL_RenderTextureAffineRefs)>(*this,lib,"SDL_RenderTextureAffineRefs",SideEffects::worstDefault,"SDL_RenderTextureAffineRefs");
+    addExtern<DAS_BIND_FUN(SDL_RenderTextureTiledRefs)>(*this,lib,"SDL_RenderTextureTiledRefs",SideEffects::worstDefault,"SDL_RenderTextureTiledRefs");
+    addExtern<DAS_BIND_FUN(SDL_RenderTexture9GridRefs)>(*this,lib,"SDL_RenderTexture9GridRefs",SideEffects::worstDefault,"SDL_RenderTexture9GridRefs");
+    addExtern<DAS_BIND_FUN(SDL_GetRenderDrawColorFloatRef)>(*this,lib,"SDL_GetRenderDrawColorFloatRef",SideEffects::worstDefault,"SDL_GetRenderDrawColorFloatRef");
+    addExtern<DAS_BIND_FUN(SDL_GetRenderDrawColorRef)>(*this,lib,"SDL_GetRenderDrawColorRef",SideEffects::worstDefault,"SDL_GetRenderDrawColorRef");
+    addExtern<DAS_BIND_FUN(SDL_GetRenderColorScaleRef)>(*this,lib,"SDL_GetRenderColorScaleRef",SideEffects::worstDefault,"SDL_GetRenderColorScaleRef");
+    addExtern<DAS_BIND_FUN(SDL_GetRenderDrawBlendModeRef)>(*this,lib,"SDL_GetRenderDrawBlendModeRef",SideEffects::worstDefault,"SDL_GetRenderDrawBlendModeRef");
+    addExtern<DAS_BIND_FUN(SDL_UpdateYUVTextureArrays)>(*this,lib,"SDL_UpdateYUVTextureArrays",SideEffects::worstDefault,"SDL_UpdateYUVTextureArrays");
+    addExtern<DAS_BIND_FUN(SDL_UpdateNVTextureArrays)>(*this,lib,"SDL_UpdateNVTextureArrays",SideEffects::worstDefault,"SDL_UpdateNVTextureArrays");
+    addExtern<DAS_BIND_FUN(SDL_GetTextureColorModRef)>(*this,lib,"SDL_GetTextureColorModRef",SideEffects::worstDefault,"SDL_GetTextureColorModRef");
+    addExtern<DAS_BIND_FUN(SDL_GetTextureAlphaModRef)>(*this,lib,"SDL_GetTextureAlphaModRef",SideEffects::worstDefault,"SDL_GetTextureAlphaModRef");
+    addExtern<DAS_BIND_FUN(SDL_GetTextureBlendModeRef)>(*this,lib,"SDL_GetTextureBlendModeRef",SideEffects::worstDefault,"SDL_GetTextureBlendModeRef");
+    addExtern<DAS_BIND_FUN(SDL_LockTextureToSurfaceRef)>(*this,lib,"SDL_LockTextureToSurfaceRef",SideEffects::worstDefault,"SDL_LockTextureToSurfaceRef");
+    addExtern<DAS_BIND_FUN(SDL_UpdateTextureRGBA8)>(*this,lib,"SDL_UpdateTextureRGBA8",SideEffects::worstDefault,"SDL_UpdateTextureRGBA8");
+    addExtern<DAS_BIND_FUN(SDL_GetTextureColorModFloatRef)>(*this,lib,"SDL_GetTextureColorModFloatRef",SideEffects::worstDefault,"SDL_GetTextureColorModFloatRef");
+    addExtern<DAS_BIND_FUN(SDL_GetTextureAlphaModFloatRef)>(*this,lib,"SDL_GetTextureAlphaModFloatRef",SideEffects::worstDefault,"SDL_GetTextureAlphaModFloatRef");
+    addExtern<DAS_BIND_FUN(SDL_GetTextureScaleModeRef)>(*this,lib,"SDL_GetTextureScaleModeRef",SideEffects::worstDefault,"SDL_GetTextureScaleModeRef");
+    addExtern<DAS_BIND_FUN(SDL_GetRendererNameCopy)>(*this,lib,"SDL_GetRendererNameCopy",SideEffects::worstDefault,"SDL_GetRendererNameCopy");
+    addExtern<DAS_BIND_FUN(SDL_GetRenderSafeAreaRef)>(*this,lib,"SDL_GetRenderSafeAreaRef",SideEffects::worstDefault,"SDL_GetRenderSafeAreaRef");
+    addExtern<DAS_BIND_FUN(SDL_GetRenderLogicalPresentationRef)>(*this,lib,"SDL_GetRenderLogicalPresentationRef",SideEffects::worstDefault,"SDL_GetRenderLogicalPresentationRef");
+    addExtern<DAS_BIND_FUN(SDL_GetRenderLogicalPresentationRectRef)>(*this,lib,"SDL_GetRenderLogicalPresentationRectRef",SideEffects::worstDefault,"SDL_GetRenderLogicalPresentationRectRef");
+    addExtern<DAS_BIND_FUN(SDL_RenderCoordinatesFromWindowRef)>(*this,lib,"SDL_RenderCoordinatesFromWindowRef",SideEffects::worstDefault,"SDL_RenderCoordinatesFromWindowRef");
+    addExtern<DAS_BIND_FUN(SDL_RenderCoordinatesToWindowRef)>(*this,lib,"SDL_RenderCoordinatesToWindowRef",SideEffects::worstDefault,"SDL_RenderCoordinatesToWindowRef");
+    addExtern<DAS_BIND_FUN(SDL_GetRenderOutputSizeRef)>(*this,lib,"SDL_GetRenderOutputSizeRef",SideEffects::worstDefault,"SDL_GetRenderOutputSizeRef");
+    addExtern<DAS_BIND_FUN(SDL_GetCurrentRenderOutputSizeRef)>(*this,lib,"SDL_GetCurrentRenderOutputSizeRef",SideEffects::worstDefault,"SDL_GetCurrentRenderOutputSizeRef");
+    addExtern<DAS_BIND_FUN(SDL_SetRenderViewportRef)>(*this,lib,"SDL_SetRenderViewportRef",SideEffects::worstDefault,"SDL_SetRenderViewportRef");
+    addExtern<DAS_BIND_FUN(SDL_GetRenderViewportRef)>(*this,lib,"SDL_GetRenderViewportRef",SideEffects::worstDefault,"SDL_GetRenderViewportRef");
+    addExtern<DAS_BIND_FUN(SDL_ResetRenderViewport)>(*this,lib,"SDL_ResetRenderViewport",SideEffects::worstDefault,"SDL_ResetRenderViewport");
+    addExtern<DAS_BIND_FUN(SDL_SetRenderClipRectRef)>(*this,lib,"SDL_SetRenderClipRectRef",SideEffects::worstDefault,"SDL_SetRenderClipRectRef");
+    addExtern<DAS_BIND_FUN(SDL_GetRenderClipRectRef)>(*this,lib,"SDL_GetRenderClipRectRef",SideEffects::worstDefault,"SDL_GetRenderClipRectRef");
+    addExtern<DAS_BIND_FUN(SDL_DisableRenderClip)>(*this,lib,"SDL_DisableRenderClip",SideEffects::worstDefault,"SDL_DisableRenderClip");
+    addExtern<DAS_BIND_FUN(SDL_GetRenderScaleRef)>(*this,lib,"SDL_GetRenderScaleRef",SideEffects::worstDefault,"SDL_GetRenderScaleRef");
+    addExtern<DAS_BIND_FUN(SDL_RenderPointsArray)>(*this,lib,"SDL_RenderPointsArray",SideEffects::worstDefault,"SDL_RenderPointsArray");
     addExtern<DAS_BIND_FUN(SDL_RenderLinesArray)>(*this,lib,"SDL_RenderLinesArray",SideEffects::worstDefault,"SDL_RenderLinesArray");
     addExtern<DAS_BIND_FUN(SDL_RenderRectsArray)>(*this,lib,"SDL_RenderRectsArray",SideEffects::worstDefault,"SDL_RenderRectsArray");
     addExtern<DAS_BIND_FUN(SDL_RenderFillRectsArray)>(*this,lib,"SDL_RenderFillRectsArray",SideEffects::worstDefault,"SDL_RenderFillRectsArray");

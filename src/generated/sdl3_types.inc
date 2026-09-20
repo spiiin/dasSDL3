@@ -964,6 +964,93 @@ addIEx("FLASH_BRIEFLY","SDL_FLASH_BRIEFLY",int64_t(SDL_FLASH_BRIEFLY),das::LineI
 static_assert(int64_t(SDL_FLASH_UNTIL_FOCUSED) == 2LL);
 addIEx("FLASH_UNTIL_FOCUSED","SDL_FLASH_UNTIL_FOCUSED",int64_t(SDL_FLASH_UNTIL_FOCUSED),das::LineInfo());
 } };
+DAS_BIND_ENUM_CAST(SDL_RendererLogicalPresentation);
+DAS_BASE_BIND_ENUM_GEN(SDL_RendererLogicalPresentation,SDL_RendererLogicalPresentation);
+static_assert(sizeof(SDL_RendererLogicalPresentation) == 4);
+class Enumeration_SDL_RendererLogicalPresentation : public das::Enumeration {
+public: Enumeration_SDL_RendererLogicalPresentation() : das::Enumeration("SDL_RendererLogicalPresentation") {
+external=true; cppName="SDL_RendererLogicalPresentation"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_RendererLogicalPresentation>::type>::type;
+static_assert(int64_t(SDL_LOGICAL_PRESENTATION_DISABLED) == 0LL);
+addIEx("LOGICAL_PRESENTATION_DISABLED","SDL_LOGICAL_PRESENTATION_DISABLED",int64_t(SDL_LOGICAL_PRESENTATION_DISABLED),das::LineInfo());
+static_assert(int64_t(SDL_LOGICAL_PRESENTATION_STRETCH) == 1LL);
+addIEx("LOGICAL_PRESENTATION_STRETCH","SDL_LOGICAL_PRESENTATION_STRETCH",int64_t(SDL_LOGICAL_PRESENTATION_STRETCH),das::LineInfo());
+static_assert(int64_t(SDL_LOGICAL_PRESENTATION_LETTERBOX) == 2LL);
+addIEx("LOGICAL_PRESENTATION_LETTERBOX","SDL_LOGICAL_PRESENTATION_LETTERBOX",int64_t(SDL_LOGICAL_PRESENTATION_LETTERBOX),das::LineInfo());
+static_assert(int64_t(SDL_LOGICAL_PRESENTATION_OVERSCAN) == 3LL);
+addIEx("LOGICAL_PRESENTATION_OVERSCAN","SDL_LOGICAL_PRESENTATION_OVERSCAN",int64_t(SDL_LOGICAL_PRESENTATION_OVERSCAN),das::LineInfo());
+static_assert(int64_t(SDL_LOGICAL_PRESENTATION_INTEGER_SCALE) == 4LL);
+addIEx("LOGICAL_PRESENTATION_INTEGER_SCALE","SDL_LOGICAL_PRESENTATION_INTEGER_SCALE",int64_t(SDL_LOGICAL_PRESENTATION_INTEGER_SCALE),das::LineInfo());
+} };
+DAS_BIND_ENUM_CAST(SDL_TextureAccess);
+DAS_BASE_BIND_ENUM_GEN(SDL_TextureAccess,SDL_TextureAccess);
+static_assert(sizeof(SDL_TextureAccess) == 4);
+class Enumeration_SDL_TextureAccess : public das::Enumeration {
+public: Enumeration_SDL_TextureAccess() : das::Enumeration("SDL_TextureAccess") {
+external=true; cppName="SDL_TextureAccess"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_TextureAccess>::type>::type;
+static_assert(int64_t(SDL_TEXTUREACCESS_STATIC) == 0LL);
+addIEx("TEXTUREACCESS_STATIC","SDL_TEXTUREACCESS_STATIC",int64_t(SDL_TEXTUREACCESS_STATIC),das::LineInfo());
+static_assert(int64_t(SDL_TEXTUREACCESS_STREAMING) == 1LL);
+addIEx("TEXTUREACCESS_STREAMING","SDL_TEXTUREACCESS_STREAMING",int64_t(SDL_TEXTUREACCESS_STREAMING),das::LineInfo());
+static_assert(int64_t(SDL_TEXTUREACCESS_TARGET) == 2LL);
+addIEx("TEXTUREACCESS_TARGET","SDL_TEXTUREACCESS_TARGET",int64_t(SDL_TEXTUREACCESS_TARGET),das::LineInfo());
+} };
+DAS_BIND_ENUM_CAST(SDL_ScaleMode);
+DAS_BASE_BIND_ENUM_GEN(SDL_ScaleMode,SDL_ScaleMode);
+static_assert(sizeof(SDL_ScaleMode) == 4);
+class Enumeration_SDL_ScaleMode : public das::Enumeration {
+public: Enumeration_SDL_ScaleMode() : das::Enumeration("SDL_ScaleMode") {
+external=true; cppName="SDL_ScaleMode"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_ScaleMode>::type>::type;
+static_assert(int64_t(SDL_SCALEMODE_INVALID) == -1LL);
+addIEx("SCALEMODE_INVALID","SDL_SCALEMODE_INVALID",int64_t(SDL_SCALEMODE_INVALID),das::LineInfo());
+static_assert(int64_t(SDL_SCALEMODE_NEAREST) == 0LL);
+addIEx("SCALEMODE_NEAREST","SDL_SCALEMODE_NEAREST",int64_t(SDL_SCALEMODE_NEAREST),das::LineInfo());
+static_assert(int64_t(SDL_SCALEMODE_LINEAR) == 1LL);
+addIEx("SCALEMODE_LINEAR","SDL_SCALEMODE_LINEAR",int64_t(SDL_SCALEMODE_LINEAR),das::LineInfo());
+} };
+DAS_BIND_ENUM_CAST(SDL_BlendOperation);
+DAS_BASE_BIND_ENUM_GEN(SDL_BlendOperation,SDL_BlendOperation);
+static_assert(sizeof(SDL_BlendOperation) == 4);
+class Enumeration_SDL_BlendOperation : public das::Enumeration {
+public: Enumeration_SDL_BlendOperation() : das::Enumeration("SDL_BlendOperation") {
+external=true; cppName="SDL_BlendOperation"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_BlendOperation>::type>::type;
+static_assert(int64_t(SDL_BLENDOPERATION_ADD) == 1LL);
+addIEx("BLENDOPERATION_ADD","SDL_BLENDOPERATION_ADD",int64_t(SDL_BLENDOPERATION_ADD),das::LineInfo());
+static_assert(int64_t(SDL_BLENDOPERATION_SUBTRACT) == 2LL);
+addIEx("BLENDOPERATION_SUBTRACT","SDL_BLENDOPERATION_SUBTRACT",int64_t(SDL_BLENDOPERATION_SUBTRACT),das::LineInfo());
+static_assert(int64_t(SDL_BLENDOPERATION_REV_SUBTRACT) == 3LL);
+addIEx("BLENDOPERATION_REV_SUBTRACT","SDL_BLENDOPERATION_REV_SUBTRACT",int64_t(SDL_BLENDOPERATION_REV_SUBTRACT),das::LineInfo());
+static_assert(int64_t(SDL_BLENDOPERATION_MINIMUM) == 4LL);
+addIEx("BLENDOPERATION_MINIMUM","SDL_BLENDOPERATION_MINIMUM",int64_t(SDL_BLENDOPERATION_MINIMUM),das::LineInfo());
+static_assert(int64_t(SDL_BLENDOPERATION_MAXIMUM) == 5LL);
+addIEx("BLENDOPERATION_MAXIMUM","SDL_BLENDOPERATION_MAXIMUM",int64_t(SDL_BLENDOPERATION_MAXIMUM),das::LineInfo());
+} };
+DAS_BIND_ENUM_CAST(SDL_BlendFactor);
+DAS_BASE_BIND_ENUM_GEN(SDL_BlendFactor,SDL_BlendFactor);
+static_assert(sizeof(SDL_BlendFactor) == 4);
+class Enumeration_SDL_BlendFactor : public das::Enumeration {
+public: Enumeration_SDL_BlendFactor() : das::Enumeration("SDL_BlendFactor") {
+external=true; cppName="SDL_BlendFactor"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_BlendFactor>::type>::type;
+static_assert(int64_t(SDL_BLENDFACTOR_ZERO) == 1LL);
+addIEx("BLENDFACTOR_ZERO","SDL_BLENDFACTOR_ZERO",int64_t(SDL_BLENDFACTOR_ZERO),das::LineInfo());
+static_assert(int64_t(SDL_BLENDFACTOR_ONE) == 2LL);
+addIEx("BLENDFACTOR_ONE","SDL_BLENDFACTOR_ONE",int64_t(SDL_BLENDFACTOR_ONE),das::LineInfo());
+static_assert(int64_t(SDL_BLENDFACTOR_SRC_COLOR) == 3LL);
+addIEx("BLENDFACTOR_SRC_COLOR","SDL_BLENDFACTOR_SRC_COLOR",int64_t(SDL_BLENDFACTOR_SRC_COLOR),das::LineInfo());
+static_assert(int64_t(SDL_BLENDFACTOR_ONE_MINUS_SRC_COLOR) == 4LL);
+addIEx("BLENDFACTOR_ONE_MINUS_SRC_COLOR","SDL_BLENDFACTOR_ONE_MINUS_SRC_COLOR",int64_t(SDL_BLENDFACTOR_ONE_MINUS_SRC_COLOR),das::LineInfo());
+static_assert(int64_t(SDL_BLENDFACTOR_SRC_ALPHA) == 5LL);
+addIEx("BLENDFACTOR_SRC_ALPHA","SDL_BLENDFACTOR_SRC_ALPHA",int64_t(SDL_BLENDFACTOR_SRC_ALPHA),das::LineInfo());
+static_assert(int64_t(SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA) == 6LL);
+addIEx("BLENDFACTOR_ONE_MINUS_SRC_ALPHA","SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA",int64_t(SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA),das::LineInfo());
+static_assert(int64_t(SDL_BLENDFACTOR_DST_COLOR) == 7LL);
+addIEx("BLENDFACTOR_DST_COLOR","SDL_BLENDFACTOR_DST_COLOR",int64_t(SDL_BLENDFACTOR_DST_COLOR),das::LineInfo());
+static_assert(int64_t(SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR) == 8LL);
+addIEx("BLENDFACTOR_ONE_MINUS_DST_COLOR","SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR",int64_t(SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR),das::LineInfo());
+static_assert(int64_t(SDL_BLENDFACTOR_DST_ALPHA) == 9LL);
+addIEx("BLENDFACTOR_DST_ALPHA","SDL_BLENDFACTOR_DST_ALPHA",int64_t(SDL_BLENDFACTOR_DST_ALPHA),das::LineInfo());
+static_assert(int64_t(SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA) == 10LL);
+addIEx("BLENDFACTOR_ONE_MINUS_DST_ALPHA","SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA",int64_t(SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA),das::LineInfo());
+} };
 MAKE_TYPE_FACTORY(SDL_Window, SDL_Window);
 MAKE_TYPE_FACTORY(SDL_Renderer, SDL_Renderer);
 MAKE_TYPE_FACTORY(SDL_Surface, SDL_Surface);

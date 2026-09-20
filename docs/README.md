@@ -46,3 +46,17 @@
 - [Window fullscreen/surface/IO](window-io.md): borrowed surfaces, ICC and capability limits.
 
 - [Software renderer/primitives](renderer-primitives.md): surface lifetime and CPU pixel checks.
+
+- [Renderer state](renderer-state.md): viewport, clipping, scale and target output.
+
+- [Renderer queries/presentation](renderer-presentation.md): names, logical modes and window coordinates.
+
+- [Texture creation/state](texture-state.md): native access modes, properties, modulation and filtering.
+
+- [Texture bytes/transfer](texture-transfer.md): byte modulation, blending, region updates and borrowed locks.
+
+- [Renderer YUV/color/blend](renderer-yuv-blend.md): plane arrays, renderer color and custom composition.
+
+- [Renderer operations](renderer-operations.md): creation, transformed drawing, readback, VSync and debug text.
+
+- [Renderer final APIs](renderer-final-api.md): raw geometry, event conversion, fixed-text format and native interop limits.

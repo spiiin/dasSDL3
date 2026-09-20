@@ -34,6 +34,11 @@ addEnumeration(new Enumeration_SDL_SystemTheme());
 addEnumeration(new Enumeration_SDL_DisplayOrientation());
 addEnumeration(new Enumeration_SDL_PixelFormat());
 addEnumeration(new Enumeration_SDL_FlashOperation());
+addEnumeration(new Enumeration_SDL_RendererLogicalPresentation());
+addEnumeration(new Enumeration_SDL_TextureAccess());
+addEnumeration(new Enumeration_SDL_ScaleMode());
+addEnumeration(new Enumeration_SDL_BlendOperation());
+addEnumeration(new Enumeration_SDL_BlendFactor());
 addAnnotation(new DummyTypeAnnotation("SDL_Window", "SDL_Window", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Renderer", "SDL_Renderer", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Surface", "SDL_Surface", 1, 1));
@@ -322,6 +327,16 @@ addConstant(*this, "SDL_WINDOWPOS_UNDEFINED", static_cast<int32_t>(SDL_WINDOWPOS
 addConstant(*this, "SDL_WINDOWPOS_CENTERED", static_cast<int32_t>(SDL_WINDOWPOS_CENTERED));
 addConstant(*this, "SDL_WINDOW_SURFACE_VSYNC_DISABLED", static_cast<int32_t>(SDL_WINDOW_SURFACE_VSYNC_DISABLED));
 addConstant(*this, "SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE", static_cast<int32_t>(SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE));
+addConstant(*this, "SDL_BLENDMODE_NONE", static_cast<uint32_t>(SDL_BLENDMODE_NONE));
+addConstant(*this, "SDL_BLENDMODE_BLEND", static_cast<uint32_t>(SDL_BLENDMODE_BLEND));
+addConstant(*this, "SDL_BLENDMODE_BLEND_PREMULTIPLIED", static_cast<uint32_t>(SDL_BLENDMODE_BLEND_PREMULTIPLIED));
+addConstant(*this, "SDL_BLENDMODE_ADD", static_cast<uint32_t>(SDL_BLENDMODE_ADD));
+addConstant(*this, "SDL_BLENDMODE_ADD_PREMULTIPLIED", static_cast<uint32_t>(SDL_BLENDMODE_ADD_PREMULTIPLIED));
+addConstant(*this, "SDL_BLENDMODE_MOD", static_cast<uint32_t>(SDL_BLENDMODE_MOD));
+addConstant(*this, "SDL_BLENDMODE_MUL", static_cast<uint32_t>(SDL_BLENDMODE_MUL));
+addConstant(*this, "SDL_BLENDMODE_INVALID", static_cast<uint32_t>(SDL_BLENDMODE_INVALID));
+addConstant(*this, "SDL_RENDERER_VSYNC_DISABLED", static_cast<int32_t>(SDL_RENDERER_VSYNC_DISABLED));
+addConstant(*this, "SDL_RENDERER_VSYNC_ADAPTIVE", static_cast<int32_t>(SDL_RENDERER_VSYNC_ADAPTIVE));
 // Uint32 (SDL_GPUTextureFormat) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_GPUTextureFormatTexelBlockSize)>(*this, lib, "SDL_GPUTextureFormatTexelBlockSize", SideEffects::worstDefault, "SDL_GPUTextureFormatTexelBlockSize")->args({"format"});
 // Uint32 (SDL_GPUTextureFormat, Uint32, Uint32, Uint32) __attribute__((cdecl))
@@ -910,3 +925,133 @@ addExtern<DAS_BIND_FUN(SDL_RenderRect)>(*this, lib, "SDL_RenderRect", SideEffect
 addExtern<DAS_BIND_FUN(SDL_RenderRects)>(*this, lib, "SDL_RenderRects", SideEffects::worstDefault, "SDL_RenderRects")->args({"renderer", "rects", "count"});
 // bool (SDL_Renderer *, const SDL_FRect *, int) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_RenderFillRects)>(*this, lib, "SDL_RenderFillRects", SideEffects::worstDefault, "SDL_RenderFillRects")->args({"renderer", "rects", "count"});
+// bool (SDL_Renderer *, int *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRenderOutputSize)>(*this, lib, "SDL_GetRenderOutputSize", SideEffects::worstDefault, "SDL_GetRenderOutputSize")->args({"renderer", "w", "h"});
+// bool (SDL_Renderer *, int *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetCurrentRenderOutputSize)>(*this, lib, "SDL_GetCurrentRenderOutputSize", SideEffects::worstDefault, "SDL_GetCurrentRenderOutputSize")->args({"renderer", "w", "h"});
+// bool (SDL_Renderer *, const SDL_Rect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetRenderViewport)>(*this, lib, "SDL_SetRenderViewport", SideEffects::worstDefault, "SDL_SetRenderViewport")->args({"renderer", "rect"});
+// bool (SDL_Renderer *, SDL_Rect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRenderViewport)>(*this, lib, "SDL_GetRenderViewport", SideEffects::worstDefault, "SDL_GetRenderViewport")->args({"renderer", "rect"});
+// bool (SDL_Renderer *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RenderViewportSet)>(*this, lib, "SDL_RenderViewportSet", SideEffects::worstDefault, "SDL_RenderViewportSet")->args({"renderer"});
+// bool (SDL_Renderer *, const SDL_Rect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetRenderClipRect)>(*this, lib, "SDL_SetRenderClipRect", SideEffects::worstDefault, "SDL_SetRenderClipRect")->args({"renderer", "rect"});
+// bool (SDL_Renderer *, SDL_Rect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRenderClipRect)>(*this, lib, "SDL_GetRenderClipRect", SideEffects::worstDefault, "SDL_GetRenderClipRect")->args({"renderer", "rect"});
+// bool (SDL_Renderer *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RenderClipEnabled)>(*this, lib, "SDL_RenderClipEnabled", SideEffects::worstDefault, "SDL_RenderClipEnabled")->args({"renderer"});
+// bool (SDL_Renderer *, float, float) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetRenderScale)>(*this, lib, "SDL_SetRenderScale", SideEffects::worstDefault, "SDL_SetRenderScale")->args({"renderer", "scaleX", "scaleY"});
+// bool (SDL_Renderer *, float *, float *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRenderScale)>(*this, lib, "SDL_GetRenderScale", SideEffects::worstDefault, "SDL_GetRenderScale")->args({"renderer", "scaleX", "scaleY"});
+// int (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetNumRenderDrivers)>(*this, lib, "SDL_GetNumRenderDrivers", SideEffects::worstDefault, "SDL_GetNumRenderDrivers");
+// const char *(int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRenderDriver)>(*this, lib, "SDL_GetRenderDriver", SideEffects::worstDefault, "SDL_GetRenderDriver")->args({"index"});
+// const char *(SDL_Renderer *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRendererName)>(*this, lib, "SDL_GetRendererName", SideEffects::worstDefault, "SDL_GetRendererName")->args({"renderer"});
+// SDL_PropertiesID (SDL_Renderer *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRendererProperties)>(*this, lib, "SDL_GetRendererProperties", SideEffects::worstDefault, "SDL_GetRendererProperties")->args({"renderer"});
+// bool (SDL_Renderer *, SDL_Rect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRenderSafeArea)>(*this, lib, "SDL_GetRenderSafeArea", SideEffects::worstDefault, "SDL_GetRenderSafeArea")->args({"renderer", "rect"});
+// bool (SDL_Renderer *, int, int, SDL_RendererLogicalPresentation) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetRenderLogicalPresentation)>(*this, lib, "SDL_SetRenderLogicalPresentation", SideEffects::worstDefault, "SDL_SetRenderLogicalPresentation")->args({"renderer", "w", "h", "mode"});
+// bool (SDL_Renderer *, int *, int *, SDL_RendererLogicalPresentation *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRenderLogicalPresentation)>(*this, lib, "SDL_GetRenderLogicalPresentation", SideEffects::worstDefault, "SDL_GetRenderLogicalPresentation")->args({"renderer", "w", "h", "mode"});
+// bool (SDL_Renderer *, SDL_FRect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRenderLogicalPresentationRect)>(*this, lib, "SDL_GetRenderLogicalPresentationRect", SideEffects::worstDefault, "SDL_GetRenderLogicalPresentationRect")->args({"renderer", "rect"});
+// bool (SDL_Renderer *, float, float, float *, float *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RenderCoordinatesFromWindow)>(*this, lib, "SDL_RenderCoordinatesFromWindow", SideEffects::worstDefault, "SDL_RenderCoordinatesFromWindow")->args({"renderer", "window_x", "window_y", "x", "y"});
+// bool (SDL_Renderer *, float, float, float *, float *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RenderCoordinatesToWindow)>(*this, lib, "SDL_RenderCoordinatesToWindow", SideEffects::worstDefault, "SDL_RenderCoordinatesToWindow")->args({"renderer", "x", "y", "window_x", "window_y"});
+// SDL_Texture *(SDL_Renderer *, SDL_PixelFormat, SDL_TextureAccess, int, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateTexture)>(*this, lib, "SDL_CreateTexture", SideEffects::worstDefault, "SDL_CreateTexture")->args({"renderer", "format", "access", "w", "h"});
+// SDL_Texture *(SDL_Renderer *, SDL_PropertiesID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateTextureWithProperties)>(*this, lib, "SDL_CreateTextureWithProperties", SideEffects::worstDefault, "SDL_CreateTextureWithProperties")->args({"renderer", "props"});
+// SDL_PropertiesID (SDL_Texture *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetTextureProperties)>(*this, lib, "SDL_GetTextureProperties", SideEffects::worstDefault, "SDL_GetTextureProperties")->args({"texture"});
+// SDL_Renderer *(SDL_Texture *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRendererFromTexture)>(*this, lib, "SDL_GetRendererFromTexture", SideEffects::worstDefault, "SDL_GetRendererFromTexture")->args({"texture"});
+// bool (SDL_Texture *, float, float, float) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetTextureColorModFloat)>(*this, lib, "SDL_SetTextureColorModFloat", SideEffects::worstDefault, "SDL_SetTextureColorModFloat")->args({"texture", "r", "g", "b"});
+// bool (SDL_Texture *, float *, float *, float *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetTextureColorModFloat)>(*this, lib, "SDL_GetTextureColorModFloat", SideEffects::worstDefault, "SDL_GetTextureColorModFloat")->args({"texture", "r", "g", "b"});
+// bool (SDL_Texture *, float) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetTextureAlphaModFloat)>(*this, lib, "SDL_SetTextureAlphaModFloat", SideEffects::worstDefault, "SDL_SetTextureAlphaModFloat")->args({"texture", "alpha"});
+// bool (SDL_Texture *, float *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetTextureAlphaModFloat)>(*this, lib, "SDL_GetTextureAlphaModFloat", SideEffects::worstDefault, "SDL_GetTextureAlphaModFloat")->args({"texture", "alpha"});
+// bool (SDL_Texture *, SDL_ScaleMode) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetTextureScaleMode)>(*this, lib, "SDL_SetTextureScaleMode", SideEffects::worstDefault, "SDL_SetTextureScaleMode")->args({"texture", "scaleMode"});
+// bool (SDL_Texture *, SDL_ScaleMode *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetTextureScaleMode)>(*this, lib, "SDL_GetTextureScaleMode", SideEffects::worstDefault, "SDL_GetTextureScaleMode")->args({"texture", "scaleMode"});
+// bool (SDL_Texture *, Uint8, Uint8, Uint8) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetTextureColorMod)>(*this, lib, "SDL_SetTextureColorMod", SideEffects::worstDefault, "SDL_SetTextureColorMod")->args({"texture", "r", "g", "b"});
+// bool (SDL_Texture *, Uint8 *, Uint8 *, Uint8 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetTextureColorMod)>(*this, lib, "SDL_GetTextureColorMod", SideEffects::worstDefault, "SDL_GetTextureColorMod")->args({"texture", "r", "g", "b"});
+// bool (SDL_Texture *, Uint8) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetTextureAlphaMod)>(*this, lib, "SDL_SetTextureAlphaMod", SideEffects::worstDefault, "SDL_SetTextureAlphaMod")->args({"texture", "alpha"});
+// bool (SDL_Texture *, Uint8 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetTextureAlphaMod)>(*this, lib, "SDL_GetTextureAlphaMod", SideEffects::worstDefault, "SDL_GetTextureAlphaMod")->args({"texture", "alpha"});
+// bool (SDL_Texture *, SDL_BlendMode) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetTextureBlendMode)>(*this, lib, "SDL_SetTextureBlendMode", SideEffects::worstDefault, "SDL_SetTextureBlendMode")->args({"texture", "blendMode"});
+// bool (SDL_Texture *, SDL_BlendMode *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetTextureBlendMode)>(*this, lib, "SDL_GetTextureBlendMode", SideEffects::worstDefault, "SDL_GetTextureBlendMode")->args({"texture", "blendMode"});
+// bool (SDL_Texture *, const SDL_Rect *, const void *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_UpdateTexture)>(*this, lib, "SDL_UpdateTexture", SideEffects::worstDefault, "SDL_UpdateTexture")->args({"texture", "rect", "pixels", "pitch"});
+// bool (SDL_Texture *, const SDL_Rect *, void **, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_LockTexture)>(*this, lib, "SDL_LockTexture", SideEffects::worstDefault, "SDL_LockTexture")->args({"texture", "rect", "pixels", "pitch"});
+// void (SDL_Texture *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_UnlockTexture)>(*this, lib, "SDL_UnlockTexture", SideEffects::worstDefault, "SDL_UnlockTexture")->args({"texture"});
+// bool (SDL_Texture *, const SDL_Rect *, SDL_Surface **) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_LockTextureToSurface)>(*this, lib, "SDL_LockTextureToSurface", SideEffects::worstDefault, "SDL_LockTextureToSurface")->args({"texture", "rect", "surface"});
+// bool (SDL_Texture *, const SDL_Rect *, const Uint8 *, int, const Uint8 *, int, const Uint8 *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_UpdateYUVTexture)>(*this, lib, "SDL_UpdateYUVTexture", SideEffects::worstDefault, "SDL_UpdateYUVTexture")->args({"texture", "rect", "Yplane", "Ypitch", "Uplane", "Upitch", "Vplane", "Vpitch"});
+// bool (SDL_Texture *, const SDL_Rect *, const Uint8 *, int, const Uint8 *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_UpdateNVTexture)>(*this, lib, "SDL_UpdateNVTexture", SideEffects::worstDefault, "SDL_UpdateNVTexture")->args({"texture", "rect", "Yplane", "Ypitch", "UVplane", "UVpitch"});
+// bool (SDL_Renderer *, float, float, float, float) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetRenderDrawColorFloat)>(*this, lib, "SDL_SetRenderDrawColorFloat", SideEffects::worstDefault, "SDL_SetRenderDrawColorFloat")->args({"renderer", "r", "g", "b", "a"});
+// bool (SDL_Renderer *, float *, float *, float *, float *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRenderDrawColorFloat)>(*this, lib, "SDL_GetRenderDrawColorFloat", SideEffects::worstDefault, "SDL_GetRenderDrawColorFloat")->args({"renderer", "r", "g", "b", "a"});
+// bool (SDL_Renderer *, Uint8 *, Uint8 *, Uint8 *, Uint8 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRenderDrawColor)>(*this, lib, "SDL_GetRenderDrawColor", SideEffects::worstDefault, "SDL_GetRenderDrawColor")->args({"renderer", "r", "g", "b", "a"});
+// bool (SDL_Renderer *, float) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetRenderColorScale)>(*this, lib, "SDL_SetRenderColorScale", SideEffects::worstDefault, "SDL_SetRenderColorScale")->args({"renderer", "scale"});
+// bool (SDL_Renderer *, float *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRenderColorScale)>(*this, lib, "SDL_GetRenderColorScale", SideEffects::worstDefault, "SDL_GetRenderColorScale")->args({"renderer", "scale"});
+// bool (SDL_Renderer *, SDL_BlendMode) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetRenderDrawBlendMode)>(*this, lib, "SDL_SetRenderDrawBlendMode", SideEffects::worstDefault, "SDL_SetRenderDrawBlendMode")->args({"renderer", "blendMode"});
+// bool (SDL_Renderer *, SDL_BlendMode *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRenderDrawBlendMode)>(*this, lib, "SDL_GetRenderDrawBlendMode", SideEffects::worstDefault, "SDL_GetRenderDrawBlendMode")->args({"renderer", "blendMode"});
+// SDL_BlendMode (SDL_BlendFactor, SDL_BlendFactor, SDL_BlendOperation, SDL_BlendFactor, SDL_BlendFactor, SDL_BlendOperation) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ComposeCustomBlendMode)>(*this, lib, "SDL_ComposeCustomBlendMode", SideEffects::worstDefault, "SDL_ComposeCustomBlendMode")->args({"srcColorFactor", "dstColorFactor", "colorOperation", "srcAlphaFactor", "dstAlphaFactor", "alphaOperation"});
+// bool (const char *, int, int, SDL_WindowFlags, SDL_Window **, SDL_Renderer **) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateWindowAndRenderer)>(*this, lib, "SDL_CreateWindowAndRenderer", SideEffects::worstDefault, "SDL_CreateWindowAndRenderer")->args({"title", "width", "height", "window_flags", "window", "renderer"});
+// SDL_Renderer *(SDL_PropertiesID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateRendererWithProperties)>(*this, lib, "SDL_CreateRendererWithProperties", SideEffects::worstDefault, "SDL_CreateRendererWithProperties")->args({"props"});
+// bool (SDL_Renderer *, SDL_Texture *, const SDL_FRect *, const SDL_FRect *, double, const SDL_FPoint *, SDL_FlipMode) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RenderTextureRotated)>(*this, lib, "SDL_RenderTextureRotated", SideEffects::worstDefault, "SDL_RenderTextureRotated")->args({"renderer", "texture", "srcrect", "dstrect", "angle", "center", "flip"});
+// bool (SDL_Renderer *, SDL_Texture *, const SDL_FRect *, const SDL_FPoint *, const SDL_FPoint *, const SDL_FPoint *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RenderTextureAffine)>(*this, lib, "SDL_RenderTextureAffine", SideEffects::worstDefault, "SDL_RenderTextureAffine")->args({"renderer", "texture", "srcrect", "origin", "right", "down"});
+// bool (SDL_Renderer *, SDL_Texture *, const SDL_FRect *, float, const SDL_FRect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RenderTextureTiled)>(*this, lib, "SDL_RenderTextureTiled", SideEffects::worstDefault, "SDL_RenderTextureTiled")->args({"renderer", "texture", "srcrect", "scale", "dstrect"});
+// bool (SDL_Renderer *, SDL_Texture *, const SDL_FRect *, float, float, float, float, float, const SDL_FRect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RenderTexture9Grid)>(*this, lib, "SDL_RenderTexture9Grid", SideEffects::worstDefault, "SDL_RenderTexture9Grid")->args({"renderer", "texture", "srcrect", "left_width", "right_width", "top_height", "bottom_height", "scale", "dstrect"});
+// SDL_Surface *(SDL_Renderer *, const SDL_Rect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RenderReadPixels)>(*this, lib, "SDL_RenderReadPixels", SideEffects::worstDefault, "SDL_RenderReadPixels")->args({"renderer", "rect"});
+// bool (SDL_Renderer *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetRenderVSync)>(*this, lib, "SDL_SetRenderVSync", SideEffects::worstDefault, "SDL_SetRenderVSync")->args({"renderer", "vsync"});
+// bool (SDL_Renderer *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRenderVSync)>(*this, lib, "SDL_GetRenderVSync", SideEffects::worstDefault, "SDL_GetRenderVSync")->args({"renderer", "vsync"});
+// bool (SDL_Renderer *, float, float, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RenderDebugText)>(*this, lib, "SDL_RenderDebugText", SideEffects::worstDefault, "SDL_RenderDebugText")->args({"renderer", "x", "y", "str"});
+// bool (SDL_Renderer *, SDL_Texture *, const float *, int, const SDL_FColor *, int, const float *, int, int, const void *, int, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RenderGeometryRaw)>(*this, lib, "SDL_RenderGeometryRaw", SideEffects::worstDefault, "SDL_RenderGeometryRaw")->args({"renderer", "texture", "xy", "xy_stride", "color", "color_stride", "uv", "uv_stride", "num_vertices", "indices", "num_indices", "size_indices"});
+// bool (SDL_Renderer *, SDL_Event *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ConvertEventToRenderCoordinates)>(*this, lib, "SDL_ConvertEventToRenderCoordinates", SideEffects::worstDefault, "SDL_ConvertEventToRenderCoordinates")->args({"renderer", "event"});
+// void *(SDL_Renderer *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRenderMetalLayer)>(*this, lib, "SDL_GetRenderMetalLayer", SideEffects::worstDefault, "SDL_GetRenderMetalLayer")->args({"renderer"});
+// void *(SDL_Renderer *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRenderMetalCommandEncoder)>(*this, lib, "SDL_GetRenderMetalCommandEncoder", SideEffects::worstDefault, "SDL_GetRenderMetalCommandEncoder")->args({"renderer"});
+// bool (SDL_Renderer *, Uint32, Sint64, Sint64) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_AddVulkanRenderSemaphores)>(*this, lib, "SDL_AddVulkanRenderSemaphores", SideEffects::worstDefault, "SDL_AddVulkanRenderSemaphores")->args({"renderer", "wait_stage_mask", "wait_semaphore", "signal_semaphore"});

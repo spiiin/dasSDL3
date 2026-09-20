@@ -781,7 +781,7 @@
       "line": 88,
       "id": "enum:SDL_BlendFactor",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -791,7 +791,7 @@
       "line": 69,
       "id": "enum:SDL_BlendOperation",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1481,7 +1481,7 @@
       "line": 105,
       "id": "enum:SDL_RendererLogicalPresentation",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1501,7 +1501,7 @@
       "line": 83,
       "id": "enum:SDL_ScaleMode",
       "category": "Surface",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1561,7 +1561,7 @@
       "line": 93,
       "id": "enum:SDL_TextureAccess",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2039,7 +2039,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_BLENDFACTOR_DST_ALPHA",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2050,7 +2050,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_BLENDFACTOR_DST_COLOR",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2061,7 +2061,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_BLENDFACTOR_ONE",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2072,7 +2072,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2083,7 +2083,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2094,7 +2094,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2105,7 +2105,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_BLENDFACTOR_ONE_MINUS_SRC_COLOR",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2116,7 +2116,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_BLENDFACTOR_SRC_ALPHA",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2127,7 +2127,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_BLENDFACTOR_SRC_COLOR",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2138,7 +2138,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_BLENDFACTOR_ZERO",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2149,7 +2149,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_BLENDOPERATION_ADD",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2160,7 +2160,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_BLENDOPERATION_MAXIMUM",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2171,7 +2171,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_BLENDOPERATION_MINIMUM",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2182,7 +2182,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_BLENDOPERATION_REV_SUBTRACT",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2193,7 +2193,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_BLENDOPERATION_SUBTRACT",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8309,7 +8309,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOGICAL_PRESENTATION_DISABLED",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8320,7 +8320,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOGICAL_PRESENTATION_INTEGER_SCALE",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8331,7 +8331,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOGICAL_PRESENTATION_LETTERBOX",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8342,7 +8342,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOGICAL_PRESENTATION_OVERSCAN",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8353,7 +8353,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOGICAL_PRESENTATION_STRETCH",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10509,7 +10509,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_SCALEMODE_INVALID",
       "category": "Surface",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10520,7 +10520,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_SCALEMODE_LINEAR",
       "category": "Surface",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10531,7 +10531,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_SCALEMODE_NEAREST",
       "category": "Surface",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -13732,7 +13732,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_TEXTUREACCESS_STATIC",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -13743,7 +13743,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_TEXTUREACCESS_STREAMING",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -13754,7 +13754,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_TEXTUREACCESS_TARGET",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -14437,8 +14437,13 @@
       ],
       "id": "function:SDL_AddVulkanRenderSemaphores",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Generated native signature. Geometry arrays and event reference adapters are available; native Metal/Vulkan resources require backend-specific caller ownership.",
+      "contract": "docs/renderer-final-api.md",
+      "tests": [
+        "tests/renderer_final_api.das"
+      ]
     },
     {
       "name": "SDL_AsyncIOFromFile",
@@ -15919,8 +15924,13 @@
       ],
       "id": "function:SDL_ComposeCustomBlendMode",
       "category": "Blendmode",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct YUV/NV and renderer color/blend APIs. Plane arrays adapt whole-texture updates only; native regions and backend capabilities remain SDL contracts.",
+      "contract": "docs/renderer-yuv-blend.md",
+      "tests": [
+        "tests/renderer_yuv_blend.das"
+      ]
     },
     {
       "name": "SDL_ConvertAudioSamples",
@@ -15979,8 +15989,13 @@
       ],
       "id": "function:SDL_ConvertEventToRenderCoordinates",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Generated native signature. Geometry arrays and event reference adapters are available; native Metal/Vulkan resources require backend-specific caller ownership.",
+      "contract": "docs/renderer-final-api.md",
+      "tests": [
+        "tests/renderer_final_api.das"
+      ]
     },
     {
       "name": "SDL_ConvertPixels",
@@ -16914,8 +16929,13 @@
       ],
       "id": "function:SDL_CreateRendererWithProperties",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer creation/draw/readback/VSync/debug access; ref adapters and explicit ownership scopes preserve SDL results and backend constraints.",
+      "contract": "docs/renderer-operations.md",
+      "tests": [
+        "tests/renderer_operations.das"
+      ]
     },
     {
       "name": "SDL_CreateSemaphore",
@@ -17112,14 +17132,13 @@
       ],
       "id": "function:SDL_CreateTexture",
       "category": "Render",
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Only RGBA32 streaming and target textures; no general format/access binding",
-      "adapter": "SDL_CreateRGBA8Texture",
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct SDL texture creation and modulation, scalar output references and defer scopes. No implicit ownership of borrowed renderer or properties.",
+      "contract": "docs/texture-state.md",
       "tests": [
-        "tests/pixels.das"
-      ],
-      "contract": "docs/pixels.md"
+        "tests/texture_state.das"
+      ]
     },
     {
       "name": "SDL_CreateTextureFromSurface",
@@ -17162,8 +17181,13 @@
       ],
       "id": "function:SDL_CreateTextureWithProperties",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct SDL texture creation and modulation, scalar output references and defer scopes. No implicit ownership of borrowed renderer or properties.",
+      "contract": "docs/texture-state.md",
+      "tests": [
+        "tests/texture_state.das"
+      ]
     },
     {
       "name": "SDL_CreateThreadRuntime",
@@ -17348,8 +17372,13 @@
       ],
       "id": "function:SDL_CreateWindowAndRenderer",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer creation/draw/readback/VSync/debug access; ref adapters and explicit ownership scopes preserve SDL results and backend constraints.",
+      "contract": "docs/renderer-operations.md",
+      "tests": [
+        "tests/renderer_operations.das"
+      ]
     },
     {
       "name": "SDL_CreateWindowWithProperties",
@@ -20262,8 +20291,13 @@
       ],
       "id": "function:SDL_GetCurrentRenderOutputSize",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer state access with borrowed rect and scalar output reference adapters; preserves SDL results and target-local state.",
+      "contract": "docs/renderer-state.md",
+      "tests": [
+        "tests/renderer_state.das"
+      ]
     },
     {
       "name": "SDL_GetCurrentThreadID",
@@ -23399,8 +23433,13 @@
       "arguments": [],
       "id": "function:SDL_GetNumRenderDrivers",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer queries and logical presentation; copied names and scalar/rect output references preserve native results and ownership.",
+      "contract": "docs/renderer-presentation.md",
+      "tests": [
+        "tests/renderer_presentation.das"
+      ]
     },
     {
       "name": "SDL_GetNumVideoDrivers",
@@ -24201,8 +24240,13 @@
       ],
       "id": "function:SDL_GetRenderClipRect",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer state access with borrowed rect and scalar output reference adapters; preserves SDL results and target-local state.",
+      "contract": "docs/renderer-state.md",
+      "tests": [
+        "tests/renderer_state.das"
+      ]
     },
     {
       "name": "SDL_GetRenderColorScale",
@@ -24223,8 +24267,13 @@
       ],
       "id": "function:SDL_GetRenderColorScale",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct YUV/NV and renderer color/blend APIs. Plane arrays adapt whole-texture updates only; native regions and backend capabilities remain SDL contracts.",
+      "contract": "docs/renderer-yuv-blend.md",
+      "tests": [
+        "tests/renderer_yuv_blend.das"
+      ]
     },
     {
       "name": "SDL_GetRenderDrawBlendMode",
@@ -24245,8 +24294,13 @@
       ],
       "id": "function:SDL_GetRenderDrawBlendMode",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct YUV/NV and renderer color/blend APIs. Plane arrays adapt whole-texture updates only; native regions and backend capabilities remain SDL contracts.",
+      "contract": "docs/renderer-yuv-blend.md",
+      "tests": [
+        "tests/renderer_yuv_blend.das"
+      ]
     },
     {
       "name": "SDL_GetRenderDrawColor",
@@ -24279,8 +24333,13 @@
       ],
       "id": "function:SDL_GetRenderDrawColor",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct YUV/NV and renderer color/blend APIs. Plane arrays adapt whole-texture updates only; native regions and backend capabilities remain SDL contracts.",
+      "contract": "docs/renderer-yuv-blend.md",
+      "tests": [
+        "tests/renderer_yuv_blend.das"
+      ]
     },
     {
       "name": "SDL_GetRenderDrawColorFloat",
@@ -24313,8 +24372,13 @@
       ],
       "id": "function:SDL_GetRenderDrawColorFloat",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct YUV/NV and renderer color/blend APIs. Plane arrays adapt whole-texture updates only; native regions and backend capabilities remain SDL contracts.",
+      "contract": "docs/renderer-yuv-blend.md",
+      "tests": [
+        "tests/renderer_yuv_blend.das"
+      ]
     },
     {
       "name": "SDL_GetRenderDriver",
@@ -24331,8 +24395,13 @@
       ],
       "id": "function:SDL_GetRenderDriver",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer queries and logical presentation; copied names and scalar/rect output references preserve native results and ownership.",
+      "contract": "docs/renderer-presentation.md",
+      "tests": [
+        "tests/renderer_presentation.das"
+      ]
     },
     {
       "name": "SDL_GetRenderLogicalPresentation",
@@ -24361,8 +24430,13 @@
       ],
       "id": "function:SDL_GetRenderLogicalPresentation",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer queries and logical presentation; copied names and scalar/rect output references preserve native results and ownership.",
+      "contract": "docs/renderer-presentation.md",
+      "tests": [
+        "tests/renderer_presentation.das"
+      ]
     },
     {
       "name": "SDL_GetRenderLogicalPresentationRect",
@@ -24383,8 +24457,13 @@
       ],
       "id": "function:SDL_GetRenderLogicalPresentationRect",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer queries and logical presentation; copied names and scalar/rect output references preserve native results and ownership.",
+      "contract": "docs/renderer-presentation.md",
+      "tests": [
+        "tests/renderer_presentation.das"
+      ]
     },
     {
       "name": "SDL_GetRenderMetalCommandEncoder",
@@ -24401,8 +24480,13 @@
       ],
       "id": "function:SDL_GetRenderMetalCommandEncoder",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Generated native signature. Geometry arrays and event reference adapters are available; native Metal/Vulkan resources require backend-specific caller ownership.",
+      "contract": "docs/renderer-final-api.md",
+      "tests": [
+        "tests/renderer_final_api.das"
+      ]
     },
     {
       "name": "SDL_GetRenderMetalLayer",
@@ -24419,8 +24503,13 @@
       ],
       "id": "function:SDL_GetRenderMetalLayer",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Generated native signature. Geometry arrays and event reference adapters are available; native Metal/Vulkan resources require backend-specific caller ownership.",
+      "contract": "docs/renderer-final-api.md",
+      "tests": [
+        "tests/renderer_final_api.das"
+      ]
     },
     {
       "name": "SDL_GetRenderOutputSize",
@@ -24445,8 +24534,13 @@
       ],
       "id": "function:SDL_GetRenderOutputSize",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer state access with borrowed rect and scalar output reference adapters; preserves SDL results and target-local state.",
+      "contract": "docs/renderer-state.md",
+      "tests": [
+        "tests/renderer_state.das"
+      ]
     },
     {
       "name": "SDL_GetRenderSafeArea",
@@ -24467,8 +24561,13 @@
       ],
       "id": "function:SDL_GetRenderSafeArea",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer queries and logical presentation; copied names and scalar/rect output references preserve native results and ownership.",
+      "contract": "docs/renderer-presentation.md",
+      "tests": [
+        "tests/renderer_presentation.das"
+      ]
     },
     {
       "name": "SDL_GetRenderScale",
@@ -24493,8 +24592,13 @@
       ],
       "id": "function:SDL_GetRenderScale",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer state access with borrowed rect and scalar output reference adapters; preserves SDL results and target-local state.",
+      "contract": "docs/renderer-state.md",
+      "tests": [
+        "tests/renderer_state.das"
+      ]
     },
     {
       "name": "SDL_GetRenderTarget",
@@ -24537,8 +24641,13 @@
       ],
       "id": "function:SDL_GetRenderVSync",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer creation/draw/readback/VSync/debug access; ref adapters and explicit ownership scopes preserve SDL results and backend constraints.",
+      "contract": "docs/renderer-operations.md",
+      "tests": [
+        "tests/renderer_operations.das"
+      ]
     },
     {
       "name": "SDL_GetRenderViewport",
@@ -24559,8 +24668,13 @@
       ],
       "id": "function:SDL_GetRenderViewport",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer state access with borrowed rect and scalar output reference adapters; preserves SDL results and target-local state.",
+      "contract": "docs/renderer-state.md",
+      "tests": [
+        "tests/renderer_state.das"
+      ]
     },
     {
       "name": "SDL_GetRenderWindow",
@@ -24618,8 +24732,13 @@
       ],
       "id": "function:SDL_GetRendererFromTexture",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct SDL texture creation and modulation, scalar output references and defer scopes. No implicit ownership of borrowed renderer or properties.",
+      "contract": "docs/texture-state.md",
+      "tests": [
+        "tests/texture_state.das"
+      ]
     },
     {
       "name": "SDL_GetRendererName",
@@ -24636,8 +24755,13 @@
       ],
       "id": "function:SDL_GetRendererName",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer queries and logical presentation; copied names and scalar/rect output references preserve native results and ownership.",
+      "contract": "docs/renderer-presentation.md",
+      "tests": [
+        "tests/renderer_presentation.das"
+      ]
     },
     {
       "name": "SDL_GetRendererProperties",
@@ -24654,8 +24778,13 @@
       ],
       "id": "function:SDL_GetRendererProperties",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer queries and logical presentation; copied names and scalar/rect output references preserve native results and ownership.",
+      "contract": "docs/renderer-presentation.md",
+      "tests": [
+        "tests/renderer_presentation.das"
+      ]
     },
     {
       "name": "SDL_GetRevision",
@@ -25380,8 +25509,13 @@
       ],
       "id": "function:SDL_GetTextureAlphaMod",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct texture modulation, blending and transfer APIs. RGBA32 update array adapter and borrowed surface lock scope are limited adapters; native mapped pointer validity remains caller-owned.",
+      "contract": "docs/texture-transfer.md",
+      "tests": [
+        "tests/texture_transfer.das"
+      ]
     },
     {
       "name": "SDL_GetTextureAlphaModFloat",
@@ -25402,8 +25536,13 @@
       ],
       "id": "function:SDL_GetTextureAlphaModFloat",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct SDL texture creation and modulation, scalar output references and defer scopes. No implicit ownership of borrowed renderer or properties.",
+      "contract": "docs/texture-state.md",
+      "tests": [
+        "tests/texture_state.das"
+      ]
     },
     {
       "name": "SDL_GetTextureBlendMode",
@@ -25424,8 +25563,13 @@
       ],
       "id": "function:SDL_GetTextureBlendMode",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct texture modulation, blending and transfer APIs. RGBA32 update array adapter and borrowed surface lock scope are limited adapters; native mapped pointer validity remains caller-owned.",
+      "contract": "docs/texture-transfer.md",
+      "tests": [
+        "tests/texture_transfer.das"
+      ]
     },
     {
       "name": "SDL_GetTextureColorMod",
@@ -25454,8 +25598,13 @@
       ],
       "id": "function:SDL_GetTextureColorMod",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct texture modulation, blending and transfer APIs. RGBA32 update array adapter and borrowed surface lock scope are limited adapters; native mapped pointer validity remains caller-owned.",
+      "contract": "docs/texture-transfer.md",
+      "tests": [
+        "tests/texture_transfer.das"
+      ]
     },
     {
       "name": "SDL_GetTextureColorModFloat",
@@ -25484,8 +25633,13 @@
       ],
       "id": "function:SDL_GetTextureColorModFloat",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct SDL texture creation and modulation, scalar output references and defer scopes. No implicit ownership of borrowed renderer or properties.",
+      "contract": "docs/texture-state.md",
+      "tests": [
+        "tests/texture_state.das"
+      ]
     },
     {
       "name": "SDL_GetTextureProperties",
@@ -25502,8 +25656,13 @@
       ],
       "id": "function:SDL_GetTextureProperties",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct SDL texture creation and modulation, scalar output references and defer scopes. No implicit ownership of borrowed renderer or properties.",
+      "contract": "docs/texture-state.md",
+      "tests": [
+        "tests/texture_state.das"
+      ]
     },
     {
       "name": "SDL_GetTextureScaleMode",
@@ -25524,8 +25683,13 @@
       ],
       "id": "function:SDL_GetTextureScaleMode",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct SDL texture creation and modulation, scalar output references and defer scopes. No implicit ownership of borrowed renderer or properties.",
+      "contract": "docs/texture-state.md",
+      "tests": [
+        "tests/texture_state.das"
+      ]
     },
     {
       "name": "SDL_GetTextureSize",
@@ -28019,14 +28183,13 @@
       ],
       "id": "function:SDL_LockTexture",
       "category": "Render",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Whole-image synchronous upload from a checked RGBA8 array; no borrowed mapping exposed",
-      "adapter": "SDL_UploadRGBA8",
+      "reason": "Direct texture modulation, blending and transfer APIs. RGBA32 update array adapter and borrowed surface lock scope are limited adapters; native mapped pointer validity remains caller-owned.",
+      "contract": "docs/texture-transfer.md",
       "tests": [
-        "tests/pixels.das"
-      ],
-      "contract": "docs/pixels.md"
+        "tests/texture_transfer.das"
+      ]
     },
     {
       "name": "SDL_LockTextureToSurface",
@@ -28051,8 +28214,13 @@
       ],
       "id": "function:SDL_LockTextureToSurface",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct texture modulation, blending and transfer APIs. RGBA32 update array adapter and borrowed surface lock scope are limited adapters; native mapped pointer validity remains caller-owned.",
+      "contract": "docs/texture-transfer.md",
+      "tests": [
+        "tests/texture_transfer.das"
+      ]
     },
     {
       "name": "SDL_Log",
@@ -30838,8 +31006,13 @@
       ],
       "id": "function:SDL_RenderClipEnabled",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer state access with borrowed rect and scalar output reference adapters; preserves SDL results and target-local state.",
+      "contract": "docs/renderer-state.md",
+      "tests": [
+        "tests/renderer_state.das"
+      ]
     },
     {
       "name": "SDL_RenderCoordinatesFromWindow",
@@ -30872,8 +31045,13 @@
       ],
       "id": "function:SDL_RenderCoordinatesFromWindow",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer queries and logical presentation; copied names and scalar/rect output references preserve native results and ownership.",
+      "contract": "docs/renderer-presentation.md",
+      "tests": [
+        "tests/renderer_presentation.das"
+      ]
     },
     {
       "name": "SDL_RenderCoordinatesToWindow",
@@ -30906,8 +31084,13 @@
       ],
       "id": "function:SDL_RenderCoordinatesToWindow",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer queries and logical presentation; copied names and scalar/rect output references preserve native results and ownership.",
+      "contract": "docs/renderer-presentation.md",
+      "tests": [
+        "tests/renderer_presentation.das"
+      ]
     },
     {
       "name": "SDL_RenderDebugText",
@@ -30936,8 +31119,13 @@
       ],
       "id": "function:SDL_RenderDebugText",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer creation/draw/readback/VSync/debug access; ref adapters and explicit ownership scopes preserve SDL results and backend constraints.",
+      "contract": "docs/renderer-operations.md",
+      "tests": [
+        "tests/renderer_operations.das"
+      ]
     },
     {
       "name": "SDL_RenderDebugTextFormat",
@@ -30966,8 +31154,14 @@
       ],
       "id": "function:SDL_RenderDebugTextFormat",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Fixed %s text adapter only; arbitrary C varargs are not exposed. Format strings are prepared in daScript.",
+      "adapter": "SDL_RenderDebugTextFormatText",
+      "contract": "docs/renderer-final-api.md",
+      "tests": [
+        "tests/renderer_final_api.das"
+      ]
     },
     {
       "name": "SDL_RenderFillRect",
@@ -31124,8 +31318,13 @@
       ],
       "id": "function:SDL_RenderGeometryRaw",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Generated native signature. Geometry arrays and event reference adapters are available; native Metal/Vulkan resources require backend-specific caller ownership.",
+      "contract": "docs/renderer-final-api.md",
+      "tests": [
+        "tests/renderer_final_api.das"
+      ]
     },
     {
       "name": "SDL_RenderLine",
@@ -31296,14 +31495,13 @@
       ],
       "id": "function:SDL_RenderReadPixels",
       "category": "Render",
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Current viewport only; returned surface owned by with_read_pixels",
-      "adapter": "SDL_ReadPixelsOwned",
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer creation/draw/readback/VSync/debug access; ref adapters and explicit ownership scopes preserve SDL results and backend constraints.",
+      "contract": "docs/renderer-operations.md",
       "tests": [
-        "tests/pixels.das"
-      ],
-      "contract": "docs/pixels.md"
+        "tests/renderer_operations.das"
+      ]
     },
     {
       "name": "SDL_RenderRect",
@@ -31440,8 +31638,13 @@
       ],
       "id": "function:SDL_RenderTexture9Grid",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer creation/draw/readback/VSync/debug access; ref adapters and explicit ownership scopes preserve SDL results and backend constraints.",
+      "contract": "docs/renderer-operations.md",
+      "tests": [
+        "tests/renderer_operations.das"
+      ]
     },
     {
       "name": "SDL_RenderTextureAffine",
@@ -31478,8 +31681,13 @@
       ],
       "id": "function:SDL_RenderTextureAffine",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer creation/draw/readback/VSync/debug access; ref adapters and explicit ownership scopes preserve SDL results and backend constraints.",
+      "contract": "docs/renderer-operations.md",
+      "tests": [
+        "tests/renderer_operations.das"
+      ]
     },
     {
       "name": "SDL_RenderTextureRotated",
@@ -31520,8 +31728,13 @@
       ],
       "id": "function:SDL_RenderTextureRotated",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer creation/draw/readback/VSync/debug access; ref adapters and explicit ownership scopes preserve SDL results and backend constraints.",
+      "contract": "docs/renderer-operations.md",
+      "tests": [
+        "tests/renderer_operations.das"
+      ]
     },
     {
       "name": "SDL_RenderTextureTiled",
@@ -31554,8 +31767,13 @@
       ],
       "id": "function:SDL_RenderTextureTiled",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer creation/draw/readback/VSync/debug access; ref adapters and explicit ownership scopes preserve SDL results and backend constraints.",
+      "contract": "docs/renderer-operations.md",
+      "tests": [
+        "tests/renderer_operations.das"
+      ]
     },
     {
       "name": "SDL_RenderViewportSet",
@@ -31572,8 +31790,13 @@
       ],
       "id": "function:SDL_RenderViewportSet",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer state access with borrowed rect and scalar output reference adapters; preserves SDL results and target-local state.",
+      "contract": "docs/renderer-state.md",
+      "tests": [
+        "tests/renderer_state.das"
+      ]
     },
     {
       "name": "SDL_ReportAssertion",
@@ -33898,8 +34121,13 @@
       ],
       "id": "function:SDL_SetRenderClipRect",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer state access with borrowed rect and scalar output reference adapters; preserves SDL results and target-local state.",
+      "contract": "docs/renderer-state.md",
+      "tests": [
+        "tests/renderer_state.das"
+      ]
     },
     {
       "name": "SDL_SetRenderColorScale",
@@ -33920,8 +34148,13 @@
       ],
       "id": "function:SDL_SetRenderColorScale",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct YUV/NV and renderer color/blend APIs. Plane arrays adapt whole-texture updates only; native regions and backend capabilities remain SDL contracts.",
+      "contract": "docs/renderer-yuv-blend.md",
+      "tests": [
+        "tests/renderer_yuv_blend.das"
+      ]
     },
     {
       "name": "SDL_SetRenderDrawBlendMode",
@@ -33942,8 +34175,13 @@
       ],
       "id": "function:SDL_SetRenderDrawBlendMode",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct YUV/NV and renderer color/blend APIs. Plane arrays adapt whole-texture updates only; native regions and backend capabilities remain SDL contracts.",
+      "contract": "docs/renderer-yuv-blend.md",
+      "tests": [
+        "tests/renderer_yuv_blend.das"
+      ]
     },
     {
       "name": "SDL_SetRenderDrawColor",
@@ -34010,8 +34248,13 @@
       ],
       "id": "function:SDL_SetRenderDrawColorFloat",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct YUV/NV and renderer color/blend APIs. Plane arrays adapt whole-texture updates only; native regions and backend capabilities remain SDL contracts.",
+      "contract": "docs/renderer-yuv-blend.md",
+      "tests": [
+        "tests/renderer_yuv_blend.das"
+      ]
     },
     {
       "name": "SDL_SetRenderLogicalPresentation",
@@ -34040,8 +34283,13 @@
       ],
       "id": "function:SDL_SetRenderLogicalPresentation",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer queries and logical presentation; copied names and scalar/rect output references preserve native results and ownership.",
+      "contract": "docs/renderer-presentation.md",
+      "tests": [
+        "tests/renderer_presentation.das"
+      ]
     },
     {
       "name": "SDL_SetRenderScale",
@@ -34066,8 +34314,13 @@
       ],
       "id": "function:SDL_SetRenderScale",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer state access with borrowed rect and scalar output reference adapters; preserves SDL results and target-local state.",
+      "contract": "docs/renderer-state.md",
+      "tests": [
+        "tests/renderer_state.das"
+      ]
     },
     {
       "name": "SDL_SetRenderTarget",
@@ -34114,8 +34367,13 @@
       ],
       "id": "function:SDL_SetRenderVSync",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer creation/draw/readback/VSync/debug access; ref adapters and explicit ownership scopes preserve SDL results and backend constraints.",
+      "contract": "docs/renderer-operations.md",
+      "tests": [
+        "tests/renderer_operations.das"
+      ]
     },
     {
       "name": "SDL_SetRenderViewport",
@@ -34136,8 +34394,13 @@
       ],
       "id": "function:SDL_SetRenderViewport",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct renderer state access with borrowed rect and scalar output reference adapters; preserves SDL results and target-local state.",
+      "contract": "docs/renderer-state.md",
+      "tests": [
+        "tests/renderer_state.das"
+      ]
     },
     {
       "name": "SDL_SetScancodeName",
@@ -34446,8 +34709,13 @@
       ],
       "id": "function:SDL_SetTextureAlphaMod",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct texture modulation, blending and transfer APIs. RGBA32 update array adapter and borrowed surface lock scope are limited adapters; native mapped pointer validity remains caller-owned.",
+      "contract": "docs/texture-transfer.md",
+      "tests": [
+        "tests/texture_transfer.das"
+      ]
     },
     {
       "name": "SDL_SetTextureAlphaModFloat",
@@ -34468,8 +34736,13 @@
       ],
       "id": "function:SDL_SetTextureAlphaModFloat",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct SDL texture creation and modulation, scalar output references and defer scopes. No implicit ownership of borrowed renderer or properties.",
+      "contract": "docs/texture-state.md",
+      "tests": [
+        "tests/texture_state.das"
+      ]
     },
     {
       "name": "SDL_SetTextureBlendMode",
@@ -34490,8 +34763,13 @@
       ],
       "id": "function:SDL_SetTextureBlendMode",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct texture modulation, blending and transfer APIs. RGBA32 update array adapter and borrowed surface lock scope are limited adapters; native mapped pointer validity remains caller-owned.",
+      "contract": "docs/texture-transfer.md",
+      "tests": [
+        "tests/texture_transfer.das"
+      ]
     },
     {
       "name": "SDL_SetTextureColorMod",
@@ -34520,8 +34798,13 @@
       ],
       "id": "function:SDL_SetTextureColorMod",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct texture modulation, blending and transfer APIs. RGBA32 update array adapter and borrowed surface lock scope are limited adapters; native mapped pointer validity remains caller-owned.",
+      "contract": "docs/texture-transfer.md",
+      "tests": [
+        "tests/texture_transfer.das"
+      ]
     },
     {
       "name": "SDL_SetTextureColorModFloat",
@@ -34550,8 +34833,13 @@
       ],
       "id": "function:SDL_SetTextureColorModFloat",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct SDL texture creation and modulation, scalar output references and defer scopes. No implicit ownership of borrowed renderer or properties.",
+      "contract": "docs/texture-state.md",
+      "tests": [
+        "tests/texture_state.das"
+      ]
     },
     {
       "name": "SDL_SetTextureScaleMode",
@@ -34572,8 +34860,13 @@
       ],
       "id": "function:SDL_SetTextureScaleMode",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct SDL texture creation and modulation, scalar output references and defer scopes. No implicit ownership of borrowed renderer or properties.",
+      "contract": "docs/texture-state.md",
+      "tests": [
+        "tests/texture_state.das"
+      ]
     },
     {
       "name": "SDL_SetTrayEntryCallback",
@@ -36550,14 +36843,13 @@
       ],
       "id": "function:SDL_UnlockTexture",
       "category": "Render",
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Native cleanup within synchronous RGBA upload; no script unlock API",
-      "adapter": "SDL_UploadRGBA8",
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct texture modulation, blending and transfer APIs. RGBA32 update array adapter and borrowed surface lock scope are limited adapters; native mapped pointer validity remains caller-owned.",
+      "contract": "docs/texture-transfer.md",
       "tests": [
-        "tests/pixels.das"
-      ],
-      "contract": "docs/pixels.md"
+        "tests/texture_transfer.das"
+      ]
     },
     {
       "name": "SDL_UnmapGPUTransferBuffer",
@@ -36709,8 +37001,13 @@
       ],
       "id": "function:SDL_UpdateNVTexture",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct YUV/NV and renderer color/blend APIs. Plane arrays adapt whole-texture updates only; native regions and backend capabilities remain SDL contracts.",
+      "contract": "docs/renderer-yuv-blend.md",
+      "tests": [
+        "tests/renderer_yuv_blend.das"
+      ]
     },
     {
       "name": "SDL_UpdateSensors",
@@ -36752,8 +37049,13 @@
       ],
       "id": "function:SDL_UpdateTexture",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct texture modulation, blending and transfer APIs. RGBA32 update array adapter and borrowed surface lock scope are limited adapters; native mapped pointer validity remains caller-owned.",
+      "contract": "docs/texture-transfer.md",
+      "tests": [
+        "tests/texture_transfer.das"
+      ]
     },
     {
       "name": "SDL_UpdateTrays",
@@ -36865,8 +37167,13 @@
       ],
       "id": "function:SDL_UpdateYUVTexture",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct YUV/NV and renderer color/blend APIs. Plane arrays adapt whole-texture updates only; native regions and backend capabilities remain SDL contracts.",
+      "contract": "docs/renderer-yuv-blend.md",
+      "tests": [
+        "tests/renderer_yuv_blend.das"
+      ]
     },
     {
       "name": "SDL_UploadToGPUBuffer",
@@ -46625,7 +46932,7 @@
       "function_like": false,
       "id": "macro:SDL_BLENDMODE_ADD",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -46637,7 +46944,7 @@
       "function_like": false,
       "id": "macro:SDL_BLENDMODE_ADD_PREMULTIPLIED",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -46649,7 +46956,7 @@
       "function_like": false,
       "id": "macro:SDL_BLENDMODE_BLEND",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -46661,7 +46968,7 @@
       "function_like": false,
       "id": "macro:SDL_BLENDMODE_BLEND_PREMULTIPLIED",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -46673,7 +46980,7 @@
       "function_like": false,
       "id": "macro:SDL_BLENDMODE_INVALID",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -46685,7 +46992,7 @@
       "function_like": false,
       "id": "macro:SDL_BLENDMODE_MOD",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -46697,7 +47004,7 @@
       "function_like": false,
       "id": "macro:SDL_BLENDMODE_MUL",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -46709,7 +47016,7 @@
       "function_like": false,
       "id": "macro:SDL_BLENDMODE_NONE",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -59595,7 +59902,7 @@
       "function_like": false,
       "id": "macro:SDL_RENDERER_VSYNC_ADAPTIVE",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -59607,7 +59914,7 @@
       "function_like": false,
       "id": "macro:SDL_RENDERER_VSYNC_DISABLED",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69279,7 +69586,7 @@
       "callback": false,
       "id": "typedef:SDL_BlendFactor",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69303,7 +69610,7 @@
       "callback": false,
       "id": "typedef:SDL_BlendOperation",
       "category": "Blendmode",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -72543,7 +72850,7 @@
       "callback": false,
       "id": "typedef:SDL_RendererLogicalPresentation",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -72567,7 +72874,7 @@
       "callback": false,
       "id": "typedef:SDL_ScaleMode",
       "category": "Surface",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -72831,7 +73138,7 @@
       "callback": false,
       "id": "typedef:SDL_TextureAccess",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {

@@ -64,3 +64,17 @@ See [native GPU guide](../docs/gpu-native-boost.md) for ownership and execution.
 - [56_window_surface.das](56_window_surface.das): CPU color fills on a borrowed window surface.
 
 - [57_software_renderer.das](57_software_renderer.das): software primitives on a borrowed window surface.
+
+- [58_renderer_state.das](58_renderer_state.das): scaled viewport and clipping on a window surface.
+
+- [59_renderer_presentation.das](59_renderer_presentation.das): letterboxed logical canvas and coordinate conversion.
+
+- [60_texture_state.das](60_texture_state.das): streaming checker with color/alpha modulation.
+
+- [61_texture_transfer.das](61_texture_transfer.das): scoped write-only surface lock and byte modulation.
+
+- [62_renderer_yuv_blend.das](62_renderer_yuv_blend.das): planar YUV checker upload.
+
+- [63_renderer_operations.das](63_renderer_operations.das): paired creation, rotated texture and debug text.
+
+- [64_renderer_raw_geometry.das](64_renderer_raw_geometry.das): split position/color arrays and literal debug text.

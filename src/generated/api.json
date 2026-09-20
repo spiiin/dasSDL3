@@ -2030,5 +2030,536 @@
       "rects",
       "count"
     ]
+  },
+  "SDL_GetRenderOutputSize": {
+    "signature": "bool (SDL_Renderer *, int *, int *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "w",
+      "h"
+    ]
+  },
+  "SDL_GetCurrentRenderOutputSize": {
+    "signature": "bool (SDL_Renderer *, int *, int *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "w",
+      "h"
+    ]
+  },
+  "SDL_SetRenderViewport": {
+    "signature": "bool (SDL_Renderer *, const SDL_Rect *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "rect"
+    ]
+  },
+  "SDL_GetRenderViewport": {
+    "signature": "bool (SDL_Renderer *, SDL_Rect *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "rect"
+    ]
+  },
+  "SDL_RenderViewportSet": {
+    "signature": "bool (SDL_Renderer *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer"
+    ]
+  },
+  "SDL_SetRenderClipRect": {
+    "signature": "bool (SDL_Renderer *, const SDL_Rect *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "rect"
+    ]
+  },
+  "SDL_GetRenderClipRect": {
+    "signature": "bool (SDL_Renderer *, SDL_Rect *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "rect"
+    ]
+  },
+  "SDL_RenderClipEnabled": {
+    "signature": "bool (SDL_Renderer *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer"
+    ]
+  },
+  "SDL_SetRenderScale": {
+    "signature": "bool (SDL_Renderer *, float, float) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "scaleX",
+      "scaleY"
+    ]
+  },
+  "SDL_GetRenderScale": {
+    "signature": "bool (SDL_Renderer *, float *, float *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "scaleX",
+      "scaleY"
+    ]
+  },
+  "SDL_GetNumRenderDrivers": {
+    "signature": "int (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetRenderDriver": {
+    "signature": "const char *(int) __attribute__((cdecl))",
+    "arguments": [
+      "index"
+    ]
+  },
+  "SDL_GetRendererName": {
+    "signature": "const char *(SDL_Renderer *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer"
+    ]
+  },
+  "SDL_GetRendererProperties": {
+    "signature": "SDL_PropertiesID (SDL_Renderer *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer"
+    ]
+  },
+  "SDL_GetRenderSafeArea": {
+    "signature": "bool (SDL_Renderer *, SDL_Rect *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "rect"
+    ]
+  },
+  "SDL_SetRenderLogicalPresentation": {
+    "signature": "bool (SDL_Renderer *, int, int, SDL_RendererLogicalPresentation) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "w",
+      "h",
+      "mode"
+    ]
+  },
+  "SDL_GetRenderLogicalPresentation": {
+    "signature": "bool (SDL_Renderer *, int *, int *, SDL_RendererLogicalPresentation *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "w",
+      "h",
+      "mode"
+    ]
+  },
+  "SDL_GetRenderLogicalPresentationRect": {
+    "signature": "bool (SDL_Renderer *, SDL_FRect *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "rect"
+    ]
+  },
+  "SDL_RenderCoordinatesFromWindow": {
+    "signature": "bool (SDL_Renderer *, float, float, float *, float *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "window_x",
+      "window_y",
+      "x",
+      "y"
+    ]
+  },
+  "SDL_RenderCoordinatesToWindow": {
+    "signature": "bool (SDL_Renderer *, float, float, float *, float *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "x",
+      "y",
+      "window_x",
+      "window_y"
+    ]
+  },
+  "SDL_CreateTexture": {
+    "signature": "SDL_Texture *(SDL_Renderer *, SDL_PixelFormat, SDL_TextureAccess, int, int) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "format",
+      "access",
+      "w",
+      "h"
+    ]
+  },
+  "SDL_CreateTextureWithProperties": {
+    "signature": "SDL_Texture *(SDL_Renderer *, SDL_PropertiesID) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "props"
+    ]
+  },
+  "SDL_GetTextureProperties": {
+    "signature": "SDL_PropertiesID (SDL_Texture *) __attribute__((cdecl))",
+    "arguments": [
+      "texture"
+    ]
+  },
+  "SDL_GetRendererFromTexture": {
+    "signature": "SDL_Renderer *(SDL_Texture *) __attribute__((cdecl))",
+    "arguments": [
+      "texture"
+    ]
+  },
+  "SDL_SetTextureColorModFloat": {
+    "signature": "bool (SDL_Texture *, float, float, float) __attribute__((cdecl))",
+    "arguments": [
+      "texture",
+      "r",
+      "g",
+      "b"
+    ]
+  },
+  "SDL_GetTextureColorModFloat": {
+    "signature": "bool (SDL_Texture *, float *, float *, float *) __attribute__((cdecl))",
+    "arguments": [
+      "texture",
+      "r",
+      "g",
+      "b"
+    ]
+  },
+  "SDL_SetTextureAlphaModFloat": {
+    "signature": "bool (SDL_Texture *, float) __attribute__((cdecl))",
+    "arguments": [
+      "texture",
+      "alpha"
+    ]
+  },
+  "SDL_GetTextureAlphaModFloat": {
+    "signature": "bool (SDL_Texture *, float *) __attribute__((cdecl))",
+    "arguments": [
+      "texture",
+      "alpha"
+    ]
+  },
+  "SDL_SetTextureScaleMode": {
+    "signature": "bool (SDL_Texture *, SDL_ScaleMode) __attribute__((cdecl))",
+    "arguments": [
+      "texture",
+      "scaleMode"
+    ]
+  },
+  "SDL_GetTextureScaleMode": {
+    "signature": "bool (SDL_Texture *, SDL_ScaleMode *) __attribute__((cdecl))",
+    "arguments": [
+      "texture",
+      "scaleMode"
+    ]
+  },
+  "SDL_SetTextureColorMod": {
+    "signature": "bool (SDL_Texture *, Uint8, Uint8, Uint8) __attribute__((cdecl))",
+    "arguments": [
+      "texture",
+      "r",
+      "g",
+      "b"
+    ]
+  },
+  "SDL_GetTextureColorMod": {
+    "signature": "bool (SDL_Texture *, Uint8 *, Uint8 *, Uint8 *) __attribute__((cdecl))",
+    "arguments": [
+      "texture",
+      "r",
+      "g",
+      "b"
+    ]
+  },
+  "SDL_SetTextureAlphaMod": {
+    "signature": "bool (SDL_Texture *, Uint8) __attribute__((cdecl))",
+    "arguments": [
+      "texture",
+      "alpha"
+    ]
+  },
+  "SDL_GetTextureAlphaMod": {
+    "signature": "bool (SDL_Texture *, Uint8 *) __attribute__((cdecl))",
+    "arguments": [
+      "texture",
+      "alpha"
+    ]
+  },
+  "SDL_SetTextureBlendMode": {
+    "signature": "bool (SDL_Texture *, SDL_BlendMode) __attribute__((cdecl))",
+    "arguments": [
+      "texture",
+      "blendMode"
+    ]
+  },
+  "SDL_GetTextureBlendMode": {
+    "signature": "bool (SDL_Texture *, SDL_BlendMode *) __attribute__((cdecl))",
+    "arguments": [
+      "texture",
+      "blendMode"
+    ]
+  },
+  "SDL_UpdateTexture": {
+    "signature": "bool (SDL_Texture *, const SDL_Rect *, const void *, int) __attribute__((cdecl))",
+    "arguments": [
+      "texture",
+      "rect",
+      "pixels",
+      "pitch"
+    ]
+  },
+  "SDL_LockTexture": {
+    "signature": "bool (SDL_Texture *, const SDL_Rect *, void **, int *) __attribute__((cdecl))",
+    "arguments": [
+      "texture",
+      "rect",
+      "pixels",
+      "pitch"
+    ]
+  },
+  "SDL_UnlockTexture": {
+    "signature": "void (SDL_Texture *) __attribute__((cdecl))",
+    "arguments": [
+      "texture"
+    ]
+  },
+  "SDL_LockTextureToSurface": {
+    "signature": "bool (SDL_Texture *, const SDL_Rect *, SDL_Surface **) __attribute__((cdecl))",
+    "arguments": [
+      "texture",
+      "rect",
+      "surface"
+    ]
+  },
+  "SDL_UpdateYUVTexture": {
+    "signature": "bool (SDL_Texture *, const SDL_Rect *, const Uint8 *, int, const Uint8 *, int, const Uint8 *, int) __attribute__((cdecl))",
+    "arguments": [
+      "texture",
+      "rect",
+      "Yplane",
+      "Ypitch",
+      "Uplane",
+      "Upitch",
+      "Vplane",
+      "Vpitch"
+    ]
+  },
+  "SDL_UpdateNVTexture": {
+    "signature": "bool (SDL_Texture *, const SDL_Rect *, const Uint8 *, int, const Uint8 *, int) __attribute__((cdecl))",
+    "arguments": [
+      "texture",
+      "rect",
+      "Yplane",
+      "Ypitch",
+      "UVplane",
+      "UVpitch"
+    ]
+  },
+  "SDL_SetRenderDrawColorFloat": {
+    "signature": "bool (SDL_Renderer *, float, float, float, float) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "r",
+      "g",
+      "b",
+      "a"
+    ]
+  },
+  "SDL_GetRenderDrawColorFloat": {
+    "signature": "bool (SDL_Renderer *, float *, float *, float *, float *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "r",
+      "g",
+      "b",
+      "a"
+    ]
+  },
+  "SDL_GetRenderDrawColor": {
+    "signature": "bool (SDL_Renderer *, Uint8 *, Uint8 *, Uint8 *, Uint8 *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "r",
+      "g",
+      "b",
+      "a"
+    ]
+  },
+  "SDL_SetRenderColorScale": {
+    "signature": "bool (SDL_Renderer *, float) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "scale"
+    ]
+  },
+  "SDL_GetRenderColorScale": {
+    "signature": "bool (SDL_Renderer *, float *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "scale"
+    ]
+  },
+  "SDL_SetRenderDrawBlendMode": {
+    "signature": "bool (SDL_Renderer *, SDL_BlendMode) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "blendMode"
+    ]
+  },
+  "SDL_GetRenderDrawBlendMode": {
+    "signature": "bool (SDL_Renderer *, SDL_BlendMode *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "blendMode"
+    ]
+  },
+  "SDL_ComposeCustomBlendMode": {
+    "signature": "SDL_BlendMode (SDL_BlendFactor, SDL_BlendFactor, SDL_BlendOperation, SDL_BlendFactor, SDL_BlendFactor, SDL_BlendOperation) __attribute__((cdecl))",
+    "arguments": [
+      "srcColorFactor",
+      "dstColorFactor",
+      "colorOperation",
+      "srcAlphaFactor",
+      "dstAlphaFactor",
+      "alphaOperation"
+    ]
+  },
+  "SDL_CreateWindowAndRenderer": {
+    "signature": "bool (const char *, int, int, SDL_WindowFlags, SDL_Window **, SDL_Renderer **) __attribute__((cdecl))",
+    "arguments": [
+      "title",
+      "width",
+      "height",
+      "window_flags",
+      "window",
+      "renderer"
+    ]
+  },
+  "SDL_CreateRendererWithProperties": {
+    "signature": "SDL_Renderer *(SDL_PropertiesID) __attribute__((cdecl))",
+    "arguments": [
+      "props"
+    ]
+  },
+  "SDL_RenderTextureRotated": {
+    "signature": "bool (SDL_Renderer *, SDL_Texture *, const SDL_FRect *, const SDL_FRect *, double, const SDL_FPoint *, SDL_FlipMode) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "texture",
+      "srcrect",
+      "dstrect",
+      "angle",
+      "center",
+      "flip"
+    ]
+  },
+  "SDL_RenderTextureAffine": {
+    "signature": "bool (SDL_Renderer *, SDL_Texture *, const SDL_FRect *, const SDL_FPoint *, const SDL_FPoint *, const SDL_FPoint *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "texture",
+      "srcrect",
+      "origin",
+      "right",
+      "down"
+    ]
+  },
+  "SDL_RenderTextureTiled": {
+    "signature": "bool (SDL_Renderer *, SDL_Texture *, const SDL_FRect *, float, const SDL_FRect *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "texture",
+      "srcrect",
+      "scale",
+      "dstrect"
+    ]
+  },
+  "SDL_RenderTexture9Grid": {
+    "signature": "bool (SDL_Renderer *, SDL_Texture *, const SDL_FRect *, float, float, float, float, float, const SDL_FRect *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "texture",
+      "srcrect",
+      "left_width",
+      "right_width",
+      "top_height",
+      "bottom_height",
+      "scale",
+      "dstrect"
+    ]
+  },
+  "SDL_RenderReadPixels": {
+    "signature": "SDL_Surface *(SDL_Renderer *, const SDL_Rect *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "rect"
+    ]
+  },
+  "SDL_SetRenderVSync": {
+    "signature": "bool (SDL_Renderer *, int) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "vsync"
+    ]
+  },
+  "SDL_GetRenderVSync": {
+    "signature": "bool (SDL_Renderer *, int *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "vsync"
+    ]
+  },
+  "SDL_RenderDebugText": {
+    "signature": "bool (SDL_Renderer *, float, float, const char *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "x",
+      "y",
+      "str"
+    ]
+  },
+  "SDL_RenderGeometryRaw": {
+    "signature": "bool (SDL_Renderer *, SDL_Texture *, const float *, int, const SDL_FColor *, int, const float *, int, int, const void *, int, int) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "texture",
+      "xy",
+      "xy_stride",
+      "color",
+      "color_stride",
+      "uv",
+      "uv_stride",
+      "num_vertices",
+      "indices",
+      "num_indices",
+      "size_indices"
+    ]
+  },
+  "SDL_ConvertEventToRenderCoordinates": {
+    "signature": "bool (SDL_Renderer *, SDL_Event *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "event"
+    ]
+  },
+  "SDL_GetRenderMetalLayer": {
+    "signature": "void *(SDL_Renderer *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer"
+    ]
+  },
+  "SDL_GetRenderMetalCommandEncoder": {
+    "signature": "void *(SDL_Renderer *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer"
+    ]
+  },
+  "SDL_AddVulkanRenderSemaphores": {
+    "signature": "bool (SDL_Renderer *, Uint32, Sint64, Sint64) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "wait_stage_mask",
+      "wait_semaphore",
+      "signal_semaphore"
+    ]
   }
 }
