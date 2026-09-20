@@ -72,28 +72,8 @@ fixed arrays, uint64 macro spelling, #undef, повторные declarations,
 детерминизм, неверную версию, пропавший export и ошибочную policy.
 Дополнительно у 1226 функций настоящего SDL сверено имя с исходной строкой.
 
-Локальная проверка: 11 существующих CTest-сценариев и 2 новых прошли.
-После исправления доступа основная сборка повторно сконфигурирована;
-все 13 тестов повторно прошли непосредственно из build/ninja.
-`--check` отдельно подтвердил точное соответствие снимка повторной генерации.
-
-Следом: отдельные Linux/macOS profiles и объединённый реестр доступности;
-неактивные платформенные guards и версии появления; явный аудит manual adapters;
-вычисленные enum/constant values и ABI assertions; dasClangBind/AOT эксперимент.
-Не называть текущий снимок «полной SDL на всех платформах».
-
-## Готовность dasClangBind
-
-В проверенном каталоге MSVC LLVM установлен Clang 16.0.5, есть libclang.dll и
-libclang.lib. Наш pinned `modules/dasClangBind/CMakeLists.txt` ищет Clang 22.1.
-Наличие libclang 16 не удовлетворяет этому условию. Теперь полный SDK 22.1.5
-установлен отдельно в C:/src/libclang, dasClangBind собран и загружен.
-Разбор SDL.h и upstream-тест препроцессора прошли; подробности и команды
-в [clangbind-setup.md](clangbind-setup.md). CppGenBind теперь штатный backend Windows x64 (saved snapshots).
-Теперь отдельная выборка rect/pixels/GPU сгенерирована, собрана и проверена
-в interpreter/AOT: [clangbind-experiment.md](clangbind-experiment.md).
-Эквивалентность 50 functions и interpreter-сценариев проверена отдельно:
-[clangbind-parity.md](clangbind-parity.md). Затем выполнены самостоятельная
-генерация текущих аннотаций/констант и [ресурсный AOT](clangbind-types-aot.md).
-Штатный backend уже выбран; впереди расширение platform/ABI coverage.
-Работающий Python backend и публичные bindings в этой итерации сохранены.
+Current snapshot/inventory gates pass; see [validation](gpu-native-validation.md).
+Remaining P0 work: other platform profiles, macro/ABI expansion and install/export.
+CppGenBind is the Windows x64 production backend with saved snapshots;
+[setup](clangbind-setup.md), [generation](clangbind-production.md),
+[parity/AOT](clangbind-types-aot.md). Census still uses pinned Clang JSON AST.

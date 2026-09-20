@@ -14,7 +14,7 @@ Public native exports, boost modules and implementations for meshes, materials,
 scenes, scene draw lists, batching, culling, fixed mesh/triangle rendering and
 command/render plans have been removed. They are not hidden behind a build flag
 or kept as a second compatibility API. Their engine-specific examples/tests and
-unused shader assets were removed too. Historical documents are labelled as such.
+unused shader assets were removed too. Documents for removed APIs have been deleted.
 
 Examples 44 and 45 now use direct SDL command-buffer/render-pass operations;
 46 already used that path. Independent pixel oracles are private test fixtures.
@@ -55,8 +55,7 @@ native adapter validation now have CPU pixel/byte oracles and interpreter/AOT
 coverage on Vulkan/D3D12; see gpu-native-validation.md for exclusions. The SDL
 version has not changed.
 
-Follow gpu-roadmap.md: direct copy/compute/render passes and command lifecycle,
-swapchain acquisition/fences, complete resource bindings and attachments. Extend
+The native GPU follow-up is implemented; maintenance limits are in gpu-roadmap.md. Extend
 generation where signatures allow it; add adapters only for explicit language
 or lifetime requirements. Reflection/shader DSL and companion libraries remain
 separate later work. Do not add engine features to increase a coverage count.
@@ -64,18 +63,7 @@ separate later work. Do not add engine features to increase a coverage count.
 `tests/test_gpu_api_boundary.py` verifies that removed public names/modules stay
 unavailable, including negative compilation against the actual runner.
 
-## Cleanup verification (2026-09-20)
+## Verification
 
-- Main CTest suite: 101/101 passed.
-- Baseline/AOT/CppGenBind parity suite: 250/250 passed.
-- Standalone clangbind checks: 4/4 passed.
-- Final generation/inventory/preprocessor freshness checks: 5/5 passed.
-- Consumer build with generators, LLVM and Clang disabled: example 46 passed
-  on Vulkan and D3D12. The removed-API negative compilation check passed against
-  this production runner too; its build graph has no LLVM/clang generator dependency.
-- Main and parity logs contained no skipped tests or Vulkan validation errors.
-  D3D12 debug capture finished with no ERROR/CORRUPTION messages; warning 820
-  (optimized clear value mismatch) remains, so this is not a warning-free claim.
-
-These are Windows checks. They do not establish Linux/Metal support, positive
-ASTC HDR hardware coverage or completeness of the remaining partial adapters.
+The boundary test runs negative compilation against development and consumer
+runners. Current combined results: [gpu-native-validation.md](gpu-native-validation.md).

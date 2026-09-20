@@ -59,24 +59,14 @@ ctest --test-dir build/ninja -R "^(sdl3_|bindings_up_to_date)" --output-on-failu
 включает main, Vulkan, Metal и revision headers, использует другой Clang.
 Проверка не утверждает полного покрытия API или поддержки иных платформ.
 
-## Следующий этап
+## После установки
 
-Дополнение: [ограниченный CppGenBind/AOT эксперимент](clangbind-experiment.md)
-теперь выполнен: три функции, девять структур, interpreter и строгий AOT
-consumer прошли. Ниже перечислены оставшиеся условия полной миграции.
+CppGenBind уже выбран production backend Windows x64. Следующие команды —
+[обновление snapshots](clangbind-production.md), [parity](clangbind-parity.md)
+и [AOT](clangbind-types-aot.md). Минимальный compiler regression сохранён в
+[clangbind-experiment.md](clangbind-experiment.md). Проверки других платформ
+остаются отдельной работой.
 
-50 exports и существующие interpreter-сценарии теперь проверены в
-[parity-проекте](clangbind-parity.md) с общими аннотациями типов/констант.
-Policy текущих типов/констант и [ресурсный AOT](clangbind-types-aot.md) теперь
-проверены (33 теста). Остаётся штатно подключить backend, проверить consumer
-без LLVM и расширить enum/flags, ABI и platform policy. Только после этого выбирать
-backend по gates из binding-design-review.md. Полная миграция и
-кроссплатформенность пока не проверены. Публичные SDL bindings и boost не менялись.
-
-## Локальная проблема доступа
-
-Первоначально владелец C:/src/libclang был CodexSandboxOnline, а настройка
-sandbox завершалась ошибкой SetNamedSecurityInfoW (5) до запуска команд.
-Пользователь пересоздал пустой каталог под своей учётной записью; после смены
-владельца на BATTLEFIELD20\\sanya выполнение команд и сборка восстановились.
-Это исправление локальной установки, не требование dasClangBind.
+Не запускайте consumer configure одновременно с генерацией: shared modules и
+конфигурация daScript общие для разных -B каталогов. После consumer восстановите
+developer-конфигурацию и dasModuleClangBind перед preflight/freshness gates.

@@ -38,6 +38,5 @@ cleanup, two devices and array rejection before native calls. Submission contain
 no draw commands in this slice; existing recording tests still verify pixels.
 Never test stale raw handles by passing freed pointers into SDL.
 
-Swapchain acquisition and borrowed swapchain texture lifetimes remain next,
-followed by direct copy-pass and compute APIs. Never cancel a command after a
-non-null swapchain texture acquisition. This slice does not claim those operations.
+Swapchain acquisition, transfer creation and native pass/resource scopes are now
+available in [gpu-native-boost.md](gpu-native-boost.md), examples 48–50.

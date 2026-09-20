@@ -34,29 +34,18 @@ Video/Render and IOStream/Events. Keep GPU backend limitations visible; Metal,
 other operating systems and platform-specific declarations need their own tests.
 A shader DSL and companion libraries remain separate projects in the roadmap.
 
-## Retained GPU maintenance checklist
+## Remaining GPU work
 
-1. Audit every GPU declaration against its exported signature and state/lifetime
-   contract. Separate generated raw access from array/ownership adapters. Generate
-   direct signatures wherever possible; avoid project concepts in public names.
-2. Add native swapchain acquire/wait-and-acquire and borrowed texture lifetime.
-   Native command submission and fence wait/query/release are now generated.
-   Never cancel after a non-null swapchain acquisition; finalize on normal/error
-   return via defer. Add compatible native render-pass descriptors and operations.
-3. Direct copy-pass begin/end, transfer-buffer create/map/unmap/release and
-   upload/download/copy operations, with explicit offsets, strides and cycling.
-   Existing readback conveniences must not hide missing direct operations.
-4. Complete graphics bindings: first slots, vertex/index offsets, first-instance,
-   sampled/storage buffers and textures. Keep validation bounds explicit;
-   replace adapter restrictions where SDL supports broader use.
-5. Render attachments: multiple color targets, depth/stencil, sample counts,
-   resolve, load/store and cycling. Test output and pass state, not just creation.
-6. Compute pipelines/passes, storage bindings, uniforms and direct/indirect dispatch.
-7. Indirect graphics draws, debug labels/groups and remaining property/platform
-   paths. Preserve the pinned D3D12 debug-group limitation until verified fixed.
-8. Close coverage: enum/record/field ABI, errors, thread/state/lifetime edges,
-   interpreter/AOT parity, no-LLVM consumer, Vulkan/D3D12 pixel and byte references.
-   Add other platforms/backends before claiming cross-platform completion.
+1. Add actual Linux/macOS/Metal profiles, builds and output tests; handle
+   platform-only declarations explicitly rather than counting Windows as all SDL.
+2. Validate positive ASTC transfers on supported hardware and additional format/
+   attachment combinations. Unsupported results remain explicit limitations.
+3. When updating SDL, recheck D3D12 debug-group metadata/depth sample queries,
+   Vulkan combined buffer usage and fence retirement before removing workarounds.
+4. Preserve raw call receipts, ABI/metadata parity, CPU pixel/byte oracles and
+   native adapter lifetime tests as regression gates for future generator changes.
+5. Integrate GPU property-based construction after the general Properties layer
+   has a documented owned/borrowed/callback contract.
 
 ## Verification rules
 
@@ -68,3 +57,20 @@ Tests and examples should demonstrate SDL operations directly. Application code
 such as matrices or lighting belongs in the example. A shader DSL, reflection,
 SDL_shadercross and SDL companion libraries are separate follow-ups after their
 underlying SDL access is complete. No scene/material/batching API is planned here.
+
+## Optional shader tooling / DSL
+
+This is separate work, not a prerequisite for using the native SDL GPU API.
+1. Keep offline HLSL/SPIR-V/DXIL assets reproducible and versioned. Add a pinned
+   SDL_shadercross tool only after checking its SDL/toolchain requirements.
+2. Define resource metadata and byte layout for uniforms/storage/vertex inputs;
+   compare actual shader reflection with SDL stage counts and register conventions.
+3. Prototype a small daScript annotated-function DSL using pinned shader_lingua_franca,
+   shader_block_layout and dasSpirv/dasGlsl as research inputs. Do not alter raw SDL.
+4. Cover vertex/fragment first, compute next; unsupported language constructs must
+   fail with source diagnostics. Validate emitted SPIR-V and backend conversions.
+5. Compare DSL and external shaders with the same CPU pixel/byte tests on each
+   supported backend, including arrays, matrices, alignment and resource bindings.
+   Cache keys include compiler/version/options; runtime compiler dependency is optional.
+
+No scene/material/mesh framework is needed to implement or test this tooling.

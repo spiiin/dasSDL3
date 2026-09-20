@@ -10,14 +10,15 @@ those APIs. Application algorithms belong in examples, after direct SDL access e
 
 Keep generated SDL declarations, necessary language/lifetime/array adapters, and
 small defaults/with_* boost helpers. Do not add new composite GPU objects to bypass
-missing SDL functions. Current transfer/readback helpers are partial adapters, not
-proof of complete direct transfer/fence access. Count exported contracts, not internal
-calls, helper names, examples or native test fixtures. P6 GPU API is the user's priority;
-Properties, shader DSL and companion libraries follow separately. Current queue:
-docs/gpu-roadmap.md. The user has now authorized the combined test run after
-adding all native GPU declarations. Run main, parity/AOT and consumer checks;
-after fixes repeat affected tests rather than every suite without a reason.
-no repeated go-ahead requests. No commit or publication without a user request.
+missing SDL functions. Count exported contracts, not internal calls, helper names,
+examples or native test fixtures. Five native GPU follow-up steps are locally
+verified; the next library-wide batch is Properties (21 functions in pinned
+SDL_properties.h). Shader DSL and companion libraries follow separately.
+Current queue: docs/full-binding-roadmap.md; GPU limitations: docs/gpu-roadmap.md;
+documentation index: docs/README.md. Run main, parity/AOT and consumer checks for
+binding changes; after fixes repeat affected tests rather than every suite
+without a reason. No repeated go-ahead requests. No commit or publication without
+a user request.
 
 ## Sources and generation
 

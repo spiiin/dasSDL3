@@ -1,66 +1,29 @@
-# Генерация типов/констант и AOT ресурсов
+# Генерация типов и строгий AOT
 
-19 сентября 2026. Проверенный профиль: Windows x64, MSVC 19.38, Release /MD,
-SDL 3.2.18, daScript `35bf260c0d8a79b94c64005bd3d2435adcf7e261`, libclang 22.1.5.
-Это продолжение [проверки 50 функций](clangbind-parity.md).
+CppGenBind functions и SDL-specific emitter используют libclang и общую policy
+из tools/bindings.json. Выбранные annotations/opaque types, aliases, поля и
+константы генерируются независимо от legacy snapshots. SDL_Event раскрывается
+по явной policy, не как неограниченный union.
 
-## Самостоятельная генерация текущего API
-
-Эксперимент больше не читает production sdl3_types.inc и не копирует
-регистрации типов/констант из production sdl3_functions.inc.
-
-Единственный источник отбора и публичных имён — tools/bindings.json.
-tools/api-policy.json отдельно отмечает SDL_Wav как собственный wrapper,
-а не тип SDL. Python передаёт policy генератору и проверяет результат;
-C++ функций создаёт CppGenBind, а SDL-специфичный emitter в том же das-скрипте
-создаёт ограниченные аннотации полей и opaque types по данным libclang.
-Общий struct emitter CppGenBind не используется для раскрытия всех полей:
-нужно сохранить установленный контракт SDL_Event и SDL_AudioSpec.
-
-Генерируются:
-
-- 50 raw-функций, как на предыдущем этапе;
-- 13 аннотаций: 7 структур/union и 6 opaque types, включая проектный SDL_Wav;
-- ровно 40 выбранных полей с прежними именами, включая event_type;
-- 42 константы с явной шириной int32/uint32/uint64 из policy.
-
-Константы вычисляются libclang через типизированные декларации во временном
-C-заголовке. Generated C++ содержит вычисленные значения и static_assert,
-сверяющий их с теми же SDL-макросами/enum. Для 7 records и 40 полей добавлены
-sizeof/alignof/offsetof assertions по данным Clang. Это профильные проверки
-Windows x64, а не обещание межплатформенного ABI.
-
-Ошибки парсинга, исчезновение поля/типа/функции, неподдержанные bitfields и
-нецелочисленные вычисления не допускают публикации output. Набор полей и
-констант проверяется против policy. Две генерации в разных выходных каталогах
-должны дать одинаковый результат. Снимки основного backend не изменены.
-
-Native metadata старого и нового модулей совпали: 104 функции (raw + adapters
-+ test helpers), 13 типов, 40 полей и 42 константы. Сравниваются квалификаторы
-типов, имена аргументов, side effects/unsafe flags, размеры/выравнивание,
-copy/constructor flags, имена/смещения/типы полей, ширина и значения констант.
+Constant expressions вычисляются во временном C header с явной шириной.
+Generated C++ сверяет значения, sizeof/alignof/offsetof с компилятором.
+Parse errors, changed/missing declarations, unsupported bitfields и неверные
+числовые диапазоны отклоняются. Nested types регистрируются по зависимостям
+полей. Набор GPU enum/record проверок описан в gpu-types.md.
 
 ## AOT consumer
 
-tests/clangbind_parity/aot_tool.cpp вызывает pinned daslib/aot_cpp::run_aot.
-Единый FileAccess монтирует dassdl3 и для компиляции скриптов, и для инструмента.
-Boost-модули sdl3_boost и sdl3_audio_boost генерируются отдельными единицами
-компиляции: генерации только main-примеров недостаточно для их AOT-функций.
+Tests/clangbind_parity/aot_tool.cpp вызывает pinned daslib/aot_cpp::run_aot.
+FileAccess монтирует dassdl3 одинаково для compiler и runtime. AOT создаётся для
+сценариев и boost-модулей из AOT_SCRIPTS/AOT_MODULES в CMakeLists.txt.
+parity_aot_runner задаёт aot=true, fail_on_no_aot=true и проверяет main->aot.
+Отрицательный runner должен получить именно AOT link failed on main; произвольный
+сбой DLL/старта не считается правильным результатом.
 
-parity_aot_runner включает скомпилированный AOT-код, задаёт
-`aot=true`, `fail_on_no_aot=true` и дополнительно проверяет `main->aot`.
-Runner без AOT-кода обязан завершиться именно с `AOT link failed on main`;
-проверка не принимает произвольный сбой DLL/запуска за ожидаемую ошибку.
-
-Проверяются существующие bindings/boost/textures/input/audio tests и четыре
-примера square/textures/input/audio. Это те же scripts, включая panic,
-ранний выход, частичную инициализацию, вложенные scopes и освобождение ресурсов.
-Audio использует dummy-драйвер только в окружении соответствующего теста.
-JIT, аппаратный GPU и слышимый аудиовывод здесь не проверяются.
-
-Итог: **33/33 CTest прошли** (57,74 с). Это 10 сценариев на каждом из двух
-interpreter backend, те же 10 в строгом AOT, сравнение metadata, отрицательная
-проверка отсутствующего AOT и проверка ошибок генерации с четырьмя fixtures.
+Те же public сценарии проверяются interpreter и AOT, включая GPU CPU oracles,
+ошибки SDL и defer на раннем выходе. Эти тесты не устанавливают JIT поддержку.
+Pinned emitter имеет проблему deeply nested inline-block/for capture: pixels test
+использует явную while-переменную. Inlining/AOT остаются включены; upstream не менялся.
 
 ## Обход ошибки pinned AOT runtime
 
@@ -85,27 +48,14 @@ runWithCatch восстанавливает stack/ABI, затем очищают
 
 Отдельный recover.das проверяет текущий last_exception, повторный panic в
 recover и переход в наружный recover. Он запускается на обоих interpreter
-backend и в строгом AOT. Существующий SDL_InvokeProtected для восстановления
-block arguments также сохранён.
+backend и в строгом AOT. Это только тестовый AOT compatibility shim для recover.das; SDL wrappers
+не используют try/recover или SDL_InvokeProtected (он удалён).
 
-## Запуск
 
-Используется прежний standalone CMake-проект, теперь с AOT targets.
-Из x64 Native Tools Command Prompt в корне репозитория:
+## Сборка и проверка
 
-```bat
-cmake -S tests/clangbind_parity -B build/clangbind-parity -G Ninja -DCMAKE_BUILD_TYPE=Release -DLLVM_SDK=C:/src/libclang -DSDL_INCLUDE=C:/src/dasSDL3/test-app/build/_deps/sdl3-src/include
-cmake --build build/clangbind-parity --parallel 6
-ctest --test-dir build/clangbind-parity --output-on-failure
-```
-
-MAIN_BUILD по умолчанию build/ninja; его static SDL и собранный daScript должны
-соответствовать указанным версиям. Каталог -B можно вынести из репозитория.
-Generated output включает parity_types.inc, parity_functions.inc,
-parity-contract.tsv и parity-api.json; AOT .cpp также остаются внутри сборки.
-
-Обновление: основной CMake теперь выбирает CppGenBind-снимки для MSVC Windows
-x64; штатная опция, обновление snapshots и consumer без LLVM описаны в
-`clangbind-production.md`. AOT-header пока задаётся экспериментальным target.
-Перед широким расширением
-остаются platform policy, nested GPU create-info и новые ownership contracts.
+Команды — [clangbind-parity.md](clangbind-parity.md). MAIN_BUILD/SDL_INCLUDE
+должны соответствовать закреплённой SDL; vcvars64 и 6 parallel jobs.
+Список тестов задаётся CMake, текущие результаты —
+[gpu-native-validation.md](gpu-native-validation.md). Не использовать числа
+первоначального 50-function эксперимента как текущее покрытие.

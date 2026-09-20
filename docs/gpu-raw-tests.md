@@ -82,5 +82,5 @@ The current fixture targets vs/ps/cs_6_0 and SPIR-V Vulkan 1.0.
   not claim the debug output contains no warnings.
 
 Logs: task workspace work/raw-main-tests.log, raw-parity-tests.log,
-raw-debug-d3d12.log. The full pre-existing suite was not repeated after these
-test-only additions; the previous general validation report remains historical.
+raw-debug-d3d12.log. The subsequent full-suite/native-adapter results are in
+[gpu-native-validation.md](gpu-native-validation.md).

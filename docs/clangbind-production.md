@@ -6,8 +6,9 @@
 Профиль: SDL 3.2.18, LLVM SDK 22.1.5, x86_64-pc-windows-msvc,
 daScript из закреплённого сабмодуля. Это ещё не полная обвязка SDL.
 
-`src/generated/clangbind/` содержит 50 функций, 7 записей с 40 полями,
-6 opaque-типов и 42 константы. Ручные адаптеры и boost используются без изменений.
+`src/generated/clangbind/` содержит текущую выборку tools/bindings.json.
+Покрытие фиксируется в [api-coverage.md](api-coverage.md), а не в числах первого
+эксперимента. Ручные адаптеры и boost общие для обоих backend.
 Размеры, выравнивание, смещения полей и значения констант проверяются
 static_assert при компиляции. `profile.json` хранит хеши входной политики,
 генератора и SDL-заголовков. Названия версий в профиле обозначают проверенный
@@ -66,29 +67,16 @@ Upstream daScript пишет библиотеки и shared modules в дере�
 
 ## Границы этапа
 
-Обычный runner работает через interpreter. Строгий AOT с защитой try/recover
-пока проверяется отдельным `tests/clangbind_parity`; основной CMake не обещает
+Обычный runner работает через interpreter. Строгий AOT проверяется отдельным
+`tests/clangbind_parity`; основной CMake не обещает
 готовую AOT-сборку приложения. Проверка LLVM-free относится к сборке из исходников
 со снимками, а не к install/export SDK или переносимому бинарному пакету.
-Следующие этапы: расширение allowlist, новые ownership-контракты, platform policy
-и отдельная проверка вложенных GPU create-info.
+Следующие этапы: Properties и остальной SDL API, platform policy и packaging.
+Вложенные GPU create-info и native adapters уже проверяются interpreter/AOT.
 
-## Проверено 2026-09-19
+## Проверки
 
-- Основная developer-сборка с CppGenBind: 15/15 CTest, включая freshness,
-  inventory, libclang preflight и текущие SDL-сценарии.
-- Отдельный parity-проект: 33/33, включая 10 строгих AOT-сценариев,
-  оба interpreter backend, metadata и отрицательные проверки генерации/AOT.
-- Чистая сборка из 451 шага с отключёнными генераторами, CLANG_BIND и LLVM:
-  10/10 обычных SDL-тестов. Поиск Clang, LLVM и Python3 дополнительно запрещён
-  через CMAKE_DISABLE_FIND_PACKAGE; build.ninja не содержит генератора привязок
-  и ссылок на libclang/libLLVM.
-- После переключения этой сборки на BUILD_TESTING=OFF пересобран runner и
-  успешно выполнены square, textures, input и audio в smoke-режиме.
-  Аудио проверено с dummy-драйвером, слышимое воспроизведение не проверялось.
-- Свежие снимки проходят --check; намеренно испорченный снимок отклоняется,
-  его содержимое остаётся неизменным. Снимки репозитория проходят --check.
-
-Consumer собирался в отдельном каталоге из исходников; SDL взят из локального
-checkout release-3.2.18. После проверки восстановлен developer dasClangBind,
-который upstream удалил при отключении модуля.
+Текущие результаты production/parity/consumer: [gpu-native-validation.md](gpu-native-validation.md).
+Снимки проверяются через --check; свежесть, inventory и preprocessor gates
+запускаются после восстановления developer-конфигурации. Consumer с отключёнными
+генераторами/LLVM использует те же публичные API; тестовые exports недоступны.

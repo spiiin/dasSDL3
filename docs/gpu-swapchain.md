@@ -1,86 +1,40 @@
-# GPU packages 30–32: swapchain control
+# Checked GPU swapchain settings
 
-Pinned SDL 3.2.18. Module: `dassdl3/sdl3_gpu_swapchain_boost.das`.
-Native checked adapters: `src/sdl3_gpu_swapchain.h`.
+Module: dassdl3/sdl3_gpu_swapchain_boost; native adapters: src/sdl3_gpu_swapchain.h.
+Examples 30–32 query/configure the window. Actual presentation is demonstrated
+by [native example 48](../examples/48_gpu_native_graphics.das).
 
-## 30: capabilities and current format
+## Contract
 
-`gpu_supports_present_mode(device,window,mode)` and
-`gpu_supports_composition(device,window,composition)` require a live scoped
-device and a live window claimed by that device, on the main thread.
-The adapter compares the window address with SDL_GetWindows before calling
-window APIs; invalid/unclaimed/foreign/null windows fail without backend access.
-Window/device pointers remain borrowed scope values, not generational handles;
-do not keep them beyond their scope (address reuse cannot identify an old borrow).
+Operations require a live scoped device, a live window claimed by that device,
+and the main thread. The adapter checks windows against SDL_GetWindows; pointer
+address reuse is not a generation check, so borrowed pointers must not outlive scope.
 
-All three present modes and all four compositions from the pinned header are
-generated uint constants. Unknown numeric values cause a script panic;
-unsupported valid values return false. `gpu_swapchain_format` returns the
-current SDL texture-format constant and rejects invalid handles. Enumeration
-is target/display dependent and is not a promise of HDR color correctness.
-SDR + VSYNC is SDL's required baseline.
+- gpu_supports_present_mode/composition return false for unsupported or invalid
+  input; native Checked queries preserve -1/0/1. No panic conversion.
+- gpu_swapchain_format returns the current format or INVALID on failure.
+- gpu_try_configure_swapchain checks support before mutation and returns bool.
+  SDL setter failure retains SDL's state semantics; no transactional rollback.
+- gpu_frames_in_flight accepts 1..3, device-wide. SDL stalls/flushes on change;
+  this is not an FPS limiter or measured latency claim.
+- gpu_wait_swapchain waits for availability, without acquiring a texture,
+  presenting, pumping events or proving a drawable exists.
 
-## 31: configuration between frames
+Configure between command recordings, with no acquired swapchain texture/pass
+still in use. A composition change can change format; recreate incompatible
+pipelines. Settings persist until changed/released and are per window, unlike
+the device frame limit. No automatic restoration scope is added.
 
-`gpu_try_configure_swapchain(device,window,composition,mode)` returns false
-without calling the mutating SDL setter if either capability is unsupported.
-Invalid input and an SDL setter failure panic. A setter failure has SDL's own
-state semantics; the adapter does not promise transactional rollback.
-Settings last until explicitly changed or the window is released. There is no
-automatic restoration scope and no cache of presumed native settings.
+Native acquire can succeed with null texture; skip drawing then. Once acquisition
+returns a non-null texture, submit that command instead of cancelling it.
+with_native_gpu_swapchain implements this defer policy; its callback borrows
+command/texture and must not consume/release them.
 
-Call between completed script frame helpers. The current API records/submits
-frames entirely in native code, so no script callback can change the swapchain
-while a pass is open. Future command/pass bindings must enforce that restriction.
-Changing composition can change the swapchain texture format: query it and
-recreate incompatible pipelines. Existing fixed GPU draw helpers check format
-compatibility; tests keep an old triangle pipeline across transitions, verify
-rejection when the format differs, then draw again after restoring SDR/VSYNC.
-Changing one window's parameters does not configure other windows.
+## Checks and limits
 
-## 32: frames in flight and availability
-
-`gpu_frames_in_flight(device,count)` accepts exactly 1..3. It is device-wide,
-not per window. SDL stalls and flushes the command queue when changing it;
-configure it deliberately rather than calling it every frame. SDL defaults to
-two. This is a queue/latency limit, not an FPS limiter or measured latency result.
-
-`gpu_wait_swapchain(device,window)` blocks for availability. It does not acquire
-a texture, submit/present a frame, pump events or wait for global device idle.
-A subsequent acquisition can still return no drawable (e.g. minimized). Use
-the existing submitted/skipped result from `gpu_clear` or other frame helpers.
-Do not infer drawable size or visibility from a successful wait alone.
-
-## Verification
-
-`tests/gpu_swapchain.das` exercises all reported composition/mode combinations,
-invalid values, unclaimed/foreign/released/destroyed windows, dead devices,
-limits 1/2/3, consecutive waits/presents, two windows, two devices, reclaim,
-and pipeline compatibility after format changes. Hardware capability outcomes
-are printed, with unsupported combinations explicitly returning false.
-Examples 30/31/32 demonstrate queries, mode changes and latency configuration.
-Interpreter/AOT and Vulkan/D3D12 checks share this contract; Linux/Metal and
-actual HDR output/color accuracy remain unverified.
-
-Observed on this Windows machine: both backends accepted all three present
-modes with SDR and SDR_LINEAR. Vulkan rejected both HDR compositions;
-D3D12 accepted HDR10_ST2084 but rejected HDR_EXTENDED_LINEAR. These are logged
-capability results, not portable assumptions. Tests exercised both real format
-changes (and incompatible pipeline rejection) and unsupported no-mutation paths.
-SDL_GetWindows is an internal liveness check here, not a new public enumeration
-binding counted by the inventory.
-
-Combined verification on 2026-09-20:
-
-- Main project: 110/110 CTest; parity/interpreter/strict AOT: 247/247.
-- Standalone dasClangBind experiment: 4/4. Generated selection is deterministic:
-  60 functions, 10 records, 7 opaque types, 49 fields, 181 constants (7 new).
-- Examples 30–32 passed on Vulkan and D3D12 in the LLVM-free consumer build,
-  with generators and Clang/LLVM/Python package discovery disabled. build.ninja
-  contains no libclang/libLLVM or binding-generator commands.
-- Completed main/parity logs contain no VUID, Validation Error or D3D12 ERROR.
-  The existing FPS Monitor layer filter stayed process-local.
-- GPU inventory: 7 generated / 55 adapted / 30 pending; total SDL API:
-  60 generated / 64 adapted / 1102 pending. Adapted contracts remain partial.
-- Developer generator configuration restored; final snapshot freshness,
-  inventory and Clang preflight checks: 5/5 passed.
+Tests/gpu_swapchain.das checks supported combinations, invalid values, unclaimed/
+foreign/released windows, frame limits, two windows/devices and reclaim. It no
+longer relies on removed triangle helpers. Native graphics/raw tests cover actual
+acquisition/presentation. Capability reports do not prove HDR color accuracy.
+Other platforms and HDR displays need their own verification.
+See [combined results](gpu-native-validation.md).

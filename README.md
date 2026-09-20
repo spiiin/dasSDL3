@@ -144,7 +144,8 @@ SDL_Event сохраняет настоящий размер и выравнив
 компоненты передаются как uint в диапазоне 0..255. Строку SDL_GetError
 следует использовать сразу: это сообщение из внутреннего буфера SDL.
 Callbacks, varargs, остальные устройства и универсальные владеющие типы
-пока не входят в эту версию. AOT и JIT не проверялись.
+пока не входят в эту версию. Interpreter и строгий AOT проверяются в parity;
+JIT не заявлен как проверенный режим.
 
 ## Пример с текстурами
 
@@ -342,3 +343,14 @@ presents frames through the native API.
 Native SDL GPU command/fence lifecycle: [example 47](examples/47_gpu_native_fences.das)
 and [contract](docs/gpu-native-fences.md). Original SDL pointers/results, generated
 signatures, borrowed fence-array adapter and explicit defer ownership.
+
+## Native GPU examples
+
+```powershell
+./build/ninja/bin/dasSDL3_runner.exe examples/48_gpu_native_graphics.das
+./build/ninja/bin/dasSDL3_runner.exe examples/49_gpu_native_compute.das
+./build/ninja/bin/dasSDL3_runner.exe examples/50_gpu_native_transfer.das
+```
+
+[Creation/transfers/defer contract](docs/gpu-native-boost.md) ·
+[Validation and backend limits](docs/gpu-native-validation.md).

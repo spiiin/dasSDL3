@@ -1,6 +1,6 @@
 # RGBA8 GPU texture transfers
 
-Second public G3 slice, after buffer transfers. Native adapter:
+Checked RGBA8 transfer API. Native adapter:
 `src/sdl3_gpu_texture_transfer.h`; script module:
 `dassdl3/sdl3_gpu_texture_transfer_boost`; example 24.
 

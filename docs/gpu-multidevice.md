@@ -2,7 +2,7 @@
 
 Исследование 2026-09-19, Windows x64, RTX 4080 Laptop, SDL 3.2.18.
 Прежний запрет второго scoped device снят. Устройства регистрируются независимо;
-при shutdown освобождаются только pipeline/mesh IDs соответствующего device.
+при shutdown освобождаются только checked resource IDs соответствующего device.
 Операции остаются на main thread, scopes заканчиваются до SDL_Quit.
 
 ## Причина наблюдавшегося падения
@@ -32,8 +32,8 @@ Native C++ repro без daScript создаёт A, рисует triangle, соз
 ## Запуск
 
 ```powershell
-./build/ninja/bin/dasSDL3_runner.exe tests/gpu_devices.das --smoke-test --disable-vulkan-layer=VK_LAYER_RENDERDOC_Capture
-./build/ninja/bin/dasSDL3_runner.exe examples/11_gpu_textured_quad.das --disable-vulkan-layer=VK_LAYER_RENDERDOC_Capture
+./build/ninja/bin/dasSDL3_runner.exe tests/gpu_recording.das --smoke-test --disable-vulkan-layer=VK_LAYER_RENDERDOC_Capture
+./build/ninja/bin/dasSDL3_runner.exe examples/48_gpu_native_graphics.das --disable-vulkan-layer=VK_LAYER_RENDERDOC_Capture
 ```
 
 Runner добавляет фильтр к существующему `VK_LOADER_LAYERS_DISABLE` до инициализации
@@ -44,7 +44,7 @@ SDL. Флаг можно повторять; без него поведение 
 
 ```powershell
 cmake -S . -B build/ninja -DDASSDL3_TEST_VULKAN_LAYERS_DISABLE=VK_LAYER_RENDERDOC_Capture
-ctest --test-dir build/ninja -R gpu_devices --output-on-failure
+ctest --test-dir build/ninja -R gpu_recording --output-on-failure
 ```
 
 По умолчанию фильтр пуст. Настройка действует на GPU test processes и сохраняет
@@ -53,19 +53,14 @@ ctest --test-dir build/ninja -R gpu_devices --output-on-failure
 [Khronos Loader debugging](https://github.com/KhronosGroup/Vulkan-Loader/blob/main/docs/LoaderDebugging.md).
 Не отключать validation вместо локализации конфликтующего overlay.
 
-## Регрессия
+## Текущие регрессии
 
-`tests/gpu_devices.das` выполняет три цикла создания/уничтожения B при живом A,
-рисует обоими, проверяет чужие/stale IDs и запрещает повторный claim окна.
-Проверяет обычный, ранний и panic выход, счётчики ресурсов до SDL_Quit и draw A
-после каждого shutdown B. Включён в interpreter, обе генерации и strict AOT;
-Vulkan и Direct3D 12 имеют отдельные тесты. Отсутствующий первый backend — SKIP77;
-ошибка второго устройства или rendering — failure.
+Отдельный старый gpu_devices.das удалён вместе с fixed renderer. Проверки двух
+устройств сохранены в действующих checked transfer/resource/recording tests:
+освобождение B не должно затрагивать ресурсы A. gpu_recording.das проверяет
+teardown с открытой записью и сохранность команды другого устройства.
+Это несколько SDL logical devices на доступном GPU, не multi-adapter тест.
 
-Это проверка двух SDL logical devices на доступном GPU, не multi-adapter тест.
-Сохранённые device/window pointers нельзя использовать после scope: копируемость
-указателей и отсутствие generation ID для самих устройств остаются ограничением.
-
-Результат: основной набор 36/36 и parity/strict AOT 81/81, без SKIP, включая
-отдельные Vulkan/D3D12 multi-device tests. Mesh regression дополнительно
-проверяет readback A после shutdown B и cleanup оставленных B mesh IDs.
+Scopes очищают обычный/ранний выход через defer; panic приложения не даёт
+такой гарантии. Нативные device/window pointers не должны переживать scope.
+Актуальные общие результаты: [gpu-native-validation.md](gpu-native-validation.md).

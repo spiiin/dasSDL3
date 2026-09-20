@@ -3,7 +3,8 @@
 SDL 3.2.18, Windows x64: all 92 active SDL_gpu.h functions are now selected
 in tools/bindings.json. Both generator backends emit the original signatures.
 The two GDK-only suspend/resume declarations are inactive in this profile and
-are not included. This is declaration coverage, not completed P6 validation.
+are not included. Declaration coverage and runtime evidence are tracked
+separately; local validation and remaining limits are linked below.
 
 The surface includes device queries/properties, resource creation/release,
 render/compute/copy passes, graphics and compute bindings, uniform uploads,
@@ -67,10 +68,9 @@ the original SDL function and AOT C++ signature remain unchanged.
 ## Validation state and remaining work
 
 Both snapshots generated deterministically; the production C++ build passed.
-The combined existing suite has now passed with targeted corrections and reruns;
-see [validation report](gpu-native-validation.md). Existing checked-adapter
-test results do not establish every new raw contract. Dedicated raw execution
-coverage has since been added: [raw GPU tests](gpu-raw-tests.md) execute all 92
+The combined suite and new native adapter tests passed as documented in the
+[validation report](gpu-native-validation.md). Dedicated raw execution coverage:
+ [raw GPU tests](gpu-raw-tests.md) execute all 92
 functions on Vulkan and 90 on D3D12, through both generators and AOT. The two
 D3D12 debug-group exclusions are explicit. Pixel and byte oracles verify actual
 GPU work, including the by-value color argument.

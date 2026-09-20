@@ -1,14 +1,7 @@
-> Current architectural decision: [SDL API boundary](gpu-api-boundary.md).
-
-> Current error/lifetime contract: [error-handling.md](error-handling.md).
-> SDL failures return values; scopes use defer. Earlier panic/protected-scope
-> descriptions below are historical and no longer describe the public binding.
-> Renderer framework APIs and plans were removed; old implementation references below
-> are historical. Prioritize complete direct SDL access; see [GPU roadmap](gpu-roadmap.md).
-
 # Аудит идиом и выбор генератора
 
-19 сентября 2026. Предложения ниже ещё не являются новым публичным API.
+Исследование 19 сентября; решения актуализированы 20 сентября 2026.
+Result/Option и variants ниже — возможные приёмы, не новый обязательный API.
 Предыдущие проверенные решения сохранены в `bgfx-idioms.md`, `sdl3-boost.md`,
 `input.md`, `audio.md`. Общий план — `full-binding-roadmap.md`.
 
@@ -19,7 +12,7 @@
 - daScript commit `35bf260c0d8a79b94c64005bd3d2435adcf7e261`:
   `daslib/result.das`, `option.das`, `safe_addr.das`,
   `shader_lingua_franca.das`, `shader_block_layout.das`;
-  `tests/option`, `tests/bare_block`, `tests/language/variants.das`,
+  `tests/option`, `tests/bare_block`, `third_party/daScript/tests/language/variants.das`,
   `container_finalize.das`, `inscope_return_inscope.das`, `tests/spirv`;
   `modules/dasClangBind`, `dasVulkan`, `dasSpirv`, `dasGlsl`.
 - [dasBGFX](https://github.com/borisbat/dasBGFX/tree/a569838d35a2a584946e784d5e013fb2f08ec4c1):
@@ -36,12 +29,12 @@
 
 | Идиома и свидетельство | Применение в dasSDL3 | Ограничение / обязательная проверка |
 | --- | --- | --- |
-| Trailing block, `tests/bare_block/test_assumed_pipe.das` и `test_piped_default_padding.das` | `with_sdl() { ... }`, `with_window(...) $(window) { ... }`, receiver-first pipes | Сохранять этот уже принятый синтаксис; `$()` не нужен лишь блоку без аргументов |
-| `daslib/result.das`, `tests/option/test_result*.das` | `try_*` возвращает стандартный Result с собственной копией SDL error; map/and_then | Фабрики ok/err копируют; move_ok/move_err для movable values. Не копировать owning handle случайно |
-| `daslib/option.das`, non-copyable tests | Нет события/устройства, minimized swapchain — штатный empty result | Отсутствие и SDL error различать; для fallible lookup может понадобиться Result с Option внутри |
-| Tagged variants, `tests/language/variants.das` | Высокоуровневое событие с key/mouse/text/drop payload и unknown fallback | Данные должны принадлежать событию; union и временные `char*` нельзя просто клонировать |
-| `var inscope`, finalize, move; `inscope_return_inscope.das` | Рассмотреть ресурсные wrappers и композицию owners | У нас panic пропускает defer/finally: существующие catch-cleanup-rethrow scopes сохранять |
-| `tests/language/container_finalize.das` | Явное освобождение owning элементов при удалении/очистке коллекций | Пользовательский finalize не вызывается автоматически erase/clear/shrink/pop по исследованному контракту; array<Handle> сам по себе не RAII |
+| Trailing block, `third_party/daScript/tests/bare_block/test_assumed_pipe.das` и `test_piped_default_padding.das` | `with_sdl() { ... }`, `with_window(...) $(window) { ... }`, receiver-first pipes | Сохранять этот уже принятый синтаксис; `$()` не нужен лишь блоку без аргументов |
+| `daslib/result.das`, `tests/option/test_result*.das` | Возможный отдельный application layer; текущий boost сохраняет SDL results | Фабрики ok/err копируют; move_ok/move_err для movable values. Не копировать owning handle случайно |
+| `daslib/option.das`, non-copyable tests | Нет события/устройства, minimized swapchain — штатный empty result | Текущий SDL contract различает результат операции и nullable output |
+| Tagged variants, `third_party/daScript/tests/language/variants.das` | Высокоуровневое событие с key/mouse/text/drop payload и unknown fallback | Данные должны принадлежать событию; union и временные `char*` нельзя просто клонировать |
+| `var inscope`, finalize, move; `inscope_return_inscope.das` | Рассмотреть ресурсные wrappers и композицию owners | Panic пропускает defer/finally; применять defer для обычных/ранних выходов, без catch-моста |
+| `third_party/daScript/tests/language/container_finalize.das` | Явное освобождение owning элементов при удалении/очистке коллекций | Пользовательский finalize не вызывается автоматически erase/clear/shrink/pop по исследованному контракту; array<Handle> сам по себе не RAII |
 | `safe_addr` и временные pointer types | Синхронные native ref adapters вместо адресов в пользовательском коде | safe_addr не доказывает lifetime, если C сохраняет pointer; scalar outputs требуют `T&` |
 | Generic array adapters | geometry, аудио, IO, GPU buffers | Только разрешённые POD/форматы; пустой array, размер, stride, lifetime и copy/borrow проверять |
 | Type annotations/macros | Vertex declaration, shader bindings, checked builders | Генерировать metadata и диагностику, не отключать strict type/pointer checks |
@@ -76,16 +69,16 @@ array-поля вместо count+pointer и builders. Это полезнее �
 
 Итого: переносить приёмы композиции, метаданных и маленьких законченных
 примеров. Наличие defer, unsafe или make_ref в upstream-примере не является
-доказательством безопасности на нашем interpreter. Подтверждённый workaround
-в `sdl3_scopes.h` для восстановления block arguments после panic сохраняется.
+доказательством безопасности на нашем interpreter. Нативный scope bridge удалён;
+актуальный контракт — [error-handling.md](error-handling.md).
 
 ## Что взять из Rust sdl3
 
 У Rust полезны separation sys/high-level, scoped locks, typed data,
 конструкторы с defaults, Result/Option и выраженные связи родителей/детей.
 [TextureCreator](https://docs.rs/sdl3/0.20.0/sdl3/render/struct.TextureCreator.html)
-ограничивает жизнь текстуры и связь с renderer. В daScript предлагается
-проверяемый owner token с invalidation; это runtime-контроль, не Rust borrow checker.
+ограничивает жизнь текстуры и связь с renderer. В daScript документируем
+borrowed lifetime и defer; новые owner registries ради имитации Rust не добавляем.
 
 Аудит [GPU pass.rs](https://github.com/vhspace/sdl3-rs/blob/0ffa35e5f6d68b3bcc56bb724af0ad5e538af6f4/src/sdl3/gpu/pass.rs):
 nullable успешный swapchain acquisition оформлен как Option, submit потребляет
@@ -97,50 +90,27 @@ handle, проверять результат отмены и упаковыва
 В [render.rs](https://github.com/vhspace/sdl3-rs/blob/0ffa35e5f6d68b3bcc56bb724af0ad5e538af6f4/src/sdl3/render.rs)
 lock даёт callback с slice/pitch; это хорошая форма API. В просмотренном пути
 unlock стоит после callback, поэтому устойчивость к unwind не следует из самой
-формы closure. Для нашего panic нужен уже проверенный механизм scope cleanup.
+формы closure. В нашей обвязке cleanup после произвольного panic не обещается.
 
 [IOStream](https://github.com/vhspace/sdl3-rs/blob/0ffa35e5f6d68b3bcc56bb724af0ad5e538af6f4/src/sdl3/iostream.rs)
 привязывает memory stream к заимствованным bytes. Для первого das API проще
 копировать память в owner либо удерживать специальный buffer object до close.
 Режим borrow без копии предоставлять только с доказанным сроком жизни.
 
-## ADR: Python + Clang или dasClangBind?
+## Решение о генераторе
 
-| Критерий | Текущий генератор | dasClangBind / CppGenBind |
-| --- | --- | --- |
-| Уже работает | 50 функций, allowlist, structs/opaque handles, api.json, freshness test | 50 функций; самостоятельные policy annotations/константы; прежние interpreter/AOT-сценарии. 33 теста, локальный обход pinned AOT recover (см. clangbind-types-aot.md) |
-| Комплексность типов | Нужны расширения enum/flags/macros/platform census, callbacks policy, AOT | Есть инфраструктура aliases/enums/structs/preprocessor и AOT, hooks и разбиение функций по TU |
-| Среда | Python stdlib + Clang 16.0.5 в текущей проверенной конфигурации | Закреплённый CMake ищет Clang 22.1, libclang и корректную CRT-конфигурацию |
-| Семантика SDL | Ручная policy нужна | Ручная policy всё равно нужна; AST не знает ownership и thread affinity |
-| Стоимость сейчас | Мало инфраструктурных изменений, но расширяем собственный backend | Выше начальная стоимость, ниже дублирование возможностей daScript binding toolchain при успешном эксперименте |
+CppGenBind/libclang 22.1.5 — production backend MSVC Windows x64. Python/Clang
+остаётся baseline/fallback; оба используют один отбор tools/bindings.json.
+Сохранённые snapshots позволяют сборку без LLVM. Нынешнее покрытие и проверки:
+[api-coverage](api-coverage.md), [production](clangbind-production.md),
+[parity/AOT](clangbind-types-aot.md).
 
-В `modules/dasClangBind/cbind/cbind_boost.das` есть CppGenBind;
-`bind/bind_bgfx.das` показывает настройку aliases, исключение variadic/callback
-деклараций, разбиение функций. Его решения вроде isArgByValue нельзя применять
-ко всем SDL-типам без ABI проверки. Генерация native binding не создаёт boost
-автоматически и не делает callback безопасным.
+При расширении: точный selected field set, enum/flags widths, qualifiers,
+calling convention, deterministic output, ABI assertions, отрицательные tests
+и реальные interpreter/AOT вызовы. SDL ownership/thread/allocator policy всё
+равно ручная. Не заменять генерацию массовыми ручными регистрациями и не
+регистрировать один raw export двумя backend одновременно.
 
-**Решение после эксперимента:** CppGenBind выбран по умолчанию для MSVC Windows
-x64 и текущих 50 функций. Сохранённые snapshots поддерживают обычную сборку
-без LLVM (clangbind-production.md). Старый backend пока остаётся baseline
-для parity и fallback для других платформ. Это ограниченное принятие текущего
-профиля; следующие условия сохраняются для расширения ABI/GPU и платформ.
-
-Эксперимент ограничить тремя репрезентативными группами:
-
-1. SDL_rect.h: простые POD, ref/out, inline/function macros.
-2. SDL_pixels.h: enums, aliases, bit constants, formats и указатели.
-3. Выборка SDL_gpu.h: nested create-info, fixed arrays, pointer+count,
-   opaque resources; отдельно callback typedef из другого заголовка.
-
-Условия принятия: воспроизведены существующие 50 exports и примеры; корректны
-ABI assertions и AOT consumer; генерация повторяется без diff; неподдержанные
-конструкции диагностируются; policy и platform guards сохраняются; обычная
-сборка не требует LLVM. Сравнить размер diff, время и сложность overrides.
-
-При выполнении условий перенести единственный источник generated raw на
-dasClangBind и убрать старый backend после проверки эквивалентности. На время
-эксперимента можно сравнивать outputs в отдельной папке, но не регистрировать
-одни exports двумя генераторами. Если toolchain/ABI/AOT блокируют переход,
-продолжить Python Clang backend с тем же census/policy и закрыть конкретные
-пробелы. Массовое расширение вручную не выбирать ни в одном варианте.
+Дальнейший выбор fallback зависит от проверок других платформ; автоматическое
+удаление Python backend сейчас не запланировано. Callback typedef и raw pointer
+сами по себе не разрешают сохранять или вызывать script closure через C ABI.

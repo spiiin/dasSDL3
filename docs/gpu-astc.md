@@ -3,11 +3,11 @@
 Batch 40 adds rectangular block handling to the existing 2D/array/cube transfer
 API. **Positive ASTC GPU transfers are not verified on this machine.** CPU layout
 tests and unsupported-path checks pass; this is not completion of the ASTC GPU
-acceptance gate or G3.
+acceptance gate.
 
 The related steps are block extent metadata, independent block axes, staging
 footprints, region/mip validation, creation policy, upload/readback integration,
-direct/command-plan copies, transfer capability checks and example/regressions.
+direct copies, transfer capability checks and example/regressions.
 
 ## Interface and data contract
 
@@ -33,7 +33,7 @@ Private staging uses 256-aligned rows, texel-based pixels_per_row and zero
 rows_per_layer for each single-layer transfer. Readback strips staging padding
 and returns complete encoded blocks, including partial mip edges.
 
-Upload, direct copy and command-plan copy share rectangular validation. Existing
+Upload and direct copy share rectangular validation. Existing
 ID/device checks, validity, cycling, scoped cleanup and retired fence behavior
 remain in force. Color-only factories and 3D volumes still reject compressed
 formats. This code does not encode, decode, transcode or sample ASTC. Initial
@@ -65,8 +65,7 @@ contract can be verified or the pinned SDL version is upgraded.
 independent size API, 25 nonsquare/edge dimensions per format, aligned staging,
 5x4 region axes, invalid origins/interior extents, partial mip edges and 1x1 mips.
 These tests require no GPU. `gpu_astc.das` verifies actual capability/rejection
-behavior and contains capability-gated padded upload, layer isolation, direct and
-planned copies, edge mips and byte readback. The positive branch is compiled in
+behavior and contains capability-gated padded upload, layer isolation, direct copies, edge mips and byte readback. The positive branch is compiled in
 interpreter/AOT but remains unexecuted here: final output explicitly reports zero
 ASTC GPU roundtrips. Tests pass for successful rejection; that does not imply a
 successful ASTC transfer. Example 40 similarly reports unavailability instead of
@@ -75,16 +74,6 @@ silently substituting another format.
 Hardware evidence still required: execute the positive branch on supported ASTC
 UNORM/sRGB hardware, and FLOAT on an allowed backend with verified support.
 Cube/array variations, sampling decoded pixels and Metal/Linux validation remain
-unverified. Existing real BC, color, volume and command-plan regressions protect
-the shared code paths. Function census remains 13 generated / 54 adapted / 25
-pending; this batch changes supported descriptors and capability policy.
-
-Verification on 2026-09-20: main suite 138/138, baseline/CppGenBind/strict AOT
-suite 319/319, standalone Clang preflight 4/4. Final suites emitted no GPU
-validation errors after the guard was added. ASTC tests passed their CPU and
-capability/rejection assertions; both Vulkan and D3D12 completed **zero** positive
-ASTC transfer roundtrips. That limitation is not represented as a CTest skip,
-because the rejection checks themselves ran and passed.
-The LLVM/Python-disabled consumer built from saved snapshots and ran example 40
-on Vulkan and D3D12, reporting transfer unavailability and valid 5x4 block
-metadata. Its build graph contains no LLVM/libclang or generator dependency.
+unverified. Existing real BC, color and volume regressions protect
+the shared code paths. Current validation results: [gpu-native-validation.md](gpu-native-validation.md).
+Zero positive ASTC roundtrips is a limitation, not successful transfer coverage.

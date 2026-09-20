@@ -1,7 +1,7 @@
 # SDL results and deferred ownership
 
-SDL failures are ordinary return values, not daScript panic. This supersedes
-the former native protected-scope design described in older documents.
+SDL failures are ordinary return values, not daScript panic. Ownership cleanup
+uses script defer; native protected-scope bridges have been removed.
 
 - Operations return bool, null/zero handles, or the native error sentinel.
   Read SDL_GetError immediately after a reported failure; a stale nonempty
@@ -12,7 +12,9 @@ the former native protected-scope design described in older documents.
   block. True means the resource was acquired and the block returned, not that
   every operation inside succeeded. The block remains void; check operation
   results explicitly or use direct acquisition plus defer when returning a
-  result from a larger operation is clearer.
+  result from a larger operation is clearer. The documented native swapchain
+  owner is an exception: it reports acquisition/submission success and may skip
+  its block on a successful null texture (minimized window).
 - Predicate conveniences such as gpu_supports_format return false for both
   unsupported and invalid input; the corresponding native Checked query retains
   its -1/0/1 distinction. `gpu_poll_readback` (formerly gpu_readback_ready) and

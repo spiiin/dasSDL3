@@ -54,7 +54,7 @@ successful creation. Do not manually release a scope-owned pipeline.
 - 1..4 RGBA8/BGRA8 UNORM/SRGB color targets. All blend operations and factors are
   range checked; enabled blending rejects INVALID. Alpha factors SRC_COLOR,
   DST_COLOR and their inverses are excluded for D3D12 compatibility. Write masks
-  use only RGBA bits. Other color formats and depth-only pipelines are pending.
+  use only RGBA bits. Other color formats and depth-only pipelines are outside this checked subset.
 - Fill rasterization only. Cull/front-face/topology enums checked. Bias requires
   finite constant within +/-65536, slope within +/-16, and clamp zero. Pinned
   Vulkan does not enable depthBiasClamp, so nonzero clamp is rejected. Wireframe
@@ -73,7 +73,7 @@ point topology and correct resource declarations remain the caller's trusted
 offline contract. This stage does not add shader reflection or native pass ownership. Multiple target/depth/sample settings are creation contracts; they do
 not imply corresponding checked draw/binding coverage.
 
-## Tests and next step
+## Tests
 
 `tests/gpu_pipeline.das` checks triangle pixels, source-color blending (squared
 RGB CPU reference), R-only writes, and a textured quad using copied float2/float2

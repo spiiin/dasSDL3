@@ -1,6 +1,6 @@
 # Checked 3D texture transfers
 
-P6/G3 batch 39: `sdl3_gpu_volume_boost`, `src/sdl3_gpu_volume.h`,
+Checked volume API (example 39): `sdl3_gpu_volume_boost`, `src/sdl3_gpu_volume.h`,
 `examples/39_gpu_volume_transfers.das`. This extends the existing five texture
 create/release/upload/copy/download contracts to 3D volumes. These checked
 conveniences are separate from the complete generated native signatures.

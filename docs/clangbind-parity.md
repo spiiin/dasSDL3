@@ -1,64 +1,28 @@
-# CppGenBind: совместимость существующих 50 функций
+# CppGenBind / baseline parity
 
-Этот документ фиксирует этап замены функций. Следующий этап уже выполнен:
-[самостоятельная генерация типов/констант и ресурсный AOT](clangbind-types-aot.md).
-Ограничения об общих аннотациях и отсутствии ресурсного AOT ниже относятся
-к первоначальному этапу, а не к текущему экспериментальному target.
+Windows x64/MSVC, SDL 3.2.18, pinned daScript, libclang 22.1.5.
+CppGenBind is the production default; the separate tests/clangbind_parity project
+compares it with Python/Clang baseline and executes scripts in both interpreters
+and strict AOT. Current results: [gpu-native-validation.md](gpu-native-validation.md).
 
-Проверено 19 сентября 2026: SDL 3.2.18, pinned daScript
-`35bf260c0d8a79b94c64005bd3d2435adcf7e261`, libclang 22.1.5,
-Windows x64, MSVC 19.38, Release /MD.
+## Contract
 
-Все 50 функций из tools/bindings.json сгенерированы через CppGenBind.
-Экспериментальный runner выполняет неизменённые сценарии и примеры проекта.
-По умолчанию основной проект по-прежнему использует Python backend.
+Selection and aliases come from tools/bindings.json. run_clangbind_parity.py
+checks C signatures/argument names and deterministic generation in two clean
+folders. Types/constants are independently emitted from libclang and policy;
+native adapters and script boost are shared. Missing/extra/duplicate exports
+or parse errors fail generation before publication.
 
-## Что именно заменено
+The same module_sdl3.cpp is compiled into separate baseline and cppgenbind
+executables; only one sdl3 module is registered in each process. Generated
+registration/type include overrides choose the corresponding backend.
+Native metadata compares qualifiers, arguments, side effects/unsafe flags,
+record sizes/alignments/fields, enums and constant widths/values.
 
-`tools/clangbind_parity.das` использует CppGenBind для генерации регистраций
-функций. Allowlist формируется из существующего bindings.json, второго списка
-функций в исходниках нет. Генерация выполняется дважды в чистых каталогах;
-outputs должны совпасть. Типы C-функций и имена аргументов сравниваются с
-src/generated/api.json. Отсутствующий, лишний или повторный export — ошибка.
-
-При этом аннотации типов, перечень доступных полей, opaque handles, константы,
-нативные adapters и script boost общие для обоих backend. Это сознательно
-ограничивает проверку заменой **генерации функций**, не является завершением
-миграции генерации типов/констант на CppGenBind.
-
-Скрипт `tools/run_clangbind_parity.py` соединяет общие регистрации аннотаций и
-констант со сгенерированными CppGenBind функциями. Он не переносит старые
-addExtern-регистрации функций и не генерирует новые C++ сигнатуры самостоятельно.
-Generated output хранится в каталоге отдельной сборки, не в src/generated.
-
-В src/module_sdl3.cpp добавлена возможность выбрать include регистраций через
-DASSDL3_REGISTRATION_INCLUDE. Только экспериментальная цель задаёт эту опцию.
-Общий код адаптеров не копируется: один исходник компилируется в два отдельных
-модуля/исполняемых файла; в одном процессе двух модулей с именем sdl3 нет.
-
-## Результаты проверки
-
-| Проверка | Результат |
-| --- | --- |
-| C-сигнатуры и имена аргументов 50 функций | Совпали после описанной ниже нормализации spelling |
-| Две генерации в разных временных каталогах | Побайтово одинаковый output |
-| Компиляция CppGenBind регистраций | Успешно, все 50 функций |
-| Native metadata двух модулей | Совпали все 104 зарегистрированные функции, включая общие adapters и test helpers |
-| Тесты bindings, boost, textures, input, audio | Все 5 прошли на каждом backend |
-| Примеры square, textures, input, audio | Все 4 прошли в smoke-режиме на каждом backend |
-| Ошибка Clang и изменённый/неполный набор exports | Отклонены до публикации файлов |
-
-Итого: 19 проверок первого запуска (metadata + 9 сценариев × 2 backend),
-затем отдельная добавленная проверка ошибок генерации — все прошли.
-В итоговом CTest-проекте 20 тестов. Audio использует dummy-драйвер только
-в окружении соответствующего теста; слышимый вывод не проверялся.
-Проверка hello не дублируется: она не использует SDL-модуль.
-
-Metadata сравнивает result/argument type mangling (включая квалификаторы),
-имена аргументов, sideEffectFlags и unsafeOperation. Оба модуля сохраняют
-существующее повышение uint8/uint16 аргументов до uint для удобства daScript.
-Проверка полей/констант выполняется текущими сценариями; независимой генерации
-нового набора аннотаций в этой итерации нет.
+Runtime cases cover results, acquisition failure, normal/early cleanup and
+independent CPU pixels/bytes. GPU tests explicitly select Vulkan and D3D12.
+Audio dummy checks do not certify audible output. Missing-AOT rejection and
+negative generator/type/API-boundary cases remain part of the suite.
 
 ## Нюансы libclang
 
@@ -93,15 +57,11 @@ MAIN_BUILD по умолчанию build/ninja основного проекта
 или вынести каталог `-B` за пределы репозитория. Проверенный запуск использовал
 рабочую папку Codex. Результат signature comparison — generated/parity-api.json.
 
-## Вывод и дальнейшая работа
 
-CppGenBind подтвердил совместимость **функционального backend** на текущем
-Windows x64 allowlist и существующих interpreter-сценариях. Можно переходить
-к переносу policy для типов/полей/констант, сохраняя этот parity-набор как gate.
+## Operational limits
 
-Перед полным переключением остаются: самостоятельная генерация аннотаций
-с точным набором полей и opaque types, enum/flags/uint64 policy, валидация
-платформенных исключений, полный nested GPU create-info и AOT ресурсов.
-Строгий AOT ранее проверен только в маленьком tests/clangbind consumer;
-эти 50 функций и все нынешние ресурсные сценарии в AOT здесь не проверялись.
-Обычная сборка должна сохранить возможность работать без LLVM.
+Do not overlap no-LLVM consumer configure with clangbind builds/tests: daScript
+module configuration is shared. Restore generator configuration before gates.
+Do not edit scripts while their old AOT binary is under test; regenerate/rebuild
+before running changed scripts. Other platforms require separate profiles/builds.
+See [AOT details](clangbind-types-aot.md) and [production generation](clangbind-production.md).

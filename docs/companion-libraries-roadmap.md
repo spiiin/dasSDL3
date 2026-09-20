@@ -28,10 +28,10 @@ SDL_sound main ищет SDL3 без указанного рядом числен
 | Приоритет | Библиотека | Привязка и идиоматичный слой | Приёмочная проверка |
 | --- | --- | --- | --- |
 | L1 | SDL_image | `sdl3_image`: loaders для path/IO, surface/texture, format options; возврат в существующие owners | PNG/JPEG с alpha и без, повреждённые bytes, missing file; closeio ownership; пиксели и cleanup |
-| L1 | SDL_ttf | `sdl3_ttf`: font owner, UTF-8, metrics/shaping; сначала surface/renderer engine, GPU engine после G2–G4 | Несколько шрифтов/размеров, перенос строк, non-Latin/combining text, text editing; font/engine/text lifetimes |
+| L1 | SDL_ttf | `sdl3_ttf`: font owner, UTF-8, metrics/shaping; сначала surface/renderer engine, GPU engine после проверки версии и native GPU integration | Несколько шрифтов/размеров, перенос строк, non-Latin/combining text, text editing; font/engine/text lifetimes |
 | G/S | SDL_shadercross | Build tool сначала; runtime binding опционально | Один asset в поддерживаемых backend formats, reflection/layout, ошибка shader compile и стабильный cache |
 | L2 | SDL_mixer | `sdl3_mixer`: mixer/audio/track/group/decoder owners, load/play/stop/seek; управляемые подписки | Несколько дорожек, looping, fade, seek, completion и shutdown; offline/dummy отдельно от физического вывода |
-| L2 | SDL_net | `sdl3_net`: address resolver, client/server, stream/datagram; Result/Option для state, bytes API | Loopback, partial read, disconnect, DNS failure, pending/cancel lifecycle, datagram bounds |
+| L2 | SDL_net | `sdl3_net`: address resolver, client/server, stream/datagram; явные state/results, bytes API | Loopback, partial read, disconnect, DNS failure, pending/cancel lifecycle, datagram bounds |
 | L3 | SDL_sound | Опциональный decoder-модуль, если нужен более узкий decode-only путь | Decode chunk/rewind/EOF/error, передача PCM в core audio stream, освобождение input и sample |
 | L3 | Dear ImGui | Переиспользовать daScript imgui; SDL3 events/platform + SDLRenderer3 либо SDLGPU3 backend | Mouse/keyboard/text, DPI, resize, capture routing; lifecycle context/backend/device |
 | L3 | RmlUI | Отдельный C++ module, interface adapters для system/file/render/events | Один UI document, fonts/textures, event subscriptions, shutdown без удержанных script callbacks |
@@ -72,7 +72,7 @@ RmlUI — C++ интерфейсы, поэтому механический ге
 несовместимых копий SDL внутри одного приложения. Проверять static/shared,
 CRT, runtime DLL packaging и codecs; shader toolchain не тащить в core.
 
-Повторно использовать owners Surface/Texture/IOStream/Audio и SdlError из core,
+Повторно использовать доступные Surface/Texture/Audio scopes; IOStream ещё в плане,
 но соблюдать deleter каждой библиотеки. Init/refcount/shutdown модулей описать
 явно. Callbacks не вызывают общий script Context из произвольного worker thread.
 Сохраняемый IO/byte buffer живёт до decoder/async operation, а closeio-параметр
