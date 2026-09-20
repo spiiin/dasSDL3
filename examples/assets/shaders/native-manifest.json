@@ -1,0 +1,11 @@
+{
+  "native.comp.hlsl": "7b322054998697cb3a81b245a55625f873765d64ee0e451892bf864e99c29a64",
+  "native.comp.spv": "1f80aca90cce9f1ed4b394f870c4fecda504345e3b1c6c049ef6bc40494b1558",
+  "native.comp.dxil": "275c45cc5dd0e70770f02f18135554b3d71ffb9f9f03ad07b4066357444d9175",
+  "attachments.vert.hlsl": "5918c321cc36c3b4c9fcf83b8a205419327a9bfedcd2359ecc0a8d938ee45c31",
+  "attachments.vert.spv": "300e5573ae0ac62564eac07c497f696a65db50999b80a35338991483fa24d651",
+  "attachments.vert.dxil": "96dbbf4e5ae154eae574608c68baa37b89a288c57f484b8b31a3e15cc53ad559",
+  "attachments.frag.hlsl": "9debb05aa0ba901a1b279ebca1684a57a6b7e70a99ad036ab369df1c7e191be9",
+  "attachments.frag.spv": "94522514a2dcc3ba57a0fe07fcf86638e4df36105ca608aad443d02356e3bde1",
+  "attachments.frag.dxil": "35c0929ab62c7d5ab0e4a525e123d9f00c9e816e67ea7b102e2540ec169bd7ff"
+}

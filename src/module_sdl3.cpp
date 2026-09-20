@@ -15,6 +15,7 @@
 #include "sdl3_gpu_volume.h"
 #include "sdl3_gpu_fences.h"
 #include "sdl3_gpu_native.h"
+#include "sdl3_gpu_native_data.h"
 #ifdef DASSDL3_TYPES_INCLUDE
 #include DASSDL3_TYPES_INCLUDE
 #else
@@ -58,6 +59,29 @@ public:
         #else
         #include "generated/sdl3_functions.inc"
         #endif
+        addExtern<DAS_BIND_FUN(SDL_CreateGPUDeviceDefault)>(*this, lib, "SDL_CreateGPUDeviceDefault", SideEffects::worstDefault, "SDL_CreateGPUDeviceDefault");
+        addExtern<DAS_BIND_FUN(SDL_CreateGPUShaderBytes)>(*this, lib, "SDL_CreateGPUShaderBytes", SideEffects::worstDefault, "SDL_CreateGPUShaderBytes");
+        addExtern<DAS_BIND_FUN(SDL_CreateGPUComputePipelineBytes)>(*this, lib, "SDL_CreateGPUComputePipelineBytes", SideEffects::worstDefault, "SDL_CreateGPUComputePipelineBytes");
+        addExtern<DAS_BIND_FUN(SDL_LoadGPUShaderFile)>(*this, lib, "SDL_LoadGPUShaderFile", SideEffects::worstDefault, "SDL_LoadGPUShaderFile");
+        addExtern<DAS_BIND_FUN(SDL_LoadGPUComputePipelineFile)>(*this, lib, "SDL_LoadGPUComputePipelineFile", SideEffects::worstDefault, "SDL_LoadGPUComputePipelineFile");
+        addExtern<DAS_BIND_FUN(SDL_CreateGPUGraphicsPipelineArrays)>(*this, lib, "SDL_CreateGPUGraphicsPipelineArrays", SideEffects::worstDefault, "SDL_CreateGPUGraphicsPipelineArrays");
+        addExtern<DAS_BIND_FUN(SDL_WriteGPUTransferBufferBytes)>(*this, lib, "SDL_WriteGPUTransferBufferBytes", SideEffects::worstDefault, "SDL_WriteGPUTransferBufferBytes");
+        addExtern<DAS_BIND_FUN(SDL_ReadGPUTransferBufferBytes)>(*this, lib, "SDL_ReadGPUTransferBufferBytes", SideEffects::worstDefault, "SDL_ReadGPUTransferBufferBytes");
+        addExtern<DAS_BIND_FUN(SDL_CreateGPUBufferRef)>(*this, lib, "SDL_CreateGPUBufferRef", SideEffects::worstDefault, "SDL_CreateGPUBufferRef");
+        addExtern<DAS_BIND_FUN(SDL_CreateGPUTextureRef)>(*this, lib, "SDL_CreateGPUTextureRef", SideEffects::worstDefault, "SDL_CreateGPUTextureRef");
+        addExtern<DAS_BIND_FUN(SDL_CreateGPUTransferBufferRef)>(*this, lib, "SDL_CreateGPUTransferBufferRef", SideEffects::worstDefault, "SDL_CreateGPUTransferBufferRef");
+        addExtern<DAS_BIND_FUN(SDL_CreateGPUSamplerRef)>(*this, lib, "SDL_CreateGPUSamplerRef", SideEffects::worstDefault, "SDL_CreateGPUSamplerRef");
+        addExtern<DAS_BIND_FUN(SDL_SetGPUViewportRef)>(*this, lib, "SDL_SetGPUViewportRef", SideEffects::worstDefault, "SDL_SetGPUViewportRef");
+        addExtern<DAS_BIND_FUN(SDL_SetGPUScissorRef)>(*this, lib, "SDL_SetGPUScissorRef", SideEffects::worstDefault, "SDL_SetGPUScissorRef");
+        addExtern<DAS_BIND_FUN(SDL_BlitGPUTextureRef)>(*this, lib, "SDL_BlitGPUTextureRef", SideEffects::worstDefault, "SDL_BlitGPUTextureRef");
+        addExtern<DAS_BIND_FUN(SDL_BindGPUIndexBufferRef)>(*this, lib, "SDL_BindGPUIndexBufferRef", SideEffects::worstDefault, "SDL_BindGPUIndexBufferRef");
+        addExtern<DAS_BIND_FUN(SDL_UploadToGPUBufferRef)>(*this, lib, "SDL_UploadToGPUBufferRef", SideEffects::worstDefault, "SDL_UploadToGPUBufferRef");
+        addExtern<DAS_BIND_FUN(SDL_UploadToGPUTextureRef)>(*this, lib, "SDL_UploadToGPUTextureRef", SideEffects::worstDefault, "SDL_UploadToGPUTextureRef");
+        addExtern<DAS_BIND_FUN(SDL_DownloadFromGPUBufferRef)>(*this, lib, "SDL_DownloadFromGPUBufferRef", SideEffects::worstDefault, "SDL_DownloadFromGPUBufferRef");
+        addExtern<DAS_BIND_FUN(SDL_DownloadFromGPUTextureRef)>(*this, lib, "SDL_DownloadFromGPUTextureRef", SideEffects::worstDefault, "SDL_DownloadFromGPUTextureRef");
+        addExtern<DAS_BIND_FUN(SDL_CopyGPUBufferToBufferRef)>(*this, lib, "SDL_CopyGPUBufferToBufferRef", SideEffects::worstDefault, "SDL_CopyGPUBufferToBufferRef");
+        addExtern<DAS_BIND_FUN(SDL_CopyGPUTextureToTextureRef)>(*this, lib, "SDL_CopyGPUTextureToTextureRef", SideEffects::worstDefault, "SDL_CopyGPUTextureToTextureRef");
+        addExtern<DAS_BIND_FUN(SDL_BeginGPURenderPassDepthArray)>(*this, lib, "SDL_BeginGPURenderPassDepthArray", SideEffects::worstDefault, "SDL_BeginGPURenderPassDepthArray");
         addExtern<DAS_BIND_FUN(SDL_AcquireGPUSwapchainTextureRef)>(*this, lib, "SDL_AcquireGPUSwapchainTextureRef", SideEffects::worstDefault, "SDL_AcquireGPUSwapchainTextureRef");
         addExtern<DAS_BIND_FUN(SDL_WaitAndAcquireGPUSwapchainTextureRef)>(*this, lib, "SDL_WaitAndAcquireGPUSwapchainTextureRef", SideEffects::worstDefault, "SDL_WaitAndAcquireGPUSwapchainTextureRef");
         addExtern<DAS_BIND_FUN(SDL_BeginGPURenderPassArray)>(*this, lib, "SDL_BeginGPURenderPassArray", SideEffects::worstDefault, "SDL_BeginGPURenderPassArray");

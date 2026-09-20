@@ -16,6 +16,7 @@
 #include "sdl3_gpu_volume.h"
 #include "sdl3_gpu_fences.h"
 #include "sdl3_gpu_native.h"
+#include "sdl3_gpu_native_data.h"
 #include "parity_types.inc"
 #include "sdl3_texture_load.h"
 #include "aot_recover.h"

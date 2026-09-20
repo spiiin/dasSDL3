@@ -23,8 +23,8 @@ do not keep descriptors referring to expired script storage.
 The pinned daScript annotation treats const-pointee descriptor fields such as
 shader `code` and pipeline `color_target_descriptions` as non-assignable views.
 They are exposed for inspection, but ordinary script assignment does not populate
-them. Safe call-scoped creation adapters are still needed for complete native
-shader/pipeline construction from script arrays. `entrypoint` is represented as
+them. Call-scoped creation adapters now populate them from script arrays without
+retaining pointers: see [native boost](gpu-native-boost.md). `entrypoint` is represented as
 a string (assigning a null pointer is a type error). Generated declaration
 coverage must not be presented as unrestricted script descriptor construction.
 
@@ -75,10 +75,10 @@ functions on Vulkan and 90 on D3D12, through both generators and AOT. The two
 D3D12 debug-group exclusions are explicit. Pixel and byte oracles verify actual
 GPU work, including the by-value color argument.
 
-Before declaring P6 complete: expand attachment/format/state combinations and
-array/out adapter tests, and provide safe native shader/pipeline construction
-adapters for const-pointer descriptors. The raw test deliberately uses local
-addresses and test-owned backing storage; it does not solve public descriptor
-construction. Retain pinned D3D12 debug-group limitations until verified.
-General Properties API ergonomics, other platform profiles and shader DSL
-remain separate work.
+The five follow-up implementation steps are covered by the native creation/data
+adapters, defer scopes, MRT/MSAA/depth/stencil tests and public examples 48–50;
+see [native boost](gpu-native-boost.md). Raw tests retain their pointer ABI role,
+while the new examples need no test fixture or script address expression.
+Retain pinned backend limitations and explicit native lifetime preconditions.
+This does not certify every parameter combination or other platform profile.
+General Properties API ergonomics and shader DSL remain separate work.
