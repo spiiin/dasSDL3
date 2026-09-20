@@ -8,14 +8,10 @@ def public vertex(position : float2; rgba : float4; uv : float2 = float2(0.0)) :
 }
 
 def public draw_geometry(renderer : SDL_Renderer?; vertices : array<SDL_Vertex>; texture : SDL_Texture? = null) {
-    if (!SDL_RenderGeometryVertices(renderer, texture, vertices)) {
-        panic("draw_geometry: {SDL_GetError()}")
-    }
+    return SDL_RenderGeometryVertices(renderer, texture, vertices)
 }
 
 def public draw_geometry(renderer : SDL_Renderer?; vertices : array<SDL_Vertex>;
                          indices : array<int>; texture : SDL_Texture? = null) {
-    if (!SDL_RenderGeometryIndices(renderer, texture, vertices, indices)) {
-        panic("draw_geometry: {SDL_GetError()}")
-    }
+    return SDL_RenderGeometryIndices(renderer, texture, vertices, indices)
 }

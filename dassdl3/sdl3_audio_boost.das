@@ -1,23 +1,17 @@
 options gen2
+require daslib/defer
 module sdl3_audio_boost shared public
 require dassdl3/sdl3_boost public
 
-[inline]
-def private check_audio(ok : bool; operation : string) {
-    if (!ok) { panic("{operation}: {SDL_GetError()}") }
-}
 def public load_wav(path : string) {
     var wav = SDL_LoadWavOwned(path)
-    if (wav == null) { panic("SDL_LoadWAV({path}): {SDL_GetError()}") }
     return wav
 }
 def public destroy_wav(wav : SDL_Wav?) { SDL_DestroyWav(wav) }
 def public wav_spec(wav : SDL_Wav?) {
-    verify(wav != null, "wav_spec: null WAV")
     return SDL_WavSpec(wav)
 }
 def public wav_size(wav : SDL_Wav?) : uint {
-    verify(wav != null, "wav_size: null WAV")
     return SDL_WavSize(wav)
 }
 def public audio_format(spec : SDL_AudioSpec) : uint { return SDL_AudioSpecFormat(spec) }
@@ -26,16 +20,19 @@ def public audio_spec(format : uint; channels, frequency : int) {
 }
 def public with_wav(path : string; blk : block<(wav : SDL_Wav?) : void>) {
     var wav = load_wav(path)
-    SDL_ScopeWav(wav,blk)
+    if (wav == null) { return false }
+    {
+        defer() { SDL_DestroyWav(wav) }
+        blk(wav)
+        return true
+    }
 }
 def public create_audio_stream(src, dst : SDL_AudioSpec) {
     var stream = SDL_CreateAudioStreamRef(src, dst)
-    if (stream == null) { panic("SDL_CreateAudioStream: {SDL_GetError()}") }
     return stream
 }
 def public open_playback(spec : SDL_AudioSpec) {
     var stream = SDL_OpenPlaybackStream(spec)
-    if (stream == null) { panic("SDL_OpenAudioDeviceStream: {SDL_GetError()}") }
     return stream
 }
 def public destroy_audio_stream(stream : SDL_AudioStream?) {
@@ -43,48 +40,50 @@ def public destroy_audio_stream(stream : SDL_AudioStream?) {
 }
 def private with_owned_audio_stream(stream : SDL_AudioStream?;
                                    blk : block<(stream : SDL_AudioStream?) : void>) {
-    SDL_ScopeAudioStream(stream,blk)
+    if (stream == null) { return false }
+    {
+        defer() { SDL_DestroyAudioStream(stream) }
+        blk(stream)
+        return true
+    }
 }
 def public with_audio_stream(src, dst : SDL_AudioSpec;
                              blk : block<(stream : SDL_AudioStream?) : void>) {
     var stream = create_audio_stream(src, dst)
-    with_owned_audio_stream(stream, blk)
+    return with_owned_audio_stream(stream, blk)
 }
 def public with_playback(spec : SDL_AudioSpec;
                          blk : block<(stream : SDL_AudioStream?) : void>) {
     var stream = open_playback(spec)
-    with_owned_audio_stream(stream, blk)
+    return with_owned_audio_stream(stream, blk)
 }
 def public queue_wav(stream : SDL_AudioStream?; wav : SDL_Wav?) {
-    check_audio(SDL_QueueWav(stream, wav), "queue_wav")
+    return SDL_QueueWav(stream, wav)
 }
 def public put_audio(stream : SDL_AudioStream?; bytes : array<uint8>) {
-    check_audio(SDL_PutAudioBytes(stream, bytes), "put_audio")
+    return SDL_PutAudioBytes(stream, bytes)
 }
 def public read_audio(stream : SDL_AudioStream?; var bytes : array<uint8>) : int {
     let read = SDL_GetAudioBytes(stream, bytes)
-    if (read < 0) { panic("read_audio: {SDL_GetError()}") }
     return read
 }
 def public queued_audio(stream : SDL_AudioStream?) : int {
     let size = SDL_GetAudioStreamQueued(stream)
-    if (size < 0) { panic("SDL_GetAudioStreamQueued: {SDL_GetError()}") }
     return size
 }
 def public available_audio(stream : SDL_AudioStream?) : int {
     let size = SDL_GetAudioStreamAvailable(stream)
-    if (size < 0) { panic("SDL_GetAudioStreamAvailable: {SDL_GetError()}") }
     return size
 }
 def public flush_audio(stream : SDL_AudioStream?) {
-    check_audio(SDL_FlushAudioStream(stream), "SDL_FlushAudioStream")
+    return SDL_FlushAudioStream(stream)
 }
 def public clear_audio(stream : SDL_AudioStream?) {
-    check_audio(SDL_ClearAudioStream(stream), "SDL_ClearAudioStream")
+    return SDL_ClearAudioStream(stream)
 }
 def public resume_audio(stream : SDL_AudioStream?) {
-    check_audio(SDL_ResumeAudioStreamDevice(stream), "SDL_ResumeAudioStreamDevice")
+    return SDL_ResumeAudioStreamDevice(stream)
 }
 def public pause_audio(stream : SDL_AudioStream?) {
-    check_audio(SDL_PauseAudioStreamDevice(stream), "SDL_PauseAudioStreamDevice")
+    return SDL_PauseAudioStreamDevice(stream)
 }

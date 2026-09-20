@@ -1,25 +1,19 @@
 options gen2
+require daslib/defer
 module sdl3_boost shared public
 require sdl3 public
 
 // Synchronous helpers. Raw pointers are borrowed inside the with_* blocks.
-[inline]
-def private check_sdl(ok : bool; operation : string) {
-    if (!ok) { panic("{operation}: {SDL_GetError()}") }
-}
 def public sdl_init(flags : uint = SDL_INIT_VIDEO) {
-    check_sdl(SDL_Init(flags), "SDL_Init")
+    return SDL_Init(flags)
 }
 def public create_window(title : string; width, height : int;
                          flags : uint64 = SDL_WINDOW_RESIZABLE) {
     var window = SDL_CreateWindow(title, width, height, flags)
-    if (window == null) { panic("SDL_CreateWindow: {SDL_GetError()}") }
     return window
 }
 def public create_renderer(window : SDL_Window?; driver : string = "") {
-    verify(window != null, "create_renderer: null window")
     var renderer = SDL_CreateRenderer(window, driver)
-    if (renderer == null) { panic("SDL_CreateRenderer: {SDL_GetError()}") }
     return renderer
 }
 def public destroy_renderer(renderer : SDL_Renderer?) {
@@ -32,54 +26,65 @@ def public poll_event(var event : SDL_Event) : bool {
     return SDL_PollEventRef(event)
 }
 def public push_event(var event : SDL_Event) {
-    check_sdl(SDL_PushEventRef(event), "SDL_PushEvent")
+    return SDL_PushEventRef(event)
 }
 def public should_close(event : SDL_Event) : bool {
     return SDL_EventIsQuit(event) || SDL_EventIsEscape(event)
 }
 def public set_color(renderer : SDL_Renderer?; rgba : uint4) {
-    verify(renderer != null, "set_color: null renderer")
-    verify(rgba.x <= 255u && rgba.y <= 255u && rgba.z <= 255u && rgba.w <= 255u,
-           "set_color: components must be in 0..255")
-    check_sdl(SDL_SetRenderDrawColor(renderer, rgba.x, rgba.y, rgba.z, rgba.w), "SDL_SetRenderDrawColor")
+    if (rgba.x > 255u || rgba.y > 255u || rgba.z > 255u || rgba.w > 255u) {
+        return SDL_SetErrorMessage("set_color: components must be in 0..255")
+    }
+    return SDL_SetRenderDrawColor(renderer, rgba.x, rgba.y, rgba.z, rgba.w)
 }
 def public clear(renderer : SDL_Renderer?; rgba : uint4 = uint4(24u, 28u, 40u, 255u)) {
-    renderer |> set_color(rgba)
-    check_sdl(SDL_RenderClear(renderer), "SDL_RenderClear")
+    if (!(renderer |> set_color(rgba))) { return false }
+    return SDL_RenderClear(renderer)
 }
 def public fill_rect(renderer : SDL_Renderer?; rect : SDL_FRect) {
-    verify(renderer != null, "fill_rect: null renderer")
-    check_sdl(SDL_RenderFillRectRef(renderer, rect), "SDL_RenderFillRect")
+    return SDL_RenderFillRectRef(renderer, rect)
 }
 def public present(renderer : SDL_Renderer?) {
-    verify(renderer != null, "present: null renderer")
-    check_sdl(SDL_RenderPresent(renderer), "SDL_RenderPresent")
+    return SDL_RenderPresent(renderer)
 }
 
-// Native owned scopes release resources on normal return and panic.
+// Successful scopes defer cleanup on normal and early return; false skips the block.
 def public with_sdl(flags : uint; blk : block<() : void>) {
-    sdl_init(flags)
-    SDL_ScopeSDL(blk)
+    if (!sdl_init(flags)) { return false }
+    {
+        defer() { SDL_Quit() }
+        blk()
+        return true
+    }
 }
 
 def public with_sdl(blk : block<() : void>) {
-    with_sdl(SDL_INIT_VIDEO, blk)
+    return with_sdl(SDL_INIT_VIDEO, blk)
 }
 
 def public with_window(title : string; width, height : int; flags : uint64;
                        blk : block<(window : SDL_Window?) : void>) {
     var window = create_window(title, width, height, flags)
-    SDL_ScopeWindow(window,blk)
+    if (window == null) { return false }
+    {
+        defer() { SDL_DestroyWindow(window) }
+        blk(window)
+        return true
+    }
 }
 
 def public with_renderer(window : SDL_Window?; blk : block<(renderer : SDL_Renderer?) : void>) {
     var renderer = create_renderer(window)
-    SDL_ScopeRenderer(renderer,blk)
+    if (renderer == null) { return false }
+    {
+        defer() { SDL_DestroyRenderer(renderer) }
+        blk(renderer)
+        return true
+    }
 }
 
 def public load_bmp(path : string) {
     var surface = SDL_LoadBMP(path)
-    if (surface == null) { panic("SDL_LoadBMP({path}): {SDL_GetError()}") }
     return surface
 }
 
@@ -93,54 +98,57 @@ def public destroy_texture(texture : SDL_Texture?) {
 
 // SDL copies the pixels; the caller still owns the surface.
 def public create_texture(renderer : SDL_Renderer?; surface : SDL_Surface?) {
-    verify(renderer != null, "create_texture: null renderer")
-    verify(surface != null, "create_texture: null surface")
     var texture = SDL_CreateTextureFromSurface(renderer, surface)
-    if (texture == null) { panic("SDL_CreateTextureFromSurface: {SDL_GetError()}") }
     return texture
 }
 
-def public texture_size(texture : SDL_Texture?) : float2 {
-    verify(texture != null, "texture_size: null texture")
+def public texture_size(texture : SDL_Texture?; var size : float2&) : bool {
     var w, h : float
-    check_sdl(SDL_GetTextureSizeRef(texture, w, h), "SDL_GetTextureSize")
-    return float2(w, h)
+    if (!SDL_GetTextureSizeRef(texture, w, h)) { return false }
+    size = float2(w, h)
+    return true
 }
 
 // No rectangles: use the whole source and current rendering target.
 def public draw_texture(renderer : SDL_Renderer?; texture : SDL_Texture?) {
-    verify(renderer != null && texture != null, "draw_texture: null handle")
-    check_sdl(SDL_RenderTexture(renderer, texture, null, null), "SDL_RenderTexture")
+    return SDL_RenderTexture(renderer, texture, null, null)
 }
 
 // One rectangle: whole source scaled to destination. Two: source crop + destination.
 def public draw_texture(renderer : SDL_Renderer?; texture : SDL_Texture?; dst : SDL_FRect) {
-    verify(renderer != null && texture != null, "draw_texture: null handle")
-    check_sdl(SDL_RenderTextureToRect(renderer, texture, dst), "SDL_RenderTexture")
+    return SDL_RenderTextureToRect(renderer, texture, dst)
 }
 
 def public draw_texture(renderer : SDL_Renderer?; texture : SDL_Texture?;
                         src, dst : SDL_FRect) {
-    verify(renderer != null && texture != null, "draw_texture: null handle")
-    check_sdl(SDL_RenderTextureRects(renderer, texture, src, dst), "SDL_RenderTexture")
+    return SDL_RenderTextureRects(renderer, texture, src, dst)
 }
 
 def public with_bmp(path : string; blk : block<(surface : SDL_Surface?) : void>) {
     var surface = load_bmp(path)
-    SDL_ScopeSurface(surface,blk)
+    if (surface == null) { return false }
+    {
+        defer() { SDL_DestroySurface(surface) }
+        blk(surface)
+        return true
+    }
 }
 
 // Release the temporary CPU surface before returning the owned GPU texture.
 def public load_texture(renderer : SDL_Renderer?; path : string) {
     var texture = SDL_LoadBMPTextureOwned(renderer,path)
-    if (texture == null) { panic("load_texture({path}): {SDL_GetError()}") }
     return texture
 }
 
 def public with_texture(renderer : SDL_Renderer?; path : string;
                         blk : block<(texture : SDL_Texture?) : void>) {
     var texture = load_texture(renderer, path)
-    SDL_ScopeTexture(texture,blk)
+    if (texture == null) { return false }
+    {
+        defer() { SDL_DestroyTexture(texture) }
+        blk(texture)
+        return true
+    }
 }
 
 // Input reads are snapshots; poll events (or pump them) before querying key state.
@@ -179,20 +187,21 @@ def public input_window_id(event : SDL_Event) : uint { return SDL_InputWindowID(
 
 // Global Quit applies to all windows; Escape and close requests match this window.
 def public should_close(event : SDL_Event; window : SDL_Window?) : bool {
-    verify(window != null, "should_close: null window")
     if (SDL_EventIsQuit(event)) { return true }
     return (input_window_id(event) == SDL_GetWindowID(window) &&
            (SDL_EventIsEscape(event) || event.event_type == SDL_EVENT_WINDOW_CLOSE_REQUESTED))
 }
 def public set_title(window : SDL_Window?; title : string) {
-    verify(window != null, "set_title: null window")
-    check_sdl(SDL_SetWindowTitle(window, title), "SDL_SetWindowTitle")
+    return SDL_SetWindowTitle(window, title)
 }
 
 // Preserve an already-active session. Do not start/stop input manually in the block.
 def public with_text_input(window : SDL_Window?; blk : block<() : void>) {
-    verify(window != null, "with_text_input: null window")
     let owned = !SDL_TextInputActive(window)
-    if (owned) { check_sdl(SDL_StartTextInput(window), "SDL_StartTextInput") }
-    SDL_ScopeTextInput(window,owned,blk)
+    if (owned && !SDL_StartTextInput(window)) { return false }
+    {
+        defer() { if (owned) { SDL_StopTextInput(window) } }
+        blk()
+        return true
+    }
 }
