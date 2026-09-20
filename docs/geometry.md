@@ -1,5 +1,9 @@
 # Geometry: проверяемые массивы вершин и индексов
 
+> Current error/lifetime contract: [error-handling.md](error-handling.md).
+> SDL failures return values; scopes use defer. Earlier panic/protected-scope
+> descriptions below are historical and no longer describe the public binding.
+
 Профиль: SDL 3.2.18, Windows x64/MSVC, закреплённый daScript.
 `require dassdl3/sdl3_geometry_boost` переэкспортирует базовый boost.
 Raw SDL_RenderGeometry также доступен; проверки ниже относятся к helpers.

@@ -11,41 +11,42 @@ def queue_input(kind, id : uint) {
 [export]
 def main(smoke : bool) : int {
     verify(smoke)
-    with_sdl() {
-        with_window("input tests", 128, 128, SDL_WINDOW_HIDDEN) $(window) {
+    let scope_ok_0 = with_sdl() {
+        let scope_ok_1 = with_window("input tests", 128, 128, SDL_WINDOW_HIDDEN) $(window) {
             let id = SDL_GetWindowID(window)
             verify(!SDL_TextInputActive(window))
             for (mode in range(3)) {
                 var caught = false
                 var error = ""
-                try {
-                    with_text_input(window) {
+                {
+                    let scope_ok_2 = with_text_input(window) {
                         verify(SDL_TextInputActive(window))
                         // Inner scope must not stop a session owned by the outer one.
-                        with_text_input(window) { verify(SDL_TextInputActive(window)) }
+                        let scope_ok_3 = with_text_input(window) { verify(SDL_TextInputActive(window)) }
+                        verify(scope_ok_3)
                         verify(SDL_TextInputActive(window))
                         if (mode == 1) { return }
-                        if (mode == 2) { panic("input panic") }
+                        if (mode == 2) { caught = !set_title(null,"expected SDL failure"); return }
                     }
-                } recover {
-                    caught = true
-                    error := rtrim(this_context().last_exception)
+                    verify(scope_ok_2)
                 }
                 verify(caught == (mode == 2))
-                if (mode == 2) { verify(error == "input panic") }
+
                 verify(!SDL_TextInputActive(window), "text input survived its scope")
                 verify(SDL_GetWindowID(window) == id, "outer block argument corrupted")
             }
             verify(SDL_StartTextInput(window))
-            with_text_input(window) { verify(SDL_TextInputActive(window)) }
+            let scope_ok_4 = with_text_input(window) { verify(SDL_TextInputActive(window)) }
+            verify(scope_ok_4)
             verify(SDL_TextInputActive(window), "borrowed text session stopped")
             verify(SDL_StopTextInput(window))
-            with_text_input(window) {
+            let scope_ok_5 = with_text_input(window) {
                 var caught = false
-                try { with_text_input(window) { panic("nested input") } } recover { caught = true }
-                verify(caught && SDL_TextInputActive(window), "inner panic stopped outer input")
-                verify(SDL_GetWindowID(window) == id, "nested recovery corrupted window")
+                { with_text_input(window) { caught = !set_title(null,"expected SDL failure"); return } }
+                verify(caught && SDL_TextInputActive(window), "inner return stopped outer input")
+                verify(SDL_GetWindowID(window) == id, "nested return corrupted window")
             }
+            verify(scope_ok_5)
             verify(!SDL_TextInputActive(window))
 
             var key : SDL_KeyboardEvent
@@ -64,7 +65,7 @@ def main(smoke : bool) : int {
             text = ""
             // Drain platform startup events before injecting deterministic input.
             while (poll_event(event)) { }
-            with_text_input(window) {
+            let scope_ok_6 = with_text_input(window) {
                 queue_input(SDL_EVENT_KEY_DOWN, id)
                 queue_input(SDL_EVENT_KEY_UP, id)
                 queue_input(SDL_EVENT_MOUSE_MOTION, id)
@@ -117,6 +118,7 @@ def main(smoke : bool) : int {
                 }
                 verify(seen == 255, "input queue lost or duplicated events")
             }
+            verify(scope_ok_6)
             // Native event text memory changes; retained script strings must not change.
             SDLTestMutateInputText()
             verify(text == "Привет 🌍" && editing == "日本", "event text was borrowed")
@@ -138,12 +140,15 @@ def main(smoke : bool) : int {
             let buttons = mouse_state(position)
             verify(position.x != -1000000.0 && position.y != -1000000.0, "mouse output passed by value")
             window |> set_title("input tests complete")
-            with_window("other window", 64, 64, SDL_WINDOW_HIDDEN) $(other) {
+            let scope_ok_7 = with_window("other window", 64, 64, SDL_WINDOW_HIDDEN) $(other) {
                 let close = SDLTestInputEvent(SDL_EVENT_WINDOW_CLOSE_REQUESTED, SDL_GetWindowID(other))
                 verify(!should_close(close, window) && should_close(close, other))
             }
+            verify(scope_ok_7)
         }
+        verify(scope_ok_1)
     }
+    verify(scope_ok_0)
     verify(SDL_WasInit(SDL_INIT_VIDEO) == 0u)
     print("Input: typed events, UTF-8 copy, union guards, routing and scoped text input: OK\n")
     return 0

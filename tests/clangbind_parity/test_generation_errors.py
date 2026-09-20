@@ -39,4 +39,27 @@ with tempfile.TemporaryDirectory(prefix='sdl-parity-errors-') as temp:
         log = result.stdout + result.stderr
         if result.returncode == 0 or diagnostic not in log or output.exists():
             raise SystemExit(f'Invalid header or signature mismatch accepted:\n{log}')
-print('Clang errors, changed signatures, missing fields and bitfields rejected before publishing output')
+    (headers / 'SDL.h').write_text(original_header, encoding='utf-8')
+    version.write_text(original_version, encoding='utf-8')
+    audio.write_text(original_audio, encoding='utf-8')
+    gpu = headers / 'SDL_gpu.h'
+    original_gpu = gpu.read_text(encoding='utf-8')
+    for old, new, diagnostic in (
+        ('typedef enum SDL_GPUFillMode', 'typedef enum RenamedGPUFillMode', 'Missing enum SDL_GPUFillMode'),
+        ('SDL_GPU_FILLMODE_FILL,', 'SDL_GPU_FILLMODE_RENAMED,', 'Enum members differ from policy'),
+        ('SDL_GPU_FILLMODE_FILL,', 'SDL_GPU_FILLMODE_FILL = 2147483648ULL,', 'Enum value outside supported int32 range'),
+        ('typedef enum SDL_GPUFillMode', 'typedef enum SDL_GPUFillMode : unsigned long long', 'Unsupported enum width'),
+    ):
+        assert original_gpu.count(old) == 1, old
+        modified = original_gpu.replace(old,new)
+        if diagnostic == 'Enum value outside supported int32 range':
+            modified = modified.replace('typedef enum SDL_GPUFillMode', 'typedef enum SDL_GPUFillMode : unsigned int')
+        gpu.write_text(modified, encoding='utf-8')
+        output = root / 'unpublished_enum'
+        result = subprocess.run([sys.executable, generator, '--daslang', daslang,
+            '--sdl-include', str(headers.parent), '--sdk', sdk, '--output', str(output)],
+            capture_output=True, text=True, errors='replace')
+        log = result.stdout + result.stderr
+        if result.returncode == 0 or diagnostic not in log or output.exists():
+            raise SystemExit(f'Invalid enum ({diagnostic}) declaration accepted:\n{log}')
+print('Clang/signature/field/bitfield failures plus missing, changed, wide-value and 64-bit enums reject before publishing')

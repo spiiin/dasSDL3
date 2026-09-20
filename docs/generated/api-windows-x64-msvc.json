@@ -951,7 +951,7 @@
       "line": 95,
       "id": "enum:SDL_FlipMode",
       "category": "Surface",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -981,7 +981,7 @@
       "line": 1151,
       "id": "enum:SDL_GPUBlendFactor",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -991,7 +991,7 @@
       "line": 1130,
       "id": "enum:SDL_GPUBlendOp",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1001,7 +1001,7 @@
       "line": 1085,
       "id": "enum:SDL_GPUCompareOp",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1011,7 +1011,7 @@
       "line": 874,
       "id": "enum:SDL_GPUCubeMapFace",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1021,7 +1021,7 @@
       "line": 1057,
       "id": "enum:SDL_GPUCullMode",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1031,7 +1031,7 @@
       "line": 1044,
       "id": "enum:SDL_GPUFillMode",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1041,7 +1041,7 @@
       "line": 1190,
       "id": "enum:SDL_GPUFilter",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1051,7 +1051,7 @@
       "line": 1072,
       "id": "enum:SDL_GPUFrontFace",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1061,7 +1061,7 @@
       "line": 585,
       "id": "enum:SDL_GPUIndexElementSize",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1071,7 +1071,7 @@
       "line": 555,
       "id": "enum:SDL_GPULoadOp",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1081,7 +1081,7 @@
       "line": 1249,
       "id": "enum:SDL_GPUPresentMode",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1091,7 +1091,7 @@
       "line": 538,
       "id": "enum:SDL_GPUPrimitiveType",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1101,7 +1101,7 @@
       "line": 858,
       "id": "enum:SDL_GPUSampleCount",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1111,7 +1111,7 @@
       "line": 1217,
       "id": "enum:SDL_GPUSamplerAddressMode",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1121,7 +1121,7 @@
       "line": 1203,
       "id": "enum:SDL_GPUSamplerMipmapMode",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1131,7 +1131,7 @@
       "line": 933,
       "id": "enum:SDL_GPUShaderStage",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1141,7 +1141,7 @@
       "line": 1106,
       "id": "enum:SDL_GPUStencilOp",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1151,7 +1151,7 @@
       "line": 570,
       "id": "enum:SDL_GPUStoreOp",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1161,7 +1161,7 @@
       "line": 1282,
       "id": "enum:SDL_GPUSwapchainComposition",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1171,7 +1171,7 @@
       "line": 676,
       "id": "enum:SDL_GPUTextureFormat",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1181,7 +1181,7 @@
       "line": 838,
       "id": "enum:SDL_GPUTextureType",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1191,7 +1191,7 @@
       "line": 920,
       "id": "enum:SDL_GPUTransferBufferUsage",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1201,7 +1201,7 @@
       "line": 965,
       "id": "enum:SDL_GPUVertexElementFormat",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1211,7 +1211,7 @@
       "line": 1031,
       "id": "enum:SDL_GPUVertexInputRate",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -4118,7 +4118,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_FLIP_HORIZONTAL",
       "category": "Surface",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -4129,7 +4129,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_FLIP_NONE",
       "category": "Surface",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -4140,7 +4140,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_FLIP_VERTICAL",
       "category": "Surface",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5273,7 +5273,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_BLENDFACTOR_CONSTANT_COLOR",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5284,7 +5284,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_BLENDFACTOR_DST_ALPHA",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5295,7 +5295,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_BLENDFACTOR_DST_COLOR",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5306,7 +5306,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_BLENDFACTOR_INVALID",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5317,7 +5317,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_BLENDFACTOR_ONE",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5328,7 +5328,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_BLENDFACTOR_ONE_MINUS_CONSTANT_COLOR",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5339,7 +5339,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_BLENDFACTOR_ONE_MINUS_DST_ALPHA",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5350,7 +5350,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_BLENDFACTOR_ONE_MINUS_DST_COLOR",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5361,7 +5361,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_BLENDFACTOR_ONE_MINUS_SRC_ALPHA",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5372,7 +5372,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_BLENDFACTOR_ONE_MINUS_SRC_COLOR",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5383,7 +5383,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_BLENDFACTOR_SRC_ALPHA",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5394,7 +5394,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_BLENDFACTOR_SRC_ALPHA_SATURATE",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5405,7 +5405,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_BLENDFACTOR_SRC_COLOR",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5416,7 +5416,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_BLENDFACTOR_ZERO",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5427,7 +5427,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_BLENDOP_ADD",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5438,7 +5438,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_BLENDOP_INVALID",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5449,7 +5449,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_BLENDOP_MAX",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5460,7 +5460,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_BLENDOP_MIN",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5471,7 +5471,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_BLENDOP_REVERSE_SUBTRACT",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5482,7 +5482,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_BLENDOP_SUBTRACT",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5493,7 +5493,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_COMPAREOP_ALWAYS",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5504,7 +5504,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_COMPAREOP_EQUAL",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5515,7 +5515,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_COMPAREOP_GREATER",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5526,7 +5526,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_COMPAREOP_GREATER_OR_EQUAL",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5537,7 +5537,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_COMPAREOP_INVALID",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5548,7 +5548,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_COMPAREOP_LESS",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5559,7 +5559,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_COMPAREOP_LESS_OR_EQUAL",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5570,7 +5570,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_COMPAREOP_NEVER",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5581,7 +5581,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_COMPAREOP_NOT_EQUAL",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5592,7 +5592,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_CUBEMAPFACE_NEGATIVEX",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5603,7 +5603,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_CUBEMAPFACE_NEGATIVEY",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5614,7 +5614,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_CUBEMAPFACE_NEGATIVEZ",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5625,7 +5625,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_CUBEMAPFACE_POSITIVEX",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5636,7 +5636,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_CUBEMAPFACE_POSITIVEY",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5647,7 +5647,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_CUBEMAPFACE_POSITIVEZ",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5658,7 +5658,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_CULLMODE_BACK",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5669,7 +5669,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_CULLMODE_FRONT",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5680,7 +5680,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_CULLMODE_NONE",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5691,7 +5691,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_FILLMODE_FILL",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5702,7 +5702,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_FILLMODE_LINE",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5735,7 +5735,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_FRONTFACE_CLOCKWISE",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5746,7 +5746,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_FRONTFACE_COUNTER_CLOCKWISE",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5757,7 +5757,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_INDEXELEMENTSIZE_16BIT",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5768,7 +5768,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_INDEXELEMENTSIZE_32BIT",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5779,7 +5779,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_LOADOP_CLEAR",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5790,7 +5790,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_LOADOP_DONT_CARE",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5801,7 +5801,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_LOADOP_LOAD",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5845,7 +5845,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_PRIMITIVETYPE_LINELIST",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5856,7 +5856,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_PRIMITIVETYPE_LINESTRIP",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5867,7 +5867,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_PRIMITIVETYPE_POINTLIST",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5878,7 +5878,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_PRIMITIVETYPE_TRIANGLELIST",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5889,7 +5889,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_PRIMITIVETYPE_TRIANGLESTRIP",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5944,7 +5944,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5955,7 +5955,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_SAMPLERADDRESSMODE_MIRRORED_REPEAT",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5966,7 +5966,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_SAMPLERADDRESSMODE_REPEAT",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5977,7 +5977,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_SAMPLERMIPMAPMODE_LINEAR",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5988,7 +5988,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_SAMPLERMIPMAPMODE_NEAREST",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5999,7 +5999,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_SHADERSTAGE_FRAGMENT",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -6010,7 +6010,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_SHADERSTAGE_VERTEX",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -6021,7 +6021,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_STENCILOP_DECREMENT_AND_CLAMP",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -6032,7 +6032,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_STENCILOP_DECREMENT_AND_WRAP",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -6043,7 +6043,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_STENCILOP_INCREMENT_AND_CLAMP",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -6054,7 +6054,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_STENCILOP_INCREMENT_AND_WRAP",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -6065,7 +6065,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_STENCILOP_INVALID",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -6076,7 +6076,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_STENCILOP_INVERT",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -6087,7 +6087,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_STENCILOP_KEEP",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -6098,7 +6098,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_STENCILOP_REPLACE",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -6109,7 +6109,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_STENCILOP_ZERO",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -6120,7 +6120,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_STOREOP_DONT_CARE",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -6131,7 +6131,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_STOREOP_RESOLVE",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -6142,7 +6142,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_STOREOP_RESOLVE_AND_STORE",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -6153,7 +6153,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_STOREOP_STORE",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7418,7 +7418,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_TRANSFERBUFFERUSAGE_DOWNLOAD",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7429,7 +7429,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7440,7 +7440,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_BYTE2",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7451,7 +7451,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_BYTE2_NORM",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7462,7 +7462,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_BYTE4",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7473,7 +7473,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_BYTE4_NORM",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7484,7 +7484,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_FLOAT",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7495,7 +7495,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_FLOAT2",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7506,7 +7506,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7517,7 +7517,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7528,7 +7528,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_HALF2",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7539,7 +7539,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_HALF4",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7550,7 +7550,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_INT",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7561,7 +7561,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_INT2",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7572,7 +7572,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_INT3",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7583,7 +7583,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_INT4",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7594,7 +7594,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_INVALID",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7605,7 +7605,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_SHORT2",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7616,7 +7616,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_SHORT2_NORM",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7627,7 +7627,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_SHORT4",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7638,7 +7638,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_SHORT4_NORM",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7649,7 +7649,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_UBYTE2",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7660,7 +7660,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_UBYTE2_NORM",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7671,7 +7671,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_UBYTE4",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7682,7 +7682,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_UBYTE4_NORM",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7693,7 +7693,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_UINT",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7704,7 +7704,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_UINT2",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7715,7 +7715,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_UINT3",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7726,7 +7726,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_UINT4",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7737,7 +7737,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_USHORT2",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7748,7 +7748,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_USHORT2_NORM",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7759,7 +7759,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_USHORT4",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7770,7 +7770,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXELEMENTFORMAT_USHORT4_NORM",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7781,7 +7781,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXINPUTRATE_INSTANCE",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7792,7 +7792,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GPU_VERTEXINPUTRATE_VERTEX",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -14157,16 +14157,14 @@
       ],
       "id": "function:SDL_AcquireGPUCommandBuffer",
       "category": "GPU",
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Closed native clear frame only; no command handle exposed; also revalidated value-only plans with one native submission (docs/gpu-command-plans.md)",
-      "adapter": "SDL_ClearGPUWindow / SDL_CreateGPUCommandPlan / SDL_SubmitGPUCommandPlan",
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_AcquireGPUCommandBuffer",
       "tests": [
-        "tests/gpu_state.das",
-        "tests/gpu.das",
-        "tests/gpu_commands.das"
+        "tests/gpu_native_fences.das"
       ],
-      "contract": "docs/gpu-clear.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_AcquireGPUSwapchainTexture",
@@ -14199,8 +14197,10 @@
       ],
       "id": "function:SDL_AcquireGPUSwapchainTexture",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_AddAtomicInt",
@@ -14541,8 +14541,10 @@
       ],
       "id": "function:SDL_BeginGPUComputePass",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_BeginGPUCopyPass",
@@ -14559,14 +14561,10 @@
       ],
       "id": "function:SDL_BeginGPUCopyPass",
       "category": "GPU",
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
-      "tests": [
-        "tests/gpu_mesh.das"
-      ],
-      "contract": "docs/gpu-mesh.md"
+      "raw_status": "generated",
+      "boost_status": "pending",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_BeginGPURenderPass",
@@ -14595,17 +14593,15 @@
       ],
       "id": "function:SDL_BeginGPURenderPass",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Closed color/depth pass with resize; lit scene validates a bounded draw list before acquisition and records multiple objects against one shared depth target; no general render pass API",
-      "adapter": "SDL_ClearGPUWindow / SDL_BeginGPU3DPass / SDL_GPUSceneFrame",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_BeginGPURenderPassChecked",
       "tests": [
-        "tests/gpu_state.das",
         "tests/gpu.das",
-        "tests/gpu_3d.das",
-        "tests/gpu_scene.das"
+        "tests/gpu_recording.das"
       ],
-      "contract": "docs/gpu-3d.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_BindAudioStream",
@@ -14674,8 +14670,10 @@
       ],
       "id": "function:SDL_BindGPUComputePipeline",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_BindGPUComputeSamplers",
@@ -14704,8 +14702,10 @@
       ],
       "id": "function:SDL_BindGPUComputeSamplers",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_BindGPUComputeStorageBuffers",
@@ -14734,8 +14734,10 @@
       ],
       "id": "function:SDL_BindGPUComputeStorageBuffers",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_BindGPUComputeStorageTextures",
@@ -14764,8 +14766,10 @@
       ],
       "id": "function:SDL_BindGPUComputeStorageTextures",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_BindGPUFragmentSamplers",
@@ -14794,14 +14798,14 @@
       ],
       "id": "function:SDL_BindGPUFragmentSamplers",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_BindGPUSamplersChecked",
       "tests": [
-        "tests/gpu_mesh.das"
+        "tests/gpu_recording.das"
       ],
-      "contract": "docs/gpu-mesh.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_BindGPUFragmentStorageBuffers",
@@ -14830,8 +14834,10 @@
       ],
       "id": "function:SDL_BindGPUFragmentStorageBuffers",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_BindGPUFragmentStorageTextures",
@@ -14860,8 +14866,10 @@
       ],
       "id": "function:SDL_BindGPUFragmentStorageTextures",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_BindGPUGraphicsPipeline",
@@ -14882,14 +14890,14 @@
       ],
       "id": "function:SDL_BindGPUGraphicsPipeline",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Closed native vertex-ID triangle frame; no render-pass handle exposed",
-      "adapter": "SDL_DrawGPUVertexIDTriangle",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_BindGPUGraphicsPipelineChecked",
       "tests": [
-        "tests/gpu_triangle.das"
+        "tests/gpu_recording.das"
       ],
-      "contract": "docs/gpu-triangle.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_BindGPUIndexBuffer",
@@ -14914,14 +14922,15 @@
       ],
       "id": "function:SDL_BindGPUIndexBuffer",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Immutable copied uint32 index buffer with checked bounds; offset zero, fixed triangle-list mesh",
-      "adapter": "SDL_CreateGPUIndexedTexturedMesh / SDL_RecordGPUMesh",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_BindGPUIndexBufferChecked",
       "tests": [
-        "tests/gpu_indexed_mesh.das"
+        "tests/gpu_recording.das",
+        "tests/gpu_vertex_buffers.das"
       ],
-      "contract": "docs/gpu-indexed-mesh.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_BindGPUVertexBuffers",
@@ -14950,17 +14959,15 @@
       ],
       "id": "function:SDL_BindGPUVertexBuffers",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Fixed vertex layouts with cycled instance buffers: model/normal stride112 or RGBA stride128; material batches bind checked byte slices, reserved step rate zero",
-      "adapter": "SDL_RecordGPUMesh / SDL_RecordGPUInstances / SDL_RecordGPUBatches",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_BindGPUVertexBuffersChecked",
       "tests": [
-        "tests/gpu_mesh.das",
-        "tests/gpu_instancing.das",
-        "tests/gpu_instance_colors.das",
-        "tests/gpu_batches.das"
+        "tests/gpu_recording.das",
+        "tests/gpu_vertex_buffers.das"
       ],
-      "contract": "docs/gpu-instance-colors.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_BindGPUVertexSamplers",
@@ -14989,8 +14996,14 @@
       ],
       "id": "function:SDL_BindGPUVertexSamplers",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_BindGPUSamplersChecked",
+      "tests": [
+        "tests/gpu_recording.das"
+      ],
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_BindGPUVertexStorageBuffers",
@@ -15019,8 +15032,10 @@
       ],
       "id": "function:SDL_BindGPUVertexStorageBuffers",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_BindGPUVertexStorageTextures",
@@ -15049,8 +15064,10 @@
       ],
       "id": "function:SDL_BindGPUVertexStorageTextures",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_BlitGPUTexture",
@@ -15071,15 +15088,14 @@
       ],
       "id": "function:SDL_BlitGPUTexture",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Closed native command, checked distinct same-format RGBA8/BGRA8 regions, nearest/linear, LOAD preserves neighbors, no flip/cycling; also revalidated value-only plans with one native submission (docs/gpu-command-plans.md)",
-      "adapter": "SDL_BlitGPUTextureChecked / gpu_blit_texture / SDL_GPUPlanBlit",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_BlitGPUTextureChecked / gpu_blit_texture",
       "tests": [
-        "tests/gpu_image.das",
-        "tests/gpu_commands.das"
+        "tests/gpu_image.das"
       ],
-      "contract": "docs/gpu-image.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_BlitSurface",
@@ -15376,14 +15392,15 @@
       ],
       "id": "function:SDL_CalculateGPUTextureFormatSize",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Bounded dimensions, exact SDL block rounding, checked Uint32 product",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_GPUFormatSizeChecked / gpu_format_bytes",
       "tests": [
-        "tests/gpu_formats.das"
+        "tests/gpu_formats.das",
+        "tests/gpu_typed_queries.das"
       ],
-      "contract": "docs/gpu-formats.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_CancelGPUCommandBuffer",
@@ -15400,14 +15417,14 @@
       ],
       "id": "function:SDL_CancelGPUCommandBuffer",
       "category": "GPU",
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Native clear cleanup only before a non-null swapchain texture is acquired",
-      "adapter": "SDL_ClearGPUWindow",
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CancelGPUCommandBuffer",
       "tests": [
-        "tests/gpu_state.das"
+        "tests/gpu_native_fences.das"
       ],
-      "contract": "docs/gpu-clear.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_CaptureMouse",
@@ -15452,7 +15469,8 @@
       "tests": [
         "tests/gpu.das"
       ],
-      "contract": "docs/gpu-clear.md"
+      "contract": "docs/gpu-native-api.md",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending."
     },
     {
       "name": "SDL_CleanupTLS",
@@ -16176,15 +16194,14 @@
       ],
       "id": "function:SDL_CopyGPUBufferToBuffer",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Distinct checked data buffers; 4-aligned byte ranges, no cycling or raw copy pass; also revalidated value-only plans with one native submission (docs/gpu-command-plans.md)",
-      "adapter": "SDL_CopyGPUDataBuffer / SDL_GPUPlanCopyBuffer",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CopyGPUDataBuffer",
       "tests": [
-        "tests/gpu_transfer.das",
-        "tests/gpu_commands.das"
+        "tests/gpu_transfer.das"
       ],
-      "contract": "docs/gpu-transfer.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_CopyGPUTextureToTexture",
@@ -16225,17 +16242,19 @@
       ],
       "id": "function:SDL_CopyGPUTextureToTexture",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Distinct checked RGBA8 2D/array textures, mip/layer regions, no scaling/cycling; uncompressed color formats and validated capability queries (docs/gpu-formats.md); BC block and cube/array transfers (docs/gpu-texture-types.md); also revalidated value-only plans with one native submission (docs/gpu-command-plans.md)",
-      "adapter": "SDL_CopyGPUTextureRegion / gpu_copy_texture / SDL_CreateGPUColorTransferTexture / SDL_GPUFormatSupportedChecked / SDL_CreateGPUTypedTransferTexture / SDL_GPUPlanCopyTexture",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CopyGPUTextureRegion / gpu_copy_texture / SDL_CreateGPUColorTransferTexture / SDL_GPUFormatSupportedChecked / SDL_CreateGPUTypedTransferTexture",
       "tests": [
         "tests/gpu_texture_transfer.das",
         "tests/gpu_formats.das",
         "tests/gpu_texture_types.das",
-        "tests/gpu_commands.das"
+        "tests/gpu_volume.das",
+        "tests/gpu_astc_layout.das",
+        "tests/gpu_astc.das"
       ],
-      "contract": "docs/gpu-texture-transfer.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_CopyProperties",
@@ -16452,16 +16471,15 @@
       ],
       "id": "function:SDL_CreateGPUBuffer",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Immutable checked stride48 geometry and UINT32 indices can be owned separately from materials; fixed instance buffers remain supported; public copied data buffers and scoped asynchronous readback tickets (docs/gpu-transfer.md)",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh / SDL_CreateGPUGeometry / SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback / SDL_CreateGPUCheckedIndexBuffer / SDL_ReleaseGPUCheckedIndexBuffer",
       "tests": [
-        "tests/gpu_mesh.das",
-        "tests/gpu_resources.das",
-        "tests/gpu_transfer.das"
+        "tests/gpu_transfer.das",
+        "tests/gpu_vertex_buffers.das"
       ],
-      "contract": "docs/gpu-shared-resources.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_CreateGPUComputePipeline",
@@ -16482,8 +16500,10 @@
       ],
       "id": "function:SDL_CreateGPUComputePipeline",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_CreateGPUDevice",
@@ -16514,7 +16534,8 @@
       "tests": [
         "tests/gpu.das"
       ],
-      "contract": "docs/gpu-clear.md"
+      "contract": "docs/gpu-native-api.md",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending."
     },
     {
       "name": "SDL_CreateGPUDeviceWithProperties",
@@ -16531,8 +16552,10 @@
       ],
       "id": "function:SDL_CreateGPUDeviceWithProperties",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_CreateGPUGraphicsPipeline",
@@ -16553,15 +16576,14 @@
       ],
       "id": "function:SDL_CreateGPUGraphicsPipeline",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Trusted fixed vertex layouts, including colored instancing with depth test/write; reusable material pipeline, no general pipeline descriptor API",
-      "adapter": "SDL_CreateGPUVertexIDPipeline / SDL_CreateGPUMaterial / SDL_CreateGPULitPipeline",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUCheckedGraphicsPipeline / SDL_ReleaseGPUCheckedGraphicsPipeline",
       "tests": [
-        "tests/gpu_triangle.das",
-        "tests/gpu_resources.das"
+        "tests/gpu_pipeline.das"
       ],
-      "contract": "docs/gpu-shared-resources.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_CreateGPUSampler",
@@ -16582,14 +16604,15 @@
       ],
       "id": "function:SDL_CreateGPUSampler",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUCheckedSampler / SDL_ReleaseGPUCheckedSampler",
       "tests": [
-        "tests/gpu_mesh.das"
+        "tests/gpu_typed_queries.das",
+        "tests/gpu_sampler.das"
       ],
-      "contract": "docs/gpu-mesh.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_CreateGPUShader",
@@ -16610,14 +16633,14 @@
       ],
       "id": "function:SDL_CreateGPUShader",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Trusted precompiled SPIR-V/DXIL: vertex-ID zero-resource triangle or fixed position/UV mesh with one fragment sampler",
-      "adapter": "SDL_LoadGPUZeroResourceShader",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUCheckedShader / SDL_LoadGPUCheckedShader / SDL_ReleaseGPUCheckedShader",
       "tests": [
-        "tests/gpu_triangle.das"
+        "tests/gpu_shader.das"
       ],
-      "contract": "docs/gpu-triangle.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_CreateGPUTexture",
@@ -16638,20 +16661,20 @@
       ],
       "id": "function:SDL_CreateGPUTexture",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Copied bounded RGBA8 material textures and existing depth/mesh targets; no general texture descriptor API; independent initialized RGBA8 2D/array mip/layer texture transfers (docs/gpu-texture-transfer.md); uncompressed color formats and validated capability queries (docs/gpu-formats.md); BC block and cube/array transfers (docs/gpu-texture-types.md); initialized RGBA8/BGRA8 color-target image resources (docs/gpu-image.md)",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_EnsureGPU3DDepth / SDL_CreateGPUMaterial / SDL_CreateGPUTransferTexture / SDL_UploadGPUTextureRegion / SDL_CreateGPUColorTransferTexture / SDL_GPUFormatSupportedChecked / SDL_CreateGPUTypedTransferTexture / SDL_CreateGPUColorTargetTexture",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUTransferTexture / SDL_UploadGPUTextureRegion / SDL_CreateGPUColorTransferTexture / SDL_GPUFormatSupportedChecked / SDL_CreateGPUTypedTransferTexture / SDL_CreateGPUColorTargetTexture",
       "tests": [
-        "tests/gpu_mesh.das",
-        "tests/gpu_3d.das",
-        "tests/gpu_resources.das",
         "tests/gpu_texture_transfer.das",
         "tests/gpu_formats.das",
         "tests/gpu_texture_types.das",
-        "tests/gpu_image.das"
+        "tests/gpu_image.das",
+        "tests/gpu_volume.das",
+        "tests/gpu_astc_layout.das",
+        "tests/gpu_astc.das"
       ],
-      "contract": "docs/gpu-shared-resources.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_CreateGPUTransferBuffer",
@@ -16672,15 +16695,14 @@
       ],
       "id": "function:SDL_CreateGPUTransferBuffer",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed; public copied data buffers and scoped asynchronous readback tickets (docs/gpu-transfer.md)",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh / SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
       "tests": [
-        "tests/gpu_mesh.das",
         "tests/gpu_transfer.das"
       ],
-      "contract": "docs/gpu-mesh.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_CreateHapticEffect",
@@ -17521,7 +17543,8 @@
       "tests": [
         "tests/gpu.das"
       ],
-      "contract": "docs/gpu-clear.md"
+      "contract": "docs/gpu-native-api.md",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending."
     },
     {
       "name": "SDL_DestroyHapticEffect",
@@ -17837,8 +17860,10 @@
       ],
       "id": "function:SDL_DispatchGPUCompute",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_DispatchGPUComputeIndirect",
@@ -17863,8 +17888,10 @@
       ],
       "id": "function:SDL_DispatchGPUComputeIndirect",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_DownloadFromGPUBuffer",
@@ -17889,14 +17916,14 @@
       ],
       "id": "function:SDL_DownloadFromGPUBuffer",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Checked 4-aligned buffer range to owned readback snapshot; textures remain pending",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_RequestGPUBufferReadback",
       "tests": [
         "tests/gpu_transfer.das"
       ],
-      "contract": "docs/gpu-transfer.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_DownloadFromGPUTexture",
@@ -17921,16 +17948,19 @@
       ],
       "id": "function:SDL_DownloadFromGPUTexture",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Checked RGBA8 regions, aligned staging and tightly packed owned output after fence; uncompressed color formats and validated capability queries (docs/gpu-formats.md); BC block and cube/array transfers (docs/gpu-texture-types.md)",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_RequestGPUTextureReadback / with_gpu_texture_readback / SDL_CreateGPUColorTransferTexture / SDL_GPUFormatSupportedChecked / SDL_CreateGPUTypedTransferTexture",
       "tests": [
         "tests/gpu_texture_transfer.das",
         "tests/gpu_formats.das",
-        "tests/gpu_texture_types.das"
+        "tests/gpu_texture_types.das",
+        "tests/gpu_volume.das",
+        "tests/gpu_astc_layout.das",
+        "tests/gpu_astc.das"
       ],
-      "contract": "docs/gpu-texture-transfer.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_DrawGPUIndexedPrimitives",
@@ -17967,17 +17997,15 @@
       ],
       "id": "function:SDL_DrawGPUIndexedPrimitives",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Checked indexed draws; shared geometry/material pairs coalesce, 4096 objects / 64 groups, fixed colored-instance ABI; no general draw API",
-      "adapter": "SDL_RecordGPUMesh / SDL_RecordGPUInstances / SDL_RecordGPUBatches / SDL_ResolveGPUBatchMesh / SDL_RecordGPUBatches",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_DrawGPUIndexedPrimitivesChecked",
       "tests": [
-        "tests/gpu_indexed_mesh.das",
-        "tests/gpu_instancing.das",
-        "tests/gpu_batches.das",
-        "tests/gpu_resources.das"
+        "tests/gpu_recording.das",
+        "tests/gpu_vertex_buffers.das"
       ],
-      "contract": "docs/gpu-shared-resources.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_DrawGPUIndexedPrimitivesIndirect",
@@ -18006,8 +18034,10 @@
       ],
       "id": "function:SDL_DrawGPUIndexedPrimitivesIndirect",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_DrawGPUPrimitives",
@@ -18040,14 +18070,15 @@
       ],
       "id": "function:SDL_DrawGPUPrimitives",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Triangle or immutable checked mesh vertex count; 1 instance, offsets zero; no general draw API",
-      "adapter": "SDL_DrawGPUVertexIDTriangle",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_DrawGPUPrimitivesChecked",
       "tests": [
-        "tests/gpu_triangle.das"
+        "tests/gpu_recording.das",
+        "tests/gpu_vertex_buffers.das"
       ],
-      "contract": "docs/gpu-triangle.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_DrawGPUPrimitivesIndirect",
@@ -18076,8 +18107,10 @@
       ],
       "id": "function:SDL_DrawGPUPrimitivesIndirect",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_DuplicateSurface",
@@ -18217,8 +18250,10 @@
       ],
       "id": "function:SDL_EndGPUComputePass",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_EndGPUCopyPass",
@@ -18235,14 +18270,10 @@
       ],
       "id": "function:SDL_EndGPUCopyPass",
       "category": "GPU",
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
-      "tests": [
-        "tests/gpu_mesh.das"
-      ],
-      "contract": "docs/gpu-mesh.md"
+      "raw_status": "generated",
+      "boost_status": "pending",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_EndGPURenderPass",
@@ -18259,16 +18290,15 @@
       ],
       "id": "function:SDL_EndGPURenderPass",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Closed native color/depth passes, including lit scene draw lists; no script callback during recording",
-      "adapter": "SDL_GPUFrameWithTarget",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_EndGPURenderPassChecked",
       "tests": [
-        "tests/gpu_state.das",
         "tests/gpu.das",
-        "tests/gpu_scene.das"
+        "tests/gpu_recording.das"
       ],
-      "contract": "docs/gpu-scene.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_EnterAppMainCallbacks",
@@ -18914,8 +18944,10 @@
       ],
       "id": "function:SDL_GPUSupportsProperties",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_GPUSupportsShaderFormats",
@@ -18936,14 +18968,14 @@
       ],
       "id": "function:SDL_GPUSupportsShaderFormats",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Validated mask, SDL driver-hint precedence preserved, no device created",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_GPUShaderSupportChecked / gpu_supports_shaders",
       "tests": [
         "tests/gpu_utilities.das"
       ],
-      "contract": "docs/gpu-texture-types.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_GPUTextureFormatTexelBlockSize",
@@ -18960,14 +18992,15 @@
       ],
       "id": "function:SDL_GPUTextureFormatTexelBlockSize",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Validated pinned format values; bytes per texel/block, not allocation size",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_GPUFormatBlockSizeChecked / gpu_format_block_bytes",
       "tests": [
-        "tests/gpu_formats.das"
+        "tests/gpu_formats.das",
+        "tests/gpu_typed_queries.das"
       ],
-      "contract": "docs/gpu-formats.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_GPUTextureSupportsFormat",
@@ -18996,16 +19029,16 @@
       ],
       "id": "function:SDL_GPUTextureSupportsFormat",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Depth format selection for fixed 3D color mesh; D32/D24/D16 depth-target usage only; independent initialized RGBA8 2D/array mip/layer texture transfers (docs/gpu-texture-transfer.md); uncompressed color formats and validated capability queries (docs/gpu-formats.md)",
-      "adapter": "SDL_GPU3DDepthFormat / SDL_CreateGPUTransferTexture / SDL_UploadGPUTextureRegion / SDL_CreateGPUColorTransferTexture / SDL_GPUFormatSupportedChecked",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUTransferTexture / SDL_UploadGPUTextureRegion / SDL_CreateGPUColorTransferTexture / SDL_GPUFormatSupportedChecked",
       "tests": [
-        "tests/gpu_3d.das",
         "tests/gpu_texture_transfer.das",
-        "tests/gpu_formats.das"
+        "tests/gpu_formats.das",
+        "tests/gpu_typed_queries.das"
       ],
-      "contract": "docs/gpu-3d.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_GPUTextureSupportsSampleCount",
@@ -19030,14 +19063,15 @@
       ],
       "id": "function:SDL_GPUTextureSupportsSampleCount",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Live scoped device, validated format/sample enums, unsupported separate from invalid",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_GPUSampleCountSupportedChecked / gpu_supports_samples",
       "tests": [
-        "tests/gpu_formats.das"
+        "tests/gpu_formats.das",
+        "tests/gpu_typed_queries.das"
       ],
-      "contract": "docs/gpu-formats.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_GUIDToString",
@@ -19203,15 +19237,14 @@
       ],
       "id": "function:SDL_GenerateMipmapsForGPUTexture",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Closed native command, initialized RGBA8/BGRA8 2D/array sampler+color-target resources, all allocated mips/layers; also revalidated value-only plans with one native submission (docs/gpu-command-plans.md)",
-      "adapter": "SDL_GenerateGPUTextureMipmapsChecked / gpu_generate_mipmaps / SDL_GPUPlanMipmaps",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_GenerateGPUTextureMipmapsChecked / gpu_generate_mipmaps",
       "tests": [
-        "tests/gpu_image.das",
-        "tests/gpu_commands.das"
+        "tests/gpu_image.das"
       ],
-      "contract": "docs/gpu-image.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_GetAppMetadataProperty",
@@ -20706,7 +20739,9 @@
       "id": "function:SDL_GetGPUDeviceDriver",
       "category": "GPU",
       "raw_status": "generated",
-      "boost_status": "unreviewed"
+      "boost_status": "unreviewed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_GetGPUDriver",
@@ -20723,14 +20758,14 @@
       ],
       "id": "function:SDL_GetGPUDriver",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Validated index, copied script-owned names",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_GPUDriverNameCopy / gpu_driver_names",
       "tests": [
         "tests/gpu_utilities.das"
       ],
-      "contract": "docs/gpu-texture-types.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_GetGPUShaderFormats",
@@ -20748,7 +20783,9 @@
       "id": "function:SDL_GetGPUShaderFormats",
       "category": "GPU",
       "raw_status": "generated",
-      "boost_status": "unreviewed"
+      "boost_status": "unreviewed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_GetGPUSwapchainTextureFormat",
@@ -20769,15 +20806,14 @@
       ],
       "id": "function:SDL_GetGPUSwapchainTextureFormat",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Checked public uint-format query after claim plus existing pipeline compatibility checks; main thread and live scoped owner required",
-      "adapter": "SDL_CreateGPUVertexIDPipeline / SDL_DrawGPUVertexIDTriangle / SDL_GPUWindowFormatChecked / gpu_swapchain_format",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_GPUWindowFormatChecked / gpu_swapchain_format",
       "tests": [
-        "tests/gpu_triangle.das",
         "tests/gpu_swapchain.das"
       ],
-      "contract": "docs/gpu-swapchain.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_GetGamepadAppleSFSymbolsNameForAxis",
@@ -22985,14 +23021,14 @@
       "arguments": [],
       "id": "function:SDL_GetNumGPUDrivers",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Main-thread compiled driver enumeration, not physical adapters",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_GPUDriverCountChecked / gpu_driver_names",
       "tests": [
         "tests/gpu_utilities.das"
       ],
-      "contract": "docs/gpu-texture-types.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_GetNumGamepadTouchpadFingers",
@@ -26143,14 +26179,9 @@
       ],
       "id": "function:SDL_GetWindowSizeInPixels",
       "category": "Video",
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Main-thread GPU camera aspect ratio from drawable pixel dimensions; zero-size fallback only",
-      "adapter": "SDL_GPU3DWindowAspect",
-      "tests": [
-        "tests/gpu_3d.das"
-      ],
-      "contract": "docs/gpu-3d.md"
+      "raw_status": "pending",
+      "boost_status": "pending",
+      "reason": "The former SDL_GPU3DWindowAspect engine helper was removed; no exported replacement yet."
     },
     {
       "name": "SDL_GetWindowSurface",
@@ -26978,14 +27009,10 @@
       ],
       "id": "function:SDL_InsertGPUDebugLabel",
       "category": "GPU",
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Owned copied text and balanced depth in checked value-only command plans; outside native passes; one-shot native submission; D3D12 groups explicitly unsupported on pinned SDL (labels supported); no debugger visibility guarantee",
-      "adapter": "SDL_GPUPlanLabel / gpu_plan_label",
-      "tests": [
-        "tests/gpu_commands.das"
-      ],
-      "contract": "docs/gpu-command-plans.md"
+      "raw_status": "generated",
+      "boost_status": "pending",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_InsertTrayEntryAt",
@@ -27888,16 +27915,14 @@
       ],
       "id": "function:SDL_MapGPUTransferBuffer",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Copied immutable mesh uploads and fixed-count full instance updates; staging and destination cycling; no borrowed mapped pointers or general update API; public copied data buffers and scoped asynchronous readback tickets (docs/gpu-transfer.md)",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_UpdateGPUInstances / SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
       "tests": [
-        "tests/gpu_mesh.das",
-        "tests/gpu_instancing.das",
         "tests/gpu_transfer.das"
       ],
-      "contract": "docs/gpu-dynamic-instances.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_MapRGB",
@@ -28796,14 +28821,10 @@
       ],
       "id": "function:SDL_PopGPUDebugGroup",
       "category": "GPU",
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Owned copied text and balanced depth in checked value-only command plans; outside native passes; one-shot native submission; D3D12 groups explicitly unsupported on pinned SDL (labels supported); no debugger visibility guarantee",
-      "adapter": "SDL_GPUPlanPopGroup / gpu_plan_pop_group",
-      "tests": [
-        "tests/gpu_commands.das"
-      ],
-      "contract": "docs/gpu-command-plans.md"
+      "raw_status": "generated",
+      "boost_status": "pending",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_PremultiplyAlpha",
@@ -28935,8 +28956,10 @@
       ],
       "id": "function:SDL_PushGPUComputeUniformData",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_PushGPUDebugGroup",
@@ -28957,14 +28980,10 @@
       ],
       "id": "function:SDL_PushGPUDebugGroup",
       "category": "GPU",
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Owned copied text and balanced depth in checked value-only command plans; outside native passes; one-shot native submission; D3D12 groups explicitly unsupported on pinned SDL (labels supported); no debugger visibility guarantee",
-      "adapter": "SDL_GPUPlanPushGroup / gpu_plan_push_group",
-      "tests": [
-        "tests/gpu_commands.das"
-      ],
-      "contract": "docs/gpu-command-plans.md"
+      "raw_status": "generated",
+      "boost_status": "pending",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_PushGPUFragmentUniformData",
@@ -28993,14 +29012,14 @@
       ],
       "id": "function:SDL_PushGPUFragmentUniformData",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Fixed 16-byte world-space light direction and ambient at fragment slot zero; no general uniform layout API",
-      "adapter": "SDL_RecordGPULit",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_PushGPUUniformBytesChecked / SDL_PushGPUUniformVectorsChecked",
       "tests": [
-        "tests/gpu_lit.das"
+        "tests/gpu_recording.das"
       ],
-      "contract": "docs/gpu-lit.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_PushGPUVertexUniformData",
@@ -29029,16 +29048,14 @@
       ],
       "id": "function:SDL_PushGPUVertexUniformData",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Fixed 2D rows (32 bytes), 3D MVP (64 bytes), or MVP/normal columns (112 bytes), std140 vertex slot zero; no general uniform layout API",
-      "adapter": "SDL_PushGPUTransform / SDL_RecordGPU3D / SDL_RecordGPULit",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_PushGPUUniformBytesChecked / SDL_PushGPUUniformVectorsChecked",
       "tests": [
-        "tests/gpu_transform.das",
-        "tests/gpu_3d.das",
-        "tests/gpu_lit.das"
+        "tests/gpu_recording.das"
       ],
-      "contract": "docs/gpu-3d.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_PutAudioStreamData",
@@ -29085,14 +29102,14 @@
       ],
       "id": "function:SDL_QueryGPUFence",
       "category": "GPU",
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Single checked readback ticket; pending is not an error",
-      "adapter": "SDL_PollGPUReadback / gpu_readback_ready",
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_QueryGPUFence",
       "tests": [
-        "tests/gpu_transfer.das"
+        "tests/gpu_native_fences.das"
       ],
-      "contract": "docs/gpu-transfer.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_Quit",
@@ -29868,16 +29885,15 @@
       ],
       "id": "function:SDL_ReleaseGPUBuffer",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Checked separate geometry ownership, scoped/device cleanup and SDL deferred destruction for submitted work; public copied data buffers and scoped asynchronous readback tickets (docs/gpu-transfer.md)",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh / SDL_ReleaseGPUGeometry / SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback / SDL_CreateGPUCheckedIndexBuffer / SDL_ReleaseGPUCheckedIndexBuffer",
       "tests": [
-        "tests/gpu_mesh.das",
-        "tests/gpu_resources.das",
-        "tests/gpu_transfer.das"
+        "tests/gpu_transfer.das",
+        "tests/gpu_vertex_buffers.das"
       ],
-      "contract": "docs/gpu-shared-resources.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_ReleaseGPUComputePipeline",
@@ -29898,8 +29914,10 @@
       ],
       "id": "function:SDL_ReleaseGPUComputePipeline",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_ReleaseGPUFence",
@@ -29920,14 +29938,14 @@
       ],
       "id": "function:SDL_ReleaseGPUFence",
       "category": "GPU",
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Readback ticket owns fence; no raw fence pointer escapes",
-      "adapter": "SDL_ReleaseGPUReadback / with_gpu_readback",
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_ReleaseGPUFence",
       "tests": [
-        "tests/gpu_transfer.das"
+        "tests/gpu_native_fences.das"
       ],
-      "contract": "docs/gpu-transfer.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_ReleaseGPUGraphicsPipeline",
@@ -29948,15 +29966,14 @@
       ],
       "id": "function:SDL_ReleaseGPUGraphicsPipeline",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Checked material and existing pipeline IDs; scoped/device cleanup and deferred destruction",
-      "adapter": "SDL_ReleaseGPUVertexIDPipeline / SDL_ReleaseGPUMaterial",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUCheckedGraphicsPipeline / SDL_ReleaseGPUCheckedGraphicsPipeline",
       "tests": [
-        "tests/gpu_triangle.das",
-        "tests/gpu_resources.das"
+        "tests/gpu_pipeline.das"
       ],
-      "contract": "docs/gpu-shared-resources.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_ReleaseGPUSampler",
@@ -29977,14 +29994,15 @@
       ],
       "id": "function:SDL_ReleaseGPUSampler",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUCheckedSampler / SDL_ReleaseGPUCheckedSampler",
       "tests": [
-        "tests/gpu_mesh.das"
+        "tests/gpu_typed_queries.das",
+        "tests/gpu_sampler.das"
       ],
-      "contract": "docs/gpu-mesh.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_ReleaseGPUShader",
@@ -30005,14 +30023,14 @@
       ],
       "id": "function:SDL_ReleaseGPUShader",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Native RAII cleanup of temporary pipeline shaders; no script shader handle",
-      "adapter": "SDL_GPUShaderOwner",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUCheckedShader / SDL_LoadGPUCheckedShader / SDL_ReleaseGPUCheckedShader",
       "tests": [
-        "tests/gpu_triangle.das"
+        "tests/gpu_shader.das"
       ],
-      "contract": "docs/gpu-triangle.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_ReleaseGPUTexture",
@@ -30033,16 +30051,17 @@
       ],
       "id": "function:SDL_ReleaseGPUTexture",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Scoped material texture ownership and existing mesh/depth cleanup; device-specific release; independent initialized RGBA8 2D/array mip/layer texture transfers (docs/gpu-texture-transfer.md)",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh / SDL_ReleaseGPUMaterial / SDL_CreateGPUTransferTexture / SDL_UploadGPUTextureRegion",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUTransferTexture / SDL_UploadGPUTextureRegion",
       "tests": [
-        "tests/gpu_mesh.das",
-        "tests/gpu_resources.das",
-        "tests/gpu_texture_transfer.das"
+        "tests/gpu_texture_transfer.das",
+        "tests/gpu_volume.das",
+        "tests/gpu_astc_layout.das",
+        "tests/gpu_astc.das"
       ],
-      "contract": "docs/gpu-shared-resources.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_ReleaseGPUTransferBuffer",
@@ -30063,15 +30082,14 @@
       ],
       "id": "function:SDL_ReleaseGPUTransferBuffer",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed; public copied data buffers and scoped asynchronous readback tickets (docs/gpu-transfer.md)",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh / SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
       "tests": [
-        "tests/gpu_mesh.das",
         "tests/gpu_transfer.das"
       ],
-      "contract": "docs/gpu-mesh.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_ReleaseWindowFromGPUDevice",
@@ -30098,7 +30116,8 @@
       "tests": [
         "tests/gpu.das"
       ],
-      "contract": "docs/gpu-clear.md"
+      "contract": "docs/gpu-native-api.md",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending."
     },
     {
       "name": "SDL_ReloadGamepadMappings",
@@ -32320,14 +32339,14 @@
       ],
       "id": "function:SDL_SetGPUAllowedFramesInFlight",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Live scoped device, main thread, 1..3; device-wide synchronous queue flush",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_SetGPUFramesInFlightChecked / gpu_frames_in_flight",
       "tests": [
         "tests/gpu_swapchain.das"
       ],
-      "contract": "docs/gpu-swapchain.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_SetGPUBlendConstants",
@@ -32348,8 +32367,14 @@
       ],
       "id": "function:SDL_SetGPUBlendConstants",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_SetGPUBlendConstantsChecked",
+      "tests": [
+        "tests/gpu_recording.das"
+      ],
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_SetGPUBufferName",
@@ -32374,14 +32399,14 @@
       ],
       "id": "function:SDL_SetGPUBufferName",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Only checked public data buffers; bounded names, void SDL setter",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_SetGPUDataBufferNameChecked / gpu_buffer_name",
       "tests": [
         "tests/gpu_utilities.das"
       ],
-      "contract": "docs/gpu-texture-types.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_SetGPUScissor",
@@ -32402,8 +32427,14 @@
       ],
       "id": "function:SDL_SetGPUScissor",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_SetGPUScissorChecked",
+      "tests": [
+        "tests/gpu_recording.das"
+      ],
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_SetGPUStencilReference",
@@ -32424,8 +32455,10 @@
       ],
       "id": "function:SDL_SetGPUStencilReference",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_SetGPUSwapchainParameters",
@@ -32454,14 +32487,14 @@
       ],
       "id": "function:SDL_SetGPUSwapchainParameters",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Between-frame setter, capability precheck without mutation on unsupported; no rollback on SDL failure",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_ConfigureGPUSwapchainChecked / gpu_try_configure_swapchain",
       "tests": [
         "tests/gpu_swapchain.das"
       ],
-      "contract": "docs/gpu-swapchain.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_SetGPUTextureName",
@@ -32486,14 +32519,14 @@
       ],
       "id": "function:SDL_SetGPUTextureName",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Only checked public transfer textures; bounded names, void SDL setter",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_SetGPUTransferTextureNameChecked / gpu_texture_name",
       "tests": [
         "tests/gpu_utilities.das"
       ],
-      "contract": "docs/gpu-texture-types.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_SetGPUViewport",
@@ -32514,8 +32547,14 @@
       ],
       "id": "function:SDL_SetGPUViewport",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_SetGPUViewportChecked",
+      "tests": [
+        "tests/gpu_recording.das"
+      ],
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_SetGamepadEventsEnabled",
@@ -35242,16 +35281,14 @@
       ],
       "id": "function:SDL_SubmitGPUCommandBuffer",
       "category": "GPU",
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Closed native clear frame; command consumed even on submission failure; also revalidated value-only plans with one native submission (docs/gpu-command-plans.md)",
-      "adapter": "SDL_ClearGPUWindow / SDL_SubmitGPUCommandPlan",
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_SubmitGPUCommandBuffer",
       "tests": [
-        "tests/gpu_state.das",
-        "tests/gpu.das",
-        "tests/gpu_commands.das"
+        "tests/gpu_native_fences.das"
       ],
-      "contract": "docs/gpu-clear.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_SubmitGPUCommandBufferAndAcquireFence",
@@ -35268,14 +35305,14 @@
       ],
       "id": "function:SDL_SubmitGPUCommandBufferAndAcquireFence",
       "category": "GPU",
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Closed native buffer download submission; fence owned by readback ticket",
-      "adapter": "SDL_RequestGPUBufferReadback",
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_SubmitGPUCommandBufferAndAcquireFence",
       "tests": [
-        "tests/gpu_transfer.das"
+        "tests/gpu_native_fences.das"
       ],
-      "contract": "docs/gpu-transfer.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_SurfaceHasAlternateImages",
@@ -35817,15 +35854,14 @@
       ],
       "id": "function:SDL_UnmapGPUTransferBuffer",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed; public copied data buffers and scoped asynchronous readback tickets (docs/gpu-transfer.md)",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh / SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
       "tests": [
-        "tests/gpu_mesh.das",
         "tests/gpu_transfer.das"
       ],
-      "contract": "docs/gpu-mesh.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_UnregisterApp",
@@ -36125,16 +36161,14 @@
       ],
       "id": "function:SDL_UploadToGPUBuffer",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Copied immutable mesh uploads and fixed-count full instance updates; staging and destination cycling; no borrowed mapped pointers or general update API; public copied data buffers and scoped asynchronous readback tickets (docs/gpu-transfer.md)",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_UpdateGPUInstances / SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
       "tests": [
-        "tests/gpu_mesh.das",
-        "tests/gpu_instancing.das",
         "tests/gpu_transfer.das"
       ],
-      "contract": "docs/gpu-dynamic-instances.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_UploadToGPUTexture",
@@ -36163,17 +36197,19 @@
       ],
       "id": "function:SDL_UploadToGPUTexture",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed; independent initialized RGBA8 2D/array mip/layer texture transfers (docs/gpu-texture-transfer.md); uncompressed color formats and validated capability queries (docs/gpu-formats.md); BC block and cube/array transfers (docs/gpu-texture-types.md)",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh / SDL_CreateGPUTransferTexture / SDL_UploadGPUTextureRegion / SDL_CreateGPUColorTransferTexture / SDL_GPUFormatSupportedChecked / SDL_CreateGPUTypedTransferTexture",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUTransferTexture / SDL_UploadGPUTextureRegion / SDL_CreateGPUColorTransferTexture / SDL_GPUFormatSupportedChecked / SDL_CreateGPUTypedTransferTexture",
       "tests": [
-        "tests/gpu_mesh.das",
         "tests/gpu_texture_transfer.das",
         "tests/gpu_formats.das",
-        "tests/gpu_texture_types.das"
+        "tests/gpu_texture_types.das",
+        "tests/gpu_volume.das",
+        "tests/gpu_astc_layout.das",
+        "tests/gpu_astc.das"
       ],
-      "contract": "docs/gpu-mesh.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_Vulkan_CreateSurface",
@@ -36350,15 +36386,10 @@
       ],
       "id": "function:SDL_WaitAndAcquireGPUSwapchainTexture",
       "category": "GPU",
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Closed native clear frame only; borrowed swapchain texture never escapes",
-      "adapter": "SDL_ClearGPUWindow",
-      "tests": [
-        "tests/gpu_state.das",
-        "tests/gpu.das"
-      ],
-      "contract": "docs/gpu-clear.md"
+      "raw_status": "generated",
+      "boost_status": "pending",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_WaitAsyncIOResult",
@@ -36501,14 +36532,14 @@
       ],
       "id": "function:SDL_WaitForGPUFences",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Wait for one checked readback ticket, not arbitrary fence arrays",
-      "adapter": "SDL_WaitGPUReadback / gpu_wait_readback",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_WaitForGPUFencesArray",
       "tests": [
-        "tests/gpu_transfer.das"
+        "tests/gpu_native_fences.das"
       ],
-      "contract": "docs/gpu-transfer.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_WaitForGPUIdle",
@@ -36526,7 +36557,13 @@
       "id": "function:SDL_WaitForGPUIdle",
       "category": "GPU",
       "raw_status": "generated",
-      "boost_status": "unreviewed"
+      "boost_status": "not_needed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_WaitForGPUIdle",
+      "tests": [
+        "tests/gpu_native_fences.das"
+      ],
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_WaitForGPUSwapchain",
@@ -36547,14 +36584,14 @@
       ],
       "id": "function:SDL_WaitForGPUSwapchain",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Blocking availability only, checked claimed window; no texture/command borrow exposed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_WaitGPUSwapchainChecked / gpu_wait_swapchain",
       "tests": [
         "tests/gpu_swapchain.das"
       ],
-      "contract": "docs/gpu-swapchain.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_WaitProcess",
@@ -36751,14 +36788,14 @@
       ],
       "id": "function:SDL_WindowSupportsGPUPresentMode",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Checked live claimed window, owner/main thread and present enum",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_GPUWindowPresentSupported / gpu_supports_present_mode",
       "tests": [
         "tests/gpu_swapchain.das"
       ],
-      "contract": "docs/gpu-swapchain.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_WindowSupportsGPUSwapchainComposition",
@@ -36783,14 +36820,14 @@
       ],
       "id": "function:SDL_WindowSupportsGPUSwapchainComposition",
       "category": "GPU",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Checked live claimed window, owner/main thread and composition enum",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_GPUWindowCompositionSupported / gpu_supports_composition",
       "tests": [
         "tests/gpu_swapchain.das"
       ],
-      "contract": "docs/gpu-swapchain.md"
+      "contract": "docs/gpu-native-api.md"
     },
     {
       "name": "SDL_WriteAsyncIO",
@@ -48111,7 +48148,7 @@
       "function_like": false,
       "id": "macro:SDL_GPU_COLORCOMPONENT_A",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -48123,7 +48160,7 @@
       "function_like": false,
       "id": "macro:SDL_GPU_COLORCOMPONENT_B",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -48135,7 +48172,7 @@
       "function_like": false,
       "id": "macro:SDL_GPU_COLORCOMPONENT_G",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -48147,7 +48184,7 @@
       "function_like": false,
       "id": "macro:SDL_GPU_COLORCOMPONENT_R",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63421,8 +63458,17 @@
       ],
       "id": "record:SDL_GPUBlitInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "source",
+        "destination",
+        "load_op",
+        "clear_color",
+        "flip_mode",
+        "filter",
+        "cycle"
+      ]
     },
     {
       "name": "SDL_GPUBlitRegion",
@@ -63463,8 +63509,17 @@
       ],
       "id": "record:SDL_GPUBlitRegion",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "texture",
+        "mip_level",
+        "layer_or_depth_plane",
+        "x",
+        "y",
+        "w",
+        "h"
+      ]
     },
     {
       "name": "SDL_GPUBuffer",
@@ -63476,7 +63531,7 @@
       "fields": [],
       "id": "record:SDL_GPUBuffer",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -63498,8 +63553,12 @@
       ],
       "id": "record:SDL_GPUBufferBinding",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "buffer",
+        "offset"
+      ]
     },
     {
       "name": "SDL_GPUBufferCreateInfo",
@@ -63524,8 +63583,13 @@
       ],
       "id": "record:SDL_GPUBufferCreateInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "usage",
+        "size",
+        "props"
+      ]
     },
     {
       "name": "SDL_GPUBufferLocation",
@@ -63546,8 +63610,12 @@
       ],
       "id": "record:SDL_GPUBufferLocation",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "buffer",
+        "offset"
+      ]
     },
     {
       "name": "SDL_GPUBufferRegion",
@@ -63572,8 +63640,13 @@
       ],
       "id": "record:SDL_GPUBufferRegion",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "buffer",
+        "offset",
+        "size"
+      ]
     },
     {
       "name": "SDL_GPUColorTargetBlendState",
@@ -63630,8 +63703,19 @@
       ],
       "id": "record:SDL_GPUColorTargetBlendState",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "src_color_blendfactor",
+        "dst_color_blendfactor",
+        "color_blend_op",
+        "src_alpha_blendfactor",
+        "dst_alpha_blendfactor",
+        "alpha_blend_op",
+        "color_write_mask",
+        "enable_blend",
+        "enable_color_write_mask"
+      ]
     },
     {
       "name": "SDL_GPUColorTargetDescription",
@@ -63652,8 +63736,12 @@
       ],
       "id": "record:SDL_GPUColorTargetDescription",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "format",
+        "blend_state"
+      ]
     },
     {
       "name": "SDL_GPUColorTargetInfo",
@@ -63718,8 +63806,21 @@
       ],
       "id": "record:SDL_GPUColorTargetInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "texture",
+        "mip_level",
+        "layer_or_depth_plane",
+        "clear_color",
+        "load_op",
+        "store_op",
+        "resolve_texture",
+        "resolve_mip_level",
+        "resolve_layer",
+        "cycle",
+        "cycle_resolve_texture"
+      ]
     },
     {
       "name": "SDL_GPUCommandBuffer",
@@ -63731,7 +63832,7 @@
       "fields": [],
       "id": "record:SDL_GPUCommandBuffer",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -63744,7 +63845,7 @@
       "fields": [],
       "id": "record:SDL_GPUComputePass",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -63757,7 +63858,7 @@
       "fields": [],
       "id": "record:SDL_GPUComputePipeline",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -63827,8 +63928,24 @@
       ],
       "id": "record:SDL_GPUComputePipelineCreateInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "code_size",
+        "code",
+        "entrypoint",
+        "format",
+        "num_samplers",
+        "num_readonly_storage_textures",
+        "num_readonly_storage_buffers",
+        "num_readwrite_storage_textures",
+        "num_readwrite_storage_buffers",
+        "num_uniform_buffers",
+        "threadcount_x",
+        "threadcount_y",
+        "threadcount_z",
+        "props"
+      ]
     },
     {
       "name": "SDL_GPUCopyPass",
@@ -63840,7 +63957,7 @@
       "fields": [],
       "id": "record:SDL_GPUCopyPass",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -63898,8 +64015,18 @@
       ],
       "id": "record:SDL_GPUDepthStencilState",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "compare_op",
+        "back_stencil_state",
+        "front_stencil_state",
+        "compare_mask",
+        "write_mask",
+        "enable_depth_test",
+        "enable_depth_write",
+        "enable_stencil_test"
+      ]
     },
     {
       "name": "SDL_GPUDepthStencilTargetInfo",
@@ -63952,8 +64079,18 @@
       ],
       "id": "record:SDL_GPUDepthStencilTargetInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "texture",
+        "clear_depth",
+        "load_op",
+        "store_op",
+        "stencil_load_op",
+        "stencil_store_op",
+        "cycle",
+        "clear_stencil"
+      ]
     },
     {
       "name": "SDL_GPUDevice",
@@ -63978,7 +64115,7 @@
       "fields": [],
       "id": "record:SDL_GPUFence",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -63991,7 +64128,7 @@
       "fields": [],
       "id": "record:SDL_GPUGraphicsPipeline",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -64041,8 +64178,19 @@
       ],
       "id": "record:SDL_GPUGraphicsPipelineCreateInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "vertex_shader",
+        "fragment_shader",
+        "vertex_input_state",
+        "primitive_type",
+        "rasterizer_state",
+        "multisample_state",
+        "depth_stencil_state",
+        "target_info",
+        "props"
+      ]
     },
     {
       "name": "SDL_GPUGraphicsPipelineTargetInfo",
@@ -64083,8 +64231,14 @@
       ],
       "id": "record:SDL_GPUGraphicsPipelineTargetInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "color_target_descriptions",
+        "num_color_targets",
+        "depth_stencil_format",
+        "has_depth_stencil_target"
+      ]
     },
     {
       "name": "SDL_GPUIndexedIndirectDrawCommand",
@@ -64117,8 +64271,15 @@
       ],
       "id": "record:SDL_GPUIndexedIndirectDrawCommand",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "num_indices",
+        "num_instances",
+        "first_index",
+        "vertex_offset",
+        "first_instance"
+      ]
     },
     {
       "name": "SDL_GPUIndirectDispatchCommand",
@@ -64143,8 +64304,13 @@
       ],
       "id": "record:SDL_GPUIndirectDispatchCommand",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "groupcount_x",
+        "groupcount_y",
+        "groupcount_z"
+      ]
     },
     {
       "name": "SDL_GPUIndirectDrawCommand",
@@ -64173,8 +64339,14 @@
       ],
       "id": "record:SDL_GPUIndirectDrawCommand",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "num_vertices",
+        "num_instances",
+        "first_vertex",
+        "first_instance"
+      ]
     },
     {
       "name": "SDL_GPUMultisampleState",
@@ -64211,8 +64383,13 @@
       ],
       "id": "record:SDL_GPUMultisampleState",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "sample_count",
+        "sample_mask",
+        "enable_mask"
+      ]
     },
     {
       "name": "SDL_GPURasterizerState",
@@ -64265,8 +64442,18 @@
       ],
       "id": "record:SDL_GPURasterizerState",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "fill_mode",
+        "cull_mode",
+        "front_face",
+        "depth_bias_constant_factor",
+        "depth_bias_clamp",
+        "depth_bias_slope_factor",
+        "enable_depth_bias",
+        "enable_depth_clip"
+      ]
     },
     {
       "name": "SDL_GPURenderPass",
@@ -64278,7 +64465,7 @@
       "fields": [],
       "id": "record:SDL_GPURenderPass",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -64291,7 +64478,7 @@
       "fields": [],
       "id": "record:SDL_GPUSampler",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -64369,8 +64556,24 @@
       ],
       "id": "record:SDL_GPUSamplerCreateInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "min_filter",
+        "mag_filter",
+        "mipmap_mode",
+        "address_mode_u",
+        "address_mode_v",
+        "address_mode_w",
+        "mip_lod_bias",
+        "max_anisotropy",
+        "compare_op",
+        "min_lod",
+        "max_lod",
+        "enable_anisotropy",
+        "enable_compare",
+        "props"
+      ]
     },
     {
       "name": "SDL_GPUShader",
@@ -64382,7 +64585,7 @@
       "fields": [],
       "id": "record:SDL_GPUShader",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -64436,8 +64639,20 @@
       ],
       "id": "record:SDL_GPUShaderCreateInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "code_size",
+        "code",
+        "entrypoint",
+        "format",
+        "stage",
+        "num_samplers",
+        "num_storage_textures",
+        "num_storage_buffers",
+        "num_uniform_buffers",
+        "props"
+      ]
     },
     {
       "name": "SDL_GPUStencilOpState",
@@ -64466,8 +64681,14 @@
       ],
       "id": "record:SDL_GPUStencilOpState",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "fail_op",
+        "pass_op",
+        "depth_fail_op",
+        "compare_op"
+      ]
     },
     {
       "name": "SDL_GPUStorageBufferReadWriteBinding",
@@ -64500,8 +64721,12 @@
       ],
       "id": "record:SDL_GPUStorageBufferReadWriteBinding",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "buffer",
+        "cycle"
+      ]
     },
     {
       "name": "SDL_GPUStorageTextureReadWriteBinding",
@@ -64542,8 +64767,14 @@
       ],
       "id": "record:SDL_GPUStorageTextureReadWriteBinding",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "texture",
+        "mip_level",
+        "layer",
+        "cycle"
+      ]
     },
     {
       "name": "SDL_GPUTexture",
@@ -64555,7 +64786,7 @@
       "fields": [],
       "id": "record:SDL_GPUTexture",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -64605,8 +64836,19 @@
       ],
       "id": "record:SDL_GPUTextureCreateInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "type",
+        "format",
+        "usage",
+        "width",
+        "height",
+        "layer_count_or_depth",
+        "num_levels",
+        "sample_count",
+        "props"
+      ]
     },
     {
       "name": "SDL_GPUTextureLocation",
@@ -64643,8 +64885,16 @@
       ],
       "id": "record:SDL_GPUTextureLocation",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "texture",
+        "mip_level",
+        "layer",
+        "x",
+        "y",
+        "z"
+      ]
     },
     {
       "name": "SDL_GPUTextureRegion",
@@ -64693,8 +64943,19 @@
       ],
       "id": "record:SDL_GPUTextureRegion",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "texture",
+        "mip_level",
+        "layer",
+        "x",
+        "y",
+        "z",
+        "w",
+        "h",
+        "d"
+      ]
     },
     {
       "name": "SDL_GPUTextureSamplerBinding",
@@ -64715,8 +64976,12 @@
       ],
       "id": "record:SDL_GPUTextureSamplerBinding",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "texture",
+        "sampler"
+      ]
     },
     {
       "name": "SDL_GPUTextureTransferInfo",
@@ -64745,8 +65010,14 @@
       ],
       "id": "record:SDL_GPUTextureTransferInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "transfer_buffer",
+        "offset",
+        "pixels_per_row",
+        "rows_per_layer"
+      ]
     },
     {
       "name": "SDL_GPUTransferBuffer",
@@ -64758,7 +65029,7 @@
       "fields": [],
       "id": "record:SDL_GPUTransferBuffer",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -64784,8 +65055,13 @@
       ],
       "id": "record:SDL_GPUTransferBufferCreateInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "usage",
+        "size",
+        "props"
+      ]
     },
     {
       "name": "SDL_GPUTransferBufferLocation",
@@ -64806,8 +65082,12 @@
       ],
       "id": "record:SDL_GPUTransferBufferLocation",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "transfer_buffer",
+        "offset"
+      ]
     },
     {
       "name": "SDL_GPUVertexAttribute",
@@ -64836,8 +65116,14 @@
       ],
       "id": "record:SDL_GPUVertexAttribute",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "location",
+        "buffer_slot",
+        "format",
+        "offset"
+      ]
     },
     {
       "name": "SDL_GPUVertexBufferDescription",
@@ -64866,8 +65152,14 @@
       ],
       "id": "record:SDL_GPUVertexBufferDescription",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "slot",
+        "pitch",
+        "input_rate",
+        "instance_step_rate"
+      ]
     },
     {
       "name": "SDL_GPUVertexInputState",
@@ -64896,8 +65188,14 @@
       ],
       "id": "record:SDL_GPUVertexInputState",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "vertex_buffer_descriptions",
+        "num_vertex_buffers",
+        "vertex_attributes",
+        "num_vertex_attributes"
+      ]
     },
     {
       "name": "SDL_GPUViewport",
@@ -64934,8 +65232,16 @@
       ],
       "id": "record:SDL_GPUViewport",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "x",
+        "y",
+        "w",
+        "h",
+        "min_depth",
+        "max_depth"
+      ]
     },
     {
       "name": "SDL_GUID",
@@ -66976,8 +67282,14 @@
       ],
       "id": "record:SDL_Rect",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "x",
+        "y",
+        "w",
+        "h"
+      ]
     },
     {
       "name": "SDL_RenderEvent",
@@ -68906,7 +69218,7 @@
       "callback": false,
       "id": "typedef:SDL_FlipMode",
       "category": "Surface",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69014,7 +69326,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUBlendFactor",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69026,7 +69338,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUBlendOp",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69038,8 +69350,17 @@
       "callback": false,
       "id": "typedef:SDL_GPUBlitInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "source",
+        "destination",
+        "load_op",
+        "clear_color",
+        "flip_mode",
+        "filter",
+        "cycle"
+      ]
     },
     {
       "name": "SDL_GPUBlitRegion",
@@ -69050,8 +69371,17 @@
       "callback": false,
       "id": "typedef:SDL_GPUBlitRegion",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "texture",
+        "mip_level",
+        "layer_or_depth_plane",
+        "x",
+        "y",
+        "w",
+        "h"
+      ]
     },
     {
       "name": "SDL_GPUBuffer",
@@ -69062,7 +69392,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUBuffer",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -69074,8 +69404,12 @@
       "callback": false,
       "id": "typedef:SDL_GPUBufferBinding",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "buffer",
+        "offset"
+      ]
     },
     {
       "name": "SDL_GPUBufferCreateInfo",
@@ -69086,8 +69420,13 @@
       "callback": false,
       "id": "typedef:SDL_GPUBufferCreateInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "usage",
+        "size",
+        "props"
+      ]
     },
     {
       "name": "SDL_GPUBufferLocation",
@@ -69098,8 +69437,12 @@
       "callback": false,
       "id": "typedef:SDL_GPUBufferLocation",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "buffer",
+        "offset"
+      ]
     },
     {
       "name": "SDL_GPUBufferRegion",
@@ -69110,8 +69453,13 @@
       "callback": false,
       "id": "typedef:SDL_GPUBufferRegion",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "buffer",
+        "offset",
+        "size"
+      ]
     },
     {
       "name": "SDL_GPUBufferUsageFlags",
@@ -69146,8 +69494,19 @@
       "callback": false,
       "id": "typedef:SDL_GPUColorTargetBlendState",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "src_color_blendfactor",
+        "dst_color_blendfactor",
+        "color_blend_op",
+        "src_alpha_blendfactor",
+        "dst_alpha_blendfactor",
+        "alpha_blend_op",
+        "color_write_mask",
+        "enable_blend",
+        "enable_color_write_mask"
+      ]
     },
     {
       "name": "SDL_GPUColorTargetDescription",
@@ -69158,8 +69517,12 @@
       "callback": false,
       "id": "typedef:SDL_GPUColorTargetDescription",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "format",
+        "blend_state"
+      ]
     },
     {
       "name": "SDL_GPUColorTargetInfo",
@@ -69170,8 +69533,21 @@
       "callback": false,
       "id": "typedef:SDL_GPUColorTargetInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "texture",
+        "mip_level",
+        "layer_or_depth_plane",
+        "clear_color",
+        "load_op",
+        "store_op",
+        "resolve_texture",
+        "resolve_mip_level",
+        "resolve_layer",
+        "cycle",
+        "cycle_resolve_texture"
+      ]
     },
     {
       "name": "SDL_GPUCommandBuffer",
@@ -69182,7 +69558,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUCommandBuffer",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -69194,7 +69570,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUCompareOp",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69206,7 +69582,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUComputePass",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -69218,7 +69594,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUComputePipeline",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -69230,8 +69606,24 @@
       "callback": false,
       "id": "typedef:SDL_GPUComputePipelineCreateInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "code_size",
+        "code",
+        "entrypoint",
+        "format",
+        "num_samplers",
+        "num_readonly_storage_textures",
+        "num_readonly_storage_buffers",
+        "num_readwrite_storage_textures",
+        "num_readwrite_storage_buffers",
+        "num_uniform_buffers",
+        "threadcount_x",
+        "threadcount_y",
+        "threadcount_z",
+        "props"
+      ]
     },
     {
       "name": "SDL_GPUCopyPass",
@@ -69242,7 +69634,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUCopyPass",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -69254,7 +69646,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUCubeMapFace",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69266,7 +69658,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUCullMode",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69278,8 +69670,18 @@
       "callback": false,
       "id": "typedef:SDL_GPUDepthStencilState",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "compare_op",
+        "back_stencil_state",
+        "front_stencil_state",
+        "compare_mask",
+        "write_mask",
+        "enable_depth_test",
+        "enable_depth_write",
+        "enable_stencil_test"
+      ]
     },
     {
       "name": "SDL_GPUDepthStencilTargetInfo",
@@ -69290,8 +69692,18 @@
       "callback": false,
       "id": "typedef:SDL_GPUDepthStencilTargetInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "texture",
+        "clear_depth",
+        "load_op",
+        "store_op",
+        "stencil_load_op",
+        "stencil_store_op",
+        "cycle",
+        "clear_stencil"
+      ]
     },
     {
       "name": "SDL_GPUDevice",
@@ -69314,7 +69726,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUFence",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -69326,7 +69738,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUFillMode",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69338,7 +69750,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUFilter",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69350,7 +69762,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUFrontFace",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69362,7 +69774,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUGraphicsPipeline",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -69374,8 +69786,19 @@
       "callback": false,
       "id": "typedef:SDL_GPUGraphicsPipelineCreateInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "vertex_shader",
+        "fragment_shader",
+        "vertex_input_state",
+        "primitive_type",
+        "rasterizer_state",
+        "multisample_state",
+        "depth_stencil_state",
+        "target_info",
+        "props"
+      ]
     },
     {
       "name": "SDL_GPUGraphicsPipelineTargetInfo",
@@ -69386,8 +69809,14 @@
       "callback": false,
       "id": "typedef:SDL_GPUGraphicsPipelineTargetInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "color_target_descriptions",
+        "num_color_targets",
+        "depth_stencil_format",
+        "has_depth_stencil_target"
+      ]
     },
     {
       "name": "SDL_GPUIndexElementSize",
@@ -69398,7 +69827,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUIndexElementSize",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69410,8 +69839,15 @@
       "callback": false,
       "id": "typedef:SDL_GPUIndexedIndirectDrawCommand",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "num_indices",
+        "num_instances",
+        "first_index",
+        "vertex_offset",
+        "first_instance"
+      ]
     },
     {
       "name": "SDL_GPUIndirectDispatchCommand",
@@ -69422,8 +69858,13 @@
       "callback": false,
       "id": "typedef:SDL_GPUIndirectDispatchCommand",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "groupcount_x",
+        "groupcount_y",
+        "groupcount_z"
+      ]
     },
     {
       "name": "SDL_GPUIndirectDrawCommand",
@@ -69434,8 +69875,14 @@
       "callback": false,
       "id": "typedef:SDL_GPUIndirectDrawCommand",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "num_vertices",
+        "num_instances",
+        "first_vertex",
+        "first_instance"
+      ]
     },
     {
       "name": "SDL_GPULoadOp",
@@ -69446,7 +69893,7 @@
       "callback": false,
       "id": "typedef:SDL_GPULoadOp",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69458,8 +69905,13 @@
       "callback": false,
       "id": "typedef:SDL_GPUMultisampleState",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "sample_count",
+        "sample_mask",
+        "enable_mask"
+      ]
     },
     {
       "name": "SDL_GPUPresentMode",
@@ -69470,7 +69922,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUPresentMode",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69482,7 +69934,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUPrimitiveType",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69494,8 +69946,18 @@
       "callback": false,
       "id": "typedef:SDL_GPURasterizerState",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "fill_mode",
+        "cull_mode",
+        "front_face",
+        "depth_bias_constant_factor",
+        "depth_bias_clamp",
+        "depth_bias_slope_factor",
+        "enable_depth_bias",
+        "enable_depth_clip"
+      ]
     },
     {
       "name": "SDL_GPURenderPass",
@@ -69506,7 +69968,7 @@
       "callback": false,
       "id": "typedef:SDL_GPURenderPass",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -69518,7 +69980,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUSampleCount",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69530,7 +69992,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUSampler",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -69542,7 +70004,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUSamplerAddressMode",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69554,8 +70016,24 @@
       "callback": false,
       "id": "typedef:SDL_GPUSamplerCreateInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "min_filter",
+        "mag_filter",
+        "mipmap_mode",
+        "address_mode_u",
+        "address_mode_v",
+        "address_mode_w",
+        "mip_lod_bias",
+        "max_anisotropy",
+        "compare_op",
+        "min_lod",
+        "max_lod",
+        "enable_anisotropy",
+        "enable_compare",
+        "props"
+      ]
     },
     {
       "name": "SDL_GPUSamplerMipmapMode",
@@ -69566,7 +70044,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUSamplerMipmapMode",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69578,7 +70056,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUShader",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -69590,8 +70068,20 @@
       "callback": false,
       "id": "typedef:SDL_GPUShaderCreateInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "code_size",
+        "code",
+        "entrypoint",
+        "format",
+        "stage",
+        "num_samplers",
+        "num_storage_textures",
+        "num_storage_buffers",
+        "num_uniform_buffers",
+        "props"
+      ]
     },
     {
       "name": "SDL_GPUShaderFormat",
@@ -69614,7 +70104,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUShaderStage",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69626,7 +70116,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUStencilOp",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69638,8 +70128,14 @@
       "callback": false,
       "id": "typedef:SDL_GPUStencilOpState",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "fail_op",
+        "pass_op",
+        "depth_fail_op",
+        "compare_op"
+      ]
     },
     {
       "name": "SDL_GPUStorageBufferReadWriteBinding",
@@ -69650,8 +70146,12 @@
       "callback": false,
       "id": "typedef:SDL_GPUStorageBufferReadWriteBinding",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "buffer",
+        "cycle"
+      ]
     },
     {
       "name": "SDL_GPUStorageTextureReadWriteBinding",
@@ -69662,8 +70162,14 @@
       "callback": false,
       "id": "typedef:SDL_GPUStorageTextureReadWriteBinding",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "texture",
+        "mip_level",
+        "layer",
+        "cycle"
+      ]
     },
     {
       "name": "SDL_GPUStoreOp",
@@ -69674,7 +70180,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUStoreOp",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69686,7 +70192,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUSwapchainComposition",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69698,7 +70204,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUTexture",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -69710,8 +70216,19 @@
       "callback": false,
       "id": "typedef:SDL_GPUTextureCreateInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "type",
+        "format",
+        "usage",
+        "width",
+        "height",
+        "layer_count_or_depth",
+        "num_levels",
+        "sample_count",
+        "props"
+      ]
     },
     {
       "name": "SDL_GPUTextureFormat",
@@ -69722,7 +70239,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUTextureFormat",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69734,8 +70251,16 @@
       "callback": false,
       "id": "typedef:SDL_GPUTextureLocation",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "texture",
+        "mip_level",
+        "layer",
+        "x",
+        "y",
+        "z"
+      ]
     },
     {
       "name": "SDL_GPUTextureRegion",
@@ -69746,8 +70271,19 @@
       "callback": false,
       "id": "typedef:SDL_GPUTextureRegion",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "texture",
+        "mip_level",
+        "layer",
+        "x",
+        "y",
+        "z",
+        "w",
+        "h",
+        "d"
+      ]
     },
     {
       "name": "SDL_GPUTextureSamplerBinding",
@@ -69758,8 +70294,12 @@
       "callback": false,
       "id": "typedef:SDL_GPUTextureSamplerBinding",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "texture",
+        "sampler"
+      ]
     },
     {
       "name": "SDL_GPUTextureTransferInfo",
@@ -69770,8 +70310,14 @@
       "callback": false,
       "id": "typedef:SDL_GPUTextureTransferInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "transfer_buffer",
+        "offset",
+        "pixels_per_row",
+        "rows_per_layer"
+      ]
     },
     {
       "name": "SDL_GPUTextureType",
@@ -69782,7 +70328,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUTextureType",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69806,7 +70352,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUTransferBuffer",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -69818,8 +70364,13 @@
       "callback": false,
       "id": "typedef:SDL_GPUTransferBufferCreateInfo",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "usage",
+        "size",
+        "props"
+      ]
     },
     {
       "name": "SDL_GPUTransferBufferLocation",
@@ -69830,8 +70381,12 @@
       "callback": false,
       "id": "typedef:SDL_GPUTransferBufferLocation",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "transfer_buffer",
+        "offset"
+      ]
     },
     {
       "name": "SDL_GPUTransferBufferUsage",
@@ -69842,7 +70397,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUTransferBufferUsage",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69854,8 +70409,14 @@
       "callback": false,
       "id": "typedef:SDL_GPUVertexAttribute",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "location",
+        "buffer_slot",
+        "format",
+        "offset"
+      ]
     },
     {
       "name": "SDL_GPUVertexBufferDescription",
@@ -69866,8 +70427,14 @@
       "callback": false,
       "id": "typedef:SDL_GPUVertexBufferDescription",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "slot",
+        "pitch",
+        "input_rate",
+        "instance_step_rate"
+      ]
     },
     {
       "name": "SDL_GPUVertexElementFormat",
@@ -69878,7 +70445,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUVertexElementFormat",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69890,7 +70457,7 @@
       "callback": false,
       "id": "typedef:SDL_GPUVertexInputRate",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69902,8 +70469,14 @@
       "callback": false,
       "id": "typedef:SDL_GPUVertexInputState",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "vertex_buffer_descriptions",
+        "num_vertex_buffers",
+        "vertex_attributes",
+        "num_vertex_attributes"
+      ]
     },
     {
       "name": "SDL_GPUViewport",
@@ -69914,8 +70487,16 @@
       "callback": false,
       "id": "typedef:SDL_GPUViewport",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "x",
+        "y",
+        "w",
+        "h",
+        "min_depth",
+        "max_depth"
+      ]
     },
     {
       "name": "SDL_GUID",
@@ -71131,8 +71712,14 @@
       "callback": false,
       "id": "typedef:SDL_Rect",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "x",
+        "y",
+        "w",
+        "h"
+      ]
     },
     {
       "name": "SDL_RenderEvent",

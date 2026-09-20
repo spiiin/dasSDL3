@@ -1,5 +1,9 @@
 # Пиксельные буферы, streaming texture и render target
 
+> Current error/lifetime contract: [error-handling.md](error-handling.md).
+> SDL failures return values; scopes use defer. Earlier panic/protected-scope
+> descriptions below are historical and no longer describe the public binding.
+
 SDL 3.2.18, Windows x64/MSVC, закреплённый daScript. Публичный модуль:
 `require dassdl3/sdl3_pixels_boost`; он переэкспортирует базовый boost.
 Нативные адаптеры находятся в `src/sdl3_pixels.h`.
@@ -37,7 +41,8 @@ RGBA32 target texture. Внутри её времени жизни:
 renderer |> with_render_target(texture) {
     renderer |> clear(uint4(20u, 40u, 80u, 255u))
     renderer |> with_read_pixels() $(surface) {
-        let size = surface_size(surface)
+        var size : int2
+        if (!surface_size(surface,size)) { return }
         var bytes : array<uint8>
         bytes |> resize(rgba8_buffer_size(size.x, size.y, size.x * 4))
         surface |> copy_surface_rgba8(bytes, size.x * 4)
@@ -46,9 +51,9 @@ renderer |> with_render_target(texture) {
 ```
 
 `with_render_target` запоминает прежнюю цель, включая null (окно), и
-восстанавливает её на обычном/раннем выходе и panic. Ошибка переключения не
-вызывает блок. Восстановление проверяется; при двойной ошибке сообщение
-содержит исходный panic и ошибку восстановления. SDL хранит viewport, clip,
+восстанавливает её через defer на обычном/раннем выходе. Ошибка переключения
+возвращает false и не вызывает блок. Для проверки результата восстановления
+используйте явный SDL_SetRenderTarget. SDL хранит viewport, clip,
 scale и logical presentation отдельно для каждой цели. Draw color и blend
 state эти helpers не сохраняют.
 
@@ -83,7 +88,7 @@ SDL_Surface и SDL_Texture остаются opaque. Указатели из бл
   upload/readback, отсутствие обязательного padding последней строки,
   сохранность padding и копии после уничтожения ресурсов, неверные размеры,
   переполнение без огромных аллокаций, короткий/пустой массив, неверный access,
-  повторный upload, nested target, normal/early/panic cleanup и исходный panic.
+  повторный upload, nested target, normal/early cleanup и результат ошибки SDL.
   SDL property callbacks подтверждают порядок уничтожения поверхности и текстуры
   до teardown renderer. Stale pointers для теста не разыменовываются.
 

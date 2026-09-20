@@ -1,5 +1,9 @@
 # Ввод: события, состояние и текст
 
+> Current error/lifetime contract: [error-handling.md](error-handling.md).
+> SDL failures return values; scopes use defer. Earlier panic/protected-scope
+> descriptions below are historical and no longer describe the public binding.
+
 Реализовано для SDL 3.2.18 и закреплённого интерпретатора daScript.
 Подключение: `require dassdl3/sdl3_boost`. Пример: `examples/03_input.das`.
 

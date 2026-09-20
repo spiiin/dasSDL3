@@ -1,3 +1,11 @@
+> Historical implementation record. The framework API described here was removed.
+
+> Current error/lifetime contract: [error-handling.md](error-handling.md).
+> SDL failures return values; scopes use defer. Earlier panic/protected-scope
+> descriptions below are historical and no longer describe the public binding.
+> Do not use this as current binding guidance. See [API boundary](gpu-api-boundary.md)
+> and [current GPU roadmap](gpu-roadmap.md). Old test counts describe earlier revisions.
+
 # GPU command plans: next P6 batch (9 steps)
 
 `sdl3_gpu_commands_boost` extends G0/G3/G4/G6 with a value-only plan and one
@@ -97,4 +105,18 @@ descriptors and native live command handles remain pending. CPU plans do not
 complete those contracts. This batch adds **3** partially adapted SDL functions
 (the debug commands); the other steps extend existing partial contracts.
 
-Verification results are recorded below after running the shared suites.
+Final verification (including the native scope simplification):
+
+- Main project CTest: **122/122**.
+- Legacy/CppGenBind parity and strict AOT: **277/277**.
+- Standalone generator/AOT/missing-AOT experiment: **4/4**.
+- LLVM/Clang/Python discovery and generators disabled: consumer built; examples
+  02, 04, 06, 08 passed (audio uses process-local dummy driver), and example 36
+  passed on Vulkan and D3D12. No generator/LLVM dependency in consumer build.ninja.
+- Main/parity logs contain no VUID, validation errors or D3D12 error/corruption;
+  no skipped or not-run tests. D3D12 group rejection is tested explicitly.
+- Developer generation/preflight is restored and rechecked after the consumer.
+
+Extension 44 adds native complete render operations; see [gpu-render-plans.md](gpu-render-plans.md).
+The earlier pending-pass statement describes the original transfer-only batch.
+General live pass handles remain pending; plans now support bounded offscreen draws.

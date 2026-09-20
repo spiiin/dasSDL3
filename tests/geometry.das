@@ -5,11 +5,14 @@ require daslib/rtti
 require daslib/strings_boost
 
 def read_geometry_image(renderer : SDL_Renderer?; var bytes : array<uint8>) {
-    renderer |> with_read_pixels() $(surface) {
-        let size = surface_size(surface)
+    let scope_ok_0 = renderer |> with_read_pixels() $(surface) {
+        var query_result_1 : int2
+        verify(surface_size(surface,query_result_1))
+        let size = query_result_1
         bytes |> resize(rgba8_buffer_size(size.x, size.y, size.x * 4))
         surface |> copy_surface_rgba8(bytes, size.x * 4)
     }
+    verify(scope_ok_0)
 }
 def pixel(bytes : array<uint8>; x, y : int) : uint4 {
     let i = (y * 64 + x) * 4
@@ -19,12 +22,12 @@ def pixel(bytes : array<uint8>; x, y : int) : uint4 {
 [export]
 def main(smoke : bool) : int {
     verify(smoke)
-    with_sdl() {
-        with_window("geometry contracts", 64, 64, SDL_WINDOW_HIDDEN) $(window) {
-            window |> with_renderer() $(renderer) {
+    let scope_ok_1 = with_sdl() {
+        let scope_ok_2 = with_window("geometry contracts", 64, 64, SDL_WINDOW_HIDDEN) $(window) {
+            let scope_ok_3 = window |> with_renderer() $(renderer) {
                 verify(SDLTestGeometryCounts(renderer))
-                renderer |> with_target_texture(64, 64) $(target) {
-                    renderer |> with_render_target(target) {
+                let scope_ok_4 = renderer |> with_target_texture(64, 64) $(target) {
+                    let scope_ok_5 = renderer |> with_render_target(target) {
                         var vertices : array<SDL_Vertex>
                         var indices : array<int>
                         var bytes : array<uint8>
@@ -70,10 +73,8 @@ def main(smoke : bool) : int {
                         indices[0] = -1
                         verify(!SDL_RenderGeometryIndices(renderer, null, vertices, indices))
                         var caught = false
-                        try { renderer |> draw_geometry(vertices, indices) } recover {
-                            caught = true
-                            verify(rtrim(this_context().last_exception) == "draw_geometry: geometry: index out of bounds")
-                        }
+                        { let operation_ok = renderer |> draw_geometry(vertices, indices)
+caught = !operation_ok }
                         verify(caught)
                         indices[0] = 4
                         verify(!SDL_RenderGeometryIndices(renderer, null, vertices, indices))
@@ -96,7 +97,7 @@ def main(smoke : bool) : int {
                         read_geometry_image(renderer, bytes)
                         for (i in 0 .. length(bytes)) { verify(bytes[i] == indexed_image[i], "rejected draw changed target") }
                         // Texture sampling + vertex color modulation, then release arrays before readback.
-                        renderer |> with_streaming_texture(2, 2) $(texture) {
+                        let scope_ok_6 = renderer |> with_streaming_texture(2, 2) $(texture) {
                             var texels : array<uint8>
                             texels |> resize(16)
                             for (i in 0 .. 4) {
@@ -115,17 +116,23 @@ def main(smoke : bool) : int {
                             read_geometry_image(renderer, bytes)
                             verify(pixel(bytes, 32, 32) == uint4(31u, 95u, 191u, 255u))
                         }
+                        verify(scope_ok_6)
                         indices |> resize(3)
                         verify(!SDL_RenderGeometryIndices(renderer, null, vertices, indices))
                         verify(!SDL_RenderGeometryVertices(null, null, vertices))
                     }
+                    verify(scope_ok_5)
                     verify(SDL_GetRenderTarget(renderer) == null)
                 }
+                verify(scope_ok_4)
                 renderer |> clear()
                 renderer |> present()
             }
+            verify(scope_ok_3)
         }
+        verify(scope_ok_2)
     }
+    verify(scope_ok_1)
     print("Geometry: indexed/sequential pixels, texture, array lifetime and bounds OK\n")
     return 0
 }

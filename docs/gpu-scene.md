@@ -1,3 +1,11 @@
+> Historical implementation record. The framework API described here was removed.
+
+> Current error/lifetime contract: [error-handling.md](error-handling.md).
+> SDL failures return values; scopes use defer. Earlier panic/protected-scope
+> descriptions below are historical and no longer describe the public binding.
+> Do not use this as current binding guidance. See [API boundary](gpu-api-boundary.md)
+> and [current GPU roadmap](gpu-roadmap.md). Old test counts describe earlier revisions.
+
 # Несколько lit objects в одном render pass
 
 `examples/16_gpu_scene.das` рисует три экземпляра текстурированного куба с разными

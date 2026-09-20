@@ -11,6 +11,7 @@ struct SDL_GPUDataBuffer {
     SDL_GPUBuffer * buffer;
     uint32_t size;
     bool valid;
+    uint32_t usage=0;
 };
 struct SDL_GPUReadback {
     SDL_GPUDevice * device;
@@ -40,7 +41,7 @@ inline bool SDL_GPUTransferDevice(SDL_GPUDevice * device) {
     return true;
 }
 inline bool SDL_GPUTransferIDAvailable() {
-    return SDL_GPUNextPipeline != std::numeric_limits<uint64_t>::max() ||
+    return SDL_GPUNextResourceID != std::numeric_limits<uint64_t>::max() ||
         SDL_SetError("GPU transfer: ID space exhausted");
 }
 template <typename T>
@@ -129,8 +130,8 @@ inline uint64_t SDL_CreateGPUDataBuffer(SDL_GPUDevice * device, const das::TArra
     build.buffer=SDL_CreateGPUBuffer(device,&info); if (!build.buffer) return 0;
     bool submitted=false;
     if (!SDL_GPUUploadData(device,build.buffer,0,bytes,false,submitted)) return 0;
-    const auto id=SDL_GPUNextPipeline++;
-    SDL_GPUDataBuffers.emplace(id,SDL_GPUDataBuffer{device,build.buffer,uint32_t(bytes.size),true});
+    const auto id=SDL_GPUNextResourceID++;
+    SDL_GPUDataBuffers.emplace(id,SDL_GPUDataBuffer{device,build.buffer,uint32_t(bytes.size),true,usage});
     build.buffer=nullptr; return id;
 }
 inline bool SDL_ReleaseGPUDataBuffer(SDL_GPUDevice * device,uint64_t id) {
@@ -171,7 +172,7 @@ inline uint64_t SDL_RequestGPUBufferReadback(SDL_GPUDevice * device,uint64_t id,
     SDL_GPUTransferBufferLocation dest{}; dest.transfer_buffer=build.transfer;
     SDL_DownloadFromGPUBuffer(pass,&source,&dest); SDL_EndGPUCopyPass(pass);
     if (!build.submitFence()) return 0;
-    const auto ticket=SDL_GPUNextPipeline++;
+    const auto ticket=SDL_GPUNextResourceID++;
     SDL_GPUReadbacks.emplace(ticket,SDL_GPUReadback{device,build.transfer,build.fence,size});
     build.transfer=nullptr; build.fence=nullptr; return ticket;
 }

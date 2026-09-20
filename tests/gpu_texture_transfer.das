@@ -11,11 +11,12 @@ def equal(a,b : array<uint8>) {
 def pixels(device : SDL_GPUDevice?; texture : uint64; sub : uint2; width,height : uint; expected : array<uint8>) {
     var actual : array<uint8>
     resize(actual,int(width*height*4u))
-    device |> with_gpu_texture_readback(texture,sub,uint4(0u,0u,width,height)) $(ticket) {
+    let scope_ok_0 = device |> with_gpu_texture_readback(texture,sub,uint4(0u,0u,width,height)) $(ticket) {
         device |> gpu_wait_readback(ticket)
         device |> gpu_readback_bytes(ticket,actual)
         equal(actual,expected)
     }
+    verify(scope_ok_0)
 }
 def zeros(device : SDL_GPUDevice?; texture : uint64; sub : uint2; width,height : uint) {
     var expected : array<uint8>
@@ -26,8 +27,8 @@ def zeros(device : SDL_GPUDevice?; texture : uint64; sub : uint2; width,height :
 [export]
 def main(smoke : bool) : int {
     var available = false
-    with_sdl() {
-        available = try_with_gpu_device(GPU_CLEAR_FORMATS,true,"") $(device) {
+    let scope_ok_1 = with_sdl() {
+        available = try_with_gpu_device(GPU_SHADER_FORMATS,true,"") $(device) {
             verify(SDL_CreateGPUTransferTexture(device,0u,1u,1u,1u) == 0ul)
             verify(SDL_CreateGPUTransferTexture(device,8193u,1u,1u,1u) == 0ul)
             verify(SDL_CreateGPUTransferTexture(device,1u,1u,0u,1u) == 0ul)
@@ -43,7 +44,7 @@ def main(smoke : bool) : int {
                 padded[y*31+x] = packed[y*28+x]
             }
             var stale = 0ul
-            device |> with_gpu_rgba_texture(7u,5u,2u,3u) $(source) {
+            let scope_ok_2 = device |> with_gpu_rgba_texture(7u,5u,2u,3u) $(source) {
                 stale = source
                 for (layer in 0u .. 2u) {
                     zeros(device,source,uint2(0u,layer),7u,5u)
@@ -75,7 +76,7 @@ def main(smoke : bool) : int {
                 pixels(device,source,uint2(0u),7u,5u,packed)
                 pixels(device,source,uint2(2u,1u),1u,1u,tiny)
                 zeros(device,source,uint2(0u,1u),7u,5u)
-                device |> with_gpu_rgba_texture(8u,6u,2u,3u) $(destination) {
+                let scope_ok_3 = device |> with_gpu_rgba_texture(8u,6u,2u,3u) $(destination) {
                     verify(!SDL_CopyGPUTextureRegion(device,source,uint2(0u),uint4(2u,1u,3u,2u),destination,uint2(1u,1u),uint2(3u,1u)))
                     device |> gpu_copy_texture(source,uint2(0u),uint4(2u,1u,3u,2u),destination,uint2(1u,1u),uint2(1u,1u))
                     var expected : array<uint8>
@@ -85,7 +86,7 @@ def main(smoke : bool) : int {
                     pixels(device,destination,uint2(1u,1u),4u,3u,expected)
                     zeros(device,destination,uint2(0u,1u),8u,6u)
                     zeros(device,destination,uint2(1u,0u),4u,3u)
-                    let other_available = try_with_gpu_device(GPU_CLEAR_FORMATS,true,"") $(other) {
+                    let other_available = try_with_gpu_device(GPU_SHADER_FORMATS,true,"") $(other) {
                         verify(!SDL_ReleaseGPUTransferTexture(other,source))
                         verify(SDL_RequestGPUTextureReadback(other,source,uint2(0u),uint4(0u,0u,1u,1u)) == 0ul)
                         let own = SDL_CreateGPUTransferTexture(other,3u,2u,2u,2u)
@@ -97,14 +98,16 @@ def main(smoke : bool) : int {
                     verify(other_available)
                     pixels(device,destination,uint2(1u,1u),4u,3u,expected)
                 }
+                verify(scope_ok_3)
             }
+            verify(scope_ok_2)
             verify(!SDL_ReleaseGPUTransferTexture(device,stale))
             // Queued snapshot, cycling and release of source before reading.
             let texture = SDL_CreateGPUTransferTexture(device,7u,5u,1u,1u)
             verify(texture != 0ul)
             device |> gpu_upload_texture(texture,uint2(0u),uint4(0u,0u,7u,5u),packed,28u,true)
             var dead_ticket = 0ul
-            device |> with_gpu_texture_readback(texture,uint2(0u),uint4(0u,0u,7u,5u)) $(ticket) {
+            let scope_ok_4 = device |> with_gpu_texture_readback(texture,uint2(0u),uint4(0u,0u,7u,5u)) $(ticket) {
                 dead_ticket = ticket
                 var zero, actual : array<uint8>
                 resize(zero,140); resize(actual,140)
@@ -118,30 +121,37 @@ def main(smoke : bool) : int {
                 device |> gpu_readback_bytes(ticket,actual)
                 equal(actual,packed)
             }
+            verify(scope_ok_4)
             verify(SDL_PollGPUReadback(device,dead_ticket) == -1)
             var caught = false
-            try {
-                device |> with_gpu_rgba_texture(1u,1u) $(owned) {
+            {
+                let scope_ok_5 = device |> with_gpu_rgba_texture(1u,1u) $(owned) {
                     stale = owned
-                    device |> with_gpu_texture_readback(owned,uint2(0u),uint4(0u,0u,1u,1u)) $(ticket) {
+                    let scope_ok_6 = device |> with_gpu_texture_readback(owned,uint2(0u),uint4(0u,0u,1u,1u)) $(ticket) {
                         dead_ticket = ticket
-                        panic("texture transfer scope sentinel")
+                        caught = !set_title(null,"expected SDL failure"); return
                     }
+                    verify(scope_ok_6)
                 }
-            } recover { caught = rtrim(this_context().last_exception) == "texture transfer scope sentinel" }
+                verify(scope_ok_5)
+            }
             verify(caught && !SDL_ReleaseGPUTransferTexture(device,stale))
             verify(SDL_PollGPUReadback(device,dead_ticket) == -1)
-            device |> with_gpu_rgba_texture(1u,1u) $(owned) { stale = owned; return }
+            let scope_ok_7 = device |> with_gpu_rgba_texture(1u,1u) $(owned) { stale = owned; return }
+            verify(scope_ok_7)
             verify(!SDL_ReleaseGPUTransferTexture(device,stale))
-            device |> with_gpu_rgba_texture(3u,2u) $(owned) {
+            let scope_ok_8 = device |> with_gpu_rgba_texture(3u,2u) $(owned) {
                 for (i in 0 .. 64) {
-                    device |> with_gpu_texture_readback(owned,uint2(0u),uint4(0u,0u,3u,2u)) $(ticket) { dead_ticket = ticket; return }
+                    let scope_ok_9 = device |> with_gpu_texture_readback(owned,uint2(0u),uint4(0u,0u,3u,2u)) $(ticket) { dead_ticket = ticket; return }
+                    verify(scope_ok_9)
                     verify(SDL_PollGPUReadback(device,dead_ticket) == -1)
                 }
                 zeros(device,owned,uint2(0u),3u,2u)
             }
+            verify(scope_ok_8)
             print("GPU texture mip/layer, pitch, copy, snapshots, bounds and scopes PASS: {SDL_GetGPUDeviceDriver(device)}\n")
         }
     }
+    verify(scope_ok_1)
     return available ? 0 : 77
 }

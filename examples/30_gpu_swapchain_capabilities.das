@@ -1,13 +1,15 @@
 options gen2
 require dassdl3/sdl3_gpu_swapchain_boost
 
+var example_failed = false
+
 [export]
 def main(smoke : bool) : int {
     var available = false
-    with_sdl() {
-        available = try_with_gpu_device(GPU_CLEAR_FORMATS,true,"") $(device) {
-            with_window("SDL GPU swapchain",320,240,0ul) $(window) {
-                device |> with_gpu_window(window) {
+    let scope_ok_0 = with_sdl() {
+        available = try_with_gpu_device(GPU_SHADER_FORMATS,true,"") $(device) {
+            let scope_ok_1 = with_window("SDL GPU swapchain",320,240,0ul) $(window) {
+                let scope_ok_2 = device |> with_gpu_window(window) {
                     for (mode in SDL_GPU_PRESENTMODE_VSYNC .. SDL_GPU_PRESENTMODE_MAILBOX+1u) {
                         print("Present mode {mode}: {gpu_supports_present_mode(device,window,mode)}\n")
                     }
@@ -15,10 +17,12 @@ def main(smoke : bool) : int {
                         print("Composition {composition}: {gpu_supports_composition(device,window,composition)}\n")
                     }
                     print("Current texture format: {gpu_swapchain_format(device,window)}\n")
-                    gpu_clear(device,window,float4(0.1,0.3,0.5,1.0))
                 }
+                if (!scope_ok_2) { example_failed = true; print("SDL acquisition: {SDL_GetError()}\n") }
             }
+            if (!scope_ok_1) { example_failed = true; print("SDL acquisition: {SDL_GetError()}\n") }
         }
     }
-    return available ? 0 : 77
+    if (!scope_ok_0) { example_failed = true; print("SDL acquisition: {SDL_GetError()}\n") }
+    return example_failed ? 1 : (available ? 0 : 77)
 }

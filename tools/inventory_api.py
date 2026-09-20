@@ -140,6 +140,10 @@ def annotate(symbols, spec, policy, categories):
             item["raw_status"] = "generated"
         elif kind in ("macro", "enumerator") and name in spec["constants"]:
             item["raw_status"] = "generated"
+        elif kind in ("enum", "typedef") and name in spec.get("enums", {}):
+            item["raw_status"] = "generated"
+        elif kind == "enumerator" and any(name in members for members in spec.get("enums", {}).values()):
+            item["raw_status"] = "generated"
         elif kind in ("record", "typedef") and name in spec["opaque_types"]:
             item["raw_status"] = "opaque"
         elif kind in ("record", "typedef") and name in spec["structs"]:
@@ -164,7 +168,7 @@ def annotate(symbols, spec, policy, categories):
     types = {s["name"] for s in symbols if s["kind"] in ("record", "typedef", "enum")}
     if set(spec["constants"]) - constants:
         raise RuntimeError(f"Generated constants absent from census: {sorted(set(spec['constants']) - constants)}")
-    required_types = (set(spec["opaque_types"]) | set(spec["structs"])) - set(policy.get("project_types", {}))
+    required_types = (set(spec["opaque_types"]) | set(spec["structs"]) | set(spec.get("enums", {}))) - set(policy.get("project_types", {}))
     if required_types - types:
         raise RuntimeError(f"Generated types absent from census: {sorted(required_types - types)}")
     return sorted(symbols, key=lambda item: item["id"])

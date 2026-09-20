@@ -1,0 +1,363 @@
+options gen2
+require sdl3
+
+// Deliberate raw-pointer ABI test. Every pointed-to local outlives the native
+// call; shader/pipeline backing arrays belong to the test-only data fixture.
+// No checked GPU helper or fixture issues the GPU calls under test.
+[export]
+def main(smoke : bool) : int {
+    unsafe {
+        verify(SDL_Init(SDL_INIT_VIDEO))
+        verify(SDL_GetNumGPUDrivers() > 0)
+        print("RAW_CALL SDL_GetNumGPUDrivers\n")
+        let driver = SDL_GetGPUDriver(0)
+        print("RAW_CALL SDL_GetGPUDriver\n")
+        let formats = SDL_GPU_SHADERFORMAT_SPIRV | SDL_GPU_SHADERFORMAT_DXIL
+        verify(SDL_GPUSupportsShaderFormats(formats,driver))
+        print("RAW_CALL SDL_GPUSupportsShaderFormats\n")
+        let props = SDLTest_raw_properties()
+        verify(props != 0u && SDL_GPUSupportsProperties(props))
+        print("RAW_CALL SDL_GPUSupportsProperties\n")
+        var device = SDL_CreateGPUDeviceWithProperties(props)
+        print("RAW_CALL SDL_CreateGPUDeviceWithProperties\n")
+        SDLTest_raw_destroy_properties(props)
+        verify(device != null)
+        let dxil = SDL_GetGPUDeviceDriver(device) == "direct3d12"
+        print("RAW_CALL SDL_GetGPUDeviceDriver\n")
+        verify(SDL_GetGPUShaderFormats(device) != 0u)
+        print("RAW_CALL SDL_GetGPUShaderFormats\n")
+        verify(SDL_GPUTextureFormatTexelBlockSize(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM) == 4u)
+        print("RAW_CALL SDL_GPUTextureFormatTexelBlockSize\n")
+        verify(SDL_CalculateGPUTextureFormatSize(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM,4u,4u,1u) == 64u)
+        print("RAW_CALL SDL_CalculateGPUTextureFormatSize\n")
+        verify(SDL_GPUTextureSupportsFormat(device,SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM,SDL_GPUTextureType.TEXTURETYPE_2D,SDL_GPU_TEXTUREUSAGE_SAMPLER))
+        print("RAW_CALL SDL_GPUTextureSupportsFormat\n")
+        verify(SDL_GPUTextureSupportsSampleCount(device,SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM,SDL_GPUSampleCount.SAMPLECOUNT_1))
+        print("RAW_CALL SDL_GPUTextureSupportsSampleCount\n")
+
+        var ti : SDL_GPUTransferBufferCreateInfo
+        ti.usage=SDL_GPUTransferBufferUsage.TRANSFERBUFFERUSAGE_UPLOAD; ti.size=1024u
+        var upload=SDL_CreateGPUTransferBuffer(device,addr(ti)); verify(upload!=null)
+        print("RAW_CALL SDL_CreateGPUTransferBuffer\n")
+        ti.usage=SDL_GPUTransferBufferUsage.TRANSFERBUFFERUSAGE_DOWNLOAD; ti.size=2048u
+        var download=SDL_CreateGPUTransferBuffer(device,addr(ti)); verify(download!=null)
+        print("RAW_CALL SDL_CreateGPUTransferBuffer\n")
+        let mapped=SDL_MapGPUTransferBuffer(device,upload,false); verify(SDLTest_raw_fill_upload(mapped))
+        print("RAW_CALL SDL_MapGPUTransferBuffer\n")
+        SDL_UnmapGPUTransferBuffer(device,upload)
+        print("RAW_CALL SDL_UnmapGPUTransferBuffer\n")
+        var bi : SDL_GPUBufferCreateInfo
+        bi.size=1024u; bi.usage=SDL_GPU_BUFFERUSAGE_VERTEX
+        var geometry=SDL_CreateGPUBuffer(device,addr(bi)); verify(geometry!=null)
+        print("RAW_CALL SDL_CreateGPUBuffer\n")
+        bi.usage=SDL_GPU_BUFFERUSAGE_INDEX
+        var indices=SDL_CreateGPUBuffer(device,addr(bi)); verify(indices!=null)
+        bi.usage=SDL_GPU_BUFFERUSAGE_INDIRECT
+        var indirect=SDL_CreateGPUBuffer(device,addr(bi)); verify(indirect!=null)
+        bi.size=32u; bi.usage=SDL_GPU_BUFFERUSAGE_GRAPHICS_STORAGE_READ|SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_READ
+        var readonly=SDL_CreateGPUBuffer(device,addr(bi)); verify(readonly!=null)
+        print("RAW_CALL SDL_CreateGPUBuffer\n")
+        var copied=SDL_CreateGPUBuffer(device,addr(bi)); verify(copied!=null)
+        print("RAW_CALL SDL_CreateGPUBuffer\n")
+        bi.usage=SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE
+        var output=SDL_CreateGPUBuffer(device,addr(bi)); verify(output!=null)
+        print("RAW_CALL SDL_CreateGPUBuffer\n")
+        SDL_SetGPUBufferName(device,geometry,"raw geometry and indirect commands")
+        print("RAW_CALL SDL_SetGPUBufferName\n")
+        var texture_info : SDL_GPUTextureCreateInfo
+        texture_info.texture_type=SDL_GPUTextureType.TEXTURETYPE_2D; texture_info.format=SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM
+        texture_info.width=4u; texture_info.height=4u; texture_info.layer_count_or_depth=1u; texture_info.num_levels=1u
+        texture_info.usage=SDL_GPU_TEXTUREUSAGE_SAMPLER
+        var image=SDL_CreateGPUTexture(device,addr(texture_info)); verify(image!=null)
+        print("RAW_CALL SDL_CreateGPUTexture\n")
+        texture_info.usage=SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ|SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_READ
+        var image_copy=SDL_CreateGPUTexture(device,addr(texture_info)); verify(image_copy!=null)
+        print("RAW_CALL SDL_CreateGPUTexture\n")
+        texture_info.width=8u; texture_info.height=8u; texture_info.num_levels=4u
+        texture_info.usage=SDL_GPU_TEXTUREUSAGE_COLOR_TARGET|SDL_GPU_TEXTUREUSAGE_SAMPLER
+        var target=SDL_CreateGPUTexture(device,addr(texture_info)); verify(target!=null)
+        print("RAW_CALL SDL_CreateGPUTexture\n")
+        var blitted=SDL_CreateGPUTexture(device,addr(texture_info)); verify(blitted!=null)
+        print("RAW_CALL SDL_CreateGPUTexture\n")
+        texture_info.height=1u; texture_info.num_levels=1u; texture_info.usage=SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE
+        var compute_image=SDL_CreateGPUTexture(device,addr(texture_info)); verify(compute_image!=null)
+        print("RAW_CALL SDL_CreateGPUTexture\n")
+        SDL_SetGPUTextureName(device,target,"raw rendered target")
+        print("RAW_CALL SDL_SetGPUTextureName\n")
+        var sampler_info : SDL_GPUSamplerCreateInfo
+        var sampler=SDL_CreateGPUSampler(device,addr(sampler_info)); verify(sampler!=null)
+        print("RAW_CALL SDL_CreateGPUSampler\n")
+
+        var command=SDL_AcquireGPUCommandBuffer(device); verify(command!=null)
+        print("RAW_CALL SDL_AcquireGPUCommandBuffer\n")
+        SDL_InsertGPUDebugLabel(command,"raw transfer/render/compute")
+        print("RAW_CALL SDL_InsertGPUDebugLabel\n")
+        if (!dxil) {
+            SDL_PushGPUDebugGroup(command,"raw group")
+            print("RAW_CALL SDL_PushGPUDebugGroup\n")
+            SDL_PopGPUDebugGroup(command)
+            print("RAW_CALL SDL_PopGPUDebugGroup\n")
+        } else {
+            print("RAW_UNSUPPORTED SDL_PushGPUDebugGroup SDL_PopGPUDebugGroup pinned SDL 3.2.18 D3D12 metadata defect\n")
+        }
+        var copy_pass=SDL_BeginGPUCopyPass(command); verify(copy_pass!=null)
+        print("RAW_CALL SDL_BeginGPUCopyPass\n")
+        var transfer : SDL_GPUTransferBufferLocation; transfer.transfer_buffer=upload
+        var region : SDL_GPUBufferRegion; region.buffer=geometry; region.size=192u
+        SDL_UploadToGPUBuffer(copy_pass,addr(transfer),addr(region),false)
+        print("RAW_CALL SDL_UploadToGPUBuffer\n")
+        region.buffer=indices
+        SDL_UploadToGPUBuffer(copy_pass,addr(transfer),addr(region),false)
+        region.buffer=indirect
+        SDL_UploadToGPUBuffer(copy_pass,addr(transfer),addr(region),false)
+        transfer.offset=64u; region.buffer=readonly; region.size=16u
+        SDL_UploadToGPUBuffer(copy_pass,addr(transfer),addr(region),false)
+        print("RAW_CALL SDL_UploadToGPUBuffer\n")
+        var source : SDL_GPUBufferLocation; source.buffer=readonly
+        var dest : SDL_GPUBufferLocation; dest.buffer=copied
+        SDL_CopyGPUBufferToBuffer(copy_pass,addr(source),addr(dest),16u,false)
+        print("RAW_CALL SDL_CopyGPUBufferToBuffer\n")
+        var tex_transfer : SDL_GPUTextureTransferInfo; tex_transfer.transfer_buffer=upload; tex_transfer.offset=256u; tex_transfer.pixels_per_row=4u; tex_transfer.rows_per_layer=4u
+        var tex_region : SDL_GPUTextureRegion; tex_region.texture=image; tex_region.w=4u; tex_region.h=4u; tex_region.d=1u
+        SDL_UploadToGPUTexture(copy_pass,addr(tex_transfer),addr(tex_region),false)
+        print("RAW_CALL SDL_UploadToGPUTexture\n")
+        var tex_source : SDL_GPUTextureLocation; tex_source.texture=image
+        var tex_dest : SDL_GPUTextureLocation; tex_dest.texture=image_copy
+        SDL_CopyGPUTextureToTexture(copy_pass,addr(tex_source),addr(tex_dest),4u,4u,1u,false)
+        print("RAW_CALL SDL_CopyGPUTextureToTexture\n")
+        SDL_EndGPUCopyPass(copy_pass)
+        print("RAW_CALL SDL_EndGPUCopyPass\n")
+
+        var shader_info : SDL_GPUShaderCreateInfo
+        verify(SDLTest_raw_shader_info(dxil,0,shader_info))
+        var vs=SDL_CreateGPUShader(device,addr(shader_info)); verify(vs!=null)
+        print("RAW_CALL SDL_CreateGPUShader\n")
+        verify(SDLTest_raw_shader_info(dxil,1,shader_info))
+        var fs=SDL_CreateGPUShader(device,addr(shader_info)); verify(fs!=null)
+        print("RAW_CALL SDL_CreateGPUShader\n")
+        var pipeline_info : SDL_GPUGraphicsPipelineCreateInfo
+        SDLTest_raw_pipeline_info(pipeline_info,vs,fs)
+        var pipeline=SDL_CreateGPUGraphicsPipeline(device,addr(pipeline_info)); verify(pipeline!=null)
+        print("RAW_CALL SDL_CreateGPUGraphicsPipeline\n")
+        var compute_info : SDL_GPUComputePipelineCreateInfo
+        verify(SDLTest_raw_compute_info(dxil,compute_info))
+        var compute=SDL_CreateGPUComputePipeline(device,addr(compute_info)); verify(compute!=null)
+        print("RAW_CALL SDL_CreateGPUComputePipeline\n")
+        var color : SDL_GPUColorTargetInfo; color.texture=target; color.load_op=SDL_GPULoadOp.LOADOP_CLEAR; color.store_op=SDL_GPUStoreOp.STOREOP_STORE
+        var render_pass=SDL_BeginGPURenderPass(command,addr(color),1u,null); verify(render_pass!=null)
+        print("RAW_CALL SDL_BeginGPURenderPass\n")
+        SDL_BindGPUGraphicsPipeline(render_pass,pipeline)
+        print("RAW_CALL SDL_BindGPUGraphicsPipeline\n")
+        var blend : SDL_FColor; blend.r=0.25; blend.g=0.5; blend.b=0.75; blend.a=1.0
+        SDL_SetGPUBlendConstants(render_pass,blend)
+        print("RAW_CALL SDL_SetGPUBlendConstants\n")
+        SDL_SetGPUStencilReference(render_pass,7u)
+        print("RAW_CALL SDL_SetGPUStencilReference\n")
+        var binding : SDL_GPUBufferBinding; binding.buffer=geometry
+        SDL_BindGPUVertexBuffers(render_pass,0u,addr(binding),1u)
+        print("RAW_CALL SDL_BindGPUVertexBuffers\n")
+        binding.buffer=indices; binding.offset=32u
+        SDL_BindGPUIndexBuffer(render_pass,addr(binding),SDL_GPUIndexElementSize.INDEXELEMENTSIZE_32BIT)
+        print("RAW_CALL SDL_BindGPUIndexBuffer\n")
+        var sampled : SDL_GPUTextureSamplerBinding; sampled.texture=image; sampled.sampler=sampler
+        SDL_BindGPUVertexSamplers(render_pass,0u,addr(sampled),1u)
+        print("RAW_CALL SDL_BindGPUVertexSamplers\n")
+        SDL_BindGPUFragmentSamplers(render_pass,0u,addr(sampled),1u)
+        print("RAW_CALL SDL_BindGPUFragmentSamplers\n")
+        SDL_BindGPUVertexStorageTextures(render_pass,0u,addr(image_copy),1u)
+        print("RAW_CALL SDL_BindGPUVertexStorageTextures\n")
+        SDL_BindGPUFragmentStorageTextures(render_pass,0u,addr(image_copy),1u)
+        print("RAW_CALL SDL_BindGPUFragmentStorageTextures\n")
+        SDL_BindGPUVertexStorageBuffers(render_pass,0u,addr(copied),1u)
+        print("RAW_CALL SDL_BindGPUVertexStorageBuffers\n")
+        SDL_BindGPUFragmentStorageBuffers(render_pass,0u,addr(copied),1u)
+        print("RAW_CALL SDL_BindGPUFragmentStorageBuffers\n")
+        SDL_PushGPUVertexUniformData(command,0u,SDLTest_raw_uniform(false,0u),16u)
+        print("RAW_CALL SDL_PushGPUVertexUniformData\n")
+        SDL_PushGPUFragmentUniformData(command,0u,SDLTest_raw_uniform(false,0u),16u)
+        print("RAW_CALL SDL_PushGPUFragmentUniformData\n")
+        var viewport : SDL_GPUViewport; viewport.w=8.0; viewport.h=8.0; viewport.max_depth=1.0
+        SDL_SetGPUViewport(render_pass,addr(viewport))
+        print("RAW_CALL SDL_SetGPUViewport\n")
+        var scissor : SDL_Rect; scissor.w=4; scissor.h=4
+        SDL_SetGPUScissor(render_pass,addr(scissor))
+        print("RAW_CALL SDL_SetGPUScissor\n")
+        SDL_DrawGPUPrimitives(render_pass,3u,1u,0u,0u)
+        print("RAW_CALL SDL_DrawGPUPrimitives\n")
+        scissor.x=4; SDL_SetGPUScissor(render_pass,addr(scissor))
+        print("RAW_CALL SDL_SetGPUScissor\n")
+        SDL_DrawGPUIndexedPrimitives(render_pass,3u,1u,0u,0,0u)
+        print("RAW_CALL SDL_DrawGPUIndexedPrimitives\n")
+        scissor.x=0; scissor.y=4; SDL_SetGPUScissor(render_pass,addr(scissor))
+        print("RAW_CALL SDL_SetGPUScissor\n")
+        SDL_DrawGPUPrimitivesIndirect(render_pass,indirect,96u,1u)
+        print("RAW_CALL SDL_DrawGPUPrimitivesIndirect\n")
+        scissor.x=4; SDL_SetGPUScissor(render_pass,addr(scissor))
+        print("RAW_CALL SDL_SetGPUScissor\n")
+        SDL_DrawGPUIndexedPrimitivesIndirect(render_pass,indirect,128u,1u)
+        print("RAW_CALL SDL_DrawGPUIndexedPrimitivesIndirect\n")
+        SDL_EndGPURenderPass(render_pass)
+        print("RAW_CALL SDL_EndGPURenderPass\n")
+        SDL_GenerateMipmapsForGPUTexture(command,target)
+        print("RAW_CALL SDL_GenerateMipmapsForGPUTexture\n")
+        var blit : SDL_GPUBlitInfo
+        blit.source.texture=target; blit.source.w=8u; blit.source.h=8u
+        blit.destination.texture=blitted; blit.destination.w=8u; blit.destination.h=8u
+        blit.load_op=SDL_GPULoadOp.LOADOP_DONT_CARE
+        SDL_BlitGPUTexture(command,addr(blit))
+        print("RAW_CALL SDL_BlitGPUTexture\n")
+
+        var rwtex : SDL_GPUStorageTextureReadWriteBinding; rwtex.texture=compute_image
+        var rwbuf : SDL_GPUStorageBufferReadWriteBinding; rwbuf.buffer=output
+        var compute_pass=SDL_BeginGPUComputePass(command,addr(rwtex),1u,addr(rwbuf),1u); verify(compute_pass!=null)
+        print("RAW_CALL SDL_BeginGPUComputePass\n")
+        SDL_BindGPUComputePipeline(compute_pass,compute)
+        print("RAW_CALL SDL_BindGPUComputePipeline\n")
+        SDL_BindGPUComputeSamplers(compute_pass,0u,addr(sampled),1u)
+        print("RAW_CALL SDL_BindGPUComputeSamplers\n")
+        SDL_BindGPUComputeStorageTextures(compute_pass,0u,addr(image_copy),1u)
+        print("RAW_CALL SDL_BindGPUComputeStorageTextures\n")
+        SDL_BindGPUComputeStorageBuffers(compute_pass,0u,addr(copied),1u)
+        print("RAW_CALL SDL_BindGPUComputeStorageBuffers\n")
+        SDL_PushGPUComputeUniformData(command,0u,SDLTest_raw_uniform(true,11u),16u)
+        print("RAW_CALL SDL_PushGPUComputeUniformData\n")
+        SDL_DispatchGPUCompute(compute_pass,2u,1u,1u)
+        print("RAW_CALL SDL_DispatchGPUCompute\n")
+        SDL_EndGPUComputePass(compute_pass)
+        print("RAW_CALL SDL_EndGPUComputePass\n")
+        // Snapshot the first dispatch before the second overwrites the output.
+        copy_pass=SDL_BeginGPUCopyPass(command)
+        print("RAW_CALL SDL_BeginGPUCopyPass\n")
+        region.buffer=output; region.size=32u; transfer.transfer_buffer=download; transfer.offset=64u
+        SDL_DownloadFromGPUBuffer(copy_pass,addr(region),addr(transfer))
+        print("RAW_CALL SDL_DownloadFromGPUBuffer\n")
+        SDL_EndGPUCopyPass(copy_pass)
+        print("RAW_CALL SDL_EndGPUCopyPass\n")
+        compute_pass=SDL_BeginGPUComputePass(command,addr(rwtex),1u,addr(rwbuf),1u)
+        print("RAW_CALL SDL_BeginGPUComputePass\n")
+        SDL_BindGPUComputePipeline(compute_pass,compute)
+        print("RAW_CALL SDL_BindGPUComputePipeline\n")
+        SDL_BindGPUComputeSamplers(compute_pass,0u,addr(sampled),1u)
+        print("RAW_CALL SDL_BindGPUComputeSamplers\n")
+        SDL_BindGPUComputeStorageTextures(compute_pass,0u,addr(image_copy),1u)
+        print("RAW_CALL SDL_BindGPUComputeStorageTextures\n")
+        SDL_BindGPUComputeStorageBuffers(compute_pass,0u,addr(copied),1u)
+        print("RAW_CALL SDL_BindGPUComputeStorageBuffers\n")
+        SDL_PushGPUComputeUniformData(command,0u,SDLTest_raw_uniform(true,21u),16u)
+        print("RAW_CALL SDL_PushGPUComputeUniformData\n")
+        SDL_DispatchGPUComputeIndirect(compute_pass,indirect,160u)
+        print("RAW_CALL SDL_DispatchGPUComputeIndirect\n")
+        SDL_EndGPUComputePass(compute_pass)
+        print("RAW_CALL SDL_EndGPUComputePass\n")
+        copy_pass=SDL_BeginGPUCopyPass(command)
+        print("RAW_CALL SDL_BeginGPUCopyPass\n")
+        region.buffer=copied; region.size=16u; transfer.offset=0u
+        SDL_DownloadFromGPUBuffer(copy_pass,addr(region),addr(transfer))
+        print("RAW_CALL SDL_DownloadFromGPUBuffer\n")
+        region.buffer=output; region.size=32u; transfer.offset=128u
+        SDL_DownloadFromGPUBuffer(copy_pass,addr(region),addr(transfer))
+        print("RAW_CALL SDL_DownloadFromGPUBuffer\n")
+        tex_transfer.transfer_buffer=download; tex_transfer.offset=256u; tex_transfer.pixels_per_row=8u; tex_transfer.rows_per_layer=8u
+        tex_region.texture=blitted; tex_region.w=8u; tex_region.h=8u
+        SDL_DownloadFromGPUTexture(copy_pass,addr(tex_region),addr(tex_transfer))
+        print("RAW_CALL SDL_DownloadFromGPUTexture\n")
+        tex_transfer.offset=512u; tex_transfer.rows_per_layer=1u; tex_region.texture=compute_image; tex_region.h=1u
+        SDL_DownloadFromGPUTexture(copy_pass,addr(tex_region),addr(tex_transfer))
+        print("RAW_CALL SDL_DownloadFromGPUTexture\n")
+        tex_transfer.offset=768u; tex_transfer.pixels_per_row=1u; tex_transfer.rows_per_layer=1u; tex_region.texture=target; tex_region.mip_level=3u; tex_region.w=1u
+        SDL_DownloadFromGPUTexture(copy_pass,addr(tex_region),addr(tex_transfer))
+        print("RAW_CALL SDL_DownloadFromGPUTexture\n")
+        SDL_EndGPUCopyPass(copy_pass)
+        print("RAW_CALL SDL_EndGPUCopyPass\n")
+        var fence=SDL_SubmitGPUCommandBufferAndAcquireFence(command); verify(fence!=null)
+        print("RAW_CALL SDL_SubmitGPUCommandBufferAndAcquireFence\n")
+        verify(SDL_WaitForGPUFences(device,true,addr(fence),1u))
+        print("RAW_CALL SDL_WaitForGPUFences\n")
+        verify(SDL_QueryGPUFence(device,fence))
+        print("RAW_CALL SDL_QueryGPUFence\n")
+        let result=SDL_MapGPUTransferBuffer(device,download,false); verify(result!=null)
+        print("RAW_CALL SDL_MapGPUTransferBuffer\n")
+        verify(SDLTest_raw_check_copy(result))
+        verify(SDLTest_raw_check_words(result,64u,14u))
+        verify(SDLTest_raw_check_words(result,128u,24u))
+        verify(SDLTest_raw_check_pixels(result,256u,64u))
+        verify(SDLTest_raw_check_pixels(result,512u,8u))
+        verify(SDLTest_raw_check_pixels(result,768u,1u))
+        SDL_UnmapGPUTransferBuffer(device,download)
+        print("RAW_CALL SDL_UnmapGPUTransferBuffer\n")
+        SDL_ReleaseGPUFence(device,fence)
+        print("RAW_CALL SDL_ReleaseGPUFence\n")
+
+        var window=SDL_CreateWindow("Raw GPU execution test",64,64,0ul); verify(window!=null)
+        verify(SDL_ClaimWindowForGPUDevice(device,window))
+        print("RAW_CALL SDL_ClaimWindowForGPUDevice\n")
+        verify(SDL_WindowSupportsGPUSwapchainComposition(device,window,SDL_GPUSwapchainComposition.SWAPCHAINCOMPOSITION_SDR))
+        print("RAW_CALL SDL_WindowSupportsGPUSwapchainComposition\n")
+        verify(SDL_WindowSupportsGPUPresentMode(device,window,SDL_GPUPresentMode.PRESENTMODE_VSYNC))
+        print("RAW_CALL SDL_WindowSupportsGPUPresentMode\n")
+        verify(SDL_SetGPUSwapchainParameters(device,window,SDL_GPUSwapchainComposition.SWAPCHAINCOMPOSITION_SDR,SDL_GPUPresentMode.PRESENTMODE_VSYNC))
+        print("RAW_CALL SDL_SetGPUSwapchainParameters\n")
+        verify(SDL_SetGPUAllowedFramesInFlight(device,1u))
+        print("RAW_CALL SDL_SetGPUAllowedFramesInFlight\n")
+        verify(SDL_GetGPUSwapchainTextureFormat(device,window)!=SDL_GPUTextureFormat.TEXTUREFORMAT_INVALID)
+        print("RAW_CALL SDL_GetGPUSwapchainTextureFormat\n")
+        verify(SDL_WaitForGPUSwapchain(device,window))
+        print("RAW_CALL SDL_WaitForGPUSwapchain\n")
+        command=SDL_AcquireGPUCommandBuffer(device)
+        print("RAW_CALL SDL_AcquireGPUCommandBuffer\n")
+        var swap : SDL_GPUTexture?; var width=0u; var height=0u
+        verify(SDL_AcquireGPUSwapchainTexture(command,window,addr(swap),addr(width),addr(height)))
+        print("RAW_CALL SDL_AcquireGPUSwapchainTexture\n")
+        verify(swap!=null && width>0u && height>0u)
+        color.texture=swap; color.clear_color=blend
+        render_pass=SDL_BeginGPURenderPass(command,addr(color),1u,null); verify(render_pass!=null)
+        print("RAW_CALL SDL_BeginGPURenderPass\n")
+        SDL_EndGPURenderPass(render_pass)
+        print("RAW_CALL SDL_EndGPURenderPass\n")
+        verify(SDL_SubmitGPUCommandBuffer(command))
+        print("RAW_CALL SDL_SubmitGPUCommandBuffer\n")
+        command=SDL_AcquireGPUCommandBuffer(device)
+        print("RAW_CALL SDL_AcquireGPUCommandBuffer\n")
+        verify(SDL_WaitAndAcquireGPUSwapchainTexture(command,window,addr(swap),addr(width),addr(height)))
+        print("RAW_CALL SDL_WaitAndAcquireGPUSwapchainTexture\n")
+        verify(swap!=null)
+        color.texture=swap; render_pass=SDL_BeginGPURenderPass(command,addr(color),1u,null); verify(render_pass!=null)
+        print("RAW_CALL SDL_BeginGPURenderPass\n")
+        SDL_EndGPURenderPass(render_pass)
+        print("RAW_CALL SDL_EndGPURenderPass\n")
+        verify(SDL_SubmitGPUCommandBuffer(command))
+        print("RAW_CALL SDL_SubmitGPUCommandBuffer\n")
+        command=SDL_AcquireGPUCommandBuffer(device); verify(SDL_CancelGPUCommandBuffer(command))
+        print("RAW_CALL SDL_AcquireGPUCommandBuffer\n")
+        print("RAW_CALL SDL_CancelGPUCommandBuffer\n")
+        verify(SDL_WaitForGPUIdle(device))
+        print("RAW_CALL SDL_WaitForGPUIdle\n")
+        SDL_ReleaseWindowFromGPUDevice(device,window)
+        print("RAW_CALL SDL_ReleaseWindowFromGPUDevice\n")
+        SDL_DestroyWindow(window)
+        SDL_ReleaseGPUGraphicsPipeline(device,pipeline)
+        print("RAW_CALL SDL_ReleaseGPUGraphicsPipeline\n")
+        SDL_ReleaseGPUComputePipeline(device,compute)
+        print("RAW_CALL SDL_ReleaseGPUComputePipeline\n")
+        SDL_ReleaseGPUShader(device,vs); SDL_ReleaseGPUShader(device,fs)
+        print("RAW_CALL SDL_ReleaseGPUShader\n")
+        SDL_ReleaseGPUSampler(device,sampler)
+        print("RAW_CALL SDL_ReleaseGPUSampler\n")
+        SDL_ReleaseGPUBuffer(device,geometry); SDL_ReleaseGPUBuffer(device,readonly); SDL_ReleaseGPUBuffer(device,copied); SDL_ReleaseGPUBuffer(device,output)
+        SDL_ReleaseGPUBuffer(device,indices); SDL_ReleaseGPUBuffer(device,indirect)
+        print("RAW_CALL SDL_ReleaseGPUBuffer\n")
+        SDL_ReleaseGPUTexture(device,image); SDL_ReleaseGPUTexture(device,image_copy); SDL_ReleaseGPUTexture(device,target); SDL_ReleaseGPUTexture(device,blitted); SDL_ReleaseGPUTexture(device,compute_image)
+        print("RAW_CALL SDL_ReleaseGPUTexture\n")
+        SDL_ReleaseGPUTransferBuffer(device,upload); SDL_ReleaseGPUTransferBuffer(device,download)
+        print("RAW_CALL SDL_ReleaseGPUTransferBuffer\n")
+        SDL_DestroyGPUDevice(device)
+        print("RAW_CALL SDL_DestroyGPUDevice\n")
+        device=SDL_CreateGPUDevice(formats,true,driver); verify(device!=null)
+        print("RAW_CALL SDL_CreateGPUDevice\n")
+        SDL_DestroyGPUDevice(device)
+        print("RAW_CALL SDL_DestroyGPUDevice\n")
+        SDL_Quit()
+        print("RAW GPU pixels, transfers, direct/indirect compute and swapchain PASS\n")
+        return 0
+    }
+}

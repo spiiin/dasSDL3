@@ -7,9 +7,9 @@ reusable idioms and pinned upstream source links; this one describes our layer.
   script functions. The runner mounts the project's `dassdl3/` directory through
   FsFileAccess.addFsRoot, independently of the current working directory.
 - GPU helpers are separate in `dassdl3/sdl3_gpu_boost`: device/window scopes,
-  clear and vertex-ID triangle with checked pipeline IDs. Multiple scoped GPU
-  devices and windows are supported. See `gpu-triangle.md`
-  for trusted shader ABI, offline assets and backend/pixel-reference tests.
+  independent device/window ownership. Multiple scoped GPU
+  devices and windows are supported. See `gpu-recording.md`
+  for the current direct graphics subset and validation tests.
 - `require dassdl3/sdl3_geometry_boost` adds initialized vertex values and checked
   vertex/index arrays. Vertex colors are float4 in 0..1; positions are pixels.
   See `geometry.md` for empty indexed draws, finite values and buffer lifetimes.
@@ -19,7 +19,7 @@ reusable idioms and pinned upstream source links; this one describes our layer.
 - `require dassdl3/sdl3_audio_boost` adds audio and re-exports this base layer.
   See `audio.md` for WAV ownership, stream queues, array limits and testing.
   `with_sdl(flags)` supports audio-only or combined initialization; `with_sdl()`
-  keeps its VIDEO default. Both use guarded block invocation and global SDL_Quit.
+  keeps its VIDEO default. Both defer global SDL_Quit after successful initialization.
 - The current safe_addr macro rejects reference arguments as "not a local value".
   Therefore synchronous SDL_PollEvent, SDL_PushEvent and SDL_RenderFillRect
   use small C++ reference adapters. Texture size and rectangle adapters follow
@@ -27,8 +27,8 @@ reusable idioms and pinned upstream source links; this one describes our layer.
   addresses. Callers pass an event by mutable reference or a rectangle by
   const reference, without copying the union or taking an address in script.
   Neither the boost module nor the example needs an unsafe block.
-- Creation and rendering helpers panic on failure, including SDL_GetError's
-  message. The runner turns an uncaught panic into exit code 1.
+- Creation and rendering helpers preserve failure results. Check bool/null/zero
+  and then read SDL_GetError; see error-handling.md for scope return semantics.
 - `create_window` defaults to a resizable window; `create_renderer` accepts an
   optional driver string (empty chooses the default).
 - Rendering helpers take renderer first for `renderer |> clear()` syntax.
@@ -39,32 +39,22 @@ reusable idioms and pinned upstream source links; this one describes our layer.
   needs no `<|`; a block without parameters also needs no `$()` marker.
   The example and lifetime tests pass with these forms on the pinned interpreter.
   This changes call syntax only; cleanup remains implemented by the helpers.
-- Prefer nested with_sdl -> with_window -> with_renderer blocks. Each helper
-  delegates callback and cleanup to one native owner helper, which restores
-  block arguments, destroys its resource and rethrows the original panic. This preserves renderer
-  -> window -> SDL_Quit order on normal block exit, early return and errors.
-- Actual tests on the pinned interpreter showed that defer/finally is skipped
-  on panic: the cleanup trace was 0 instead of 123. Defer worked for normal and
-  early return. Therefore it is not sufficient for checked helpers that panic.
-  Do not infer full exception cleanup from the BGFX examples or macro comments.
-- Nested panic/recovery also exposes a block-argument restoration issue in
-  Context::invoke / SimNode_TryCatch: an outer block can read stale arguments
-  after a nested callback panics. `src/sdl3_scopes.h` wraps resource callbacks
-  with runWithCatch, restores BlockArguments and abiThisBlockArg, then rethrows.
-  Native owner helpers combine invocation and cleanup; no script try/recover
-  remains in boost wrappers (see native-scopes.md). No upstream files are
-  modified. Recheck this version-specific workaround when updating daScript.
+- Ownership uses daslib/defer and direct script block invocation. Acquisition
+  failure returns false without invoking the block; successful scopes clean up
+  on normal/early return. No native exception bridge remains. See error-handling.md.
+- Arbitrary application panic still skips finally in the pinned runtime. SDL
+  failures no longer panic; do not use verify as production error handling.
 - `with_bmp(path)` lends an opaque SDL_Surface. `create_texture(renderer, surface)`
   copies its pixels and leaves the surface owned by the caller. `load_texture`
   releases its temporary surface before returning the owned texture;
   `renderer |> with_texture(path) $(texture) { ... }` releases that texture on exit.
   Texture scopes must be nested inside the renderer scope. Rendering stays on
   the main thread. Raw pointers must not escape scopes or be manually destroyed.
-- `texture_size` returns float2 through a checked output-reference adapter.
+- `texture_size(texture,size)` returns bool and writes float2 through a reference.
   `draw_texture(texture)` uses the whole source/current target; adding a dst
   rectangle scales the whole source; adding src and dst crops then scales.
   Rectangles use SDL_FRect pixel coordinates and are borrowed synchronously.
-  Missing files and SDL failures panic; null handles are rejected. Null destroy
+  Missing files and SDL failures return failure values; null handles are rejected. Null destroy
   remains a no-op. Stale handles, foreign-renderer textures and invalid input
   remain subject to SDL's contract; the layer does not track pointer ownership.
 - Use one outer with_sdl session. The current wrapper calls global SDL_Quit;
@@ -84,18 +74,18 @@ reusable idioms and pinned upstream source links; this one describes our layer.
 - Scalar output parameters need explicit references in script wrappers:
   `var text : string&`, `var start : int&`, `var position : float2&`.
   Mutable value parameters would silently discard native output at return.
-- `with_text_input` uses guarded no-argument block invocation and only stops
+- `with_text_input` uses direct no-argument block invocation and defer and only stops
   input if it started the session. Nested scopes preserve the outer session,
-  including on panic. Do not manually toggle text input within these scopes.
+  on normal and early return. Do not manually toggle text input within these scopes.
   State queries read physical state after polling; pushed events do not update it.
-- `tests/boost.das` exercises normal return, early return, panic, failed renderer
+- `tests/boost.das` exercises normal return, early return, SDL errors, failed renderer
   creation and invalid color input. It checks actual SDL window/renderer state
   before SDL_Quit, so the runner's final fallback cannot mask leaked resources.
   It also tests the by-reference event wrappers and rendering with a const rect.
 - Texture tests observe SDL property cleanup callbacks before renderer teardown
   and compare rendered pixels for all three draw overloads. They cover normal
-  exit, early return, panic, failed creation after surface acquisition, missing
-  BMP and continued renderer use after recovery. Test-only helpers are compiled
+  exit, early return, SDL errors, failed creation after surface acquisition, missing
+  BMP and continued renderer use after failure. Test-only helpers are compiled
   only with BUILD_TESTING=ON; they are not supported public bindings.
 - Project CTests cover generated output, standalone daslang,
   raw bindings, boost example, boost lifetime tests, texture example and texture
@@ -112,93 +102,17 @@ Build and test commands are in README.md. This file and AGENTS.md are the
 persistent project context for future sessions; no global user settings or
 personal skill installation is required.
 
-GPU mesh scopes are in `dassdl3/sdl3_gpu_mesh_boost.das`; see `gpu-mesh.md` for
-the fixed vertex/shader ABI and copied array contract. Multiple scoped devices
-are supported; device-specific cleanup must preserve other devices' resources.
-The former single-device restriction was traced to this machine's FPS Monitor
-Vulkan layer. Diagnosis and opt-in per-process filtering: `gpu-multidevice.md`.
-The indexed scope uses the same owned bundle with copied UINT32 indices;
-`gpu-indexed-mesh.md` describes bounds, empty-array behavior and coverage.
-`sdl3_gpu_transform_boost` adds a separate transform mesh scope and receiver-first
-draw accepting translation/scale/angle. Native uniform rows have an explicit
-32-byte std140 ABI; see `gpu-transform.md`. Do not pass plain shaders to this scope.
-`sdl3_gpu_3d_boost` uses standard float4x4/math_boost camera helpers. Four columns
-are copied to a 64-byte uniform; indexed position/color arrays are copied into
-native vertex storage. Depth format selection, resize and failure contracts live
-in `gpu-3d.md`. Keep the old textured/2D shader ABIs separate.
-`sdl3_gpu_lit_boost` adds copied position/normal/UV/RGBA8 data and Lambert light.
-`gpu_draw_lit_mesh` takes camera and affine model separately; native code computes
-inverse-transpose normals. See `gpu-lit.md` for shader ABI, validation and limits.
-`sdl3_gpu_scene_boost` adds a value-only `GpuLitDrawList` and scoped scene depth
-owner. List validation precedes acquisition; recording multiple lit objects is
-native-only. Draw lists never own meshes. See `gpu-scene.md` for empty lists,
-limits, failure paths and shared-depth pixel tests.
+GPU API boundary: see gpu-api-boundary.md. Renderer-framework APIs and plans were
+removed, including their native exports. Current modules provide individual SDL
+resources and necessary array/lifetime adapters: sdl3_gpu_boost (device/window),
+sdl3_gpu_transfer_boost, sdl3_gpu_texture_transfer_boost, sdl3_gpu_formats_boost,
+sdl3_gpu_volume_boost, sdl3_gpu_image_boost, sdl3_gpu_utilities_boost,
+sdl3_gpu_swapchain_boost, sdl3_gpu_shader_boost, sdl3_gpu_sampler_boost,
+sdl3_gpu_pipeline_boost, sdl3_gpu_buffers_boost and sdl3_gpu_recording_boost.
 
-`sdl3_gpu_instancing_boost` adds value-only `GpuInstanceList`,
-`gpu_instance_add`, `with_gpu_instanced_mesh`, and `gpu_draw_instanced_mesh`.
-Creation copies all models; clearing the input list does not change instances.
-One indexed draw renders the entire buffer. `gpu_update_instances` replaces all
-transforms without changing count; it copies arrays and cycles staging and GPU
-data. See `gpu-instancing.md` and `gpu-dynamic-instances.md`.
-
-`sdl3_gpu_instance_colors_boost` adds GpuColoredInstanceList,
-`gpu_colored_instance_add` (default white), `with_gpu_colored_instanced_mesh`,
-and `gpu_update_colored_instances`. Draw uses `gpu_draw_instanced_mesh`. Values
-are copied, all colors validated, and updates cycle with the model data. See
-`gpu-instance-colors.md` for the distinct ABI and alpha contract.
-
-`sdl3_gpu_batches_boost` adds value-only GpuBatchList, gpu_batch_add/clear,
-with_gpu_batch_scene and gpu_draw_batches. Objects sharing the exact colored
-mesh bundle ID become one instanced draw with shared scene depth. Lists borrow
-mesh IDs; scenes own cycled instance/upload buffers, support changing counts,
-and validate the complete list before GPU work. See `gpu-material-batches.md`
-for 4096-object/64-group limits, ownership and opaque ordering constraints.
-
-`sdl3_gpu_culling_boost` is a script-only layer: gpu_frustum extracts six 0..1
-clip planes; gpu_sphere_visible tests an affine-transformed local sphere;
-gpu_batch_add_visible appends candidates to GpuBatchList. It borrows no native
-memory and creates no resources. Caller-supplied bounds, conservative numerical
-behavior and renderer validation are distinct; see `gpu-frustum-culling.md`.
-
-`sdl3_gpu_resources_boost` adds protected with_gpu_geometry/material/shared_mesh
-scopes. Geometry owns vertices/indices; material owns texture/sampler/pipeline;
-shared mesh IDs borrow both parents. Batch draws resolve live parents and group
-by their exact pair; different binding IDs for that pair merge. Existing owned
-mesh IDs still work, including mixed lists. See `gpu-shared-resources.md`.
-
-`sdl3_gpu_transfer_boost` adds checked data-buffer IDs and asynchronous readback
-tickets with owned transfer buffers/fences. Arrays are copied, byte ranges are
-validated, full updates may cycle, partial updates preserve other bytes. See
-`gpu-transfer.md` for completion, invalidation and scoped cleanup contracts.
-
-`sdl3_gpu_texture_transfer_boost` adds independent owned RGBA8 2D/array
-textures with initialized mip levels, checked rectangular upload/copy and
-asynchronous tightly packed pixel readback. Reuses the buffer ticket API.
-Pitch, limits, subresource validity and lifecycle: `gpu-texture-transfer.md`.
-
-`sdl3_gpu_formats_boost` exposes checked block/tight-size and capability queries.
-`with_gpu_color_texture` extends existing transfers to supported uncompressed
-color formats using format-native bytes and exact-format copies. RGBA8 scopes
-are compatibility wrappers. See `gpu-formats.md` for limits and unsupported vs
-invalid results; all texture constants are generated but enum types remain work.
-
-`with_gpu_transfer_texture` accepts explicit 2D/array/cube types and BC blocks;
-legacy color scopes keep their contracts. `sdl3_gpu_utilities_boost` adds owned
-compiled-driver names, checked shader-support queries and resource names.
-See `gpu-texture-types.md` for byte/pixel units, hint precedence and limitations.
-
-`sdl3_gpu_swapchain_boost` adds checked claimed-window capabilities/current
-format, configuration between frames, device-wide frames-in-flight and blocking
-availability. Unsupported differs from invalid; no automatic settings rollback.
-See `gpu-swapchain.md` for pipeline compatibility and scope/thread contracts.
-
-`sdl3_gpu_image_boost` adds initialized RGBA8/BGRA8 color-target texture scopes,
-all-layer mip generation and checked nearest/linear region blits. Existing
-transfer upload/readback work on the same IDs. See `gpu-image.md` for usage,
-format, filtering, failure-validity and outside-pass recording contracts.
-
-`sdl3_gpu_commands_boost` adds protected `with_gpu_command_plan`, value-only
-operation builders and explicit `gpu_submit_plan`. Scopes discard unsubmitted
-work; plans borrow resource IDs and are fully revalidated before native recording.
-Debug strings are copied, groups balanced; query support before using groups
-on pinned D3D12. See `gpu-command-plans.md` for state/error/lifetime contracts.
+The direct recording module exposes SDL command-buffer/render-pass order and
+immediate bind/state/uniform/draw calls. Examples 44–46 use this path. It keeps
+deferred command cleanup and no exception interception. Read gpu-recording.md
+for current bounds; compute/copy passes and swapchain acquisition remain pending.
+Transfer/readback helpers are not full direct access to transfer/fence operations.
+Do not add another composite object to compensate for missing SDL bindings.

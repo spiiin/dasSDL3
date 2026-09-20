@@ -1,5 +1,9 @@
 # GPU format queries and color transfers
 
+> Current error/lifetime contract: [error-handling.md](error-handling.md).
+> SDL failures return values; scopes use defer. Earlier panic/protected-scope
+> descriptions below are historical and no longer describe the public binding.
+
 Batch 25, pinned SDL 3.2.18. Module: `sdl3_gpu_formats_boost` (re-exports texture
 transfers). Native queries: `src/sdl3_gpu_formats.h`.
 

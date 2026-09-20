@@ -1,5 +1,9 @@
 # GPU data buffers and asynchronous readback
 
+> Current error/lifetime contract: [error-handling.md](error-handling.md).
+> SDL failures return values; scopes use defer. Earlier panic/protected-scope
+> descriptions below are historical and no longer describe the public binding.
+
 Public G3 slice after example 22, pinned SDL 3.2.18. Module:
 `dassdl3/sdl3_gpu_transfer_boost`; native adapter: `src/sdl3_gpu_transfer.h`.
 Example 23 needs a GPU device but no window or shaders. This does not complete P6.
@@ -25,7 +29,7 @@ Example 23 needs a GPU device but no window or shaders. This does not complete P
   download transfer buffer and fence. Later updates do not change that snapshot.
   The source buffer may be released after the request: SDL defers native release
   while submitted commands still reference it.
-- `gpu_readback_ready` returns false for pending, panics for invalid IDs.
+- `gpu_poll_readback` returns -1 for error, 0 for pending and 1 for ready.
   `gpu_wait_readback` waits for that fence, never the entire device.
   `gpu_readback_bytes` requires a ready ticket and an output array of exactly the
   requested size; it copies bytes into script-owned storage. Repeated reads are
@@ -41,8 +45,7 @@ Example 23 needs a GPU device but no window or shaders. This does not complete P
   share the existing monotonic GPU ID namespace and reject stale, wrong-kind
   and foreign-device use. Device teardown clears only that device's entries.
   Raw destruction of a scoped device remains unsupported, as in the base API.
-- Scopes use protected invocation and catch/cleanup/rethrow; `defer` alone is
-  insufficient on the pinned interpreter. Do not manually release a resource
+- Scopes use direct script invocation and defer; SDL failures return values. Do not manually release a resource
   whose enclosing scope still owns it.
 
 ## Coverage and remaining work
@@ -63,7 +66,7 @@ establishes transfer and lifetime contracts first.
 `tests/gpu_transfer.das` covers exact byte comparison, partial updates/copies,
 queued snapshots before cycling, repeated reads, release of the download source,
 invalid ranges/usage/output sizes, stale/cross-kind/foreign-device IDs, normal
-exit/early return/panic, and device-specific cleanup with pending work. Real
+exit/early return/SDL error, and device-specific cleanup with pending work. Real
 backend runs must distinguish a skipped device from a passing test. Hardware
 device-loss and allocation-failure injection are not covered by those tests.
 

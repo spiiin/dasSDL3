@@ -1,0 +1,15 @@
+{
+  "entrypoint": "main",
+  "resources": "vertex sampler 0; vertex uniform 0: two float4 rows, 32 bytes; fragment sampler 0; fragment uniform 0: tint float4, 16 bytes",
+  "vertex_inputs": "float2 location0 position; float2 location1 uv; stride16",
+  "compiler": "dxcompiler.dll: 1.8 - 1.8.0.4739 (d9a5e97d0)",
+  "spirv_target": "vulkan1.0",
+  "files": {
+    "bindings.vert.hlsl": "c851ad8d82df68b311d26853978183d01860b432846d7b3217b3a28a40aec446",
+    "bindings.vert.spv": "0f18706d702ce9d122b32756eb4208f83f78cc4f0f17bda8a7d08536c3db35a2",
+    "bindings.vert.dxil": "7613bda7a0e29dda6e3024b1428266acdc85683f5b8c8a1aa031463637c28aa7",
+    "bindings.frag.hlsl": "d109f3e228410202eaa567c0e58651b749afc6f3df54375756199d97e6d5ae4c",
+    "bindings.frag.spv": "62ebdeafc08eab462f2d1ed27d19c061d15079b64141f9984fa7e5f7d559cf60",
+    "bindings.frag.dxil": "9c68f2daa1cd0f749819f5848cdfb0d034fe7d264a4629cb963e0fbff379f552"
+  }
+}

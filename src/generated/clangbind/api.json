@@ -206,6 +206,19 @@
     "signature": "const char *(void)",
     "arguments": []
   },
+  "SDL_GPUSupportsShaderFormats": {
+    "signature": "bool (SDL_GPUShaderFormat, const char *)",
+    "arguments": [
+      "format_flags",
+      "name"
+    ]
+  },
+  "SDL_GPUSupportsProperties": {
+    "signature": "bool (SDL_PropertiesID)",
+    "arguments": [
+      "props"
+    ]
+  },
   "SDL_CreateGPUDevice": {
     "signature": "SDL_GPUDevice *(SDL_GPUShaderFormat, bool, const char *)",
     "arguments": [
@@ -214,10 +227,26 @@
       "name"
     ]
   },
+  "SDL_CreateGPUDeviceWithProperties": {
+    "signature": "SDL_GPUDevice *(SDL_PropertiesID)",
+    "arguments": [
+      "props"
+    ]
+  },
   "SDL_DestroyGPUDevice": {
     "signature": "void (SDL_GPUDevice *)",
     "arguments": [
       "device"
+    ]
+  },
+  "SDL_GetNumGPUDrivers": {
+    "signature": "int (void)",
+    "arguments": []
+  },
+  "SDL_GetGPUDriver": {
+    "signature": "const char *(int)",
+    "arguments": [
+      "index"
     ]
   },
   "SDL_GetGPUDeviceDriver": {
@@ -230,6 +259,513 @@
     "signature": "SDL_GPUShaderFormat (SDL_GPUDevice *)",
     "arguments": [
       "device"
+    ]
+  },
+  "SDL_CreateGPUComputePipeline": {
+    "signature": "SDL_GPUComputePipeline *(SDL_GPUDevice *, const SDL_GPUComputePipelineCreateInfo *)",
+    "arguments": [
+      "device",
+      "createinfo"
+    ]
+  },
+  "SDL_CreateGPUGraphicsPipeline": {
+    "signature": "SDL_GPUGraphicsPipeline *(SDL_GPUDevice *, const SDL_GPUGraphicsPipelineCreateInfo *)",
+    "arguments": [
+      "device",
+      "createinfo"
+    ]
+  },
+  "SDL_CreateGPUSampler": {
+    "signature": "SDL_GPUSampler *(SDL_GPUDevice *, const SDL_GPUSamplerCreateInfo *)",
+    "arguments": [
+      "device",
+      "createinfo"
+    ]
+  },
+  "SDL_CreateGPUShader": {
+    "signature": "SDL_GPUShader *(SDL_GPUDevice *, const SDL_GPUShaderCreateInfo *)",
+    "arguments": [
+      "device",
+      "createinfo"
+    ]
+  },
+  "SDL_CreateGPUTexture": {
+    "signature": "SDL_GPUTexture *(SDL_GPUDevice *, const SDL_GPUTextureCreateInfo *)",
+    "arguments": [
+      "device",
+      "createinfo"
+    ]
+  },
+  "SDL_CreateGPUBuffer": {
+    "signature": "SDL_GPUBuffer *(SDL_GPUDevice *, const SDL_GPUBufferCreateInfo *)",
+    "arguments": [
+      "device",
+      "createinfo"
+    ]
+  },
+  "SDL_CreateGPUTransferBuffer": {
+    "signature": "SDL_GPUTransferBuffer *(SDL_GPUDevice *, const SDL_GPUTransferBufferCreateInfo *)",
+    "arguments": [
+      "device",
+      "createinfo"
+    ]
+  },
+  "SDL_SetGPUBufferName": {
+    "signature": "void (SDL_GPUDevice *, SDL_GPUBuffer *, const char *)",
+    "arguments": [
+      "device",
+      "buffer",
+      "text"
+    ]
+  },
+  "SDL_SetGPUTextureName": {
+    "signature": "void (SDL_GPUDevice *, SDL_GPUTexture *, const char *)",
+    "arguments": [
+      "device",
+      "texture",
+      "text"
+    ]
+  },
+  "SDL_InsertGPUDebugLabel": {
+    "signature": "void (SDL_GPUCommandBuffer *, const char *)",
+    "arguments": [
+      "command_buffer",
+      "text"
+    ]
+  },
+  "SDL_PushGPUDebugGroup": {
+    "signature": "void (SDL_GPUCommandBuffer *, const char *)",
+    "arguments": [
+      "command_buffer",
+      "name"
+    ]
+  },
+  "SDL_PopGPUDebugGroup": {
+    "signature": "void (SDL_GPUCommandBuffer *)",
+    "arguments": [
+      "command_buffer"
+    ]
+  },
+  "SDL_ReleaseGPUTexture": {
+    "signature": "void (SDL_GPUDevice *, SDL_GPUTexture *)",
+    "arguments": [
+      "device",
+      "texture"
+    ]
+  },
+  "SDL_ReleaseGPUSampler": {
+    "signature": "void (SDL_GPUDevice *, SDL_GPUSampler *)",
+    "arguments": [
+      "device",
+      "sampler"
+    ]
+  },
+  "SDL_ReleaseGPUBuffer": {
+    "signature": "void (SDL_GPUDevice *, SDL_GPUBuffer *)",
+    "arguments": [
+      "device",
+      "buffer"
+    ]
+  },
+  "SDL_ReleaseGPUTransferBuffer": {
+    "signature": "void (SDL_GPUDevice *, SDL_GPUTransferBuffer *)",
+    "arguments": [
+      "device",
+      "transfer_buffer"
+    ]
+  },
+  "SDL_ReleaseGPUComputePipeline": {
+    "signature": "void (SDL_GPUDevice *, SDL_GPUComputePipeline *)",
+    "arguments": [
+      "device",
+      "compute_pipeline"
+    ]
+  },
+  "SDL_ReleaseGPUShader": {
+    "signature": "void (SDL_GPUDevice *, SDL_GPUShader *)",
+    "arguments": [
+      "device",
+      "shader"
+    ]
+  },
+  "SDL_ReleaseGPUGraphicsPipeline": {
+    "signature": "void (SDL_GPUDevice *, SDL_GPUGraphicsPipeline *)",
+    "arguments": [
+      "device",
+      "graphics_pipeline"
+    ]
+  },
+  "SDL_AcquireGPUCommandBuffer": {
+    "signature": "SDL_GPUCommandBuffer *(SDL_GPUDevice *)",
+    "arguments": [
+      "device"
+    ]
+  },
+  "SDL_PushGPUVertexUniformData": {
+    "signature": "void (SDL_GPUCommandBuffer *, Uint32, const void *, Uint32)",
+    "arguments": [
+      "command_buffer",
+      "slot_index",
+      "data",
+      "length"
+    ]
+  },
+  "SDL_PushGPUFragmentUniformData": {
+    "signature": "void (SDL_GPUCommandBuffer *, Uint32, const void *, Uint32)",
+    "arguments": [
+      "command_buffer",
+      "slot_index",
+      "data",
+      "length"
+    ]
+  },
+  "SDL_PushGPUComputeUniformData": {
+    "signature": "void (SDL_GPUCommandBuffer *, Uint32, const void *, Uint32)",
+    "arguments": [
+      "command_buffer",
+      "slot_index",
+      "data",
+      "length"
+    ]
+  },
+  "SDL_BeginGPURenderPass": {
+    "signature": "SDL_GPURenderPass *(SDL_GPUCommandBuffer *, const SDL_GPUColorTargetInfo *, Uint32, const SDL_GPUDepthStencilTargetInfo *)",
+    "arguments": [
+      "command_buffer",
+      "color_target_infos",
+      "num_color_targets",
+      "depth_stencil_target_info"
+    ]
+  },
+  "SDL_BindGPUGraphicsPipeline": {
+    "signature": "void (SDL_GPURenderPass *, SDL_GPUGraphicsPipeline *)",
+    "arguments": [
+      "render_pass",
+      "graphics_pipeline"
+    ]
+  },
+  "SDL_SetGPUViewport": {
+    "signature": "void (SDL_GPURenderPass *, const SDL_GPUViewport *)",
+    "arguments": [
+      "render_pass",
+      "viewport"
+    ]
+  },
+  "SDL_SetGPUScissor": {
+    "signature": "void (SDL_GPURenderPass *, const SDL_Rect *)",
+    "arguments": [
+      "render_pass",
+      "scissor"
+    ]
+  },
+  "SDL_SetGPUBlendConstants": {
+    "signature": "void (SDL_GPURenderPass *, SDL_FColor)",
+    "arguments": [
+      "render_pass",
+      "blend_constants"
+    ]
+  },
+  "SDL_SetGPUStencilReference": {
+    "signature": "void (SDL_GPURenderPass *, Uint8)",
+    "arguments": [
+      "render_pass",
+      "reference"
+    ]
+  },
+  "SDL_BindGPUVertexBuffers": {
+    "signature": "void (SDL_GPURenderPass *, Uint32, const SDL_GPUBufferBinding *, Uint32)",
+    "arguments": [
+      "render_pass",
+      "first_slot",
+      "bindings",
+      "num_bindings"
+    ]
+  },
+  "SDL_BindGPUIndexBuffer": {
+    "signature": "void (SDL_GPURenderPass *, const SDL_GPUBufferBinding *, SDL_GPUIndexElementSize)",
+    "arguments": [
+      "render_pass",
+      "binding",
+      "index_element_size"
+    ]
+  },
+  "SDL_BindGPUVertexSamplers": {
+    "signature": "void (SDL_GPURenderPass *, Uint32, const SDL_GPUTextureSamplerBinding *, Uint32)",
+    "arguments": [
+      "render_pass",
+      "first_slot",
+      "texture_sampler_bindings",
+      "num_bindings"
+    ]
+  },
+  "SDL_BindGPUVertexStorageTextures": {
+    "signature": "void (SDL_GPURenderPass *, Uint32, SDL_GPUTexture *const *, Uint32)",
+    "arguments": [
+      "render_pass",
+      "first_slot",
+      "storage_textures",
+      "num_bindings"
+    ]
+  },
+  "SDL_BindGPUVertexStorageBuffers": {
+    "signature": "void (SDL_GPURenderPass *, Uint32, SDL_GPUBuffer *const *, Uint32)",
+    "arguments": [
+      "render_pass",
+      "first_slot",
+      "storage_buffers",
+      "num_bindings"
+    ]
+  },
+  "SDL_BindGPUFragmentSamplers": {
+    "signature": "void (SDL_GPURenderPass *, Uint32, const SDL_GPUTextureSamplerBinding *, Uint32)",
+    "arguments": [
+      "render_pass",
+      "first_slot",
+      "texture_sampler_bindings",
+      "num_bindings"
+    ]
+  },
+  "SDL_BindGPUFragmentStorageTextures": {
+    "signature": "void (SDL_GPURenderPass *, Uint32, SDL_GPUTexture *const *, Uint32)",
+    "arguments": [
+      "render_pass",
+      "first_slot",
+      "storage_textures",
+      "num_bindings"
+    ]
+  },
+  "SDL_BindGPUFragmentStorageBuffers": {
+    "signature": "void (SDL_GPURenderPass *, Uint32, SDL_GPUBuffer *const *, Uint32)",
+    "arguments": [
+      "render_pass",
+      "first_slot",
+      "storage_buffers",
+      "num_bindings"
+    ]
+  },
+  "SDL_DrawGPUIndexedPrimitives": {
+    "signature": "void (SDL_GPURenderPass *, Uint32, Uint32, Uint32, Sint32, Uint32)",
+    "arguments": [
+      "render_pass",
+      "num_indices",
+      "num_instances",
+      "first_index",
+      "vertex_offset",
+      "first_instance"
+    ]
+  },
+  "SDL_DrawGPUPrimitives": {
+    "signature": "void (SDL_GPURenderPass *, Uint32, Uint32, Uint32, Uint32)",
+    "arguments": [
+      "render_pass",
+      "num_vertices",
+      "num_instances",
+      "first_vertex",
+      "first_instance"
+    ]
+  },
+  "SDL_DrawGPUPrimitivesIndirect": {
+    "signature": "void (SDL_GPURenderPass *, SDL_GPUBuffer *, Uint32, Uint32)",
+    "arguments": [
+      "render_pass",
+      "buffer",
+      "offset",
+      "draw_count"
+    ]
+  },
+  "SDL_DrawGPUIndexedPrimitivesIndirect": {
+    "signature": "void (SDL_GPURenderPass *, SDL_GPUBuffer *, Uint32, Uint32)",
+    "arguments": [
+      "render_pass",
+      "buffer",
+      "offset",
+      "draw_count"
+    ]
+  },
+  "SDL_EndGPURenderPass": {
+    "signature": "void (SDL_GPURenderPass *)",
+    "arguments": [
+      "render_pass"
+    ]
+  },
+  "SDL_BeginGPUComputePass": {
+    "signature": "SDL_GPUComputePass *(SDL_GPUCommandBuffer *, const SDL_GPUStorageTextureReadWriteBinding *, Uint32, const SDL_GPUStorageBufferReadWriteBinding *, Uint32)",
+    "arguments": [
+      "command_buffer",
+      "storage_texture_bindings",
+      "num_storage_texture_bindings",
+      "storage_buffer_bindings",
+      "num_storage_buffer_bindings"
+    ]
+  },
+  "SDL_BindGPUComputePipeline": {
+    "signature": "void (SDL_GPUComputePass *, SDL_GPUComputePipeline *)",
+    "arguments": [
+      "compute_pass",
+      "compute_pipeline"
+    ]
+  },
+  "SDL_BindGPUComputeSamplers": {
+    "signature": "void (SDL_GPUComputePass *, Uint32, const SDL_GPUTextureSamplerBinding *, Uint32)",
+    "arguments": [
+      "compute_pass",
+      "first_slot",
+      "texture_sampler_bindings",
+      "num_bindings"
+    ]
+  },
+  "SDL_BindGPUComputeStorageTextures": {
+    "signature": "void (SDL_GPUComputePass *, Uint32, SDL_GPUTexture *const *, Uint32)",
+    "arguments": [
+      "compute_pass",
+      "first_slot",
+      "storage_textures",
+      "num_bindings"
+    ]
+  },
+  "SDL_BindGPUComputeStorageBuffers": {
+    "signature": "void (SDL_GPUComputePass *, Uint32, SDL_GPUBuffer *const *, Uint32)",
+    "arguments": [
+      "compute_pass",
+      "first_slot",
+      "storage_buffers",
+      "num_bindings"
+    ]
+  },
+  "SDL_DispatchGPUCompute": {
+    "signature": "void (SDL_GPUComputePass *, Uint32, Uint32, Uint32)",
+    "arguments": [
+      "compute_pass",
+      "groupcount_x",
+      "groupcount_y",
+      "groupcount_z"
+    ]
+  },
+  "SDL_DispatchGPUComputeIndirect": {
+    "signature": "void (SDL_GPUComputePass *, SDL_GPUBuffer *, Uint32)",
+    "arguments": [
+      "compute_pass",
+      "buffer",
+      "offset"
+    ]
+  },
+  "SDL_EndGPUComputePass": {
+    "signature": "void (SDL_GPUComputePass *)",
+    "arguments": [
+      "compute_pass"
+    ]
+  },
+  "SDL_MapGPUTransferBuffer": {
+    "signature": "void *(SDL_GPUDevice *, SDL_GPUTransferBuffer *, bool)",
+    "arguments": [
+      "device",
+      "transfer_buffer",
+      "cycle"
+    ]
+  },
+  "SDL_UnmapGPUTransferBuffer": {
+    "signature": "void (SDL_GPUDevice *, SDL_GPUTransferBuffer *)",
+    "arguments": [
+      "device",
+      "transfer_buffer"
+    ]
+  },
+  "SDL_BeginGPUCopyPass": {
+    "signature": "SDL_GPUCopyPass *(SDL_GPUCommandBuffer *)",
+    "arguments": [
+      "command_buffer"
+    ]
+  },
+  "SDL_UploadToGPUTexture": {
+    "signature": "void (SDL_GPUCopyPass *, const SDL_GPUTextureTransferInfo *, const SDL_GPUTextureRegion *, bool)",
+    "arguments": [
+      "copy_pass",
+      "source",
+      "destination",
+      "cycle"
+    ]
+  },
+  "SDL_UploadToGPUBuffer": {
+    "signature": "void (SDL_GPUCopyPass *, const SDL_GPUTransferBufferLocation *, const SDL_GPUBufferRegion *, bool)",
+    "arguments": [
+      "copy_pass",
+      "source",
+      "destination",
+      "cycle"
+    ]
+  },
+  "SDL_CopyGPUTextureToTexture": {
+    "signature": "void (SDL_GPUCopyPass *, const SDL_GPUTextureLocation *, const SDL_GPUTextureLocation *, Uint32, Uint32, Uint32, bool)",
+    "arguments": [
+      "copy_pass",
+      "source",
+      "destination",
+      "w",
+      "h",
+      "d",
+      "cycle"
+    ]
+  },
+  "SDL_CopyGPUBufferToBuffer": {
+    "signature": "void (SDL_GPUCopyPass *, const SDL_GPUBufferLocation *, const SDL_GPUBufferLocation *, Uint32, bool)",
+    "arguments": [
+      "copy_pass",
+      "source",
+      "destination",
+      "size",
+      "cycle"
+    ]
+  },
+  "SDL_DownloadFromGPUTexture": {
+    "signature": "void (SDL_GPUCopyPass *, const SDL_GPUTextureRegion *, const SDL_GPUTextureTransferInfo *)",
+    "arguments": [
+      "copy_pass",
+      "source",
+      "destination"
+    ]
+  },
+  "SDL_DownloadFromGPUBuffer": {
+    "signature": "void (SDL_GPUCopyPass *, const SDL_GPUBufferRegion *, const SDL_GPUTransferBufferLocation *)",
+    "arguments": [
+      "copy_pass",
+      "source",
+      "destination"
+    ]
+  },
+  "SDL_EndGPUCopyPass": {
+    "signature": "void (SDL_GPUCopyPass *)",
+    "arguments": [
+      "copy_pass"
+    ]
+  },
+  "SDL_GenerateMipmapsForGPUTexture": {
+    "signature": "void (SDL_GPUCommandBuffer *, SDL_GPUTexture *)",
+    "arguments": [
+      "command_buffer",
+      "texture"
+    ]
+  },
+  "SDL_BlitGPUTexture": {
+    "signature": "void (SDL_GPUCommandBuffer *, const SDL_GPUBlitInfo *)",
+    "arguments": [
+      "command_buffer",
+      "info"
+    ]
+  },
+  "SDL_WindowSupportsGPUSwapchainComposition": {
+    "signature": "bool (SDL_GPUDevice *, SDL_Window *, SDL_GPUSwapchainComposition)",
+    "arguments": [
+      "device",
+      "window",
+      "swapchain_composition"
+    ]
+  },
+  "SDL_WindowSupportsGPUPresentMode": {
+    "signature": "bool (SDL_GPUDevice *, SDL_Window *, SDL_GPUPresentMode)",
+    "arguments": [
+      "device",
+      "window",
+      "present_mode"
     ]
   },
   "SDL_ClaimWindowForGPUDevice": {
@@ -246,10 +782,133 @@
       "window"
     ]
   },
+  "SDL_SetGPUSwapchainParameters": {
+    "signature": "bool (SDL_GPUDevice *, SDL_Window *, SDL_GPUSwapchainComposition, SDL_GPUPresentMode)",
+    "arguments": [
+      "device",
+      "window",
+      "swapchain_composition",
+      "present_mode"
+    ]
+  },
+  "SDL_SetGPUAllowedFramesInFlight": {
+    "signature": "bool (SDL_GPUDevice *, Uint32)",
+    "arguments": [
+      "device",
+      "allowed_frames_in_flight"
+    ]
+  },
+  "SDL_GetGPUSwapchainTextureFormat": {
+    "signature": "SDL_GPUTextureFormat (SDL_GPUDevice *, SDL_Window *)",
+    "arguments": [
+      "device",
+      "window"
+    ]
+  },
+  "SDL_AcquireGPUSwapchainTexture": {
+    "signature": "bool (SDL_GPUCommandBuffer *, SDL_Window *, SDL_GPUTexture **, Uint32 *, Uint32 *)",
+    "arguments": [
+      "command_buffer",
+      "window",
+      "swapchain_texture",
+      "swapchain_texture_width",
+      "swapchain_texture_height"
+    ]
+  },
+  "SDL_WaitForGPUSwapchain": {
+    "signature": "bool (SDL_GPUDevice *, SDL_Window *)",
+    "arguments": [
+      "device",
+      "window"
+    ]
+  },
+  "SDL_WaitAndAcquireGPUSwapchainTexture": {
+    "signature": "bool (SDL_GPUCommandBuffer *, SDL_Window *, SDL_GPUTexture **, Uint32 *, Uint32 *)",
+    "arguments": [
+      "command_buffer",
+      "window",
+      "swapchain_texture",
+      "swapchain_texture_width",
+      "swapchain_texture_height"
+    ]
+  },
+  "SDL_SubmitGPUCommandBuffer": {
+    "signature": "bool (SDL_GPUCommandBuffer *)",
+    "arguments": [
+      "command_buffer"
+    ]
+  },
+  "SDL_SubmitGPUCommandBufferAndAcquireFence": {
+    "signature": "SDL_GPUFence *(SDL_GPUCommandBuffer *)",
+    "arguments": [
+      "command_buffer"
+    ]
+  },
+  "SDL_CancelGPUCommandBuffer": {
+    "signature": "bool (SDL_GPUCommandBuffer *)",
+    "arguments": [
+      "command_buffer"
+    ]
+  },
   "SDL_WaitForGPUIdle": {
     "signature": "bool (SDL_GPUDevice *)",
     "arguments": [
       "device"
+    ]
+  },
+  "SDL_WaitForGPUFences": {
+    "signature": "bool (SDL_GPUDevice *, bool, SDL_GPUFence *const *, Uint32)",
+    "arguments": [
+      "device",
+      "wait_all",
+      "fences",
+      "num_fences"
+    ]
+  },
+  "SDL_QueryGPUFence": {
+    "signature": "bool (SDL_GPUDevice *, SDL_GPUFence *)",
+    "arguments": [
+      "device",
+      "fence"
+    ]
+  },
+  "SDL_ReleaseGPUFence": {
+    "signature": "void (SDL_GPUDevice *, SDL_GPUFence *)",
+    "arguments": [
+      "device",
+      "fence"
+    ]
+  },
+  "SDL_GPUTextureFormatTexelBlockSize": {
+    "signature": "Uint32 (SDL_GPUTextureFormat)",
+    "arguments": [
+      "format"
+    ]
+  },
+  "SDL_GPUTextureSupportsFormat": {
+    "signature": "bool (SDL_GPUDevice *, SDL_GPUTextureFormat, SDL_GPUTextureType, SDL_GPUTextureUsageFlags)",
+    "arguments": [
+      "device",
+      "format",
+      "type",
+      "usage"
+    ]
+  },
+  "SDL_GPUTextureSupportsSampleCount": {
+    "signature": "bool (SDL_GPUDevice *, SDL_GPUTextureFormat, SDL_GPUSampleCount)",
+    "arguments": [
+      "device",
+      "format",
+      "sample_count"
+    ]
+  },
+  "SDL_CalculateGPUTextureFormatSize": {
+    "signature": "Uint32 (SDL_GPUTextureFormat, Uint32, Uint32, Uint32)",
+    "arguments": [
+      "format",
+      "width",
+      "height",
+      "depth_or_layer_count"
     ]
   },
   "SDL_Init": {

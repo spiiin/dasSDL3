@@ -4,8 +4,16 @@
   "profiles": {
     "windows-x64-msvc": {
       "target": "x86_64-pc-windows-msvc",
-      "defines": ["SDL_MAIN_NOIMPL=1"],
-      "entry_headers": ["SDL.h", "SDL_main.h", "SDL_vulkan.h", "SDL_metal.h", "SDL_revision.h"]
+      "defines": [
+        "SDL_MAIN_NOIMPL=1"
+      ],
+      "entry_headers": [
+        "SDL.h",
+        "SDL_main.h",
+        "SDL_vulkan.h",
+        "SDL_metal.h",
+        "SDL_revision.h"
+      ]
     }
   },
   "excluded_headers": {
@@ -30,690 +38,839 @@
   },
   "symbols": {
     "function:SDL_InsertGPUDebugLabel": {
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Owned copied text and balanced depth in checked value-only command plans; outside native passes; one-shot native submission; D3D12 groups explicitly unsupported on pinned SDL (labels supported); no debugger visibility guarantee",
-      "adapter": "SDL_GPUPlanLabel / gpu_plan_label",
-      "tests": [
-        "tests/gpu_commands.das"
-      ],
-      "contract": "docs/gpu-command-plans.md"
+      "boost_status": "pending",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_PushGPUDebugGroup": {
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Owned copied text and balanced depth in checked value-only command plans; outside native passes; one-shot native submission; D3D12 groups explicitly unsupported on pinned SDL (labels supported); no debugger visibility guarantee",
-      "adapter": "SDL_GPUPlanPushGroup / gpu_plan_push_group",
-      "tests": [
-        "tests/gpu_commands.das"
-      ],
-      "contract": "docs/gpu-command-plans.md"
+      "boost_status": "pending",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_PopGPUDebugGroup": {
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Owned copied text and balanced depth in checked value-only command plans; outside native passes; one-shot native submission; D3D12 groups explicitly unsupported on pinned SDL (labels supported); no debugger visibility guarantee",
-      "adapter": "SDL_GPUPlanPopGroup / gpu_plan_pop_group",
-      "tests": [
-        "tests/gpu_commands.das"
-      ],
-      "contract": "docs/gpu-command-plans.md"
+      "boost_status": "pending",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_GenerateMipmapsForGPUTexture": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Closed native command, initialized RGBA8/BGRA8 2D/array sampler+color-target resources, all allocated mips/layers; also revalidated value-only plans with one native submission (docs/gpu-command-plans.md)",
-      "adapter": "SDL_GenerateGPUTextureMipmapsChecked / gpu_generate_mipmaps / SDL_GPUPlanMipmaps",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_GenerateGPUTextureMipmapsChecked / gpu_generate_mipmaps",
       "tests": [
-        "tests/gpu_image.das",
-        "tests/gpu_commands.das"
+        "tests/gpu_image.das"
       ],
-      "contract": "docs/gpu-image.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_BlitGPUTexture": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Closed native command, checked distinct same-format RGBA8/BGRA8 regions, nearest/linear, LOAD preserves neighbors, no flip/cycling; also revalidated value-only plans with one native submission (docs/gpu-command-plans.md)",
-      "adapter": "SDL_BlitGPUTextureChecked / gpu_blit_texture / SDL_GPUPlanBlit",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_BlitGPUTextureChecked / gpu_blit_texture",
       "tests": [
-        "tests/gpu_image.das",
-        "tests/gpu_commands.das"
+        "tests/gpu_image.das"
       ],
-      "contract": "docs/gpu-image.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_WindowSupportsGPUPresentMode": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Checked live claimed window, owner/main thread and present enum",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_GPUWindowPresentSupported / gpu_supports_present_mode",
       "tests": [
         "tests/gpu_swapchain.das"
       ],
-      "contract": "docs/gpu-swapchain.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_WindowSupportsGPUSwapchainComposition": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Checked live claimed window, owner/main thread and composition enum",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_GPUWindowCompositionSupported / gpu_supports_composition",
       "tests": [
         "tests/gpu_swapchain.das"
       ],
-      "contract": "docs/gpu-swapchain.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_SetGPUSwapchainParameters": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Between-frame setter, capability precheck without mutation on unsupported; no rollback on SDL failure",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_ConfigureGPUSwapchainChecked / gpu_try_configure_swapchain",
       "tests": [
         "tests/gpu_swapchain.das"
       ],
-      "contract": "docs/gpu-swapchain.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_SetGPUAllowedFramesInFlight": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Live scoped device, main thread, 1..3; device-wide synchronous queue flush",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_SetGPUFramesInFlightChecked / gpu_frames_in_flight",
       "tests": [
         "tests/gpu_swapchain.das"
       ],
-      "contract": "docs/gpu-swapchain.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_WaitForGPUSwapchain": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Blocking availability only, checked claimed window; no texture/command borrow exposed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_WaitGPUSwapchainChecked / gpu_wait_swapchain",
       "tests": [
         "tests/gpu_swapchain.das"
       ],
-      "contract": "docs/gpu-swapchain.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_GetNumGPUDrivers": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Main-thread compiled driver enumeration, not physical adapters",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_GPUDriverCountChecked / gpu_driver_names",
       "tests": [
         "tests/gpu_utilities.das"
       ],
-      "contract": "docs/gpu-texture-types.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_GetGPUDriver": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Validated index, copied script-owned names",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_GPUDriverNameCopy / gpu_driver_names",
       "tests": [
         "tests/gpu_utilities.das"
       ],
-      "contract": "docs/gpu-texture-types.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_GPUSupportsShaderFormats": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Validated mask, SDL driver-hint precedence preserved, no device created",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_GPUShaderSupportChecked / gpu_supports_shaders",
       "tests": [
         "tests/gpu_utilities.das"
       ],
-      "contract": "docs/gpu-texture-types.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_SetGPUBufferName": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Only checked public data buffers; bounded names, void SDL setter",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_SetGPUDataBufferNameChecked / gpu_buffer_name",
       "tests": [
         "tests/gpu_utilities.das"
       ],
-      "contract": "docs/gpu-texture-types.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_SetGPUTextureName": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Only checked public transfer textures; bounded names, void SDL setter",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_SetGPUTransferTextureNameChecked / gpu_texture_name",
       "tests": [
         "tests/gpu_utilities.das"
       ],
-      "contract": "docs/gpu-texture-types.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_GPUTextureFormatTexelBlockSize": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Validated pinned format values; bytes per texel/block, not allocation size",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_GPUFormatBlockSizeChecked / gpu_format_block_bytes",
       "tests": [
-        "tests/gpu_formats.das"
+        "tests/gpu_formats.das",
+        "tests/gpu_typed_queries.das"
       ],
-      "contract": "docs/gpu-formats.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_CalculateGPUTextureFormatSize": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Bounded dimensions, exact SDL block rounding, checked Uint32 product",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_GPUFormatSizeChecked / gpu_format_bytes",
       "tests": [
-        "tests/gpu_formats.das"
+        "tests/gpu_formats.das",
+        "tests/gpu_typed_queries.das"
       ],
-      "contract": "docs/gpu-formats.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_GPUTextureSupportsSampleCount": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Live scoped device, validated format/sample enums, unsupported separate from invalid",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_GPUSampleCountSupportedChecked / gpu_supports_samples",
       "tests": [
-        "tests/gpu_formats.das"
+        "tests/gpu_formats.das",
+        "tests/gpu_typed_queries.das"
       ],
-      "contract": "docs/gpu-formats.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_CopyGPUTextureToTexture": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Distinct checked RGBA8 2D/array textures, mip/layer regions, no scaling/cycling; uncompressed color formats and validated capability queries (docs/gpu-formats.md); BC block and cube/array transfers (docs/gpu-texture-types.md); also revalidated value-only plans with one native submission (docs/gpu-command-plans.md)",
-      "adapter": "SDL_CopyGPUTextureRegion / gpu_copy_texture / SDL_CreateGPUColorTransferTexture / SDL_GPUFormatSupportedChecked / SDL_CreateGPUTypedTransferTexture / SDL_GPUPlanCopyTexture",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CopyGPUTextureRegion / gpu_copy_texture / SDL_CreateGPUColorTransferTexture / SDL_GPUFormatSupportedChecked / SDL_CreateGPUTypedTransferTexture",
       "tests": [
         "tests/gpu_texture_transfer.das",
         "tests/gpu_formats.das",
         "tests/gpu_texture_types.das",
-        "tests/gpu_commands.das"
+        "tests/gpu_volume.das",
+        "tests/gpu_astc_layout.das",
+        "tests/gpu_astc.das"
       ],
-      "contract": "docs/gpu-texture-transfer.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_DownloadFromGPUTexture": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Checked RGBA8 regions, aligned staging and tightly packed owned output after fence; uncompressed color formats and validated capability queries (docs/gpu-formats.md); BC block and cube/array transfers (docs/gpu-texture-types.md)",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_RequestGPUTextureReadback / with_gpu_texture_readback / SDL_CreateGPUColorTransferTexture / SDL_GPUFormatSupportedChecked / SDL_CreateGPUTypedTransferTexture",
       "tests": [
         "tests/gpu_texture_transfer.das",
         "tests/gpu_formats.das",
-        "tests/gpu_texture_types.das"
+        "tests/gpu_texture_types.das",
+        "tests/gpu_volume.das",
+        "tests/gpu_astc_layout.das",
+        "tests/gpu_astc.das"
       ],
-      "contract": "docs/gpu-texture-transfer.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_CopyGPUBufferToBuffer": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Distinct checked data buffers; 4-aligned byte ranges, no cycling or raw copy pass; also revalidated value-only plans with one native submission (docs/gpu-command-plans.md)",
-      "adapter": "SDL_CopyGPUDataBuffer / SDL_GPUPlanCopyBuffer",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CopyGPUDataBuffer",
       "tests": [
-        "tests/gpu_transfer.das",
-        "tests/gpu_commands.das"
+        "tests/gpu_transfer.das"
       ],
-      "contract": "docs/gpu-transfer.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_DownloadFromGPUBuffer": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Checked 4-aligned buffer range to owned readback snapshot; textures remain pending",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "adapter": "SDL_RequestGPUBufferReadback",
       "tests": [
         "tests/gpu_transfer.das"
       ],
-      "contract": "docs/gpu-transfer.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_SubmitGPUCommandBufferAndAcquireFence": {
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Closed native buffer download submission; fence owned by readback ticket",
-      "adapter": "SDL_RequestGPUBufferReadback",
+      "boost_status": "not_needed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_SubmitGPUCommandBufferAndAcquireFence",
       "tests": [
-        "tests/gpu_transfer.das"
+        "tests/gpu_native_fences.das"
       ],
-      "contract": "docs/gpu-transfer.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_QueryGPUFence": {
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Single checked readback ticket; pending is not an error",
-      "adapter": "SDL_PollGPUReadback / gpu_readback_ready",
+      "boost_status": "not_needed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_QueryGPUFence",
       "tests": [
-        "tests/gpu_transfer.das"
+        "tests/gpu_native_fences.das"
       ],
-      "contract": "docs/gpu-transfer.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_WaitForGPUFences": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Wait for one checked readback ticket, not arbitrary fence arrays",
-      "adapter": "SDL_WaitGPUReadback / gpu_wait_readback",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_WaitForGPUFencesArray",
       "tests": [
-        "tests/gpu_transfer.das"
+        "tests/gpu_native_fences.das"
       ],
-      "contract": "docs/gpu-transfer.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_ReleaseGPUFence": {
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Readback ticket owns fence; no raw fence pointer escapes",
-      "adapter": "SDL_ReleaseGPUReadback / with_gpu_readback",
+      "boost_status": "not_needed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_ReleaseGPUFence",
       "tests": [
-        "tests/gpu_transfer.das"
+        "tests/gpu_native_fences.das"
       ],
-      "contract": "docs/gpu-transfer.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_OpenAudioDeviceStream": {
       "raw_status": "adapted",
       "boost_status": "partial",
       "reason": "Default playback device only, null callback/userdata; scoped device-stream ownership, not general capture or callback support",
       "adapter": "SDL_OpenPlaybackStream / with_playback",
-      "tests": ["tests/audio.das"],
+      "tests": [
+        "tests/audio.das"
+      ],
       "contract": "docs/audio.md"
     },
     "function:SDL_GetWindowSizeInPixels": {
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Main-thread GPU camera aspect ratio from drawable pixel dimensions; zero-size fallback only",
-      "adapter": "SDL_GPU3DWindowAspect",
-      "tests": [
-        "tests/gpu_3d.das"
-      ],
-      "contract": "docs/gpu-3d.md"
+      "raw_status": "pending",
+      "boost_status": "pending",
+      "reason": "The former SDL_GPU3DWindowAspect engine helper was removed; no exported replacement yet."
     },
     "function:SDL_GPUTextureSupportsFormat": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Depth format selection for fixed 3D color mesh; D32/D24/D16 depth-target usage only; independent initialized RGBA8 2D/array mip/layer texture transfers (docs/gpu-texture-transfer.md); uncompressed color formats and validated capability queries (docs/gpu-formats.md)",
-      "adapter": "SDL_GPU3DDepthFormat / SDL_CreateGPUTransferTexture / SDL_UploadGPUTextureRegion / SDL_CreateGPUColorTransferTexture / SDL_GPUFormatSupportedChecked",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUTransferTexture / SDL_UploadGPUTextureRegion / SDL_CreateGPUColorTransferTexture / SDL_GPUFormatSupportedChecked",
       "tests": [
-        "tests/gpu_3d.das",
         "tests/gpu_texture_transfer.das",
-        "tests/gpu_formats.das"
+        "tests/gpu_formats.das",
+        "tests/gpu_typed_queries.das"
       ],
-      "contract": "docs/gpu-3d.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_CreateGPUBuffer": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Immutable checked stride48 geometry and UINT32 indices can be owned separately from materials; fixed instance buffers remain supported; public copied data buffers and scoped asynchronous readback tickets (docs/gpu-transfer.md)",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh / SDL_CreateGPUGeometry / SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback / SDL_CreateGPUCheckedIndexBuffer / SDL_ReleaseGPUCheckedIndexBuffer",
       "tests": [
-        "tests/gpu_mesh.das",
-        "tests/gpu_resources.das",
-        "tests/gpu_transfer.das"
+        "tests/gpu_transfer.das",
+        "tests/gpu_vertex_buffers.das"
       ],
-      "contract": "docs/gpu-shared-resources.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_ReleaseGPUBuffer": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Checked separate geometry ownership, scoped/device cleanup and SDL deferred destruction for submitted work; public copied data buffers and scoped asynchronous readback tickets (docs/gpu-transfer.md)",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh / SDL_ReleaseGPUGeometry / SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback / SDL_CreateGPUCheckedIndexBuffer / SDL_ReleaseGPUCheckedIndexBuffer",
       "tests": [
-        "tests/gpu_mesh.das",
-        "tests/gpu_resources.das",
-        "tests/gpu_transfer.das"
+        "tests/gpu_transfer.das",
+        "tests/gpu_vertex_buffers.das"
       ],
-      "contract": "docs/gpu-shared-resources.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_CreateGPUTexture": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Copied bounded RGBA8 material textures and existing depth/mesh targets; no general texture descriptor API; independent initialized RGBA8 2D/array mip/layer texture transfers (docs/gpu-texture-transfer.md); uncompressed color formats and validated capability queries (docs/gpu-formats.md); BC block and cube/array transfers (docs/gpu-texture-types.md); initialized RGBA8/BGRA8 color-target image resources (docs/gpu-image.md)",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_EnsureGPU3DDepth / SDL_CreateGPUMaterial / SDL_CreateGPUTransferTexture / SDL_UploadGPUTextureRegion / SDL_CreateGPUColorTransferTexture / SDL_GPUFormatSupportedChecked / SDL_CreateGPUTypedTransferTexture / SDL_CreateGPUColorTargetTexture",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUTransferTexture / SDL_UploadGPUTextureRegion / SDL_CreateGPUColorTransferTexture / SDL_GPUFormatSupportedChecked / SDL_CreateGPUTypedTransferTexture / SDL_CreateGPUColorTargetTexture",
       "tests": [
-        "tests/gpu_mesh.das",
-        "tests/gpu_3d.das",
-        "tests/gpu_resources.das",
         "tests/gpu_texture_transfer.das",
         "tests/gpu_formats.das",
         "tests/gpu_texture_types.das",
-        "tests/gpu_image.das"
+        "tests/gpu_image.das",
+        "tests/gpu_volume.das",
+        "tests/gpu_astc_layout.das",
+        "tests/gpu_astc.das"
       ],
-      "contract": "docs/gpu-shared-resources.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_ReleaseGPUTexture": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Scoped material texture ownership and existing mesh/depth cleanup; device-specific release; independent initialized RGBA8 2D/array mip/layer texture transfers (docs/gpu-texture-transfer.md)",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh / SDL_ReleaseGPUMaterial / SDL_CreateGPUTransferTexture / SDL_UploadGPUTextureRegion",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUTransferTexture / SDL_UploadGPUTextureRegion",
       "tests": [
-        "tests/gpu_mesh.das",
-        "tests/gpu_resources.das",
-        "tests/gpu_texture_transfer.das"
+        "tests/gpu_texture_transfer.das",
+        "tests/gpu_volume.das",
+        "tests/gpu_astc_layout.das",
+        "tests/gpu_astc.das"
       ],
-      "contract": "docs/gpu-shared-resources.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_CreateGPUSampler": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUCheckedSampler / SDL_ReleaseGPUCheckedSampler",
       "tests": [
-        "tests/gpu_mesh.das"
+        "tests/gpu_typed_queries.das",
+        "tests/gpu_sampler.das"
       ],
-      "contract": "docs/gpu-mesh.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_ReleaseGPUSampler": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUCheckedSampler / SDL_ReleaseGPUCheckedSampler",
       "tests": [
-        "tests/gpu_mesh.das"
+        "tests/gpu_typed_queries.das",
+        "tests/gpu_sampler.das"
       ],
-      "contract": "docs/gpu-mesh.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_CreateGPUTransferBuffer": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed; public copied data buffers and scoped asynchronous readback tickets (docs/gpu-transfer.md)",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh / SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
       "tests": [
-        "tests/gpu_mesh.das",
         "tests/gpu_transfer.das"
       ],
-      "contract": "docs/gpu-mesh.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_ReleaseGPUTransferBuffer": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed; public copied data buffers and scoped asynchronous readback tickets (docs/gpu-transfer.md)",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh / SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
       "tests": [
-        "tests/gpu_mesh.das",
         "tests/gpu_transfer.das"
       ],
-      "contract": "docs/gpu-mesh.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_MapGPUTransferBuffer": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Copied immutable mesh uploads and fixed-count full instance updates; staging and destination cycling; no borrowed mapped pointers or general update API; public copied data buffers and scoped asynchronous readback tickets (docs/gpu-transfer.md)",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_UpdateGPUInstances / SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
       "tests": [
-        "tests/gpu_mesh.das",
-        "tests/gpu_instancing.das",
         "tests/gpu_transfer.das"
       ],
-      "contract": "docs/gpu-dynamic-instances.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_UnmapGPUTransferBuffer": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed; public copied data buffers and scoped asynchronous readback tickets (docs/gpu-transfer.md)",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh / SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
       "tests": [
-        "tests/gpu_mesh.das",
         "tests/gpu_transfer.das"
       ],
-      "contract": "docs/gpu-mesh.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_BeginGPUCopyPass": {
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
-      "tests": [
-        "tests/gpu_mesh.das"
-      ],
-      "contract": "docs/gpu-mesh.md"
+      "boost_status": "pending",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_EndGPUCopyPass": {
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
-      "tests": [
-        "tests/gpu_mesh.das"
-      ],
-      "contract": "docs/gpu-mesh.md"
+      "boost_status": "pending",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_UploadToGPUBuffer": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Copied immutable mesh uploads and fixed-count full instance updates; staging and destination cycling; no borrowed mapped pointers or general update API; public copied data buffers and scoped asynchronous readback tickets (docs/gpu-transfer.md)",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_UpdateGPUInstances / SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUDataBuffer / SDL_RequestGPUBufferReadback",
       "tests": [
-        "tests/gpu_mesh.das",
-        "tests/gpu_instancing.das",
         "tests/gpu_transfer.das"
       ],
-      "contract": "docs/gpu-dynamic-instances.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_UploadToGPUTexture": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed; independent initialized RGBA8 2D/array mip/layer texture transfers (docs/gpu-texture-transfer.md); uncompressed color formats and validated capability queries (docs/gpu-formats.md); BC block and cube/array transfers (docs/gpu-texture-types.md)",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh / SDL_CreateGPUTransferTexture / SDL_UploadGPUTextureRegion / SDL_CreateGPUColorTransferTexture / SDL_GPUFormatSupportedChecked / SDL_CreateGPUTypedTransferTexture",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUTransferTexture / SDL_UploadGPUTextureRegion / SDL_CreateGPUColorTransferTexture / SDL_GPUFormatSupportedChecked / SDL_CreateGPUTypedTransferTexture",
       "tests": [
-        "tests/gpu_mesh.das",
         "tests/gpu_texture_transfer.das",
         "tests/gpu_formats.das",
-        "tests/gpu_texture_types.das"
+        "tests/gpu_texture_types.das",
+        "tests/gpu_volume.das",
+        "tests/gpu_astc_layout.das",
+        "tests/gpu_astc.das"
       ],
-      "contract": "docs/gpu-mesh.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_BindGPUVertexBuffers": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Fixed vertex layouts with cycled instance buffers: model/normal stride112 or RGBA stride128; material batches bind checked byte slices, reserved step rate zero",
-      "adapter": "SDL_RecordGPUMesh / SDL_RecordGPUInstances / SDL_RecordGPUBatches",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_BindGPUVertexBuffersChecked",
       "tests": [
-        "tests/gpu_mesh.das", "tests/gpu_instancing.das", "tests/gpu_instance_colors.das", "tests/gpu_batches.das"
+        "tests/gpu_recording.das",
+        "tests/gpu_vertex_buffers.das"
       ],
-      "contract": "docs/gpu-instance-colors.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_BindGPUIndexBuffer": {
-      "raw_status": "adapted", "boost_status": "partial",
-      "reason": "Immutable copied uint32 index buffer with checked bounds; offset zero, fixed triangle-list mesh",
-      "adapter": "SDL_CreateGPUIndexedTexturedMesh / SDL_RecordGPUMesh",
-      "tests": ["tests/gpu_indexed_mesh.das"], "contract": "docs/gpu-indexed-mesh.md"
+      "boost_status": "partial",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_BindGPUIndexBufferChecked",
+      "tests": [
+        "tests/gpu_recording.das",
+        "tests/gpu_vertex_buffers.das"
+      ],
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_PushGPUVertexUniformData": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Fixed 2D rows (32 bytes), 3D MVP (64 bytes), or MVP/normal columns (112 bytes), std140 vertex slot zero; no general uniform layout API",
-      "adapter": "SDL_PushGPUTransform / SDL_RecordGPU3D / SDL_RecordGPULit",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_PushGPUUniformBytesChecked / SDL_PushGPUUniformVectorsChecked",
       "tests": [
-        "tests/gpu_transform.das",
-        "tests/gpu_3d.das",
-        "tests/gpu_lit.das"
+        "tests/gpu_recording.das"
       ],
-      "contract": "docs/gpu-3d.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_PushGPUFragmentUniformData": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Fixed 16-byte world-space light direction and ambient at fragment slot zero; no general uniform layout API",
-      "adapter": "SDL_RecordGPULit",
-      "tests": ["tests/gpu_lit.das"],
-      "contract": "docs/gpu-lit.md"
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_PushGPUUniformBytesChecked / SDL_PushGPUUniformVectorsChecked",
+      "tests": [
+        "tests/gpu_recording.das"
+      ],
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_DrawGPUIndexedPrimitives": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Checked indexed draws; shared geometry/material pairs coalesce, 4096 objects / 64 groups, fixed colored-instance ABI; no general draw API",
-      "adapter": "SDL_RecordGPUMesh / SDL_RecordGPUInstances / SDL_RecordGPUBatches / SDL_ResolveGPUBatchMesh / SDL_RecordGPUBatches",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_DrawGPUIndexedPrimitivesChecked",
       "tests": [
-        "tests/gpu_indexed_mesh.das",
-        "tests/gpu_instancing.das",
-        "tests/gpu_batches.das",
-        "tests/gpu_resources.das"
+        "tests/gpu_recording.das",
+        "tests/gpu_vertex_buffers.das"
       ],
-      "contract": "docs/gpu-shared-resources.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_BindGPUFragmentSamplers": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Bounded immutable float4 x/y/u/v triangle mesh and copied packed RGBA8 texture; closed upload/draw, nearest sampler, no native handles exposed",
-      "adapter": "SDL_CreateGPUTexturedMesh / SDL_RecordGPUMesh",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_BindGPUSamplersChecked",
       "tests": [
-        "tests/gpu_mesh.das"
+        "tests/gpu_recording.das"
       ],
-      "contract": "docs/gpu-mesh.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_CreateGPUShader": {
-      "raw_status": "adapted", "boost_status": "partial",
-      "reason": "Trusted precompiled SPIR-V/DXIL: vertex-ID zero-resource triangle or fixed position/UV mesh with one fragment sampler",
-      "adapter": "SDL_LoadGPUZeroResourceShader", "tests": ["tests/gpu_triangle.das"], "contract": "docs/gpu-triangle.md"
+      "boost_status": "partial",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUCheckedShader / SDL_LoadGPUCheckedShader / SDL_ReleaseGPUCheckedShader",
+      "tests": [
+        "tests/gpu_shader.das"
+      ],
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_ReleaseGPUShader": {
-      "raw_status": "adapted", "boost_status": "partial",
-      "reason": "Native RAII cleanup of temporary pipeline shaders; no script shader handle",
-      "adapter": "SDL_GPUShaderOwner", "tests": ["tests/gpu_triangle.das"], "contract": "docs/gpu-triangle.md"
+      "boost_status": "partial",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUCheckedShader / SDL_LoadGPUCheckedShader / SDL_ReleaseGPUCheckedShader",
+      "tests": [
+        "tests/gpu_shader.das"
+      ],
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_CreateGPUGraphicsPipeline": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Trusted fixed vertex layouts, including colored instancing with depth test/write; reusable material pipeline, no general pipeline descriptor API",
-      "adapter": "SDL_CreateGPUVertexIDPipeline / SDL_CreateGPUMaterial / SDL_CreateGPULitPipeline",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUCheckedGraphicsPipeline / SDL_ReleaseGPUCheckedGraphicsPipeline",
       "tests": [
-        "tests/gpu_triangle.das",
-        "tests/gpu_resources.das"
+        "tests/gpu_pipeline.das"
       ],
-      "contract": "docs/gpu-shared-resources.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_ReleaseGPUGraphicsPipeline": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Checked material and existing pipeline IDs; scoped/device cleanup and deferred destruction",
-      "adapter": "SDL_ReleaseGPUVertexIDPipeline / SDL_ReleaseGPUMaterial",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CreateGPUCheckedGraphicsPipeline / SDL_ReleaseGPUCheckedGraphicsPipeline",
       "tests": [
-        "tests/gpu_triangle.das",
-        "tests/gpu_resources.das"
+        "tests/gpu_pipeline.das"
       ],
-      "contract": "docs/gpu-shared-resources.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_GetGPUSwapchainTextureFormat": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Checked public uint-format query after claim plus existing pipeline compatibility checks; main thread and live scoped owner required",
-      "adapter": "SDL_CreateGPUVertexIDPipeline / SDL_DrawGPUVertexIDTriangle / SDL_GPUWindowFormatChecked / gpu_swapchain_format",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_GPUWindowFormatChecked / gpu_swapchain_format",
       "tests": [
-        "tests/gpu_triangle.das",
         "tests/gpu_swapchain.das"
       ],
-      "contract": "docs/gpu-swapchain.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_BindGPUGraphicsPipeline": {
-      "raw_status": "adapted", "boost_status": "partial",
-      "reason": "Closed native vertex-ID triangle frame; no render-pass handle exposed",
-      "adapter": "SDL_DrawGPUVertexIDTriangle", "tests": ["tests/gpu_triangle.das"], "contract": "docs/gpu-triangle.md"
+      "boost_status": "partial",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_BindGPUGraphicsPipelineChecked",
+      "tests": [
+        "tests/gpu_recording.das"
+      ],
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_DrawGPUPrimitives": {
-      "raw_status": "adapted", "boost_status": "partial",
-      "reason": "Triangle or immutable checked mesh vertex count; 1 instance, offsets zero; no general draw API",
-      "adapter": "SDL_DrawGPUVertexIDTriangle", "tests": ["tests/gpu_triangle.das"], "contract": "docs/gpu-triangle.md"
+      "boost_status": "partial",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_DrawGPUPrimitivesChecked",
+      "tests": [
+        "tests/gpu_recording.das",
+        "tests/gpu_vertex_buffers.das"
+      ],
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_CreateGPUDevice": {
-      "boost_status": "scoped", "adapter": "try_with_gpu_device / with_gpu_device",
-      "tests": ["tests/gpu.das"], "contract": "docs/gpu-clear.md"
+      "boost_status": "scoped",
+      "adapter": "try_with_gpu_device / with_gpu_device",
+      "tests": [
+        "tests/gpu.das"
+      ],
+      "contract": "docs/gpu-native-api.md",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending."
     },
     "function:SDL_DestroyGPUDevice": {
-      "boost_status": "scoped", "adapter": "SDL_DestroyGPUDeviceScoped",
-      "tests": ["tests/gpu.das"], "contract": "docs/gpu-clear.md"
+      "boost_status": "scoped",
+      "adapter": "SDL_DestroyGPUDeviceScoped",
+      "tests": [
+        "tests/gpu.das"
+      ],
+      "contract": "docs/gpu-native-api.md",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending."
     },
     "function:SDL_ClaimWindowForGPUDevice": {
-      "boost_status": "scoped", "adapter": "with_gpu_window",
-      "tests": ["tests/gpu.das"], "contract": "docs/gpu-clear.md"
+      "boost_status": "scoped",
+      "adapter": "with_gpu_window",
+      "tests": [
+        "tests/gpu.das"
+      ],
+      "contract": "docs/gpu-native-api.md",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending."
     },
     "function:SDL_ReleaseWindowFromGPUDevice": {
-      "boost_status": "scoped", "adapter": "with_gpu_window",
-      "tests": ["tests/gpu.das"], "contract": "docs/gpu-clear.md"
+      "boost_status": "scoped",
+      "adapter": "with_gpu_window",
+      "tests": [
+        "tests/gpu.das"
+      ],
+      "contract": "docs/gpu-native-api.md",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending."
     },
     "function:SDL_AcquireGPUCommandBuffer": {
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Closed native clear frame only; no command handle exposed; also revalidated value-only plans with one native submission (docs/gpu-command-plans.md)",
-      "adapter": "SDL_ClearGPUWindow / SDL_CreateGPUCommandPlan / SDL_SubmitGPUCommandPlan",
+      "boost_status": "not_needed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_AcquireGPUCommandBuffer",
       "tests": [
-        "tests/gpu_state.das",
-        "tests/gpu.das",
-        "tests/gpu_commands.das"
+        "tests/gpu_native_fences.das"
       ],
-      "contract": "docs/gpu-clear.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_WaitAndAcquireGPUSwapchainTexture": {
-      "raw_status": "adapted", "boost_status": "partial",
-      "reason": "Closed native clear frame only; borrowed swapchain texture never escapes",
-      "adapter": "SDL_ClearGPUWindow", "tests": ["tests/gpu_state.das", "tests/gpu.das"], "contract": "docs/gpu-clear.md"
+      "boost_status": "pending",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_BeginGPURenderPass": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Closed color/depth pass with resize; lit scene validates a bounded draw list before acquisition and records multiple objects against one shared depth target; no general render pass API",
-      "adapter": "SDL_ClearGPUWindow / SDL_BeginGPU3DPass / SDL_GPUSceneFrame",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_BeginGPURenderPassChecked",
       "tests": [
-        "tests/gpu_state.das",
         "tests/gpu.das",
-        "tests/gpu_3d.das",
-        "tests/gpu_scene.das"
+        "tests/gpu_recording.das"
       ],
-      "contract": "docs/gpu-3d.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_EndGPURenderPass": {
-      "raw_status": "adapted", "boost_status": "partial",
-      "reason": "Closed native color/depth passes, including lit scene draw lists; no script callback during recording",
-      "adapter": "SDL_GPUFrameWithTarget", "tests": ["tests/gpu_state.das", "tests/gpu.das", "tests/gpu_scene.das"], "contract": "docs/gpu-scene.md"
+      "boost_status": "partial",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_EndGPURenderPassChecked",
+      "tests": [
+        "tests/gpu.das",
+        "tests/gpu_recording.das"
+      ],
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_SubmitGPUCommandBuffer": {
-      "raw_status": "adapted",
-      "boost_status": "partial",
-      "reason": "Closed native clear frame; command consumed even on submission failure; also revalidated value-only plans with one native submission (docs/gpu-command-plans.md)",
-      "adapter": "SDL_ClearGPUWindow / SDL_SubmitGPUCommandPlan",
+      "boost_status": "not_needed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_SubmitGPUCommandBuffer",
       "tests": [
-        "tests/gpu_state.das",
-        "tests/gpu.das",
-        "tests/gpu_commands.das"
+        "tests/gpu_native_fences.das"
       ],
-      "contract": "docs/gpu-clear.md"
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_CancelGPUCommandBuffer": {
-      "raw_status": "adapted", "boost_status": "partial",
-      "reason": "Native clear cleanup only before a non-null swapchain texture is acquired",
-      "adapter": "SDL_ClearGPUWindow", "tests": ["tests/gpu_state.das"], "contract": "docs/gpu-clear.md"
+      "boost_status": "not_needed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_CancelGPUCommandBuffer",
+      "tests": [
+        "tests/gpu_native_fences.das"
+      ],
+      "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_RenderGeometry": {
       "boost_status": "checked-arrays",
       "adapter": "SDL_RenderGeometryVertices / SDL_RenderGeometryIndices",
-      "tests": ["tests/geometry.das"], "contract": "docs/geometry.md"
+      "tests": [
+        "tests/geometry.das"
+      ],
+      "contract": "docs/geometry.md"
     },
     "function:SDL_CreateTexture": {
-      "raw_status": "adapted", "boost_status": "partial",
+      "raw_status": "adapted",
+      "boost_status": "partial",
       "reason": "Only RGBA32 streaming and target textures; no general format/access binding",
-      "adapter": "SDL_CreateRGBA8Texture", "tests": ["tests/pixels.das"], "contract": "docs/pixels.md"
+      "adapter": "SDL_CreateRGBA8Texture",
+      "tests": [
+        "tests/pixels.das"
+      ],
+      "contract": "docs/pixels.md"
     },
     "function:SDL_LockTexture": {
-      "raw_status": "adapted", "boost_status": "partial",
+      "raw_status": "adapted",
+      "boost_status": "partial",
       "reason": "Whole-image synchronous upload from a checked RGBA8 array; no borrowed mapping exposed",
-      "adapter": "SDL_UploadRGBA8", "tests": ["tests/pixels.das"], "contract": "docs/pixels.md"
+      "adapter": "SDL_UploadRGBA8",
+      "tests": [
+        "tests/pixels.das"
+      ],
+      "contract": "docs/pixels.md"
     },
     "function:SDL_UnlockTexture": {
-      "raw_status": "adapted", "boost_status": "partial",
+      "raw_status": "adapted",
+      "boost_status": "partial",
       "reason": "Native cleanup within synchronous RGBA upload; no script unlock API",
-      "adapter": "SDL_UploadRGBA8", "tests": ["tests/pixels.das"], "contract": "docs/pixels.md"
+      "adapter": "SDL_UploadRGBA8",
+      "tests": [
+        "tests/pixels.das"
+      ],
+      "contract": "docs/pixels.md"
     },
     "function:SDL_RenderReadPixels": {
-      "raw_status": "adapted", "boost_status": "partial",
+      "raw_status": "adapted",
+      "boost_status": "partial",
       "reason": "Current viewport only; returned surface owned by with_read_pixels",
-      "adapter": "SDL_ReadPixelsOwned", "tests": ["tests/pixels.das"], "contract": "docs/pixels.md"
+      "adapter": "SDL_ReadPixelsOwned",
+      "tests": [
+        "tests/pixels.das"
+      ],
+      "contract": "docs/pixels.md"
     },
     "function:SDL_ConvertSurface": {
-      "raw_status": "adapted", "boost_status": "partial",
+      "raw_status": "adapted",
+      "boost_status": "partial",
       "reason": "RGBA32 copy only; temporary conversion surface stays native",
-      "adapter": "SDL_CopySurfaceRGBA8", "tests": ["tests/pixels.das"], "contract": "docs/pixels.md"
+      "adapter": "SDL_CopySurfaceRGBA8",
+      "tests": [
+        "tests/pixels.das"
+      ],
+      "contract": "docs/pixels.md"
     },
     "function:SDL_LockSurface": {
-      "raw_status": "adapted", "boost_status": "partial",
+      "raw_status": "adapted",
+      "boost_status": "partial",
       "reason": "Internal lock of converted readback surface; no borrowed pixels exposed",
-      "adapter": "SDL_CopySurfaceRGBA8", "tests": ["tests/pixels.das"], "contract": "docs/pixels.md"
+      "adapter": "SDL_CopySurfaceRGBA8",
+      "tests": [
+        "tests/pixels.das"
+      ],
+      "contract": "docs/pixels.md"
     },
     "function:SDL_UnlockSurface": {
-      "raw_status": "adapted", "boost_status": "partial",
+      "raw_status": "adapted",
+      "boost_status": "partial",
       "reason": "Internal cleanup of converted readback surface",
-      "adapter": "SDL_CopySurfaceRGBA8", "tests": ["tests/pixels.das"], "contract": "docs/pixels.md"
+      "adapter": "SDL_CopySurfaceRGBA8",
+      "tests": [
+        "tests/pixels.das"
+      ],
+      "contract": "docs/pixels.md"
     },
     "function:SDL_GetRenderTarget": {
-      "boost_status": "scoped", "tests": ["tests/pixels.das"], "contract": "docs/pixels.md"
+      "boost_status": "scoped",
+      "tests": [
+        "tests/pixels.das"
+      ],
+      "contract": "docs/pixels.md"
     },
     "function:SDL_SetRenderTarget": {
-      "boost_status": "scoped", "tests": ["tests/pixels.das"], "contract": "docs/pixels.md"
+      "boost_status": "scoped",
+      "tests": [
+        "tests/pixels.das"
+      ],
+      "contract": "docs/pixels.md"
+    },
+    "function:SDL_SetGPUViewport": {
+      "boost_status": "partial",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_SetGPUViewportChecked",
+      "tests": [
+        "tests/gpu_recording.das"
+      ],
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_SetGPUScissor": {
+      "boost_status": "partial",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_SetGPUScissorChecked",
+      "tests": [
+        "tests/gpu_recording.das"
+      ],
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_SetGPUBlendConstants": {
+      "boost_status": "partial",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_SetGPUBlendConstantsChecked",
+      "tests": [
+        "tests/gpu_recording.das"
+      ],
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_BindGPUVertexSamplers": {
+      "boost_status": "partial",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_BindGPUSamplersChecked",
+      "tests": [
+        "tests/gpu_recording.das"
+      ],
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_WaitForGPUIdle": {
+      "boost_status": "not_needed",
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "adapter": "SDL_WaitForGPUIdle",
+      "tests": [
+        "tests/gpu_native_fences.das"
+      ],
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_GPUSupportsProperties": {
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_CreateGPUDeviceWithProperties": {
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_GetGPUDeviceDriver": {
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_GetGPUShaderFormats": {
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_CreateGPUComputePipeline": {
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_ReleaseGPUComputePipeline": {
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_PushGPUComputeUniformData": {
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_SetGPUStencilReference": {
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_BindGPUVertexStorageTextures": {
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_BindGPUVertexStorageBuffers": {
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_BindGPUFragmentStorageTextures": {
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_BindGPUFragmentStorageBuffers": {
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_DrawGPUPrimitivesIndirect": {
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_DrawGPUIndexedPrimitivesIndirect": {
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_BeginGPUComputePass": {
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_BindGPUComputePipeline": {
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_BindGPUComputeSamplers": {
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_BindGPUComputeStorageTextures": {
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_BindGPUComputeStorageBuffers": {
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_DispatchGPUCompute": {
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_DispatchGPUComputeIndirect": {
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_EndGPUComputePass": {
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_AcquireGPUSwapchainTexture": {
+      "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
+      "contract": "docs/gpu-native-api.md"
     }
   }
 }

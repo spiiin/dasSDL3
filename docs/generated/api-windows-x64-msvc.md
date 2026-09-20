@@ -4,7 +4,7 @@ SDL 3.2.18; profile `windows-x64-msvc`.
 
 Active declarations/macros only; inactive platform branches are NOT counted. Record and typedef entries are distinct declarations.
 
-Generated functions: **60/1226** active non-excluded functions.
+Generated functions: **145/1226** active non-excluded functions.
 Adapted coverage and boost coverage are not inferred from function names.
 
 | Category | Functions | Generated | Adapted | Pending |
@@ -23,7 +23,7 @@ Adapted coverage and boost coverage are not inferred from function names.
 | Error | 5 | 1 | 0 | 4 |
 | Events | 19 | 3 | 0 | 16 |
 | Filesystem | 11 | 1 | 0 | 10 |
-| GPU | 92 | 7 | 60 | 25 |
+| GPU | 92 | 92 | 0 | 0 |
 | GUID | 2 | 0 | 0 | 2 |
 | Gamepad | 73 | 0 | 0 | 73 |
 | HIDAPI | 22 | 0 | 0 | 22 |
@@ -60,7 +60,7 @@ Adapted coverage and boost coverage are not inferred from function names.
 | Touch | 4 | 0 | 0 | 4 |
 | Tray | 23 | 0 | 0 | 23 |
 | Version | 2 | 1 | 0 | 1 |
-| Video | 109 | 5 | 1 | 103 |
+| Video | 109 | 5 | 0 | 104 |
 | Vulkan | 7 | 0 | 0 | 7 |
 
 Declaration counts (including explicitly excluded scaffolding):

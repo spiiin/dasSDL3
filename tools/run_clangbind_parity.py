@@ -47,6 +47,11 @@ def main():
         policy = ['P\t' + name for name in spec['functions']]
         project_types = json.loads((ROOT / 'tools/api-policy.json').read_text())['project_types']
         policy += ['O\t' + name + ('\tproject' if name in project_types else '') for name in spec['opaque_types']]
+        for name, members in spec.get('enums', {}).items():
+            if len(set(members.values())) != len(members):
+                raise RuntimeError(f'Duplicate enum aliases: {name}')
+            policy.append('E\t' + name)
+            policy += [f'V\t{name}\t{member}\t{alias}' for member, alias in members.items()]
         for name, fields in spec['structs'].items():
             policy.append('S\t' + name)
             for field in fields:
@@ -79,6 +84,12 @@ def main():
     rows = [line.split('\t') for line in files['contract.tsv'].splitlines()]
     if sorted(row[1] for row in rows if row[0] == 'S') != sorted(spec['structs']):
         raise RuntimeError('Struct declarations differ from policy')
+    if sorted(row[1] for row in rows if row[0] == 'E') != sorted(spec.get('enums', {})):
+        raise RuntimeError('Enum declarations differ from policy')
+    expected_members = sorted((name, member, alias) for name, members in spec.get('enums', {}).items()
+                              for member, alias in members.items())
+    if sorted(tuple(row[1:4]) for row in rows if row[0] == 'V') != expected_members:
+        raise RuntimeError('Enum members differ from policy')
     expected_fields = sorted((name, field, spec.get('field_names', {}).get(f'{name}.{field}', field))
                              for name, fields in spec['structs'].items() for field in fields)
     if sorted(tuple(row[1:4]) for row in rows if row[0] == 'F') != expected_fields:
@@ -116,7 +127,7 @@ def main():
             (args.output / name).write_text(value, encoding='utf-8')
     print(f'CppGenBind parity: {len(actual)} functions, {len(spec["structs"])} records, '
           f'{len(spec["opaque_types"])} opaque types, {len(expected_fields)} fields, '
-          f'{len(spec["constants"])} constants; deterministic output PASS')
+          f'{len(spec["constants"])} constants, {len(spec.get("enums", {}))} enums / {len(expected_members)} enum values; deterministic output PASS')
 
 
 if __name__ == '__main__':

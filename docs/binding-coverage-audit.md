@@ -1,5 +1,9 @@
 # Аудит покрытия и следующая вертикаль
 
+> Current error/lifetime contract: [error-handling.md](error-handling.md).
+> SDL failures return values; scopes use defer. Earlier panic/protected-scope
+> descriptions below are historical and no longer describe the public binding.
+
 **Текущий приоритет пользователя:** вернуться к P6 и завершать GPU API.
 Предложенная ниже очередь с Properties отложена. Ближайший блок —
 публичные transfers/readback, затем command/pass state, graphics и compute;

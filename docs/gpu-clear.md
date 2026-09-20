@@ -1,3 +1,11 @@
+> Historical implementation record. The framework API described here was removed.
+
+> Current error/lifetime contract: [error-handling.md](error-handling.md).
+> SDL failures return values; scopes use defer. Earlier panic/protected-scope
+> descriptions below are historical and no longer describe the public binding.
+> Do not use this as current binding guidance. See [API boundary](gpu-api-boundary.md)
+> and [current GPU roadmap](gpu-roadmap.md). Old test counts describe earlier revisions.
+
 # SDL GPU ClearScreen
 
 Первый ограниченный GPU-сценарий для SDL 3.2.18. Он отделён от SDL_Renderer:

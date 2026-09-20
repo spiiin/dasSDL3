@@ -16,10 +16,9 @@ bgfx_gen, bgfx_ttf. Механизмы safe_addr и defer дополнитель
 **Результат последующего внедрения:** слой SDL3 уже реализован; его актуальное
 описание — в `sdl3-boost.md`. На закреплённом daScript тест показал, что panic
 пропускает defer/finally, хотя обычный и ранний return выполняют defer.
-Поэтому для ресурсов используем блоки with_sdl/with_window/with_renderer
-с нативной защитой вызова, очисткой и повторной передачей ошибки.
-Ранее использовавшийся внешний script try/recover удалён по запросу пользователя;
-см. native-scopes.md: одна нативная граница на ресурсный блок.
+Теперь SDL ошибки остаются bool/null; очистка использует script defer.
+Нативные catch/cleanup/rethrow мосты удалены; актуальный контракт —
+[error-handling.md](error-handling.md). Panic приложения не гарантирует очистку.
 safe_addr также отвергает ссылочные аргументы обёрток как "not a local value";
 для трёх синхронных вызовов выбраны нативные адаптеры по ссылке.
 Рекомендации ниже сохраняют контекст первоначального исследования.
@@ -244,3 +243,8 @@ with_sdl() {
 высокоуровневых обёрток скрывает обязанности вызывающего по времени жизни.
 
 [Оставшийся unsafe в compute-примере](https://github.com/borisbat/dasBGFX/blob/a569838d35a2a584946e784d5e013fb2f08ec4c1/examples/05_hello_compute.das#L97)
+
+Current SDL ownership follows the dasBGFX defer idiom. Each with_* helper
+calls its script block directly and defers release after successful acquisition.
+SDL failures return ordinary values; native protected scopes were removed.
+See error-handling.md for the finally-hoisting detail and panic limitation.

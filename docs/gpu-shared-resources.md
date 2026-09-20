@@ -1,3 +1,11 @@
+> Historical implementation record. The framework API described here was removed.
+
+> Current error/lifetime contract: [error-handling.md](error-handling.md).
+> SDL failures return values; scopes use defer. Earlier panic/protected-scope
+> descriptions below are historical and no longer describe the public binding.
+> Do not use this as current binding guidance. See [API boundary](gpu-api-boundary.md)
+> and [current GPU roadmap](gpu-roadmap.md). Old test counts describe earlier revisions.
+
 # Shared geometry and materials
 
 Example 22 uses one cube geometry with two materials for 2304 culled instances.

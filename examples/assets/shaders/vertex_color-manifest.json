@@ -1,0 +1,15 @@
+{
+  "entrypoint": "main",
+  "resources": "none",
+  "vertex_inputs": "float2 location0 position; float3 location1 color; configurable vertex/instance layouts",
+  "compiler": "dxcompiler.dll: 1.8 - 1.8.0.4739 (d9a5e97d0)",
+  "spirv_target": "vulkan1.0",
+  "files": {
+    "vertex_color.vert.hlsl": "a29aaab2b8f6466f24eee786e278bdd705287e201395250b65c23f7842aec3d5",
+    "vertex_color.vert.spv": "4531214d44f186d4f48a687ecabd25abc86dad9334b9d1d0917dd8d949746835",
+    "vertex_color.vert.dxil": "fe9896fc7cac6cec7391aae076b3ba354883db4f81846576acafce49b7469197",
+    "vertex_color.frag.hlsl": "c00b58857ab157f94dfb5dbb921e400d75948fa63c4acc75b6cb39d9597aeaa8",
+    "vertex_color.frag.spv": "835fe61370d12b82d4789a09ca3fb7fecbec83735c854e128cba025bafda4736",
+    "vertex_color.frag.dxil": "77db686f70a32389bce8f18c4bf69c6d82397080fec0bde461dc5b9e9796fa13"
+  }
+}

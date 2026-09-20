@@ -1,5 +1,9 @@
 # GPU packages 30–32: swapchain control
 
+> Current error/lifetime contract: [error-handling.md](error-handling.md).
+> SDL failures return values; scopes use defer. Earlier panic/protected-scope
+> descriptions below are historical and no longer describe the public binding.
+
 Pinned SDL 3.2.18. Module: `dassdl3/sdl3_gpu_swapchain_boost.das`.
 Native checked adapters: `src/sdl3_gpu_swapchain.h`.
 

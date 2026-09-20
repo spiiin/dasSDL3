@@ -1,3 +1,11 @@
+> Current architectural decision: [SDL API boundary](gpu-api-boundary.md).
+
+> Current error/lifetime contract: [error-handling.md](error-handling.md).
+> SDL failures return values; scopes use defer. Earlier panic/protected-scope
+> descriptions below are historical and no longer describe the public binding.
+> Renderer framework APIs and plans were removed; old implementation references below
+> are historical. Prioritize complete direct SDL access; see [GPU roadmap](gpu-roadmap.md).
+
 # План полной привязки SDL3 к daScript
 
 **Текущий приоритет пользователя:** вернуться к P6 и завершать GPU API.

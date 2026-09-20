@@ -1,5 +1,9 @@
 # GPU packages 26–29
 
+> Current error/lifetime contract: [error-handling.md](error-handling.md).
+> SDL failures return values; scopes use defer. Earlier panic/protected-scope
+> descriptions below are historical and no longer describe the public binding.
+
 Pinned SDL 3.2.18. `sdl3_gpu_utilities_boost` re-exports format and texture
 transfer helpers. The four packages share one regression/build pass.
 
@@ -92,3 +96,12 @@ Combined verification on 2026-09-20:
   checks plus example 28: 7/7. After clarifying that example's driver-preference
   output, its interpreter/AOT parity subset passed 5/5 and both consumer runs
   passed again. No implementation changes followed the combined suite.
+
+3D color volumes are now available through a separate checked API and registry;
+see [gpu-volume.md](gpu-volume.md). Existing 2D/array/cube factories retain their
+original type restrictions. ASTC/depth transfers remain pending.
+
+ASTC infrastructure (example 40): rectangular block extents/regions and guarded
+transfer selection are implemented. Positive ASTC GPU roundtrip is unverified
+locally; pinned Vulkan HDR is conservatively excluded after a validation failure.
+See [ASTC limits and evidence](gpu-astc.md). G3 acceptance remains open.

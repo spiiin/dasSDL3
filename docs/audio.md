@@ -1,5 +1,9 @@
 # Аудио: WAV и потоки
 
+> Current error/lifetime contract: [error-handling.md](error-handling.md).
+> SDL failures return values; scopes use defer. Earlier panic/protected-scope
+> descriptions below are historical and no longer describe the public binding.
+
 Подключение: `require dassdl3/sdl3_audio_boost` (переэкспортирует sdl3_boost).
 Слой рассчитан на SDL 3.2.18; пока поддерживается воспроизведение через очередь,
 без вызова daScript из фонового аудиопотока и без записи с микрофона.
@@ -13,7 +17,7 @@ with_sdl(SDL_INIT_AUDIO) {
             stream |> resume_audio()
             let start = SDL_GetTicks()
             while (queued_audio(stream) > 0 || available_audio(stream) > 0) {
-                if (SDL_GetTicks() - start > 5000ul) { panic("Audio timeout") }
+                if (SDL_GetTicks() - start > 5000ul) { print("Audio timeout\n"); return }
                 SDL_Delay(10u)
             }
             SDL_Delay(100u)
@@ -32,7 +36,7 @@ with_sdl(SDL_INIT_AUDIO) {
   SDL-сессию: SDL_Quit глобальный и вложенные независимые сессии не поддержаны.
 - `load_wav` возвращает непрозрачный SDL_Wav: он владеет буфером SDL_LoadWAV.
   `destroy_wav` освобождает буфер через SDL_free; `with_wav` делает это также
-  при раннем return и panic. Не уничтожайте заимствованный handle внутри блока
+  при раннем return через defer. Не уничтожайте заимствованный handle внутри блока
   и не сохраняйте его за пределами блока. Уникальное владение типами не обеспечено.
 - `wav_spec` возвращает копию SDL_AudioSpec, `wav_size` — размер PCM в байтах.
   `audio_format(spec)` возвращает uint; `audio_spec(format, channels, frequency)`

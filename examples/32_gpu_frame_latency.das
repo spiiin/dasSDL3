@@ -1,26 +1,30 @@
 options gen2
 require dassdl3/sdl3_gpu_swapchain_boost
 
+var example_failed = false
+
 [export]
 def main(smoke : bool) : int {
     var available = false
-    with_sdl() {
-        available = try_with_gpu_device(GPU_CLEAR_FORMATS,true,"") $(device) {
-            with_window("SDL GPU swapchain",320,240,0ul) $(window) {
-                device |> with_gpu_window(window) {
+    let scope_ok_0 = with_sdl() {
+        available = try_with_gpu_device(GPU_SHADER_FORMATS,true,"") $(device) {
+            let scope_ok_1 = with_window("SDL GPU swapchain",320,240,0ul) $(window) {
+                let scope_ok_2 = device |> with_gpu_window(window) {
                     for (count in 1u .. 4u) {
-                        device |> gpu_frames_in_flight(count)
+                        if (!(device |> gpu_frames_in_flight(count))) { example_failed = true; print("SDL operation: {SDL_GetError()}\n"); return }
                         print("Allowed frames in flight: {count} (not an FPS cap)\n")
                         for (i in 0 .. (smoke ? 3 : 60)) {
                             var event = SDL_MakeEvent()
                             while (poll_event(event)) {}
-                            device |> gpu_wait_swapchain(window)
-                            gpu_clear(device,window,float4(0.1,0.2*float(count),0.3,1.0))
+                            if (!(device |> gpu_wait_swapchain(window))) { example_failed = true; print("SDL operation: {SDL_GetError()}\n"); return }
                         }
                     }
                 }
+                if (!scope_ok_2) { example_failed = true; print("SDL acquisition: {SDL_GetError()}\n") }
             }
+            if (!scope_ok_1) { example_failed = true; print("SDL acquisition: {SDL_GetError()}\n") }
         }
     }
-    return available ? 0 : 77
+    if (!scope_ok_0) { example_failed = true; print("SDL acquisition: {SDL_GetError()}\n") }
+    return example_failed ? 1 : (available ? 0 : 77)
 }

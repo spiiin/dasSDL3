@@ -28,6 +28,12 @@ int main() {
             }
         }
     }
+    for (auto &enumeration : module->enumerations.each()) {
+        rows.push_back("ENUM\t" + enumeration->name + "\t" + enumeration->cppName + "\t" +
+            std::to_string(uint32_t(enumeration->baseType)) + "\t" + std::to_string(enumeration->external));
+        for (const auto &entry : enumeration->list)
+            rows.push_back("ENUM_VALUE\t" + enumeration->name + "\t" + entry.name + "\t" + entry.cppName + "\t" + entry.value->describe());
+    }
     for (auto &variable : module->globals.each())
         rows.push_back("CONST\t" + variable->name + "\t" + variable->type->getMangledName() + "\t" + variable->init->describe());
     for (auto &fn : module->functions.each()) {

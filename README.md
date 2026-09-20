@@ -1,53 +1,9 @@
 # dasSDL3
 
-Минимальные привязки SDL3 к daScript / daslang. В первой версии покрывается
-пример с окном, движущимся квадратом и выходом по Escape или закрытию окна.
+Привязки SDL3 к daScript / daslang. Публичный API следует объектам и операциям SDL;
+mesh/material/scene/batching и планы удалены из библиотеки.
 
-[Порядок изучения примеров: 01–16](examples/README.md).
-
-Новый GPU-пример с vertex buffer, RGBA8 texture и sampler:
-
-```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/11_gpu_textured_quad.das
-```
-
-Проверяемые mesh IDs, copied arrays и фиксированный shader ABI описаны в
-[gpu-mesh.md](docs/gpu-mesh.md).
-Следующий пример — `examples/12_gpu_indexed_quad.das`: четыре вершины и шесть
-индексов. [Контракт index buffer](docs/gpu-indexed-mesh.md).
-`examples/13_gpu_transform_quad.das` добавляет анимацию через vertex uniforms:
-[2D transforms и shader ABI](docs/gpu-transform.md).
-`examples/14_gpu_cube.das` показывает вращающийся цветной куб:
-[3D-матрицы, камера и depth buffer](docs/gpu-3d.md).
-`examples/15_gpu_lit_cube.das` добавляет текстуру и направленный свет:
-[Нормали, освещение и fragment uniforms](docs/gpu-lit.md).
-`examples/22_gpu_shared_geometry.das` использует одну геометрию куба с двумя
-материалами: [ресурсы и время жизни](docs/gpu-shared-resources.md).
-
-`examples/21_gpu_frustum_culling.das` отсекает невидимые объекты из 2304 кубов:
-[bounding spheres, управление и проверки](docs/gpu-frustum-culling.md).
-
-`examples/20_gpu_material_batches.das` группирует 64 объекта с двумя текстурами
-в два instanced draw: [контракт группировки](docs/gpu-material-batches.md).
-
-`examples/19_gpu_instance_colors.das` добавляет индивидуальные анимированные
-цвета к текстурированным экземплярам: [контракт RGBA](docs/gpu-instance-colors.md).
-
-`examples/18_gpu_dynamic_instances.das` анимирует каждый куб отдельно:
-обновляет матрицы экземпляров с cycling и сохраняет один draw call.
-Контракт: [обновление экземпляров](docs/gpu-dynamic-instances.md).
-
-`examples/17_gpu_instancing.das` рисует 64 освещённых куба одним indexed draw;
-матрицы экземпляров загружаются один раз, камера вращается вокруг сцены.
-Контракт: [GPU instancing](docs/gpu-instancing.md).
-
-`examples/16_gpu_scene.das` рисует несколько объектов за один кадр:
-[Draw list и общий depth buffer](docs/gpu-scene.md).
-
-Несколько scoped GPU devices поддерживаются. При конфликте с установленным
-FPS Monitor добавьте `--disable-vulkan-layer=VK_LAYER_RENDERDOC_Capture` к команде
-runner. Этот opt-in фильтр действует только в процессе; validation сохраняется.
-[Диагностика и регрессии двух устройств](docs/gpu-multidevice.md).
+[Граница API](docs/gpu-api-boundary.md) · [Примеры](examples/README.md) · [GPU roadmap](docs/gpu-roadmap.md).
 
 ## План развития
 
@@ -165,9 +121,11 @@ with_sdl() {
 }
 ```
 
-Блоки освобождают renderer, затем окно, затем вызывают SDL_Quit. Они также
-обрабатывают panic: обычный defer в закреплённой версии языка на этом пути
-не выполняется. Ошибка сохраняется и передаётся дальше после очистки.
+Блоки освобождают renderer, затем окно, затем вызывают SDL_Quit. Очистка выполняется через
+`defer` при обычном и раннем выходе. Ошибки SDL возвращаются как bool/null/zero,
+без panic и перехвата. `with_*` возвращает false при неудачном создании и не
+вызывает блок. Произвольный panic приложения по-прежнему обходит defer;
+см. [контракт ошибок](docs/error-handling.md).
 Ссылочные адаптеры C++ позволяют poll_event/push_event/fill_rect работать
 без unsafe в скриптовом слое. Цвет задаётся uint4 RGBA в диапазоне 0..255.
 
@@ -209,7 +167,7 @@ $(texture) { ... }` загружает BMP, сразу освобождает в
 её в dst или переносят фрагмент src в dst. Пример не требует unsafe.
 
 Тест текстур проверяет пиксели, размеры, реальные вызовы освобождения ресурсов,
-ранний выход, panic и ошибку загрузки. Сборки с BUILD_TESTING=ON содержат
+ранний выход и ошибку загрузки. Сборки с BUILD_TESTING=ON содержат
 служебные SDLTest*; это не часть публичного API.
 
 ## Пример с вводом
@@ -247,29 +205,6 @@ ctest --test-dir build/ninja -R '^sdl3_audio' --output-on-failure
 CTest выбирает dummy-драйвер в окружении аудиотестов и не требует колонок.
 Прямой запуск использует устройство по умолчанию. Подробности владения,
 размеров буферов и ограничения определения конца воспроизведения — в docs/audio.md.
-
-## SDL GPU BasicTriangle
-
-```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/10_gpu_triangle.das
-ctest --test-dir build/ninja -R '^sdl3_gpu_triangle' --output-on-failure
-```
-
-Готовые SPIR-V/DXIL shaders копируются при сборке; DXC при запуске не нужен.
-Треугольник использует vertex ID, scoped pipeline handle и GPU render pass.
-`--smoke-test` требует 60 кадров. [Контракт и ограничения](docs/gpu-triangle.md).
-
-## SDL GPU ClearScreen
-
-```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/09_gpu_clear.das
-ctest --test-dir build/ninja -R '^sdl3_gpu' --output-on-failure
-```
-
-`require dassdl3/sdl3_gpu_boost` добавляет scopes устройства/окна и `gpu_clear`.
-Пример меняет цвет GPU swapchain без шейдеров; Escape закрывает окно,
-`--smoke-test` требует 60 кадров. Отсутствие backend даёт CTest SKIP.
-[Контракты и ограничения](docs/gpu-clear.md).
 
 ## Geometry
 
@@ -335,7 +270,7 @@ ctest --test-dir build/ninja -R "^(sdl3_|bindings_up_to_date)" --output-on-failu
 отрисовка 60 кадров в скрытом окне с освобождением ресурсов. При наличии
 Clang дополнительно проверяется воспроизводимость генерации.
 Отдельный тест boost проверяет очистку ресурсов при обычном/раннем выходе,
-panic, неудачном создании renderer и недопустимом цвете, а также сохранение
+ошибке SDL, неудачном создании renderer и недопустимом цвете, а также сохранение
 сообщения об ошибке. Состояние окна и renderer проверяется до SDL_Quit.
 
 GPU buffer copy and asynchronous fence/readback example (no window):
@@ -387,9 +322,20 @@ and scaled blits, with public readback. [Contracts and tests](docs/gpu-image.md)
 ./build/ninja/bin/dasSDL3_runner.exe examples/35_gpu_scaled_blit.das
 ```
 
-GPU example 36 groups dependent copies into one native submission, with copied
-debug labels and checked CPU plans. [Contracts and limits](docs/gpu-command-plans.md).
+GPU descriptors and independent resources: examples 37–43. Direct render passes,
+vertex/index buffers and textures/uniforms: examples 44–46.
 
 ```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/36_gpu_command_plan.das
+./build/ninja/bin/dasSDL3_runner.exe examples/44_gpu_render_pass.das
+./build/ninja/bin/dasSDL3_runner.exe examples/45_gpu_vertex_index_buffers.das
+./build/ninja/bin/dasSDL3_runner.exe examples/46_gpu_texture_uniform_bindings.das
 ```
+
+[Direct recording limits](docs/gpu-recording.md). GPU coverage is partial:
+public copy/compute pass handles, swapchain acquisition and broad attachment/storage
+contracts remain to be implemented. Examples 30–32 configure/query window properties;
+they do not present frames after removal of the closed-frame renderer helper.
+
+Native SDL GPU command/fence lifecycle: [example 47](examples/47_gpu_native_fences.das)
+and [contract](docs/gpu-native-fences.md). Original SDL pointers/results, generated
+signatures, borrowed fence-array adapter and explicit defer ownership.

@@ -8,6 +8,21 @@ inline bool SDL_GPUFormatValid(uint32_t format) {
 inline uint32_t SDL_GPUFormatBlockSizeChecked(uint32_t format) {
     return SDL_GPUFormatValid(format) ? SDL_GPUTextureFormatTexelBlockSize(SDL_GPUTextureFormat(format)) : 0;
 }
+inline das::uint2 SDL_GPUFormatBlockExtentChecked(uint32_t format) {
+    if (!SDL_GPUFormatValid(format)) return {0,0};
+    if ((format>=SDL_GPU_TEXTUREFORMAT_BC1_RGBA_UNORM && format<=SDL_GPU_TEXTUREFORMAT_BC6H_RGB_UFLOAT) ||
+        (format>=SDL_GPU_TEXTUREFORMAT_BC1_RGBA_UNORM_SRGB && format<=SDL_GPU_TEXTUREFORMAT_BC7_RGBA_UNORM_SRGB)) return {4,4};
+    if (format>=SDL_GPU_TEXTUREFORMAT_ASTC_4x4_UNORM) {
+        // The pinned header has the same fourteen footprints in each of three families.
+        static_assert(SDL_GPU_TEXTUREFORMAT_ASTC_12x12_UNORM-SDL_GPU_TEXTUREFORMAT_ASTC_4x4_UNORM==13);
+        static_assert(SDL_GPU_TEXTUREFORMAT_ASTC_4x4_UNORM_SRGB-SDL_GPU_TEXTUREFORMAT_ASTC_4x4_UNORM==14);
+        static_assert(SDL_GPU_TEXTUREFORMAT_ASTC_4x4_FLOAT-SDL_GPU_TEXTUREFORMAT_ASTC_4x4_UNORM==28);
+        static_assert(SDL_GPU_TEXTUREFORMAT_ASTC_12x12_FLOAT-SDL_GPU_TEXTUREFORMAT_ASTC_4x4_UNORM==41);
+        static const das::uint2 extents[]={{4,4},{5,4},{5,5},{6,5},{6,6},{8,5},{8,6},{8,8},{10,5},{10,6},{10,8},{10,10},{12,10},{12,12}};
+        return extents[(format-SDL_GPU_TEXTUREFORMAT_ASTC_4x4_UNORM)%14];
+    }
+    return {1,1};
+}
 // Bounds prevent SDL's Uint32 rounding/product from overflowing. These are
 // descriptor limits, not hardware capability claims; the result is tight bytes.
 inline uint32_t SDL_GPUFormatSizeChecked(uint32_t format,uint32_t width,uint32_t height,uint32_t layers) {

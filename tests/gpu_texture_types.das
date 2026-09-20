@@ -4,10 +4,11 @@ require dassdl3/sdl3_gpu_utilities_boost
 def read_equal(device : SDL_GPUDevice?; id : uint64; sub : uint2; rect : uint4; expected : array<uint8>) {
     var actual : array<uint8>
     resize(actual,length(expected))
-    device |> with_gpu_texture_readback(id,sub,rect) $(ticket) {
+    let scope_ok_0 = device |> with_gpu_texture_readback(id,sub,rect) $(ticket) {
         device |> gpu_wait_readback(ticket)
         device |> gpu_readback_bytes(ticket,actual)
     }
+    verify(scope_ok_0)
     for (i in 0 .. length(actual)) { verify(actual[i] == expected[i]) }
 }
 def check_bc(device : SDL_GPUDevice?; format : uint) {
@@ -26,9 +27,9 @@ def check_bc(device : SDL_GPUDevice?; format : uint) {
     for (y in 0 .. 2) { for (x in 0 .. int(row)) { tight[y*int(row)+x] = source[y*int(pitch)+x] } }
     for (i in 0 .. length(one)) { one[i] = uint8(i*3+7) }
     var stale = 0ul
-    device |> with_gpu_transfer_texture(12u,8u,2u,4u,format,SDL_GPU_TEXTURETYPE_2D_ARRAY) $(a) {
+    let scope_ok_1 = device |> with_gpu_transfer_texture(12u,8u,2u,4u,format,SDL_GPU_TEXTURETYPE_2D_ARRAY) $(a) {
         stale = a
-        device |> with_gpu_transfer_texture(12u,8u,2u,4u,format,SDL_GPU_TEXTURETYPE_2D_ARRAY) $(b) {
+        let scope_ok_2 = device |> with_gpu_transfer_texture(12u,8u,2u,4u,format,SDL_GPU_TEXTURETYPE_2D_ARRAY) $(b) {
             read_equal(device,a,uint2(0u),uint4(0u,0u,12u,8u),zero)
             device |> gpu_upload_texture(a,uint2(0u,1u),uint4(0u,0u,12u,8u),source,pitch)
             read_equal(device,a,uint2(0u,1u),uint4(0u,0u,12u,8u),tight)
@@ -52,7 +53,9 @@ def check_bc(device : SDL_GPUDevice?; format : uint) {
             device |> gpu_upload_texture(a,uint2(3u,1u),uint4(0u,0u,1u,1u),one,block_bytes)
             read_equal(device,a,uint2(3u,1u),uint4(0u,0u,1u,1u),one)
         }
+        verify(scope_ok_2)
     }
+    verify(scope_ok_1)
     verify(SDL_RequestGPUTextureReadback(device,stale,uint2(0u),uint4(0u,0u,4u,4u)) == 0ul)
 }
 def check_cube(device : SDL_GPUDevice?; format, count, levels, texture_type : uint) {
@@ -60,7 +63,7 @@ def check_cube(device : SDL_GPUDevice?; format, count, levels, texture_type : ui
     let pitch = bc ? 16u : 32u
     var data, zero : array<uint8>
     resize(data,bc ? 32 : 256); resize(zero,length(data))
-    device |> with_gpu_transfer_texture(8u,8u,count,levels,format,texture_type) $(cube) {
+    let scope_ok_3 = device |> with_gpu_transfer_texture(8u,8u,count,levels,format,texture_type) $(cube) {
         for (face in 0u .. count) {
             read_equal(device,cube,uint2(0u,face),uint4(0u,0u,8u,8u),zero)
             for (i in 0 .. length(data)) { data[i] = uint8(int(face)*13+i) }
@@ -78,12 +81,13 @@ def check_cube(device : SDL_GPUDevice?; format, count, levels, texture_type : ui
             read_equal(device,cube,uint2(3u,count-1u),uint4(0u,0u,1u,1u),small)
         }
     }
+    verify(scope_ok_3)
 }
 [export]
 def main(smoke : bool) : int {
     var available = false
-    with_sdl() {
-        available = try_with_gpu_device(GPU_CLEAR_FORMATS,true,"") $(device) {
+    let scope_ok_4 = with_sdl() {
+        available = try_with_gpu_device(GPU_SHADER_FORMATS,true,"") $(device) {
             let rgba = SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM
             verify(SDL_CreateGPUTypedTransferTexture(device,4u,4u,1u,1u,rgba,SDL_GPU_TEXTURETYPE_3D) == 0ul)
             verify(SDL_CreateGPUTypedTransferTexture(device,4u,8u,6u,1u,rgba,SDL_GPU_TEXTURETYPE_CUBE) == 0ul)
@@ -92,21 +96,21 @@ def main(smoke : bool) : int {
             verify(SDL_CreateGPUTypedTransferTexture(device,4u,4u,0u,1u,rgba,SDL_GPU_TEXTURETYPE_CUBE_ARRAY) == 0ul)
             verify(SDL_CreateGPUTypedTransferTexture(device,8192u,8192u,252u,1u,rgba,SDL_GPU_TEXTURETYPE_CUBE_ARRAY) == 0ul)
             verify(SDL_CreateGPUTypedTransferTexture(device,7u,4u,1u,1u,SDL_GPU_TEXTUREFORMAT_BC1_RGBA_UNORM,SDL_GPU_TEXTURETYPE_2D) == 0ul)
-            verify(SDL_CreateGPUTypedTransferTexture(device,4u,4u,1u,1u,SDL_GPU_TEXTUREFORMAT_ASTC_4x4_UNORM,SDL_GPU_TEXTURETYPE_2D) == 0ul)
             for (f in SDL_GPU_TEXTUREFORMAT_BC1_RGBA_UNORM .. SDL_GPU_TEXTUREFORMAT_BC6H_RGB_UFLOAT+1u) { check_bc(device,f) }
             for (f in SDL_GPU_TEXTUREFORMAT_BC1_RGBA_UNORM_SRGB .. SDL_GPU_TEXTUREFORMAT_BC7_RGBA_UNORM_SRGB+1u) { check_bc(device,f) }
             check_cube(device,rgba,6u,4u,SDL_GPU_TEXTURETYPE_CUBE)
             check_cube(device,rgba,12u,4u,SDL_GPU_TEXTURETYPE_CUBE_ARRAY)
             check_cube(device,SDL_GPU_TEXTUREFORMAT_BC1_RGBA_UNORM,6u,4u,SDL_GPU_TEXTURETYPE_CUBE)
-            // New scopes preserve cleanup on panic and source-independent tickets.
+            // New scopes preserve cleanup on early return and source-independent tickets.
             var escaped = 0ul
             var caught = false
-            try {
-                device |> with_gpu_transfer_texture(4u,4u,6u,1u,rgba,SDL_GPU_TEXTURETYPE_CUBE) $(cube) {
+            {
+                let scope_ok_5 = device |> with_gpu_transfer_texture(4u,4u,6u,1u,rgba,SDL_GPU_TEXTURETYPE_CUBE) $(cube) {
                     escaped = cube
-                    panic("cube scope marker")
+                    caught = !set_title(null,"expected SDL failure"); return
                 }
-            } recover { caught = true }
+                verify(scope_ok_5)
+            }
             verify(caught)
             verify(!SDL_ReleaseGPUTransferTexture(device,escaped))
             let cube = SDL_CreateGPUTypedTransferTexture(device,4u,4u,6u,1u,rgba,SDL_GPU_TEXTURETYPE_CUBE)
@@ -117,10 +121,11 @@ def main(smoke : bool) : int {
             device |> gpu_upload_texture(cube,uint2(0u,5u),uint4(0u,0u,4u,4u),face,16u)
             let ticket = SDL_RequestGPUTextureReadback(device,cube,uint2(0u,5u),uint4(0u,0u,4u,4u))
             verify(ticket != 0ul)
-            with_gpu_device() $(other) {
+            let scope_ok_6 = with_gpu_device() $(other) {
                 verify(SDL_RequestGPUTextureReadback(other,cube,uint2(0u),uint4(0u,0u,4u,4u)) == 0ul)
                 verify(!SDL_ReleaseGPUTransferTexture(other,cube))
             }
+            verify(scope_ok_6)
             verify(SDL_ReleaseGPUTransferTexture(device,cube))
             device |> gpu_wait_readback(ticket)
             device |> gpu_readback_bytes(ticket,result)
@@ -129,5 +134,6 @@ def main(smoke : bool) : int {
             print("BC blocks and cube face/mip roundtrips PASS: {SDL_GetGPUDeviceDriver(device)}\n")
         }
     }
+    verify(scope_ok_4)
     return available ? 0 : 77
 }

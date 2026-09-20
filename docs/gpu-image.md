@@ -1,5 +1,9 @@
 # GPU packages 33–35: color targets, mipmaps and scaled blits
 
+> Current error/lifetime contract: [error-handling.md](error-handling.md).
+> SDL failures return values; scopes use defer. Earlier panic/protected-scope
+> descriptions below are historical and no longer describe the public binding.
+
 Pinned SDL 3.2.18. Script module: `sdl3_gpu_image_boost`; native adapter:
 `src/sdl3_gpu_image.h`. These are image-processing commands with CPU readback,
 not a general render-pass or material/pipeline API.

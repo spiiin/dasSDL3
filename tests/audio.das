@@ -8,17 +8,18 @@ def main(smoke : bool) : int {
     verify(smoke)
     let path = "{SDL_GetBasePath()}assets/tone.wav"
     let src = audio_spec(SDL_AUDIO_S16LE, 1, 22050)
-    with_sdl(SDL_INIT_AUDIO) {
+    let scope_ok_0 = with_sdl(SDL_INIT_AUDIO) {
         verify(SDL_WasInit(SDL_INIT_AUDIO) != 0u && SDL_WasInit(SDL_INIT_VIDEO) == 0u)
         // No device is attached here. Read back the stream after freeing the WAV.
-        with_audio_stream(src, src) $(stream) {
+        let scope_ok_1 = with_audio_stream(src, src) $(stream) {
             verify(SDL_GetAudioStreamDevice(stream) == 0u)
-            with_wav(path) $(wav) {
+            let scope_ok_2 = with_wav(path) $(wav) {
                 let spec = wav_spec(wav)
                 verify(audio_format(spec) == SDL_AUDIO_S16LE && spec.channels == 1 && spec.freq == 22050)
                 verify(wav_size(wav) == 17640u && SDLTestLiveWavs() == 1)
                 stream |> queue_wav(wav)
             }
+            verify(scope_ok_2)
             verify(SDLTestLiveWavs() == 0, "WAV survived its scope")
             verify(queued_audio(stream) == 17640)
             stream |> flush_audio()
@@ -44,10 +45,12 @@ def main(smoke : bool) : int {
             stream |> clear_audio()
             verify(queued_audio(stream) == 0 && available_audio(stream) == 0)
         }
+        verify(scope_ok_1)
         // Conversion from PCM16 mono 22050 Hz to float stereo 44100 Hz.
         let dst = audio_spec(SDL_AUDIO_F32, 2, 44100)
-        with_audio_stream(src, dst) $(stream) {
-            with_wav(path) $(wav) { stream |> queue_wav(wav) }
+        let scope_ok_3 = with_audio_stream(src, dst) $(stream) {
+            let scope_ok_4 = with_wav(path) $(wav) { stream |> queue_wav(wav) }
+            verify(scope_ok_4)
             stream |> flush_audio()
             let size = available_audio(stream)
             verify(size == 141120, "resampled frame count mismatch")
@@ -56,55 +59,61 @@ def main(smoke : bool) : int {
             verify(read_audio(stream, bytes) == size)
             verify(SDLTestStereoFloatSignal(bytes), "invalid resampled stereo signal")
         }
+        verify(scope_ok_3)
         // Recover before SDL_Quit, observe actual stream cleanup and WAV ownership.
         for (mode in range(4)) {
             let before = SDLTestDestroyedAudioStreams()
             var caught = false
             var error = ""
-            try {
-                with_wav(path) $(wav) {
-                    with_audio_stream(src, src) $(stream) {
+            {
+                let scope_ok_5 = with_wav(path) $(wav) {
+                    let scope_ok_6 = with_audio_stream(src, src) $(stream) {
                         verify(SDLTestWatchAudio(stream))
                         if (mode == 1) { return }
-                        if (mode == 2) { panic("audio panic") }
+                        if (mode == 2) { caught = !set_title(null,"expected SDL failure"); return }
                         if (mode == 3) {
-                            with_audio_stream(dst, dst) $(wrong) { wrong |> queue_wav(wav) }
+                            let scope_ok_7 = with_audio_stream(dst, dst) $(wrong) { caught = !(wrong |> queue_wav(wav)) }
+                            verify(scope_ok_7)
                         }
                         stream |> queue_wav(wav)
                     }
+                    verify(scope_ok_6)
                     verify(SDLTestDestroyedAudioStreams() == before + 1)
                 }
-            } recover {
-                caught = true
-                error := rtrim(this_context().last_exception)
+                verify(scope_ok_5)
             }
             verify(caught == (mode >= 2))
-            if (mode == 2) { verify(error == "audio panic") }
+
             verify(SDLTestLiveWavs() == 0 && SDLTestDestroyedAudioStreams() == before + 1)
         }
         var entered = false
         var caught = false
-        try { with_wav("{path}.missing") $(wav) { entered = true } } recover { caught = true }
+        { let operation_ok = with_wav("{path}.missing") $(wav) { entered = true }
+caught = !operation_ok }
         verify(caught && !entered && SDLTestLiveWavs() == 0)
         caught = false
-        try { with_wav("{SDL_GetBasePath()}assets/checker.bmp") $(wav) { entered = true } } recover { caught = true }
+        { let operation_ok = with_wav("{SDL_GetBasePath()}assets/checker.bmp") $(wav) { entered = true }
+caught = !operation_ok }
         verify(caught && !entered && SDLTestLiveWavs() == 0, "invalid WAV accepted")
         caught = false
-        try {
-            with_wav(path) $(wav) {
+        {
+            let scope_ok_8 = with_wav(path) $(wav) {
                 let invalid = audio_spec(0u, 0, 0)
-                with_audio_stream(invalid, src) $(stream) { entered = true }
+                let acquired = with_audio_stream(invalid, src) $(stream) { entered = true }
+                caught = !acquired
             }
-        } recover { caught = true }
+            verify(scope_ok_8)
+        }
         verify(caught && !entered && SDLTestLiveWavs() == 0)
         // Device path: CTest selects the dummy backend, so no speakers are needed.
         var device = 0u
         let before = SDLTestDestroyedAudioStreams()
-        with_playback(src) $(stream) {
+        let scope_ok_9 = with_playback(src) $(stream) {
             verify(SDLTestWatchAudio(stream))
             device = SDL_GetAudioStreamDevice(stream)
             verify(device != 0u && SDL_AudioStreamDevicePaused(stream))
-            with_wav(path) $(wav) { stream |> queue_wav(wav) }
+            let scope_ok_10 = with_wav(path) $(wav) { stream |> queue_wav(wav) }
+            verify(scope_ok_10)
             stream |> flush_audio()
             stream |> resume_audio()
             let start = SDL_GetTicks()
@@ -115,9 +124,11 @@ def main(smoke : bool) : int {
             stream |> pause_audio()
             verify(SDL_AudioStreamDevicePaused(stream))
         }
+        verify(scope_ok_9)
         verify(SDLTestDestroyedAudioStreams() == before + 1 && SDLTestDeviceClosed(device))
         verify(SDLTestLiveWavs() == 0 && SDL_WasInit(SDL_INIT_AUDIO) != 0u)
     }
+    verify(scope_ok_0)
     verify(SDL_WasInit(SDL_INIT_AUDIO) == 0u)
     print("Audio: PCM copies, conversion, queues, scope errors and dummy device cleanup: OK\n")
     return 0

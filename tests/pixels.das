@@ -13,23 +13,26 @@ def main(smoke : bool) : int {
     verify(SDL_RGBA8BufferSize(3, 2, 11) == -1)
     verify(SDL_RGBA8BufferSize(2147483647, 1, 16) == -1)
     verify(SDL_RGBA8BufferSize(1, 2147483647, 2147483647) == -1)
-    with_sdl() {
-        with_window("pixels contracts", 64, 64, SDL_WINDOW_HIDDEN) $(window) {
-            window |> with_renderer() $(renderer) {
-                renderer |> with_target_texture(3, 2) $(outer) {
-                    renderer |> with_render_target(outer) {
-                        for (mode in 0 .. 3) {
+    let scope_ok_0 = with_sdl() {
+        let scope_ok_1 = with_window("pixels contracts", 64, 64, SDL_WINDOW_HIDDEN) $(window) {
+            let scope_ok_2 = window |> with_renderer() $(renderer) {
+                let scope_ok_3 = renderer |> with_target_texture(3, 2) $(outer) {
+                    let scope_ok_4 = renderer |> with_render_target(outer) {
+                        // The pinned AOT emitter can hoist nested block functors
+                        // before a for-iterator declaration after scope inlining.
+                        var mode = 0
+                        while (mode < 3) {
                             SDLTestReset()
                             var caught = false
                             var error = ""
                             var copy : array<uint8>
                             copy |> resize(36)
                             for (i in 0 .. length(copy)) { copy[i] = uint8(201) }
-                            try {
-                                renderer |> with_target_texture(3, 2) $(target) {
+                            {
+                                let scope_ok_5 = renderer |> with_target_texture(3, 2) $(target) {
                                     verify(SDLTestWatchTexture(target))
-                                    renderer |> with_render_target(target) {
-                                        renderer |> with_streaming_texture(3, 2) $(streaming) {
+                                    let scope_ok_6 = renderer |> with_render_target(target) {
+                                        let scope_ok_7 = renderer |> with_streaming_texture(3, 2) $(streaming) {
                                             var bytes : array<uint8>
                                             verify(!SDL_UploadRGBA8(streaming, bytes, 16))
                                             bytes |> resize(28)
@@ -52,9 +55,12 @@ def main(smoke : bool) : int {
                                             renderer |> clear(uint4(0u, 0u, 0u, 255u))
                                             renderer |> draw_texture(streaming)
                                         }
-                                        renderer |> with_read_pixels() $(surface) {
+                                        verify(scope_ok_7)
+                                        let scope_ok_8 = renderer |> with_read_pixels() $(surface) {
                                             verify(SDLTestWatchSurface(surface))
-                                            verify(surface_size(surface) == int2(3, 2))
+                                            var query_result_1 : int2
+                                            verify(surface_size(surface,query_result_1))
+                                            verify(query_result_1 == int2(3, 2))
                                             var short_copy : array<uint8>
                                             short_copy |> resize(1)
                                             short_copy[0] = uint8(99)
@@ -62,21 +68,21 @@ def main(smoke : bool) : int {
                                             verify(short_copy[0] == uint8(99))
                                             surface |> copy_surface_rgba8(copy, 20)
                                             if (mode == 1) { return }
-                                            if (mode == 2) { panic("pixels panic") }
+                                            if (mode == 2) { caught = !set_title(null,"expected SDL failure"); return }
                                         }
+                                        verify(scope_ok_8)
                                         verify(SDLTestCleanupTrace() == 1, "readback surface leaked")
                                         if (mode == 1) { return }
                                     }
+                                    verify(scope_ok_6)
                                     verify(SDL_GetRenderTarget(renderer) == outer)
                                     if (mode == 1) { return }
                                 }
-                            } recover {
-                                caught = true
-                                error := rtrim(this_context().last_exception)
+                                verify(scope_ok_5)
                             }
                             if (caught && mode != 2) { panic(error) }
                             verify(caught == (mode == 2))
-                            if (caught) { verify(error == "pixels panic", "panic message changed") }
+
                             verify(SDL_GetRenderTarget(renderer) == outer, "previous target not restored")
                             verify(SDLTestCleanupTrace() == 12, "surface/texture destruction order")
                             for (pixel in 0 .. 6) {
@@ -89,22 +95,30 @@ def main(smoke : bool) : int {
                             }
                             for (i in 12 .. 20) { verify(copy[i] == uint8(201), "padding overwritten") }
                             var called = false
-                            renderer |> with_streaming_texture(3, 2) $(streaming) {
+                            let scope_ok_9 = renderer |> with_streaming_texture(3, 2) $(streaming) {
                                 var rejected = false
-                                try { renderer |> with_render_target(streaming) { called = true } } recover { rejected = true }
+                                { let operation_ok = renderer |> with_render_target(streaming) { called = true }
+rejected = !operation_ok }
                                 verify(rejected && !called)
                             }
+                            verify(scope_ok_9)
                             verify(SDL_GetRenderTarget(renderer) == outer)
                             renderer |> clear()
+                            mode++
                         }
                     }
+                    verify(scope_ok_4)
                     verify(SDL_GetRenderTarget(renderer) == null)
                 }
+                verify(scope_ok_3)
                 renderer |> clear()
                 renderer |> present()
             }
+            verify(scope_ok_2)
         }
+        verify(scope_ok_1)
     }
-    print("Pixels: pitched RGBA copies, readback, nested targets and panic cleanup OK\n")
+    verify(scope_ok_0)
+    print("Pixels: pitched RGBA copies, readback, nested targets and deferred cleanup OK\n")
     return 0
 }

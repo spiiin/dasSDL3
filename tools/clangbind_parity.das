@@ -10,7 +10,8 @@ class SdlParityGen : CppGenBind {
     selected : table<string; bool>
     signatures : FILE const?
     types, registrations, contract : FILE const?
-    records, opaque, emitted : table<string; bool>
+    records, opaque, emitted, enums : table<string; bool>
+    enum_values : table<string; string>
     fields, constants : table<string; string>
     entry : string
     def SdlParityGen(inc, sdk, output, allowlist, header : string) {
@@ -29,7 +30,11 @@ class SdlParityGen : CppGenBind {
             if (empty(line)) { continue }
             let row <- split(line, "\t")
             let name = row[1]
-            if (row[0] == "P") { selected[name] = true }
+            if (row[0] == "E") {
+                enums[name] = true
+                fwrite(types, "DAS_BIND_ENUM_CAST({name});\nDAS_BASE_BIND_ENUM_GEN({name},{name});\n")
+            } elif (row[0] == "V") { enum_values["{name}.{row[2]}"] = row[3] }
+            elif (row[0] == "P") { selected[name] = true }
             elif (row[0] == "S" || row[0] == "O") {
                 fwrite(types, "MAKE_TYPE_FACTORY({name}, {name});\n")
                 if (row[0] == "S") { records[name] = true }
@@ -71,6 +76,33 @@ class SdlParityGen : CppGenBind {
         fwrite(types, "\}\n\}; \}\n")
         fwrite(registrations, "addAnnotation(new {name}Annotation(lib));\n")
     }
+    def emit_enum(var c : CXCursor; name : string) {
+        if (key_exists(emitted,name)) { return }
+        emitted[name] = true
+        var tp = clang_getCursorType(c)
+        let size = clang_Type_getSizeOf(tp)
+        let alignment = clang_Type_getAlignOf(tp)
+        if (size != 4l) { panic("Unsupported enum width {name}") }
+        fwrite(contract,"E\t{name}\t{size}\t{alignment}\n")
+        fwrite(types,"static_assert(sizeof({name}) == {size} && alignof({name}) == {alignment});\nclass Enumeration_{name} : public das::Enumeration \{\npublic: Enumeration_{name}() : das::Enumeration(\"{name}\") \{\nexternal=true; cppName=\"{name}\"; baseType=(das::Type)das::ToBasicType<das::underlying_type<{name}>::type>::type;\n")
+        let integer_type = clang_getCanonicalType(clang_getEnumDeclIntegerType(c))
+        let unsigned_enum = integer_type.kind == CXTypeKind.UInt || integer_type.kind == CXTypeKind.ULong || integer_type.kind == CXTypeKind.ULongLong
+        clang_visitChildren(c) $(var member, parent) {
+            if (clang_getCursorKind(member) == CXCursorKind.EnumConstantDecl) {
+                let mn = string(clang_getCursorSpelling(member))
+                if (!key_exists(enum_values,"{name}.{mn}")) { panic("Enum members differ from policy: {name}.{mn}") }
+                let alias = enum_values["{name}.{mn}"]
+                if (unsigned_enum && clang_getEnumConstantDeclUnsignedValue(member) > 2147483647ul) { panic("Enum value outside supported int32 range: {name}.{mn}") }
+                let value = clang_getEnumConstantDeclValue(member)
+                if (value < -2147483648l || value > 2147483647l) { panic("Enum value outside supported int32 range: {name}.{mn}") }
+                fwrite(types,"static_assert(int64_t({mn}) == {value}LL);\naddIEx(\"{alias}\",\"{mn}\",int64_t({mn}),das::LineInfo());\n")
+                fwrite(contract,"V\t{name}\t{mn}\t{alias}\t{value}\n")
+            }
+            return CXChildVisitResult.Continue
+        }
+        fwrite(types,"\} \};\n")
+        fwrite(registrations,"addEnumeration(new Enumeration_{name}());\n")
+    }
     def emit_constant(var c : CXCursor; name : string) {
         let eval = clang_Cursor_Evaluate(c)
         if (eval == null) { panic("Cannot evaluate {name}") }
@@ -92,6 +124,8 @@ class SdlParityGen : CppGenBind {
             let name = string(clang_getCursorSpelling(c))
             if (kind == CXCursorKind.FunctionDecl && !skip_function(c)) {
                 parse_FunctionDecl(c)
+            } elif (kind == CXCursorKind.EnumDecl && key_exists(enums,name) && clang_isCursorDefinition(c) != 0u) {
+                emit_enum(c,name)
             } elif (kind == CXCursorKind.StructDecl || kind == CXCursorKind.UnionDecl) {
                 if (key_exists(opaque, name)) { emitted[name] = true }
                 if (key_exists(records, name) && clang_isCursorDefinition(c) != 0u) { emit_record(c, name) }
@@ -128,6 +162,7 @@ class SdlParityGen : CppGenBind {
         CppGenBind`parse_FunctionDecl(self, c)
     }
     def finish {
+        for (name in keys(enums)) { if (!key_exists(emitted,name)) { panic("Missing enum {name}") } }
         for (name in keys(opaque)) { if (!key_exists(emitted, name)) { panic("Missing opaque type {name}") } }
         fclose(func_file); fclose(signatures); fclose(types); fclose(registrations); fclose(contract)
     }

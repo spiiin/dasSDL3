@@ -1,5 +1,9 @@
 # RGBA8 GPU texture transfers
 
+> Current error/lifetime contract: [error-handling.md](error-handling.md).
+> SDL failures return values; scopes use defer. Earlier panic/protected-scope
+> descriptions below are historical and no longer describe the public binding.
+
 Second public G3 slice, after buffer transfers. Native adapter:
 `src/sdl3_gpu_texture_transfer.h`; script module:
 `dassdl3/sdl3_gpu_texture_transfer_boost`; example 24.
@@ -34,7 +38,7 @@ Second public G3 slice, after buffer transfers. Native adapter:
   subresources. Same-texture copies are rejected even between distinct mips.
   No scaling, filtering, format conversion or cycling occurs.
 - `with_gpu_texture_readback` submits a snapshot of the selected region and
-  returns the shared readback ticket type. Existing `gpu_readback_ready`,
+  returns the shared readback ticket type. Existing `gpu_poll_readback`,
   `gpu_wait_readback`, `gpu_readback_bytes` apply. Output array size must be
   exactly width*height*4. It is tightly packed RGBA8, row-major, top row first;
   driver padding is never copied to script. Repeated reads are allowed.
@@ -91,3 +95,7 @@ See `gpu-formats.md`; compressed/depth/3D/cube transfers remain pending.
 
 The newer typed factory adds BC/cube transfer contracts and backend-specific
 edge handling: [gpu-texture-types.md](gpu-texture-types.md).
+
+3D color volumes are now available through a separate checked API and registry;
+see [gpu-volume.md](gpu-volume.md). Existing 2D/array/cube factories retain their
+original type restrictions. ASTC/depth transfers remain pending.

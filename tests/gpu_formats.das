@@ -28,38 +28,45 @@ def check_format(device : SDL_GPUDevice?; format, bpp : uint; optional : bool = 
         tight[i] = value
         expected[i] = uint8(0)
     }
-    device |> with_gpu_color_texture(5u,3u,2u,2u,format) $(a) {
+    let scope_ok_0 = device |> with_gpu_color_texture(5u,3u,2u,2u,format) $(a) {
         device |> gpu_upload_texture(a,uint2(0u,1u),uint4(0u,0u,5u,3u),source,uint(pitch))
         clear(source)
-        device |> with_gpu_texture_readback(a,uint2(0u,1u),uint4(0u,0u,5u,3u)) $(ticket) {
+        let scope_ok_1 = device |> with_gpu_texture_readback(a,uint2(0u,1u),uint4(0u,0u,5u,3u)) $(ticket) {
             device |> gpu_wait_readback(ticket)
             device |> gpu_readback_bytes(ticket,actual)
             for (i in 0 .. length(tight)) { verify(actual[i] == tight[i]) }
         }
-        device |> with_gpu_color_texture(5u,3u,2u,2u,format) $(b) {
+        verify(scope_ok_1)
+        let scope_ok_2 = device |> with_gpu_color_texture(5u,3u,2u,2u,format) $(b) {
             device |> gpu_copy_texture(a,uint2(0u,1u),uint4(1u,1u,3u,2u),b,uint2(0u,0u),uint2(0u))
             for (i in 0 .. int(6u*bpp)) {
                 let y = i / int(3u*bpp)
                 let x = i % int(3u*bpp)
                 expected[y*row+x] = tight[(y+1)*row+int(bpp)+x]
             }
-            device |> with_gpu_texture_readback(b,uint2(0u),uint4(0u,0u,5u,3u)) $(ticket) {
+            let scope_ok_3 = device |> with_gpu_texture_readback(b,uint2(0u),uint4(0u,0u,5u,3u)) $(ticket) {
                 device |> gpu_wait_readback(ticket)
                 device |> gpu_readback_bytes(ticket,actual)
                 for (i in 0 .. length(expected)) { verify(actual[i] == expected[i]) }
             }
+            verify(scope_ok_3)
             // Separate mip stays zero, with format-dependent tight size.
             resize(actual,int(2u*bpp))
-            device |> with_gpu_texture_readback(b,uint2(1u,1u),uint4(0u,0u,2u,1u)) $(ticket) {
+            let scope_ok_4 = device |> with_gpu_texture_readback(b,uint2(1u,1u),uint4(0u,0u,2u,1u)) $(ticket) {
                 device |> gpu_wait_readback(ticket)
                 device |> gpu_readback_bytes(ticket,actual)
                 for (v in actual) { verify(v == uint8(0)) }
             }
+            verify(scope_ok_4)
         }
+        verify(scope_ok_2)
     }
+    verify(scope_ok_0)
 }
 [export]
 def main(smoke : bool) : int {
+    verify(!gpu_supports_texture_transfer(null,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM,SDL_GPU_TEXTURETYPE_2D))
+    verify(SDL_GetError() != "")
     verify(SDL_GPUFormatBlockSizeChecked(0u) == 0u)
     verify(SDL_GPUFormatBlockSizeChecked(0xffffffffu) == 0u)
     verify(SDL_GPUFormatSizeChecked(SDL_GPU_TEXTUREFORMAT_R8_UNORM,0u,1u,1u) == 0u)
@@ -75,8 +82,8 @@ def main(smoke : bool) : int {
         verify(gpu_format_bytes(f,1u,1u) == gpu_format_block_bytes(f))
     }
     var available = false
-    with_sdl() {
-        available = try_with_gpu_device(GPU_CLEAR_FORMATS,true,"") $(device) {
+    let scope_ok_5 = with_sdl() {
+        available = try_with_gpu_device(GPU_SHADER_FORMATS,true,"") $(device) {
             verify(SDL_GPUFormatSupportedChecked(device,0u,0u,1u) == -1)
             verify(SDL_GPUFormatSupportedChecked(device,SDL_GPU_TEXTUREFORMAT_R8_UNORM,999u,1u) == -1)
             verify(SDL_GPUFormatSupportedChecked(device,SDL_GPU_TEXTUREFORMAT_R8_UNORM,0u,0x80000000u) == -1)
@@ -94,13 +101,16 @@ def main(smoke : bool) : int {
             check_format(device,SDL_GPU_TEXTUREFORMAT_R32G32B32A32_FLOAT,16u)
             check_format(device,SDL_GPU_TEXTUREFORMAT_R32_FLOAT,4u)
             check_format(device,SDL_GPU_TEXTUREFORMAT_R16G16B16A16_FLOAT,8u)
-            device |> with_gpu_color_texture(2u,2u,1u,1u,SDL_GPU_TEXTUREFORMAT_R8_UNORM) $(a) {
-                device |> with_gpu_rgba_texture(2u,2u) $(b) {
+            let scope_ok_6 = device |> with_gpu_color_texture(2u,2u,1u,1u,SDL_GPU_TEXTUREFORMAT_R8_UNORM) $(a) {
+                let scope_ok_7 = device |> with_gpu_rgba_texture(2u,2u) $(b) {
                     verify(!SDL_CopyGPUTextureRegion(device,a,uint2(0u),uint4(0u,0u,2u,2u),b,uint2(0u),uint2(0u)))
                 }
+                verify(scope_ok_7)
             }
+            verify(scope_ok_6)
             print("Format queries and seven required + two optional color formats PASS: {SDL_GetGPUDeviceDriver(device)}, RGBA8 MSAA4 supported: {supports4}\n")
         }
     }
+    verify(scope_ok_5)
     return available ? 0 : 77
 }
