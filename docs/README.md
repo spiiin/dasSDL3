@@ -68,3 +68,4 @@
 - [Rect, Clipboard and hit tests](rect-clipboard-hittest.md): geometry refs, copied clipboard data, native callbacks and lexical script callback lifetime.
 
 Result/Option boost API: [contracts and migration plan](result-option-plan.md).
+Early-return syntax: [`sdl_try` macro and example](sdl-try.md).

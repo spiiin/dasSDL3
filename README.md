@@ -131,6 +131,9 @@ if (is_err(result)) {
 без panic и перехвата. `with_*` возвращает Err при неудачном создании и не
 вызывает блок. Произвольный panic приложения по-прежнему обходит defer;
 см. [контракт ошибок](docs/error-handling.md).
+Для раннего возврата ошибки можно подключить `dassdl3/sdl3_try`:
+`let size = texture_size(texture) |> sdl_try` и `renderer |> present() |> sdl_try`.
+См. [контракт макроса](docs/sdl-try.md) и [пример](examples/results/02_sdl_try.das).
 Ссылочные адаптеры C++ позволяют poll_event/push_event/fill_rect работать
 без unsafe в скриптовом слое. Цвет задаётся uint4 RGBA в диапазоне 0..255.
 

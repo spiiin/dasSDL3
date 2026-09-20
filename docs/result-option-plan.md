@@ -7,6 +7,10 @@ are unchanged.
 
 ## Current API
 
+Opt-in [`sdl_try`](sdl-try.md) now provides ordinary early error returns for
+Result-valued statements and single-variable initializers. It preserves the
+existing scope cleanup policy and leaves raw SDL signatures unchanged.
+
 Standard containers are re-exported from `dassdl3/sdl3_result` through the usual
 boost modules. The experimental `sdl3_result_boost` module and suffixed function
 names were removed. Every fallible boost operation now returns Result; absence

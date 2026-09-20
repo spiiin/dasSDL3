@@ -124,3 +124,4 @@ Do not add another composite object to compensate for missing SDL bindings.
   script Func/Block to one. See [callback contracts](rect-clipboard-hittest.md).
 
 Result/Option boost API: [contracts and migration plan](result-option-plan.md).
+Opt-in [`sdl_try`](sdl-try.md) removes repetitive error guards without exceptions.

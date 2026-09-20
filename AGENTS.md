@@ -100,6 +100,16 @@ SDL forbids cancellation after swapchain acquisition. None skips the body.
 Pinned panic skips defer/finally: do not promise cleanup after application panic.
 Test normal/early returns, SDL error results, partial initialization and cleanup order.
 Use trailing gen2 blocks: with_sdl() { ... }, with_window(...) $(window) { ... }.
+Keep example acquisition callbacks short: return nested Result directly, and move
+substantial loops/upload/draw/readback work into ordinary named Result-returning
+functions inside the example. Borrow handles synchronously; report errors once in
+main. Avoid global failure flags and blanket and_then nesting. Do not introduce
+public composite scopes or a shared rendering framework just to reduce indentation.
+For linear Result work, opt into dassdl3/sdl3_try; see docs/sdl-try.md. Use it only
+as a standalone statement or the sole initializer of one let/var in a Result
+function/block. It performs ordinary early return, preserving defer; do not use
+it in cleanup, nested expressions or as a function pointer. Arrays require move
+initializers. Keep an ordinary success return so the enclosing Result type is known.
 Prefer receiver-first pipes. Scalar out parameters require explicit references;
 managed structs differ. `pass`, `block` and `variant` are reserved identifiers.
 Keep public examples free of unsafe/address expressions; never relax language pointer
