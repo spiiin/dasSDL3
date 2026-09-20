@@ -23,3 +23,10 @@ inline char * SDL_GetAppMetadataPropertyCopy(const char * name,das::Context * co
 inline bool SDL_ClearAppMetadataProperty(const char * name) {
     return SDL_SetAppMetadataProperty(name,nullptr);
 }
+
+// Copy and presence come from the same lookup; an empty value is still present.
+inline bool SDL_GetHintOptionalCopy(const char * name, char * & value, das::Context * context, das::LineInfoArg * at) {
+    const char * hint = SDL_GetHint(name);
+    value = sdl3_init_hints::copy(hint, context, at);
+    return hint != nullptr;
+}

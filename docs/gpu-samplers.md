@@ -10,8 +10,7 @@ var info = gpu_sampler_info(SDL_GPUFilter.FILTER_LINEAR,
 info.enable_anisotropy = true
 info.max_anisotropy = 4.0
 device |> with_gpu_sampler(info) $(sampler) {
-    var copied : SDL_GPUSamplerCreateInfo
-    if (!gpu_sampler_descriptor(device,sampler,copied)) { return }
+    return gpu_sampler_descriptor(device,sampler)
 }
 ```
 
@@ -37,7 +36,7 @@ disabled its native operation is normalized to ALWAYS; disabled anisotropy is
 normalized to 1 (any finite unused input is accepted). Properties must be zero:
 extension properties are outside this checked contract. Padding is always zeroed
 by field-wise copying. Creation failure returns zero at the native adapter layer
-and false from the boost scope, without invoking the ownership block.
+and Err(SdlError) from the boost scope, without invoking the ownership block.
 
 ## Lifetime
 

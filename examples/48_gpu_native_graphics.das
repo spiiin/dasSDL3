@@ -38,13 +38,17 @@ def draw_frames(device : SDL_GPUDevice?; window : SDL_Window?; smoke : bool) : b
                         targets[0].texture=texture; targets[0].load_op=SDL_GPULoadOp.LOADOP_CLEAR
                         targets[0].store_op=SDL_GPUStoreOp.STOREOP_STORE
                         targets[0].clear_color.r=0.05; targets[0].clear_color.b=0.15; targets[0].clear_color.a=1.0
-                        let begun=with_native_gpu_render_pass(command,targets) $(render_pass) {
+                        let begun=with_native_gpu_render_pass(command,targets) $(render_pass : SDL_GPURenderPass?) {
                             SDL_BindGPUGraphicsPipeline(render_pass,pipeline)
                             SDL_DrawGPUPrimitives(render_pass,3u,1u,0u,0u)
+
+                            return sdl_ok()
                         }
-                        if (!begun) { success=false }
+                        if (is_err(begun)) { success=false ; return err(unwrap_err(begun),type<SdlUnit>) }
+
+                        return sdl_ok()
                     }
-                    if (!acquired || !success) { return false }
+                    if (!is_ok(acquired) || !success) { return false }
                     SDL_PumpEvents(); SDL_Delay(16u); frame++
                 }
                 return SDL_WaitForGPUIdle(device)
@@ -57,15 +61,21 @@ def draw_frames(device : SDL_GPUDevice?; window : SDL_Window?; smoke : bool) : b
 def main(smoke : bool) : int {
     var success=false
     let initialized=with_sdl() {
-        let opened=with_window("Native SDL GPU triangle",640,480,0ul) $(window) {
-            let created=with_native_gpu_device(GPU_SHADER_FORMATS,true,"") $(device) {
-                if (!SDL_ClaimWindowForGPUDevice(device,window)) { return }
+        let opened=with_window("Native SDL GPU triangle",640,480,0ul) $(window : SDL_Window?) {
+            let created=with_native_gpu_device(GPU_SHADER_FORMATS,true,"") $(device : SDL_GPUDevice?) {
+                if (!SDL_ClaimWindowForGPUDevice(device,window)) {return err(sdl_error("48_gpu_native_graphics"),type<SdlUnit>)}
                 { defer() { SDL_ReleaseWindowFromGPUDevice(device,window) }; success=draw_frames(device,window,smoke) }
+
+                return sdl_ok()
             }
-            if (!created) { print("GPU device: {SDL_GetError()}\n") }
+            if (is_err(created)) { print("GPU device: {unwrap_err(created).message}\n") ; return err(unwrap_err(created),type<SdlUnit>) }
+
+            return sdl_ok()
         }
-        if (!opened) { print("Window: {SDL_GetError()}\n") }
+        if (is_err(opened)) { print("Window: {unwrap_err(opened).message}\n") ; return err(unwrap_err(opened),type<SdlUnit>) }
+
+        return sdl_ok()
     }
-    if (!initialized || !success) { print("Native graphics: {SDL_GetError()}\n"); return 1 }
+    if (!is_ok(initialized) || !success) { print("Native graphics: {is_err(initialized) ? unwrap_err(initialized).message : SDL_GetErrorCopy()}\n"); return 1 }
     print("Native graphics PASS\n"); return 0
 }

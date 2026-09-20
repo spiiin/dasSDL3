@@ -25,7 +25,8 @@ Example 23 needs a GPU device but no window or shaders. This does not complete P
   download transfer buffer and fence. Later updates do not change that snapshot.
   The source buffer may be released after the request: SDL defers native release
   while submitted commands still reference it.
-- `gpu_poll_readback` returns -1 for error, 0 for pending and 1 for ready.
+- `gpu_poll_readback` returns Result<bool,SdlError>: Err for error,
+  Ok(false) for pending and Ok(true) for ready.
   `gpu_wait_readback` waits for that fence, never the entire device.
   `gpu_readback_bytes` requires a ready ticket and an output array of exactly the
   requested size; it copies bytes into script-owned storage. Repeated reads are

@@ -27,8 +27,7 @@ reusable idioms and pinned upstream source links; this one describes our layer.
   addresses. Callers pass an event by mutable reference or a rectangle by
   const reference, without copying the union or taking an address in script.
   Neither the boost module nor the example needs an unsafe block.
-- Creation and rendering helpers preserve failure results. Check bool/null/zero
-  and then read SDL_GetError; see error-handling.md for scope return semantics.
+- Creation and rendering helpers preserve failure results. Check Result/Option; errors are already copied before cleanup; see error-handling.md for scope return semantics.
 - `create_window` defaults to a resizable window; `create_renderer` accepts an
   optional driver string (empty chooses the default).
 - Rendering helpers take renderer first for `renderer |> clear()` syntax.
@@ -40,7 +39,7 @@ reusable idioms and pinned upstream source links; this one describes our layer.
   The example and lifetime tests pass with these forms on the pinned interpreter.
   This changes call syntax only; cleanup remains implemented by the helpers.
 - Ownership uses daslib/defer and direct script block invocation. Acquisition
-  failure returns false without invoking the block; successful scopes clean up
+  failure returns Err without invoking the Result-returning block; successful scopes clean up
   on normal/early return. No native exception bridge remains. See error-handling.md.
 - Arbitrary application panic still skips finally in the pinned runtime. SDL
   failures no longer panic; do not use verify as production error handling.
@@ -50,7 +49,7 @@ reusable idioms and pinned upstream source links; this one describes our layer.
   `renderer |> with_texture(path) $(texture) { ... }` releases that texture on exit.
   Texture scopes must be nested inside the renderer scope. Rendering stays on
   the main thread. Raw pointers must not escape scopes or be manually destroyed.
-- `texture_size(texture,size)` returns bool and writes float2 through a reference.
+- `texture_size(texture)` returns Result<float2,SdlError>; the explicit ref overload returns Result<SdlUnit,SdlError>.
   `draw_texture(texture)` uses the whole source/current target; adding a dst
   rectangle scales the whole source; adding src and dst crops then scales.
   Rectangles use SDL_FRect pixel coordinates and are borrowed synchronously.
@@ -68,7 +67,7 @@ reusable idioms and pinned upstream source links; this one describes our layer.
   events by window ID. `input_window_id` covers supported input and window events.
 - Input readers and state adapters are in `src/sdl3_input.h`; see `input.md`
   for the API, main-thread contract and text lifetime. Readers check the union
-  tag and copy typed snapshots; on mismatch they clear output and return false.
+  tag and copy typed snapshots; mismatch returns None. Value overloads return the snapshot; ref overloads clear output on mismatch.
   UTF-8 input/composition strings are allocated in the daScript heap, never
   returned as borrowed SDL pointers. Decode raw text events before polling again.
 - Scalar output parameters need explicit references in script wrappers:
@@ -117,3 +116,11 @@ for its checked bounds. `sdl3_gpu_native_boost` separately provides native
 copy/compute/render/swapchain scopes and byte-array creation/transfers; see
 gpu-native-boost.md and examples 48–50. Native handles do not interoperate with IDs.
 Do not add another composite object to compensate for missing SDL bindings.
+
+- `sdl3_rect_clipboard_boost` uses copied clipboard payloads and a lexical
+  `with_window_hit_test` block. Keep `[never_inline]` on that scope: inline
+  substitution can destroy an AOT callback temporary after native registration,
+  before the scope body uses it. Native callbacks take C addresses, never cast a
+  script Func/Block to one. See [callback contracts](rect-clipboard-hittest.md).
+
+Result/Option boost API: [contracts and migration plan](result-option-plan.md).

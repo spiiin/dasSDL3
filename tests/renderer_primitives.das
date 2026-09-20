@@ -8,7 +8,7 @@ def reset_image(renderer : SDL_Renderer?) {
 def check_pixel(renderer : SDL_Renderer?; surface : SDL_Surface?; x,y : int) {
     verify(SDL_FlushRenderer(renderer))
     var bytes : array<uint8>;resize(bytes,16*16*4)
-    verify(copy_surface_rgba8(surface,bytes,16*4))
+    verify(is_ok(copy_surface_rgba8(surface,bytes,16*4)))
     let i=(y*16+x)*4
     verify(bytes[i]==uint8(230) && bytes[i+1]==uint8(40) && bytes[i+2]==uint8(20))
     verify(bytes[0]==uint8(0))
@@ -16,11 +16,13 @@ def check_pixel(renderer : SDL_Renderer?; surface : SDL_Surface?; x,y : int) {
 [export]
 def main(smoke : bool) : int {
     var called=false
-    verify(!with_software_renderer(null) $(renderer) {called=true})
+    verify(!with_software_renderer(null) $(renderer : SDL_Renderer?) {called=true
+        return sdl_ok()
+    } |> is_ok)
     verify(!called)
     let initialized=with_sdl() {
-        let allocated=with_surface(16,16,SDL_PixelFormat.PIXELFORMAT_RGBA32) $(surface) {
-            let scoped=with_software_renderer(surface) $(renderer) {
+        let allocated=with_surface(16,16,SDL_PixelFormat.PIXELFORMAT_RGBA32) $(surface : SDL_Surface?) {
+            let scoped=with_software_renderer(surface) $(renderer : SDL_Renderer?) {
                 verify(SDL_GetRenderWindow(renderer)==null)
                 var points : array<SDL_FPoint>;resize(points,2)
                 points[0].x=2.0;points[0].y=2.0;points[1].x=6.0;points[1].y=2.0
@@ -52,17 +54,27 @@ def main(smoke : bool) : int {
                 var empty_points : array<SDL_FPoint>;var empty_rects : array<SDL_FRect>
                 verify(SDL_RenderPointsArray(renderer,empty_points) && SDL_RenderLinesArray(renderer,empty_points))
                 verify(SDL_RenderRectsArray(renderer,empty_rects) && SDL_RenderFillRectsArray(renderer,empty_rects))
-            }
+
+                return sdl_ok()
+            } |> is_ok
             verify(scoped)
             // Renderer destruction leaves its caller-owned surface alive; early return too.
-            verify(with_software_renderer(surface) $(renderer) {return})
+            verify(with_software_renderer(surface) $(renderer : SDL_Renderer?) {return sdl_ok()} |> is_ok)
             verify(SDL_FillSurfaceAll(surface,SDL_MapSurfaceRGBA(surface,1u,2u,3u,255u)))
-        }
+
+            return sdl_ok()
+        } |> is_ok
         verify(allocated)
-        verify(with_window("renderer association",16,16,SDL_WINDOW_HIDDEN) $(window) {
-            verify(with_renderer(window) $(renderer) {verify(SDL_GetRenderWindow(renderer)==window)})
-        })
-    }
+        verify(with_window("renderer association",16,16,SDL_WINDOW_HIDDEN) $(window : SDL_Window?) {
+            verify(with_renderer(window) $(renderer : SDL_Renderer?) {verify(SDL_GetRenderWindow(renderer)==window)
+                return sdl_ok()
+            } |> is_ok)
+
+            return sdl_ok()
+        } |> is_ok)
+
+        return sdl_ok()
+    } |> is_ok
     verify(initialized)
     verify(!SDL_RenderPoint(null,0.0,0.0))
     print("renderer primitives: pixels and ownership passed\n")

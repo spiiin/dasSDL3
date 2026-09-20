@@ -24,12 +24,22 @@ template <typename T> inline const T * data(const das::TArray<T> & values) {
 }
 }
 
+#ifdef DASSDL3_TESTING
+// Deterministic unavailable-frame injection; production always calls SDL.
+inline bool SDL_TestSwapchainUnavailable=false;
+#endif
 inline bool SDL_AcquireGPUSwapchainTextureRef(SDL_GPUCommandBuffer * commands,
     SDL_Window * window, SDL_GPUTexture * & texture, uint32_t & width, uint32_t & height) {
+#ifdef DASSDL3_TESTING
+    if(SDL_TestSwapchainUnavailable && commands && window){texture=nullptr;width=height=0;return true;}
+#endif
     return SDL_AcquireGPUSwapchainTexture(commands, window, &texture, &width, &height);
 }
 inline bool SDL_WaitAndAcquireGPUSwapchainTextureRef(SDL_GPUCommandBuffer * commands,
     SDL_Window * window, SDL_GPUTexture * & texture, uint32_t & width, uint32_t & height) {
+#ifdef DASSDL3_TESTING
+    if(SDL_TestSwapchainUnavailable && commands && window){texture=nullptr;width=height=0;return true;}
+#endif
     return SDL_WaitAndAcquireGPUSwapchainTexture(commands, window, &texture, &width, &height);
 }
 inline SDL_GPURenderPass * SDL_BeginGPURenderPassArray(SDL_GPUCommandBuffer * commands,

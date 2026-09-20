@@ -41,6 +41,7 @@ addEnumeration(new Enumeration_SDL_BlendOperation());
 addEnumeration(new Enumeration_SDL_BlendFactor());
 addEnumeration(new Enumeration_SDL_Colorspace());
 addEnumeration(new Enumeration_SDL_IOWhence());
+addEnumeration(new Enumeration_SDL_HitTestResult());
 addAnnotation(new DummyTypeAnnotation("SDL_Window", "SDL_Window", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Renderer", "SDL_Renderer", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Surface", "SDL_Surface", 1, 1));
@@ -62,6 +63,7 @@ addAnnotation(new DummyTypeAnnotation("SDL_GPUComputePass", "SDL_GPUComputePass"
 addAnnotation(new DummyTypeAnnotation("SDL_GPUCopyPass", "SDL_GPUCopyPass", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Palette", "SDL_Palette", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_IOStream", "SDL_IOStream", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_HitTestBinding", "SDL_HitTestBinding", 1, 1));
 addAnnotation(new SDL_GPUViewportAnnotation(lib));
 addAnnotation(new SDL_GPUIndirectDrawCommandAnnotation(lib));
 addAnnotation(new SDL_GPUIndexedIndirectDrawCommandAnnotation(lib));
@@ -1199,3 +1201,63 @@ addExtern<DAS_BIND_FUN(SDL_CloseIO)>(*this, lib, "SDL_CloseIO", SideEffects::wor
 addExtern<DAS_BIND_FUN(SDL_SeekIO)>(*this, lib, "SDL_SeekIO", SideEffects::worstDefault, "SDL_SeekIO")->args({"context", "offset", "whence"});
 // bool (const char *) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_RemovePath)>(*this, lib, "SDL_RemovePath", SideEffects::worstDefault, "SDL_RemovePath")->args({"path"});
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ClearClipboardData)>(*this, lib, "SDL_ClearClipboardData", SideEffects::worstDefault, "SDL_ClearClipboardData");
+// void *(const char *, size_t *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetClipboardData)>(*this, lib, "SDL_GetClipboardData", SideEffects::worstDefault, "SDL_GetClipboardData")->args({"mime_type", "size"});
+// char **(size_t *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetClipboardMimeTypes)>(*this, lib, "SDL_GetClipboardMimeTypes", SideEffects::worstDefault, "SDL_GetClipboardMimeTypes")->args({"num_mime_types"});
+// char *(void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetClipboardText)>(*this, lib, "SDL_GetClipboardText", SideEffects::worstDefault, "SDL_GetClipboardText");
+// char *(void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetPrimarySelectionText)>(*this, lib, "SDL_GetPrimarySelectionText", SideEffects::worstDefault, "SDL_GetPrimarySelectionText");
+// bool (const SDL_Rect *, int *, int *, int *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRectAndLineIntersection)>(*this, lib, "SDL_GetRectAndLineIntersection", SideEffects::worstDefault, "SDL_GetRectAndLineIntersection")->args({"rect", "X1", "Y1", "X2", "Y2"});
+// bool (const SDL_FRect *, float *, float *, float *, float *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRectAndLineIntersectionFloat)>(*this, lib, "SDL_GetRectAndLineIntersectionFloat", SideEffects::worstDefault, "SDL_GetRectAndLineIntersectionFloat")->args({"rect", "X1", "Y1", "X2", "Y2"});
+// bool (const SDL_Point *, int, const SDL_Rect *, SDL_Rect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRectEnclosingPoints)>(*this, lib, "SDL_GetRectEnclosingPoints", SideEffects::worstDefault, "SDL_GetRectEnclosingPoints")->args({"points", "count", "clip", "result"});
+// bool (const SDL_FPoint *, int, const SDL_FRect *, SDL_FRect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRectEnclosingPointsFloat)>(*this, lib, "SDL_GetRectEnclosingPointsFloat", SideEffects::worstDefault, "SDL_GetRectEnclosingPointsFloat")->args({"points", "count", "clip", "result"});
+// bool (const SDL_Rect *, const SDL_Rect *, SDL_Rect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRectIntersection)>(*this, lib, "SDL_GetRectIntersection", SideEffects::worstDefault, "SDL_GetRectIntersection")->args({"A", "B", "result"});
+// bool (const SDL_FRect *, const SDL_FRect *, SDL_FRect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRectIntersectionFloat)>(*this, lib, "SDL_GetRectIntersectionFloat", SideEffects::worstDefault, "SDL_GetRectIntersectionFloat")->args({"A", "B", "result"});
+// bool (const SDL_Rect *, const SDL_Rect *, SDL_Rect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRectUnion)>(*this, lib, "SDL_GetRectUnion", SideEffects::worstDefault, "SDL_GetRectUnion")->args({"A", "B", "result"});
+// bool (const SDL_FRect *, const SDL_FRect *, SDL_FRect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRectUnionFloat)>(*this, lib, "SDL_GetRectUnionFloat", SideEffects::worstDefault, "SDL_GetRectUnionFloat")->args({"A", "B", "result"});
+// bool (const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasClipboardData)>(*this, lib, "SDL_HasClipboardData", SideEffects::worstDefault, "SDL_HasClipboardData")->args({"mime_type"});
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasClipboardText)>(*this, lib, "SDL_HasClipboardText", SideEffects::worstDefault, "SDL_HasClipboardText");
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasPrimarySelectionText)>(*this, lib, "SDL_HasPrimarySelectionText", SideEffects::worstDefault, "SDL_HasPrimarySelectionText");
+// bool (const SDL_Rect *, const SDL_Rect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasRectIntersection)>(*this, lib, "SDL_HasRectIntersection", SideEffects::worstDefault, "SDL_HasRectIntersection")->args({"A", "B"});
+// bool (const SDL_FRect *, const SDL_FRect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasRectIntersectionFloat)>(*this, lib, "SDL_HasRectIntersectionFloat", SideEffects::worstDefault, "SDL_HasRectIntersectionFloat")->args({"A", "B"});
+// bool (const SDL_Point *, const SDL_Rect *)
+addExtern<DAS_BIND_FUN(SDL_PointInRect)>(*this, lib, "SDL_PointInRect", SideEffects::worstDefault, "SDL_PointInRect")->args({"p", "r"});
+// bool (const SDL_FPoint *, const SDL_FRect *)
+addExtern<DAS_BIND_FUN(SDL_PointInRectFloat)>(*this, lib, "SDL_PointInRectFloat", SideEffects::worstDefault, "SDL_PointInRectFloat")->args({"p", "r"});
+// bool (const SDL_Rect *)
+addExtern<DAS_BIND_FUN(SDL_RectEmpty)>(*this, lib, "SDL_RectEmpty", SideEffects::worstDefault, "SDL_RectEmpty")->args({"r"});
+// bool (const SDL_FRect *)
+addExtern<DAS_BIND_FUN(SDL_RectEmptyFloat)>(*this, lib, "SDL_RectEmptyFloat", SideEffects::worstDefault, "SDL_RectEmptyFloat")->args({"r"});
+// void (const SDL_Rect *, SDL_FRect *)
+addExtern<DAS_BIND_FUN(SDL_RectToFRect)>(*this, lib, "SDL_RectToFRect", SideEffects::worstDefault, "SDL_RectToFRect")->args({"rect", "frect"});
+// bool (const SDL_Rect *, const SDL_Rect *)
+addExtern<DAS_BIND_FUN(SDL_RectsEqual)>(*this, lib, "SDL_RectsEqual", SideEffects::worstDefault, "SDL_RectsEqual")->args({"a", "b"});
+// bool (const SDL_FRect *, const SDL_FRect *, float)
+addExtern<DAS_BIND_FUN(SDL_RectsEqualEpsilon)>(*this, lib, "SDL_RectsEqualEpsilon", SideEffects::worstDefault, "SDL_RectsEqualEpsilon")->args({"a", "b", "epsilon"});
+// bool (const SDL_FRect *, const SDL_FRect *)
+addExtern<DAS_BIND_FUN(SDL_RectsEqualFloat)>(*this, lib, "SDL_RectsEqualFloat", SideEffects::worstDefault, "SDL_RectsEqualFloat")->args({"a", "b"});
+// bool (SDL_ClipboardDataCallback, SDL_ClipboardCleanupCallback, void *, const char **, size_t) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetClipboardData)>(*this, lib, "SDL_SetClipboardData", SideEffects::worstDefault, "SDL_SetClipboardDataAddress")->args({"callback", "cleanup", "userdata", "mime_types", "num_mime_types"});
+// bool (const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetClipboardText)>(*this, lib, "SDL_SetClipboardText", SideEffects::worstDefault, "SDL_SetClipboardText")->args({"text"});
+// bool (const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetPrimarySelectionText)>(*this, lib, "SDL_SetPrimarySelectionText", SideEffects::worstDefault, "SDL_SetPrimarySelectionText")->args({"text"});
+// bool (SDL_Window *, SDL_HitTest, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetWindowHitTest)>(*this, lib, "SDL_SetWindowHitTest", SideEffects::worstDefault, "SDL_SetWindowHitTestAddress")->args({"window", "callback", "callback_data"});

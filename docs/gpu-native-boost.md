@@ -49,9 +49,9 @@ forged native handle or a falsely declared capacity.
 
 `with_native_gpu_device`, resource/shader/pipeline scopes and copy/render/compute
 pass scopes acquire first, enter a nested cleanup scope, invoke the block directly
-and release/end with script `defer`. False acquisition skips the callback. A true
-return reports acquisition success; the callback's own operation results must
-be checked separately. Normal and early returns run cleanup. Pinned application
+and release/end with script `defer`. Failed acquisition returns Err without
+calling the body. The body returns Result<T,SdlError>, which is propagated
+after cleanup; cleanup errors replace success, never the primary body error. Normal and early returns run cleanup. Pinned application
 panic does not guarantee cleanup. Native pointers must not escape their owners.
 
 `with_native_gpu_commands` is for offscreen commands. Its mutable command
@@ -65,7 +65,8 @@ texture (minimized window) skips the callback and cancels the empty command.
 Once a non-null texture is acquired, cleanup submits rather than cancels, including
 after callback early return. The callback borrows the command and texture and
 must not consume/release them. It must end passes before returning. The helper
-returns acquisition/submission success; it does not release or read the borrowed
+returns Result<Option<T>,SdlError>; None skips the body, Some carries its value.
+It does not release or read the borrowed
 swapchain texture. The claimed window and device must outlive the call.
 
 Fence wait/release stays explicit. Wait before release because of the pinned

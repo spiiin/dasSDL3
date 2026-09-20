@@ -34,6 +34,10 @@
     "SDL_Wav": {
       "native_header": "src/sdl3_audio.h",
       "reason": "Project-owned WAV buffer wrapper; not a declaration in SDL headers"
+    },
+    "SDL_HitTestBinding": {
+      "native_header": "src/sdl3_callback_types.h",
+      "reason": "Scoped callback lifetime token; not an SDL declaration"
     }
   },
   "symbols": {
@@ -1870,10 +1874,14 @@
       ]
     },
     "function:SDL_SetWindowHitTest": {
-      "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "Retained callback requires lifetime, rooting and thread contract.",
-      "contract": "docs/window-io.md"
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     "function:SDL_CreateSoftwareRenderer": {
       "boost_status": "available",
@@ -2979,6 +2987,296 @@
       "contract": "docs/surface-pixels.md",
       "tests": [
         "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_ClearClipboardData": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_GetClipboardData": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_GetClipboardMimeTypes": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_GetClipboardText": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_GetPrimarySelectionText": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_GetRectAndLineIntersection": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_GetRectAndLineIntersectionFloat": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_GetRectEnclosingPoints": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_GetRectEnclosingPointsFloat": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_GetRectIntersection": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_GetRectIntersectionFloat": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_GetRectUnion": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_GetRectUnionFloat": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_HasClipboardData": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_HasClipboardText": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_HasPrimarySelectionText": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_HasRectIntersection": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_HasRectIntersectionFloat": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_PointInRect": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_PointInRectFloat": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_RectEmpty": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_RectEmptyFloat": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_RectToFRect": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_RectsEqual": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_RectsEqualEpsilon": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_RectsEqualFloat": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_SetClipboardData": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_SetClipboardText": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
+    },
+    "function:SDL_SetPrimarySelectionText": {
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
       ]
     }
   }

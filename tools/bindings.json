@@ -427,7 +427,37 @@
     "SDL_IOFromConstMem",
     "SDL_CloseIO",
     "SDL_SeekIO",
-    "SDL_RemovePath"
+    "SDL_RemovePath",
+    "SDL_ClearClipboardData",
+    "SDL_GetClipboardData",
+    "SDL_GetClipboardMimeTypes",
+    "SDL_GetClipboardText",
+    "SDL_GetPrimarySelectionText",
+    "SDL_GetRectAndLineIntersection",
+    "SDL_GetRectAndLineIntersectionFloat",
+    "SDL_GetRectEnclosingPoints",
+    "SDL_GetRectEnclosingPointsFloat",
+    "SDL_GetRectIntersection",
+    "SDL_GetRectIntersectionFloat",
+    "SDL_GetRectUnion",
+    "SDL_GetRectUnionFloat",
+    "SDL_HasClipboardData",
+    "SDL_HasClipboardText",
+    "SDL_HasPrimarySelectionText",
+    "SDL_HasRectIntersection",
+    "SDL_HasRectIntersectionFloat",
+    "SDL_PointInRect",
+    "SDL_PointInRectFloat",
+    "SDL_RectEmpty",
+    "SDL_RectEmptyFloat",
+    "SDL_RectToFRect",
+    "SDL_RectsEqual",
+    "SDL_RectsEqualEpsilon",
+    "SDL_RectsEqualFloat",
+    "SDL_SetClipboardData",
+    "SDL_SetClipboardText",
+    "SDL_SetPrimarySelectionText",
+    "SDL_SetWindowHitTest"
   ],
   "opaque_types": [
     "SDL_Window",
@@ -450,7 +480,8 @@
     "SDL_GPUComputePass",
     "SDL_GPUCopyPass",
     "SDL_Palette",
-    "SDL_IOStream"
+    "SDL_IOStream",
+    "SDL_HitTestBinding"
   ],
   "enums": {
     "SDL_GPUTextureType": {
@@ -938,6 +969,18 @@
       "SDL_IO_SEEK_SET": "IO_SEEK_SET",
       "SDL_IO_SEEK_CUR": "IO_SEEK_CUR",
       "SDL_IO_SEEK_END": "IO_SEEK_END"
+    },
+    "SDL_HitTestResult": {
+      "SDL_HITTEST_NORMAL": "HITTEST_NORMAL",
+      "SDL_HITTEST_DRAGGABLE": "HITTEST_DRAGGABLE",
+      "SDL_HITTEST_RESIZE_TOPLEFT": "HITTEST_RESIZE_TOPLEFT",
+      "SDL_HITTEST_RESIZE_TOP": "HITTEST_RESIZE_TOP",
+      "SDL_HITTEST_RESIZE_TOPRIGHT": "HITTEST_RESIZE_TOPRIGHT",
+      "SDL_HITTEST_RESIZE_RIGHT": "HITTEST_RESIZE_RIGHT",
+      "SDL_HITTEST_RESIZE_BOTTOMRIGHT": "HITTEST_RESIZE_BOTTOMRIGHT",
+      "SDL_HITTEST_RESIZE_BOTTOM": "HITTEST_RESIZE_BOTTOM",
+      "SDL_HITTEST_RESIZE_BOTTOMLEFT": "HITTEST_RESIZE_BOTTOMLEFT",
+      "SDL_HITTEST_RESIZE_LEFT": "HITTEST_RESIZE_LEFT"
     }
   },
   "structs": {

@@ -38,7 +38,8 @@ def submit_and_wait(device : SDL_GPUDevice?) : bool {
 
 [export]
 def main(smoke : bool) : int {
-    if (!sdl_init()) { print("SDL_Init: {SDL_GetError()}\n"); return 1 }
+    var operation_result_1 <- sdl_init()
+    if (is_err(operation_result_1)) { print("SDL_Init: {unwrap_err(operation_result_1).message}\n"); return 1 }
     {
         defer() { SDL_Quit() }
         let device = create_native_device()

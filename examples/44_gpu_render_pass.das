@@ -34,18 +34,24 @@ def render_triangle(device : SDL_GPUDevice?) : bool {
     if (command == 0ul) { return false }
     var black : SDL_FColor
     black.a = 1.0
-    let render_pass = gpu_begin_render_pass(device,command,target,uint2(0u),SDL_GPULoadOp.LOADOP_CLEAR,black)
+    let render_pass = unwrap_or(gpu_begin_render_pass(device,command,target,uint2(0u),SDL_GPULoadOp.LOADOP_CLEAR,black), 0ul)
     if (render_pass == 0ul) { return false }
-    if (!gpu_bind_pipeline(device,render_pass,pipeline)) { return false }
-    if (!gpu_draw_primitives(device,render_pass,3u)) { return false }
-    if (!gpu_end_render_pass(device,render_pass)) { return false }
-    if (!gpu_submit_command_buffer(device,command)) { return false }
+    var operation_result_1 <- gpu_bind_pipeline(device,render_pass,pipeline)
+    if (is_err(operation_result_1)) { return false }
+    var operation_result_2 <- gpu_draw_primitives(device,render_pass,3u)
+    if (is_err(operation_result_2)) { return false }
+    var operation_result_3 <- gpu_end_render_pass(device,render_pass)
+    if (is_err(operation_result_3)) { return false }
+    var operation_result_4 <- gpu_submit_command_buffer(device,command)
+    if (is_err(operation_result_4)) { return false }
     var pixels : array<uint8>
     resize(pixels,64*64*4)
     ticket = SDL_RequestGPUTextureReadback(device,target,uint2(0u),uint4(0u,0u,64u,64u))
     if (ticket == 0ul) { return false }
-    if (!gpu_wait_readback(device,ticket)) { return false }
-    if (!gpu_readback_bytes(device,ticket,pixels)) { return false }
+    var operation_result_5 <- gpu_wait_readback(device,ticket)
+    if (is_err(operation_result_5)) { return false }
+    var operation_result_6 <- gpu_readback_bytes(device,ticket,pixels)
+    if (is_err(operation_result_6)) { return false }
     let center = (32*64+32)*4
     if (int(pixels[center]) <= 40 || int(pixels[center+1]) <= 100 || int(pixels[center+2]) <= 40 ||
             pixels[0] != uint8(0) || pixels[3] != uint8(255)) {
@@ -57,7 +63,8 @@ def render_triangle(device : SDL_GPUDevice?) : bool {
 
 [export]
 def main(smoke : bool) : int {
-    if (!sdl_init()) { print("SDL_Init: {SDL_GetError()}\n"); return 1 }
+    var operation_result_7 <- sdl_init()
+    if (is_err(operation_result_7)) { print("SDL_Init: {unwrap_err(operation_result_7).message}\n"); return 1 }
     {
         defer() { SDL_Quit() }
         let device = SDL_CreateGPUDeviceScoped(GPU_SHADER_FORMATS,true,"")

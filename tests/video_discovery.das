@@ -11,13 +11,13 @@ def main(smoke : bool) : int {
         let theme=SDL_GetSystemTheme()
         verify(int(theme)>=0 && int(theme)<=2)
         var ids : array<uint>
-        verify(displays(ids) && length(ids)>0)
+        verify(is_ok(displays(ids)) && length(ids)>0)
         let primary=SDL_GetPrimaryDisplay()
         var found=false
         for(id in ids) {if(id==primary){found=true}}
         verify(found)
         verify(SDL_GetDisplayProperties(primary)!=0u)
-        let name=display_name(primary)
+        let name=unwrap_or(display_name(primary), "")
         verify(name==SDL_GetDisplayName(primary) && length(name)>0)
         let natural=SDL_GetNaturalDisplayOrientation(primary)
         let current=SDL_GetCurrentDisplayOrientation(primary)
@@ -31,7 +31,7 @@ def main(smoke : bool) : int {
         point.x=bounds.x+bounds.w/2;point.y=bounds.y+bounds.h/2
         verify(SDL_GetDisplayForPointRef(point)==primary && SDL_GetDisplayForRectRef(bounds)==primary)
         var modes : array<SDL_DisplayMode>
-        verify(display_modes(primary,modes) && length(modes)>0)
+        verify(is_ok(display_modes(primary,modes)) && length(modes)>0)
         verify(modes[0].displayID==primary && modes[0].w>0)
         var desktop : SDL_DisplayMode
         var active : SDL_DisplayMode
@@ -56,21 +56,21 @@ def main(smoke : bool) : int {
             verify(SDL_GetDisplayForPoint(addr(point))==primary && SDL_GetDisplayForRect(addr(bounds))==primary)
         }
         var listed : array<SDL_Window?>
-        verify(windows(listed) && length(listed)==0)
-        let opened=with_window("Окно",320,240,SDL_WINDOW_HIDDEN) $(window) {
+        verify(is_ok(windows(listed)) && length(listed)==0)
+        let opened=with_window("Окно",320,240,SDL_WINDOW_HIDDEN) $(window : SDL_Window?) {
             verify(SDL_GetDisplayForWindow(window)!=0u)
             verify(SDL_GetWindowPixelDensity(window)>0.0 && SDL_GetWindowDisplayScale(window)>0.0)
             verify(SDL_GetWindowPixelFormat(window)!=SDL_PixelFormat.PIXELFORMAT_UNKNOWN)
             verify(SDL_GetWindowParent(window)==null && SDL_GetWindowProperties(window)!=0u)
             verify((SDL_GetWindowFlags(window) & SDL_WINDOW_HIDDEN)!=0ul)
-            let title=window_title(window)
+            let title=unwrap_or(window_title(window), "")
             verify(SDL_GetWindowTitle(window)==title && title=="Окно")
             verify(SDL_SetWindowTitle(window,"changed") && title=="Окно")
-            verify(windows(listed) && length(listed)==1 && listed[0]==window)
+            verify(is_ok(windows(listed)) && length(listed)==1 && listed[0]==window)
             var w=0;var h=0;var x=0;var y=0
-            verify(window_size(window,w,h) && w==320 && h==240)
-            verify(window_size_pixels(window,w,h) && w>0 && h>0)
-            verify(window_position(window,x,y))
+            verify(is_ok(window_size(window,w,h)) && w==320 && h==240)
+            verify(is_ok(window_size_pixels(window,w,h)) && w>0 && h>0)
+            verify(is_ok(window_position(window,x,y)))
             unsafe {
                 var count=0
                 let raw_windows=SDL_GetWindows(addr(count))
@@ -80,15 +80,19 @@ def main(smoke : bool) : int {
                 verify(SDL_GetWindowSize(window,addr(w),addr(h)) && w==320 && h==240)
                 verify(SDL_GetWindowSizeInPixels(window,addr(w),addr(h)) && w>0 && h>0)
             }
-        }
+
+            return sdl_ok()
+        } |> is_ok
         verify(opened)
-        verify(windows(listed) && length(listed)==0)
+        verify(is_ok(windows(listed)) && length(listed)==0)
         verify(!SDL_GetDisplayBoundsRef(0u,bounds))
-        verify(!display_modes(0u,modes) && length(modes)==0)
+        verify(!is_ok(display_modes(0u,modes)) && length(modes)==0)
         verify(!SDL_GetCurrentDisplayModeCopy(0u,active) && active.w==0)
         var w=0;var h=0
-        verify(!window_size(null,w,h))
-    }
+        verify(!is_ok(window_size(null,w,h)))
+
+        return sdl_ok()
+    } |> is_ok
     verify(initialized)
     verify(drivers==SDL_GetVideoDriverCopy(0))
     return 0

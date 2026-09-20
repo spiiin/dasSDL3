@@ -28,8 +28,8 @@ def transfer_roundtrip(device : SDL_GPUDevice?) : bool {
                     for (i in 0..100) { bytes[i]=uint8((i*7+3)%256) }
                     if (!SDL_WriteGPUTransferBufferBytes(device,upload,256u,32u,bytes,true)) { return false }
                     var completed=false
-                    let acquired=with_native_gpu_commands(device) $(var command) {
-                        let copied=with_native_gpu_copy_pass(command) $(copy_pass) {
+                    let acquired=with_native_gpu_commands(device) $(var command : SDL_GPUCommandBuffer?&) {
+                        let copied=with_native_gpu_copy_pass(command) $(copy_pass : SDL_GPUCopyPass?) {
                             var location : SDL_GPUTransferBufferLocation; location.transfer_buffer=upload; location.offset=32u
                             var region : SDL_GPUBufferRegion; region.buffer=source; region.offset=16u; region.size=100u
                             SDL_UploadToGPUBufferRef(copy_pass,location,region,true)
@@ -39,19 +39,25 @@ def transfer_roundtrip(device : SDL_GPUDevice?) : bool {
                             region.buffer=destination; region.offset=48u
                             location.transfer_buffer=download; location.offset=24u
                             SDL_DownloadFromGPUBufferRef(copy_pass,region,location)
+
+                            return sdl_ok()
                         }
-                        if (!copied) { return }
-                        var fence=native_gpu_submit_fence(command)
-                        if (fence==null) { return }
+                        if (is_err(copied)) { return err(unwrap_err(copied),type<SdlUnit>) }
+                        var submitted <- native_gpu_submit_fence(command)
+                    if(is_err(submitted)){return err(unwrap_err(submitted),type<SdlUnit>)}
+                    var fence=move_unwrap(submitted)
+                        if (fence==null) {return err(sdl_error("50_gpu_native_transfer"),type<SdlUnit>)}
                         var fences : array<SDL_GPUFence?>; resize(fences,1); fences[0]=fence
-                        if (!SDL_WaitForGPUFencesArray(device,true,fences)) { return }
+                        if (!SDL_WaitForGPUFencesArray(device,true,fences)) {return err(sdl_error("50_gpu_native_transfer"),type<SdlUnit>)}
                         SDL_ReleaseGPUFence(device,fence)
                         var result : array<uint8>; resize(result,100)
-                        if (!SDL_ReadGPUTransferBufferBytes(device,download,256u,24u,result)) { return }
+                        if (!SDL_ReadGPUTransferBufferBytes(device,download,256u,24u,result)) {return err(sdl_error("50_gpu_native_transfer"),type<SdlUnit>)}
                         completed=true
                         for (i in 0..100) { if (result[i]!=bytes[i]) { completed=false } }
+
+                        return sdl_ok()
                     }
-                    return acquired && completed
+                    return is_ok(acquired) && completed
                 }
             }
         }
@@ -62,9 +68,13 @@ def transfer_roundtrip(device : SDL_GPUDevice?) : bool {
 def main(smoke : bool) : int {
     var success=false
     let initialized=with_sdl() {
-        let created=with_native_gpu_device(GPU_SHADER_FORMATS,true,"") $(device) { success=transfer_roundtrip(device) }
-        if (!created) { print("GPU device: {SDL_GetError()}\n") }
+        let created=with_native_gpu_device(GPU_SHADER_FORMATS,true,"") $(device : SDL_GPUDevice?) { success=transfer_roundtrip(device)
+            return sdl_ok()
+        }
+        if (is_err(created)) { print("GPU device: {unwrap_err(created).message}\n") ; return err(unwrap_err(created),type<SdlUnit>) }
+
+        return sdl_ok()
     }
-    if (!initialized || !success) { print("Native transfer: {SDL_GetError()}\n"); return 1 }
+    if (!is_ok(initialized) || !success) { print("Native transfer: {is_err(initialized) ? unwrap_err(initialized).message : SDL_GetErrorCopy()}\n"); return 1 }
     print("Native transfer: 100 bytes, nonzero offsets, cycling PASS\n"); return 0
 }

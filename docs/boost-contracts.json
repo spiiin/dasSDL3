@@ -1,0 +1,1826 @@
+[
+  {
+    "module": "sdl3_audio_boost",
+    "name": "load_wav",
+    "contract": "Result",
+    "signature": "def public load_wav(path : string)"
+  },
+  {
+    "module": "sdl3_audio_boost",
+    "name": "destroy_wav",
+    "contract": "value",
+    "signature": "def public destroy_wav(wav : SDL_Wav?)"
+  },
+  {
+    "module": "sdl3_audio_boost",
+    "name": "wav_spec",
+    "contract": "Result",
+    "signature": "def public wav_spec(wav : SDL_Wav?)"
+  },
+  {
+    "module": "sdl3_audio_boost",
+    "name": "wav_size",
+    "contract": "Result",
+    "signature": "def public wav_size(wav : SDL_Wav?)"
+  },
+  {
+    "module": "sdl3_audio_boost",
+    "name": "audio_format",
+    "contract": "value",
+    "signature": "def public audio_format(spec : SDL_AudioSpec) : uint"
+  },
+  {
+    "module": "sdl3_audio_boost",
+    "name": "audio_spec",
+    "contract": "value",
+    "signature": "def public audio_spec(format : uint; channels, frequency : int)"
+  },
+  {
+    "module": "sdl3_audio_boost",
+    "name": "with_wav",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_wav(path : string; blk : block<(wav : SDL_Wav?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_audio_boost",
+    "name": "create_audio_stream",
+    "contract": "Result",
+    "signature": "def public create_audio_stream(src, dst : SDL_AudioSpec)"
+  },
+  {
+    "module": "sdl3_audio_boost",
+    "name": "open_playback",
+    "contract": "Result",
+    "signature": "def public open_playback(spec : SDL_AudioSpec)"
+  },
+  {
+    "module": "sdl3_audio_boost",
+    "name": "destroy_audio_stream",
+    "contract": "value",
+    "signature": "def public destroy_audio_stream(stream : SDL_AudioStream?)"
+  },
+  {
+    "module": "sdl3_audio_boost",
+    "name": "with_audio_stream",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_audio_stream(src, dst : SDL_AudioSpec; blk : block<(stream : SDL_AudioStream?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_audio_boost",
+    "name": "with_playback",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_playback(spec : SDL_AudioSpec; blk : block<(stream : SDL_AudioStream?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_audio_boost",
+    "name": "queue_wav",
+    "contract": "Result",
+    "signature": "def public queue_wav(stream : SDL_AudioStream?; wav : SDL_Wav?)"
+  },
+  {
+    "module": "sdl3_audio_boost",
+    "name": "put_audio",
+    "contract": "Result",
+    "signature": "def public put_audio(stream : SDL_AudioStream?; bytes : array<uint8>)"
+  },
+  {
+    "module": "sdl3_audio_boost",
+    "name": "read_audio",
+    "contract": "Result",
+    "signature": "def public read_audio(stream : SDL_AudioStream?; var bytes : array<uint8>)"
+  },
+  {
+    "module": "sdl3_audio_boost",
+    "name": "queued_audio",
+    "contract": "Result",
+    "signature": "def public queued_audio(stream : SDL_AudioStream?)"
+  },
+  {
+    "module": "sdl3_audio_boost",
+    "name": "available_audio",
+    "contract": "Result",
+    "signature": "def public available_audio(stream : SDL_AudioStream?)"
+  },
+  {
+    "module": "sdl3_audio_boost",
+    "name": "flush_audio",
+    "contract": "Result",
+    "signature": "def public flush_audio(stream : SDL_AudioStream?)"
+  },
+  {
+    "module": "sdl3_audio_boost",
+    "name": "clear_audio",
+    "contract": "Result",
+    "signature": "def public clear_audio(stream : SDL_AudioStream?)"
+  },
+  {
+    "module": "sdl3_audio_boost",
+    "name": "resume_audio",
+    "contract": "Result",
+    "signature": "def public resume_audio(stream : SDL_AudioStream?)"
+  },
+  {
+    "module": "sdl3_audio_boost",
+    "name": "pause_audio",
+    "contract": "Result",
+    "signature": "def public pause_audio(stream : SDL_AudioStream?)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "sdl_init",
+    "contract": "Result",
+    "signature": "def public sdl_init(flags : uint = SDL_INIT_VIDEO)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "create_window",
+    "contract": "Result",
+    "signature": "def public create_window(title : string; width, height : int; flags : uint64 = SDL_WINDOW_RESIZABLE)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "create_renderer",
+    "contract": "Result",
+    "signature": "def public create_renderer(window : SDL_Window?; driver : string = \"\")"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "destroy_renderer",
+    "contract": "value",
+    "signature": "def public destroy_renderer(renderer : SDL_Renderer?)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "destroy_window",
+    "contract": "value",
+    "signature": "def public destroy_window(window : SDL_Window?)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "poll_event",
+    "contract": "Option",
+    "signature": "def public poll_event(var event : SDL_Event)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "push_event",
+    "contract": "value",
+    "signature": "def public push_event(var event : SDL_Event) : bool"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "should_close",
+    "contract": "value",
+    "signature": "def public should_close(event : SDL_Event) : bool"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "set_color",
+    "contract": "Result",
+    "signature": "def public set_color(renderer : SDL_Renderer?; rgba : uint4)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "clear",
+    "contract": "Result",
+    "signature": "def public clear(renderer : SDL_Renderer?; rgba : uint4 = uint4(24u,28u,40u,255u))"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "fill_rect",
+    "contract": "Result",
+    "signature": "def public fill_rect(renderer : SDL_Renderer?; rect : SDL_FRect)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "present",
+    "contract": "Result",
+    "signature": "def public present(renderer : SDL_Renderer?)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "with_sdl",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_sdl(flags : uint; blk : block<() : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "with_sdl",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_sdl(blk : block<() : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "with_window",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_window(title : string; width, height : int; flags : uint64; blk : block<(window : SDL_Window?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "with_renderer",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_renderer(window : SDL_Window?; blk : block<(renderer : SDL_Renderer?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "load_bmp",
+    "contract": "Result",
+    "signature": "def public load_bmp(path : string)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "destroy_surface",
+    "contract": "value",
+    "signature": "def public destroy_surface(surface : SDL_Surface?)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "destroy_texture",
+    "contract": "value",
+    "signature": "def public destroy_texture(texture : SDL_Texture?)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "create_texture",
+    "contract": "Result",
+    "signature": "def public create_texture(renderer : SDL_Renderer?; surface : SDL_Surface?)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "texture_size",
+    "contract": "Result",
+    "signature": "def public texture_size(texture : SDL_Texture?; var size : float2&)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "draw_texture",
+    "contract": "Result",
+    "signature": "def public draw_texture(renderer : SDL_Renderer?; texture : SDL_Texture?)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "draw_texture",
+    "contract": "Result",
+    "signature": "def public draw_texture(renderer : SDL_Renderer?; texture : SDL_Texture?; dst : SDL_FRect)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "draw_texture",
+    "contract": "Result",
+    "signature": "def public draw_texture(renderer : SDL_Renderer?; texture : SDL_Texture?; src, dst : SDL_FRect)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "with_bmp",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_bmp(path : string; blk : block<(surface : SDL_Surface?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "load_texture",
+    "contract": "Result",
+    "signature": "def public load_texture(renderer : SDL_Renderer?; path : string)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "with_texture",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_texture(renderer : SDL_Renderer?; path : string; blk : block<(texture : SDL_Texture?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "key_event",
+    "contract": "Option",
+    "signature": "def public key_event(event : SDL_Event; var key : SDL_KeyboardEvent)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "key_scancode",
+    "contract": "value",
+    "signature": "def public key_scancode(key : SDL_KeyboardEvent) : int"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "key_down",
+    "contract": "value",
+    "signature": "def public key_down(scancode : int) : bool"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "mouse_motion_event",
+    "contract": "Option",
+    "signature": "def public mouse_motion_event(event : SDL_Event; var motion : SDL_MouseMotionEvent)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "mouse_button_event",
+    "contract": "Option",
+    "signature": "def public mouse_button_event(event : SDL_Event; var button : SDL_MouseButtonEvent)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "mouse_wheel_event",
+    "contract": "Option",
+    "signature": "def public mouse_wheel_event(event : SDL_Event; var wheel : SDL_MouseWheelEvent)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "wheel_delta",
+    "contract": "value",
+    "signature": "def public wheel_delta(wheel : SDL_MouseWheelEvent) : float2"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "mouse_state",
+    "contract": "value",
+    "signature": "def public mouse_state(var position : float2&) : uint"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "text_input_event",
+    "contract": "Option",
+    "signature": "def public text_input_event(event : SDL_Event; var text : string&)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "text_editing_event",
+    "contract": "Option",
+    "signature": "def public text_editing_event(event : SDL_Event; var text : string&; var start, length : int&)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "input_window_id",
+    "contract": "value",
+    "signature": "def public input_window_id(event : SDL_Event) : uint"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "should_close",
+    "contract": "value",
+    "signature": "def public should_close(event : SDL_Event; window : SDL_Window?) : bool"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "set_title",
+    "contract": "Result",
+    "signature": "def public set_title(window : SDL_Window?; title : string)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "with_text_input",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_text_input(window : SDL_Window?; blk : block<() : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "texture_size",
+    "contract": "Result",
+    "signature": "def public texture_size(texture : SDL_Texture?)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "key_event",
+    "contract": "Option",
+    "signature": "def public key_event(event : SDL_Event)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "mouse_motion_event",
+    "contract": "Option",
+    "signature": "def public mouse_motion_event(event : SDL_Event)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "mouse_button_event",
+    "contract": "Option",
+    "signature": "def public mouse_button_event(event : SDL_Event)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "mouse_wheel_event",
+    "contract": "Option",
+    "signature": "def public mouse_wheel_event(event : SDL_Event)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "text_input_event",
+    "contract": "Option",
+    "signature": "def public text_input_event(event : SDL_Event)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "text_editing_event",
+    "contract": "Option",
+    "signature": "def public text_editing_event(event : SDL_Event)"
+  },
+  {
+    "module": "sdl3_diagnostics_boost",
+    "name": "error_string",
+    "contract": "value",
+    "signature": "def public error_string : string"
+  },
+  {
+    "module": "sdl3_diagnostics_boost",
+    "name": "set_error",
+    "contract": "value",
+    "signature": "def public set_error(text : string) : SdlError"
+  },
+  {
+    "module": "sdl3_diagnostics_boost",
+    "name": "log_message",
+    "contract": "value",
+    "signature": "def public log_message(category : int; priority : SDL_LogPriority; text : string)"
+  },
+  {
+    "module": "sdl3_diagnostics_boost",
+    "name": "current_time",
+    "contract": "Result",
+    "signature": "def public current_time(var ticks : int64&)"
+  },
+  {
+    "module": "sdl3_diagnostics_boost",
+    "name": "time_to_date",
+    "contract": "Result",
+    "signature": "def public time_to_date(ticks : int64; var date : SDL_DateTime; local_time : bool=false)"
+  },
+  {
+    "module": "sdl3_diagnostics_boost",
+    "name": "date_to_time",
+    "contract": "Result",
+    "signature": "def public date_to_time(date : SDL_DateTime; var ticks : int64&)"
+  },
+  {
+    "module": "sdl3_diagnostics_boost",
+    "name": "current_time",
+    "contract": "Result",
+    "signature": "def public current_time()"
+  },
+  {
+    "module": "sdl3_diagnostics_boost",
+    "name": "date_to_time",
+    "contract": "Result",
+    "signature": "def public date_to_time(date : SDL_DateTime)"
+  },
+  {
+    "module": "sdl3_diagnostics_boost",
+    "name": "time_to_date",
+    "contract": "Result",
+    "signature": "def public time_to_date(ticks : int64; local_time : bool = false)"
+  },
+  {
+    "module": "sdl3_geometry_boost",
+    "name": "vertex",
+    "contract": "value",
+    "signature": "def public vertex(position : float2; rgba : float4; uv : float2 = float2(0.0)) : SDL_Vertex"
+  },
+  {
+    "module": "sdl3_geometry_boost",
+    "name": "draw_geometry",
+    "contract": "Result",
+    "signature": "def public draw_geometry(renderer : SDL_Renderer?; vertices : array<SDL_Vertex>; texture : SDL_Texture? = null)"
+  },
+  {
+    "module": "sdl3_geometry_boost",
+    "name": "draw_geometry",
+    "contract": "Result",
+    "signature": "def public draw_geometry(renderer : SDL_Renderer?; vertices : array<SDL_Vertex>; indices : array<int>; texture : SDL_Texture? = null)"
+  },
+  {
+    "module": "sdl3_gpu_boost",
+    "name": "with_gpu_device",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_device(formats : uint; debug : bool; driver : string; blk : block<(device : SDL_GPUDevice?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_boost",
+    "name": "with_gpu_device",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_device(blk : block<(device : SDL_GPUDevice?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_boost",
+    "name": "with_gpu_window",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_window(device : SDL_GPUDevice?; window : SDL_Window?; blk : block<() : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_buffers_boost",
+    "name": "with_gpu_vertex_buffer",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_vertex_buffer(device : SDL_GPUDevice?; values : array<float>; blk : block<(buffer : uint64) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_buffers_boost",
+    "name": "with_gpu_index_buffer",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_index_buffer(device : SDL_GPUDevice?; values : array<uint>; element : SDL_GPUIndexElementSize; blk : block<(buffer : uint64) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_buffers_boost",
+    "name": "gpu_viewport",
+    "contract": "value",
+    "signature": "def public gpu_viewport(width, height : float) : SDL_GPUViewport"
+  },
+  {
+    "module": "sdl3_gpu_formats_boost",
+    "name": "gpu_format_block_bytes",
+    "contract": "Result",
+    "signature": "def public gpu_format_block_bytes(format : uint)"
+  },
+  {
+    "module": "sdl3_gpu_formats_boost",
+    "name": "gpu_format_bytes",
+    "contract": "Result",
+    "signature": "def public gpu_format_bytes(format, width, height : uint; depth_or_layers : uint = 1u)"
+  },
+  {
+    "module": "sdl3_gpu_formats_boost",
+    "name": "gpu_supports_format",
+    "contract": "Result",
+    "signature": "def public gpu_supports_format(device : SDL_GPUDevice?; format, texture_type, usage : uint)"
+  },
+  {
+    "module": "sdl3_gpu_formats_boost",
+    "name": "gpu_supports_samples",
+    "contract": "Result",
+    "signature": "def public gpu_supports_samples(device : SDL_GPUDevice?; format, sample_count : uint)"
+  },
+  {
+    "module": "sdl3_gpu_formats_boost",
+    "name": "gpu_format_block_extent",
+    "contract": "Result",
+    "signature": "def public gpu_format_block_extent(format : uint)"
+  },
+  {
+    "module": "sdl3_gpu_formats_boost",
+    "name": "gpu_supports_texture_transfer",
+    "contract": "Result",
+    "signature": "def public gpu_supports_texture_transfer(device : SDL_GPUDevice?; format, texture_type : uint)"
+  },
+  {
+    "module": "sdl3_gpu_image_boost",
+    "name": "with_gpu_color_target_texture",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_color_target_texture(device : SDL_GPUDevice?; width, height, layers, levels, format : uint; blk : block<(texture : uint64) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_image_boost",
+    "name": "gpu_generate_mipmaps",
+    "contract": "Result",
+    "signature": "def public gpu_generate_mipmaps(device : SDL_GPUDevice?; texture : uint64)"
+  },
+  {
+    "module": "sdl3_gpu_image_boost",
+    "name": "gpu_blit_texture",
+    "contract": "Result",
+    "signature": "def public gpu_blit_texture(device : SDL_GPUDevice?; source : uint64; source_sub : uint2; source_rect : uint4; destination : uint64; dest_sub : uint2; dest_rect : uint4; filter_mode : uint = SDL_GPU_FILTER_NEAREST)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "with_native_gpu_device",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_native_gpu_device(formats : uint; debug : bool; driver : string; blk : block<(device : SDL_GPUDevice?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "with_native_gpu_buffer",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_native_gpu_buffer(device : SDL_GPUDevice?; info : SDL_GPUBufferCreateInfo; blk : block<(var resource : SDL_GPUBuffer?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "with_native_gpu_texture",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_native_gpu_texture(device : SDL_GPUDevice?; info : SDL_GPUTextureCreateInfo; blk : block<(var resource : SDL_GPUTexture?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "with_native_gpu_transfer_buffer",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_native_gpu_transfer_buffer(device : SDL_GPUDevice?; info : SDL_GPUTransferBufferCreateInfo; blk : block<(var resource : SDL_GPUTransferBuffer?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "with_native_gpu_sampler",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_native_gpu_sampler(device : SDL_GPUDevice?; info : SDL_GPUSamplerCreateInfo; blk : block<(var resource : SDL_GPUSampler?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "with_native_gpu_shader_bytes",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_native_gpu_shader_bytes(device : SDL_GPUDevice?; info : SDL_GPUShaderCreateInfo; bytes : array<uint8>; entrypoint : string; blk : block<(var resource : SDL_GPUShader?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "with_native_gpu_shader_file",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_native_gpu_shader_file(device : SDL_GPUDevice?; info : SDL_GPUShaderCreateInfo; path : string; entrypoint : string; blk : block<(var resource : SDL_GPUShader?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "with_native_gpu_compute_pipeline_bytes",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_native_gpu_compute_pipeline_bytes(device : SDL_GPUDevice?; info : SDL_GPUComputePipelineCreateInfo; bytes : array<uint8>; entrypoint : string; blk : block<(var resource : SDL_GPUComputePipeline?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "with_native_gpu_compute_pipeline_file",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_native_gpu_compute_pipeline_file(device : SDL_GPUDevice?; info : SDL_GPUComputePipelineCreateInfo; path : string; entrypoint : string; blk : block<(var resource : SDL_GPUComputePipeline?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "with_native_gpu_graphics_pipeline",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_native_gpu_graphics_pipeline(device : SDL_GPUDevice?; info : SDL_GPUGraphicsPipelineCreateInfo; buffers : array<SDL_GPUVertexBufferDescription>; attributes : array<SDL_GPUVertexAttribute>; colors : array<SDL_GPUColorTargetDescription>; blk : block<(pipeline : SDL_GPUGraphicsPipeline?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "native_gpu_submit",
+    "contract": "Result",
+    "signature": "def public native_gpu_submit(var command : SDL_GPUCommandBuffer?&)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "native_gpu_cancel",
+    "contract": "Result",
+    "signature": "def public native_gpu_cancel(var command : SDL_GPUCommandBuffer?&)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "native_gpu_submit_fence",
+    "contract": "Result",
+    "signature": "def public native_gpu_submit_fence(var command : SDL_GPUCommandBuffer?&)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "with_native_gpu_commands",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_native_gpu_commands(device : SDL_GPUDevice?; blk : block<(var command : SDL_GPUCommandBuffer?&) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "with_native_gpu_copy_pass",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_native_gpu_copy_pass(command : SDL_GPUCommandBuffer?; blk : block<(copy_pass : SDL_GPUCopyPass?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "with_native_gpu_render_pass",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_native_gpu_render_pass(command : SDL_GPUCommandBuffer?; colors : array<SDL_GPUColorTargetInfo>; blk : block<(render_pass : SDL_GPURenderPass?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "with_native_gpu_render_pass",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_native_gpu_render_pass(command : SDL_GPUCommandBuffer?; colors : array<SDL_GPUColorTargetInfo>; depth : SDL_GPUDepthStencilTargetInfo; blk : block<(render_pass : SDL_GPURenderPass?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "with_native_gpu_compute_pass",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_native_gpu_compute_pass(command : SDL_GPUCommandBuffer?; textures : array<SDL_GPUStorageTextureReadWriteBinding>; buffers : array<SDL_GPUStorageBufferReadWriteBinding>; blk : block<(compute_pass : SDL_GPUComputePass?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "native_gpu_swapchain",
+    "contract": "Result",
+    "signature": "def public native_gpu_swapchain(command : SDL_GPUCommandBuffer?; window : SDL_Window?; wait : bool = true)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "with_native_gpu_swapchain",
+    "contract": "Result<Option<T>,SdlError>",
+    "signature": "def public with_native_gpu_swapchain(device : SDL_GPUDevice?; window : SDL_Window?; blk : block<(command : SDL_GPUCommandBuffer?; var texture : SDL_GPUTexture?; width, height : uint) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_pipeline_boost",
+    "name": "gpu_graphics_pipeline_info",
+    "contract": "value",
+    "signature": "def public gpu_graphics_pipeline_info() : SDL_GPUGraphicsPipelineCreateInfo"
+  },
+  {
+    "module": "sdl3_gpu_pipeline_boost",
+    "name": "gpu_color_target",
+    "contract": "value",
+    "signature": "def public gpu_color_target(format : SDL_GPUTextureFormat) : SDL_GPUColorTargetDescription"
+  },
+  {
+    "module": "sdl3_gpu_pipeline_boost",
+    "name": "with_gpu_graphics_pipeline",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_graphics_pipeline(device : SDL_GPUDevice?; vertex, fragment : uint64; info : SDL_GPUGraphicsPipelineCreateInfo; buffers : array<SDL_GPUVertexBufferDescription>; attributes : array<SDL_GPUVertexAttribute>; colors : array<SDL_GPUColorTargetDescription>; blk : block<(pipeline : uint64) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_pipeline_boost",
+    "name": "with_gpu_graphics_pipeline",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_graphics_pipeline(device : SDL_GPUDevice?; vertex, fragment : uint64; format : SDL_GPUTextureFormat; blk : block<(pipeline : uint64) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_pipeline_boost",
+    "name": "gpu_graphics_pipeline_descriptor",
+    "contract": "Result",
+    "signature": "def public gpu_graphics_pipeline_descriptor(device : SDL_GPUDevice?; pipeline : uint64; var info : SDL_GPUGraphicsPipelineCreateInfo)"
+  },
+  {
+    "module": "sdl3_gpu_pipeline_boost",
+    "name": "gpu_graphics_pipeline_descriptor",
+    "contract": "Result",
+    "signature": "def public gpu_graphics_pipeline_descriptor(device : SDL_GPUDevice?; pipeline : uint64)"
+  },
+  {
+    "module": "sdl3_gpu_recording_boost",
+    "name": "with_gpu_command_buffer",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_command_buffer(device : SDL_GPUDevice?; blk : block<(command : uint64) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_recording_boost",
+    "name": "gpu_begin_render_pass",
+    "contract": "Result",
+    "signature": "def public gpu_begin_render_pass(device : SDL_GPUDevice?; command, target : uint64; sub : uint2; load : SDL_GPULoadOp; clear : SDL_FColor)"
+  },
+  {
+    "module": "sdl3_gpu_recording_boost",
+    "name": "gpu_end_render_pass",
+    "contract": "Result",
+    "signature": "def public gpu_end_render_pass(device : SDL_GPUDevice?; render_pass : uint64)"
+  },
+  {
+    "module": "sdl3_gpu_recording_boost",
+    "name": "gpu_submit_command_buffer",
+    "contract": "Result",
+    "signature": "def public gpu_submit_command_buffer(device : SDL_GPUDevice?; command : uint64)"
+  },
+  {
+    "module": "sdl3_gpu_recording_boost",
+    "name": "gpu_cancel_command_buffer",
+    "contract": "Result",
+    "signature": "def public gpu_cancel_command_buffer(device : SDL_GPUDevice?; command : uint64)"
+  },
+  {
+    "module": "sdl3_gpu_recording_boost",
+    "name": "gpu_bind_pipeline",
+    "contract": "Result",
+    "signature": "def public gpu_bind_pipeline(device : SDL_GPUDevice?; render_pass, pipeline : uint64)"
+  },
+  {
+    "module": "sdl3_gpu_recording_boost",
+    "name": "gpu_set_viewport",
+    "contract": "Result",
+    "signature": "def public gpu_set_viewport(device : SDL_GPUDevice?; render_pass : uint64; viewport : SDL_GPUViewport)"
+  },
+  {
+    "module": "sdl3_gpu_recording_boost",
+    "name": "gpu_set_scissor",
+    "contract": "Result",
+    "signature": "def public gpu_set_scissor(device : SDL_GPUDevice?; render_pass : uint64; rect : uint4)"
+  },
+  {
+    "module": "sdl3_gpu_recording_boost",
+    "name": "gpu_set_blend_constants",
+    "contract": "Result",
+    "signature": "def public gpu_set_blend_constants(device : SDL_GPUDevice?; render_pass : uint64; color : SDL_FColor)"
+  },
+  {
+    "module": "sdl3_gpu_recording_boost",
+    "name": "gpu_bind_vertex_buffers",
+    "contract": "Result",
+    "signature": "def public gpu_bind_vertex_buffers(device : SDL_GPUDevice?; render_pass : uint64; first : uint; buffers : array<uint64>; offsets : array<uint>)"
+  },
+  {
+    "module": "sdl3_gpu_recording_boost",
+    "name": "gpu_bind_index_buffer",
+    "contract": "Result",
+    "signature": "def public gpu_bind_index_buffer(device : SDL_GPUDevice?; render_pass, index : uint64)"
+  },
+  {
+    "module": "sdl3_gpu_recording_boost",
+    "name": "gpu_bind_samplers",
+    "contract": "Result",
+    "signature": "def public gpu_bind_samplers(device : SDL_GPUDevice?; render_pass : uint64; stage : SDL_GPUShaderStage; textures, samplers : array<uint64>)"
+  },
+  {
+    "module": "sdl3_gpu_recording_boost",
+    "name": "gpu_push_uniform",
+    "contract": "Result",
+    "signature": "def public gpu_push_uniform(device : SDL_GPUDevice?; command : uint64; stage : SDL_GPUShaderStage; slot : uint; values : array<float4>)"
+  },
+  {
+    "module": "sdl3_gpu_recording_boost",
+    "name": "gpu_push_uniform_bytes",
+    "contract": "Result",
+    "signature": "def public gpu_push_uniform_bytes(device : SDL_GPUDevice?; command : uint64; stage : SDL_GPUShaderStage; slot : uint; bytes : array<uint8>)"
+  },
+  {
+    "module": "sdl3_gpu_recording_boost",
+    "name": "gpu_draw_primitives",
+    "contract": "Result",
+    "signature": "def public gpu_draw_primitives(device : SDL_GPUDevice?; render_pass : uint64; vertices : uint; instances : uint = 1u; first_vertex : uint = 0u)"
+  },
+  {
+    "module": "sdl3_gpu_recording_boost",
+    "name": "gpu_draw_indexed_primitives",
+    "contract": "Result",
+    "signature": "def public gpu_draw_indexed_primitives(device : SDL_GPUDevice?; render_pass : uint64; indices : uint; instances : uint = 1u; first_index : uint = 0u; base_vertex : int = 0)"
+  },
+  {
+    "module": "sdl3_gpu_sampler_boost",
+    "name": "gpu_sampler_info",
+    "contract": "value",
+    "signature": "def public gpu_sampler_info(filter : SDL_GPUFilter = SDL_GPUFilter.FILTER_NEAREST; address : SDL_GPUSamplerAddressMode = SDL_GPUSamplerAddressMode.SAMPLERADDRESSMODE_CLAMP_TO_EDGE) : SDL_GPUSamplerCreateInfo"
+  },
+  {
+    "module": "sdl3_gpu_sampler_boost",
+    "name": "with_gpu_sampler",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_sampler(device : SDL_GPUDevice?; info : SDL_GPUSamplerCreateInfo; blk : block<(sampler : uint64) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_sampler_boost",
+    "name": "with_gpu_sampler",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_sampler(device : SDL_GPUDevice?; blk : block<(sampler : uint64) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_sampler_boost",
+    "name": "gpu_sampler_descriptor",
+    "contract": "Result",
+    "signature": "def public gpu_sampler_descriptor(device : SDL_GPUDevice?; sampler : uint64; var info : SDL_GPUSamplerCreateInfo)"
+  },
+  {
+    "module": "sdl3_gpu_sampler_boost",
+    "name": "gpu_sampler_descriptor",
+    "contract": "Result",
+    "signature": "def public gpu_sampler_descriptor(device : SDL_GPUDevice?; sampler : uint64)"
+  },
+  {
+    "module": "sdl3_gpu_shader_boost",
+    "name": "gpu_shader_info",
+    "contract": "value",
+    "signature": "def public gpu_shader_info(format : uint; stage : SDL_GPUShaderStage) : SDL_GPUShaderCreateInfo"
+  },
+  {
+    "module": "sdl3_gpu_shader_boost",
+    "name": "with_gpu_shader",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_shader(device : SDL_GPUDevice?; bytes : array<uint8>; info : SDL_GPUShaderCreateInfo; entrypoint : string; blk : block<(shader : uint64) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_shader_boost",
+    "name": "with_gpu_shader",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_shader(device : SDL_GPUDevice?; bytes : array<uint8>; info : SDL_GPUShaderCreateInfo; blk : block<(shader : uint64) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_shader_boost",
+    "name": "with_gpu_shader_file",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_shader_file(device : SDL_GPUDevice?; path : string; info : SDL_GPUShaderCreateInfo; entrypoint : string; blk : block<(shader : uint64) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_shader_boost",
+    "name": "with_gpu_shader_file",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_shader_file(device : SDL_GPUDevice?; path : string; info : SDL_GPUShaderCreateInfo; blk : block<(shader : uint64) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_shader_boost",
+    "name": "gpu_shader_descriptor",
+    "contract": "Result",
+    "signature": "def public gpu_shader_descriptor(device : SDL_GPUDevice?; shader : uint64; var info : SDL_GPUShaderCreateInfo)"
+  },
+  {
+    "module": "sdl3_gpu_shader_boost",
+    "name": "gpu_shader_entrypoint",
+    "contract": "Result",
+    "signature": "def public gpu_shader_entrypoint(device : SDL_GPUDevice?; shader : uint64)"
+  },
+  {
+    "module": "sdl3_gpu_shader_boost",
+    "name": "gpu_shader_descriptor",
+    "contract": "Result",
+    "signature": "def public gpu_shader_descriptor(device : SDL_GPUDevice?; shader : uint64)"
+  },
+  {
+    "module": "sdl3_gpu_swapchain_boost",
+    "name": "gpu_supports_present_mode",
+    "contract": "Result",
+    "signature": "def public gpu_supports_present_mode(device : SDL_GPUDevice?; window : SDL_Window?; mode : uint)"
+  },
+  {
+    "module": "sdl3_gpu_swapchain_boost",
+    "name": "gpu_supports_composition",
+    "contract": "Result",
+    "signature": "def public gpu_supports_composition(device : SDL_GPUDevice?; window : SDL_Window?; composition : uint)"
+  },
+  {
+    "module": "sdl3_gpu_swapchain_boost",
+    "name": "gpu_swapchain_format",
+    "contract": "Result",
+    "signature": "def public gpu_swapchain_format(device : SDL_GPUDevice?; window : SDL_Window?)"
+  },
+  {
+    "module": "sdl3_gpu_swapchain_boost",
+    "name": "gpu_configure_swapchain",
+    "contract": "Result",
+    "signature": "def public gpu_configure_swapchain(device : SDL_GPUDevice?; window : SDL_Window?; composition, mode : uint)"
+  },
+  {
+    "module": "sdl3_gpu_swapchain_boost",
+    "name": "gpu_frames_in_flight",
+    "contract": "Result",
+    "signature": "def public gpu_frames_in_flight(device : SDL_GPUDevice?; count : uint)"
+  },
+  {
+    "module": "sdl3_gpu_swapchain_boost",
+    "name": "gpu_wait_swapchain",
+    "contract": "Result",
+    "signature": "def public gpu_wait_swapchain(device : SDL_GPUDevice?; window : SDL_Window?)"
+  },
+  {
+    "module": "sdl3_gpu_texture_transfer_boost",
+    "name": "with_gpu_transfer_texture",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_transfer_texture(device : SDL_GPUDevice?; width, height, layers, levels, format, texture_type : uint; blk : block<(texture : uint64) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_texture_transfer_boost",
+    "name": "with_gpu_color_texture",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_color_texture(device : SDL_GPUDevice?; width, height, layers, levels, format : uint; blk : block<(texture : uint64) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_texture_transfer_boost",
+    "name": "with_gpu_rgba_texture",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_rgba_texture(device : SDL_GPUDevice?; width, height, layers, levels : uint; blk : block<(texture : uint64) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_texture_transfer_boost",
+    "name": "with_gpu_rgba_texture",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_rgba_texture(device : SDL_GPUDevice?; width, height : uint; blk : block<(texture : uint64) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_texture_transfer_boost",
+    "name": "gpu_upload_texture",
+    "contract": "Result",
+    "signature": "def public gpu_upload_texture(device : SDL_GPUDevice?; texture : uint64; sub : uint2; region : uint4; bytes : array<uint8>; pitch : uint; cycle : bool = false)"
+  },
+  {
+    "module": "sdl3_gpu_texture_transfer_boost",
+    "name": "gpu_copy_texture",
+    "contract": "Result",
+    "signature": "def public gpu_copy_texture(device : SDL_GPUDevice?; source : uint64; source_sub : uint2; source_region : uint4; destination : uint64; dest_sub, dest_origin : uint2)"
+  },
+  {
+    "module": "sdl3_gpu_texture_transfer_boost",
+    "name": "with_gpu_texture_readback",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_texture_readback(device : SDL_GPUDevice?; texture : uint64; sub : uint2; region : uint4; blk : block<(ticket : uint64) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_transfer_boost",
+    "name": "with_gpu_buffer",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_buffer(device : SDL_GPUDevice?; bytes : array<uint8>; usage : uint; blk : block<(buffer : uint64) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_transfer_boost",
+    "name": "gpu_update_buffer",
+    "contract": "Result",
+    "signature": "def public gpu_update_buffer(device : SDL_GPUDevice?; buffer : uint64; offset : uint; bytes : array<uint8>; cycle : bool = false)"
+  },
+  {
+    "module": "sdl3_gpu_transfer_boost",
+    "name": "gpu_copy_buffer",
+    "contract": "Result",
+    "signature": "def public gpu_copy_buffer(device : SDL_GPUDevice?; source : uint64; source_offset : uint; destination : uint64; destination_offset, size : uint)"
+  },
+  {
+    "module": "sdl3_gpu_transfer_boost",
+    "name": "with_gpu_readback",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_readback(device : SDL_GPUDevice?; buffer : uint64; offset, size : uint; blk : block<(readback : uint64) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_transfer_boost",
+    "name": "gpu_poll_readback",
+    "contract": "Result",
+    "signature": "def public gpu_poll_readback(device : SDL_GPUDevice?; ticket : uint64)"
+  },
+  {
+    "module": "sdl3_gpu_transfer_boost",
+    "name": "gpu_wait_readback",
+    "contract": "Result",
+    "signature": "def public gpu_wait_readback(device : SDL_GPUDevice?; ticket : uint64)"
+  },
+  {
+    "module": "sdl3_gpu_transfer_boost",
+    "name": "gpu_readback_bytes",
+    "contract": "Result",
+    "signature": "def public gpu_readback_bytes(device : SDL_GPUDevice?; ticket : uint64; var bytes : array<uint8>)"
+  },
+  {
+    "module": "sdl3_gpu_utilities_boost",
+    "name": "gpu_driver_names",
+    "contract": "Result",
+    "signature": "def public gpu_driver_names()"
+  },
+  {
+    "module": "sdl3_gpu_utilities_boost",
+    "name": "gpu_supports_shaders",
+    "contract": "Result",
+    "signature": "def public gpu_supports_shaders(formats : uint; driver : string = \"\")"
+  },
+  {
+    "module": "sdl3_gpu_utilities_boost",
+    "name": "gpu_buffer_name",
+    "contract": "Result",
+    "signature": "def public gpu_buffer_name(device : SDL_GPUDevice?; buffer : uint64; name : string)"
+  },
+  {
+    "module": "sdl3_gpu_utilities_boost",
+    "name": "gpu_texture_name",
+    "contract": "Result",
+    "signature": "def public gpu_texture_name(device : SDL_GPUDevice?; texture : uint64; name : string)"
+  },
+  {
+    "module": "sdl3_gpu_volume_boost",
+    "name": "with_gpu_volume",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_volume(device : SDL_GPUDevice?; size : uint3; levels : uint; format : SDL_GPUTextureFormat; blk : block<(volume : uint64) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_volume_boost",
+    "name": "with_gpu_volume",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_volume(device : SDL_GPUDevice?; size : uint3; blk : block<(volume : uint64) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_gpu_volume_boost",
+    "name": "gpu_upload_volume",
+    "contract": "Result",
+    "signature": "def public gpu_upload_volume(device : SDL_GPUDevice?; volume : uint64; mip : uint; origin, size : uint3; bytes : array<uint8>; row_pitch, slice_pitch : uint; cycle : bool = false)"
+  },
+  {
+    "module": "sdl3_gpu_volume_boost",
+    "name": "gpu_copy_volume",
+    "contract": "Result",
+    "signature": "def public gpu_copy_volume(device : SDL_GPUDevice?; source : uint64; source_mip : uint; source_origin, size : uint3; destination : uint64; dest_mip : uint; dest_origin : uint3)"
+  },
+  {
+    "module": "sdl3_gpu_volume_boost",
+    "name": "with_gpu_volume_readback",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_volume_readback(device : SDL_GPUDevice?; volume : uint64; mip : uint; origin, size : uint3; blk : block<(ticket : uint64) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_init_boost",
+    "name": "with_sdl_subsystems",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_sdl_subsystems(flags : uint; blk : block<() : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_init_boost",
+    "name": "hint_string",
+    "contract": "Option",
+    "signature": "def public hint_string(name : string)"
+  },
+  {
+    "module": "sdl3_init_boost",
+    "name": "app_metadata_string",
+    "contract": "Result",
+    "signature": "def public app_metadata_string(name : string)"
+  },
+  {
+    "module": "sdl3_pixels_boost",
+    "name": "rgba8_buffer_size",
+    "contract": "Result",
+    "signature": "def public rgba8_buffer_size(width, height, pitch : int)"
+  },
+  {
+    "module": "sdl3_pixels_boost",
+    "name": "with_streaming_texture",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_streaming_texture(renderer : SDL_Renderer?; width, height : int; blk : block<(texture : SDL_Texture?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_pixels_boost",
+    "name": "with_target_texture",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_target_texture(renderer : SDL_Renderer?; width, height : int; blk : block<(texture : SDL_Texture?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_pixels_boost",
+    "name": "upload_rgba8",
+    "contract": "Result",
+    "signature": "def public upload_rgba8(texture : SDL_Texture?; bytes : array<uint8>; pitch : int)"
+  },
+  {
+    "module": "sdl3_pixels_boost",
+    "name": "with_render_target",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_render_target(renderer : SDL_Renderer?; texture : SDL_Texture?; blk : block<() : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_pixels_boost",
+    "name": "with_read_pixels",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_read_pixels(renderer : SDL_Renderer?; blk : block<(surface : SDL_Surface?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_pixels_boost",
+    "name": "surface_size",
+    "contract": "Result",
+    "signature": "def public surface_size(surface : SDL_Surface?; var size : int2&)"
+  },
+  {
+    "module": "sdl3_pixels_boost",
+    "name": "copy_surface_rgba8",
+    "contract": "Result",
+    "signature": "def public copy_surface_rgba8(surface : SDL_Surface?; var bytes : array<uint8>; pitch : int)"
+  },
+  {
+    "module": "sdl3_pixels_boost",
+    "name": "surface_size",
+    "contract": "Result",
+    "signature": "def public surface_size(surface : SDL_Surface?)"
+  },
+  {
+    "module": "sdl3_properties_boost",
+    "name": "with_properties",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_properties(blk : block<(props : uint) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_properties_boost",
+    "name": "with_properties_lock",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_properties_lock(props : uint; blk : block<() : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_properties_boost",
+    "name": "property_string",
+    "contract": "Result",
+    "signature": "def public property_string(props : uint; name : string; fallback : string = \"\")"
+  },
+  {
+    "module": "sdl3_properties_boost",
+    "name": "property_names",
+    "contract": "Result",
+    "signature": "def public property_names(props : uint; var names : array<string>)"
+  },
+  {
+    "module": "sdl3_properties_boost",
+    "name": "property_names",
+    "contract": "Result",
+    "signature": "def public property_names(props : uint)"
+  },
+  {
+    "module": "sdl3_rect_clipboard_boost",
+    "name": "with_window_hit_test",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_window_hit_test(window : SDL_Window?; callback : block<(window : SDL_Window?; x : int; y : int) : SDL_HitTestResult>; body : block<() : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_rect_clipboard_boost",
+    "name": "clipboard_text",
+    "contract": "Result",
+    "signature": "def public clipboard_text()"
+  },
+  {
+    "module": "sdl3_rect_clipboard_boost",
+    "name": "primary_selection_text",
+    "contract": "Result",
+    "signature": "def public primary_selection_text()"
+  },
+  {
+    "module": "sdl3_rect_clipboard_boost",
+    "name": "clipboard_data",
+    "contract": "Result",
+    "signature": "def public clipboard_data(mime : string; var bytes : array<uint8>)"
+  },
+  {
+    "module": "sdl3_rect_clipboard_boost",
+    "name": "set_clipboard_data",
+    "contract": "Result",
+    "signature": "def public set_clipboard_data(mime : string; bytes : array<uint8>)"
+  },
+  {
+    "module": "sdl3_rect_clipboard_boost",
+    "name": "clipboard_mime_types",
+    "contract": "Result",
+    "signature": "def public clipboard_mime_types(var types : array<string>)"
+  },
+  {
+    "module": "sdl3_rect_clipboard_boost",
+    "name": "clipboard_data",
+    "contract": "Result",
+    "signature": "def public clipboard_data(mime : string)"
+  },
+  {
+    "module": "sdl3_rect_clipboard_boost",
+    "name": "clipboard_mime_types",
+    "contract": "Result",
+    "signature": "def public clipboard_mime_types()"
+  },
+  {
+    "module": "sdl3_renderer_final_boost",
+    "name": "convert_event_to_render",
+    "contract": "Result",
+    "signature": "def public convert_event_to_render(renderer : SDL_Renderer?; var event : SDL_Event)"
+  },
+  {
+    "module": "sdl3_renderer_final_boost",
+    "name": "render_geometry_raw",
+    "contract": "Result",
+    "signature": "def public render_geometry_raw(renderer : SDL_Renderer?; texture : SDL_Texture?; xy : array<SDL_FPoint>; colors : array<SDL_FColor>; uv : array<SDL_FPoint>)"
+  },
+  {
+    "module": "sdl3_renderer_final_boost",
+    "name": "render_geometry_raw",
+    "contract": "Result",
+    "signature": "def public render_geometry_raw(renderer : SDL_Renderer?; texture : SDL_Texture?; xy : array<SDL_FPoint>; colors : array<SDL_FColor>; uv : array<SDL_FPoint>; indices : array<int>)"
+  },
+  {
+    "module": "sdl3_renderer_operations_boost",
+    "name": "with_window_renderer",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_window_renderer(title : string; w,h : int; flags : uint64; blk : block<(window : SDL_Window?; renderer : SDL_Renderer?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_renderer_operations_boost",
+    "name": "with_renderer_properties",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_renderer_properties(props : uint; blk : block<(renderer : SDL_Renderer?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_renderer_operations_boost",
+    "name": "with_read_pixels",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_read_pixels(renderer : SDL_Renderer?; rect : SDL_Rect; blk : block<(surface : SDL_Surface?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_renderer_operations_boost",
+    "name": "render_vsync",
+    "contract": "Result",
+    "signature": "def public render_vsync(renderer : SDL_Renderer?; var vsync : int&)"
+  },
+  {
+    "module": "sdl3_renderer_operations_boost",
+    "name": "render_vsync",
+    "contract": "Result",
+    "signature": "def public render_vsync(renderer : SDL_Renderer?)"
+  },
+  {
+    "module": "sdl3_renderer_presentation_boost",
+    "name": "render_driver",
+    "contract": "Result",
+    "signature": "def public render_driver(index : int)"
+  },
+  {
+    "module": "sdl3_renderer_presentation_boost",
+    "name": "renderer_name",
+    "contract": "Result",
+    "signature": "def public renderer_name(renderer : SDL_Renderer?)"
+  },
+  {
+    "module": "sdl3_renderer_presentation_boost",
+    "name": "render_logical_presentation",
+    "contract": "Result",
+    "signature": "def public render_logical_presentation(renderer : SDL_Renderer?; var w,h : int&; var mode : SDL_RendererLogicalPresentation&)"
+  },
+  {
+    "module": "sdl3_renderer_presentation_boost",
+    "name": "render_from_window",
+    "contract": "Result",
+    "signature": "def public render_from_window(renderer : SDL_Renderer?; wx,wy : float; var x,y : float&)"
+  },
+  {
+    "module": "sdl3_renderer_presentation_boost",
+    "name": "render_to_window",
+    "contract": "Result",
+    "signature": "def public render_to_window(renderer : SDL_Renderer?; x,y : float; var wx,wy : float&)"
+  },
+  {
+    "module": "sdl3_renderer_presentation_boost",
+    "name": "render_logical_presentation",
+    "contract": "Result",
+    "signature": "def public render_logical_presentation(renderer : SDL_Renderer?)"
+  },
+  {
+    "module": "sdl3_renderer_presentation_boost",
+    "name": "render_from_window",
+    "contract": "Result",
+    "signature": "def public render_from_window(renderer : SDL_Renderer?; wx,wy : float)"
+  },
+  {
+    "module": "sdl3_renderer_presentation_boost",
+    "name": "render_to_window",
+    "contract": "Result",
+    "signature": "def public render_to_window(renderer : SDL_Renderer?; x,y : float)"
+  },
+  {
+    "module": "sdl3_renderer_primitives_boost",
+    "name": "with_software_renderer",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_software_renderer(surface : SDL_Surface?; blk : block<(renderer : SDL_Renderer?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_renderer_state_boost",
+    "name": "render_output_size",
+    "contract": "Result",
+    "signature": "def public render_output_size(renderer : SDL_Renderer?; var w,h : int&)"
+  },
+  {
+    "module": "sdl3_renderer_state_boost",
+    "name": "current_render_output_size",
+    "contract": "Result",
+    "signature": "def public current_render_output_size(renderer : SDL_Renderer?; var w,h : int&)"
+  },
+  {
+    "module": "sdl3_renderer_state_boost",
+    "name": "render_scale",
+    "contract": "Result",
+    "signature": "def public render_scale(renderer : SDL_Renderer?; var x,y : float&)"
+  },
+  {
+    "module": "sdl3_renderer_state_boost",
+    "name": "render_output_size",
+    "contract": "Result",
+    "signature": "def public render_output_size(renderer : SDL_Renderer?)"
+  },
+  {
+    "module": "sdl3_renderer_state_boost",
+    "name": "current_render_output_size",
+    "contract": "Result",
+    "signature": "def public current_render_output_size(renderer : SDL_Renderer?)"
+  },
+  {
+    "module": "sdl3_renderer_state_boost",
+    "name": "render_scale",
+    "contract": "Result",
+    "signature": "def public render_scale(renderer : SDL_Renderer?)"
+  },
+  {
+    "module": "sdl3_renderer_yuv_blend_boost",
+    "name": "render_draw_color",
+    "contract": "Result",
+    "signature": "def public render_draw_color(renderer : SDL_Renderer?; var r,g,b,a : float&)"
+  },
+  {
+    "module": "sdl3_renderer_yuv_blend_boost",
+    "name": "render_draw_color_bytes",
+    "contract": "Result",
+    "signature": "def public render_draw_color_bytes(renderer : SDL_Renderer?; var r,g,b,a : uint&)"
+  },
+  {
+    "module": "sdl3_renderer_yuv_blend_boost",
+    "name": "render_color_scale",
+    "contract": "Result",
+    "signature": "def public render_color_scale(renderer : SDL_Renderer?; var scale : float&)"
+  },
+  {
+    "module": "sdl3_renderer_yuv_blend_boost",
+    "name": "render_draw_blend_mode",
+    "contract": "Result",
+    "signature": "def public render_draw_blend_mode(renderer : SDL_Renderer?; var mode : uint&)"
+  },
+  {
+    "module": "sdl3_renderer_yuv_blend_boost",
+    "name": "update_yuv_texture",
+    "contract": "Result",
+    "signature": "def public update_yuv_texture(texture : SDL_Texture?; y : array<uint8>; yp : int; u : array<uint8>; up : int; v : array<uint8>; vp : int)"
+  },
+  {
+    "module": "sdl3_renderer_yuv_blend_boost",
+    "name": "update_nv_texture",
+    "contract": "Result",
+    "signature": "def public update_nv_texture(texture : SDL_Texture?; y : array<uint8>; yp : int; uv : array<uint8>; uvp : int)"
+  },
+  {
+    "module": "sdl3_renderer_yuv_blend_boost",
+    "name": "render_draw_color",
+    "contract": "Result",
+    "signature": "def public render_draw_color(renderer : SDL_Renderer?)"
+  },
+  {
+    "module": "sdl3_renderer_yuv_blend_boost",
+    "name": "render_draw_color_bytes",
+    "contract": "Result",
+    "signature": "def public render_draw_color_bytes(renderer : SDL_Renderer?)"
+  },
+  {
+    "module": "sdl3_renderer_yuv_blend_boost",
+    "name": "render_color_scale",
+    "contract": "Result",
+    "signature": "def public render_color_scale(renderer : SDL_Renderer?)"
+  },
+  {
+    "module": "sdl3_renderer_yuv_blend_boost",
+    "name": "render_draw_blend_mode",
+    "contract": "Result",
+    "signature": "def public render_draw_blend_mode(renderer : SDL_Renderer?)"
+  },
+  {
+    "module": "sdl3_surface_pixels_boost",
+    "name": "with_palette",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_palette(count : int; blk : block<(palette : SDL_Palette?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_surface_pixels_boost",
+    "name": "with_duplicate_surface",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_duplicate_surface(source : SDL_Surface?; blk : block<(surface : SDL_Surface?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_surface_pixels_boost",
+    "name": "with_scaled_surface",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_scaled_surface(source : SDL_Surface?; w,h : int; mode : SDL_ScaleMode; blk : block<(surface : SDL_Surface?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_surface_pixels_boost",
+    "name": "with_converted_surface",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_converted_surface(source : SDL_Surface?; format : SDL_PixelFormat; blk : block<(surface : SDL_Surface?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_surface_pixels_boost",
+    "name": "with_converted_surface",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_converted_surface(source : SDL_Surface?; format : SDL_PixelFormat; palette : SDL_Palette?; colorspace : SDL_Colorspace; props : uint; blk : block<(surface : SDL_Surface?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_surface_pixels_boost",
+    "name": "with_surface_lock",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_surface_lock(surface : SDL_Surface?; blk : block<() : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_surface_pixels_boost",
+    "name": "read_surface_pixel",
+    "contract": "Result",
+    "signature": "def public read_surface_pixel(surface : SDL_Surface?; x,y : int; var r,g,b,a : uint&)"
+  },
+  {
+    "module": "sdl3_surface_pixels_boost",
+    "name": "read_surface_pixel_float",
+    "contract": "Result",
+    "signature": "def public read_surface_pixel_float(surface : SDL_Surface?; x,y : int; var r,g,b,a : float&)"
+  },
+  {
+    "module": "sdl3_surface_pixels_boost",
+    "name": "read_surface_pixel",
+    "contract": "Result",
+    "signature": "def public read_surface_pixel(surface : SDL_Surface?; x,y : int)"
+  },
+  {
+    "module": "sdl3_surface_pixels_boost",
+    "name": "read_surface_pixel_float",
+    "contract": "Result",
+    "signature": "def public read_surface_pixel_float(surface : SDL_Surface?; x,y : int)"
+  },
+  {
+    "module": "sdl3_surface_state_boost",
+    "name": "surface_color_key",
+    "contract": "Result",
+    "signature": "def public surface_color_key(surface : SDL_Surface?)"
+  },
+  {
+    "module": "sdl3_surface_state_boost",
+    "name": "surface_color_mod",
+    "contract": "Result",
+    "signature": "def public surface_color_mod(surface : SDL_Surface?; var r,g,b : uint&)"
+  },
+  {
+    "module": "sdl3_surface_state_boost",
+    "name": "surface_alpha_mod",
+    "contract": "Result",
+    "signature": "def public surface_alpha_mod(surface : SDL_Surface?; var a : uint&)"
+  },
+  {
+    "module": "sdl3_surface_state_boost",
+    "name": "surface_blend_mode",
+    "contract": "Result",
+    "signature": "def public surface_blend_mode(surface : SDL_Surface?; var mode : uint&)"
+  },
+  {
+    "module": "sdl3_surface_state_boost",
+    "name": "surface_clip",
+    "contract": "Result",
+    "signature": "def public surface_clip(surface : SDL_Surface?; var rect : SDL_Rect)"
+  },
+  {
+    "module": "sdl3_surface_state_boost",
+    "name": "set_surface_clip",
+    "contract": "Result",
+    "signature": "def public set_surface_clip(surface : SDL_Surface?; rect : SDL_Rect)"
+  },
+  {
+    "module": "sdl3_surface_state_boost",
+    "name": "reset_surface_clip",
+    "contract": "Result",
+    "signature": "def public reset_surface_clip(surface : SDL_Surface?)"
+  },
+  {
+    "module": "sdl3_surface_state_boost",
+    "name": "surface_color_mod",
+    "contract": "Result",
+    "signature": "def public surface_color_mod(surface : SDL_Surface?)"
+  },
+  {
+    "module": "sdl3_surface_state_boost",
+    "name": "surface_alpha_mod",
+    "contract": "Result",
+    "signature": "def public surface_alpha_mod(surface : SDL_Surface?)"
+  },
+  {
+    "module": "sdl3_surface_state_boost",
+    "name": "surface_blend_mode",
+    "contract": "Result",
+    "signature": "def public surface_blend_mode(surface : SDL_Surface?)"
+  },
+  {
+    "module": "sdl3_surface_state_boost",
+    "name": "surface_clip",
+    "contract": "Result",
+    "signature": "def public surface_clip(surface : SDL_Surface?)"
+  },
+  {
+    "module": "sdl3_surface_state_boost",
+    "name": "surface_color_key",
+    "contract": "Result",
+    "signature": "def public surface_color_key(surface : SDL_Surface?; var key : uint&)"
+  },
+  {
+    "module": "sdl3_texture_state_boost",
+    "name": "with_texture",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_texture(renderer : SDL_Renderer?; format : SDL_PixelFormat; access : SDL_TextureAccess; w,h : int; blk : block<(texture : SDL_Texture?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_texture_state_boost",
+    "name": "with_texture_properties",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_texture_properties(renderer : SDL_Renderer?; props : uint; blk : block<(texture : SDL_Texture?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_texture_state_boost",
+    "name": "texture_color_mod",
+    "contract": "Result",
+    "signature": "def public texture_color_mod(texture : SDL_Texture?; var r,g,b : float&)"
+  },
+  {
+    "module": "sdl3_texture_state_boost",
+    "name": "texture_alpha_mod",
+    "contract": "Result",
+    "signature": "def public texture_alpha_mod(texture : SDL_Texture?; var a : float&)"
+  },
+  {
+    "module": "sdl3_texture_state_boost",
+    "name": "texture_scale_mode",
+    "contract": "Result",
+    "signature": "def public texture_scale_mode(texture : SDL_Texture?; var mode : SDL_ScaleMode&)"
+  },
+  {
+    "module": "sdl3_texture_state_boost",
+    "name": "texture_color_mod",
+    "contract": "Result",
+    "signature": "def public texture_color_mod(texture : SDL_Texture?)"
+  },
+  {
+    "module": "sdl3_texture_state_boost",
+    "name": "texture_alpha_mod",
+    "contract": "Result",
+    "signature": "def public texture_alpha_mod(texture : SDL_Texture?)"
+  },
+  {
+    "module": "sdl3_texture_state_boost",
+    "name": "texture_scale_mode",
+    "contract": "Result",
+    "signature": "def public texture_scale_mode(texture : SDL_Texture?)"
+  },
+  {
+    "module": "sdl3_texture_transfer_boost",
+    "name": "texture_color_mod_bytes",
+    "contract": "Result",
+    "signature": "def public texture_color_mod_bytes(texture : SDL_Texture?; var r,g,b : uint&)"
+  },
+  {
+    "module": "sdl3_texture_transfer_boost",
+    "name": "texture_alpha_mod_byte",
+    "contract": "Result",
+    "signature": "def public texture_alpha_mod_byte(texture : SDL_Texture?; var a : uint&)"
+  },
+  {
+    "module": "sdl3_texture_transfer_boost",
+    "name": "texture_blend_mode",
+    "contract": "Result",
+    "signature": "def public texture_blend_mode(texture : SDL_Texture?; var mode : uint&)"
+  },
+  {
+    "module": "sdl3_texture_transfer_boost",
+    "name": "update_texture_rgba8",
+    "contract": "Result",
+    "signature": "def public update_texture_rgba8(texture : SDL_Texture?; rect : SDL_Rect; bytes : array<uint8>; pitch : int)"
+  },
+  {
+    "module": "sdl3_texture_transfer_boost",
+    "name": "with_texture_surface",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_texture_surface(texture : SDL_Texture?; rect : SDL_Rect; blk : block<(surface : SDL_Surface?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_texture_transfer_boost",
+    "name": "texture_color_mod_bytes",
+    "contract": "Result",
+    "signature": "def public texture_color_mod_bytes(texture : SDL_Texture?)"
+  },
+  {
+    "module": "sdl3_texture_transfer_boost",
+    "name": "texture_alpha_mod_byte",
+    "contract": "Result",
+    "signature": "def public texture_alpha_mod_byte(texture : SDL_Texture?)"
+  },
+  {
+    "module": "sdl3_texture_transfer_boost",
+    "name": "texture_blend_mode",
+    "contract": "Result",
+    "signature": "def public texture_blend_mode(texture : SDL_Texture?)"
+  },
+  {
+    "module": "sdl3_video_boost",
+    "name": "displays",
+    "contract": "Result",
+    "signature": "def public displays(var output : array<uint>)"
+  },
+  {
+    "module": "sdl3_video_boost",
+    "name": "windows",
+    "contract": "Result",
+    "signature": "def public windows(var output : array<SDL_Window?>)"
+  },
+  {
+    "module": "sdl3_video_boost",
+    "name": "display_modes",
+    "contract": "Result",
+    "signature": "def public display_modes(display : uint; var output : array<SDL_DisplayMode>)"
+  },
+  {
+    "module": "sdl3_video_boost",
+    "name": "display_name",
+    "contract": "Result",
+    "signature": "def public display_name(display : uint)"
+  },
+  {
+    "module": "sdl3_video_boost",
+    "name": "window_title",
+    "contract": "Result",
+    "signature": "def public window_title(window : SDL_Window?)"
+  },
+  {
+    "module": "sdl3_video_boost",
+    "name": "window_size",
+    "contract": "Result",
+    "signature": "def public window_size(window : SDL_Window?; var w, h : int&)"
+  },
+  {
+    "module": "sdl3_video_boost",
+    "name": "window_size_pixels",
+    "contract": "Result",
+    "signature": "def public window_size_pixels(window : SDL_Window?; var w, h : int&)"
+  },
+  {
+    "module": "sdl3_video_boost",
+    "name": "window_position",
+    "contract": "Result",
+    "signature": "def public window_position(window : SDL_Window?; var x, y : int&)"
+  },
+  {
+    "module": "sdl3_video_boost",
+    "name": "displays",
+    "contract": "Result",
+    "signature": "def public displays()"
+  },
+  {
+    "module": "sdl3_video_boost",
+    "name": "windows",
+    "contract": "Result",
+    "signature": "def public windows()"
+  },
+  {
+    "module": "sdl3_video_boost",
+    "name": "display_modes",
+    "contract": "Result",
+    "signature": "def public display_modes(display : uint)"
+  },
+  {
+    "module": "sdl3_video_boost",
+    "name": "window_size",
+    "contract": "Result",
+    "signature": "def public window_size(window : SDL_Window?)"
+  },
+  {
+    "module": "sdl3_video_boost",
+    "name": "window_size_pixels",
+    "contract": "Result",
+    "signature": "def public window_size_pixels(window : SDL_Window?)"
+  },
+  {
+    "module": "sdl3_video_boost",
+    "name": "window_position",
+    "contract": "Result",
+    "signature": "def public window_position(window : SDL_Window?)"
+  },
+  {
+    "module": "sdl3_window_boost",
+    "name": "with_window_properties",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_window_properties(props : uint; blk : block<(window : SDL_Window?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_window_boost",
+    "name": "with_popup_window",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_popup_window(parent : SDL_Window?; x,y,w,h : int; flags : uint64; blk : block<(window : SDL_Window?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_window_boost",
+    "name": "window_minimum_size",
+    "contract": "Result",
+    "signature": "def public window_minimum_size(window : SDL_Window?; var w,h : int&)"
+  },
+  {
+    "module": "sdl3_window_boost",
+    "name": "window_maximum_size",
+    "contract": "Result",
+    "signature": "def public window_maximum_size(window : SDL_Window?; var w,h : int&)"
+  },
+  {
+    "module": "sdl3_window_boost",
+    "name": "window_aspect_ratio",
+    "contract": "Result",
+    "signature": "def public window_aspect_ratio(window : SDL_Window?; var low,high : float&)"
+  },
+  {
+    "module": "sdl3_window_boost",
+    "name": "window_minimum_size",
+    "contract": "Result",
+    "signature": "def public window_minimum_size(window : SDL_Window?)"
+  },
+  {
+    "module": "sdl3_window_boost",
+    "name": "window_maximum_size",
+    "contract": "Result",
+    "signature": "def public window_maximum_size(window : SDL_Window?)"
+  },
+  {
+    "module": "sdl3_window_boost",
+    "name": "window_aspect_ratio",
+    "contract": "Result",
+    "signature": "def public window_aspect_ratio(window : SDL_Window?)"
+  },
+  {
+    "module": "sdl3_window_io_boost",
+    "name": "with_surface",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_surface(w,h : int; format : SDL_PixelFormat; blk : block<(surface : SDL_Surface?) : $Result<auto(TT); SdlError> >)"
+  },
+  {
+    "module": "sdl3_window_io_boost",
+    "name": "window_surface_vsync",
+    "contract": "Result",
+    "signature": "def public window_surface_vsync(window : SDL_Window?; var vsync : int&)"
+  },
+  {
+    "module": "sdl3_window_io_boost",
+    "name": "update_window_rects",
+    "contract": "Result",
+    "signature": "def public update_window_rects(window : SDL_Window?; rects : array<SDL_Rect>)"
+  },
+  {
+    "module": "sdl3_window_io_boost",
+    "name": "window_icc_profile",
+    "contract": "Result",
+    "signature": "def public window_icc_profile(window : SDL_Window?; var bytes : array<uint8>)"
+  },
+  {
+    "module": "sdl3_window_io_boost",
+    "name": "window_surface_vsync",
+    "contract": "Result",
+    "signature": "def public window_surface_vsync(window : SDL_Window?)"
+  },
+  {
+    "module": "sdl3_window_io_boost",
+    "name": "window_icc_profile",
+    "contract": "Result",
+    "signature": "def public window_icc_profile(window : SDL_Window?)"
+  }
+]

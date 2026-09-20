@@ -16,7 +16,7 @@ bgfx_gen, bgfx_ttf. Механизмы safe_addr и defer дополнитель
 **Результат последующего внедрения:** слой SDL3 уже реализован; его актуальное
 описание — в `sdl3-boost.md`. На закреплённом daScript тест показал, что panic
 пропускает defer/finally, хотя обычный и ранний return выполняют defer.
-Теперь SDL ошибки остаются bool/null; очистка использует script defer.
+Raw SDL ошибки остаются bool/null; boost использует Result/Option и script defer.
 Нативные catch/cleanup/rethrow мосты удалены; актуальный контракт —
 [error-handling.md](error-handling.md). Panic приложения не гарантирует очистку.
 safe_addr также отвергает ссылочные аргументы обёрток как "not a local value";
@@ -122,7 +122,7 @@ bgfx_init_s, устанавливает разрешение/VSYNC и вызыв
 Загрузка изображения поддерживает canfail: либо возвращает invalid handle,
 либо сообщает ошибку. Поиск uniform проверяет совместимость типа и размера.
 
-В SDL3 принята политика обычных bool/null/zero/error результатов и SDL_GetError.
+Raw SDL сохраняет bool/null/zero/error; boost преобразует их в Result/Option и копирует SDL_GetError до очистки.
 Очистка — через defer на обычном/раннем выходе; panic приложения её не гарантирует.
 Panic-политику этого BGFX примера в обвязку SDL не переносим.
 Следовать форме примера не означает гарантировать его поведение для всех
@@ -210,13 +210,18 @@ clone на владеющую обёртку окна как простое ко
 можно передавать без `<|`. Если у блока нет параметров, не нужен и `$()`:
 
 ```das
-with_sdl() {
-    with_window("Hello", 800, 600, SDL_WINDOW_RESIZABLE) $(window) {
-        window |> with_renderer() $(renderer) {
-            renderer |> clear()
-            renderer |> present()
+let result = with_sdl() {
+    return with_window("Hello", 800, 600, SDL_WINDOW_RESIZABLE) $(window : SDL_Window?) {
+        return window |> with_renderer() $(renderer : SDL_Renderer?) {
+            let cleared = renderer |> clear()
+            if (is_err(cleared)) { return cleared }
+            return renderer |> present()
         }
     }
+}
+if (is_err(result)) {
+    let error = unwrap_err(result)
+    print("{error.operation}: {error.message}\n")
 }
 ```
 

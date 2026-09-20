@@ -32,20 +32,26 @@
 #include "sdl3_renderer_final_api.h"
 #include "sdl3_surface_state.h"
 #include "sdl3_surface_pixels.h"
+#include "sdl3_rect.h"
+#include "sdl3_callback_types.h"
 #ifdef DASSDL3_TYPES_INCLUDE
 #include DASSDL3_TYPES_INCLUDE
 #else
 #include "generated/sdl3_types.inc"
 #endif
 #include "sdl3_texture_load.h"
+#include "sdl3_clipboard_hittest.h"
+#include "sdl3_result_adapters.h"
 #ifdef DASSDL3_TESTING
 #include "../tests/resource_probe.h"
+#include "../tests/clipboard_hittest_probe.h"
 #include "../tests/properties_probe.h"
 #include "../tests/diagnostics_probe.h"
 #include "../tests/input_probe.h"
 #include "../tests/audio_probe.h"
 #include "../tests/geometry_probe.h"
 #include "../tests/gpu_probe.h"
+#include "../tests/result_probe.h"
 #include "../tests/gpu_native_fences_probe.h"
 #include "../tests/gpu_raw_probe.h"
 #include "../tests/gpu_recording_probe.h"
@@ -125,6 +131,34 @@ public:
     addExtern<DAS_BIND_FUN(SDL_ConvertPixelsArray)>(*this,lib,"SDL_ConvertPixelsArray",SideEffects::worstDefault,"SDL_ConvertPixelsArray");
     addExtern<DAS_BIND_FUN(SDL_ConvertPixelsAndColorspaceArray)>(*this,lib,"SDL_ConvertPixelsAndColorspaceArray",SideEffects::worstDefault,"SDL_ConvertPixelsAndColorspaceArray");
     addExtern<DAS_BIND_FUN(SDL_PremultiplyAlphaArray)>(*this,lib,"SDL_PremultiplyAlphaArray",SideEffects::worstDefault,"SDL_PremultiplyAlphaArray");
+    addExtern<DAS_BIND_FUN(SDL_HasRectIntersectionRefs)>(*this,lib,"SDL_HasRectIntersectionRefs",SideEffects::worstDefault,"SDL_HasRectIntersectionRefs");
+    addExtern<DAS_BIND_FUN(SDL_RectsEqualRefs)>(*this,lib,"SDL_RectsEqualRefs",SideEffects::worstDefault,"SDL_RectsEqualRefs");
+    addExtern<DAS_BIND_FUN(SDL_RectEmptyRef)>(*this,lib,"SDL_RectEmptyRef",SideEffects::worstDefault,"SDL_RectEmptyRef");
+    addExtern<DAS_BIND_FUN(SDL_PointInRectRefs)>(*this,lib,"SDL_PointInRectRefs",SideEffects::worstDefault,"SDL_PointInRectRefs");
+    addExtern<DAS_BIND_FUN(SDL_GetRectIntersectionRefs)>(*this,lib,"SDL_GetRectIntersectionRefs",SideEffects::worstDefault,"SDL_GetRectIntersectionRefs");
+    addExtern<DAS_BIND_FUN(SDL_GetRectUnionRefs)>(*this,lib,"SDL_GetRectUnionRefs",SideEffects::worstDefault,"SDL_GetRectUnionRefs");
+    addExtern<DAS_BIND_FUN(SDL_GetRectAndLineIntersectionRefs)>(*this,lib,"SDL_GetRectAndLineIntersectionRefs",SideEffects::worstDefault,"SDL_GetRectAndLineIntersectionRefs");
+    addExtern<DAS_BIND_FUN(SDL_GetRectEnclosingPointsArray)>(*this,lib,"SDL_GetRectEnclosingPointsArray",SideEffects::worstDefault,"SDL_GetRectEnclosingPointsArray");
+    addExtern<DAS_BIND_FUN(SDL_GetRectEnclosingPointsAll)>(*this,lib,"SDL_GetRectEnclosingPointsAll",SideEffects::worstDefault,"SDL_GetRectEnclosingPointsAll");
+    addExtern<DAS_BIND_FUN(SDL_HasRectIntersectionFloatRefs)>(*this,lib,"SDL_HasRectIntersectionFloatRefs",SideEffects::worstDefault,"SDL_HasRectIntersectionFloatRefs");
+    addExtern<DAS_BIND_FUN(SDL_RectsEqualFloatRefs)>(*this,lib,"SDL_RectsEqualFloatRefs",SideEffects::worstDefault,"SDL_RectsEqualFloatRefs");
+    addExtern<DAS_BIND_FUN(SDL_RectEmptyFloatRef)>(*this,lib,"SDL_RectEmptyFloatRef",SideEffects::worstDefault,"SDL_RectEmptyFloatRef");
+    addExtern<DAS_BIND_FUN(SDL_PointInRectFloatRefs)>(*this,lib,"SDL_PointInRectFloatRefs",SideEffects::worstDefault,"SDL_PointInRectFloatRefs");
+    addExtern<DAS_BIND_FUN(SDL_GetRectIntersectionFloatRefs)>(*this,lib,"SDL_GetRectIntersectionFloatRefs",SideEffects::worstDefault,"SDL_GetRectIntersectionFloatRefs");
+    addExtern<DAS_BIND_FUN(SDL_GetRectUnionFloatRefs)>(*this,lib,"SDL_GetRectUnionFloatRefs",SideEffects::worstDefault,"SDL_GetRectUnionFloatRefs");
+    addExtern<DAS_BIND_FUN(SDL_GetRectAndLineIntersectionFloatRefs)>(*this,lib,"SDL_GetRectAndLineIntersectionFloatRefs",SideEffects::worstDefault,"SDL_GetRectAndLineIntersectionFloatRefs");
+    addExtern<DAS_BIND_FUN(SDL_GetRectEnclosingPointsFloatArray)>(*this,lib,"SDL_GetRectEnclosingPointsFloatArray",SideEffects::worstDefault,"SDL_GetRectEnclosingPointsFloatArray");
+    addExtern<DAS_BIND_FUN(SDL_GetRectEnclosingPointsFloatAll)>(*this,lib,"SDL_GetRectEnclosingPointsFloatAll",SideEffects::worstDefault,"SDL_GetRectEnclosingPointsFloatAll");
+    addExtern<DAS_BIND_FUN(SDL_RectToFRectRef)>(*this,lib,"SDL_RectToFRectRef",SideEffects::worstDefault,"SDL_RectToFRectRef");
+    addExtern<DAS_BIND_FUN(SDL_RectsEqualEpsilonRefs)>(*this,lib,"SDL_RectsEqualEpsilonRefs",SideEffects::worstDefault,"SDL_RectsEqualEpsilonRefs");
+    addExtern<DAS_BIND_FUN(SDL_SetClipboardDataCopy)>(*this,lib,"SDL_SetClipboardDataCopy",SideEffects::worstDefault,"SDL_SetClipboardDataCopy");
+    addExtern<DAS_BIND_FUN(SDL_GetClipboardTextCopy)>(*this,lib,"SDL_GetClipboardTextCopy",SideEffects::worstDefault,"SDL_GetClipboardTextCopy");
+    addExtern<DAS_BIND_FUN(SDL_GetPrimarySelectionTextCopy)>(*this,lib,"SDL_GetPrimarySelectionTextCopy",SideEffects::worstDefault,"SDL_GetPrimarySelectionTextCopy");
+    addExtern<DAS_BIND_FUN(SDL_GetClipboardDataCopy)>(*this,lib,"SDL_GetClipboardDataCopy",SideEffects::worstDefault,"SDL_GetClipboardDataCopy");
+    addExtern<DAS_BIND_FUN(SDL_GetClipboardMimeTypesCopy)>(*this,lib,"SDL_GetClipboardMimeTypesCopy",SideEffects::worstDefault,"SDL_GetClipboardMimeTypesCopy");
+    addExtern<DAS_BIND_FUN(SDL_SetWindowHitTestBlock)>(*this,lib,"SDL_SetWindowHitTestBlock",SideEffects::worstDefault,"SDL_SetWindowHitTestBlock");
+    addExtern<DAS_BIND_FUN(SDL_ClearWindowHitTestBlockChecked)>(*this,lib,"SDL_ClearWindowHitTestBlockChecked",SideEffects::worstDefault,"SDL_ClearWindowHitTestBlockChecked");
+    addExtern<DAS_BIND_FUN(SDL_ClearWindowHitTestBlock)>(*this,lib,"SDL_ClearWindowHitTestBlock",SideEffects::worstDefault,"SDL_ClearWindowHitTestBlock");
     addExtern<DAS_BIND_FUN(SDL_GetSurfaceColorKeyRef)>(*this,lib,"SDL_GetSurfaceColorKeyRef",SideEffects::worstDefault,"SDL_GetSurfaceColorKeyRef");
     addExtern<DAS_BIND_FUN(SDL_GetSurfaceColorModRef)>(*this,lib,"SDL_GetSurfaceColorModRef",SideEffects::worstDefault,"SDL_GetSurfaceColorModRef");
     addExtern<DAS_BIND_FUN(SDL_GetSurfaceAlphaModRef)>(*this,lib,"SDL_GetSurfaceAlphaModRef",SideEffects::worstDefault,"SDL_GetSurfaceAlphaModRef");
@@ -203,6 +237,16 @@ public:
         addExtern<DAS_BIND_FUN(SDL_LogWarnText)>(*this, lib, "SDL_LogWarnText", SideEffects::worstDefault, "SDL_LogWarnText");
         addExtern<DAS_BIND_FUN(SDL_LogErrorText)>(*this, lib, "SDL_LogErrorText", SideEffects::worstDefault, "SDL_LogErrorText");
         addExtern<DAS_BIND_FUN(SDL_LogCriticalText)>(*this, lib, "SDL_LogCriticalText", SideEffects::worstDefault, "SDL_LogCriticalText");
+        addExtern<DAS_BIND_FUN(SDL_GetAppMetadataOptionalCopy)>(*this,lib,"SDL_GetAppMetadataOptionalCopy",SideEffects::worstDefault,"SDL_GetAppMetadataOptionalCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetDisplayNameValue)>(*this,lib,"SDL_GetDisplayNameValue",SideEffects::worstDefault,"SDL_GetDisplayNameValue");
+        addExtern<DAS_BIND_FUN(SDL_GetWindowTitleValue)>(*this,lib,"SDL_GetWindowTitleValue",SideEffects::worstDefault,"SDL_GetWindowTitleValue");
+        addExtern<DAS_BIND_FUN(SDL_GetRenderDriverValue)>(*this,lib,"SDL_GetRenderDriverValue",SideEffects::worstDefault,"SDL_GetRenderDriverValue");
+        addExtern<DAS_BIND_FUN(SDL_GetRendererNameValue)>(*this,lib,"SDL_GetRendererNameValue",SideEffects::worstDefault,"SDL_GetRendererNameValue");
+        addExtern<DAS_BIND_FUN(SDL_GetClipboardTextValue)>(*this,lib,"SDL_GetClipboardTextValue",SideEffects::worstDefault,"SDL_GetClipboardTextValue");
+        addExtern<DAS_BIND_FUN(SDL_GetPrimarySelectionTextValue)>(*this,lib,"SDL_GetPrimarySelectionTextValue",SideEffects::worstDefault,"SDL_GetPrimarySelectionTextValue");
+        addExtern<DAS_BIND_FUN(SDL_GetGPUShaderEntryPointValue)>(*this,lib,"SDL_GetGPUShaderEntryPointValue",SideEffects::worstDefault,"SDL_GetGPUShaderEntryPointValue");
+        addExtern<DAS_BIND_FUN(SDL_GetPropertyStringValue)>(*this,lib,"SDL_GetPropertyStringValue",SideEffects::worstDefault,"SDL_GetPropertyStringValue");
+        addExtern<DAS_BIND_FUN(SDL_GetHintOptionalCopy)>(*this, lib, "SDL_GetHintOptionalCopy", SideEffects::worstDefault, "SDL_GetHintOptionalCopy");
         addExtern<DAS_BIND_FUN(SDL_GetHintCopy)>(*this, lib, "SDL_GetHintCopy", SideEffects::worstDefault, "SDL_GetHintCopy");
         addExtern<DAS_BIND_FUN(SDL_GetAppMetadataPropertyCopy)>(*this, lib, "SDL_GetAppMetadataPropertyCopy", SideEffects::worstDefault, "SDL_GetAppMetadataPropertyCopy");
         addExtern<DAS_BIND_FUN(SDL_ClearAppMetadataProperty)>(*this, lib, "SDL_ClearAppMetadataProperty", SideEffects::worstDefault, "SDL_ClearAppMetadataProperty");
@@ -487,7 +531,16 @@ public:
         addExtern<DAS_BIND_FUN(sdl3_test::input_event), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDLTestInputEvent", SideEffects::worstDefault, "sdl3_test::input_event")->args({"type", "window_id"});
         addExtern<DAS_BIND_FUN(sdl3_test::poison_event), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDLTestPoisonEvent", SideEffects::none, "sdl3_test::poison_event");
         addExtern<DAS_BIND_FUN(sdl3_test::mutate_input_text)>(*this, lib, "SDLTestMutateInputText", SideEffects::worstDefault, "sdl3_test::mutate_input_text");
+        addExtern<DAS_BIND_FUN(sdl3_test::result_states)>(*this,lib,"SDLTestResultStates",SideEffects::worstDefault,"sdl3_test::result_states");
         addExtern<DAS_BIND_FUN(sdl3_test::reset)>(*this, lib, "SDLTestReset", SideEffects::worstDefault, "sdl3_test::reset");
+        addExtern<DAS_BIND_FUN(sdl3_callback_test::reset)>(*this,lib,"SDLTestCallbacksReset",SideEffects::worstDefault,"sdl3_callback_test::reset");
+        addExtern<DAS_BIND_FUN(sdl3_callback_test::cleanup_count)>(*this,lib,"SDLTestClipboardCleanupCount",SideEffects::worstDefault,"sdl3_callback_test::cleanup_count");
+        addExtern<DAS_BIND_FUN(sdl3_callback_test::request_count)>(*this,lib,"SDLTestClipboardRequestCount",SideEffects::worstDefault,"sdl3_callback_test::request_count");
+        addExtern<DAS_BIND_FUN(sdl3_callback_test::hit_count)>(*this,lib,"SDLTestHitCount",SideEffects::worstDefault,"sdl3_callback_test::hit_count");
+        addExtern<DAS_BIND_FUN(sdl3_callback_test::provider)>(*this,lib,"SDLTestClipboardProvider",SideEffects::worstDefault,"sdl3_callback_test::provider");
+        addExtern<DAS_BIND_FUN(sdl3_callback_test::cleaner)>(*this,lib,"SDLTestClipboardCleaner",SideEffects::worstDefault,"sdl3_callback_test::cleaner");
+        addExtern<DAS_BIND_FUN(sdl3_callback_test::hitter)>(*this,lib,"SDLTestHitCallback",SideEffects::worstDefault,"sdl3_callback_test::hitter");
+        addExtern<DAS_BIND_FUN(sdl3_callback_test::probe)>(*this,lib,"SDLTestWindowHit",SideEffects::worstDefault,"sdl3_callback_test::probe");
         addExtern<DAS_BIND_FUN(sdl3_test::cleanup_trace)>(*this, lib, "SDLTestCleanupTrace", SideEffects::worstDefault, "sdl3_test::cleanup_trace");
         addExtern<DAS_BIND_FUN(sdl3_test::watch_surface)>(*this, lib, "SDLTestWatchSurface", SideEffects::worstDefault, "sdl3_test::watch_surface");
         addExtern<DAS_BIND_FUN(sdl3_test::watch_texture)>(*this, lib, "SDLTestWatchTexture", SideEffects::worstDefault, "sdl3_test::watch_texture");

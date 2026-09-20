@@ -16,7 +16,10 @@ verified; Properties now has 19 generated functions plus copied enumeration; ret
 cleanup callback remains pending. Read docs/properties.md for the pinned numeric
 string-cache/CopyProperties double-free defect and copied-string adapter. Hints/Init adds 12 generated functions, copied getters and subsystem defer scopes;
 see docs/init-hints.md for pending callbacks and string constants. Next
-library-wide queue: follow docs/full-binding-roadmap.md after Surface/Pixels.
+library-wide queue: P3 Events/input. Full Result/Option migration is locally validated;
+see docs/result-option-plan.md for contracts and verification. P2 function declarations are connected, with
+RenderDebugTextFormat limited to fixed text and 20 GL/EGL Video functions explicitly
+deferred to P8. Rect/Clipboard/hit-test contracts: docs/rect-clipboard-hittest.md.
 All 58 Surface and 11 Pixels functions now have raw signatures; see
 docs/surface-pixels.md for memory, palette and BMP ownership limits. Surface state adds 16 raw functions and scalar/rect adapters;
 see docs/surface-state.md. Choose cohesive behavioral packages, not a fixed function
@@ -40,8 +43,8 @@ Software renderer/primitives adds 10 raw functions; see docs/renderer-primitives
 for borrowed surface lifetime, array adapters and CPU pixel tests. Window IO adds 25 Video + 3 Surface
 raw functions; see docs/window-io.md for borrowed surfaces, conditional capabilities
 and the pinned NULL shape-removal defect. The raw ICC getter lacks native window
-validation; its copy adapter rejects NULL, while live-window/video preconditions remain. Video is 88/109; GL/EGL and hit-test
-callbacks remain separate.
+validation; its copy adapter rejects NULL, while live-window/video preconditions remain. Video is 89/109; remaining GL/EGL is P8. Hit-test callbacks are lexical scopes;
+Clipboard uses native-owned copied data or explicit native callback addresses.
 Window creation/state adds 27 raw functions and defer scopes; parent lifetime
 preconditions are documented in docs/window-state.md. Video discovery adds 31 raw
 queries and copied/ref adapters; see docs/video-discovery.md for native lifetimes. Error/log/time adds 22 raw functions
@@ -51,6 +54,15 @@ documentation index: docs/README.md. Run main, parity/AOT and consumer checks fo
 binding changes; after fixes repeat affected tests rather than every suite
 without a reason. No repeated go-ahead requests. No commit or publication without
 a user request.
+
+Callback rules: native callback arguments are C function addresses, not script Func/Block
+values. Only explicitly reviewed callback APIs bypass dasclang's callback filter.
+The two callback setters use generated AOT cpp names for native address casts;
+keep both generators in sync. with_window_hit_test pins the lexical block/context
+until deferred unregister; keep its never_inline annotation so AOT temporaries live
+through the entire scope call. Do not store arbitrary script blocks for later callbacks.
+Clipboard copy data is native-owned through SDL cleanup even after backend failure.
+Tests that set clipboard data must use SDL_VIDEODRIVER=dummy.
 
 ## Sources and generation
 
@@ -75,8 +87,16 @@ SDL errors are return values, never panic/verify in boost wrappers. No script
 try/recover or native protected invocation/cleanup bridge. Read docs/error-handling.md.
 Use daslib/defer and direct block calls. Enter a nested cleanup scope AFTER a
 successful acquisition: defer is hoisted into the enclosing finally section.
-with_* returns acquisition success and skips its void block on failure. Preserve
-bool/null/zero/error sentinels and output references; check results at call sites.
+Boost uses standard Result/Option under canonical names; there are no legacy bool
+scopes, void-block scopes, *_result or *_status_result aliases. Scope blocks return
+Result; use sdl_ok() for successful void work. Preserve primary body error if cleanup
+also fails. Raw SDL signatures/sentinels stay unchanged. Optional event polling
+keeps its borrowed SDL_Event out parameter; do not claim owned payloads. Pure
+predicates remain bool; push_event retains SDL's ambiguous acceptance bool.
+Read docs/result-option-plan.md and docs/error-handling.md for the contract inventory.
+Capture errors before cleanup; pending/absent/unsupported are not SDL failures.
+Native swapchain commands with an acquired texture must submit even on body Err;
+SDL forbids cancellation after swapchain acquisition. None skips the body.
 Pinned panic skips defer/finally: do not promise cleanup after application panic.
 Test normal/early returns, SDL error results, partial initialization and cleanup order.
 Use trailing gen2 blocks: with_sdl() { ... }, with_window(...) $(window) { ... }.

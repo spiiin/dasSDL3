@@ -24,29 +24,35 @@ def compute_values(device : SDL_GPUDevice?) : bool {
             {
                 defer() { SDL_ReleaseGPUTransferBuffer(device,download) }
                 var finished=false
-                let acquired=with_native_gpu_commands(device) $(var command) {
+                let acquired=with_native_gpu_commands(device) $(var command : SDL_GPUCommandBuffer?&) {
                     var textures : array<SDL_GPUStorageTextureReadWriteBinding>
                     var buffers : array<SDL_GPUStorageBufferReadWriteBinding>; resize(buffers,1); buffers[0].buffer=output
                     var uniforms : array<uint8>; resize(uniforms,16); uniforms[0]=uint8(10)
-                    if (!SDL_PushGPUComputeUniformDataArray(command,0u,uniforms)) { return }
-                    let begun=with_native_gpu_compute_pass(command,textures,buffers) $(compute_pass) {
+                    if (!SDL_PushGPUComputeUniformDataArray(command,0u,uniforms)) {return err(sdl_error("49_gpu_native_compute"),type<SdlUnit>)}
+                    let begun=with_native_gpu_compute_pass(command,textures,buffers) $(compute_pass : SDL_GPUComputePass?) {
                         SDL_BindGPUComputePipeline(compute_pass,pipeline)
                         SDL_DispatchGPUCompute(compute_pass,2u,1u,1u)
+
+                        return sdl_ok()
                     }
-                    if (!begun) { return }
-                    let copied=with_native_gpu_copy_pass(command) $(copy_pass) {
+                    if (is_err(begun)) { return err(unwrap_err(begun),type<SdlUnit>) }
+                    let copied=with_native_gpu_copy_pass(command) $(copy_pass : SDL_GPUCopyPass?) {
                         var source : SDL_GPUBufferRegion; source.buffer=output; source.size=32u
                         var destination : SDL_GPUTransferBufferLocation; destination.transfer_buffer=download
                         SDL_DownloadFromGPUBufferRef(copy_pass,source,destination)
+
+                        return sdl_ok()
                     }
-                    if (!copied) { return }
-                    var fence=native_gpu_submit_fence(command)
-                    if (fence==null) { return }
+                    if (is_err(copied)) { return err(unwrap_err(copied),type<SdlUnit>) }
+                    var submitted <- native_gpu_submit_fence(command)
+                    if(is_err(submitted)){return err(unwrap_err(submitted),type<SdlUnit>)}
+                    var fence=move_unwrap(submitted)
+                    if (fence==null) {return err(sdl_error("49_gpu_native_compute"),type<SdlUnit>)}
                     var fences : array<SDL_GPUFence?>; resize(fences,1); fences[0]=fence
-                    if (!SDL_WaitForGPUFencesArray(device,true,fences)) { return }
+                    if (!SDL_WaitForGPUFencesArray(device,true,fences)) {return err(sdl_error("49_gpu_native_compute"),type<SdlUnit>)}
                     SDL_ReleaseGPUFence(device,fence)
                     var bytes : array<uint8>; resize(bytes,32)
-                    if (!SDL_ReadGPUTransferBufferBytes(device,download,32u,0u,bytes)) { return }
+                    if (!SDL_ReadGPUTransferBufferBytes(device,download,32u,0u,bytes)) {return err(sdl_error("49_gpu_native_compute"),type<SdlUnit>)}
                     finished=true
                     for (i in 0..8) {
                         let n=uint(bytes[4*i])|(uint(bytes[4*i+1])<<8u)|(uint(bytes[4*i+2])<<16u)|(uint(bytes[4*i+3])<<24u)
@@ -54,8 +60,10 @@ def compute_values(device : SDL_GPUDevice?) : bool {
                         print("{n} ")
                     }
                     print("\n")
+
+                    return sdl_ok()
                 }
-                return acquired && finished
+                return is_ok(acquired) && finished
             }
         }
     }
@@ -65,9 +73,13 @@ def compute_values(device : SDL_GPUDevice?) : bool {
 def main(smoke : bool) : int {
     var success=false
     let initialized=with_sdl() {
-        let created=with_native_gpu_device(GPU_SHADER_FORMATS,true,"") $(device) { success=compute_values(device) }
-        if (!created) { print("GPU device: {SDL_GetError()}\n") }
+        let created=with_native_gpu_device(GPU_SHADER_FORMATS,true,"") $(device : SDL_GPUDevice?) { success=compute_values(device)
+            return sdl_ok()
+        }
+        if (is_err(created)) { print("GPU device: {unwrap_err(created).message}\n") ; return err(unwrap_err(created),type<SdlUnit>) }
+
+        return sdl_ok()
     }
-    if (!initialized || !success) { print("Native compute: {SDL_GetError()}\n"); return 1 }
+    if (!is_ok(initialized) || !success) { print("Native compute: {is_err(initialized) ? unwrap_err(initialized).message : SDL_GetErrorCopy()}\n"); return 1 }
     print("Native compute PASS\n"); return 0
 }

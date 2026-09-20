@@ -117,8 +117,9 @@ def generate(clang, include):
         argnames = [n.get("name", f"arg{i}") for i, n in enumerate(args)]
         signature = decl["type"]["qualType"]
         manifest[name] = {"signature": signature, "arguments": argnames}
+        cpp_name = name + "Address" if name in ("SDL_SetClipboardData", "SDL_SetWindowHitTest") else name
         registrations.append(f'// {signature}\naddExtern<DAS_BIND_FUN({name})>(*this, lib, "{name}", '
-                             f'SideEffects::worstDefault, "{name}")')
+                             f'SideEffects::worstDefault, "{cpp_name}")')
         if argnames:
             registrations.append("->args({" + ", ".join(json.dumps(a) for a in argnames) + "})")
         registrations.append(";\n")

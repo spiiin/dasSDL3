@@ -10,10 +10,11 @@ Operations require a live scoped device, a live window claimed by that device,
 and the main thread. The adapter checks windows against SDL_GetWindows; pointer
 address reuse is not a generation check, so borrowed pointers must not outlive scope.
 
-- gpu_supports_present_mode/composition return false for unsupported or invalid
-  input; native Checked queries preserve -1/0/1. No panic conversion.
-- gpu_swapchain_format returns the current format or INVALID on failure.
-- gpu_try_configure_swapchain checks support before mutation and returns bool.
+- gpu_supports_present_mode/composition return Result<bool,SdlError>: Ok(false)
+  means unsupported; invalid input is Err. Native Checked queries retain -1/0/1.
+- gpu_swapchain_format returns Result<format,SdlError>.
+- gpu_configure_swapchain checks support before mutation and returns
+  Result<bool,SdlError>; Ok(false) means unsupported.
   SDL setter failure retains SDL's state semantics; no transactional rollback.
 - gpu_frames_in_flight accepts 1..3, device-wide. SDL stalls/flushes on change;
   this is not an FPS limiter or measured latency claim.

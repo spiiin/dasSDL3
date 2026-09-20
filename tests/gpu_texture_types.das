@@ -4,21 +4,23 @@ require dassdl3/sdl3_gpu_utilities_boost
 def read_equal(device : SDL_GPUDevice?; id : uint64; sub : uint2; rect : uint4; expected : array<uint8>) {
     var actual : array<uint8>
     resize(actual,length(expected))
-    let scope_ok_0 = device |> with_gpu_texture_readback(id,sub,rect) $(ticket) {
-        device |> gpu_wait_readback(ticket)
-        device |> gpu_readback_bytes(ticket,actual)
-    }
+    let scope_ok_0 = device |> with_gpu_texture_readback(id,sub,rect) $(ticket : uint64) {
+        is_ok(device |> gpu_wait_readback(ticket))
+        is_ok(device |> gpu_readback_bytes(ticket,actual))
+
+        return sdl_ok()
+    } |> is_ok
     verify(scope_ok_0)
     for (i in 0 .. length(actual)) { verify(actual[i] == expected[i]) }
 }
 def check_bc(device : SDL_GPUDevice?; format : uint) {
-    if (!(device |> gpu_supports_format(format,SDL_GPU_TEXTURETYPE_2D_ARRAY,SDL_GPU_TEXTUREUSAGE_SAMPLER))) {
+    if (!(unwrap_or(device |> gpu_supports_format(format,SDL_GPU_TEXTURETYPE_2D_ARRAY,SDL_GPU_TEXTUREUSAGE_SAMPLER), false))) {
         verify(SDL_CreateGPUTypedTransferTexture(device,12u,8u,2u,4u,format,SDL_GPU_TEXTURETYPE_2D_ARRAY) == 0ul)
         print("BC optional format {format} unsupported\n")
         return
     }
     print("BC test format {format}\n")
-    let block_bytes = gpu_format_block_bytes(format)
+    let block_bytes = unwrap_or(gpu_format_block_bytes(format), 0u)
     let row = 3u*block_bytes
     let pitch = row+3u
     var source, tight, zero, one : array<uint8>
@@ -27,34 +29,38 @@ def check_bc(device : SDL_GPUDevice?; format : uint) {
     for (y in 0 .. 2) { for (x in 0 .. int(row)) { tight[y*int(row)+x] = source[y*int(pitch)+x] } }
     for (i in 0 .. length(one)) { one[i] = uint8(i*3+7) }
     var stale = 0ul
-    let scope_ok_1 = device |> with_gpu_transfer_texture(12u,8u,2u,4u,format,SDL_GPU_TEXTURETYPE_2D_ARRAY) $(a) {
+    let scope_ok_1 = device |> with_gpu_transfer_texture(12u,8u,2u,4u,format,SDL_GPU_TEXTURETYPE_2D_ARRAY) $(a : uint64) {
         stale = a
-        let scope_ok_2 = device |> with_gpu_transfer_texture(12u,8u,2u,4u,format,SDL_GPU_TEXTURETYPE_2D_ARRAY) $(b) {
+        let scope_ok_2 = device |> with_gpu_transfer_texture(12u,8u,2u,4u,format,SDL_GPU_TEXTURETYPE_2D_ARRAY) $(b : uint64) {
             read_equal(device,a,uint2(0u),uint4(0u,0u,12u,8u),zero)
-            device |> gpu_upload_texture(a,uint2(0u,1u),uint4(0u,0u,12u,8u),source,pitch)
+            is_ok(device |> gpu_upload_texture(a,uint2(0u,1u),uint4(0u,0u,12u,8u),source,pitch))
             read_equal(device,a,uint2(0u,1u),uint4(0u,0u,12u,8u),tight)
             verify(!SDL_UploadGPUTextureRegion(device,a,uint2(0u),uint4(1u,0u,4u,4u),one,block_bytes,false))
             verify(!SDL_UploadGPUTextureRegion(device,a,uint2(0u),uint4(0u,0u,3u,4u),one,block_bytes,false))
             verify(!SDL_UploadGPUTextureRegion(device,a,uint2(0u),uint4(0u,0u,4u,4u),one,block_bytes-1u,false))
             verify(!SDL_UploadGPUTextureRegion(device,a,uint2(0u),uint4(0u,0u,12u,8u),source,pitch,true))
             verify(SDL_RequestGPUTextureReadback(device,a,uint2(0u),uint4(0u,1u,4u,4u)) == 0ul)
-            device |> gpu_copy_texture(a,uint2(0u,1u),uint4(4u,4u,4u,4u),b,uint2(0u),uint2(8u,0u))
+            is_ok(device |> gpu_copy_texture(a,uint2(0u,1u),uint4(4u,4u,4u,4u),b,uint2(0u),uint2(8u,0u)))
             var copied : array<uint8>
             resize(copied,int(row*2u))
             for (i in 0 .. int(block_bytes)) { copied[int(2u*block_bytes)+i] = tight[int(row+block_bytes)+i] }
             read_equal(device,b,uint2(0u),uint4(0u,0u,12u,8u),copied)
             read_equal(device,b,uint2(0u,1u),uint4(0u,0u,12u,8u),zero)
             // Mip 1 is 6x4: final 2-pixel edge occupies one complete block_bytes.
-            device |> gpu_upload_texture(a,uint2(1u,1u),uint4(4u,0u,2u,4u),one,block_bytes)
+            is_ok(device |> gpu_upload_texture(a,uint2(1u,1u),uint4(4u,0u,2u,4u),one,block_bytes))
             print("BC mip edge copy\n")
-            device |> gpu_copy_texture(a,uint2(1u,1u),uint4(4u,0u,2u,4u),b,uint2(1u),uint2(4u,0u))
+            is_ok(device |> gpu_copy_texture(a,uint2(1u,1u),uint4(4u,0u,2u,4u),b,uint2(1u),uint2(4u,0u)))
             read_equal(device,b,uint2(1u),uint4(4u,0u,2u,4u),one)
             // Smallest mips still contain a full compressed block_bytes.
-            device |> gpu_upload_texture(a,uint2(3u,1u),uint4(0u,0u,1u,1u),one,block_bytes)
+            is_ok(device |> gpu_upload_texture(a,uint2(3u,1u),uint4(0u,0u,1u,1u),one,block_bytes))
             read_equal(device,a,uint2(3u,1u),uint4(0u,0u,1u,1u),one)
-        }
+
+            return sdl_ok()
+        } |> is_ok
         verify(scope_ok_2)
-    }
+
+        return sdl_ok()
+    } |> is_ok
     verify(scope_ok_1)
     verify(SDL_RequestGPUTextureReadback(device,stale,uint2(0u),uint4(0u,0u,4u,4u)) == 0ul)
 }
@@ -63,11 +69,11 @@ def check_cube(device : SDL_GPUDevice?; format, count, levels, texture_type : ui
     let pitch = bc ? 16u : 32u
     var data, zero : array<uint8>
     resize(data,bc ? 32 : 256); resize(zero,length(data))
-    let scope_ok_3 = device |> with_gpu_transfer_texture(8u,8u,count,levels,format,texture_type) $(cube) {
+    let scope_ok_3 = device |> with_gpu_transfer_texture(8u,8u,count,levels,format,texture_type) $(cube : uint64) {
         for (face in 0u .. count) {
             read_equal(device,cube,uint2(0u,face),uint4(0u,0u,8u,8u),zero)
             for (i in 0 .. length(data)) { data[i] = uint8(int(face)*13+i) }
-            device |> gpu_upload_texture(cube,uint2(0u,face),uint4(0u,0u,8u,8u),data,pitch)
+            is_ok(device |> gpu_upload_texture(cube,uint2(0u,face),uint4(0u,0u,8u,8u),data,pitch))
         }
         for (face in 0u .. count) {
             for (i in 0 .. length(data)) { data[i] = uint8(int(face)*13+i) }
@@ -77,17 +83,19 @@ def check_cube(device : SDL_GPUDevice?; format, count, levels, texture_type : ui
         if (levels > 1u) {
             var small : array<uint8>
             resize(small,bc ? 8 : 4)
-            device |> gpu_upload_texture(cube,uint2(3u,count-1u),uint4(0u,0u,1u,1u),small,bc ? 8u : 4u)
+            is_ok(device |> gpu_upload_texture(cube,uint2(3u,count-1u),uint4(0u,0u,1u,1u),small,bc ? 8u : 4u))
             read_equal(device,cube,uint2(3u,count-1u),uint4(0u,0u,1u,1u),small)
         }
-    }
+
+        return sdl_ok()
+    } |> is_ok
     verify(scope_ok_3)
 }
 [export]
 def main(smoke : bool) : int {
     var available = false
     let scope_ok_4 = with_sdl() {
-        available = try_with_gpu_device(GPU_SHADER_FORMATS,true,"") $(device) {
+        available = with_gpu_device(GPU_SHADER_FORMATS,true,"") $(device : SDL_GPUDevice?) {
             let rgba = SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM
             verify(SDL_CreateGPUTypedTransferTexture(device,4u,4u,1u,1u,rgba,SDL_GPU_TEXTURETYPE_3D) == 0ul)
             verify(SDL_CreateGPUTypedTransferTexture(device,4u,8u,6u,1u,rgba,SDL_GPU_TEXTURETYPE_CUBE) == 0ul)
@@ -105,10 +113,10 @@ def main(smoke : bool) : int {
             var escaped = 0ul
             var caught = false
             {
-                let scope_ok_5 = device |> with_gpu_transfer_texture(4u,4u,6u,1u,rgba,SDL_GPU_TEXTURETYPE_CUBE) $(cube) {
+                let scope_ok_5 = device |> with_gpu_transfer_texture(4u,4u,6u,1u,rgba,SDL_GPU_TEXTURETYPE_CUBE) $(cube : uint64) {
                     escaped = cube
-                    caught = !set_title(null,"expected SDL failure"); return
-                }
+                    caught = !is_ok(set_title(null,"expected SDL failure")); return sdl_ok()
+                } |> is_ok
                 verify(scope_ok_5)
             }
             verify(caught)
@@ -118,22 +126,28 @@ def main(smoke : bool) : int {
             var face, result : array<uint8>
             resize(face,64); resize(result,64)
             for (i in 0 .. 64) { face[i] = uint8(i*3) }
-            device |> gpu_upload_texture(cube,uint2(0u,5u),uint4(0u,0u,4u,4u),face,16u)
+            is_ok(device |> gpu_upload_texture(cube,uint2(0u,5u),uint4(0u,0u,4u,4u),face,16u))
             let ticket = SDL_RequestGPUTextureReadback(device,cube,uint2(0u,5u),uint4(0u,0u,4u,4u))
             verify(ticket != 0ul)
-            let scope_ok_6 = with_gpu_device() $(other) {
+            let scope_ok_6 = with_gpu_device() $(other : SDL_GPUDevice?) {
                 verify(SDL_RequestGPUTextureReadback(other,cube,uint2(0u),uint4(0u,0u,4u,4u)) == 0ul)
                 verify(!SDL_ReleaseGPUTransferTexture(other,cube))
-            }
+
+                return sdl_ok()
+            } |> is_ok
             verify(scope_ok_6)
             verify(SDL_ReleaseGPUTransferTexture(device,cube))
-            device |> gpu_wait_readback(ticket)
-            device |> gpu_readback_bytes(ticket,result)
+            is_ok(device |> gpu_wait_readback(ticket))
+            is_ok(device |> gpu_readback_bytes(ticket,result))
             for (i in 0 .. 64) { verify(result[i] == face[i]) }
             verify(SDL_ReleaseGPUReadback(device,ticket))
             print("BC blocks and cube face/mip roundtrips PASS: {SDL_GetGPUDeviceDriver(device)}\n")
-        }
-    }
+
+            return sdl_ok()
+        } |> is_ok
+
+        return sdl_ok()
+    } |> is_ok
     verify(scope_ok_4)
     return available ? 0 : 77
 }

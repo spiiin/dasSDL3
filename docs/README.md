@@ -64,3 +64,7 @@
 - [Surface state](surface-state.md): properties, colorspace, RLE, color key, modulation, blending and clipping.
 
 - [Surface and Pixels](surface-pixels.md): full native function inventory, palette/image lifetimes, blits, buffers and BMP IO.
+
+- [Rect, Clipboard and hit tests](rect-clipboard-hittest.md): geometry refs, copied clipboard data, native callbacks and lexical script callback lifetime.
+
+Result/Option boost API: [contracts and migration plan](result-option-plan.md).

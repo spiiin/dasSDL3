@@ -64,16 +64,22 @@ def early_return(device : SDL_GPUDevice?) {
 def main(smoke : bool) : int {
     var available = false
     let initialized = with_sdl() {
-        available = try_with_gpu_device(GPU_SHADER_FORMATS,true,"") $(device) {
+        available = with_gpu_device(GPU_SHADER_FORMATS,true,"") $(device : SDL_GPUDevice?) {
             exercise(device)
             early_return(device)
             // Raw handles are deliberately not checked IDs. Never dereference stale/foreign handles.
-            let nested = try_with_gpu_device(GPU_SHADER_FORMATS,true,"") $(other) { exercise(other) }
+            let nested = with_gpu_device(GPU_SHADER_FORMATS,true,"") $(other : SDL_GPUDevice?) { exercise(other)
+                return sdl_ok()
+            } |> is_ok
             verify(nested)
             exercise(device)
             print("Native command/fence lifecycle PASS: {SDL_GetGPUDeviceDriver(device)}\n")
-        }
-    }
+
+            return sdl_ok()
+        } |> is_ok
+
+        return sdl_ok()
+    } |> is_ok
     verify(initialized)
     return available ? 0 : 77
 }

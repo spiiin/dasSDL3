@@ -2,16 +2,16 @@ options gen2
 require dassdl3/sdl3_gpu_formats_boost
 
 def check_format(device : SDL_GPUDevice?; format : SDL_GPUTextureFormat) {
-    verify(SDL_GPUTextureFormatTexelBlockSize(format) == gpu_format_block_bytes(uint(format)))
-    verify(SDL_CalculateGPUTextureFormatSize(format,7u,5u,2u) == gpu_format_bytes(uint(format),7u,5u,2u))
+    verify(SDL_GPUTextureFormatTexelBlockSize(format) == unwrap_or(gpu_format_block_bytes(uint(format)), 0u))
+    verify(SDL_CalculateGPUTextureFormatSize(format,7u,5u,2u) == unwrap_or(gpu_format_bytes(uint(format),7u,5u,2u), 0u))
     verify(SDL_GPUTextureSupportsFormat(device,format,SDL_GPUTextureType.TEXTURETYPE_2D,SDL_GPU_TEXTUREUSAGE_SAMPLER)
-        == gpu_supports_format(device,uint(format),SDL_GPU_TEXTURETYPE_2D,SDL_GPU_TEXTUREUSAGE_SAMPLER))
+        == unwrap_or(gpu_supports_format(device,uint(format),SDL_GPU_TEXTURETYPE_2D,SDL_GPU_TEXTUREUSAGE_SAMPLER), false))
     verify(SDL_GPUTextureSupportsFormat(device,format,SDL_GPUTextureType.TEXTURETYPE_2D_ARRAY,SDL_GPU_TEXTUREUSAGE_SAMPLER)
-        == gpu_supports_format(device,uint(format),SDL_GPU_TEXTURETYPE_2D_ARRAY,SDL_GPU_TEXTUREUSAGE_SAMPLER))
+        == unwrap_or(gpu_supports_format(device,uint(format),SDL_GPU_TEXTURETYPE_2D_ARRAY,SDL_GPU_TEXTUREUSAGE_SAMPLER), false))
 }
 def check_samples(device : SDL_GPUDevice?; count : SDL_GPUSampleCount) {
     let format = SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM
-    verify(SDL_GPUTextureSupportsSampleCount(device,format,count) == gpu_supports_samples(device,uint(format),uint(count)))
+    verify(SDL_GPUTextureSupportsSampleCount(device,format,count) == unwrap_or(gpu_supports_samples(device,uint(format),uint(count)), false))
 }
 // Raw-binding lifetime test: the descriptor is borrowed only during creation.
 // Successful handles are released before assertions or any other script calls.
@@ -47,7 +47,7 @@ def main(smoke : bool) : int {
     verify(SDL_CalculateGPUTextureFormatSize(SDL_GPUTextureFormat.TEXTUREFORMAT_BC1_RGBA_UNORM,7u,5u,2u) == 64u)
     var available = false
     let scope_ok_0 = with_sdl() {
-        available = try_with_gpu_device(GPU_SHADER_FORMATS,true,"") $(device) {
+        available = with_gpu_device(GPU_SHADER_FORMATS,true,"") $(device : SDL_GPUDevice?) {
             check_samplers(device)
             check_format(device,SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM)
             check_format(device,SDL_GPUTextureFormat.TEXTUREFORMAT_B8G8R8A8_UNORM)
@@ -58,8 +58,12 @@ def main(smoke : bool) : int {
             check_samples(device,SDL_GPUSampleCount.SAMPLECOUNT_4)
             check_samples(device,SDL_GPUSampleCount.SAMPLECOUNT_8)
             print("Generated typed GPU queries PASS: {SDL_GetGPUDeviceDriver(device)}\n")
-        }
-    }
+
+            return sdl_ok()
+        } |> is_ok
+
+        return sdl_ok()
+    } |> is_ok
     verify(scope_ok_0)
     return available ? 0 : 77
 }

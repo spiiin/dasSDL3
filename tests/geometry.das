@@ -5,13 +5,15 @@ require daslib/rtti
 require daslib/strings_boost
 
 def read_geometry_image(renderer : SDL_Renderer?; var bytes : array<uint8>) {
-    let scope_ok_0 = renderer |> with_read_pixels() $(surface) {
+    let scope_ok_0 = renderer |> with_read_pixels() $(surface : SDL_Surface?) {
         var query_result_1 : int2
-        verify(surface_size(surface,query_result_1))
+        verify(is_ok(surface_size(surface,query_result_1)))
         let size = query_result_1
-        bytes |> resize(rgba8_buffer_size(size.x, size.y, size.x * 4))
-        surface |> copy_surface_rgba8(bytes, size.x * 4)
-    }
+        bytes |> resize(unwrap_or(rgba8_buffer_size(size.x, size.y, size.x * 4), -1))
+        is_ok(surface |> copy_surface_rgba8(bytes, size.x * 4))
+
+        return sdl_ok()
+    } |> is_ok
     verify(scope_ok_0)
 }
 def pixel(bytes : array<uint8>; x, y : int) : uint4 {
@@ -23,26 +25,26 @@ def pixel(bytes : array<uint8>; x, y : int) : uint4 {
 def main(smoke : bool) : int {
     verify(smoke)
     let scope_ok_1 = with_sdl() {
-        let scope_ok_2 = with_window("geometry contracts", 64, 64, SDL_WINDOW_HIDDEN) $(window) {
-            let scope_ok_3 = window |> with_renderer() $(renderer) {
+        let scope_ok_2 = with_window("geometry contracts", 64, 64, SDL_WINDOW_HIDDEN) $(window : SDL_Window?) {
+            let scope_ok_3 = window |> with_renderer() $(renderer : SDL_Renderer?) {
                 verify(SDLTestGeometryCounts(renderer))
-                let scope_ok_4 = renderer |> with_target_texture(64, 64) $(target) {
+                let scope_ok_4 = renderer |> with_target_texture(64, 64) $(target : SDL_Texture?) {
                     let scope_ok_5 = renderer |> with_render_target(target) {
                         var vertices : array<SDL_Vertex>
                         var indices : array<int>
                         var bytes : array<uint8>
-                        renderer |> clear(uint4(0u, 0u, 0u, 255u))
-                        renderer |> draw_geometry(vertices)
-                        renderer |> draw_geometry(vertices, indices)
+                        is_ok(renderer |> clear(uint4(0u, 0u, 0u, 255u)))
+                        is_ok(renderer |> draw_geometry(vertices))
+                        is_ok(renderer |> draw_geometry(vertices, indices))
                         vertices |> resize(3)
                         vertices[0] = vertex(float2(8.0, 8.0), float4(0.0, 1.0, 0.0, 1.0))
                         vertices[1] = vertex(float2(56.0, 8.0), float4(0.0, 1.0, 0.0, 1.0))
                         vertices[2] = vertex(float2(8.0, 56.0), float4(0.0, 1.0, 0.0, 1.0))
                         // Empty indexed list must not render the sequential triangle.
-                        renderer |> draw_geometry(vertices, indices)
+                        is_ok(renderer |> draw_geometry(vertices, indices))
                         read_geometry_image(renderer, bytes)
                         verify(pixel(bytes, 16, 16) == uint4(0u, 0u, 0u, 255u))
-                        renderer |> draw_geometry(vertices)
+                        is_ok(renderer |> draw_geometry(vertices))
                         read_geometry_image(renderer, bytes)
                         verify(pixel(bytes, 16, 16) == uint4(0u, 255u, 0u, 255u))
                         verify(pixel(bytes, 50, 50) == uint4(0u, 0u, 0u, 255u))
@@ -51,8 +53,8 @@ def main(smoke : bool) : int {
                         indices |> resize(6)
                         indices[0] = 0; indices[1] = 1; indices[2] = 2
                         indices[3] = 2; indices[4] = 1; indices[5] = 3
-                        renderer |> clear(uint4(0u, 0u, 0u, 255u))
-                        renderer |> draw_geometry(vertices, indices)
+                        is_ok(renderer |> clear(uint4(0u, 0u, 0u, 255u)))
+                        is_ok(renderer |> draw_geometry(vertices, indices))
                         vertices[0].position.x = 63.0
                         indices[0] = 3
                         var indexed_image : array<uint8>
@@ -64,8 +66,8 @@ def main(smoke : bool) : int {
                         var sequential : array<SDL_Vertex>
                         sequential |> resize(6)
                         for (i in 0 .. 6) { sequential[i] = vertices[indices[i]] }
-                        renderer |> clear(uint4(0u, 0u, 0u, 255u))
-                        renderer |> draw_geometry(sequential)
+                        is_ok(renderer |> clear(uint4(0u, 0u, 0u, 255u)))
+                        is_ok(renderer |> draw_geometry(sequential))
                         read_geometry_image(renderer, bytes)
                         for (i in 0 .. length(bytes)) { verify(bytes[i] == indexed_image[i]) }
                         // Reject every bad draw before rendering, then continue with the same renderer.
@@ -73,7 +75,7 @@ def main(smoke : bool) : int {
                         indices[0] = -1
                         verify(!SDL_RenderGeometryIndices(renderer, null, vertices, indices))
                         var caught = false
-                        { let operation_ok = renderer |> draw_geometry(vertices, indices)
+                        { let operation_ok = is_ok(renderer |> draw_geometry(vertices, indices))
 caught = !operation_ok }
                         verify(caught)
                         indices[0] = 4
@@ -97,7 +99,7 @@ caught = !operation_ok }
                         read_geometry_image(renderer, bytes)
                         for (i in 0 .. length(bytes)) { verify(bytes[i] == indexed_image[i], "rejected draw changed target") }
                         // Texture sampling + vertex color modulation, then release arrays before readback.
-                        let scope_ok_6 = renderer |> with_streaming_texture(2, 2) $(texture) {
+                        let scope_ok_6 = renderer |> with_streaming_texture(2, 2) $(texture : SDL_Texture?) {
                             var texels : array<uint8>
                             texels |> resize(16)
                             for (i in 0 .. 4) {
@@ -109,29 +111,41 @@ caught = !operation_ok }
                             vertices[1].tex_coord.x = 1.0
                             vertices[2].tex_coord.y = 1.0
                             vertices[3].tex_coord.x = 1.0; vertices[3].tex_coord.y = 1.0
-                            texture |> upload_rgba8(texels, 8)
-                            renderer |> draw_geometry(vertices, indices, texture)
+                            is_ok(texture |> upload_rgba8(texels, 8))
+                            is_ok(renderer |> draw_geometry(vertices, indices, texture))
                             vertices |> resize(0)
                             indices |> resize(0)
                             read_geometry_image(renderer, bytes)
                             verify(pixel(bytes, 32, 32) == uint4(31u, 95u, 191u, 255u))
-                        }
+
+                            return sdl_ok()
+                        } |> is_ok
                         verify(scope_ok_6)
                         indices |> resize(3)
                         verify(!SDL_RenderGeometryIndices(renderer, null, vertices, indices))
                         verify(!SDL_RenderGeometryVertices(null, null, vertices))
-                    }
+
+                        return sdl_ok()
+                    } |> is_ok
                     verify(scope_ok_5)
                     verify(SDL_GetRenderTarget(renderer) == null)
-                }
+
+                    return sdl_ok()
+                } |> is_ok
                 verify(scope_ok_4)
-                renderer |> clear()
-                renderer |> present()
-            }
+                is_ok(renderer |> clear())
+                is_ok(renderer |> present())
+
+                return sdl_ok()
+            } |> is_ok
             verify(scope_ok_3)
-        }
+
+            return sdl_ok()
+        } |> is_ok
         verify(scope_ok_2)
-    }
+
+        return sdl_ok()
+    } |> is_ok
     verify(scope_ok_1)
     print("Geometry: indexed/sequential pixels, texture, array lifetime and bounds OK\n")
     return 0

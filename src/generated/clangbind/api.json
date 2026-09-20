@@ -382,6 +382,145 @@
       "a"
     ]
   },
+  "SDL_RectToFRect": {
+    "signature": "void (const SDL_Rect *, SDL_FRect *)",
+    "arguments": [
+      "rect",
+      "frect"
+    ]
+  },
+  "SDL_PointInRect": {
+    "signature": "bool (const SDL_Point *, const SDL_Rect *)",
+    "arguments": [
+      "p",
+      "r"
+    ]
+  },
+  "SDL_RectEmpty": {
+    "signature": "bool (const SDL_Rect *)",
+    "arguments": [
+      "r"
+    ]
+  },
+  "SDL_RectsEqual": {
+    "signature": "bool (const SDL_Rect *, const SDL_Rect *)",
+    "arguments": [
+      "a",
+      "b"
+    ]
+  },
+  "SDL_HasRectIntersection": {
+    "signature": "bool (const SDL_Rect *, const SDL_Rect *)",
+    "arguments": [
+      "A",
+      "B"
+    ]
+  },
+  "SDL_GetRectIntersection": {
+    "signature": "bool (const SDL_Rect *, const SDL_Rect *, SDL_Rect *)",
+    "arguments": [
+      "A",
+      "B",
+      "result"
+    ]
+  },
+  "SDL_GetRectUnion": {
+    "signature": "bool (const SDL_Rect *, const SDL_Rect *, SDL_Rect *)",
+    "arguments": [
+      "A",
+      "B",
+      "result"
+    ]
+  },
+  "SDL_GetRectEnclosingPoints": {
+    "signature": "bool (const SDL_Point *, int, const SDL_Rect *, SDL_Rect *)",
+    "arguments": [
+      "points",
+      "count",
+      "clip",
+      "result"
+    ]
+  },
+  "SDL_GetRectAndLineIntersection": {
+    "signature": "bool (const SDL_Rect *, int *, int *, int *, int *)",
+    "arguments": [
+      "rect",
+      "X1",
+      "Y1",
+      "X2",
+      "Y2"
+    ]
+  },
+  "SDL_PointInRectFloat": {
+    "signature": "bool (const SDL_FPoint *, const SDL_FRect *)",
+    "arguments": [
+      "p",
+      "r"
+    ]
+  },
+  "SDL_RectEmptyFloat": {
+    "signature": "bool (const SDL_FRect *)",
+    "arguments": [
+      "r"
+    ]
+  },
+  "SDL_RectsEqualEpsilon": {
+    "signature": "bool (const SDL_FRect *, const SDL_FRect *, float)",
+    "arguments": [
+      "a",
+      "b",
+      "epsilon"
+    ]
+  },
+  "SDL_RectsEqualFloat": {
+    "signature": "bool (const SDL_FRect *, const SDL_FRect *)",
+    "arguments": [
+      "a",
+      "b"
+    ]
+  },
+  "SDL_HasRectIntersectionFloat": {
+    "signature": "bool (const SDL_FRect *, const SDL_FRect *)",
+    "arguments": [
+      "A",
+      "B"
+    ]
+  },
+  "SDL_GetRectIntersectionFloat": {
+    "signature": "bool (const SDL_FRect *, const SDL_FRect *, SDL_FRect *)",
+    "arguments": [
+      "A",
+      "B",
+      "result"
+    ]
+  },
+  "SDL_GetRectUnionFloat": {
+    "signature": "bool (const SDL_FRect *, const SDL_FRect *, SDL_FRect *)",
+    "arguments": [
+      "A",
+      "B",
+      "result"
+    ]
+  },
+  "SDL_GetRectEnclosingPointsFloat": {
+    "signature": "bool (const SDL_FPoint *, int, const SDL_FRect *, SDL_FRect *)",
+    "arguments": [
+      "points",
+      "count",
+      "clip",
+      "result"
+    ]
+  },
+  "SDL_GetRectAndLineIntersectionFloat": {
+    "signature": "bool (const SDL_FRect *, float *, float *, float *, float *)",
+    "arguments": [
+      "rect",
+      "X1",
+      "Y1",
+      "X2",
+      "Y2"
+    ]
+  },
   "SDL_CreateSurface": {
     "signature": "SDL_Surface *(int, int, SDL_PixelFormat)",
     "arguments": [
@@ -869,6 +1008,67 @@
       "g",
       "b",
       "a"
+    ]
+  },
+  "SDL_SetClipboardText": {
+    "signature": "bool (const char *)",
+    "arguments": [
+      "text"
+    ]
+  },
+  "SDL_GetClipboardText": {
+    "signature": "char *(void)",
+    "arguments": []
+  },
+  "SDL_HasClipboardText": {
+    "signature": "bool (void)",
+    "arguments": []
+  },
+  "SDL_SetPrimarySelectionText": {
+    "signature": "bool (const char *)",
+    "arguments": [
+      "text"
+    ]
+  },
+  "SDL_GetPrimarySelectionText": {
+    "signature": "char *(void)",
+    "arguments": []
+  },
+  "SDL_HasPrimarySelectionText": {
+    "signature": "bool (void)",
+    "arguments": []
+  },
+  "SDL_SetClipboardData": {
+    "signature": "bool (SDL_ClipboardDataCallback, SDL_ClipboardCleanupCallback, void *, const char **, size_t)",
+    "arguments": [
+      "callback",
+      "cleanup",
+      "userdata",
+      "mime_types",
+      "num_mime_types"
+    ]
+  },
+  "SDL_ClearClipboardData": {
+    "signature": "bool (void)",
+    "arguments": []
+  },
+  "SDL_GetClipboardData": {
+    "signature": "void *(const char *, size_t *)",
+    "arguments": [
+      "mime_type",
+      "size"
+    ]
+  },
+  "SDL_HasClipboardData": {
+    "signature": "bool (const char *)",
+    "arguments": [
+      "mime_type"
+    ]
+  },
+  "SDL_GetClipboardMimeTypes": {
+    "signature": "char **(size_t *)",
+    "arguments": [
+      "num_mime_types"
     ]
   },
   "SDL_GetNumVideoDrivers": {
@@ -1415,6 +1615,14 @@
       "window",
       "x",
       "y"
+    ]
+  },
+  "SDL_SetWindowHitTest": {
+    "signature": "bool (SDL_Window *, SDL_HitTest, void *)",
+    "arguments": [
+      "window",
+      "callback",
+      "callback_data"
     ]
   },
   "SDL_SetWindowShape": {

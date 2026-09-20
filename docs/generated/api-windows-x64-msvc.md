@@ -4,7 +4,7 @@ SDL 3.2.18; profile `windows-x64-msvc`.
 
 Active declarations/macros only; inactive platform branches are NOT counted. Record and typedef entries are distinct declarations.
 
-Generated functions: **428/1226** active non-excluded functions.
+Generated functions: **458/1226** active non-excluded functions.
 Adapted coverage and boost coverage are not inferred from function names.
 
 | Category | Functions | Generated | Adapted | Pending |
@@ -17,7 +17,7 @@ Adapted coverage and boost coverage are not inferred from function names.
 | Blendmode | 1 | 1 | 0 | 0 |
 | CPUInfo | 18 | 0 | 0 | 18 |
 | Camera | 15 | 0 | 0 | 15 |
-| Clipboard | 11 | 0 | 0 | 11 |
+| Clipboard | 11 | 11 | 0 | 0 |
 | Dialog | 4 | 0 | 0 | 4 |
 | Endian | 1 | 0 | 0 | 1 |
 | Error | 5 | 3 | 1 | 1 |
@@ -46,7 +46,7 @@ Adapted coverage and boost coverage are not inferred from function names.
 | Power | 1 | 0 | 0 | 1 |
 | Process | 9 | 0 | 0 | 9 |
 | Properties | 21 | 19 | 1 | 1 |
-| Rect | 18 | 0 | 0 | 18 |
+| Rect | 18 | 18 | 0 | 0 |
 | Render | 89 | 88 | 1 | 0 |
 | Sensor | 14 | 0 | 0 | 14 |
 | SharedObject | 3 | 0 | 0 | 3 |
@@ -60,7 +60,7 @@ Adapted coverage and boost coverage are not inferred from function names.
 | Touch | 4 | 0 | 0 | 4 |
 | Tray | 23 | 0 | 0 | 23 |
 | Version | 2 | 1 | 0 | 1 |
-| Video | 109 | 88 | 0 | 21 |
+| Video | 109 | 89 | 0 | 20 |
 | Vulkan | 7 | 0 | 0 | 7 |
 
 Declaration counts (including explicitly excluded scaffolding):

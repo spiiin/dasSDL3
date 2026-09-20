@@ -27,24 +27,35 @@ def public gpu_color_target(format : SDL_GPUTextureFormat) : SDL_GPUColorTargetD
 def public with_gpu_graphics_pipeline(device : SDL_GPUDevice?; vertex, fragment : uint64;
         info : SDL_GPUGraphicsPipelineCreateInfo; buffers : array<SDL_GPUVertexBufferDescription>;
         attributes : array<SDL_GPUVertexAttribute>; colors : array<SDL_GPUColorTargetDescription>;
-        blk : block<(pipeline : uint64) : void>) {
+        blk : block<(pipeline : uint64) : $Result<auto(TT); SdlError> >) {
+    var scope_result : $Result<TT; SdlError>
+
     let id = SDL_CreateGPUCheckedGraphicsPipeline(device,vertex,fragment,info,buffers,attributes,colors)
-    if (id == 0ul) { return false }
+    if (id == 0ul) { return err(sdl_error("with_gpu_graphics_pipeline"), type<TT>) }
     {
-        defer() { SDL_ReleaseGPUCheckedGraphicsPipeline(device,id) }
-        blk(id)
-        return true
+        defer() { if (!SDL_ReleaseGPUCheckedGraphicsPipeline(device,id) && is_ok(scope_result)) { scope_result <- err(sdl_error("SDL_ReleaseGPUCheckedGraphicsPipeline"),type<TT>) } }
+        static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(id) } else { scope_result <- blk(id) }
     }
+
+    return <- scope_result
 }
 // Convenience for vertex-ID shaders, one color target, no depth and sample 1.
 def public with_gpu_graphics_pipeline(device : SDL_GPUDevice?; vertex, fragment : uint64;
-        format : SDL_GPUTextureFormat; blk : block<(pipeline : uint64) : void>) {
+        format : SDL_GPUTextureFormat; blk : block<(pipeline : uint64) : $Result<auto(TT); SdlError> >) {
     var buffers : array<SDL_GPUVertexBufferDescription>
     var attributes : array<SDL_GPUVertexAttribute>
     var colors : array<SDL_GPUColorTargetDescription>
     resize(colors,1); colors[0] = gpu_color_target(format)
-    return with_gpu_graphics_pipeline(device,vertex,fragment,gpu_graphics_pipeline_info(),buffers,attributes,colors,blk)
+    return <- with_gpu_graphics_pipeline(device,vertex,fragment,gpu_graphics_pipeline_info(),buffers,attributes,colors,blk)
 }
-def public gpu_graphics_pipeline_descriptor(device : SDL_GPUDevice?; pipeline : uint64; var info : SDL_GPUGraphicsPipelineCreateInfo) : bool {
-    return SDL_GetGPUCheckedGraphicsPipelineInfo(device,pipeline,info)
+def public gpu_graphics_pipeline_descriptor(device : SDL_GPUDevice?; pipeline : uint64; var info : SDL_GPUGraphicsPipelineCreateInfo) {
+    return sdl_status(SDL_GetGPUCheckedGraphicsPipelineInfo(device,pipeline,info), "gpu_graphics_pipeline_descriptor")
+}
+
+def public gpu_graphics_pipeline_descriptor(device : SDL_GPUDevice?; pipeline : uint64) {
+    var info : SDL_GPUGraphicsPipelineCreateInfo
+    let status = gpu_graphics_pipeline_descriptor(device,pipeline,info)
+    if (is_err(status)) { return err(unwrap_err(status),type<SDL_GPUGraphicsPipelineCreateInfo>) }
+    var value = info
+    return <- move_ok(value,type<SdlError>)
 }

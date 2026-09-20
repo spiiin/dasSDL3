@@ -34,29 +34,32 @@ lock не читается. Это API копирования, не zero-copy ma
 RGBA32 target texture. Внутри её времени жизни:
 
 ```das
-renderer |> with_render_target(texture) {
-    renderer |> clear(uint4(20u, 40u, 80u, 255u))
-    renderer |> with_read_pixels() $(surface) {
-        var size : int2
-        if (!surface_size(surface,size)) { return }
-        var bytes : array<uint8>
-        bytes |> resize(rgba8_buffer_size(size.x, size.y, size.x * 4))
-        surface |> copy_surface_rgba8(bytes, size.x * 4)
+let result = renderer |> with_render_target(texture) {
+    let cleared = renderer |> clear(uint4(20u, 40u, 80u, 255u))
+    if (is_err(cleared)) { return cleared }
+    return renderer |> with_read_pixels() $(surface : SDL_Surface?) {
+        return surface_size(surface) |> and_then() $(size : int2) {
+            var bytes : array<uint8>
+            let capacity = rgba8_buffer_size(size.x, size.y, size.x * 4)
+            if (is_err(capacity)) { return err(unwrap_err(capacity),type<SdlUnit>) }
+            bytes |> resize(unwrap(capacity))
+            return surface |> copy_surface_rgba8(bytes, size.x * 4)
+        }
     }
 }
 ```
 
 `with_render_target` запоминает прежнюю цель, включая null (окно), и
 восстанавливает её через defer на обычном/раннем выходе. Ошибка переключения
-возвращает false и не вызывает блок. Для проверки результата восстановления
-используйте явный SDL_SetRenderTarget. SDL хранит viewport, clip,
+возвращает Err и не вызывает блок. Ошибка восстановления заменяет успешный
+Result тела; первичная ошибка тела сохраняется. SDL хранит viewport, clip,
 scale и logical presentation отдельно для каждой цели. Draw color и blend
 state эти helpers не сохраняют.
 
 `with_read_pixels` владеет новой SDL_Surface и уничтожает её на всех путях
 выхода из блока. Читается текущий viewport; размера viewport может не хватать
 для всей текстуры при пользовательском clipping. Для окна читать до present.
-`surface_size` возвращает int2. `copy_surface_rgba8` конвертирует поверхность
+`surface_size` возвращает Result<int2,SdlError>. `copy_surface_rgba8` конвертирует поверхность
 в RGBA32, блокирует временную поверхность и копирует строки в готовый массив.
 Padding массива остаётся неизменным, временная поверхность всегда освобождается.
 Полученная копия живёт независимо от SDL_Surface и render target.

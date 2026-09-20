@@ -5,18 +5,23 @@ def main(smoke : bool) : int {
     var ok=false
     let initialized=with_sdl() {
         var ids : array<uint>
-        if(!displays(ids)) {print("{SDL_GetError()}\n");return}
+        var operation_result_1 <- displays(ids)
+        if (is_err(operation_result_1)) {print("{unwrap_err(operation_result_1).message}\n");return err(unwrap_err(operation_result_1),type<SdlUnit>)}
         for(id in ids) {
             var mode : SDL_DisplayMode
             if(SDL_GetDesktopDisplayModeCopy(id,mode)) {
-                let name=display_name(id)
+                let name=unwrap_or(display_name(id), "")
                 print("{name}: {mode.w} x {mode.h}, {mode.refresh_rate} Hz\n")
             }
         }
-        ok=with_window("Video discovery",320,240,SDL_WINDOW_HIDDEN) $(window) {
+        ok=with_window("Video discovery",320,240,SDL_WINDOW_HIDDEN) $(window : SDL_Window?) {
             var w=0;var h=0
-            if(window_size_pixels(window,w,h)) {print("Window pixel size: {w} x {h}\n")}
-        }
+            if(is_ok(window_size_pixels(window,w,h))) {print("Window pixel size: {w} x {h}\n")}
+
+            return sdl_ok()
+        } |> is_ok
+
+        return sdl_ok()
     }
-    return initialized && ok ? 0 : 1
+    return is_ok(initialized) && ok ? 0 : 1
 }

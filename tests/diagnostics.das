@@ -4,7 +4,7 @@ require dassdl3/sdl3_diagnostics_boost
 def main(smoke : bool) : int {
     verify(SDL_ClearError())
     verify(error_string()=="")
-    verify(!set_error("Ошибка %s %n 100%"))
+    verify(set_error("Ошибка %s %n 100%").message == "Ошибка %s %n 100%")
     let saved=error_string()
     verify(SDLTestThreadError())
     verify(SDL_GetError()==saved)
@@ -45,24 +45,24 @@ def main(smoke : bool) : int {
     verify(timer!=0u && SDL_RemoveTimer(timer))
     verify(!SDL_RemoveTimer(timer) && !SDL_RemoveTimer(0u))
     var ticks=0l
-    verify(current_time(ticks) && ticks>0l)
+    verify(is_ok(current_time(ticks)) && ticks>0l)
     var date : SDL_DateTime
-    verify(time_to_date(0l,date))
+    verify(is_ok(time_to_date(0l,date)))
     verify(date.year==1970 && date.month==1 && date.day==1 && date.day_of_week==4 && date.utc_offset==0)
-    verify(date_to_time(date,ticks) && ticks==0l)
+    verify(is_ok(date_to_time(date,ticks)) && ticks==0l)
     verify(SDL_GetDaysInMonth(2000,2)==29 && SDL_GetDaysInMonth(1900,2)==28)
     verify(SDL_GetDaysInMonth(2000,13)==-1)
     verify(SDL_GetDayOfYear(2000,3,1)==60)
     verify(SDL_GetDayOfWeek(1970,1,1)==4)
     date.year=2024;date.month=2;date.day=29;date.hour=12;date.nanosecond=123456700
-    verify(date_to_time(date,ticks))
+    verify(is_ok(date_to_time(date,ticks)))
     var low=0u;var high=0u
     SDL_TimeToWindowsRef(ticks,low,high)
     verify(SDL_TimeFromWindows(low,high)==ticks)
     var roundtrip : SDL_DateTime
-    verify(time_to_date(ticks,roundtrip) && roundtrip.day==29 && roundtrip.nanosecond==123456700)
+    verify(is_ok(time_to_date(ticks,roundtrip)) && roundtrip.day==29 && roundtrip.nanosecond==123456700)
     date.month=13
-    verify(!date_to_time(date,ticks))
+    verify(!is_ok(date_to_time(date,ticks)))
     var df=SDL_DateFormat.DATE_FORMAT_YYYYMMDD
     var tf=SDL_TimeFormat.TIME_FORMAT_24HR
     verify(SDL_GetDateTimeLocalePreferencesRef(df,tf))

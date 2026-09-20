@@ -8,7 +8,7 @@ def black(renderer : SDL_Renderer?) {
 def image_is_rect(renderer : SDL_Renderer?; surface : SDL_Surface?; x,y,w,h : int) {
     verify(SDL_FlushRenderer(renderer))
     var bytes : array<uint8>;resize(bytes,32*32*4)
-    verify(copy_surface_rgba8(surface,bytes,32*4))
+    verify(is_ok(copy_surface_rgba8(surface,bytes,32*4)))
     for(py in 0 .. 32) {for(px in 0 .. 32) {
         let inside=px>=x && px<x+w && py>=y && py<y+h
         let i=(py*32+px)*4
@@ -19,12 +19,12 @@ def image_is_rect(renderer : SDL_Renderer?; surface : SDL_Surface?; x,y,w,h : in
 [export]
 def main(smoke : bool) : int {
     let scope1=with_sdl() {
-        let scope2=with_surface(32,32,SDL_PixelFormat.PIXELFORMAT_RGBA32) $(surface) {
-            let scope3=with_software_renderer(surface) $(renderer) {
+        let scope2=with_surface(32,32,SDL_PixelFormat.PIXELFORMAT_RGBA32) $(surface : SDL_Surface?) {
+            let scope3=with_software_renderer(surface) $(renderer : SDL_Renderer?) {
                 var w=-1;var h=-1;var sx=-1.0;var sy=-1.0
-                verify(render_output_size(renderer,w,h) && w==32 && h==32)
-                verify(current_render_output_size(renderer,w,h) && w==32 && h==32)
-                verify(render_scale(renderer,sx,sy) && sx==1.0 && sy==1.0)
+                verify(is_ok(render_output_size(renderer,w,h)) && w==32 && h==32)
+                verify(is_ok(current_render_output_size(renderer,w,h)) && w==32 && h==32)
+                verify(is_ok(render_scale(renderer,sx,sy)) && sx==1.0 && sy==1.0)
                 verify(!SDL_RenderViewportSet(renderer) && !SDL_RenderClipEnabled(renderer))
                 var viewport : SDL_Rect
                 viewport.x=4;viewport.y=6;viewport.w=16;viewport.h=16
@@ -51,34 +51,40 @@ def main(smoke : bool) : int {
                 verify(SDL_GetRenderClipRectRef(renderer,got) && got.w==0 && got.h==0)
                 black(renderer)
                 verify(SDL_SetRenderScale(renderer,2.0,2.0))
-                verify(render_scale(renderer,sx,sy) && sx==2.0 && sy==2.0)
+                verify(is_ok(render_scale(renderer,sx,sy)) && sx==2.0 && sy==2.0)
                 verify(SDL_GetRenderViewportRef(renderer,got) && got.w==16 && got.h==16)
                 verify(SDL_RenderPoint(renderer,2.0,3.0))
                 image_is_rect(renderer,surface,4,6,2,2)
                 verify(SDL_SetRenderScale(renderer,1.0,1.0))
                 verify(SDL_SetRenderViewportRef(renderer,viewport) && SDL_SetRenderClipRectRef(renderer,clip))
                 // SDL stores viewport/clip/scale separately for each render target.
-                let scope4=with_target_texture(renderer,8,10) $(target) {
+                let scope4=with_target_texture(renderer,8,10) $(target : SDL_Texture?) {
                     let scope5=with_render_target(renderer,target) {
-                        verify(render_output_size(renderer,w,h))
+                        verify(is_ok(render_output_size(renderer,w,h)))
                         print("software output while target selected: {w}x{h}\n")
                         verify(w==8 && h==10) // pinned software backend reports active surface
-                        verify(current_render_output_size(renderer,w,h) && w==8 && h==10)
+                        verify(is_ok(current_render_output_size(renderer,w,h)) && w==8 && h==10)
                         verify(!SDL_RenderViewportSet(renderer) && !SDL_RenderClipEnabled(renderer))
-                        verify(render_scale(renderer,sx,sy) && sx==1.0 && sy==1.0)
+                        verify(is_ok(render_scale(renderer,sx,sy)) && sx==1.0 && sy==1.0)
                         verify(SDL_SetRenderScale(renderer,2.0,2.0))
                         verify(SDL_SetRenderClipRectRef(renderer,clip))
-                    }
+
+                        return sdl_ok()
+                    } |> is_ok
                     verify(scope5)
                     verify(SDL_GetRenderViewportRef(renderer,got) && got.x==4 && got.y==6)
                     verify(SDL_GetRenderClipRectRef(renderer,got) && got.w==4 && SDL_RenderClipEnabled(renderer))
-                    verify(render_scale(renderer,sx,sy) && sx==1.0 && sy==1.0)
+                    verify(is_ok(render_scale(renderer,sx,sy)) && sx==1.0 && sy==1.0)
                     let scope6=with_render_target(renderer,target) {
-                        verify(render_scale(renderer,sx,sy) && sx==2.0 && sy==2.0)
+                        verify(is_ok(render_scale(renderer,sx,sy)) && sx==2.0 && sy==2.0)
                         verify(SDL_RenderClipEnabled(renderer))
-                    }
+
+                        return sdl_ok()
+                    } |> is_ok
                     verify(scope6)
-                }
+
+                    return sdl_ok()
+                } |> is_ok
                 verify(scope4)
                 viewport.w=-1
                 verify(!SDL_SetRenderViewportRef(renderer,viewport))
@@ -86,33 +92,47 @@ def main(smoke : bool) : int {
                 // SDL's negative clip dimensions disable clipping; no invented validation.
                 clip.w=-1
                 verify(SDL_SetRenderClipRectRef(renderer,clip) && !SDL_RenderClipEnabled(renderer))
-            }
+
+                return sdl_ok()
+            } |> is_ok
             verify(scope3)
-        }
+
+            return sdl_ok()
+        } |> is_ok
         verify(scope2)
-        let window_ok=with_window("renderer output queries",32,32,SDL_WINDOW_HIDDEN) $(window) {
-            let renderer_ok=with_renderer(window) $(renderer) {
+        let window_ok=with_window("renderer output queries",32,32,SDL_WINDOW_HIDDEN) $(window : SDL_Window?) {
+            let renderer_ok=with_renderer(window) $(renderer : SDL_Renderer?) {
                 var base_w,base_h,w,h : int
-                verify(render_output_size(renderer,base_w,base_h) && base_w>8 && base_h>10)
-                let texture_ok=with_target_texture(renderer,8,10) $(target) {
+                verify(is_ok(render_output_size(renderer,base_w,base_h)) && base_w>8 && base_h>10)
+                let texture_ok=with_target_texture(renderer,8,10) $(target : SDL_Texture?) {
                     let selected=with_render_target(renderer,target) {
-                        verify(render_output_size(renderer,w,h) && w==base_w && h==base_h)
-                        verify(current_render_output_size(renderer,w,h) && w==8 && h==10)
-                    }
+                        verify(is_ok(render_output_size(renderer,w,h)) && w==base_w && h==base_h)
+                        verify(is_ok(current_render_output_size(renderer,w,h)) && w==8 && h==10)
+
+                        return sdl_ok()
+                    } |> is_ok
                     verify(selected)
-                }
+
+                    return sdl_ok()
+                } |> is_ok
                 verify(texture_ok)
-                verify(current_render_output_size(renderer,w,h) && w==base_w && h==base_h)
-            }
+                verify(is_ok(current_render_output_size(renderer,w,h)) && w==base_w && h==base_h)
+
+                return sdl_ok()
+            } |> is_ok
             verify(renderer_ok)
-        }
+
+            return sdl_ok()
+        } |> is_ok
         verify(window_ok)
-    }
+
+        return sdl_ok()
+    } |> is_ok
     verify(scope1)
     var w=9;var h=9;var sx=9.0;var sy=9.0;var rect : SDL_Rect
-    verify(!render_output_size(null,w,h) && w==0 && h==0)
-    verify(!current_render_output_size(null,w,h) && w==0 && h==0)
-    verify(!render_scale(null,sx,sy) && sx==1.0 && sy==1.0)
+    verify(!is_ok(render_output_size(null,w,h)) && w==0 && h==0)
+    verify(!is_ok(current_render_output_size(null,w,h)) && w==0 && h==0)
+    verify(!is_ok(render_scale(null,sx,sy)) && sx==1.0 && sy==1.0)
     verify(!SDL_GetRenderViewportRef(null,rect) && !SDL_GetRenderClipRectRef(null,rect))
     verify(!SDL_SetRenderViewportRef(null,rect) && !SDL_SetRenderClipRectRef(null,rect))
     verify(!SDL_SetRenderScale(null,1.0,1.0))

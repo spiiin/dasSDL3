@@ -1,12 +1,13 @@
 # Покрытие SDL3
 
-Baseline: SDL 3.2.18, Windows x64/MSVC. Generated: 428; adapted: 13;
-pending: 785 of 1226 functions. GPU: 92 generated / 0 adapted / 0 pending.
+Baseline: SDL 3.2.18, Windows x64/MSVC. Generated: 458; adapted: 13;
+pending: 755 of 1226 functions. GPU: 92 generated / 0 adapted / 0 pending.
 `adapted` means a documented partial adapter, not full raw API coverage.
 See [API boundary](gpu-api-boundary.md) and the generated header census.
 
 | Подсистема / сценарий | Raw API | Идиоматичный слой | Проверка / оставшаяся работа |
 | --- | --- | --- | --- |
+| Rect/Clipboard/hit-test | 18 + 11 + 1 generated | Ref/copy and lexical callback scopes | [Contracts](rect-clipboard-hittest.md); GL/EGL moved to P8 |
 | Surface/Pixels | Surface 58/58, Pixels 11/11 raw | Refs, packed arrays, copied pointer list, defer scopes | Native function execution, pixels and ownership; [contract](surface-pixels.md) |
 | Surface state | 16 generated | Scalar/rect refs | State, key/modulation and clip pixels; [contract](surface-state.md) |
 | Renderer final APIs | 5 generated, fixed-text variadic adapter | Geometry arrays, event refs | [Interop limitations](renderer-final-api.md) |
@@ -18,15 +19,15 @@ See [API boundary](gpu-api-boundary.md) and the generated header census.
 | Renderer state | 10 новых generated | Rect/scalar ref adapters, NULL reset | Full-image pixels, target-local state; [контракт](renderer-state.md) |
 | Software renderer/primitives | 10 новых generated | Surface lifetime scope, array/ref adapters | CPU pixels каждого примитива; [контракт](renderer-primitives.md) |
 | Window fullscreen/surface/IO | 25 Video + 3 Surface новых generated | Mode/ICC/rect/ref adapters; standalone surface defer | CPU pixels, surface lifecycle, native results; [ограничения](window-io.md) |
-| Window state | 27 новых generated; Video суммарно 88/109 | Property/popup defer scopes, ref/out | Constraints, parent/child ownership, early return; [контракт](window-state.md) |
+| Window state | 27 новых generated; Video суммарно 89/109 | Property/popup defer scopes, ref/out | Constraints, parent/child ownership, early return; [контракт](window-state.md) |
 | Video discovery | 31 новых generated | Copied display/mode/window lists, strings, ref/out | Real display queries, hidden window, invalid IDs; [контракт](video-discovery.md) |
 | Error/Log/Timer/Time | 22 новых generated и 10 fixed-text adapted | Error copy, ref/out time adapters | Thread errors, log filtering, UTC/FILETIME, timer removal; [контракт](diagnostics-time.md) |
 | Hints/Init | 6/8 Hints и 9/10 Init generated; 3 callbacks pending | Copied getters, metadata clear, with_sdl_subsystems | Приоритеты, UTF-8, nested/early return, partial init rollback; [контракт](init-hints.md) |
 | Properties | 19 из 21 generated; enumeration adapted; retained cleanup pending | with_properties, with_properties_lock, copied strings/names | Типы/defaults/UTF-8, early return, lock и native cleanup counters; [контракт](properties.md) |
-| Базовая сессия SDL | GetVersion, Init, Quit, WasInit | sdl_init, with_sdl; ошибки возвращаются как bool/null/zero | bindings, boost; расширения Init и времени описаны выше |
+| Базовая сессия SDL | GetVersion, Init, Quit, WasInit | sdl_init, with_sdl; boost возвращает Result, raw сохраняет SDL-контракт | bindings, boost; расширения Init и времени описаны выше |
 | Окно и renderer | Create/DestroyWindow, Create/DestroyRenderer, GetWindowID, GetWindowFromID, GetRenderer, SetWindowTitle | create/destroy, with_window, with_renderer, set_title | square, boost; управление окнами пока частичное |
 | События | PollEvent, PushEvent, PumpEvents; SDL_Event.event_type | poll_event, push_event, should_close(event[, window]), input_window_id | input: фильтрация union и адресация окон; остальные варианты union впереди |
-| Простая отрисовка | SetRenderDrawColor, RenderClear, RenderFillRect, RenderPresent | set_color, clear, fill_rect, present | square, boost; остальные примитивы впереди |
+| Простая отрисовка | SetRenderDrawColor, RenderClear, RenderFillRect, RenderPresent | set_color, clear, fill_rect, present | square, boost; остальные Render-функции перечислены выше |
 | BMP / поверхности | LoadBMP, DestroySurface | load_bmp, destroy_surface, with_bmp | textures: нормальный/ранний выход, ошибка создания текстуры; пиксельные буферы поверхности не раскрыты |
 | Статические текстуры | CreateTextureFromSurface, DestroyTexture, GetTextureSize, RenderTexture | create_texture, load_texture, destroy_texture, texture_size, with_texture, draw_texture (3 перегрузки) | textures: размеры, чтение пикселей, освобождение до renderer, отсутствующий файл |
 | Путь к ресурсам примера | GetBasePath | пример строит путь к assets рядом с exe | запуск не зависит от текущей папки; универсального файлового слоя ещё нет |
@@ -47,4 +48,4 @@ See [API boundary](gpu-api-boundary.md) and the generated header census.
 платформы не подтверждены. Генерация не доказывает все сочетания параметров.
 
 Удалённые engine helpers и внутренние вызовы SDL не считаются покрытием.
-Следующий пакет: [Properties и очередь](full-binding-roadmap.md).
+Следующий основной раздел: [P3 Events/input](full-binding-roadmap.md).

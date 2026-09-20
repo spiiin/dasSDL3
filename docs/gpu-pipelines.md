@@ -9,8 +9,7 @@ The registry also snapshots shader resource counts for checked pass validation.
 ```das
 device |> with_gpu_graphics_pipeline(vertex,fragment,
     SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM) $(pipeline) {
-    var state : SDL_GPUGraphicsPipelineCreateInfo
-    if (!gpu_graphics_pipeline_descriptor(device,pipeline,state)) { return }
+    return gpu_graphics_pipeline_descriptor(device,pipeline)
 }
 ```
 

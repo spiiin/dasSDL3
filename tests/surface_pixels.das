@@ -5,7 +5,7 @@ require dassdl3/sdl3_surface_pixels_boost
 
 def expect_pixel(surface : SDL_Surface?; x,y : int; expected : uint4) {
     var r,g,b,a : uint
-    verify(read_surface_pixel(surface,x,y,r,g,b,a) && uint4(r,g,b,a)==expected)
+    verify(is_ok(read_surface_pixel(surface,x,y,r,g,b,a)) && uint4(r,g,b,a)==expected)
 }
 def formats_and_palettes {
     let fmt=SDL_PixelFormat.PIXELFORMAT_RGBA32
@@ -45,9 +45,11 @@ def formats_and_palettes {
     verify(SDL_SetSurfacePalette(surface,null) && SDL_GetSurfacePalette(surface)==null)
     SDL_DestroySurface(surface)
     var entered=false
-    let scoped=with_palette(2) $(p) {entered=true;verify(SDL_SetPaletteColorsArray(p,colors,0));return}
+    let scoped=with_palette(2) $(p : SDL_Palette?) {entered=true;verify(SDL_SetPaletteColorsArray(p,colors,0));return sdl_ok()} |> is_ok
     verify(scoped && entered)
-    verify(!with_palette(0) $(p) {verify(false)})
+    verify(!with_palette(0) $(p : SDL_Palette?) {verify(false)
+        return sdl_ok()
+    } |> is_ok)
     verify(SDL_GetPixelFormatDetailsCopy(SDL_PixelFormat.PIXELFORMAT_UNKNOWN,info) && info.bits_per_pixel==uint8(0))
 }
 def external_pixels_and_images {
@@ -60,7 +62,7 @@ def external_pixels_and_images {
     bytes[0]=uint8(11);bytes[1]=uint8(22);bytes[2]=uint8(33);bytes[3]=uint8(255)
     SDL_UnlockSurface(surface)
     expect_pixel(surface,0,0,uint4(11u,22u,33u,255u))
-    let locked=with_surface_lock(surface) {bytes[12]=uint8(44);return};verify(locked)
+    let locked=with_surface_lock(surface) {bytes[12]=uint8(44);return sdl_ok()} |> is_ok;verify(locked)
     verify(SDL_WriteSurfacePixel(surface,1,1,50u,60u,70u,80u))
     verify(bytes[16]==uint8(50) && bytes[19]==uint8(80) && bytes[20]==uint8(99))
     var r,g,b,a : uint8
@@ -70,9 +72,9 @@ def external_pixels_and_images {
     var fr,fg,fb,fa : float
     unsafe {verify(SDL_ReadSurfacePixelFloat(surface,0,1,addr(fr),addr(fg),addr(fb),addr(fa)))}
     verify(fr==1.0 && fg==0.0 && fb==0.0 && fa==1.0)
-    verify(read_surface_pixel_float(surface,0,1,fr,fg,fb,fa) && fr==1.0)
+    verify(is_ok(read_surface_pixel_float(surface,0,1,fr,fg,fb,fa)) && fr==1.0)
     verify(!SDL_WriteSurfacePixel(surface,2,1,0u,0u,0u,0u))
-    var er,eg,eb,ea : uint;verify(!read_surface_pixel(surface,-1,0,er,eg,eb,ea))
+    var er,eg,eb,ea : uint;verify(!is_ok(read_surface_pixel(surface,-1,0,er,eg,eb,ea)))
     verify(!SDL_SurfaceHasAlternateImages(surface))
     let alternate=SDL_CreateSurface(4,4,SDL_PixelFormat.PIXELFORMAT_RGBA32);verify(alternate!=null)
     verify(SDL_ClearSurface(alternate,0.0,1.0,0.0,1.0) && SDL_AddSurfaceAlternateImage(surface,alternate))
@@ -107,13 +109,17 @@ def transforms {
         let converted=SDL_ConvertSurface(surface,SDL_PixelFormat.PIXELFORMAT_BGRA32);verify(converted!=null)
         expect_pixel(converted,0,0,uint4(255u,0u,0u,255u));SDL_DestroySurface(converted)
         let linear=SDL_ConvertSurfaceAndColorspace(surface,SDL_PixelFormat.PIXELFORMAT_RGBA128_FLOAT,null,SDL_Colorspace.COLORSPACE_SRGB_LINEAR,0u);verify(linear!=null)
-        var r,g,b,a : float;verify(read_surface_pixel_float(linear,0,0,r,g,b,a) && r==1.0 && g==0.0 && a==1.0);verify(read_surface_pixel_float(linear,1,0,r,g,b,a) && abs(r-0.21586)<0.001 && abs(g-r)<0.001);SDL_DestroySurface(linear)
-        let dup_ok=with_duplicate_surface(surface) $(s) {expect_pixel(s,0,0,uint4(255u,0u,0u,255u));return};verify(dup_ok)
-        let scale_ok=with_scaled_surface(surface,4,4,SDL_ScaleMode.SCALEMODE_NEAREST) $(s) {expect_pixel(s,3,3,uint4(0u,0u,255u,255u));return};verify(scale_ok)
-        let cv_ok=with_converted_surface(surface,SDL_PixelFormat.PIXELFORMAT_RGB24) $(s) {expect_pixel(s,0,0,uint4(255u,0u,0u,255u))};verify(cv_ok)
-        let cs_ok=with_converted_surface(surface,SDL_PixelFormat.PIXELFORMAT_RGBA32,null,SDL_Colorspace.COLORSPACE_SRGB,0u) $(s) {expect_pixel(s,0,0,uint4(255u,0u,0u,255u))};verify(cs_ok)
+        var r,g,b,a : float;verify(is_ok(read_surface_pixel_float(linear,0,0,r,g,b,a)) && r==1.0 && g==0.0 && a==1.0);verify(is_ok(read_surface_pixel_float(linear,1,0,r,g,b,a)) && abs(r-0.21586)<0.001 && abs(g-r)<0.001);SDL_DestroySurface(linear)
+        let dup_ok=with_duplicate_surface(surface) $(s : SDL_Surface?) {expect_pixel(s,0,0,uint4(255u,0u,0u,255u));return sdl_ok()} |> is_ok;verify(dup_ok)
+        let scale_ok=with_scaled_surface(surface,4,4,SDL_ScaleMode.SCALEMODE_NEAREST) $(s : SDL_Surface?) {expect_pixel(s,3,3,uint4(0u,0u,255u,255u));return sdl_ok()} |> is_ok;verify(scale_ok)
+        let cv_ok=with_converted_surface(surface,SDL_PixelFormat.PIXELFORMAT_RGB24) $(s : SDL_Surface?) {expect_pixel(s,0,0,uint4(255u,0u,0u,255u))
+            return sdl_ok()
+        } |> is_ok;verify(cv_ok)
+        let cs_ok=with_converted_surface(surface,SDL_PixelFormat.PIXELFORMAT_RGBA32,null,SDL_Colorspace.COLORSPACE_SRGB,0u) $(s : SDL_Surface?) {expect_pixel(s,0,0,uint4(255u,0u,0u,255u))
+            return sdl_ok()
+        } |> is_ok;verify(cs_ok)
         verify(SDL_ClearSurface(surface,1.0,0.0,0.0,0.5) && SDL_PremultiplySurfaceAlpha(surface,false))
-        var pr,pg,pb,pa : uint;verify(read_surface_pixel(surface,0,0,pr,pg,pb,pa) && pr==pa && pr>=127u && pr<=128u && pg==0u)
+        var pr,pg,pb,pa : uint;verify(is_ok(read_surface_pixel(surface,0,0,pr,pg,pb,pa)) && pr==pa && pr>=127u && pr<=128u && pg==0u)
     }
 }
 def blits {
@@ -208,7 +214,9 @@ def bmp_io {
 }
 [export]
 def main(smoke : bool) : int {
-    let initialized=with_sdl() {formats_and_palettes();external_pixels_and_images();transforms();blits();pixel_buffers();bmp_io()}
+    let initialized=with_sdl() {formats_and_palettes();external_pixels_and_images();transforms();blits();pixel_buffers();bmp_io()
+        return sdl_ok()
+    } |> is_ok
     verify(initialized)
     print("surface/pixels: formats, palettes, ownership, transforms, blits, buffers and BMP passed\n")
     return 0

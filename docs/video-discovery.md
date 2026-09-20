@@ -12,7 +12,8 @@ This is not completion of SDL_video.h.
 
 All display/window operations retain SDL's main-thread requirement. Driver
 enumeration can run before SDL_Init; display/window queries require video init.
-SDL errors remain bool/null/zero; wrappers never panic or catch exceptions.
+Raw SDL errors retain bool/null/zero. Boost returns Result values and copied
+SdlError; wrappers never panic or catch exceptions.
 
 SDL_GetDisplaysCopy / displays returns copied uint IDs. IDs identify currently
 connected displays, not permanent monitors: hotplug can invalidate them.
@@ -35,7 +36,7 @@ GetDisplayProperties and GetWindowProperties return borrowed property group IDs;
 do not call DestroyProperties for these groups.
 
 Bounds, usable bounds, point/rect selection and window position/size have ref
-adapters. Scalar boost outputs use explicit references. Window units, pixel size,
+adapters. Boost queries offer value-returning Result overloads and explicit output references. Window units, pixel size,
 pixel density and display scale are distinct SDL quantities; no extra DPI model
 or coordinate conversion policy is introduced.
 
@@ -54,7 +55,8 @@ are not certified by it. Orientation/theme may legitimately be unknown.
 
 Window creation/state is covered in [window-state.md](window-state.md).
 Fullscreen/ICC, surfaces and input grabs are covered in [window-io.md](window-io.md). GL/EGL integration,
-hit-test callbacks, platform property keys and companion libraries remain separate.
+platform property keys and companion libraries remain separate. Hit-test scopes are
+covered in [callback contracts](rect-clipboard-hittest.md); GL/EGL is P8.
 
 ## Local validation (Windows x64/MSVC, 2026-09-20)
 

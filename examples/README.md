@@ -82,3 +82,11 @@ See [native GPU guide](../docs/gpu-native-boost.md) for ownership and execution.
 - [65_surface_state.das](65_surface_state.das): clipped surface fill, color key and modulation captured by a texture.
 
 - [66_surface_pixels.das](66_surface_pixels.das): per-pixel surface data and scaled tiling with direct SDL.
+
+## Result/Option API
+
+[results/01_results.das](results/01_results.das) uses standard daScript Result/Option,
+canonical Result-returning scopes and deferred cleanup. This separate sequence preserves
+existing example numbers. It renders the BMP texture and propagates failures as
+values; `--smoke-test` renders three frames. Contracts and language caveats:
+[Result/Option plan](../docs/result-option-plan.md).

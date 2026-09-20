@@ -10,8 +10,7 @@ native pointers use [native adapters](gpu-native-boost.md).
 let info = gpu_shader_info(SDL_GPU_SHADERFORMAT_SPIRV,
     SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
 device |> with_gpu_shader_file("triangle.vert.spv",info) $(shader) {
-    var copy : SDL_GPUShaderCreateInfo
-    if (!gpu_shader_descriptor(device,shader,copy)) { return }
+    return gpu_shader_descriptor(device,shader)
 }
 ```
 
@@ -19,7 +18,7 @@ device |> with_gpu_shader_file("triangle.vert.spv",info) $(shader) {
 optional explicit entry point before the final block; the default is `main`.
 `gpu_shader_info` initializes all resource counts and props to zero. Set counts
 to match the offline shader's actual declarations and SDL register/set convention.
-`gpu_shader_entrypoint` returns a script-owned string; descriptor retrieval returns
+`gpu_shader_entrypoint` returns Result<string,SdlError> with an owned string; descriptor retrieval returns
 a value copy and never exposes native pointers or bytecode storage.
 
 ## Input and lifetime contract

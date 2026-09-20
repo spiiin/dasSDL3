@@ -6,27 +6,34 @@ require dassdl3/sdl3_renderer_operations_boost
 def main(smoke : bool) : int {
     var rendered=false
     let initialized=with_sdl() {
-        let created=with_window_renderer("Surface color key and modulation",320,240,smoke ? SDL_WINDOW_HIDDEN : 0ul) $(window,renderer) {
-            let allocated=with_surface(8,8,SDL_PixelFormat.PIXELFORMAT_RGBA32) $(surface) {
+        let created=with_window_renderer("Surface color key and modulation",320,240,smoke ? SDL_WINDOW_HIDDEN : 0ul) $(window : SDL_Window?; renderer : SDL_Renderer?) {
+            let allocated=with_surface(8,8,SDL_PixelFormat.PIXELFORMAT_RGBA32) $(surface : SDL_Surface?) {
                 let key=SDL_MapSurfaceRGBA(surface,255u,0u,255u,255u)
-                if(!SDL_FillSurfaceAll(surface,key)) {return}
+                if(!SDL_FillSurfaceAll(surface,key)) {return err(sdl_error("65_surface_state"),type<SdlUnit>)}
                 var rect : SDL_Rect;rect.x=2;rect.y=2;rect.w=4;rect.h=4
-                if(!set_surface_clip(surface,rect) || !SDL_FillSurfaceAll(surface,SDL_MapSurfaceRGBA(surface,255u,255u,255u,255u)) || !reset_surface_clip(surface)) {return}
-                if(!SDL_SetSurfaceColorKey(surface,true,key) || !SDL_SetSurfaceColorMod(surface,255u,160u,40u) || !SDL_SetSurfaceAlphaMod(surface,200u) || !SDL_SetSurfaceBlendMode(surface,SDL_BLENDMODE_BLEND)) {return}
+                if(!unwrap_or(set_surface_clip(surface,rect), false) || !SDL_FillSurfaceAll(surface,SDL_MapSurfaceRGBA(surface,255u,255u,255u,255u)) || !unwrap_or(reset_surface_clip(surface), false)) {return err(sdl_error("65_surface_state"),type<SdlUnit>)}
+                if(!SDL_SetSurfaceColorKey(surface,true,key) || !SDL_SetSurfaceColorMod(surface,255u,160u,40u) || !SDL_SetSurfaceAlphaMod(surface,200u) || !SDL_SetSurfaceBlendMode(surface,SDL_BLENDMODE_BLEND)) {return err(sdl_error("65_surface_state"),type<SdlUnit>)}
                 let texture=SDL_CreateTextureFromSurface(renderer,surface)
-                if(texture==null) {return}
+                if(texture==null) {return err(sdl_error("65_surface_state"),type<SdlUnit>)}
                 {
                     defer(){SDL_DestroyTexture(texture)}
-                    if(!SDL_SetTextureScaleMode(texture,SDL_ScaleMode.SCALEMODE_NEAREST)) {return}
-                    if(!SDL_SetRenderDrawColor(renderer,25u,35u,55u,255u) || !SDL_RenderClear(renderer) || !draw_texture(renderer,texture)) {return}
+                    if(!SDL_SetTextureScaleMode(texture,SDL_ScaleMode.SCALEMODE_NEAREST)) {return err(sdl_error("65_surface_state"),type<SdlUnit>)}
+                    if(!SDL_SetRenderDrawColor(renderer,25u,35u,55u,255u) || !SDL_RenderClear(renderer) || !is_ok(draw_texture(renderer,texture))) {return err(sdl_error("65_surface_state"),type<SdlUnit>)}
                     rendered=SDL_RenderPresent(renderer)
+                    if(!rendered) {return err(sdl_error("65_surface_state"),type<SdlUnit>)}
                     if(rendered && !smoke) {SDL_Delay(1200u)}
                 }
+
+                return sdl_ok()
             }
-            if(!allocated) {rendered=false}
+            if (is_err(allocated)) {rendered=false; return err(unwrap_err(allocated),type<SdlUnit>) }
+
+            return sdl_ok()
         }
-        if(!created) {rendered=false}
+        if (is_err(created)) {rendered=false; return err(unwrap_err(created),type<SdlUnit>) }
+
+        return sdl_ok()
     }
-    if(!initialized || !rendered) {print("Surface state failed: {SDL_GetError()}\n");return 1}
+    if(!is_ok(initialized) || !rendered) {print("Surface state failed: {is_err(initialized) ? unwrap_err(initialized).message : SDL_GetErrorCopy()}\n");return 1}
     return 0
 }

@@ -12,7 +12,7 @@
 2. Адаптеры только для ref/out, массивов, строк, union tags и времени жизни.
 3. Небольшие daScript defaults, pipes и `with_*` с `daslib/defer`.
 
-Ошибки сохраняют SDL bool/null/zero/sentinel; читать SDL_GetError после отказа.
+Raw сохраняет SDL bool/null/zero/sentinel. Boost возвращает Result/Option и копирует ошибку до cleanup; см. [контракт](error-handling.md).
 Не добавлять panic, try/recover или native catch-мосты. Указатели копируются
 как aliases; scopes не обеспечивают borrow checker. Контракты:
 [ошибки и defer](error-handling.md), [граница API](gpu-api-boundary.md).
@@ -35,13 +35,13 @@ interpreter/AOT/consumer проверки. [Результаты и исключ
 | Этап | Объём | Критерий |
 | --- | --- | --- |
 | P1, остаток | Properties/Hints/Init/Error/Log/Timer callbacks, va_list и строковые макросы | Базовые пакеты реализованы; retained callbacks требуют отдельных контрактов |
-| P2, ближайший | Video/display/window, Render, Surface/Pixels/Blend/Rect, Clipboard | Освобождение перечислений SDL, DPI, pitch/lock, parent lifetime, region updates |
+| P2, функции подключены | Video/display/window без GL/EGL, Render, Surface/Pixels/Blend/Rect, Clipboard | Rect 18/18, Clipboard 11/11, hit-test; RenderDebugTextFormat — fixed-text adapter. Платформенная валидация ограничена |
 | P3 | Events, Keyboard/Mouse, Joystick/Gamepad, Touch/Pen/Sensor/Haptic/HIDAPI | Union tags, owned payload, hotplug, device IDs, отсутствие оборудования |
 | P4 | Filesystem, Storage, IOStream, AsyncIO | EOF/short read/error, retained buffers, completion/cancellation, shutdown |
 | P5 | Audio/recording/mixing, Camera | Copy/borrow, release frames, callbacks, реальные устройства отдельно от dummy |
 | P6, сопровождение | GPU другие платформы и backend ограничения | Платформенные сборки, ABI и output tests; отдельный план ниже |
 | P7 | Threads/synchronization, Process/LoadSO, Power/Dialog/Tray/Locale/System | Context thread affinity, retained callbacks, отмена, shutdown |
-| P8 | Platform/CPUInfo/Stdinc/GUID, macros/inlines, GL/Vulkan/Metal integration | Явные exclusions, calling convention и startup host bridges |
+| P8 | Platform/CPUInfo/Stdinc/GUID, macros/inlines, GL/Vulkan/Metal integration (включая 20 GL/EGL функций Video, явно перенесённых из P2) | Явные exclusions, calling convention и startup host bridges |
 
 P0 продолжается поперёк очереди: Linux/macOS census и реальные сборки,
 ABI/flags/macros, install/export и запуск вне дерева исходников. Сборка без LLVM
@@ -58,7 +58,7 @@ cleanup-callback остаётся pending; ограничения и найде�
 Video discovery: 31 raw запроса и copy/ref adapters реализованы,
 [контракты](video-discovery.md). Создание и состояние окон также реализованы: [контракты](window-state.md).
 Fullscreen/surfaces и прочие оконные операции реализованы с ограничениями
-[window-io.md](window-io.md). Video: 88/109; GL/EGL и hit-test callbacks отдельно.
+[window-io.md](window-io.md). Video: 89/109; оставшиеся 20 GL/EGL функций явно перенесены в P8. Hit-test, Rect и Clipboard подключены; [контракт](rect-clipboard-hittest.md). Следующий основной раздел — P3 Events/input. Миграция [Result/Option boost API](result-option-plan.md) завершена и локально проверена. P2 не переоткрывается; GL/EGL остаётся в P8.
 Software renderer/primitives: ещё 10 raw функций; [контракт](renderer-primitives.md).
 Состояние Renderer (viewport/clip/scale/output): 10 raw функций и ref adapters; [контракт](renderer-state.md).
 Renderer queries/logical presentation: 10 raw функций, все режимы и преобразование координат; [контракт](renderer-presentation.md).

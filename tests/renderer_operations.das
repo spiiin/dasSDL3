@@ -30,14 +30,14 @@ def draw_case(renderer : SDL_Renderer?; texture : SDL_Texture?; op : int; raw : 
     verify(SDL_FlushRenderer(renderer))
 }
 def drawing(renderer : SDL_Renderer?; surface : SDL_Surface?) {
-    let scoped=with_texture(renderer,SDL_PixelFormat.PIXELFORMAT_RGBA32,SDL_TextureAccess.TEXTUREACCESS_STREAMING,4,4) $(texture) {
+    let scoped=with_texture(renderer,SDL_PixelFormat.PIXELFORMAT_RGBA32,SDL_TextureAccess.TEXTUREACCESS_STREAMING,4,4) $(texture : SDL_Texture?) {
         var source : array<uint8>;resize(source,64)
         for(y in 0 .. 4) {for(x in 0 .. 4) {let i=(y*4+x)*4;source[i]=uint8(x<2 ? 255 : 0);source[i+2]=uint8(x<2 ? 0 : 255);source[i+3]=uint8(255)}}
-        verify(upload_rgba8(texture,source,16) && SDL_SetTextureScaleMode(texture,SDL_ScaleMode.SCALEMODE_NEAREST))
+        verify(is_ok(upload_rgba8(texture,source,16)) && SDL_SetTextureScaleMode(texture,SDL_ScaleMode.SCALEMODE_NEAREST))
         var raw_image,adapted : array<uint8>;resize(raw_image,1024);resize(adapted,1024)
         for(op in 0 .. 4) {
-            draw_case(renderer,texture,op,true);verify(copy_surface_rgba8(surface,raw_image,64))
-            draw_case(renderer,texture,op,false);verify(copy_surface_rgba8(surface,adapted,64))
+            draw_case(renderer,texture,op,true);verify(is_ok(copy_surface_rgba8(surface,raw_image,64)))
+            draw_case(renderer,texture,op,false);verify(is_ok(copy_surface_rgba8(surface,adapted,64)))
             for(i in 0 .. 1024) {verify(raw_image[i]==adapted[i])}
             verify(pixel(adapted,15,15)==uint3(0u))
             if(op==0) {verify(pixel(adapted,5,5)==uint3(0u,0u,255u) && pixel(adapted,10,5)==uint3(255u,0u,0u))}
@@ -51,27 +51,29 @@ def drawing(renderer : SDL_Renderer?; surface : SDL_Surface?) {
             }
             else {verify(pixel(adapted,2,2)==uint3(255u,0u,0u) && pixel(adapted,13,13)==uint3(0u,0u,255u) && pixel(adapted,1,2)==uint3(0u))}
         }
-    }
+
+        return sdl_ok()
+    } |> is_ok
     verify(scoped)
     verify(SDL_SetRenderDrawColor(renderer,30u,60u,90u,255u) && SDL_RenderClear(renderer))
     var rect : SDL_Rect;rect.x=4;rect.y=4;rect.w=8;rect.h=8
     unsafe {
         let owned=SDL_RenderReadPixels(renderer,addr(rect));verify(owned!=null)
-        var size : int2;verify(surface_size(owned,size) && size==int2(8,8))
-        var bytes : array<uint8>;resize(bytes,256);verify(copy_surface_rgba8(owned,bytes,32))
+        var size : int2;verify(is_ok(surface_size(owned,size)) && size==int2(8,8))
+        var bytes : array<uint8>;resize(bytes,256);verify(is_ok(copy_surface_rgba8(owned,bytes,32)))
         for(i in 0 .. 64) {verify(bytes[i*4]==uint8(30) && bytes[i*4+1]==uint8(60) && bytes[i*4+2]==uint8(90))}
         SDL_DestroySurface(owned)
     }
     rect.x=12;rect.y=12
-    let readback=with_read_pixels(renderer,rect) $(owned) {
-        var size : int2;verify(surface_size(owned,size) && size==int2(4,4))
-        return
-    }
+    let readback=with_read_pixels(renderer,rect) $(owned : SDL_Surface?) {
+        var size : int2;verify(is_ok(surface_size(owned,size)) && size==int2(4,4))
+        return sdl_ok()
+    } |> is_ok
     verify(readback)
     verify(SDL_SetRenderDrawColor(renderer,0u,0u,0u,255u) && SDL_RenderClear(renderer))
     verify(SDL_SetRenderDrawColor(renderer,255u,255u,255u,255u) && SDL_RenderDebugText(renderer,0.0,0.0,"A%"))
     verify(SDL_FlushRenderer(renderer))
-    var bytes : array<uint8>;resize(bytes,1024);verify(copy_surface_rgba8(surface,bytes,64))
+    var bytes : array<uint8>;resize(bytes,1024);verify(is_ok(copy_surface_rgba8(surface,bytes,64)))
     var lit=0
     for(i in 0 .. 256) {if(bytes[i*4]!=uint8(0)) {lit++}}
     verify(lit>0 && lit<128) // literal debug text produced glyph pixels, not a format string
@@ -86,35 +88,45 @@ def main(smoke : bool) : int {
             SDL_DestroyRenderer(renderer);SDL_DestroyWindow(window)
         }
         var id=0u
-        let pair=with_window_renderer("scoped pair",16,16,SDL_WINDOW_HIDDEN) $(window,renderer) {
+        let pair=with_window_renderer("scoped pair",16,16,SDL_WINDOW_HIDDEN) $(window : SDL_Window?; renderer : SDL_Renderer?) {
             id=SDL_GetWindowID(window)
             let changed=SDL_SetRenderVSync(renderer,SDL_RENDERER_VSYNC_DISABLED)
             var vsync=-9;var raw=-9
-            let queried=render_vsync(renderer,vsync)
+            let queried=is_ok(render_vsync(renderer,vsync))
             unsafe {verify(SDL_GetRenderVSync(renderer,addr(raw))==queried)}
             if(changed && queried) {verify(raw==0 && vsync==0)}
             print("Renderer VSync disable/query: {changed}/{queried}\n")
-            return
-        }
+            return sdl_ok()
+        } |> is_ok
         verify(pair && id!=0u && SDL_GetWindowFromID(id)==null)
-        let allocated=with_surface(16,16,SDL_PixelFormat.PIXELFORMAT_RGBA32) $(surface) {
-            let props_ok=with_properties() $(props) {
+        let allocated=with_surface(16,16,SDL_PixelFormat.PIXELFORMAT_RGBA32) $(surface : SDL_Surface?) {
+            let props_ok=with_properties() $(props : uint) {
                 verify(SDL_SetStringProperty(props,"SDL.renderer.create.name","software"))
                 unsafe {verify(SDL_SetPointerProperty(props,"SDL.renderer.create.surface",reinterpret<void?>(surface)))}
                 let renderer=SDL_CreateRendererWithProperties(props);verify(renderer!=null)
                 drawing(renderer,surface)
                 SDL_DestroyRenderer(renderer)
-                let scoped=with_renderer_properties(props) $(next) {verify(SDL_GetRenderWindow(next)==null);return}
+                let scoped=with_renderer_properties(props) $(next : SDL_Renderer?) {verify(SDL_GetRenderWindow(next)==null);return sdl_ok()} |> is_ok
                 verify(scoped && SDL_FillSurfaceAll(surface,SDL_MapSurfaceRGBA(surface,1u,2u,3u,255u)))
-            }
+
+                return sdl_ok()
+            } |> is_ok
             verify(props_ok)
-        }
+
+            return sdl_ok()
+        } |> is_ok
         verify(allocated)
         var called=false
-        verify(!with_renderer_properties(0u) $(renderer) {called=true});verify(!called)
+        verify(!with_renderer_properties(0u) $(renderer : SDL_Renderer?) {called=true
+            return sdl_ok()
+        } |> is_ok);verify(!called)
         var rect : SDL_Rect;rect.w=1;rect.h=1
-        verify(!with_read_pixels(null,rect) $(surface) {called=true});verify(!called)
-    }
+        verify(!with_read_pixels(null,rect) $(surface : SDL_Surface?) {called=true
+            return sdl_ok()
+        } |> is_ok);verify(!called)
+
+        return sdl_ok()
+    } |> is_ok
     verify(initialized)
     print("renderer operations: draw pixels, readback and ownership passed\n")
     return 0

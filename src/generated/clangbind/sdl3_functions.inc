@@ -19,6 +19,7 @@ addAnnotation(new DummyTypeAnnotation("SDL_GPUComputePass", "SDL_GPUComputePass"
 addAnnotation(new DummyTypeAnnotation("SDL_GPUCopyPass", "SDL_GPUCopyPass", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Palette", "SDL_Palette", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_IOStream", "SDL_IOStream", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_HitTestBinding", "SDL_HitTestBinding", 1, 1));
 addEnumeration(new Enumeration_SDL_PropertyType());
 addEnumeration(new Enumeration_SDL_IOWhence());
 addAnnotation(new SDL_AudioSpecAnnotation(lib));
@@ -39,6 +40,7 @@ addEnumeration(new Enumeration_SDL_SystemTheme());
 addAnnotation(new SDL_DisplayModeAnnotation(lib));
 addEnumeration(new Enumeration_SDL_DisplayOrientation());
 addEnumeration(new Enumeration_SDL_FlashOperation());
+addEnumeration(new Enumeration_SDL_HitTestResult());
 addAnnotation(new SDL_KeyboardEventAnnotation(lib));
 addAnnotation(new SDL_MouseMotionEventAnnotation(lib));
 addAnnotation(new SDL_MouseButtonEventAnnotation(lib));
@@ -779,6 +781,78 @@ addConstant(*this, "SDL_RENDERER_VSYNC_ADAPTIVE", static_cast<int32_t>(-1ULL));
 	makeExtern< void (*)(unsigned int,const struct SDL_PixelFormatDetails *,const struct SDL_Palette *,unsigned char *,unsigned char *,unsigned char *,unsigned char *) , SDL_GetRGBA , SimNode_ExtFuncCall >(lib,"SDL_GetRGBA","SDL_GetRGBA")
 		->args({"pixel","format","palette","r","g","b","a"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_rect.h:126:23
+	makeExtern< void (*)(const struct SDL_Rect *,struct SDL_FRect *) , SDL_RectToFRect , SimNode_ExtFuncCall >(lib,"SDL_RectToFRect","SDL_RectToFRect")
+		->args({"rect","frect"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_rect.h:155:23
+	makeExtern< bool (*)(const struct SDL_Point *,const struct SDL_Rect *) , SDL_PointInRect , SimNode_ExtFuncCall >(lib,"SDL_PointInRect","SDL_PointInRect")
+		->args({"p","r"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_rect.h:179:23
+	makeExtern< bool (*)(const struct SDL_Rect *) , SDL_RectEmpty , SimNode_ExtFuncCall >(lib,"SDL_RectEmpty","SDL_RectEmpty")
+		->args({"r"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_rect.h:203:23
+	makeExtern< bool (*)(const struct SDL_Rect *,const struct SDL_Rect *) , SDL_RectsEqual , SimNode_ExtFuncCall >(lib,"SDL_RectsEqual","SDL_RectsEqual")
+		->args({"a","b"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_rect.h:224:34
+	makeExtern< bool (*)(const struct SDL_Rect *,const struct SDL_Rect *) , SDL_HasRectIntersection , SimNode_ExtFuncCall >(lib,"SDL_HasRectIntersection","SDL_HasRectIntersection")
+		->args({"A","B"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_rect.h:241:34
+	makeExtern< bool (*)(const struct SDL_Rect *,const struct SDL_Rect *,struct SDL_Rect *) , SDL_GetRectIntersection , SimNode_ExtFuncCall >(lib,"SDL_GetRectIntersection","SDL_GetRectIntersection")
+		->args({"A","B","result"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_rect.h:255:34
+	makeExtern< bool (*)(const struct SDL_Rect *,const struct SDL_Rect *,struct SDL_Rect *) , SDL_GetRectUnion , SimNode_ExtFuncCall >(lib,"SDL_GetRectUnion","SDL_GetRectUnion")
+		->args({"A","B","result"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_rect.h:274:34
+	makeExtern< bool (*)(const struct SDL_Point *,int,const struct SDL_Rect *,struct SDL_Rect *) , SDL_GetRectEnclosingPoints , SimNode_ExtFuncCall >(lib,"SDL_GetRectEnclosingPoints","SDL_GetRectEnclosingPoints")
+		->args({"points","count","clip","result"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_rect.h:294:34
+	makeExtern< bool (*)(const struct SDL_Rect *,int *,int *,int *,int *) , SDL_GetRectAndLineIntersection , SimNode_ExtFuncCall >(lib,"SDL_GetRectAndLineIntersection","SDL_GetRectAndLineIntersection")
+		->args({"rect","X1","Y1","X2","Y2"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_rect.h:320:23
+	makeExtern< bool (*)(const struct SDL_FPoint *,const struct SDL_FRect *) , SDL_PointInRectFloat , SimNode_ExtFuncCall >(lib,"SDL_PointInRectFloat","SDL_PointInRectFloat")
+		->args({"p","r"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_rect.h:344:23
+	makeExtern< bool (*)(const struct SDL_FRect *) , SDL_RectEmptyFloat , SimNode_ExtFuncCall >(lib,"SDL_RectEmptyFloat","SDL_RectEmptyFloat")
+		->args({"r"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_rect.h:374:23
+	makeExtern< bool (*)(const struct SDL_FRect *,const struct SDL_FRect *,float) , SDL_RectsEqualEpsilon , SimNode_ExtFuncCall >(lib,"SDL_RectsEqualEpsilon","SDL_RectsEqualEpsilon")
+		->args({"a","b","epsilon"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_rect.h:409:23
+	makeExtern< bool (*)(const struct SDL_FRect *,const struct SDL_FRect *) , SDL_RectsEqualFloat , SimNode_ExtFuncCall >(lib,"SDL_RectsEqualFloat","SDL_RectsEqualFloat")
+		->args({"a","b"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_rect.h:427:34
+	makeExtern< bool (*)(const struct SDL_FRect *,const struct SDL_FRect *) , SDL_HasRectIntersectionFloat , SimNode_ExtFuncCall >(lib,"SDL_HasRectIntersectionFloat","SDL_HasRectIntersectionFloat")
+		->args({"A","B"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_rect.h:444:34
+	makeExtern< bool (*)(const struct SDL_FRect *,const struct SDL_FRect *,struct SDL_FRect *) , SDL_GetRectIntersectionFloat , SimNode_ExtFuncCall >(lib,"SDL_GetRectIntersectionFloat","SDL_GetRectIntersectionFloat")
+		->args({"A","B","result"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_rect.h:458:34
+	makeExtern< bool (*)(const struct SDL_FRect *,const struct SDL_FRect *,struct SDL_FRect *) , SDL_GetRectUnionFloat , SimNode_ExtFuncCall >(lib,"SDL_GetRectUnionFloat","SDL_GetRectUnionFloat")
+		->args({"A","B","result"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_rect.h:478:34
+	makeExtern< bool (*)(const struct SDL_FPoint *,int,const struct SDL_FRect *,struct SDL_FRect *) , SDL_GetRectEnclosingPointsFloat , SimNode_ExtFuncCall >(lib,"SDL_GetRectEnclosingPointsFloat","SDL_GetRectEnclosingPointsFloat")
+		->args({"points","count","clip","result"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_rect.h:499:34
+	makeExtern< bool (*)(const struct SDL_FRect *,float *,float *,float *,float *) , SDL_GetRectAndLineIntersectionFloat , SimNode_ExtFuncCall >(lib,"SDL_GetRectAndLineIntersectionFloat","SDL_GetRectAndLineIntersectionFloat")
+		->args({"rect","X1","Y1","X2","Y2"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_surface.h:167:43
 	makeExtern< struct SDL_Surface * (*)(int,int,enum SDL_PixelFormat) , SDL_CreateSurface , SimNode_ExtFuncCall >(lib,"SDL_CreateSurface","SDL_CreateSurface")
 		->args({"width","height","format"})
@@ -1010,6 +1084,42 @@ addConstant(*this, "SDL_RENDERER_VSYNC_ADAPTIVE", static_cast<int32_t>(-1ULL));
 // from SDL3/SDL_surface.h:1555:34
 	makeExtern< bool (*)(struct SDL_Surface *,int,int,float,float,float,float) , SDL_WriteSurfacePixelFloat , SimNode_ExtFuncCall >(lib,"SDL_WriteSurfacePixelFloat","SDL_WriteSurfacePixelFloat")
 		->args({"surface","x","y","r","g","b","a"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_clipboard.h:104:34
+	makeExtern< bool (*)(const char *) , SDL_SetClipboardText , SimNode_ExtFuncCall >(lib,"SDL_SetClipboardText","SDL_SetClipboardText")
+		->args({"text"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_clipboard.h:123:36
+	makeExtern< char * (*)() , SDL_GetClipboardText , SimNode_ExtFuncCall >(lib,"SDL_GetClipboardText","SDL_GetClipboardText")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_clipboard.h:137:34
+	makeExtern< bool (*)() , SDL_HasClipboardText , SimNode_ExtFuncCall >(lib,"SDL_HasClipboardText","SDL_HasClipboardText")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_clipboard.h:153:34
+	makeExtern< bool (*)(const char *) , SDL_SetPrimarySelectionText , SimNode_ExtFuncCall >(lib,"SDL_SetPrimarySelectionText","SDL_SetPrimarySelectionText")
+		->args({"text"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_clipboard.h:172:36
+	makeExtern< char * (*)() , SDL_GetPrimarySelectionText , SimNode_ExtFuncCall >(lib,"SDL_GetPrimarySelectionText","SDL_GetPrimarySelectionText")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_clipboard.h:187:34
+	makeExtern< bool (*)() , SDL_HasPrimarySelectionText , SimNode_ExtFuncCall >(lib,"SDL_HasPrimarySelectionText","SDL_HasPrimarySelectionText")
+		->addToModule(*this, SideEffects::worstDefault);
+makeExtern<decltype(&SDL_SetClipboardData), SDL_SetClipboardData, SimNode_ExtFuncCall>(lib,"SDL_SetClipboardData","SDL_SetClipboardDataAddress")->args({"callback","cleanup","userdata","mime_types","num_mime_types"})->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_clipboard.h:269:34
+	makeExtern< bool (*)() , SDL_ClearClipboardData , SimNode_ExtFuncCall >(lib,"SDL_ClearClipboardData","SDL_ClearClipboardData")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_clipboard.h:290:36
+	makeExtern< void * (*)(const char *,size_t *) , SDL_GetClipboardData , SimNode_ExtFuncCall >(lib,"SDL_GetClipboardData","SDL_GetClipboardData")
+		->args({"mime_type","size"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_clipboard.h:306:34
+	makeExtern< bool (*)(const char *) , SDL_HasClipboardData , SimNode_ExtFuncCall >(lib,"SDL_HasClipboardData","SDL_HasClipboardData")
+		->args({"mime_type"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_clipboard.h:323:37
+	makeExtern< char ** (*)(size_t *) , SDL_GetClipboardMimeTypes , SimNode_ExtFuncCall >(lib,"SDL_GetClipboardMimeTypes","SDL_GetClipboardMimeTypes")
+		->args({"num_mime_types"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_video.h:520:33
 	makeExtern< int (*)() , SDL_GetNumVideoDrivers , SimNode_ExtFuncCall >(lib,"SDL_GetNumVideoDrivers","SDL_GetNumVideoDrivers")
@@ -1334,6 +1444,7 @@ addConstant(*this, "SDL_RENDERER_VSYNC_ADAPTIVE", static_cast<int32_t>(-1ULL));
 	makeExtern< bool (*)(struct SDL_Window *,int,int) , SDL_ShowWindowSystemMenu , SimNode_ExtFuncCall >(lib,"SDL_ShowWindowSystemMenu","SDL_ShowWindowSystemMenu")
 		->args({"window","x","y"})
 		->addToModule(*this, SideEffects::worstDefault);
+makeExtern<decltype(&SDL_SetWindowHitTest), SDL_SetWindowHitTest, SimNode_ExtFuncCall>(lib,"SDL_SetWindowHitTest","SDL_SetWindowHitTestAddress")->args({"window","callback","callback_data"})->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_video.h:2802:34
 	makeExtern< bool (*)(struct SDL_Window *,struct SDL_Surface *) , SDL_SetWindowShape , SimNode_ExtFuncCall >(lib,"SDL_SetWindowShape","SDL_SetWindowShape")
 		->args({"window","shape"})

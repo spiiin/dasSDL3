@@ -111,19 +111,24 @@ SDL_Window и SDL_Renderer доступны как непрозрачные ук
 время жизни задают блоки:
 
 ```das
-with_sdl() {
-    with_window("Hello", 800, 600, SDL_WINDOW_RESIZABLE) $(window) {
-        window |> with_renderer() $(renderer) {
-            renderer |> clear()
-            renderer |> present()
+let result = with_sdl() {
+    return with_window("Hello", 800, 600, SDL_WINDOW_RESIZABLE) $(window : SDL_Window?) {
+        return window |> with_renderer() $(renderer : SDL_Renderer?) {
+            let cleared = renderer |> clear()
+            if (is_err(cleared)) { return cleared }
+            return renderer |> present()
         }
     }
+}
+if (is_err(result)) {
+    let error = unwrap_err(result)
+    print("{error.operation}: {error.message}\n")
 }
 ```
 
 Блоки освобождают renderer, затем окно, затем вызывают SDL_Quit. Очистка выполняется через
-`defer` при обычном и раннем выходе. Ошибки SDL возвращаются как bool/null/zero,
-без panic и перехвата. `with_*` возвращает false при неудачном создании и не
+`defer` при обычном и раннем выходе. Ошибки boost возвращаются как Result/Option,
+без panic и перехвата. `with_*` возвращает Err при неудачном создании и не
 вызывает блок. Произвольный panic приложения по-прежнему обходит defer;
 см. [контракт ошибок](docs/error-handling.md).
 Ссылочные адаптеры C++ позволяют poll_event/push_event/fill_rect работать
@@ -164,7 +169,7 @@ smoke-test отрисовывает 60 кадров в скрытом окне.
 копирует её пиксели, не забирая владение. `renderer |> with_texture(path)
 $(texture) { ... }` загружает BMP, сразу освобождает временную поверхность,
 а текстуру уничтожает при выходе из блока, до renderer. `texture_size`
-возвращает float2. Перегрузки `draw_texture` рисуют всю текстуру, масштабируют
+возвращает Result<float2,SdlError>. Перегрузки `draw_texture` рисуют всю текстуру, масштабируют
 её в dst или переносят фрагмент src в dst. Пример не требует unsafe.
 
 Тест текстур проверяет пиксели, размеры, реальные вызовы освобождения ресурсов,
@@ -445,3 +450,5 @@ Surface/Pixels: [contract](docs/surface-pixels.md), [example 66](examples/66_sur
 ```powershell
 .\build\ninja\bin\dasSDL3_runner.exe examples/66_surface_pixels.das
 ```
+
+P2 Rect/Clipboard/hit-test: [contracts and tests](docs/rect-clipboard-hittest.md). GL/EGL is explicitly deferred to P8.

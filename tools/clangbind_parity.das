@@ -136,7 +136,11 @@ class SdlParityGen : CppGenBind {
         }
     }
     def override skip_function(var c : CXCursor) : bool {
-        return !key_exists(selected, string(clang_getCursorSpelling(c))) || AnyGenBind`skip_function(self, c)
+        let name=string(clang_getCursorSpelling(c))
+        if(!key_exists(selected,name)) {return true}
+        // Explicit native-address callback contracts; no script-function reinterpretation.
+        if(name=="SDL_SetClipboardData" || name=="SDL_SetWindowHitTest") {return false}
+        return AnyGenBind`skip_function(self, c)
     }
     def override skip_alias(var c : CXCursor) : bool { return true }
     def override parse_Struct(var c : CXCursor; struct_name : string) { pass }
@@ -159,6 +163,16 @@ class SdlParityGen : CppGenBind {
             fwrite(signatures, "\t{string(clang_getCursorSpelling(arg))}")
         }
         fwrite(signatures, "\n")
+        if(name=="SDL_SetClipboardData" || name=="SDL_SetWindowHitTest") {
+            fwrite(func_file,"makeExtern<decltype(&{name}), {name}, SimNode_ExtFuncCall>(lib,\"{name}\",\"{name}Address\")->args(\{")
+            for(i in urange(clang_Cursor_getNumArguments(c))) {
+                if(i!=0u) {fwrite(func_file,",")}
+                var arg=clang_Cursor_getArgument(c,i)
+                fwrite(func_file,"\"{string(clang_getCursorSpelling(arg))}\"")
+            }
+            fwrite(func_file,"\})->addToModule(*this, SideEffects::worstDefault);\n")
+            return
+        }
         CppGenBind`parse_FunctionDecl(self, c)
     }
     def finish {

@@ -176,8 +176,14 @@ inline uint64_t SDL_RequestGPUBufferReadback(SDL_GPUDevice * device,uint64_t id,
     SDL_GPUReadbacks.emplace(ticket,SDL_GPUReadback{device,build.transfer,build.fence,size});
     build.transfer=nullptr; build.fence=nullptr; return ticket;
 }
+#ifdef DASSDL3_TESTING
+inline bool SDL_TestReadbackPending=false;
+#endif
 inline int SDL_PollGPUReadback(SDL_GPUDevice * device,uint64_t id) {
     auto * entry=SDL_GPUTransferFind(SDL_GPUReadbacks,device,id); if (!entry) return -1;
+#ifdef DASSDL3_TESTING
+    if(SDL_TestReadbackPending)return 0; // After normal ticket/device validation.
+#endif
     return SDL_QueryGPUFence(device,entry->fence) ? 1 : 0;
 }
 inline bool SDL_WaitGPUReadback(SDL_GPUDevice * device,uint64_t id) {

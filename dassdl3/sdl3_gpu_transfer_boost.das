@@ -5,50 +5,58 @@ require dassdl3/sdl3_gpu_boost public
 
 // Inputs are copied before returning; buffers have fixed capacity in bytes.
 def public with_gpu_buffer(device : SDL_GPUDevice?; bytes : array<uint8>; usage : uint;
-        blk : block<(buffer : uint64) : void>) {
+        blk : block<(buffer : uint64) : $Result<auto(TT); SdlError> >) {
+    var scope_result : $Result<TT; SdlError>
+
     let id = SDL_CreateGPUDataBuffer(device,bytes,usage)
-    if (id == 0ul) { return false }
+    if (id == 0ul) { return err(sdl_error("with_gpu_buffer"), type<TT>) }
     {
-        defer() { SDL_ReleaseGPUDataBuffer(device,id) }
-        blk(id)
-        return true
+        defer() { if (!SDL_ReleaseGPUDataBuffer(device,id) && is_ok(scope_result)) { scope_result <- err(sdl_error("SDL_ReleaseGPUDataBuffer"),type<TT>) } }
+        static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(id) } else { scope_result <- blk(id) }
     }
+
+    return <- scope_result
 }
 
 // Partial updates preserve the rest of the buffer. Cycling requires a full update.
 def public gpu_update_buffer(device : SDL_GPUDevice?; buffer : uint64; offset : uint;
         bytes : array<uint8>; cycle : bool = false) {
-    return SDL_UpdateGPUDataBuffer(device,buffer,offset,bytes,cycle)
+    return sdl_status(SDL_UpdateGPUDataBuffer(device,buffer,offset,bytes,cycle), "gpu_update_buffer")
 }
 
 def public gpu_copy_buffer(device : SDL_GPUDevice?; source : uint64; source_offset : uint;
         destination : uint64; destination_offset, size : uint) {
-    return SDL_CopyGPUDataBuffer(device,source,source_offset,destination,destination_offset,size)
+    return sdl_status(SDL_CopyGPUDataBuffer(device,source,source_offset,destination,destination_offset,size), "gpu_copy_buffer")
 }
 
 // Requests and submits a snapshot, then invokes script. This is not a recording
 // scope. Closing it discards the ticket; pending GPU work remains submitted.
 def public with_gpu_readback(device : SDL_GPUDevice?; buffer : uint64; offset, size : uint;
-        blk : block<(readback : uint64) : void>) {
+        blk : block<(readback : uint64) : $Result<auto(TT); SdlError> >) {
+    var scope_result : $Result<TT; SdlError>
+
     let id = SDL_RequestGPUBufferReadback(device,buffer,offset,size)
-    if (id == 0ul) { return false }
+    if (id == 0ul) { return err(sdl_error("with_gpu_readback"), type<TT>) }
     {
-        defer() { SDL_ReleaseGPUReadback(device,id) }
-        blk(id)
-        return true
+        defer() { if (!SDL_ReleaseGPUReadback(device,id) && is_ok(scope_result)) { scope_result <- err(sdl_error("SDL_ReleaseGPUReadback"),type<TT>) } }
+        static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(id) } else { scope_result <- blk(id) }
     }
+
+    return <- scope_result
 }
 
 // -1 = error, 0 = pending, 1 = ready. A failure is not a pending readback.
-def public gpu_poll_readback(device : SDL_GPUDevice?; ticket : uint64) : int {
-    return SDL_PollGPUReadback(device,ticket)
+def public gpu_poll_readback(device : SDL_GPUDevice?; ticket : uint64) {
+    let state = SDL_PollGPUReadback(device,ticket)
+    if (state < 0) { return err(sdl_error("gpu_poll_readback"), type<bool>) }
+    return ok(state == 1, type<SdlError>)
 }
 
 def public gpu_wait_readback(device : SDL_GPUDevice?; ticket : uint64) {
-    return SDL_WaitGPUReadback(device,ticket)
+    return sdl_status(SDL_WaitGPUReadback(device,ticket), "gpu_wait_readback")
 }
 
 // Does not resize or retain output. It must match the requested byte count.
 def public gpu_readback_bytes(device : SDL_GPUDevice?; ticket : uint64; var bytes : array<uint8>) {
-    return SDL_ReadGPUReadback(device,ticket,bytes)
+    return sdl_status(SDL_ReadGPUReadback(device,ticket,bytes), "gpu_readback_bytes")
 }

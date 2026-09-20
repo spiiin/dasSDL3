@@ -37,7 +37,7 @@ def check_triangle(device : SDL_GPUDevice?; vertex, fragment : string; format : 
     for (mode in 0 .. 3) {
         let id = ids[mode]
         var query_result_1 : SDL_GPUGraphicsPipelineCreateInfo
-        verify(gpu_graphics_pipeline_descriptor(device,id,query_result_1))
+        verify(is_ok(gpu_graphics_pipeline_descriptor(device,id,query_result_1)))
         verify(query_result_1.rasterizer_state.cull_mode == SDL_GPUCullMode.CULLMODE_NONE)
         if (!SDLTest_graphics_pipeline_triangle(device,id,uint(mode))) { panic("Pipeline pixels: {SDL_GetError()}") }
         verify(SDL_ReleaseGPUCheckedGraphicsPipeline(device,id))
@@ -67,9 +67,11 @@ def check_vertex_layout(device : SDL_GPUDevice?; vertex, fragment : string; form
     buffers[0].slot = 1u; buffers[0].pitch = 8u; buffers[0].input_rate = SDL_GPUVertexInputRate.VERTEXINPUTRATE_INSTANCE
     buffers[1].slot = 0u; buffers[1].pitch = 8u; buffers[1].input_rate = SDL_GPUVertexInputRate.VERTEXINPUTRATE_VERTEX
     attributes[1].buffer_slot = 1u; attributes[1].offset = 0u
-    let scope_ok_0 = device |> with_gpu_graphics_pipeline(vs,fs,info,buffers,attributes,colors) $(sorted) {
+    let scope_ok_0 = device |> with_gpu_graphics_pipeline(vs,fs,info,buffers,attributes,colors) $(sorted : uint64) {
         verify(SDLTest_graphics_pipeline_sorted(device,sorted))
-    }
+
+        return sdl_ok()
+    } |> is_ok
     verify(scope_ok_0)
     resize(buffers,1)
     buffers[0].slot = 0u; buffers[0].pitch = 16u; buffers[0].input_rate = SDL_GPUVertexInputRate.VERTEXINPUTRATE_VERTEX
@@ -81,7 +83,7 @@ def check_vertex_layout(device : SDL_GPUDevice?; vertex, fragment : string; form
     colors[0].format = SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT
     clear(buffers); clear(attributes); clear(colors)
     var query_result_2 : SDL_GPUGraphicsPipelineCreateInfo
-    verify(gpu_graphics_pipeline_descriptor(device,pipeline,query_result_2))
+    verify(is_ok(gpu_graphics_pipeline_descriptor(device,pipeline,query_result_2)))
     verify(SDLTest_graphics_pipeline_hidden(query_result_2))
     verify(SDL_ReleaseGPUCheckedGraphicsPipeline(device,pipeline))
 }
@@ -95,12 +97,14 @@ def check_states(device : SDL_GPUDevice?; vs, fs : uint64) {
     for (sample in array<SDL_GPUSampleCount>(SDL_GPUSampleCount.SAMPLECOUNT_1,SDL_GPUSampleCount.SAMPLECOUNT_2,SDL_GPUSampleCount.SAMPLECOUNT_4,SDL_GPUSampleCount.SAMPLECOUNT_8)) {
         info.multisample_state.sample_count = sample
         if (SDL_GPUTextureSupportsSampleCount(device,colors[0].format,sample)) {
-            let scope_ok_1 = device |> with_gpu_graphics_pipeline(vs,fs,info,buffers,attributes,colors) $(id) {
+            let scope_ok_1 = device |> with_gpu_graphics_pipeline(vs,fs,info,buffers,attributes,colors) $(id : uint64) {
                 var query_result_3 : SDL_GPUGraphicsPipelineCreateInfo
-                verify(gpu_graphics_pipeline_descriptor(device,id,query_result_3))
+                verify(is_ok(gpu_graphics_pipeline_descriptor(device,id,query_result_3)))
                 verify(query_result_3.multisample_state.sample_count == sample)
                 samples++
-            }
+
+                return sdl_ok()
+            } |> is_ok
             verify(scope_ok_1)
         } else { verify(SDL_CreateGPUCheckedGraphicsPipeline(device,vs,fs,info,buffers,attributes,colors) == 0ul) }
     }
@@ -117,30 +121,36 @@ def check_states(device : SDL_GPUDevice?; vs, fs : uint64) {
             info.depth_stencil_state.front_stencil_state.compare_op = SDL_GPUCompareOp.COMPAREOP_ALWAYS
             info.depth_stencil_state.back_stencil_state = info.depth_stencil_state.front_stencil_state
             info.depth_stencil_state.compare_mask = uint8(255); info.depth_stencil_state.write_mask = uint8(255)
-            let scope_ok_2 = device |> with_gpu_graphics_pipeline(vs,fs,info,buffers,attributes,colors) $(id) {
+            let scope_ok_2 = device |> with_gpu_graphics_pipeline(vs,fs,info,buffers,attributes,colors) $(id : uint64) {
                 var query_result_4 : SDL_GPUGraphicsPipelineCreateInfo
-                verify(gpu_graphics_pipeline_descriptor(device,id,query_result_4))
+                verify(is_ok(gpu_graphics_pipeline_descriptor(device,id,query_result_4)))
                 let copy = query_result_4
                 verify(copy.target_info.has_depth_stencil_target && copy.target_info.depth_stencil_format == format)
                 verify(copy.depth_stencil_state.compare_op == SDL_GPUCompareOp.COMPAREOP_LESS && copy.depth_stencil_state.enable_depth_write)
                 verify(SDLTest_graphics_pipeline_hidden(copy))
                 depths++
-            }
+
+                return sdl_ok()
+            } |> is_ok
             verify(scope_ok_2)
         }
     }
     info = gpu_graphics_pipeline_info(); info.multisample_state.enable_mask = true
     var caught, invoked = false
-    { let operation_ok = device |> with_gpu_graphics_pipeline(vs,fs,info,buffers,attributes,colors) $(id) { invoked = true }
+    { let operation_ok = device |> with_gpu_graphics_pipeline(vs,fs,info,buffers,attributes,colors) $(id : uint64) { invoked = true
+        return sdl_ok()
+    } |> is_ok
 caught = !operation_ok }
     verify(caught && !invoked)
     info = gpu_graphics_pipeline_info()
     for (count in 2 .. 5) {
         resize(colors,count)
         for (i in 0 .. count) { colors[i] = gpu_color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM) }
-        let scope_ok_3 = device |> with_gpu_graphics_pipeline(vs,fs,info,buffers,attributes,colors) $(id) {
+        let scope_ok_3 = device |> with_gpu_graphics_pipeline(vs,fs,info,buffers,attributes,colors) $(id : uint64) {
             verify(id != 0ul)
-        }
+
+            return sdl_ok()
+        } |> is_ok
         verify(scope_ok_3)
     }
     resize(colors,5)
@@ -152,25 +162,25 @@ caught = !operation_ok }
 def check_lifetime(device : SDL_GPUDevice?; vertex, fragment : string; format : uint) {
     let vi = gpu_shader_info(format,SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
     let fi = gpu_shader_info(format,SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT)
-    let scope_ok_4 = device |> with_gpu_shader_file(vertex,vi) $(vs) {
-        let scope_ok_5 = device |> with_gpu_shader_file(fragment,fi) $(fs) {
+    let scope_ok_4 = device |> with_gpu_shader_file(vertex,vi) $(vs : uint64) {
+        let scope_ok_5 = device |> with_gpu_shader_file(fragment,fi) $(fs : uint64) {
             check_states(device,vs,fs)
             var stale = 0ul
-            let scope_ok_6 = device |> with_gpu_graphics_pipeline(vs,fs,SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM) $(outer) {
+            let scope_ok_6 = device |> with_gpu_graphics_pipeline(vs,fs,SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM) $(outer : uint64) {
                 verify(SDLTest_graphics_pipeline_thread(device,outer))
                 var caught = false
                 {
-                    let scope_ok_7 = device |> with_gpu_graphics_pipeline(vs,fs,SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM) $(inner) {
-                        stale = inner; caught = !set_title(null,"expected SDL failure"); return
-                    }
+                    let scope_ok_7 = device |> with_gpu_graphics_pipeline(vs,fs,SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM) $(inner : uint64) {
+                        stale = inner; caught = !is_ok(set_title(null,"expected SDL failure")); return sdl_ok()
+                    } |> is_ok
                     verify(scope_ok_7)
                 }
                 verify(caught && !SDLTest_graphics_pipeline_exists(stale))
                 verify(SDLTest_graphics_pipeline_triangle(device,outer,0u))
-                let other = try_with_gpu_device(GPU_SHADER_FORMATS,true,"") $(second) {
+                let other = with_gpu_device(GPU_SHADER_FORMATS,true,"") $(second : SDL_GPUDevice?) {
                     verify(!SDL_ReleaseGPUCheckedGraphicsPipeline(second,outer))
-                    let scope_ok_8 = second |> with_gpu_shader_file(vertex,vi) $(sv) {
-                        let scope_ok_9 = second |> with_gpu_shader_file(fragment,fi) $(sf) {
+                    let scope_ok_8 = second |> with_gpu_shader_file(vertex,vi) $(sv : uint64) {
+                        let scope_ok_9 = second |> with_gpu_shader_file(fragment,fi) $(sf : uint64) {
                             var b : array<SDL_GPUVertexBufferDescription>
                             var a : array<SDL_GPUVertexAttribute>
                             var c : array<SDL_GPUColorTargetDescription>
@@ -178,26 +188,41 @@ def check_lifetime(device : SDL_GPUDevice?; vertex, fragment : string; format : 
                             verify(SDL_CreateGPUCheckedGraphicsPipeline(device,sv,fs,gpu_graphics_pipeline_info(),b,a,c) == 0ul)
                             stale = SDL_CreateGPUCheckedGraphicsPipeline(second,sv,sf,gpu_graphics_pipeline_info(),b,a,c)
                             verify(stale != 0ul)
-                        }
+
+                            return sdl_ok()
+                        } |> is_ok
                         verify(scope_ok_9)
-                    }
+
+                        return sdl_ok()
+                    } |> is_ok
                     verify(scope_ok_8)
-                }
+
+                    return sdl_ok()
+                } |> is_ok
                 verify(other && !SDLTest_graphics_pipeline_exists(stale))
                 verify(SDLTest_graphics_pipeline_triangle(device,outer,0u))
-                let scope_ok_10 = device |> with_gpu_sampler() $(sampler) {
+                let scope_ok_10 = device |> with_gpu_sampler() $(sampler : uint64) {
                     verify(!SDL_ReleaseGPUCheckedGraphicsPipeline(device,sampler))
                     verify(!SDL_ReleaseGPUCheckedSampler(device,outer))
-                }
+
+                    return sdl_ok()
+                } |> is_ok
                 verify(scope_ok_10)
-            }
+
+                return sdl_ok()
+            } |> is_ok
             verify(scope_ok_6)
-            let scope_ok_11 = device |> with_gpu_graphics_pipeline(vs,fs,SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM) $(id) { stale = id; return }
+            let scope_ok_11 = device |> with_gpu_graphics_pipeline(vs,fs,SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM) $(id : uint64) { stale = id; return sdl_ok()
+            } |> is_ok
             verify(scope_ok_11)
             verify(!SDLTest_graphics_pipeline_exists(stale))
-        }
+
+            return sdl_ok()
+        } |> is_ok
         verify(scope_ok_5)
-    }
+
+        return sdl_ok()
+    } |> is_ok
     verify(scope_ok_4)
     verify(SDLTest_graphics_pipeline_count(device) == 0u)
 }
@@ -206,7 +231,7 @@ def main(smoke : bool) : int {
     verify(SDLTest_graphics_pipeline_validation())
     var available = false
     let scope_ok_12 = with_sdl() {
-        available = try_with_gpu_device(GPU_SHADER_FORMATS,true,"") $(device) {
+        available = with_gpu_device(GPU_SHADER_FORMATS,true,"") $(device : SDL_GPUDevice?) {
             let spirv = (SDL_GetGPUShaderFormats(device) & SDL_GPU_SHADERFORMAT_SPIRV) != 0u
             let format = spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL
             let extension = spirv ? "spv" : "dxil"
@@ -215,9 +240,13 @@ def main(smoke : bool) : int {
             check_vertex_layout(device,"{base}/mesh.vert.{extension}","{base}/mesh.frag.{extension}",format)
             check_lifetime(device,"{base}/triangle.vert.{extension}","{base}/triangle.frag.{extension}",format)
             print("General graphics pipeline layouts, blend/mask pixels and ownership PASS: {SDL_GetGPUDeviceDriver(device)}\n")
-        }
+
+            return sdl_ok()
+        } |> is_ok
         if (!available) { print("GPU unavailable: {SDL_GetError()}\n") }
-    }
+
+        return sdl_ok()
+    } |> is_ok
     verify(scope_ok_12)
     return available ? 0 : 77
 }

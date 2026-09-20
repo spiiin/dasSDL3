@@ -7,7 +7,7 @@ def main(smoke : bool) : int {
         verify(SDL_DisableScreenSaver() && !SDL_ScreenSaverEnabled())
         verify(SDL_EnableScreenSaver() && SDL_ScreenSaverEnabled())
         if(!screensaver) {verify(SDL_DisableScreenSaver())}
-        let owned=with_window("window IO",32,24,SDL_WINDOW_HIDDEN|SDL_WINDOW_NOT_FOCUSABLE) $(window) {
+        let owned=with_window("window IO",32,24,SDL_WINDOW_HIDDEN|SDL_WINDOW_NOT_FOCUSABLE) $(window : SDL_Window?) {
             var mode : SDL_DisplayMode
             verify(SDL_GetDesktopDisplayModeCopy(SDL_GetDisplayForWindow(window),mode))
             verify(SDL_SetWindowFullscreenModeRef(window,mode))
@@ -24,7 +24,7 @@ def main(smoke : bool) : int {
             verify(SDL_SetWindowDesktopFullscreenMode(window))
             verify(!SDL_GetWindowFullscreenModeCopy(window,selected) && selected.w==0)
             var profile : array<uint8>
-            let copied=window_icc_profile(window,profile)
+            let copied=is_ok(window_icc_profile(window,profile))
             unsafe {
                 var size=0ul
                 let raw=SDL_GetWindowICCProfile(window,addr(size))
@@ -42,7 +42,7 @@ def main(smoke : bool) : int {
             let surface=SDL_GetWindowSurface(window)
             verify(surface!=null && SDL_WindowHasSurface(window))
             var size : int2
-            verify(surface_size(surface,size) && size.x==32 && size.y==24)
+            verify(is_ok(surface_size(surface,size)) && size.x==32 && size.y==24)
             let red=SDL_MapSurfaceRGBA(surface,uint(210),uint(30),uint(40),uint(255))
             verify(SDL_FillSurfaceAll(surface,red))
             var rect : SDL_Rect
@@ -50,24 +50,24 @@ def main(smoke : bool) : int {
             let blue=SDL_MapSurfaceRGBA(surface,uint(10),uint(20),uint(230),uint(255))
             unsafe {verify(SDL_FillSurfaceRect(surface,addr(rect),blue))}
             var pixels : array<uint8>;resize(pixels,32*24*4)
-            verify(copy_surface_rgba8(surface,pixels,32*4))
+            verify(is_ok(copy_surface_rgba8(surface,pixels,32*4)))
             verify(pixels[0]==uint8(210) && pixels[1]==uint8(30))
             let offset=(3*32+2)*4
             verify(pixels[offset]==uint8(10) && pixels[offset+2]==uint8(230))
             let vsync_ok=SDL_SetWindowSurfaceVSync(window,SDL_WINDOW_SURFACE_VSYNC_DISABLED)
             var vsync=-99
-            let vsync_query=window_surface_vsync(window,vsync)
+            let vsync_query=is_ok(window_surface_vsync(window,vsync))
             unsafe {var raw_vsync=-99;verify(SDL_GetWindowSurfaceVSync(window,addr(raw_vsync))==vsync_query);if(vsync_query){verify(raw_vsync==vsync)}}
             if(vsync_ok && vsync_query) {verify(vsync==0)}
             print("Surface VSync set/query: {vsync_ok}/{vsync_query}\n")
             verify(SDL_UpdateWindowSurface(window))
             unsafe {verify(SDL_UpdateWindowSurfaceRects(window,addr(rect),1))}
             var rects : array<SDL_Rect>;push(rects,rect)
-            verify(update_window_rects(window,rects))
+            verify(is_ok(update_window_rects(window,rects)))
             verify(SDL_SetWindowSize(window,40,30) && SDL_SyncWindow(window))
             // Never touch the old borrowed surface after resize.
             let resized=SDL_GetWindowSurface(window)
-            verify(resized!=null && surface_size(resized,size) && size.x==40 && size.y==30)
+            verify(resized!=null && is_ok(surface_size(resized,size)) && size.x==40 && size.y==30)
             verify(SDL_DestroyWindowSurface(window) && !SDL_WindowHasSurface(window))
             verify(!SDL_UpdateWindowSurface(window))
             verify(SDL_GetWindowSurface(window)!=null)
@@ -94,24 +94,32 @@ def main(smoke : bool) : int {
             verify(!SDL_SetWindowShape(window,icon)) // TRANSPARENT required
             SDL_DestroySurface(icon)
             var invalid : array<uint8>;push(invalid,uint8(7))
-            verify(!window_icc_profile(null,invalid) && length(invalid)==0)
-        }
+            verify(!is_ok(window_icc_profile(null,invalid)) && length(invalid)==0)
+
+            return sdl_ok()
+        } |> is_ok
         verify(owned)
-        let transparent=with_window("shape",16,16,SDL_WINDOW_HIDDEN|SDL_WINDOW_TRANSPARENT) $(window) {
-            let shaped=with_surface(16,16,SDL_PixelFormat.PIXELFORMAT_RGBA32) $(shape) {
+        let transparent=with_window("shape",16,16,SDL_WINDOW_HIDDEN|SDL_WINDOW_TRANSPARENT) $(window : SDL_Window?) {
+            let shaped=with_surface(16,16,SDL_PixelFormat.PIXELFORMAT_RGBA32) $(shape : SDL_Surface?) {
                 verify(SDL_FillSurfaceAll(shape,SDL_MapSurfaceRGBA(shape,uint(0),uint(0),uint(0),uint(255))))
                 verify(SDL_SetWindowShape(window,shape))
                 // Pinned SDL 3.2.18 contradicts documented NULL-removal behavior.
                 verify(!SDL_SetWindowShape(window,null))
-                return
-            }
+                return sdl_ok()
+            } |> is_ok
             verify(shaped)
-        }
+
+            return sdl_ok()
+        } |> is_ok
         verify(transparent)
         var called=false
-        let bad=with_surface(-1,1,SDL_PixelFormat.PIXELFORMAT_RGBA32) $(unused) {called=true}
+        let bad=with_surface(-1,1,SDL_PixelFormat.PIXELFORMAT_RGBA32) $(unused : SDL_Surface?) {called=true
+            return sdl_ok()
+        } |> is_ok
         verify(!bad && !called)
-    }
+
+        return sdl_ok()
+    } |> is_ok
     verify(initialized)
     return 0
 }

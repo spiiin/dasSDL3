@@ -8,10 +8,10 @@ def public vertex(position : float2; rgba : float4; uv : float2 = float2(0.0)) :
 }
 
 def public draw_geometry(renderer : SDL_Renderer?; vertices : array<SDL_Vertex>; texture : SDL_Texture? = null) {
-    return SDL_RenderGeometryVertices(renderer, texture, vertices)
+    return sdl_status(SDL_RenderGeometryVertices(renderer, texture, vertices), "draw_geometry")
 }
 
 def public draw_geometry(renderer : SDL_Renderer?; vertices : array<SDL_Vertex>;
                          indices : array<int>; texture : SDL_Texture? = null) {
-    return SDL_RenderGeometryIndices(renderer, texture, vertices, indices)
+    return sdl_status(SDL_RenderGeometryIndices(renderer, texture, vertices, indices), "draw_geometry")
 }

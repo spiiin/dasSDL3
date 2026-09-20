@@ -2,7 +2,8 @@
 
 Pinned SDL 3.2.18, Windows x64/MSVC. Adds 25 generated Video functions and three
 Surface functions (CreateSurface, FillSurfaceRect, MapSurfaceRGBA). Video now has
-88/109 generated functions; its remaining 21 are GL/EGL and SetWindowHitTest.
+89/109 generated functions; its remaining 20 are GL/EGL, explicitly deferred to P8.
+SetWindowHitTest is covered in [callback contracts](rect-clipboard-hittest.md).
 SDL_FlashOperation and the two surface-vsync constants are generated.
 
 ## Surface ownership and pixels
@@ -73,7 +74,8 @@ OSes and all graphics backends are not certified by this test.
 
 [Example 56](../examples/56_window_surface.das) fills a borrowed window surface
 and updates it using only public helpers, without unsafe. Renderer/Surface API
-coverage continues next; GL/EGL and retained hit-test callbacks remain separate.
+coverage is complete at the function level; GL/EGL is P8 and hit-test scopes are
+covered in [callback contracts](rect-clipboard-hittest.md).
 
 ## Local validation (Windows x64/MSVC, 2026-09-20)
 

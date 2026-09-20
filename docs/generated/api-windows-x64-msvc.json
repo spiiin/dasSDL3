@@ -18,6 +18,10 @@
     "SDL_Wav": {
       "native_header": "src/sdl3_audio.h",
       "reason": "Project-owned WAV buffer wrapper; not a declaration in SDL headers"
+    },
+    "SDL_HitTestBinding": {
+      "native_header": "src/sdl3_callback_types.h",
+      "reason": "Scoped callback lifetime token; not an SDL declaration"
     }
   },
   "scope": "Active declarations/macros only; inactive platform branches are NOT counted. Record and typedef entries are distinct declarations.",
@@ -1281,7 +1285,7 @@
       "line": 2704,
       "id": "enum:SDL_HitTestResult",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7891,7 +7895,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_HITTEST_DRAGGABLE",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7902,7 +7906,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_HITTEST_NORMAL",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7913,7 +7917,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_HITTEST_RESIZE_BOTTOM",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7924,7 +7928,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_HITTEST_RESIZE_BOTTOMLEFT",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7935,7 +7939,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_HITTEST_RESIZE_BOTTOMRIGHT",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7946,7 +7950,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_HITTEST_RESIZE_LEFT",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7957,7 +7961,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_HITTEST_RESIZE_RIGHT",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7968,7 +7972,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_HITTEST_RESIZE_TOP",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7979,7 +7983,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_HITTEST_RESIZE_TOPLEFT",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7990,7 +7994,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_HITTEST_RESIZE_TOPRIGHT",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -15564,8 +15568,15 @@
       "arguments": [],
       "id": "function:SDL_ClearClipboardData",
       "category": "Clipboard",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_ClearComposition",
@@ -20205,8 +20216,15 @@
       ],
       "id": "function:SDL_GetClipboardData",
       "category": "Clipboard",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_GetClipboardMimeTypes",
@@ -20223,8 +20241,15 @@
       ],
       "id": "function:SDL_GetClipboardMimeTypes",
       "category": "Clipboard",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_GetClipboardText",
@@ -20236,8 +20261,15 @@
       "arguments": [],
       "id": "function:SDL_GetClipboardText",
       "category": "Clipboard",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_GetClosestFullscreenDisplayMode",
@@ -23891,8 +23923,15 @@
       "arguments": [],
       "id": "function:SDL_GetPrimarySelectionText",
       "category": "Clipboard",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_GetProcessInput",
@@ -24127,8 +24166,15 @@
       ],
       "id": "function:SDL_GetRectAndLineIntersection",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_GetRectAndLineIntersectionFloat",
@@ -24161,8 +24207,15 @@
       ],
       "id": "function:SDL_GetRectAndLineIntersectionFloat",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_GetRectEnclosingPoints",
@@ -24191,8 +24244,15 @@
       ],
       "id": "function:SDL_GetRectEnclosingPoints",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_GetRectEnclosingPointsFloat",
@@ -24221,8 +24281,15 @@
       ],
       "id": "function:SDL_GetRectEnclosingPointsFloat",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_GetRectIntersection",
@@ -24247,8 +24314,15 @@
       ],
       "id": "function:SDL_GetRectIntersection",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_GetRectIntersectionFloat",
@@ -24273,8 +24347,15 @@
       ],
       "id": "function:SDL_GetRectIntersectionFloat",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_GetRectUnion",
@@ -24299,8 +24380,15 @@
       ],
       "id": "function:SDL_GetRectUnion",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_GetRectUnionFloat",
@@ -24325,8 +24413,15 @@
       ],
       "id": "function:SDL_GetRectUnionFloat",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_GetRelativeMouseState",
@@ -27156,8 +27251,15 @@
       ],
       "id": "function:SDL_HasClipboardData",
       "category": "Clipboard",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_HasClipboardText",
@@ -27169,8 +27271,15 @@
       "arguments": [],
       "id": "function:SDL_HasClipboardText",
       "category": "Clipboard",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_HasEvent",
@@ -27344,8 +27453,15 @@
       "arguments": [],
       "id": "function:SDL_HasPrimarySelectionText",
       "category": "Clipboard",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_HasProperty",
@@ -27388,8 +27504,15 @@
       ],
       "id": "function:SDL_HasRectIntersection",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_HasRectIntersectionFloat",
@@ -27410,8 +27533,15 @@
       ],
       "id": "function:SDL_HasRectIntersectionFloat",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_HasSSE",
@@ -29600,8 +29730,15 @@
       ],
       "id": "function:SDL_PointInRect",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_PointInRectFloat",
@@ -29622,8 +29759,15 @@
       ],
       "id": "function:SDL_PointInRectFloat",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_PollEvent",
@@ -30554,8 +30698,15 @@
       ],
       "id": "function:SDL_RectEmpty",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_RectEmptyFloat",
@@ -30572,8 +30723,15 @@
       ],
       "id": "function:SDL_RectEmptyFloat",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_RectToFRect",
@@ -30594,8 +30752,15 @@
       ],
       "id": "function:SDL_RectToFRect",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_RectsEqual",
@@ -30616,8 +30781,15 @@
       ],
       "id": "function:SDL_RectsEqual",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_RectsEqualEpsilon",
@@ -30642,8 +30814,15 @@
       ],
       "id": "function:SDL_RectsEqualEpsilon",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_RectsEqualFloat",
@@ -30664,8 +30843,15 @@
       ],
       "id": "function:SDL_RectsEqualFloat",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_RegisterApp",
@@ -33154,8 +33340,15 @@
       ],
       "id": "function:SDL_SetClipboardData",
       "category": "Clipboard",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_SetClipboardText",
@@ -33172,8 +33365,15 @@
       ],
       "id": "function:SDL_SetClipboardText",
       "category": "Clipboard",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_SetCurrentThreadPriority",
@@ -34357,8 +34557,15 @@
       ],
       "id": "function:SDL_SetPrimarySelectionText",
       "category": "Clipboard",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_SetRenderClipRect",
@@ -35491,10 +35698,15 @@
       ],
       "id": "function:SDL_SetWindowHitTest",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "Retained callback requires lifetime, rooting and thread contract.",
-      "contract": "docs/window-io.md"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature with ref/copy/scope adapters. Native callback addresses are not daScript function values. Clipboard uses owned copies; hit-test script callbacks are scoped.",
+      "contract": "docs/rect-clipboard-hittest.md",
+      "tests": [
+        "tests/rect_clipboard.das",
+        "tests/callback_lifetimes.das",
+        "tests/window_hittest.das"
+      ]
     },
     {
       "name": "SDL_SetWindowIcon",
@@ -72279,7 +72491,7 @@
       "callback": false,
       "id": "typedef:SDL_HitTestResult",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
