@@ -881,7 +881,7 @@
       "line": 74,
       "id": "enum:SDL_DateFormat",
       "category": "Time",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -891,7 +891,7 @@
       "line": 157,
       "id": "enum:SDL_DisplayOrientation",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -941,7 +941,7 @@
       "line": 303,
       "id": "enum:SDL_FlashOperation",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1271,7 +1271,7 @@
       "line": 4296,
       "id": "enum:SDL_HintPriority",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1341,7 +1341,7 @@
       "line": 90,
       "id": "enum:SDL_LogCategory",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1351,7 +1351,7 @@
       "line": 130,
       "id": "enum:SDL_LogPriority",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1431,7 +1431,7 @@
       "line": 548,
       "id": "enum:SDL_PixelFormat",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1471,7 +1471,7 @@
       "line": 73,
       "id": "enum:SDL_PropertyType",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1541,7 +1541,7 @@
       "line": 108,
       "id": "enum:SDL_SystemTheme",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1591,7 +1591,7 @@
       "line": 88,
       "id": "enum:SDL_TimeFormat",
       "category": "Time",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2688,7 +2688,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_DATE_FORMAT_DDMMYYYY",
       "category": "Time",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2699,7 +2699,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_DATE_FORMAT_MMDDYYYY",
       "category": "Time",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2710,7 +2710,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_DATE_FORMAT_YYYYMMDD",
       "category": "Time",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -4085,7 +4085,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_FLASH_BRIEFLY",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -4096,7 +4096,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_FLASH_CANCEL",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -4107,7 +4107,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_FLASH_UNTIL_FOCUSED",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7858,7 +7858,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_HINT_DEFAULT",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7869,7 +7869,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_HINT_NORMAL",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -7880,7 +7880,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_HINT_OVERRIDE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8364,7 +8364,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_CATEGORY_APPLICATION",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8375,7 +8375,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_CATEGORY_ASSERT",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8386,7 +8386,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_CATEGORY_AUDIO",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8397,7 +8397,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_CATEGORY_CUSTOM",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8408,7 +8408,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_CATEGORY_ERROR",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8419,7 +8419,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_CATEGORY_GPU",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8430,7 +8430,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_CATEGORY_INPUT",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8441,7 +8441,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_CATEGORY_RENDER",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8452,7 +8452,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_CATEGORY_RESERVED10",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8463,7 +8463,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_CATEGORY_RESERVED2",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8474,7 +8474,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_CATEGORY_RESERVED3",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8485,7 +8485,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_CATEGORY_RESERVED4",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8496,7 +8496,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_CATEGORY_RESERVED5",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8507,7 +8507,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_CATEGORY_RESERVED6",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8518,7 +8518,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_CATEGORY_RESERVED7",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8529,7 +8529,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_CATEGORY_RESERVED8",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8540,7 +8540,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_CATEGORY_RESERVED9",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8551,7 +8551,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_CATEGORY_SYSTEM",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8562,7 +8562,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_CATEGORY_TEST",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8573,7 +8573,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_CATEGORY_VIDEO",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8584,7 +8584,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_PRIORITY_COUNT",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8595,7 +8595,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_PRIORITY_CRITICAL",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8606,7 +8606,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_PRIORITY_DEBUG",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8617,7 +8617,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_PRIORITY_ERROR",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8628,7 +8628,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_PRIORITY_INFO",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8639,7 +8639,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_PRIORITY_INVALID",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8650,7 +8650,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_PRIORITY_TRACE",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8661,7 +8661,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_PRIORITY_VERBOSE",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8672,7 +8672,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_LOG_PRIORITY_WARN",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8936,7 +8936,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_ORIENTATION_LANDSCAPE",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8947,7 +8947,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_ORIENTATION_LANDSCAPE_FLIPPED",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8958,7 +8958,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_ORIENTATION_PORTRAIT",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8969,7 +8969,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_ORIENTATION_PORTRAIT_FLIPPED",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8980,7 +8980,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_ORIENTATION_UNKNOWN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9332,7 +9332,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_ABGR128_FLOAT",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9343,7 +9343,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_ABGR1555",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9354,7 +9354,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_ABGR2101010",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9365,7 +9365,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_ABGR32",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9376,7 +9376,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_ABGR4444",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9387,7 +9387,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_ABGR64",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9398,7 +9398,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_ABGR64_FLOAT",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9409,7 +9409,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_ABGR8888",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9420,7 +9420,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_ARGB128_FLOAT",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9431,7 +9431,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_ARGB1555",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9442,7 +9442,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_ARGB2101010",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9453,7 +9453,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_ARGB32",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9464,7 +9464,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_ARGB4444",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9475,7 +9475,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_ARGB64",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9486,7 +9486,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_ARGB64_FLOAT",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9497,7 +9497,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_ARGB8888",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9508,7 +9508,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_BGR24",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9519,7 +9519,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_BGR48",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9530,7 +9530,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_BGR48_FLOAT",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9541,7 +9541,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_BGR565",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9552,7 +9552,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_BGR96_FLOAT",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9563,7 +9563,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_BGRA128_FLOAT",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9574,7 +9574,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_BGRA32",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9585,7 +9585,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_BGRA4444",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9596,7 +9596,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_BGRA5551",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9607,7 +9607,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_BGRA64",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9618,7 +9618,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_BGRA64_FLOAT",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9629,7 +9629,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_BGRA8888",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9640,7 +9640,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_BGRX32",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9651,7 +9651,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_BGRX8888",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9662,7 +9662,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_EXTERNAL_OES",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9673,7 +9673,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_INDEX1LSB",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9684,7 +9684,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_INDEX1MSB",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9695,7 +9695,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_INDEX2LSB",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9706,7 +9706,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_INDEX2MSB",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9717,7 +9717,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_INDEX4LSB",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9728,7 +9728,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_INDEX4MSB",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9739,7 +9739,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_INDEX8",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9750,7 +9750,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_IYUV",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9761,7 +9761,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_MJPG",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9772,7 +9772,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_NV12",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9783,7 +9783,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_NV21",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9794,7 +9794,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_P010",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9805,7 +9805,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_RGB24",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9816,7 +9816,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_RGB332",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9827,7 +9827,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_RGB48",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9838,7 +9838,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_RGB48_FLOAT",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9849,7 +9849,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_RGB565",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9860,7 +9860,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_RGB96_FLOAT",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9871,7 +9871,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_RGBA128_FLOAT",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9882,7 +9882,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_RGBA32",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9893,7 +9893,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_RGBA4444",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9904,7 +9904,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_RGBA5551",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9915,7 +9915,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_RGBA64",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9926,7 +9926,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_RGBA64_FLOAT",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9937,7 +9937,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_RGBA8888",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9948,7 +9948,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_RGBX32",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9959,7 +9959,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_RGBX8888",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9970,7 +9970,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_UNKNOWN",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9981,7 +9981,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_UYVY",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9992,7 +9992,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_XBGR1555",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10003,7 +10003,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_XBGR2101010",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10014,7 +10014,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_XBGR32",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10025,7 +10025,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_XBGR4444",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10036,7 +10036,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_XBGR8888",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10047,7 +10047,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_XRGB1555",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10058,7 +10058,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_XRGB2101010",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10069,7 +10069,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_XRGB32",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10080,7 +10080,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_XRGB4444",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10091,7 +10091,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_XRGB8888",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10102,7 +10102,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_YUY2",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10113,7 +10113,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_YV12",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10124,7 +10124,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PIXELFORMAT_YVYU",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10388,7 +10388,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PROPERTY_TYPE_BOOLEAN",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10399,7 +10399,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PROPERTY_TYPE_FLOAT",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10410,7 +10410,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PROPERTY_TYPE_INVALID",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10421,7 +10421,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PROPERTY_TYPE_NUMBER",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10432,7 +10432,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PROPERTY_TYPE_POINTER",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10443,7 +10443,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PROPERTY_TYPE_STRING",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -13600,7 +13600,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_SYSTEM_THEME_DARK",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -13611,7 +13611,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_SYSTEM_THEME_LIGHT",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -13622,7 +13622,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_SYSTEM_THEME_UNKNOWN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -13853,7 +13853,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_TIME_FORMAT_12HR",
       "category": "Time",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -13864,7 +13864,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_TIME_FORMAT_24HR",
       "category": "Time",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -14328,7 +14328,9 @@
       "id": "function:SDL_AddHintCallback",
       "category": "Hints",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "reason": "Retained callback rooting, thread affinity and teardown contract pending.",
+      "contract": "docs/init-hints.md"
     },
     {
       "name": "SDL_AddSurfaceAlternateImage",
@@ -14376,7 +14378,9 @@
       "id": "function:SDL_AddTimer",
       "category": "Timer",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
+      "contract": "docs/diagnostics-time.md"
     },
     {
       "name": "SDL_AddTimerNS",
@@ -14402,7 +14406,9 @@
       "id": "function:SDL_AddTimerNS",
       "category": "Timer",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
+      "contract": "docs/diagnostics-time.md"
     },
     {
       "name": "SDL_AddVulkanRenderSemaphores",
@@ -15544,8 +15550,13 @@
       "arguments": [],
       "id": "function:SDL_ClearError",
       "category": "Error",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_ClearProperty",
@@ -15566,7 +15577,7 @@
       ],
       "id": "function:SDL_ClearProperty",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -16275,7 +16286,7 @@
       ],
       "id": "function:SDL_CopyProperties",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -16792,8 +16803,13 @@
       ],
       "id": "function:SDL_CreatePopupWindow",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_CreateProcess",
@@ -16845,7 +16861,7 @@
       "arguments": [],
       "id": "function:SDL_CreateProperties",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -16934,8 +16950,13 @@
       ],
       "id": "function:SDL_CreateSoftwareRenderer",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct SDL software renderer and primitives; synchronous array adapters preserve SDL results and borrow storage only during the call.",
+      "contract": "docs/renderer-primitives.md",
+      "tests": [
+        "tests/renderer_primitives.das"
+      ]
     },
     {
       "name": "SDL_CreateStorageDirectory",
@@ -16982,8 +17003,13 @@
       ],
       "id": "function:SDL_CreateSurface",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_CreateSurfaceFrom",
@@ -17340,8 +17366,13 @@
       ],
       "id": "function:SDL_CreateWindowWithProperties",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_CursorVisible",
@@ -17375,8 +17406,13 @@
       ],
       "id": "function:SDL_DateTimeToTime",
       "category": "Time",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_Delay",
@@ -17411,8 +17447,13 @@
       ],
       "id": "function:SDL_DelayNS",
       "category": "Timer",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_DelayPrecise",
@@ -17429,8 +17470,13 @@
       ],
       "id": "function:SDL_DelayPrecise",
       "category": "Timer",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_DestroyAsyncIOQueue",
@@ -17637,7 +17683,7 @@
       ],
       "id": "function:SDL_DestroyProperties",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -17781,8 +17827,13 @@
       ],
       "id": "function:SDL_DestroyWindowSurface",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_DetachThread",
@@ -17830,8 +17881,13 @@
       "arguments": [],
       "id": "function:SDL_DisableScreenSaver",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_DispatchGPUCompute",
@@ -18232,8 +18288,13 @@
       "arguments": [],
       "id": "function:SDL_EnableScreenSaver",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_EndGPUComputePass",
@@ -18387,8 +18448,14 @@
       ],
       "id": "function:SDL_EnumerateProperties",
       "category": "Properties",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Synchronous native collection returns copied names; arbitrary script callback/reentrant mutation is not exposed.",
+      "adapter": "SDL_GetPropertyNamesCopy / property_names",
+      "tests": [
+        "tests/properties.das"
+      ],
+      "contract": "docs/properties.md"
     },
     {
       "name": "SDL_EnumerateStorageDirectory",
@@ -18461,8 +18528,13 @@
       ],
       "id": "function:SDL_FillSurfaceRect",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_FillSurfaceRects",
@@ -18535,8 +18607,13 @@
       ],
       "id": "function:SDL_FlashWindow",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_FlipSurface",
@@ -18651,8 +18728,13 @@
       ],
       "id": "function:SDL_FlushRenderer",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct SDL software renderer and primitives; synchronous array adapters preserve SDL results and borrow storage only during the call.",
+      "contract": "docs/renderer-primitives.md",
+      "tests": [
+        "tests/renderer_primitives.das"
+      ]
     },
     {
       "name": "SDL_GDKSuspendComplete",
@@ -19261,8 +19343,13 @@
       ],
       "id": "function:SDL_GetAppMetadataProperty",
       "category": "Init",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
     },
     {
       "name": "SDL_GetAssertionHandler",
@@ -19785,7 +19872,7 @@
       ],
       "id": "function:SDL_GetBooleanProperty",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -20059,8 +20146,13 @@
       ],
       "id": "function:SDL_GetClosestFullscreenDisplayMode",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetCurrentAudioDriver",
@@ -20116,8 +20208,13 @@
       ],
       "id": "function:SDL_GetCurrentDisplayMode",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetCurrentDisplayOrientation",
@@ -20134,8 +20231,13 @@
       ],
       "id": "function:SDL_GetCurrentDisplayOrientation",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetCurrentRenderOutputSize",
@@ -20191,8 +20293,13 @@
       ],
       "id": "function:SDL_GetCurrentTime",
       "category": "Time",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_GetCurrentVideoDriver",
@@ -20204,8 +20311,13 @@
       "arguments": [],
       "id": "function:SDL_GetCurrentVideoDriver",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetCursor",
@@ -20265,8 +20377,13 @@
       ],
       "id": "function:SDL_GetDateTimeLocalePreferences",
       "category": "Time",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_GetDayOfWeek",
@@ -20291,8 +20408,13 @@
       ],
       "id": "function:SDL_GetDayOfWeek",
       "category": "Time",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_GetDayOfYear",
@@ -20317,8 +20439,13 @@
       ],
       "id": "function:SDL_GetDayOfYear",
       "category": "Time",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_GetDaysInMonth",
@@ -20339,8 +20466,13 @@
       ],
       "id": "function:SDL_GetDaysInMonth",
       "category": "Time",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_GetDefaultAssertionHandler",
@@ -20379,7 +20511,9 @@
       "id": "function:SDL_GetDefaultLogOutputFunction",
       "category": "Log",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
+      "contract": "docs/diagnostics-time.md"
     },
     {
       "name": "SDL_GetDesktopDisplayMode",
@@ -20396,8 +20530,13 @@
       ],
       "id": "function:SDL_GetDesktopDisplayMode",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetDirect3D9AdapterIndex",
@@ -20436,8 +20575,13 @@
       ],
       "id": "function:SDL_GetDisplayBounds",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetDisplayContentScale",
@@ -20454,8 +20598,13 @@
       ],
       "id": "function:SDL_GetDisplayContentScale",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetDisplayForPoint",
@@ -20472,8 +20621,13 @@
       ],
       "id": "function:SDL_GetDisplayForPoint",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetDisplayForRect",
@@ -20490,8 +20644,13 @@
       ],
       "id": "function:SDL_GetDisplayForRect",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetDisplayForWindow",
@@ -20508,8 +20667,13 @@
       ],
       "id": "function:SDL_GetDisplayForWindow",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetDisplayName",
@@ -20526,8 +20690,13 @@
       ],
       "id": "function:SDL_GetDisplayName",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetDisplayProperties",
@@ -20544,8 +20713,13 @@
       ],
       "id": "function:SDL_GetDisplayProperties",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetDisplayUsableBounds",
@@ -20566,8 +20740,13 @@
       ],
       "id": "function:SDL_GetDisplayUsableBounds",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetDisplays",
@@ -20584,8 +20763,13 @@
       ],
       "id": "function:SDL_GetDisplays",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetEnvironment",
@@ -20698,7 +20882,7 @@
       ],
       "id": "function:SDL_GetFloatProperty",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -20720,8 +20904,13 @@
       ],
       "id": "function:SDL_GetFullscreenDisplayModes",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetGPUDeviceDriver",
@@ -21747,7 +21936,7 @@
       "arguments": [],
       "id": "function:SDL_GetGlobalProperties",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -21760,8 +21949,13 @@
       "arguments": [],
       "id": "function:SDL_GetGrabbedWindow",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_GetHapticEffectStatus",
@@ -21908,8 +22102,13 @@
       ],
       "id": "function:SDL_GetHint",
       "category": "Hints",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
     },
     {
       "name": "SDL_GetHintBoolean",
@@ -21930,8 +22129,13 @@
       ],
       "id": "function:SDL_GetHintBoolean",
       "category": "Hints",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
     },
     {
       "name": "SDL_GetIOProperties",
@@ -22746,7 +22950,9 @@
       "id": "function:SDL_GetLogOutputFunction",
       "category": "Log",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
+      "contract": "docs/diagnostics-time.md"
     },
     {
       "name": "SDL_GetLogPriority",
@@ -22763,8 +22969,13 @@
       ],
       "id": "function:SDL_GetLogPriority",
       "category": "Log",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_GetMasksForPixelFormat",
@@ -22969,8 +23180,13 @@
       ],
       "id": "function:SDL_GetNaturalDisplayOrientation",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetNumAllocations",
@@ -23196,8 +23412,13 @@
       "arguments": [],
       "id": "function:SDL_GetNumVideoDrivers",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetNumberProperty",
@@ -23222,7 +23443,7 @@
       ],
       "id": "function:SDL_GetNumberProperty",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -23287,8 +23508,13 @@
       "arguments": [],
       "id": "function:SDL_GetPerformanceCounter",
       "category": "Timer",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_GetPerformanceFrequency",
@@ -23300,8 +23526,13 @@
       "arguments": [],
       "id": "function:SDL_GetPerformanceFrequency",
       "category": "Timer",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_GetPixelFormatDetails",
@@ -23409,7 +23640,7 @@
       ],
       "id": "function:SDL_GetPointerProperty",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -23484,8 +23715,13 @@
       "arguments": [],
       "id": "function:SDL_GetPrimaryDisplay",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetPrimarySelectionText",
@@ -23573,7 +23809,7 @@
       ],
       "id": "function:SDL_GetPropertyType",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -24341,8 +24577,13 @@
       ],
       "id": "function:SDL_GetRenderWindow",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct SDL software renderer and primitives; synchronous array adapters preserve SDL results and borrow storage only during the call.",
+      "contract": "docs/renderer-primitives.md",
+      "tests": [
+        "tests/renderer_primitives.das"
+      ]
     },
     {
       "name": "SDL_GetRenderer",
@@ -24848,7 +25089,7 @@
       ],
       "id": "function:SDL_GetStringProperty",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -25068,8 +25309,13 @@
       "arguments": [],
       "id": "function:SDL_GetSystemTheme",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetTLS",
@@ -25384,8 +25630,13 @@
       "arguments": [],
       "id": "function:SDL_GetTicksNS",
       "category": "Timer",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_GetTouchDeviceName",
@@ -25675,8 +25926,13 @@
       ],
       "id": "function:SDL_GetVideoDriver",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetWindowAspectRatio",
@@ -25701,8 +25957,13 @@
       ],
       "id": "function:SDL_GetWindowAspectRatio",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_GetWindowBordersSize",
@@ -25735,8 +25996,13 @@
       ],
       "id": "function:SDL_GetWindowBordersSize",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_GetWindowDisplayScale",
@@ -25753,8 +26019,13 @@
       ],
       "id": "function:SDL_GetWindowDisplayScale",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetWindowFlags",
@@ -25771,8 +26042,13 @@
       ],
       "id": "function:SDL_GetWindowFlags",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetWindowFromEvent",
@@ -25825,8 +26101,13 @@
       ],
       "id": "function:SDL_GetWindowFullscreenMode",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_GetWindowICCProfile",
@@ -25847,8 +26128,13 @@
       ],
       "id": "function:SDL_GetWindowICCProfile",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Pinned SDL omits window validation: raw calls require initialized video and a live non-null window. Copy adapter rejects null and frees the temporary native buffer.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_GetWindowID",
@@ -25883,8 +26169,13 @@
       ],
       "id": "function:SDL_GetWindowKeyboardGrab",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_GetWindowMaximumSize",
@@ -25909,8 +26200,13 @@
       ],
       "id": "function:SDL_GetWindowMaximumSize",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_GetWindowMinimumSize",
@@ -25935,8 +26231,13 @@
       ],
       "id": "function:SDL_GetWindowMinimumSize",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_GetWindowMouseGrab",
@@ -25953,8 +26254,13 @@
       ],
       "id": "function:SDL_GetWindowMouseGrab",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_GetWindowMouseRect",
@@ -25971,8 +26277,13 @@
       ],
       "id": "function:SDL_GetWindowMouseRect",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_GetWindowOpacity",
@@ -25989,8 +26300,13 @@
       ],
       "id": "function:SDL_GetWindowOpacity",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_GetWindowParent",
@@ -26007,8 +26323,13 @@
       ],
       "id": "function:SDL_GetWindowParent",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetWindowPixelDensity",
@@ -26025,8 +26346,13 @@
       ],
       "id": "function:SDL_GetWindowPixelDensity",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetWindowPixelFormat",
@@ -26043,8 +26369,13 @@
       ],
       "id": "function:SDL_GetWindowPixelFormat",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetWindowPosition",
@@ -26069,8 +26400,13 @@
       ],
       "id": "function:SDL_GetWindowPosition",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetWindowProperties",
@@ -26087,8 +26423,13 @@
       ],
       "id": "function:SDL_GetWindowProperties",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetWindowRelativeMouseMode",
@@ -26127,8 +26468,13 @@
       ],
       "id": "function:SDL_GetWindowSafeArea",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_GetWindowSize",
@@ -26153,8 +26499,13 @@
       ],
       "id": "function:SDL_GetWindowSize",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetWindowSizeInPixels",
@@ -26179,9 +26530,13 @@
       ],
       "id": "function:SDL_GetWindowSizeInPixels",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "The former SDL_GPU3DWindowAspect engine helper was removed; no exported replacement yet."
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetWindowSurface",
@@ -26198,8 +26553,13 @@
       ],
       "id": "function:SDL_GetWindowSurface",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_GetWindowSurfaceVSync",
@@ -26220,8 +26580,13 @@
       ],
       "id": "function:SDL_GetWindowSurfaceVSync",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_GetWindowTitle",
@@ -26238,8 +26603,13 @@
       ],
       "id": "function:SDL_GetWindowTitle",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GetWindows",
@@ -26256,8 +26626,13 @@
       ],
       "id": "function:SDL_GetWindows",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     {
       "name": "SDL_GlobDirectory",
@@ -26653,7 +27028,7 @@
       ],
       "id": "function:SDL_HasProperty",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -26806,8 +27181,13 @@
       ],
       "id": "function:SDL_HideWindow",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_IOFromConstMem",
@@ -26987,8 +27367,13 @@
       ],
       "id": "function:SDL_InitSubSystem",
       "category": "Init",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
     },
     {
       "name": "SDL_InsertGPUDebugLabel",
@@ -27144,8 +27529,13 @@
       "arguments": [],
       "id": "function:SDL_IsMainThread",
       "category": "Init",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
     },
     {
       "name": "SDL_IsMouseHaptic",
@@ -27521,7 +27911,7 @@
       ],
       "id": "function:SDL_LockProperties",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -27679,8 +28069,14 @@
       ],
       "id": "function:SDL_Log",
       "category": "Log",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "adapter": "SDL_LogText",
+      "reason": "Fixed text adapter passes a literal percent-s format; C varargs are not exposed.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_LogCritical",
@@ -27701,8 +28097,14 @@
       ],
       "id": "function:SDL_LogCritical",
       "category": "Log",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "adapter": "SDL_LogCriticalText",
+      "reason": "Fixed text adapter passes a literal percent-s format; C varargs are not exposed.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_LogDebug",
@@ -27723,8 +28125,14 @@
       ],
       "id": "function:SDL_LogDebug",
       "category": "Log",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "adapter": "SDL_LogDebugText",
+      "reason": "Fixed text adapter passes a literal percent-s format; C varargs are not exposed.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_LogError",
@@ -27745,8 +28153,14 @@
       ],
       "id": "function:SDL_LogError",
       "category": "Log",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "adapter": "SDL_LogErrorText",
+      "reason": "Fixed text adapter passes a literal percent-s format; C varargs are not exposed.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_LogInfo",
@@ -27767,8 +28181,14 @@
       ],
       "id": "function:SDL_LogInfo",
       "category": "Log",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "adapter": "SDL_LogInfoText",
+      "reason": "Fixed text adapter passes a literal percent-s format; C varargs are not exposed.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_LogMessage",
@@ -27793,8 +28213,14 @@
       ],
       "id": "function:SDL_LogMessage",
       "category": "Log",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "adapter": "SDL_LogMessageText",
+      "reason": "Fixed text adapter passes a literal percent-s format; C varargs are not exposed.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_LogMessageV",
@@ -27824,7 +28250,9 @@
       "id": "function:SDL_LogMessageV",
       "category": "Log",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
+      "contract": "docs/diagnostics-time.md"
     },
     {
       "name": "SDL_LogTrace",
@@ -27845,8 +28273,14 @@
       ],
       "id": "function:SDL_LogTrace",
       "category": "Log",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "adapter": "SDL_LogTraceText",
+      "reason": "Fixed text adapter passes a literal percent-s format; C varargs are not exposed.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_LogVerbose",
@@ -27867,8 +28301,14 @@
       ],
       "id": "function:SDL_LogVerbose",
       "category": "Log",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "adapter": "SDL_LogVerboseText",
+      "reason": "Fixed text adapter passes a literal percent-s format; C varargs are not exposed.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_LogWarn",
@@ -27889,8 +28329,14 @@
       ],
       "id": "function:SDL_LogWarn",
       "category": "Log",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "adapter": "SDL_LogWarnText",
+      "reason": "Fixed text adapter passes a literal percent-s format; C varargs are not exposed.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_MapGPUTransferBuffer",
@@ -28057,8 +28503,13 @@
       ],
       "id": "function:SDL_MapSurfaceRGBA",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_MaximizeWindow",
@@ -28075,8 +28526,13 @@
       ],
       "id": "function:SDL_MaximizeWindow",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_MemoryBarrierAcquireFunction",
@@ -28173,8 +28629,13 @@
       ],
       "id": "function:SDL_MinimizeWindow",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_MixAudio",
@@ -28627,8 +29088,13 @@
       "arguments": [],
       "id": "function:SDL_OutOfMemory",
       "category": "Error",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_PauseAudioDevice",
@@ -29139,8 +29605,13 @@
       ],
       "id": "function:SDL_QuitSubSystem",
       "category": "Init",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
     },
     {
       "name": "SDL_RaiseWindow",
@@ -29157,8 +29628,13 @@
       ],
       "id": "function:SDL_RaiseWindow",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_ReadAsyncIO",
@@ -30178,7 +30654,9 @@
       "id": "function:SDL_RemoveHintCallback",
       "category": "Hints",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "reason": "Retained callback rooting, thread affinity and teardown contract pending.",
+      "contract": "docs/init-hints.md"
     },
     {
       "name": "SDL_RemovePath",
@@ -30253,8 +30731,13 @@
       ],
       "id": "function:SDL_RemoveTimer",
       "category": "Timer",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_RemoveTrayEntry",
@@ -30531,8 +31014,13 @@
       ],
       "id": "function:SDL_RenderFillRects",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct SDL software renderer and primitives; synchronous array adapters preserve SDL results and borrow storage only during the call.",
+      "contract": "docs/renderer-primitives.md",
+      "tests": [
+        "tests/renderer_primitives.das"
+      ]
     },
     {
       "name": "SDL_RenderGeometry",
@@ -30670,8 +31158,13 @@
       ],
       "id": "function:SDL_RenderLine",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct SDL software renderer and primitives; synchronous array adapters preserve SDL results and borrow storage only during the call.",
+      "contract": "docs/renderer-primitives.md",
+      "tests": [
+        "tests/renderer_primitives.das"
+      ]
     },
     {
       "name": "SDL_RenderLines",
@@ -30696,8 +31189,13 @@
       ],
       "id": "function:SDL_RenderLines",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct SDL software renderer and primitives; synchronous array adapters preserve SDL results and borrow storage only during the call.",
+      "contract": "docs/renderer-primitives.md",
+      "tests": [
+        "tests/renderer_primitives.das"
+      ]
     },
     {
       "name": "SDL_RenderPoint",
@@ -30722,8 +31220,13 @@
       ],
       "id": "function:SDL_RenderPoint",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct SDL software renderer and primitives; synchronous array adapters preserve SDL results and borrow storage only during the call.",
+      "contract": "docs/renderer-primitives.md",
+      "tests": [
+        "tests/renderer_primitives.das"
+      ]
     },
     {
       "name": "SDL_RenderPoints",
@@ -30748,8 +31251,13 @@
       ],
       "id": "function:SDL_RenderPoints",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct SDL software renderer and primitives; synchronous array adapters preserve SDL results and borrow storage only during the call.",
+      "contract": "docs/renderer-primitives.md",
+      "tests": [
+        "tests/renderer_primitives.das"
+      ]
     },
     {
       "name": "SDL_RenderPresent",
@@ -30816,8 +31324,13 @@
       ],
       "id": "function:SDL_RenderRect",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct SDL software renderer and primitives; synchronous array adapters preserve SDL results and borrow storage only during the call.",
+      "contract": "docs/renderer-primitives.md",
+      "tests": [
+        "tests/renderer_primitives.das"
+      ]
     },
     {
       "name": "SDL_RenderRects",
@@ -30842,8 +31355,13 @@
       ],
       "id": "function:SDL_RenderRects",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "available",
+      "reason": "Direct SDL software renderer and primitives; synchronous array adapters preserve SDL results and borrow storage only during the call.",
+      "contract": "docs/renderer-primitives.md",
+      "tests": [
+        "tests/renderer_primitives.das"
+      ]
     },
     {
       "name": "SDL_RenderTexture",
@@ -31115,8 +31633,13 @@
       ],
       "id": "function:SDL_ResetHint",
       "category": "Hints",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
     },
     {
       "name": "SDL_ResetHints",
@@ -31128,8 +31651,13 @@
       "arguments": [],
       "id": "function:SDL_ResetHints",
       "category": "Hints",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
     },
     {
       "name": "SDL_ResetKeyboard",
@@ -31154,8 +31682,13 @@
       "arguments": [],
       "id": "function:SDL_ResetLogPriorities",
       "category": "Log",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_RestoreWindow",
@@ -31172,8 +31705,13 @@
       ],
       "id": "function:SDL_RestoreWindow",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_ResumeAudioDevice",
@@ -31429,7 +31967,9 @@
       "id": "function:SDL_RunOnMainThread",
       "category": "Init",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "reason": "Retained callback rooting, thread affinity and teardown contract pending.",
+      "contract": "docs/init-hints.md"
     },
     {
       "name": "SDL_SaveBMP",
@@ -31593,8 +32133,13 @@
       "arguments": [],
       "id": "function:SDL_ScreenSaverEnabled",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_SeekIO",
@@ -31731,8 +32276,13 @@
       ],
       "id": "function:SDL_SetAppMetadata",
       "category": "Init",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
     },
     {
       "name": "SDL_SetAppMetadataProperty",
@@ -31753,8 +32303,13 @@
       ],
       "id": "function:SDL_SetAppMetadataProperty",
       "category": "Init",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
     },
     {
       "name": "SDL_SetAssertionHandler",
@@ -32089,7 +32644,7 @@
       ],
       "id": "function:SDL_SetBooleanProperty",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -32225,8 +32780,14 @@
       ],
       "id": "function:SDL_SetError",
       "category": "Error",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "adapter": "SDL_SetErrorText",
+      "reason": "Fixed text adapter passes a literal percent-s format; C varargs are not exposed.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_SetErrorV",
@@ -32248,7 +32809,9 @@
       "id": "function:SDL_SetErrorV",
       "category": "Error",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
+      "contract": "docs/diagnostics-time.md"
     },
     {
       "name": "SDL_SetEventEnabled",
@@ -32317,7 +32880,7 @@
       ],
       "id": "function:SDL_SetFloatProperty",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -32737,8 +33300,13 @@
       ],
       "id": "function:SDL_SetHint",
       "category": "Hints",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
     },
     {
       "name": "SDL_SetHintWithPriority",
@@ -32763,8 +33331,13 @@
       ],
       "id": "function:SDL_SetHintWithPriority",
       "category": "Hints",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
     },
     {
       "name": "SDL_SetInitialized",
@@ -33028,7 +33601,9 @@
       "id": "function:SDL_SetLogOutputFunction",
       "category": "Log",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
+      "contract": "docs/diagnostics-time.md"
     },
     {
       "name": "SDL_SetLogPriorities",
@@ -33045,8 +33620,13 @@
       ],
       "id": "function:SDL_SetLogPriorities",
       "category": "Log",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_SetLogPriority",
@@ -33067,8 +33647,13 @@
       ],
       "id": "function:SDL_SetLogPriority",
       "category": "Log",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_SetLogPriorityPrefix",
@@ -33089,8 +33674,13 @@
       ],
       "id": "function:SDL_SetLogPriorityPrefix",
       "category": "Log",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_SetMainReady",
@@ -33176,7 +33766,7 @@
       ],
       "id": "function:SDL_SetNumberProperty",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -33232,7 +33822,7 @@
       ],
       "id": "function:SDL_SetPointerProperty",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -33267,7 +33857,9 @@
       "id": "function:SDL_SetPointerPropertyWithCleanup",
       "category": "Properties",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "reason": "Retained script cleanup requires rooting, callback-thread and teardown contract; no script closure is retained across C ABI.",
+      "contract": "docs/properties.md"
     },
     {
       "name": "SDL_SetPrimarySelectionText",
@@ -33592,7 +34184,7 @@
       ],
       "id": "function:SDL_SetStringProperty",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -34138,8 +34730,13 @@
       ],
       "id": "function:SDL_SetWindowAlwaysOnTop",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_SetWindowAspectRatio",
@@ -34164,8 +34761,13 @@
       ],
       "id": "function:SDL_SetWindowAspectRatio",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_SetWindowBordered",
@@ -34186,8 +34788,13 @@
       ],
       "id": "function:SDL_SetWindowBordered",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_SetWindowFocusable",
@@ -34208,8 +34815,13 @@
       ],
       "id": "function:SDL_SetWindowFocusable",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_SetWindowFullscreen",
@@ -34230,8 +34842,13 @@
       ],
       "id": "function:SDL_SetWindowFullscreen",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_SetWindowFullscreenMode",
@@ -34252,8 +34869,13 @@
       ],
       "id": "function:SDL_SetWindowFullscreenMode",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_SetWindowHitTest",
@@ -34279,7 +34901,9 @@
       "id": "function:SDL_SetWindowHitTest",
       "category": "Video",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "reason": "Retained callback requires lifetime, rooting and thread contract.",
+      "contract": "docs/window-io.md"
     },
     {
       "name": "SDL_SetWindowIcon",
@@ -34300,8 +34924,13 @@
       ],
       "id": "function:SDL_SetWindowIcon",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_SetWindowKeyboardGrab",
@@ -34322,8 +34951,13 @@
       ],
       "id": "function:SDL_SetWindowKeyboardGrab",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_SetWindowMaximumSize",
@@ -34348,8 +34982,13 @@
       ],
       "id": "function:SDL_SetWindowMaximumSize",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_SetWindowMinimumSize",
@@ -34374,8 +35013,13 @@
       ],
       "id": "function:SDL_SetWindowMinimumSize",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_SetWindowModal",
@@ -34396,8 +35040,13 @@
       ],
       "id": "function:SDL_SetWindowModal",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_SetWindowMouseGrab",
@@ -34418,8 +35067,13 @@
       ],
       "id": "function:SDL_SetWindowMouseGrab",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_SetWindowMouseRect",
@@ -34440,8 +35094,13 @@
       ],
       "id": "function:SDL_SetWindowMouseRect",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_SetWindowOpacity",
@@ -34462,8 +35121,13 @@
       ],
       "id": "function:SDL_SetWindowOpacity",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_SetWindowParent",
@@ -34484,8 +35148,13 @@
       ],
       "id": "function:SDL_SetWindowParent",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_SetWindowPosition",
@@ -34510,8 +35179,13 @@
       ],
       "id": "function:SDL_SetWindowPosition",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_SetWindowRelativeMouseMode",
@@ -34554,8 +35228,13 @@
       ],
       "id": "function:SDL_SetWindowResizable",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_SetWindowShape",
@@ -34576,8 +35255,13 @@
       ],
       "id": "function:SDL_SetWindowShape",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Native signature preserved, including pinned SDL 3.2.18 NULL-removal failure. Valid shape copy and non-transparent-window/NULL cases are tested.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_SetWindowSize",
@@ -34602,8 +35286,13 @@
       ],
       "id": "function:SDL_SetWindowSize",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_SetWindowSurfaceVSync",
@@ -34624,8 +35313,13 @@
       ],
       "id": "function:SDL_SetWindowSurfaceVSync",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_SetWindowTitle",
@@ -34953,8 +35647,13 @@
       ],
       "id": "function:SDL_ShowWindow",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_ShowWindowSystemMenu",
@@ -34979,8 +35678,13 @@
       ],
       "id": "function:SDL_ShowWindowSystemMenu",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Generated native signature; automated execution covers invalid input only. Interactive positive menu path is manual/unverified.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_SignalAsyncIOQueue",
@@ -35401,8 +36105,13 @@
       ],
       "id": "function:SDL_SyncWindow",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
     },
     {
       "name": "SDL_TellIO",
@@ -35459,8 +36168,13 @@
       ],
       "id": "function:SDL_TimeFromWindows",
       "category": "Time",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_TimeToDateTime",
@@ -35485,8 +36199,13 @@
       ],
       "id": "function:SDL_TimeToDateTime",
       "category": "Time",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_TimeToWindows",
@@ -35511,8 +36230,13 @@
       ],
       "id": "function:SDL_TimeToWindows",
       "category": "Time",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
     },
     {
       "name": "SDL_TryLockMutex",
@@ -35748,7 +36472,7 @@
       ],
       "id": "function:SDL_UnlockProperties",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -36059,8 +36783,13 @@
       ],
       "id": "function:SDL_UpdateWindowSurface",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_UpdateWindowSurfaceRects",
@@ -36085,8 +36814,13 @@
       ],
       "id": "function:SDL_UpdateWindowSurfaceRects",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_UpdateYUVTexture",
@@ -36762,8 +37496,13 @@
       ],
       "id": "function:SDL_WindowHasSurface",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "unreviewed",
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
     },
     {
       "name": "SDL_WindowSupportsGPUPresentMode",
@@ -53025,7 +53764,7 @@
       "function_like": false,
       "id": "macro:SDL_INIT_CAMERA",
       "category": "Init",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -53037,7 +53776,7 @@
       "function_like": false,
       "id": "macro:SDL_INIT_EVENTS",
       "category": "Init",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -53062,7 +53801,7 @@
       "function_like": false,
       "id": "macro:SDL_INIT_GAMEPAD",
       "category": "Init",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -53074,7 +53813,7 @@
       "function_like": false,
       "id": "macro:SDL_INIT_HAPTIC",
       "category": "Init",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -53098,7 +53837,7 @@
       "function_like": false,
       "id": "macro:SDL_INIT_JOYSTICK",
       "category": "Init",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -53110,7 +53849,7 @@
       "function_like": false,
       "id": "macro:SDL_INIT_SENSOR",
       "category": "Init",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61339,7 +62078,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOWPOS_CENTERED",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61399,7 +62138,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOWPOS_UNDEFINED",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61448,7 +62187,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_ALWAYS_ON_TOP",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61460,7 +62199,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_BORDERLESS",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61472,7 +62211,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_EXTERNAL",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61484,7 +62223,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_FULLSCREEN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61508,7 +62247,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_HIGH_PIXEL_DENSITY",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61520,7 +62259,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_INPUT_FOCUS",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61545,7 +62284,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_KEYBOARD_GRABBED",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61557,7 +62296,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_MAXIMIZED",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61569,7 +62308,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_METAL",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61581,7 +62320,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_MINIMIZED",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61593,7 +62332,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_MODAL",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61605,7 +62344,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_MOUSE_CAPTURE",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61617,7 +62356,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_MOUSE_FOCUS",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61629,7 +62368,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_MOUSE_GRABBED",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61641,7 +62380,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_MOUSE_RELATIVE_MODE",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61653,7 +62392,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_NOT_FOCUSABLE",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61665,7 +62404,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_OCCLUDED",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61677,7 +62416,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_OPENGL",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61689,7 +62428,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_POPUP_MENU",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61726,7 +62465,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61738,7 +62477,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_SURFACE_VSYNC_DISABLED",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61750,7 +62489,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_TOOLTIP",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61762,7 +62501,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_TRANSPARENT",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61774,7 +62513,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_UTILITY",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61786,7 +62525,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_VULKAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62908,8 +63647,19 @@
       ],
       "id": "record:SDL_DateTime",
       "category": "Time",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "year",
+        "month",
+        "day",
+        "hour",
+        "minute",
+        "second",
+        "nanosecond",
+        "day_of_week",
+        "utc_offset"
+      ]
     },
     {
       "name": "SDL_DialogFileFilter",
@@ -63018,8 +63768,18 @@
       ],
       "id": "record:SDL_DisplayMode",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "displayID",
+        "format",
+        "w",
+        "h",
+        "pixel_density",
+        "refresh_rate",
+        "refresh_rate_numerator",
+        "refresh_rate_denominator"
+      ]
     },
     {
       "name": "SDL_DisplayModeData",
@@ -67200,8 +67960,12 @@
       ],
       "id": "record:SDL_Point",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "x",
+        "y"
+      ]
     },
     {
       "name": "SDL_Process",
@@ -68815,7 +69579,7 @@
       "callback": false,
       "id": "typedef:SDL_DateFormat",
       "category": "Time",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -68827,8 +69591,19 @@
       "callback": false,
       "id": "typedef:SDL_DateTime",
       "category": "Time",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "year",
+        "month",
+        "day",
+        "hour",
+        "minute",
+        "second",
+        "nanosecond",
+        "day_of_week",
+        "utc_offset"
+      ]
     },
     {
       "name": "SDL_DialogFileCallback",
@@ -68887,8 +69662,18 @@
       "callback": false,
       "id": "typedef:SDL_DisplayMode",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "displayID",
+        "format",
+        "w",
+        "h",
+        "pixel_density",
+        "refresh_rate",
+        "refresh_rate_numerator",
+        "refresh_rate_denominator"
+      ]
     },
     {
       "name": "SDL_DisplayModeData",
@@ -68911,7 +69696,7 @@
       "callback": false,
       "id": "typedef:SDL_DisplayOrientation",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69206,7 +69991,7 @@
       "callback": false,
       "id": "typedef:SDL_FlashOperation",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -70807,7 +71592,7 @@
       "callback": false,
       "id": "typedef:SDL_HintPriority",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -71129,7 +71914,7 @@
       "callback": false,
       "id": "typedef:SDL_LogCategory",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -71153,7 +71938,7 @@
       "callback": false,
       "id": "typedef:SDL_LogPriority",
       "category": "Log",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -71580,7 +72365,7 @@
       "callback": false,
       "id": "typedef:SDL_PixelFormat",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -71616,8 +72401,12 @@
       "callback": false,
       "id": "typedef:SDL_Point",
       "category": "Rect",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "x",
+        "y"
+      ]
     },
     {
       "name": "SDL_PowerState",
@@ -71676,7 +72465,7 @@
       "callback": false,
       "id": "typedef:SDL_PropertyType",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -71946,7 +72735,7 @@
       "callback": false,
       "id": "typedef:SDL_SystemTheme",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -72126,7 +72915,7 @@
       "callback": false,
       "id": "typedef:SDL_TimeFormat",
       "category": "Time",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {

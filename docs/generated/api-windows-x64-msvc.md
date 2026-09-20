@@ -4,7 +4,7 @@ SDL 3.2.18; profile `windows-x64-msvc`.
 
 Active declarations/macros only; inactive platform branches are NOT counted. Record and typedef entries are distinct declarations.
 
-Generated functions: **145/1226** active non-excluded functions.
+Generated functions: **294/1226** active non-excluded functions.
 Adapted coverage and boost coverage are not inferred from function names.
 
 | Category | Functions | Generated | Adapted | Pending |
@@ -20,7 +20,7 @@ Adapted coverage and boost coverage are not inferred from function names.
 | Clipboard | 11 | 0 | 0 | 11 |
 | Dialog | 4 | 0 | 0 | 4 |
 | Endian | 1 | 0 | 0 | 1 |
-| Error | 5 | 1 | 0 | 4 |
+| Error | 5 | 3 | 1 | 1 |
 | Events | 19 | 3 | 0 | 16 |
 | Filesystem | 11 | 1 | 0 | 10 |
 | GPU | 92 | 92 | 0 | 0 |
@@ -28,13 +28,13 @@ Adapted coverage and boost coverage are not inferred from function names.
 | Gamepad | 73 | 0 | 0 | 73 |
 | HIDAPI | 22 | 0 | 0 | 22 |
 | Haptic | 31 | 0 | 0 | 31 |
-| Hints | 8 | 0 | 0 | 8 |
+| Hints | 8 | 6 | 0 | 2 |
 | IOStream | 48 | 0 | 0 | 48 |
-| Init | 10 | 3 | 0 | 7 |
+| Init | 10 | 9 | 0 | 1 |
 | Joystick | 58 | 0 | 0 | 58 |
 | Keyboard | 24 | 5 | 0 | 19 |
 | Locale | 1 | 0 | 0 | 1 |
-| Log | 18 | 0 | 0 | 18 |
+| Log | 18 | 5 | 9 | 4 |
 | Main | 7 | 0 | 0 | 7 |
 | Messagebox | 2 | 0 | 0 | 2 |
 | Metal | 3 | 0 | 0 | 3 |
@@ -45,22 +45,22 @@ Adapted coverage and boost coverage are not inferred from function names.
 | Platform | 1 | 0 | 0 | 1 |
 | Power | 1 | 0 | 0 | 1 |
 | Process | 9 | 0 | 0 | 9 |
-| Properties | 21 | 0 | 0 | 21 |
+| Properties | 21 | 19 | 1 | 1 |
 | Rect | 18 | 0 | 0 | 18 |
-| Render | 89 | 14 | 4 | 71 |
+| Render | 89 | 24 | 4 | 61 |
 | Sensor | 14 | 0 | 0 | 14 |
 | SharedObject | 3 | 0 | 0 | 3 |
 | Stdinc | 170 | 1 | 0 | 169 |
 | Storage | 17 | 0 | 0 | 17 |
-| Surface | 58 | 2 | 3 | 53 |
+| Surface | 58 | 5 | 3 | 50 |
 | System | 13 | 0 | 0 | 13 |
 | Thread | 12 | 0 | 0 | 12 |
-| Time | 9 | 0 | 0 | 9 |
-| Timer | 10 | 2 | 0 | 8 |
+| Time | 9 | 9 | 0 | 0 |
+| Timer | 10 | 8 | 0 | 2 |
 | Touch | 4 | 0 | 0 | 4 |
 | Tray | 23 | 0 | 0 | 23 |
 | Version | 2 | 1 | 0 | 1 |
-| Video | 109 | 5 | 0 | 104 |
+| Video | 109 | 88 | 0 | 21 |
 | Vulkan | 7 | 0 | 0 | 7 |
 
 Declaration counts (including explicitly excluded scaffolding):

@@ -34,8 +34,8 @@ interpreter/AOT/consumer проверки. [Результаты и исключ
 
 | Этап | Объём | Критерий |
 | --- | --- | --- |
-| P1, ближайший | Properties → Hints/Init → error/log/time | Копии строк, defaults, borrowed/owned IDs, синхронные и retained callbacks разделены |
-| P2 | Video/display/window, Render, Surface/Pixels/Blend/Rect, Clipboard | Освобождение перечислений SDL, DPI, pitch/lock, parent lifetime, region updates |
+| P1, остаток | Properties/Hints/Init/Error/Log/Timer callbacks, va_list и строковые макросы | Базовые пакеты реализованы; retained callbacks требуют отдельных контрактов |
+| P2, ближайший | Video/display/window, Render, Surface/Pixels/Blend/Rect, Clipboard | Освобождение перечислений SDL, DPI, pitch/lock, parent lifetime, region updates |
 | P3 | Events, Keyboard/Mouse, Joystick/Gamepad, Touch/Pen/Sensor/Haptic/HIDAPI | Union tags, owned payload, hotplug, device IDs, отсутствие оборудования |
 | P4 | Filesystem, Storage, IOStream, AsyncIO | EOF/short read/error, retained buffers, completion/cancellation, shutdown |
 | P5 | Audio/recording/mixing, Camera | Copy/borrow, release frames, callbacks, реальные устройства отдельно от dummy |
@@ -48,9 +48,20 @@ ABI/flags/macros, install/export и запуск вне дерева исход�
 не доказывает переносимость установленного пакета. Обновление SDL — отдельный
 version diff, не незаметное переключение FetchContent на main.
 
-## Ближайший пакет: Properties
+## Properties: реализованный пакет и остаток
 
 В закреплённом SDL_properties.h **21 функция**, не 15 из старого плана.
+Реализованы 19 generated функций, copied enumeration и defer scopes. Retained
+cleanup-callback остаётся pending; ограничения и найденная ошибка кэша SDL —
+в [properties.md](properties.md). Hints/Init: 12 новых raw функций, copies и subsystem scopes реализованы;
+[контракт и оставшиеся callbacks](init-hints.md). Error/log/time также реализован: [контракты и остаток](diagnostics-time.md).
+Video discovery: 31 raw запроса и copy/ref adapters реализованы,
+[контракты](video-discovery.md). Создание и состояние окон также реализованы: [контракты](window-state.md).
+Fullscreen/surfaces и прочие оконные операции реализованы с ограничениями
+[window-io.md](window-io.md). Video: 88/109; GL/EGL и hit-test callbacks отдельно.
+Software renderer/primitives: ещё 10 raw функций; [контракт](renderer-primitives.md).
+Следующий пакет — состояние Renderer (viewport/clip/scale/output), затем текстуры и остаток Surface API.
+Ниже сохраняются критерии пакета; callback-пункт 5 остаётся открытым.
 
 1. Генерация 19 сигнатур без callbacks, SDL_PropertyType и SDL_PropertiesID;
    сверка raw status с реестром. Raw pointer properties остаются низкоуровневыми.

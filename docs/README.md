@@ -14,6 +14,8 @@
 
 ## API
 
+- [Properties](properties.md): values, copied strings/names and defer ownership.
+
 - [Ввод](input.md), [аудио](audio.md), [пиксели](pixels.md), [geometry](geometry.md).
 - GPU: [native API](gpu-native-api.md), [native boost](gpu-native-boost.md),
   [результаты](gpu-native-validation.md), [raw tests](gpu-raw-tests.md).
@@ -32,3 +34,15 @@
 Документы удалённого engine API убраны; история остаётся в Git.
 Актуальные числа покрытия находятся в api-coverage и generated census,
 результаты последнего GPU этапа — в gpu-native-validation.
+
+- [Hints/Init](init-hints.md): priorities, copied strings and subsystem defer scopes.
+
+- [Error/log/time](diagnostics-time.md): literal messages, clocks and calendar conversions.
+
+- [Video discovery](video-discovery.md): drivers, display modes and window query lifetimes.
+
+- [Window state](window-state.md): creation, parent/child ownership and state changes.
+
+- [Window fullscreen/surface/IO](window-io.md): borrowed surfaces, ICC and capability limits.
+
+- [Software renderer/primitives](renderer-primitives.md): surface lifetime and CPU pixel checks.

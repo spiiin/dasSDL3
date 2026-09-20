@@ -1042,5 +1042,993 @@
       "swapchain_texture_width",
       "swapchain_texture_height"
     ]
+  },
+  "SDL_GetGlobalProperties": {
+    "signature": "SDL_PropertiesID (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_CreateProperties": {
+    "signature": "SDL_PropertiesID (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_CopyProperties": {
+    "signature": "bool (SDL_PropertiesID, SDL_PropertiesID) __attribute__((cdecl))",
+    "arguments": [
+      "src",
+      "dst"
+    ]
+  },
+  "SDL_LockProperties": {
+    "signature": "bool (SDL_PropertiesID) __attribute__((cdecl))",
+    "arguments": [
+      "props"
+    ]
+  },
+  "SDL_UnlockProperties": {
+    "signature": "void (SDL_PropertiesID) __attribute__((cdecl))",
+    "arguments": [
+      "props"
+    ]
+  },
+  "SDL_SetPointerProperty": {
+    "signature": "bool (SDL_PropertiesID, const char *, void *) __attribute__((cdecl))",
+    "arguments": [
+      "props",
+      "name",
+      "value"
+    ]
+  },
+  "SDL_SetStringProperty": {
+    "signature": "bool (SDL_PropertiesID, const char *, const char *) __attribute__((cdecl))",
+    "arguments": [
+      "props",
+      "name",
+      "value"
+    ]
+  },
+  "SDL_SetNumberProperty": {
+    "signature": "bool (SDL_PropertiesID, const char *, Sint64) __attribute__((cdecl))",
+    "arguments": [
+      "props",
+      "name",
+      "value"
+    ]
+  },
+  "SDL_SetFloatProperty": {
+    "signature": "bool (SDL_PropertiesID, const char *, float) __attribute__((cdecl))",
+    "arguments": [
+      "props",
+      "name",
+      "value"
+    ]
+  },
+  "SDL_SetBooleanProperty": {
+    "signature": "bool (SDL_PropertiesID, const char *, bool) __attribute__((cdecl))",
+    "arguments": [
+      "props",
+      "name",
+      "value"
+    ]
+  },
+  "SDL_HasProperty": {
+    "signature": "bool (SDL_PropertiesID, const char *) __attribute__((cdecl))",
+    "arguments": [
+      "props",
+      "name"
+    ]
+  },
+  "SDL_GetPropertyType": {
+    "signature": "SDL_PropertyType (SDL_PropertiesID, const char *) __attribute__((cdecl))",
+    "arguments": [
+      "props",
+      "name"
+    ]
+  },
+  "SDL_GetPointerProperty": {
+    "signature": "void *(SDL_PropertiesID, const char *, void *) __attribute__((cdecl))",
+    "arguments": [
+      "props",
+      "name",
+      "default_value"
+    ]
+  },
+  "SDL_GetStringProperty": {
+    "signature": "const char *(SDL_PropertiesID, const char *, const char *) __attribute__((cdecl))",
+    "arguments": [
+      "props",
+      "name",
+      "default_value"
+    ]
+  },
+  "SDL_GetNumberProperty": {
+    "signature": "Sint64 (SDL_PropertiesID, const char *, Sint64) __attribute__((cdecl))",
+    "arguments": [
+      "props",
+      "name",
+      "default_value"
+    ]
+  },
+  "SDL_GetFloatProperty": {
+    "signature": "float (SDL_PropertiesID, const char *, float) __attribute__((cdecl))",
+    "arguments": [
+      "props",
+      "name",
+      "default_value"
+    ]
+  },
+  "SDL_GetBooleanProperty": {
+    "signature": "bool (SDL_PropertiesID, const char *, bool) __attribute__((cdecl))",
+    "arguments": [
+      "props",
+      "name",
+      "default_value"
+    ]
+  },
+  "SDL_ClearProperty": {
+    "signature": "bool (SDL_PropertiesID, const char *) __attribute__((cdecl))",
+    "arguments": [
+      "props",
+      "name"
+    ]
+  },
+  "SDL_DestroyProperties": {
+    "signature": "void (SDL_PropertiesID) __attribute__((cdecl))",
+    "arguments": [
+      "props"
+    ]
+  },
+  "SDL_SetHintWithPriority": {
+    "signature": "bool (const char *, const char *, SDL_HintPriority) __attribute__((cdecl))",
+    "arguments": [
+      "name",
+      "value",
+      "priority"
+    ]
+  },
+  "SDL_SetHint": {
+    "signature": "bool (const char *, const char *) __attribute__((cdecl))",
+    "arguments": [
+      "name",
+      "value"
+    ]
+  },
+  "SDL_ResetHint": {
+    "signature": "bool (const char *) __attribute__((cdecl))",
+    "arguments": [
+      "name"
+    ]
+  },
+  "SDL_ResetHints": {
+    "signature": "void (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetHint": {
+    "signature": "const char *(const char *) __attribute__((cdecl))",
+    "arguments": [
+      "name"
+    ]
+  },
+  "SDL_GetHintBoolean": {
+    "signature": "bool (const char *, bool) __attribute__((cdecl))",
+    "arguments": [
+      "name",
+      "default_value"
+    ]
+  },
+  "SDL_InitSubSystem": {
+    "signature": "bool (SDL_InitFlags) __attribute__((cdecl))",
+    "arguments": [
+      "flags"
+    ]
+  },
+  "SDL_QuitSubSystem": {
+    "signature": "void (SDL_InitFlags) __attribute__((cdecl))",
+    "arguments": [
+      "flags"
+    ]
+  },
+  "SDL_IsMainThread": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_SetAppMetadata": {
+    "signature": "bool (const char *, const char *, const char *) __attribute__((cdecl))",
+    "arguments": [
+      "appname",
+      "appversion",
+      "appidentifier"
+    ]
+  },
+  "SDL_SetAppMetadataProperty": {
+    "signature": "bool (const char *, const char *) __attribute__((cdecl))",
+    "arguments": [
+      "name",
+      "value"
+    ]
+  },
+  "SDL_GetAppMetadataProperty": {
+    "signature": "const char *(const char *) __attribute__((cdecl))",
+    "arguments": [
+      "name"
+    ]
+  },
+  "SDL_ClearError": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_OutOfMemory": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_SetLogPriorities": {
+    "signature": "void (SDL_LogPriority) __attribute__((cdecl))",
+    "arguments": [
+      "priority"
+    ]
+  },
+  "SDL_SetLogPriority": {
+    "signature": "void (int, SDL_LogPriority) __attribute__((cdecl))",
+    "arguments": [
+      "category",
+      "priority"
+    ]
+  },
+  "SDL_GetLogPriority": {
+    "signature": "SDL_LogPriority (int) __attribute__((cdecl))",
+    "arguments": [
+      "category"
+    ]
+  },
+  "SDL_ResetLogPriorities": {
+    "signature": "void (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_SetLogPriorityPrefix": {
+    "signature": "bool (SDL_LogPriority, const char *) __attribute__((cdecl))",
+    "arguments": [
+      "priority",
+      "prefix"
+    ]
+  },
+  "SDL_GetTicksNS": {
+    "signature": "Uint64 (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetPerformanceCounter": {
+    "signature": "Uint64 (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetPerformanceFrequency": {
+    "signature": "Uint64 (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_DelayNS": {
+    "signature": "void (Uint64) __attribute__((cdecl))",
+    "arguments": [
+      "ns"
+    ]
+  },
+  "SDL_DelayPrecise": {
+    "signature": "void (Uint64) __attribute__((cdecl))",
+    "arguments": [
+      "ns"
+    ]
+  },
+  "SDL_RemoveTimer": {
+    "signature": "bool (SDL_TimerID) __attribute__((cdecl))",
+    "arguments": [
+      "id"
+    ]
+  },
+  "SDL_GetDateTimeLocalePreferences": {
+    "signature": "bool (SDL_DateFormat *, SDL_TimeFormat *) __attribute__((cdecl))",
+    "arguments": [
+      "dateFormat",
+      "timeFormat"
+    ]
+  },
+  "SDL_GetCurrentTime": {
+    "signature": "bool (SDL_Time *) __attribute__((cdecl))",
+    "arguments": [
+      "ticks"
+    ]
+  },
+  "SDL_TimeToDateTime": {
+    "signature": "bool (SDL_Time, SDL_DateTime *, bool) __attribute__((cdecl))",
+    "arguments": [
+      "ticks",
+      "dt",
+      "localTime"
+    ]
+  },
+  "SDL_DateTimeToTime": {
+    "signature": "bool (const SDL_DateTime *, SDL_Time *) __attribute__((cdecl))",
+    "arguments": [
+      "dt",
+      "ticks"
+    ]
+  },
+  "SDL_TimeToWindows": {
+    "signature": "void (SDL_Time, Uint32 *, Uint32 *) __attribute__((cdecl))",
+    "arguments": [
+      "ticks",
+      "dwLowDateTime",
+      "dwHighDateTime"
+    ]
+  },
+  "SDL_TimeFromWindows": {
+    "signature": "SDL_Time (Uint32, Uint32) __attribute__((cdecl))",
+    "arguments": [
+      "dwLowDateTime",
+      "dwHighDateTime"
+    ]
+  },
+  "SDL_GetDaysInMonth": {
+    "signature": "int (int, int) __attribute__((cdecl))",
+    "arguments": [
+      "year",
+      "month"
+    ]
+  },
+  "SDL_GetDayOfYear": {
+    "signature": "int (int, int, int) __attribute__((cdecl))",
+    "arguments": [
+      "year",
+      "month",
+      "day"
+    ]
+  },
+  "SDL_GetDayOfWeek": {
+    "signature": "int (int, int, int) __attribute__((cdecl))",
+    "arguments": [
+      "year",
+      "month",
+      "day"
+    ]
+  },
+  "SDL_GetNumVideoDrivers": {
+    "signature": "int (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetVideoDriver": {
+    "signature": "const char *(int) __attribute__((cdecl))",
+    "arguments": [
+      "index"
+    ]
+  },
+  "SDL_GetCurrentVideoDriver": {
+    "signature": "const char *(void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetSystemTheme": {
+    "signature": "SDL_SystemTheme (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetDisplays": {
+    "signature": "SDL_DisplayID *(int *) __attribute__((cdecl))",
+    "arguments": [
+      "count"
+    ]
+  },
+  "SDL_GetPrimaryDisplay": {
+    "signature": "SDL_DisplayID (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetDisplayProperties": {
+    "signature": "SDL_PropertiesID (SDL_DisplayID) __attribute__((cdecl))",
+    "arguments": [
+      "displayID"
+    ]
+  },
+  "SDL_GetDisplayName": {
+    "signature": "const char *(SDL_DisplayID) __attribute__((cdecl))",
+    "arguments": [
+      "displayID"
+    ]
+  },
+  "SDL_GetDisplayBounds": {
+    "signature": "bool (SDL_DisplayID, SDL_Rect *) __attribute__((cdecl))",
+    "arguments": [
+      "displayID",
+      "rect"
+    ]
+  },
+  "SDL_GetDisplayUsableBounds": {
+    "signature": "bool (SDL_DisplayID, SDL_Rect *) __attribute__((cdecl))",
+    "arguments": [
+      "displayID",
+      "rect"
+    ]
+  },
+  "SDL_GetNaturalDisplayOrientation": {
+    "signature": "SDL_DisplayOrientation (SDL_DisplayID) __attribute__((cdecl))",
+    "arguments": [
+      "displayID"
+    ]
+  },
+  "SDL_GetCurrentDisplayOrientation": {
+    "signature": "SDL_DisplayOrientation (SDL_DisplayID) __attribute__((cdecl))",
+    "arguments": [
+      "displayID"
+    ]
+  },
+  "SDL_GetDisplayContentScale": {
+    "signature": "float (SDL_DisplayID) __attribute__((cdecl))",
+    "arguments": [
+      "displayID"
+    ]
+  },
+  "SDL_GetFullscreenDisplayModes": {
+    "signature": "SDL_DisplayMode **(SDL_DisplayID, int *) __attribute__((cdecl))",
+    "arguments": [
+      "displayID",
+      "count"
+    ]
+  },
+  "SDL_GetClosestFullscreenDisplayMode": {
+    "signature": "bool (SDL_DisplayID, int, int, float, bool, SDL_DisplayMode *) __attribute__((cdecl))",
+    "arguments": [
+      "displayID",
+      "w",
+      "h",
+      "refresh_rate",
+      "include_high_density_modes",
+      "closest"
+    ]
+  },
+  "SDL_GetDesktopDisplayMode": {
+    "signature": "const SDL_DisplayMode *(SDL_DisplayID) __attribute__((cdecl))",
+    "arguments": [
+      "displayID"
+    ]
+  },
+  "SDL_GetCurrentDisplayMode": {
+    "signature": "const SDL_DisplayMode *(SDL_DisplayID) __attribute__((cdecl))",
+    "arguments": [
+      "displayID"
+    ]
+  },
+  "SDL_GetDisplayForPoint": {
+    "signature": "SDL_DisplayID (const SDL_Point *) __attribute__((cdecl))",
+    "arguments": [
+      "point"
+    ]
+  },
+  "SDL_GetDisplayForRect": {
+    "signature": "SDL_DisplayID (const SDL_Rect *) __attribute__((cdecl))",
+    "arguments": [
+      "rect"
+    ]
+  },
+  "SDL_GetDisplayForWindow": {
+    "signature": "SDL_DisplayID (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetWindowPixelDensity": {
+    "signature": "float (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetWindowDisplayScale": {
+    "signature": "float (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetWindowPixelFormat": {
+    "signature": "SDL_PixelFormat (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetWindows": {
+    "signature": "SDL_Window **(int *) __attribute__((cdecl))",
+    "arguments": [
+      "count"
+    ]
+  },
+  "SDL_GetWindowParent": {
+    "signature": "SDL_Window *(SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetWindowProperties": {
+    "signature": "SDL_PropertiesID (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetWindowFlags": {
+    "signature": "SDL_WindowFlags (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetWindowTitle": {
+    "signature": "const char *(SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetWindowPosition": {
+    "signature": "bool (SDL_Window *, int *, int *) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "x",
+      "y"
+    ]
+  },
+  "SDL_GetWindowSize": {
+    "signature": "bool (SDL_Window *, int *, int *) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "w",
+      "h"
+    ]
+  },
+  "SDL_GetWindowSizeInPixels": {
+    "signature": "bool (SDL_Window *, int *, int *) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "w",
+      "h"
+    ]
+  },
+  "SDL_CreateWindowWithProperties": {
+    "signature": "SDL_Window *(SDL_PropertiesID) __attribute__((cdecl))",
+    "arguments": [
+      "props"
+    ]
+  },
+  "SDL_CreatePopupWindow": {
+    "signature": "SDL_Window *(SDL_Window *, int, int, int, int, SDL_WindowFlags) __attribute__((cdecl))",
+    "arguments": [
+      "parent",
+      "offset_x",
+      "offset_y",
+      "w",
+      "h",
+      "flags"
+    ]
+  },
+  "SDL_SetWindowPosition": {
+    "signature": "bool (SDL_Window *, int, int) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "x",
+      "y"
+    ]
+  },
+  "SDL_SetWindowSize": {
+    "signature": "bool (SDL_Window *, int, int) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "w",
+      "h"
+    ]
+  },
+  "SDL_GetWindowSafeArea": {
+    "signature": "bool (SDL_Window *, SDL_Rect *) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "rect"
+    ]
+  },
+  "SDL_SetWindowAspectRatio": {
+    "signature": "bool (SDL_Window *, float, float) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "min_aspect",
+      "max_aspect"
+    ]
+  },
+  "SDL_GetWindowAspectRatio": {
+    "signature": "bool (SDL_Window *, float *, float *) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "min_aspect",
+      "max_aspect"
+    ]
+  },
+  "SDL_GetWindowBordersSize": {
+    "signature": "bool (SDL_Window *, int *, int *, int *, int *) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "top",
+      "left",
+      "bottom",
+      "right"
+    ]
+  },
+  "SDL_SetWindowMinimumSize": {
+    "signature": "bool (SDL_Window *, int, int) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "min_w",
+      "min_h"
+    ]
+  },
+  "SDL_GetWindowMinimumSize": {
+    "signature": "bool (SDL_Window *, int *, int *) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "w",
+      "h"
+    ]
+  },
+  "SDL_SetWindowMaximumSize": {
+    "signature": "bool (SDL_Window *, int, int) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "max_w",
+      "max_h"
+    ]
+  },
+  "SDL_GetWindowMaximumSize": {
+    "signature": "bool (SDL_Window *, int *, int *) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "w",
+      "h"
+    ]
+  },
+  "SDL_SetWindowBordered": {
+    "signature": "bool (SDL_Window *, bool) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "bordered"
+    ]
+  },
+  "SDL_SetWindowResizable": {
+    "signature": "bool (SDL_Window *, bool) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "resizable"
+    ]
+  },
+  "SDL_SetWindowAlwaysOnTop": {
+    "signature": "bool (SDL_Window *, bool) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "on_top"
+    ]
+  },
+  "SDL_ShowWindow": {
+    "signature": "bool (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_HideWindow": {
+    "signature": "bool (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_RaiseWindow": {
+    "signature": "bool (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_MaximizeWindow": {
+    "signature": "bool (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_MinimizeWindow": {
+    "signature": "bool (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_RestoreWindow": {
+    "signature": "bool (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_SyncWindow": {
+    "signature": "bool (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_SetWindowOpacity": {
+    "signature": "bool (SDL_Window *, float) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "opacity"
+    ]
+  },
+  "SDL_GetWindowOpacity": {
+    "signature": "float (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_SetWindowParent": {
+    "signature": "bool (SDL_Window *, SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "parent"
+    ]
+  },
+  "SDL_SetWindowModal": {
+    "signature": "bool (SDL_Window *, bool) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "modal"
+    ]
+  },
+  "SDL_SetWindowFocusable": {
+    "signature": "bool (SDL_Window *, bool) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "focusable"
+    ]
+  },
+  "SDL_SetWindowFullscreenMode": {
+    "signature": "bool (SDL_Window *, const SDL_DisplayMode *) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "mode"
+    ]
+  },
+  "SDL_GetWindowFullscreenMode": {
+    "signature": "const SDL_DisplayMode *(SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_SetWindowFullscreen": {
+    "signature": "bool (SDL_Window *, bool) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "fullscreen"
+    ]
+  },
+  "SDL_GetWindowICCProfile": {
+    "signature": "void *(SDL_Window *, size_t *) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "size"
+    ]
+  },
+  "SDL_SetWindowIcon": {
+    "signature": "bool (SDL_Window *, SDL_Surface *) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "icon"
+    ]
+  },
+  "SDL_WindowHasSurface": {
+    "signature": "bool (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetWindowSurface": {
+    "signature": "SDL_Surface *(SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_SetWindowSurfaceVSync": {
+    "signature": "bool (SDL_Window *, int) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "vsync"
+    ]
+  },
+  "SDL_GetWindowSurfaceVSync": {
+    "signature": "bool (SDL_Window *, int *) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "vsync"
+    ]
+  },
+  "SDL_UpdateWindowSurface": {
+    "signature": "bool (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_UpdateWindowSurfaceRects": {
+    "signature": "bool (SDL_Window *, const SDL_Rect *, int) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "rects",
+      "numrects"
+    ]
+  },
+  "SDL_DestroyWindowSurface": {
+    "signature": "bool (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_SetWindowKeyboardGrab": {
+    "signature": "bool (SDL_Window *, bool) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "grabbed"
+    ]
+  },
+  "SDL_SetWindowMouseGrab": {
+    "signature": "bool (SDL_Window *, bool) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "grabbed"
+    ]
+  },
+  "SDL_GetWindowKeyboardGrab": {
+    "signature": "bool (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetWindowMouseGrab": {
+    "signature": "bool (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetGrabbedWindow": {
+    "signature": "SDL_Window *(void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_SetWindowMouseRect": {
+    "signature": "bool (SDL_Window *, const SDL_Rect *) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "rect"
+    ]
+  },
+  "SDL_GetWindowMouseRect": {
+    "signature": "const SDL_Rect *(SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_ShowWindowSystemMenu": {
+    "signature": "bool (SDL_Window *, int, int) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "x",
+      "y"
+    ]
+  },
+  "SDL_SetWindowShape": {
+    "signature": "bool (SDL_Window *, SDL_Surface *) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "shape"
+    ]
+  },
+  "SDL_FlashWindow": {
+    "signature": "bool (SDL_Window *, SDL_FlashOperation) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "operation"
+    ]
+  },
+  "SDL_ScreenSaverEnabled": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_EnableScreenSaver": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_DisableScreenSaver": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_CreateSurface": {
+    "signature": "SDL_Surface *(int, int, SDL_PixelFormat) __attribute__((cdecl))",
+    "arguments": [
+      "width",
+      "height",
+      "format"
+    ]
+  },
+  "SDL_FillSurfaceRect": {
+    "signature": "bool (SDL_Surface *, const SDL_Rect *, Uint32) __attribute__((cdecl))",
+    "arguments": [
+      "dst",
+      "rect",
+      "color"
+    ]
+  },
+  "SDL_MapSurfaceRGBA": {
+    "signature": "Uint32 (SDL_Surface *, Uint8, Uint8, Uint8, Uint8) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "r",
+      "g",
+      "b",
+      "a"
+    ]
+  },
+  "SDL_CreateSoftwareRenderer": {
+    "signature": "SDL_Renderer *(SDL_Surface *) __attribute__((cdecl))",
+    "arguments": [
+      "surface"
+    ]
+  },
+  "SDL_GetRenderWindow": {
+    "signature": "SDL_Window *(SDL_Renderer *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer"
+    ]
+  },
+  "SDL_FlushRenderer": {
+    "signature": "bool (SDL_Renderer *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer"
+    ]
+  },
+  "SDL_RenderPoint": {
+    "signature": "bool (SDL_Renderer *, float, float) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "x",
+      "y"
+    ]
+  },
+  "SDL_RenderPoints": {
+    "signature": "bool (SDL_Renderer *, const SDL_FPoint *, int) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "points",
+      "count"
+    ]
+  },
+  "SDL_RenderLine": {
+    "signature": "bool (SDL_Renderer *, float, float, float, float) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "x1",
+      "y1",
+      "x2",
+      "y2"
+    ]
+  },
+  "SDL_RenderLines": {
+    "signature": "bool (SDL_Renderer *, const SDL_FPoint *, int) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "points",
+      "count"
+    ]
+  },
+  "SDL_RenderRect": {
+    "signature": "bool (SDL_Renderer *, const SDL_FRect *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "rect"
+    ]
+  },
+  "SDL_RenderRects": {
+    "signature": "bool (SDL_Renderer *, const SDL_FRect *, int) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "rects",
+      "count"
+    ]
+  },
+  "SDL_RenderFillRects": {
+    "signature": "bool (SDL_Renderer *, const SDL_FRect *, int) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "rects",
+      "count"
+    ]
   }
 }

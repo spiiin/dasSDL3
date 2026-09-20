@@ -283,9 +283,11 @@
       "contract": "docs/audio.md"
     },
     "function:SDL_GetWindowSizeInPixels": {
-      "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "The former SDL_GPU3DWindowAspect engine helper was removed; no exported replacement yet."
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
     },
     "function:SDL_GPUTextureSupportsFormat": {
       "boost_status": "partial",
@@ -871,6 +873,1101 @@
     "function:SDL_AcquireGPUSwapchainTexture": {
       "reason": "Direct native signature generated from pinned SDL_gpu.h. Pointer lifetimes and SDL preconditions remain caller responsibilities; runtime validation of the expanded surface is pending.",
       "contract": "docs/gpu-native-api.md"
+    },
+    "function:SDL_EnumerateProperties": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Synchronous native collection returns copied names; arbitrary script callback/reentrant mutation is not exposed.",
+      "adapter": "SDL_GetPropertyNamesCopy / property_names",
+      "tests": [
+        "tests/properties.das"
+      ],
+      "contract": "docs/properties.md"
+    },
+    "function:SDL_SetPointerPropertyWithCleanup": {
+      "raw_status": "pending",
+      "boost_status": "pending",
+      "reason": "Retained script cleanup requires rooting, callback-thread and teardown contract; no script closure is retained across C ABI.",
+      "contract": "docs/properties.md"
+    },
+    "function:SDL_SetHintWithPriority": {
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
+    },
+    "function:SDL_SetHint": {
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
+    },
+    "function:SDL_ResetHint": {
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
+    },
+    "function:SDL_ResetHints": {
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
+    },
+    "function:SDL_GetHint": {
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
+    },
+    "function:SDL_GetHintBoolean": {
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
+    },
+    "function:SDL_InitSubSystem": {
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
+    },
+    "function:SDL_QuitSubSystem": {
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
+    },
+    "function:SDL_IsMainThread": {
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
+    },
+    "function:SDL_SetAppMetadata": {
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
+    },
+    "function:SDL_SetAppMetadataProperty": {
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
+    },
+    "function:SDL_GetAppMetadataProperty": {
+      "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
+      "contract": "docs/init-hints.md",
+      "tests": [
+        "tests/init_hints.das"
+      ]
+    },
+    "function:SDL_AddHintCallback": {
+      "raw_status": "pending",
+      "boost_status": "pending",
+      "reason": "Retained callback rooting, thread affinity and teardown contract pending.",
+      "contract": "docs/init-hints.md"
+    },
+    "function:SDL_RemoveHintCallback": {
+      "raw_status": "pending",
+      "boost_status": "pending",
+      "reason": "Retained callback rooting, thread affinity and teardown contract pending.",
+      "contract": "docs/init-hints.md"
+    },
+    "function:SDL_RunOnMainThread": {
+      "raw_status": "pending",
+      "boost_status": "pending",
+      "reason": "Retained callback rooting, thread affinity and teardown contract pending.",
+      "contract": "docs/init-hints.md"
+    },
+    "function:SDL_ClearError": {
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_OutOfMemory": {
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_SetLogPriorities": {
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_SetLogPriority": {
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_GetLogPriority": {
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_ResetLogPriorities": {
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_SetLogPriorityPrefix": {
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_GetTicksNS": {
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_GetPerformanceCounter": {
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_GetPerformanceFrequency": {
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_DelayNS": {
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_DelayPrecise": {
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_RemoveTimer": {
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_GetDateTimeLocalePreferences": {
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_GetCurrentTime": {
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_TimeToDateTime": {
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_DateTimeToTime": {
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_TimeToWindows": {
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_TimeFromWindows": {
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_GetDaysInMonth": {
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_GetDayOfYear": {
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_GetDayOfWeek": {
+      "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_SetError": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "adapter": "SDL_SetErrorText",
+      "reason": "Fixed text adapter passes a literal percent-s format; C varargs are not exposed.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_Log": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "adapter": "SDL_LogText",
+      "reason": "Fixed text adapter passes a literal percent-s format; C varargs are not exposed.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_LogMessage": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "adapter": "SDL_LogMessageText",
+      "reason": "Fixed text adapter passes a literal percent-s format; C varargs are not exposed.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_LogTrace": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "adapter": "SDL_LogTraceText",
+      "reason": "Fixed text adapter passes a literal percent-s format; C varargs are not exposed.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_LogVerbose": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "adapter": "SDL_LogVerboseText",
+      "reason": "Fixed text adapter passes a literal percent-s format; C varargs are not exposed.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_LogDebug": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "adapter": "SDL_LogDebugText",
+      "reason": "Fixed text adapter passes a literal percent-s format; C varargs are not exposed.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_LogInfo": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "adapter": "SDL_LogInfoText",
+      "reason": "Fixed text adapter passes a literal percent-s format; C varargs are not exposed.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_LogWarn": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "adapter": "SDL_LogWarnText",
+      "reason": "Fixed text adapter passes a literal percent-s format; C varargs are not exposed.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_LogError": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "adapter": "SDL_LogErrorText",
+      "reason": "Fixed text adapter passes a literal percent-s format; C varargs are not exposed.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_LogCritical": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "adapter": "SDL_LogCriticalText",
+      "reason": "Fixed text adapter passes a literal percent-s format; C varargs are not exposed.",
+      "contract": "docs/diagnostics-time.md",
+      "tests": [
+        "tests/diagnostics.das"
+      ]
+    },
+    "function:SDL_SetErrorV": {
+      "raw_status": "pending",
+      "boost_status": "pending",
+      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
+      "contract": "docs/diagnostics-time.md"
+    },
+    "function:SDL_LogMessageV": {
+      "raw_status": "pending",
+      "boost_status": "pending",
+      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
+      "contract": "docs/diagnostics-time.md"
+    },
+    "function:SDL_GetDefaultLogOutputFunction": {
+      "raw_status": "pending",
+      "boost_status": "pending",
+      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
+      "contract": "docs/diagnostics-time.md"
+    },
+    "function:SDL_GetLogOutputFunction": {
+      "raw_status": "pending",
+      "boost_status": "pending",
+      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
+      "contract": "docs/diagnostics-time.md"
+    },
+    "function:SDL_SetLogOutputFunction": {
+      "raw_status": "pending",
+      "boost_status": "pending",
+      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
+      "contract": "docs/diagnostics-time.md"
+    },
+    "function:SDL_AddTimer": {
+      "raw_status": "pending",
+      "boost_status": "pending",
+      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
+      "contract": "docs/diagnostics-time.md"
+    },
+    "function:SDL_AddTimerNS": {
+      "raw_status": "pending",
+      "boost_status": "pending",
+      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
+      "contract": "docs/diagnostics-time.md"
+    },
+    "function:SDL_GetNumVideoDrivers": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetVideoDriver": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetCurrentVideoDriver": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetSystemTheme": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetDisplays": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetPrimaryDisplay": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetDisplayProperties": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetDisplayName": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetDisplayBounds": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetDisplayUsableBounds": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetNaturalDisplayOrientation": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetCurrentDisplayOrientation": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetDisplayContentScale": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetFullscreenDisplayModes": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetClosestFullscreenDisplayMode": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetDesktopDisplayMode": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetCurrentDisplayMode": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetDisplayForPoint": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetDisplayForRect": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetDisplayForWindow": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetWindowPixelDensity": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetWindowDisplayScale": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetWindowPixelFormat": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetWindows": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetWindowParent": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetWindowProperties": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetWindowFlags": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetWindowTitle": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetWindowPosition": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_GetWindowSize": {
+      "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
+      "contract": "docs/video-discovery.md",
+      "tests": [
+        "tests/video_discovery.das"
+      ]
+    },
+    "function:SDL_CreateWindowWithProperties": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_CreatePopupWindow": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_SetWindowPosition": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_SetWindowSize": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_GetWindowSafeArea": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_SetWindowAspectRatio": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_GetWindowAspectRatio": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_GetWindowBordersSize": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_SetWindowMinimumSize": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_GetWindowMinimumSize": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_SetWindowMaximumSize": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_GetWindowMaximumSize": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_SetWindowBordered": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_SetWindowResizable": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_SetWindowAlwaysOnTop": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_ShowWindow": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_HideWindow": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_RaiseWindow": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_MaximizeWindow": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_MinimizeWindow": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_RestoreWindow": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_SyncWindow": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_SetWindowOpacity": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_GetWindowOpacity": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_SetWindowParent": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_SetWindowModal": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_SetWindowFocusable": {
+      "reason": "Direct SDL window operation; native ownership, main-thread and window-manager contracts preserved.",
+      "contract": "docs/window-state.md",
+      "tests": [
+        "tests/window_state.das"
+      ]
+    },
+    "function:SDL_SetWindowFullscreenMode": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_GetWindowFullscreenMode": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_SetWindowFullscreen": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_GetWindowICCProfile": {
+      "reason": "Pinned SDL omits window validation: raw calls require initialized video and a live non-null window. Copy adapter rejects null and frees the temporary native buffer.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_SetWindowIcon": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_WindowHasSurface": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_GetWindowSurface": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_SetWindowSurfaceVSync": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_GetWindowSurfaceVSync": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_UpdateWindowSurface": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_UpdateWindowSurfaceRects": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_DestroyWindowSurface": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_SetWindowKeyboardGrab": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_SetWindowMouseGrab": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_GetWindowKeyboardGrab": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_GetWindowMouseGrab": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_GetGrabbedWindow": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_SetWindowMouseRect": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_GetWindowMouseRect": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_ShowWindowSystemMenu": {
+      "reason": "Generated native signature; automated execution covers invalid input only. Interactive positive menu path is manual/unverified.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_SetWindowShape": {
+      "reason": "Native signature preserved, including pinned SDL 3.2.18 NULL-removal failure. Valid shape copy and non-transparent-window/NULL cases are tested.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_FlashWindow": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_ScreenSaverEnabled": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_EnableScreenSaver": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_DisableScreenSaver": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_CreateSurface": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_FillSurfaceRect": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_MapSurfaceRGBA": {
+      "reason": "Direct pinned SDL signature; native ownership/results and platform capability limits preserved. Runtime path limitations are documented.",
+      "contract": "docs/window-io.md",
+      "tests": [
+        "tests/window_io.das"
+      ]
+    },
+    "function:SDL_SetWindowHitTest": {
+      "raw_status": "pending",
+      "boost_status": "pending",
+      "reason": "Retained callback requires lifetime, rooting and thread contract.",
+      "contract": "docs/window-io.md"
+    },
+    "function:SDL_CreateSoftwareRenderer": {
+      "boost_status": "available",
+      "reason": "Direct SDL software renderer and primitives; synchronous array adapters preserve SDL results and borrow storage only during the call.",
+      "contract": "docs/renderer-primitives.md",
+      "tests": [
+        "tests/renderer_primitives.das"
+      ]
+    },
+    "function:SDL_GetRenderWindow": {
+      "boost_status": "available",
+      "reason": "Direct SDL software renderer and primitives; synchronous array adapters preserve SDL results and borrow storage only during the call.",
+      "contract": "docs/renderer-primitives.md",
+      "tests": [
+        "tests/renderer_primitives.das"
+      ]
+    },
+    "function:SDL_FlushRenderer": {
+      "boost_status": "available",
+      "reason": "Direct SDL software renderer and primitives; synchronous array adapters preserve SDL results and borrow storage only during the call.",
+      "contract": "docs/renderer-primitives.md",
+      "tests": [
+        "tests/renderer_primitives.das"
+      ]
+    },
+    "function:SDL_RenderPoint": {
+      "boost_status": "available",
+      "reason": "Direct SDL software renderer and primitives; synchronous array adapters preserve SDL results and borrow storage only during the call.",
+      "contract": "docs/renderer-primitives.md",
+      "tests": [
+        "tests/renderer_primitives.das"
+      ]
+    },
+    "function:SDL_RenderPoints": {
+      "boost_status": "available",
+      "reason": "Direct SDL software renderer and primitives; synchronous array adapters preserve SDL results and borrow storage only during the call.",
+      "contract": "docs/renderer-primitives.md",
+      "tests": [
+        "tests/renderer_primitives.das"
+      ]
+    },
+    "function:SDL_RenderLine": {
+      "boost_status": "available",
+      "reason": "Direct SDL software renderer and primitives; synchronous array adapters preserve SDL results and borrow storage only during the call.",
+      "contract": "docs/renderer-primitives.md",
+      "tests": [
+        "tests/renderer_primitives.das"
+      ]
+    },
+    "function:SDL_RenderLines": {
+      "boost_status": "available",
+      "reason": "Direct SDL software renderer and primitives; synchronous array adapters preserve SDL results and borrow storage only during the call.",
+      "contract": "docs/renderer-primitives.md",
+      "tests": [
+        "tests/renderer_primitives.das"
+      ]
+    },
+    "function:SDL_RenderRect": {
+      "boost_status": "available",
+      "reason": "Direct SDL software renderer and primitives; synchronous array adapters preserve SDL results and borrow storage only during the call.",
+      "contract": "docs/renderer-primitives.md",
+      "tests": [
+        "tests/renderer_primitives.das"
+      ]
+    },
+    "function:SDL_RenderRects": {
+      "boost_status": "available",
+      "reason": "Direct SDL software renderer and primitives; synchronous array adapters preserve SDL results and borrow storage only during the call.",
+      "contract": "docs/renderer-primitives.md",
+      "tests": [
+        "tests/renderer_primitives.das"
+      ]
+    },
+    "function:SDL_RenderFillRects": {
+      "boost_status": "available",
+      "reason": "Direct SDL software renderer and primitives; synchronous array adapters preserve SDL results and borrow storage only during the call.",
+      "contract": "docs/renderer-primitives.md",
+      "tests": [
+        "tests/renderer_primitives.das"
+      ]
     }
   }
 }

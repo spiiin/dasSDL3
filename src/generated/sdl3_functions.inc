@@ -24,6 +24,16 @@ addEnumeration(new Enumeration_SDL_GPUSamplerAddressMode());
 addEnumeration(new Enumeration_SDL_GPUPresentMode());
 addEnumeration(new Enumeration_SDL_GPUSwapchainComposition());
 addEnumeration(new Enumeration_SDL_FlipMode());
+addEnumeration(new Enumeration_SDL_PropertyType());
+addEnumeration(new Enumeration_SDL_HintPriority());
+addEnumeration(new Enumeration_SDL_LogCategory());
+addEnumeration(new Enumeration_SDL_LogPriority());
+addEnumeration(new Enumeration_SDL_DateFormat());
+addEnumeration(new Enumeration_SDL_TimeFormat());
+addEnumeration(new Enumeration_SDL_SystemTheme());
+addEnumeration(new Enumeration_SDL_DisplayOrientation());
+addEnumeration(new Enumeration_SDL_PixelFormat());
+addEnumeration(new Enumeration_SDL_FlashOperation());
 addAnnotation(new DummyTypeAnnotation("SDL_Window", "SDL_Window", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Renderer", "SDL_Renderer", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Surface", "SDL_Surface", 1, 1));
@@ -89,6 +99,9 @@ addAnnotation(new SDL_GPUTextureSamplerBindingAnnotation(lib));
 addAnnotation(new SDL_GPUStorageBufferReadWriteBindingAnnotation(lib));
 addAnnotation(new SDL_GPUStorageTextureReadWriteBindingAnnotation(lib));
 addAnnotation(new SDL_RectAnnotation(lib));
+addAnnotation(new SDL_DateTimeAnnotation(lib));
+addAnnotation(new SDL_PointAnnotation(lib));
+addAnnotation(new SDL_DisplayModeAnnotation(lib));
 addConstant(*this, "SDL_GPU_FILTER_NEAREST", static_cast<uint32_t>(SDL_GPU_FILTER_NEAREST));
 addConstant(*this, "SDL_GPU_FILTER_LINEAR", static_cast<uint32_t>(SDL_GPU_FILTER_LINEAR));
 addConstant(*this, "SDL_GPU_PRESENTMODE_VSYNC", static_cast<uint32_t>(SDL_GPU_PRESENTMODE_VSYNC));
@@ -276,6 +289,39 @@ addConstant(*this, "SDL_GPU_COLORCOMPONENT_R", static_cast<uint32_t>(SDL_GPU_COL
 addConstant(*this, "SDL_GPU_COLORCOMPONENT_G", static_cast<uint32_t>(SDL_GPU_COLORCOMPONENT_G));
 addConstant(*this, "SDL_GPU_COLORCOMPONENT_B", static_cast<uint32_t>(SDL_GPU_COLORCOMPONENT_B));
 addConstant(*this, "SDL_GPU_COLORCOMPONENT_A", static_cast<uint32_t>(SDL_GPU_COLORCOMPONENT_A));
+addConstant(*this, "SDL_INIT_JOYSTICK", static_cast<uint32_t>(SDL_INIT_JOYSTICK));
+addConstant(*this, "SDL_INIT_HAPTIC", static_cast<uint32_t>(SDL_INIT_HAPTIC));
+addConstant(*this, "SDL_INIT_GAMEPAD", static_cast<uint32_t>(SDL_INIT_GAMEPAD));
+addConstant(*this, "SDL_INIT_EVENTS", static_cast<uint32_t>(SDL_INIT_EVENTS));
+addConstant(*this, "SDL_INIT_SENSOR", static_cast<uint32_t>(SDL_INIT_SENSOR));
+addConstant(*this, "SDL_INIT_CAMERA", static_cast<uint32_t>(SDL_INIT_CAMERA));
+addConstant(*this, "SDL_WINDOW_FULLSCREEN", static_cast<uint64_t>(SDL_WINDOW_FULLSCREEN));
+addConstant(*this, "SDL_WINDOW_OPENGL", static_cast<uint64_t>(SDL_WINDOW_OPENGL));
+addConstant(*this, "SDL_WINDOW_OCCLUDED", static_cast<uint64_t>(SDL_WINDOW_OCCLUDED));
+addConstant(*this, "SDL_WINDOW_BORDERLESS", static_cast<uint64_t>(SDL_WINDOW_BORDERLESS));
+addConstant(*this, "SDL_WINDOW_MINIMIZED", static_cast<uint64_t>(SDL_WINDOW_MINIMIZED));
+addConstant(*this, "SDL_WINDOW_MAXIMIZED", static_cast<uint64_t>(SDL_WINDOW_MAXIMIZED));
+addConstant(*this, "SDL_WINDOW_MOUSE_GRABBED", static_cast<uint64_t>(SDL_WINDOW_MOUSE_GRABBED));
+addConstant(*this, "SDL_WINDOW_INPUT_FOCUS", static_cast<uint64_t>(SDL_WINDOW_INPUT_FOCUS));
+addConstant(*this, "SDL_WINDOW_MOUSE_FOCUS", static_cast<uint64_t>(SDL_WINDOW_MOUSE_FOCUS));
+addConstant(*this, "SDL_WINDOW_EXTERNAL", static_cast<uint64_t>(SDL_WINDOW_EXTERNAL));
+addConstant(*this, "SDL_WINDOW_MODAL", static_cast<uint64_t>(SDL_WINDOW_MODAL));
+addConstant(*this, "SDL_WINDOW_HIGH_PIXEL_DENSITY", static_cast<uint64_t>(SDL_WINDOW_HIGH_PIXEL_DENSITY));
+addConstant(*this, "SDL_WINDOW_MOUSE_CAPTURE", static_cast<uint64_t>(SDL_WINDOW_MOUSE_CAPTURE));
+addConstant(*this, "SDL_WINDOW_MOUSE_RELATIVE_MODE", static_cast<uint64_t>(SDL_WINDOW_MOUSE_RELATIVE_MODE));
+addConstant(*this, "SDL_WINDOW_ALWAYS_ON_TOP", static_cast<uint64_t>(SDL_WINDOW_ALWAYS_ON_TOP));
+addConstant(*this, "SDL_WINDOW_UTILITY", static_cast<uint64_t>(SDL_WINDOW_UTILITY));
+addConstant(*this, "SDL_WINDOW_TOOLTIP", static_cast<uint64_t>(SDL_WINDOW_TOOLTIP));
+addConstant(*this, "SDL_WINDOW_POPUP_MENU", static_cast<uint64_t>(SDL_WINDOW_POPUP_MENU));
+addConstant(*this, "SDL_WINDOW_KEYBOARD_GRABBED", static_cast<uint64_t>(SDL_WINDOW_KEYBOARD_GRABBED));
+addConstant(*this, "SDL_WINDOW_VULKAN", static_cast<uint64_t>(SDL_WINDOW_VULKAN));
+addConstant(*this, "SDL_WINDOW_METAL", static_cast<uint64_t>(SDL_WINDOW_METAL));
+addConstant(*this, "SDL_WINDOW_TRANSPARENT", static_cast<uint64_t>(SDL_WINDOW_TRANSPARENT));
+addConstant(*this, "SDL_WINDOW_NOT_FOCUSABLE", static_cast<uint64_t>(SDL_WINDOW_NOT_FOCUSABLE));
+addConstant(*this, "SDL_WINDOWPOS_UNDEFINED", static_cast<int32_t>(SDL_WINDOWPOS_UNDEFINED));
+addConstant(*this, "SDL_WINDOWPOS_CENTERED", static_cast<int32_t>(SDL_WINDOWPOS_CENTERED));
+addConstant(*this, "SDL_WINDOW_SURFACE_VSYNC_DISABLED", static_cast<int32_t>(SDL_WINDOW_SURFACE_VSYNC_DISABLED));
+addConstant(*this, "SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE", static_cast<int32_t>(SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE));
 // Uint32 (SDL_GPUTextureFormat) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_GPUTextureFormatTexelBlockSize)>(*this, lib, "SDL_GPUTextureFormatTexelBlockSize", SideEffects::worstDefault, "SDL_GPUTextureFormatTexelBlockSize")->args({"format"});
 // Uint32 (SDL_GPUTextureFormat, Uint32, Uint32, Uint32) __attribute__((cdecl))
@@ -566,3 +612,301 @@ addExtern<DAS_BIND_FUN(SDL_AcquireGPUSwapchainTexture)>(*this, lib, "SDL_Acquire
 addExtern<DAS_BIND_FUN(SDL_WaitForGPUSwapchain)>(*this, lib, "SDL_WaitForGPUSwapchain", SideEffects::worstDefault, "SDL_WaitForGPUSwapchain")->args({"device", "window"});
 // bool (SDL_GPUCommandBuffer *, SDL_Window *, SDL_GPUTexture **, Uint32 *, Uint32 *) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_WaitAndAcquireGPUSwapchainTexture)>(*this, lib, "SDL_WaitAndAcquireGPUSwapchainTexture", SideEffects::worstDefault, "SDL_WaitAndAcquireGPUSwapchainTexture")->args({"command_buffer", "window", "swapchain_texture", "swapchain_texture_width", "swapchain_texture_height"});
+// SDL_PropertiesID (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGlobalProperties)>(*this, lib, "SDL_GetGlobalProperties", SideEffects::worstDefault, "SDL_GetGlobalProperties");
+// SDL_PropertiesID (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateProperties)>(*this, lib, "SDL_CreateProperties", SideEffects::worstDefault, "SDL_CreateProperties");
+// bool (SDL_PropertiesID, SDL_PropertiesID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CopyProperties)>(*this, lib, "SDL_CopyProperties", SideEffects::worstDefault, "SDL_CopyProperties")->args({"src", "dst"});
+// bool (SDL_PropertiesID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_LockProperties)>(*this, lib, "SDL_LockProperties", SideEffects::worstDefault, "SDL_LockProperties")->args({"props"});
+// void (SDL_PropertiesID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_UnlockProperties)>(*this, lib, "SDL_UnlockProperties", SideEffects::worstDefault, "SDL_UnlockProperties")->args({"props"});
+// bool (SDL_PropertiesID, const char *, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetPointerProperty)>(*this, lib, "SDL_SetPointerProperty", SideEffects::worstDefault, "SDL_SetPointerProperty")->args({"props", "name", "value"});
+// bool (SDL_PropertiesID, const char *, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetStringProperty)>(*this, lib, "SDL_SetStringProperty", SideEffects::worstDefault, "SDL_SetStringProperty")->args({"props", "name", "value"});
+// bool (SDL_PropertiesID, const char *, Sint64) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetNumberProperty)>(*this, lib, "SDL_SetNumberProperty", SideEffects::worstDefault, "SDL_SetNumberProperty")->args({"props", "name", "value"});
+// bool (SDL_PropertiesID, const char *, float) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetFloatProperty)>(*this, lib, "SDL_SetFloatProperty", SideEffects::worstDefault, "SDL_SetFloatProperty")->args({"props", "name", "value"});
+// bool (SDL_PropertiesID, const char *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetBooleanProperty)>(*this, lib, "SDL_SetBooleanProperty", SideEffects::worstDefault, "SDL_SetBooleanProperty")->args({"props", "name", "value"});
+// bool (SDL_PropertiesID, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasProperty)>(*this, lib, "SDL_HasProperty", SideEffects::worstDefault, "SDL_HasProperty")->args({"props", "name"});
+// SDL_PropertyType (SDL_PropertiesID, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetPropertyType)>(*this, lib, "SDL_GetPropertyType", SideEffects::worstDefault, "SDL_GetPropertyType")->args({"props", "name"});
+// void *(SDL_PropertiesID, const char *, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetPointerProperty)>(*this, lib, "SDL_GetPointerProperty", SideEffects::worstDefault, "SDL_GetPointerProperty")->args({"props", "name", "default_value"});
+// const char *(SDL_PropertiesID, const char *, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetStringProperty)>(*this, lib, "SDL_GetStringProperty", SideEffects::worstDefault, "SDL_GetStringProperty")->args({"props", "name", "default_value"});
+// Sint64 (SDL_PropertiesID, const char *, Sint64) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetNumberProperty)>(*this, lib, "SDL_GetNumberProperty", SideEffects::worstDefault, "SDL_GetNumberProperty")->args({"props", "name", "default_value"});
+// float (SDL_PropertiesID, const char *, float) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetFloatProperty)>(*this, lib, "SDL_GetFloatProperty", SideEffects::worstDefault, "SDL_GetFloatProperty")->args({"props", "name", "default_value"});
+// bool (SDL_PropertiesID, const char *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetBooleanProperty)>(*this, lib, "SDL_GetBooleanProperty", SideEffects::worstDefault, "SDL_GetBooleanProperty")->args({"props", "name", "default_value"});
+// bool (SDL_PropertiesID, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ClearProperty)>(*this, lib, "SDL_ClearProperty", SideEffects::worstDefault, "SDL_ClearProperty")->args({"props", "name"});
+// void (SDL_PropertiesID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_DestroyProperties)>(*this, lib, "SDL_DestroyProperties", SideEffects::worstDefault, "SDL_DestroyProperties")->args({"props"});
+// bool (const char *, const char *, SDL_HintPriority) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetHintWithPriority)>(*this, lib, "SDL_SetHintWithPriority", SideEffects::worstDefault, "SDL_SetHintWithPriority")->args({"name", "value", "priority"});
+// bool (const char *, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetHint)>(*this, lib, "SDL_SetHint", SideEffects::worstDefault, "SDL_SetHint")->args({"name", "value"});
+// bool (const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ResetHint)>(*this, lib, "SDL_ResetHint", SideEffects::worstDefault, "SDL_ResetHint")->args({"name"});
+// void (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ResetHints)>(*this, lib, "SDL_ResetHints", SideEffects::worstDefault, "SDL_ResetHints");
+// const char *(const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetHint)>(*this, lib, "SDL_GetHint", SideEffects::worstDefault, "SDL_GetHint")->args({"name"});
+// bool (const char *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetHintBoolean)>(*this, lib, "SDL_GetHintBoolean", SideEffects::worstDefault, "SDL_GetHintBoolean")->args({"name", "default_value"});
+// bool (SDL_InitFlags) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_InitSubSystem)>(*this, lib, "SDL_InitSubSystem", SideEffects::worstDefault, "SDL_InitSubSystem")->args({"flags"});
+// void (SDL_InitFlags) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_QuitSubSystem)>(*this, lib, "SDL_QuitSubSystem", SideEffects::worstDefault, "SDL_QuitSubSystem")->args({"flags"});
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_IsMainThread)>(*this, lib, "SDL_IsMainThread", SideEffects::worstDefault, "SDL_IsMainThread");
+// bool (const char *, const char *, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetAppMetadata)>(*this, lib, "SDL_SetAppMetadata", SideEffects::worstDefault, "SDL_SetAppMetadata")->args({"appname", "appversion", "appidentifier"});
+// bool (const char *, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetAppMetadataProperty)>(*this, lib, "SDL_SetAppMetadataProperty", SideEffects::worstDefault, "SDL_SetAppMetadataProperty")->args({"name", "value"});
+// const char *(const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetAppMetadataProperty)>(*this, lib, "SDL_GetAppMetadataProperty", SideEffects::worstDefault, "SDL_GetAppMetadataProperty")->args({"name"});
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ClearError)>(*this, lib, "SDL_ClearError", SideEffects::worstDefault, "SDL_ClearError");
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_OutOfMemory)>(*this, lib, "SDL_OutOfMemory", SideEffects::worstDefault, "SDL_OutOfMemory");
+// void (SDL_LogPriority) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetLogPriorities)>(*this, lib, "SDL_SetLogPriorities", SideEffects::worstDefault, "SDL_SetLogPriorities")->args({"priority"});
+// void (int, SDL_LogPriority) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetLogPriority)>(*this, lib, "SDL_SetLogPriority", SideEffects::worstDefault, "SDL_SetLogPriority")->args({"category", "priority"});
+// SDL_LogPriority (int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetLogPriority)>(*this, lib, "SDL_GetLogPriority", SideEffects::worstDefault, "SDL_GetLogPriority")->args({"category"});
+// void (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ResetLogPriorities)>(*this, lib, "SDL_ResetLogPriorities", SideEffects::worstDefault, "SDL_ResetLogPriorities");
+// bool (SDL_LogPriority, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetLogPriorityPrefix)>(*this, lib, "SDL_SetLogPriorityPrefix", SideEffects::worstDefault, "SDL_SetLogPriorityPrefix")->args({"priority", "prefix"});
+// Uint64 (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetTicksNS)>(*this, lib, "SDL_GetTicksNS", SideEffects::worstDefault, "SDL_GetTicksNS");
+// Uint64 (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetPerformanceCounter)>(*this, lib, "SDL_GetPerformanceCounter", SideEffects::worstDefault, "SDL_GetPerformanceCounter");
+// Uint64 (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetPerformanceFrequency)>(*this, lib, "SDL_GetPerformanceFrequency", SideEffects::worstDefault, "SDL_GetPerformanceFrequency");
+// void (Uint64) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_DelayNS)>(*this, lib, "SDL_DelayNS", SideEffects::worstDefault, "SDL_DelayNS")->args({"ns"});
+// void (Uint64) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_DelayPrecise)>(*this, lib, "SDL_DelayPrecise", SideEffects::worstDefault, "SDL_DelayPrecise")->args({"ns"});
+// bool (SDL_TimerID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RemoveTimer)>(*this, lib, "SDL_RemoveTimer", SideEffects::worstDefault, "SDL_RemoveTimer")->args({"id"});
+// bool (SDL_DateFormat *, SDL_TimeFormat *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetDateTimeLocalePreferences)>(*this, lib, "SDL_GetDateTimeLocalePreferences", SideEffects::worstDefault, "SDL_GetDateTimeLocalePreferences")->args({"dateFormat", "timeFormat"});
+// bool (SDL_Time *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetCurrentTime)>(*this, lib, "SDL_GetCurrentTime", SideEffects::worstDefault, "SDL_GetCurrentTime")->args({"ticks"});
+// bool (SDL_Time, SDL_DateTime *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_TimeToDateTime)>(*this, lib, "SDL_TimeToDateTime", SideEffects::worstDefault, "SDL_TimeToDateTime")->args({"ticks", "dt", "localTime"});
+// bool (const SDL_DateTime *, SDL_Time *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_DateTimeToTime)>(*this, lib, "SDL_DateTimeToTime", SideEffects::worstDefault, "SDL_DateTimeToTime")->args({"dt", "ticks"});
+// void (SDL_Time, Uint32 *, Uint32 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_TimeToWindows)>(*this, lib, "SDL_TimeToWindows", SideEffects::worstDefault, "SDL_TimeToWindows")->args({"ticks", "dwLowDateTime", "dwHighDateTime"});
+// SDL_Time (Uint32, Uint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_TimeFromWindows)>(*this, lib, "SDL_TimeFromWindows", SideEffects::worstDefault, "SDL_TimeFromWindows")->args({"dwLowDateTime", "dwHighDateTime"});
+// int (int, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetDaysInMonth)>(*this, lib, "SDL_GetDaysInMonth", SideEffects::worstDefault, "SDL_GetDaysInMonth")->args({"year", "month"});
+// int (int, int, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetDayOfYear)>(*this, lib, "SDL_GetDayOfYear", SideEffects::worstDefault, "SDL_GetDayOfYear")->args({"year", "month", "day"});
+// int (int, int, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetDayOfWeek)>(*this, lib, "SDL_GetDayOfWeek", SideEffects::worstDefault, "SDL_GetDayOfWeek")->args({"year", "month", "day"});
+// int (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetNumVideoDrivers)>(*this, lib, "SDL_GetNumVideoDrivers", SideEffects::worstDefault, "SDL_GetNumVideoDrivers");
+// const char *(int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetVideoDriver)>(*this, lib, "SDL_GetVideoDriver", SideEffects::worstDefault, "SDL_GetVideoDriver")->args({"index"});
+// const char *(void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetCurrentVideoDriver)>(*this, lib, "SDL_GetCurrentVideoDriver", SideEffects::worstDefault, "SDL_GetCurrentVideoDriver");
+// SDL_SystemTheme (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSystemTheme)>(*this, lib, "SDL_GetSystemTheme", SideEffects::worstDefault, "SDL_GetSystemTheme");
+// SDL_DisplayID *(int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetDisplays)>(*this, lib, "SDL_GetDisplays", SideEffects::worstDefault, "SDL_GetDisplays")->args({"count"});
+// SDL_DisplayID (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetPrimaryDisplay)>(*this, lib, "SDL_GetPrimaryDisplay", SideEffects::worstDefault, "SDL_GetPrimaryDisplay");
+// SDL_PropertiesID (SDL_DisplayID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetDisplayProperties)>(*this, lib, "SDL_GetDisplayProperties", SideEffects::worstDefault, "SDL_GetDisplayProperties")->args({"displayID"});
+// const char *(SDL_DisplayID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetDisplayName)>(*this, lib, "SDL_GetDisplayName", SideEffects::worstDefault, "SDL_GetDisplayName")->args({"displayID"});
+// bool (SDL_DisplayID, SDL_Rect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetDisplayBounds)>(*this, lib, "SDL_GetDisplayBounds", SideEffects::worstDefault, "SDL_GetDisplayBounds")->args({"displayID", "rect"});
+// bool (SDL_DisplayID, SDL_Rect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetDisplayUsableBounds)>(*this, lib, "SDL_GetDisplayUsableBounds", SideEffects::worstDefault, "SDL_GetDisplayUsableBounds")->args({"displayID", "rect"});
+// SDL_DisplayOrientation (SDL_DisplayID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetNaturalDisplayOrientation)>(*this, lib, "SDL_GetNaturalDisplayOrientation", SideEffects::worstDefault, "SDL_GetNaturalDisplayOrientation")->args({"displayID"});
+// SDL_DisplayOrientation (SDL_DisplayID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetCurrentDisplayOrientation)>(*this, lib, "SDL_GetCurrentDisplayOrientation", SideEffects::worstDefault, "SDL_GetCurrentDisplayOrientation")->args({"displayID"});
+// float (SDL_DisplayID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetDisplayContentScale)>(*this, lib, "SDL_GetDisplayContentScale", SideEffects::worstDefault, "SDL_GetDisplayContentScale")->args({"displayID"});
+// SDL_DisplayMode **(SDL_DisplayID, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetFullscreenDisplayModes)>(*this, lib, "SDL_GetFullscreenDisplayModes", SideEffects::worstDefault, "SDL_GetFullscreenDisplayModes")->args({"displayID", "count"});
+// bool (SDL_DisplayID, int, int, float, bool, SDL_DisplayMode *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetClosestFullscreenDisplayMode)>(*this, lib, "SDL_GetClosestFullscreenDisplayMode", SideEffects::worstDefault, "SDL_GetClosestFullscreenDisplayMode")->args({"displayID", "w", "h", "refresh_rate", "include_high_density_modes", "closest"});
+// const SDL_DisplayMode *(SDL_DisplayID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetDesktopDisplayMode)>(*this, lib, "SDL_GetDesktopDisplayMode", SideEffects::worstDefault, "SDL_GetDesktopDisplayMode")->args({"displayID"});
+// const SDL_DisplayMode *(SDL_DisplayID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetCurrentDisplayMode)>(*this, lib, "SDL_GetCurrentDisplayMode", SideEffects::worstDefault, "SDL_GetCurrentDisplayMode")->args({"displayID"});
+// SDL_DisplayID (const SDL_Point *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetDisplayForPoint)>(*this, lib, "SDL_GetDisplayForPoint", SideEffects::worstDefault, "SDL_GetDisplayForPoint")->args({"point"});
+// SDL_DisplayID (const SDL_Rect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetDisplayForRect)>(*this, lib, "SDL_GetDisplayForRect", SideEffects::worstDefault, "SDL_GetDisplayForRect")->args({"rect"});
+// SDL_DisplayID (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetDisplayForWindow)>(*this, lib, "SDL_GetDisplayForWindow", SideEffects::worstDefault, "SDL_GetDisplayForWindow")->args({"window"});
+// float (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowPixelDensity)>(*this, lib, "SDL_GetWindowPixelDensity", SideEffects::worstDefault, "SDL_GetWindowPixelDensity")->args({"window"});
+// float (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowDisplayScale)>(*this, lib, "SDL_GetWindowDisplayScale", SideEffects::worstDefault, "SDL_GetWindowDisplayScale")->args({"window"});
+// SDL_PixelFormat (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowPixelFormat)>(*this, lib, "SDL_GetWindowPixelFormat", SideEffects::worstDefault, "SDL_GetWindowPixelFormat")->args({"window"});
+// SDL_Window **(int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindows)>(*this, lib, "SDL_GetWindows", SideEffects::worstDefault, "SDL_GetWindows")->args({"count"});
+// SDL_Window *(SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowParent)>(*this, lib, "SDL_GetWindowParent", SideEffects::worstDefault, "SDL_GetWindowParent")->args({"window"});
+// SDL_PropertiesID (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowProperties)>(*this, lib, "SDL_GetWindowProperties", SideEffects::worstDefault, "SDL_GetWindowProperties")->args({"window"});
+// SDL_WindowFlags (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowFlags)>(*this, lib, "SDL_GetWindowFlags", SideEffects::worstDefault, "SDL_GetWindowFlags")->args({"window"});
+// const char *(SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowTitle)>(*this, lib, "SDL_GetWindowTitle", SideEffects::worstDefault, "SDL_GetWindowTitle")->args({"window"});
+// bool (SDL_Window *, int *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowPosition)>(*this, lib, "SDL_GetWindowPosition", SideEffects::worstDefault, "SDL_GetWindowPosition")->args({"window", "x", "y"});
+// bool (SDL_Window *, int *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowSize)>(*this, lib, "SDL_GetWindowSize", SideEffects::worstDefault, "SDL_GetWindowSize")->args({"window", "w", "h"});
+// bool (SDL_Window *, int *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowSizeInPixels)>(*this, lib, "SDL_GetWindowSizeInPixels", SideEffects::worstDefault, "SDL_GetWindowSizeInPixels")->args({"window", "w", "h"});
+// SDL_Window *(SDL_PropertiesID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateWindowWithProperties)>(*this, lib, "SDL_CreateWindowWithProperties", SideEffects::worstDefault, "SDL_CreateWindowWithProperties")->args({"props"});
+// SDL_Window *(SDL_Window *, int, int, int, int, SDL_WindowFlags) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreatePopupWindow)>(*this, lib, "SDL_CreatePopupWindow", SideEffects::worstDefault, "SDL_CreatePopupWindow")->args({"parent", "offset_x", "offset_y", "w", "h", "flags"});
+// bool (SDL_Window *, int, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetWindowPosition)>(*this, lib, "SDL_SetWindowPosition", SideEffects::worstDefault, "SDL_SetWindowPosition")->args({"window", "x", "y"});
+// bool (SDL_Window *, int, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetWindowSize)>(*this, lib, "SDL_SetWindowSize", SideEffects::worstDefault, "SDL_SetWindowSize")->args({"window", "w", "h"});
+// bool (SDL_Window *, SDL_Rect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowSafeArea)>(*this, lib, "SDL_GetWindowSafeArea", SideEffects::worstDefault, "SDL_GetWindowSafeArea")->args({"window", "rect"});
+// bool (SDL_Window *, float, float) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetWindowAspectRatio)>(*this, lib, "SDL_SetWindowAspectRatio", SideEffects::worstDefault, "SDL_SetWindowAspectRatio")->args({"window", "min_aspect", "max_aspect"});
+// bool (SDL_Window *, float *, float *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowAspectRatio)>(*this, lib, "SDL_GetWindowAspectRatio", SideEffects::worstDefault, "SDL_GetWindowAspectRatio")->args({"window", "min_aspect", "max_aspect"});
+// bool (SDL_Window *, int *, int *, int *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowBordersSize)>(*this, lib, "SDL_GetWindowBordersSize", SideEffects::worstDefault, "SDL_GetWindowBordersSize")->args({"window", "top", "left", "bottom", "right"});
+// bool (SDL_Window *, int, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetWindowMinimumSize)>(*this, lib, "SDL_SetWindowMinimumSize", SideEffects::worstDefault, "SDL_SetWindowMinimumSize")->args({"window", "min_w", "min_h"});
+// bool (SDL_Window *, int *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowMinimumSize)>(*this, lib, "SDL_GetWindowMinimumSize", SideEffects::worstDefault, "SDL_GetWindowMinimumSize")->args({"window", "w", "h"});
+// bool (SDL_Window *, int, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetWindowMaximumSize)>(*this, lib, "SDL_SetWindowMaximumSize", SideEffects::worstDefault, "SDL_SetWindowMaximumSize")->args({"window", "max_w", "max_h"});
+// bool (SDL_Window *, int *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowMaximumSize)>(*this, lib, "SDL_GetWindowMaximumSize", SideEffects::worstDefault, "SDL_GetWindowMaximumSize")->args({"window", "w", "h"});
+// bool (SDL_Window *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetWindowBordered)>(*this, lib, "SDL_SetWindowBordered", SideEffects::worstDefault, "SDL_SetWindowBordered")->args({"window", "bordered"});
+// bool (SDL_Window *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetWindowResizable)>(*this, lib, "SDL_SetWindowResizable", SideEffects::worstDefault, "SDL_SetWindowResizable")->args({"window", "resizable"});
+// bool (SDL_Window *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetWindowAlwaysOnTop)>(*this, lib, "SDL_SetWindowAlwaysOnTop", SideEffects::worstDefault, "SDL_SetWindowAlwaysOnTop")->args({"window", "on_top"});
+// bool (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ShowWindow)>(*this, lib, "SDL_ShowWindow", SideEffects::worstDefault, "SDL_ShowWindow")->args({"window"});
+// bool (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HideWindow)>(*this, lib, "SDL_HideWindow", SideEffects::worstDefault, "SDL_HideWindow")->args({"window"});
+// bool (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RaiseWindow)>(*this, lib, "SDL_RaiseWindow", SideEffects::worstDefault, "SDL_RaiseWindow")->args({"window"});
+// bool (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_MaximizeWindow)>(*this, lib, "SDL_MaximizeWindow", SideEffects::worstDefault, "SDL_MaximizeWindow")->args({"window"});
+// bool (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_MinimizeWindow)>(*this, lib, "SDL_MinimizeWindow", SideEffects::worstDefault, "SDL_MinimizeWindow")->args({"window"});
+// bool (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RestoreWindow)>(*this, lib, "SDL_RestoreWindow", SideEffects::worstDefault, "SDL_RestoreWindow")->args({"window"});
+// bool (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SyncWindow)>(*this, lib, "SDL_SyncWindow", SideEffects::worstDefault, "SDL_SyncWindow")->args({"window"});
+// bool (SDL_Window *, float) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetWindowOpacity)>(*this, lib, "SDL_SetWindowOpacity", SideEffects::worstDefault, "SDL_SetWindowOpacity")->args({"window", "opacity"});
+// float (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowOpacity)>(*this, lib, "SDL_GetWindowOpacity", SideEffects::worstDefault, "SDL_GetWindowOpacity")->args({"window"});
+// bool (SDL_Window *, SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetWindowParent)>(*this, lib, "SDL_SetWindowParent", SideEffects::worstDefault, "SDL_SetWindowParent")->args({"window", "parent"});
+// bool (SDL_Window *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetWindowModal)>(*this, lib, "SDL_SetWindowModal", SideEffects::worstDefault, "SDL_SetWindowModal")->args({"window", "modal"});
+// bool (SDL_Window *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetWindowFocusable)>(*this, lib, "SDL_SetWindowFocusable", SideEffects::worstDefault, "SDL_SetWindowFocusable")->args({"window", "focusable"});
+// bool (SDL_Window *, const SDL_DisplayMode *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetWindowFullscreenMode)>(*this, lib, "SDL_SetWindowFullscreenMode", SideEffects::worstDefault, "SDL_SetWindowFullscreenMode")->args({"window", "mode"});
+// const SDL_DisplayMode *(SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowFullscreenMode)>(*this, lib, "SDL_GetWindowFullscreenMode", SideEffects::worstDefault, "SDL_GetWindowFullscreenMode")->args({"window"});
+// bool (SDL_Window *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetWindowFullscreen)>(*this, lib, "SDL_SetWindowFullscreen", SideEffects::worstDefault, "SDL_SetWindowFullscreen")->args({"window", "fullscreen"});
+// void *(SDL_Window *, size_t *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowICCProfile)>(*this, lib, "SDL_GetWindowICCProfile", SideEffects::worstDefault, "SDL_GetWindowICCProfile")->args({"window", "size"});
+// bool (SDL_Window *, SDL_Surface *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetWindowIcon)>(*this, lib, "SDL_SetWindowIcon", SideEffects::worstDefault, "SDL_SetWindowIcon")->args({"window", "icon"});
+// bool (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WindowHasSurface)>(*this, lib, "SDL_WindowHasSurface", SideEffects::worstDefault, "SDL_WindowHasSurface")->args({"window"});
+// SDL_Surface *(SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowSurface)>(*this, lib, "SDL_GetWindowSurface", SideEffects::worstDefault, "SDL_GetWindowSurface")->args({"window"});
+// bool (SDL_Window *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetWindowSurfaceVSync)>(*this, lib, "SDL_SetWindowSurfaceVSync", SideEffects::worstDefault, "SDL_SetWindowSurfaceVSync")->args({"window", "vsync"});
+// bool (SDL_Window *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowSurfaceVSync)>(*this, lib, "SDL_GetWindowSurfaceVSync", SideEffects::worstDefault, "SDL_GetWindowSurfaceVSync")->args({"window", "vsync"});
+// bool (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_UpdateWindowSurface)>(*this, lib, "SDL_UpdateWindowSurface", SideEffects::worstDefault, "SDL_UpdateWindowSurface")->args({"window"});
+// bool (SDL_Window *, const SDL_Rect *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_UpdateWindowSurfaceRects)>(*this, lib, "SDL_UpdateWindowSurfaceRects", SideEffects::worstDefault, "SDL_UpdateWindowSurfaceRects")->args({"window", "rects", "numrects"});
+// bool (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_DestroyWindowSurface)>(*this, lib, "SDL_DestroyWindowSurface", SideEffects::worstDefault, "SDL_DestroyWindowSurface")->args({"window"});
+// bool (SDL_Window *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetWindowKeyboardGrab)>(*this, lib, "SDL_SetWindowKeyboardGrab", SideEffects::worstDefault, "SDL_SetWindowKeyboardGrab")->args({"window", "grabbed"});
+// bool (SDL_Window *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetWindowMouseGrab)>(*this, lib, "SDL_SetWindowMouseGrab", SideEffects::worstDefault, "SDL_SetWindowMouseGrab")->args({"window", "grabbed"});
+// bool (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowKeyboardGrab)>(*this, lib, "SDL_GetWindowKeyboardGrab", SideEffects::worstDefault, "SDL_GetWindowKeyboardGrab")->args({"window"});
+// bool (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowMouseGrab)>(*this, lib, "SDL_GetWindowMouseGrab", SideEffects::worstDefault, "SDL_GetWindowMouseGrab")->args({"window"});
+// SDL_Window *(void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGrabbedWindow)>(*this, lib, "SDL_GetGrabbedWindow", SideEffects::worstDefault, "SDL_GetGrabbedWindow");
+// bool (SDL_Window *, const SDL_Rect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetWindowMouseRect)>(*this, lib, "SDL_SetWindowMouseRect", SideEffects::worstDefault, "SDL_SetWindowMouseRect")->args({"window", "rect"});
+// const SDL_Rect *(SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowMouseRect)>(*this, lib, "SDL_GetWindowMouseRect", SideEffects::worstDefault, "SDL_GetWindowMouseRect")->args({"window"});
+// bool (SDL_Window *, int, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ShowWindowSystemMenu)>(*this, lib, "SDL_ShowWindowSystemMenu", SideEffects::worstDefault, "SDL_ShowWindowSystemMenu")->args({"window", "x", "y"});
+// bool (SDL_Window *, SDL_Surface *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetWindowShape)>(*this, lib, "SDL_SetWindowShape", SideEffects::worstDefault, "SDL_SetWindowShape")->args({"window", "shape"});
+// bool (SDL_Window *, SDL_FlashOperation) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_FlashWindow)>(*this, lib, "SDL_FlashWindow", SideEffects::worstDefault, "SDL_FlashWindow")->args({"window", "operation"});
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ScreenSaverEnabled)>(*this, lib, "SDL_ScreenSaverEnabled", SideEffects::worstDefault, "SDL_ScreenSaverEnabled");
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_EnableScreenSaver)>(*this, lib, "SDL_EnableScreenSaver", SideEffects::worstDefault, "SDL_EnableScreenSaver");
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_DisableScreenSaver)>(*this, lib, "SDL_DisableScreenSaver", SideEffects::worstDefault, "SDL_DisableScreenSaver");
+// SDL_Surface *(int, int, SDL_PixelFormat) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateSurface)>(*this, lib, "SDL_CreateSurface", SideEffects::worstDefault, "SDL_CreateSurface")->args({"width", "height", "format"});
+// bool (SDL_Surface *, const SDL_Rect *, Uint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_FillSurfaceRect)>(*this, lib, "SDL_FillSurfaceRect", SideEffects::worstDefault, "SDL_FillSurfaceRect")->args({"dst", "rect", "color"});
+// Uint32 (SDL_Surface *, Uint8, Uint8, Uint8, Uint8) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_MapSurfaceRGBA)>(*this, lib, "SDL_MapSurfaceRGBA", SideEffects::worstDefault, "SDL_MapSurfaceRGBA")->args({"surface", "r", "g", "b", "a"});
+// SDL_Renderer *(SDL_Surface *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateSoftwareRenderer)>(*this, lib, "SDL_CreateSoftwareRenderer", SideEffects::worstDefault, "SDL_CreateSoftwareRenderer")->args({"surface"});
+// SDL_Window *(SDL_Renderer *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRenderWindow)>(*this, lib, "SDL_GetRenderWindow", SideEffects::worstDefault, "SDL_GetRenderWindow")->args({"renderer"});
+// bool (SDL_Renderer *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_FlushRenderer)>(*this, lib, "SDL_FlushRenderer", SideEffects::worstDefault, "SDL_FlushRenderer")->args({"renderer"});
+// bool (SDL_Renderer *, float, float) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RenderPoint)>(*this, lib, "SDL_RenderPoint", SideEffects::worstDefault, "SDL_RenderPoint")->args({"renderer", "x", "y"});
+// bool (SDL_Renderer *, const SDL_FPoint *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RenderPoints)>(*this, lib, "SDL_RenderPoints", SideEffects::worstDefault, "SDL_RenderPoints")->args({"renderer", "points", "count"});
+// bool (SDL_Renderer *, float, float, float, float) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RenderLine)>(*this, lib, "SDL_RenderLine", SideEffects::worstDefault, "SDL_RenderLine")->args({"renderer", "x1", "y1", "x2", "y2"});
+// bool (SDL_Renderer *, const SDL_FPoint *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RenderLines)>(*this, lib, "SDL_RenderLines", SideEffects::worstDefault, "SDL_RenderLines")->args({"renderer", "points", "count"});
+// bool (SDL_Renderer *, const SDL_FRect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RenderRect)>(*this, lib, "SDL_RenderRect", SideEffects::worstDefault, "SDL_RenderRect")->args({"renderer", "rect"});
+// bool (SDL_Renderer *, const SDL_FRect *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RenderRects)>(*this, lib, "SDL_RenderRects", SideEffects::worstDefault, "SDL_RenderRects")->args({"renderer", "rects", "count"});
+// bool (SDL_Renderer *, const SDL_FRect *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RenderFillRects)>(*this, lib, "SDL_RenderFillRects", SideEffects::worstDefault, "SDL_RenderFillRects")->args({"renderer", "rects", "count"});

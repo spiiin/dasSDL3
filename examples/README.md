@@ -50,3 +50,17 @@ acquisition remains pending; do not infer it from these examples.
 
 Examples 48–50 use public native modules without unsafe or private fixtures.
 See [native GPU guide](../docs/gpu-native-boost.md) for ownership and execution.
+
+- [51_properties.das](51_properties.das): typed properties, copied names/strings and owned group scope.
+
+- [52_init_hints.das](52_init_hints.das): metadata and balanced subsystem initialization.
+
+- [53_diagnostics_time.das](53_diagnostics_time.das): UTC date, logging and performance counter.
+
+- [54_video_discovery.das](54_video_discovery.das): display modes and hidden window pixel size.
+
+- [55_window_properties.das](55_window_properties.das): property-configured parent and nested popup scopes.
+
+- [56_window_surface.das](56_window_surface.das): CPU color fills on a borrowed window surface.
+
+- [57_software_renderer.das](57_software_renderer.das): software primitives on a borrowed window surface.

@@ -16,6 +16,13 @@
 #include "sdl3_gpu_fences.h"
 #include "sdl3_gpu_native.h"
 #include "sdl3_gpu_native_data.h"
+#include "sdl3_properties.h"
+#include "sdl3_init_hints.h"
+#include "sdl3_diagnostics.h"
+#include "sdl3_video.h"
+#include "sdl3_window.h"
+#include "sdl3_window_io.h"
+#include "sdl3_renderer_primitives.h"
 #ifdef DASSDL3_TYPES_INCLUDE
 #include DASSDL3_TYPES_INCLUDE
 #else
@@ -24,6 +31,8 @@
 #include "sdl3_texture_load.h"
 #ifdef DASSDL3_TESTING
 #include "../tests/resource_probe.h"
+#include "../tests/properties_probe.h"
+#include "../tests/diagnostics_probe.h"
 #include "../tests/input_probe.h"
 #include "../tests/audio_probe.h"
 #include "../tests/geometry_probe.h"
@@ -59,6 +68,76 @@ public:
         #else
         #include "generated/sdl3_functions.inc"
         #endif
+        addExtern<DAS_BIND_FUN(SDL_SetWindowFullscreenModeRef)>(*this, lib, "SDL_SetWindowFullscreenModeRef", SideEffects::worstDefault, "SDL_SetWindowFullscreenModeRef");
+        addExtern<DAS_BIND_FUN(SDL_SetWindowDesktopFullscreenMode)>(*this, lib, "SDL_SetWindowDesktopFullscreenMode", SideEffects::worstDefault, "SDL_SetWindowDesktopFullscreenMode");
+        addExtern<DAS_BIND_FUN(SDL_GetWindowFullscreenModeCopy)>(*this, lib, "SDL_GetWindowFullscreenModeCopy", SideEffects::worstDefault, "SDL_GetWindowFullscreenModeCopy");
+        addExtern<DAS_BIND_FUN(SDL_SetWindowMouseRectRef)>(*this, lib, "SDL_SetWindowMouseRectRef", SideEffects::worstDefault, "SDL_SetWindowMouseRectRef");
+        addExtern<DAS_BIND_FUN(SDL_ClearWindowMouseRect)>(*this, lib, "SDL_ClearWindowMouseRect", SideEffects::worstDefault, "SDL_ClearWindowMouseRect");
+        addExtern<DAS_BIND_FUN(SDL_GetWindowMouseRectCopy)>(*this, lib, "SDL_GetWindowMouseRectCopy", SideEffects::worstDefault, "SDL_GetWindowMouseRectCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetWindowSurfaceVSyncRef)>(*this, lib, "SDL_GetWindowSurfaceVSyncRef", SideEffects::worstDefault, "SDL_GetWindowSurfaceVSyncRef");
+        addExtern<DAS_BIND_FUN(SDL_UpdateWindowSurfaceRectsArray)>(*this, lib, "SDL_UpdateWindowSurfaceRectsArray", SideEffects::worstDefault, "SDL_UpdateWindowSurfaceRectsArray");
+        addExtern<DAS_BIND_FUN(SDL_GetWindowICCProfileCopy)>(*this, lib, "SDL_GetWindowICCProfileCopy", SideEffects::worstDefault, "SDL_GetWindowICCProfileCopy");
+        addExtern<DAS_BIND_FUN(SDL_RenderPointsArray)>(*this,lib,"SDL_RenderPointsArray",SideEffects::worstDefault,"SDL_RenderPointsArray");
+    addExtern<DAS_BIND_FUN(SDL_RenderLinesArray)>(*this,lib,"SDL_RenderLinesArray",SideEffects::worstDefault,"SDL_RenderLinesArray");
+    addExtern<DAS_BIND_FUN(SDL_RenderRectsArray)>(*this,lib,"SDL_RenderRectsArray",SideEffects::worstDefault,"SDL_RenderRectsArray");
+    addExtern<DAS_BIND_FUN(SDL_RenderFillRectsArray)>(*this,lib,"SDL_RenderFillRectsArray",SideEffects::worstDefault,"SDL_RenderFillRectsArray");
+    addExtern<DAS_BIND_FUN(SDL_RenderRectRef)>(*this,lib,"SDL_RenderRectRef",SideEffects::worstDefault,"SDL_RenderRectRef");
+    addExtern<DAS_BIND_FUN(SDL_FillSurfaceAll)>(*this, lib, "SDL_FillSurfaceAll", SideEffects::worstDefault, "SDL_FillSurfaceAll");
+        addExtern<DAS_BIND_FUN(SDL_FillSurfaceRectRef)>(*this, lib, "SDL_FillSurfaceRectRef", SideEffects::worstDefault, "SDL_FillSurfaceRectRef");
+        addExtern<DAS_BIND_FUN(SDL_GetWindowSafeAreaRef)>(*this, lib, "SDL_GetWindowSafeAreaRef", SideEffects::worstDefault, "SDL_GetWindowSafeAreaRef");
+        addExtern<DAS_BIND_FUN(SDL_GetWindowAspectRatioRef)>(*this, lib, "SDL_GetWindowAspectRatioRef", SideEffects::worstDefault, "SDL_GetWindowAspectRatioRef");
+        addExtern<DAS_BIND_FUN(SDL_GetWindowBordersSizeRef)>(*this, lib, "SDL_GetWindowBordersSizeRef", SideEffects::worstDefault, "SDL_GetWindowBordersSizeRef");
+        addExtern<DAS_BIND_FUN(SDL_GetWindowMinimumSizeRef)>(*this, lib, "SDL_GetWindowMinimumSizeRef", SideEffects::worstDefault, "SDL_GetWindowMinimumSizeRef");
+        addExtern<DAS_BIND_FUN(SDL_GetWindowMaximumSizeRef)>(*this, lib, "SDL_GetWindowMaximumSizeRef", SideEffects::worstDefault, "SDL_GetWindowMaximumSizeRef");
+        addExtern<DAS_BIND_FUN(SDL_GetDisplaysCopy)>(*this, lib, "SDL_GetDisplaysCopy", SideEffects::worstDefault, "SDL_GetDisplaysCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetWindowsCopy)>(*this, lib, "SDL_GetWindowsCopy", SideEffects::worstDefault, "SDL_GetWindowsCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetFullscreenDisplayModesCopy)>(*this, lib, "SDL_GetFullscreenDisplayModesCopy", SideEffects::worstDefault, "SDL_GetFullscreenDisplayModesCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetDesktopDisplayModeCopy)>(*this, lib, "SDL_GetDesktopDisplayModeCopy", SideEffects::worstDefault, "SDL_GetDesktopDisplayModeCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetCurrentDisplayModeCopy)>(*this, lib, "SDL_GetCurrentDisplayModeCopy", SideEffects::worstDefault, "SDL_GetCurrentDisplayModeCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetClosestFullscreenDisplayModeRef)>(*this, lib, "SDL_GetClosestFullscreenDisplayModeRef", SideEffects::worstDefault, "SDL_GetClosestFullscreenDisplayModeRef");
+        addExtern<DAS_BIND_FUN(SDL_GetDisplayForPointRef)>(*this, lib, "SDL_GetDisplayForPointRef", SideEffects::worstDefault, "SDL_GetDisplayForPointRef");
+        addExtern<DAS_BIND_FUN(SDL_GetDisplayForRectRef)>(*this, lib, "SDL_GetDisplayForRectRef", SideEffects::worstDefault, "SDL_GetDisplayForRectRef");
+        addExtern<DAS_BIND_FUN(SDL_GetVideoDriverCopy)>(*this, lib, "SDL_GetVideoDriverCopy", SideEffects::worstDefault, "SDL_GetVideoDriverCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetDisplayNameCopy)>(*this, lib, "SDL_GetDisplayNameCopy", SideEffects::worstDefault, "SDL_GetDisplayNameCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetWindowTitleCopy)>(*this, lib, "SDL_GetWindowTitleCopy", SideEffects::worstDefault, "SDL_GetWindowTitleCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetCurrentVideoDriverCopy)>(*this, lib, "SDL_GetCurrentVideoDriverCopy", SideEffects::worstDefault, "SDL_GetCurrentVideoDriverCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetDisplayBoundsRef)>(*this, lib, "SDL_GetDisplayBoundsRef", SideEffects::worstDefault, "SDL_GetDisplayBoundsRef");
+        addExtern<DAS_BIND_FUN(SDL_GetDisplayUsableBoundsRef)>(*this, lib, "SDL_GetDisplayUsableBoundsRef", SideEffects::worstDefault, "SDL_GetDisplayUsableBoundsRef");
+        addExtern<DAS_BIND_FUN(SDL_GetWindowPositionRef)>(*this, lib, "SDL_GetWindowPositionRef", SideEffects::worstDefault, "SDL_GetWindowPositionRef");
+        addExtern<DAS_BIND_FUN(SDL_GetWindowSizeRef)>(*this, lib, "SDL_GetWindowSizeRef", SideEffects::worstDefault, "SDL_GetWindowSizeRef");
+        addExtern<DAS_BIND_FUN(SDL_GetWindowSizeInPixelsRef)>(*this, lib, "SDL_GetWindowSizeInPixelsRef", SideEffects::worstDefault, "SDL_GetWindowSizeInPixelsRef");
+        addExtern<DAS_BIND_FUN(SDL_SetErrorText)>(*this, lib, "SDL_SetErrorText", SideEffects::worstDefault, "SDL_SetErrorText");
+        addExtern<DAS_BIND_FUN(SDL_GetErrorCopy)>(*this, lib, "SDL_GetErrorCopy", SideEffects::worstDefault, "SDL_GetErrorCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetCurrentTimeRef)>(*this, lib, "SDL_GetCurrentTimeRef", SideEffects::worstDefault, "SDL_GetCurrentTimeRef");
+        addExtern<DAS_BIND_FUN(SDL_GetDateTimeLocalePreferencesRef)>(*this, lib, "SDL_GetDateTimeLocalePreferencesRef", SideEffects::worstDefault, "SDL_GetDateTimeLocalePreferencesRef");
+        addExtern<DAS_BIND_FUN(SDL_TimeToDateTimeRef)>(*this, lib, "SDL_TimeToDateTimeRef", SideEffects::worstDefault, "SDL_TimeToDateTimeRef");
+        addExtern<DAS_BIND_FUN(SDL_DateTimeToTimeRef)>(*this, lib, "SDL_DateTimeToTimeRef", SideEffects::worstDefault, "SDL_DateTimeToTimeRef");
+        addExtern<DAS_BIND_FUN(SDL_TimeToWindowsRef)>(*this, lib, "SDL_TimeToWindowsRef", SideEffects::worstDefault, "SDL_TimeToWindowsRef");
+        addExtern<DAS_BIND_FUN(SDL_LogText)>(*this, lib, "SDL_LogText", SideEffects::worstDefault, "SDL_LogText");
+        addExtern<DAS_BIND_FUN(SDL_LogMessageText)>(*this, lib, "SDL_LogMessageText", SideEffects::worstDefault, "SDL_LogMessageText");
+        addExtern<DAS_BIND_FUN(SDL_LogTraceText)>(*this, lib, "SDL_LogTraceText", SideEffects::worstDefault, "SDL_LogTraceText");
+        addExtern<DAS_BIND_FUN(SDL_LogVerboseText)>(*this, lib, "SDL_LogVerboseText", SideEffects::worstDefault, "SDL_LogVerboseText");
+        addExtern<DAS_BIND_FUN(SDL_LogDebugText)>(*this, lib, "SDL_LogDebugText", SideEffects::worstDefault, "SDL_LogDebugText");
+        addExtern<DAS_BIND_FUN(SDL_LogInfoText)>(*this, lib, "SDL_LogInfoText", SideEffects::worstDefault, "SDL_LogInfoText");
+        addExtern<DAS_BIND_FUN(SDL_LogWarnText)>(*this, lib, "SDL_LogWarnText", SideEffects::worstDefault, "SDL_LogWarnText");
+        addExtern<DAS_BIND_FUN(SDL_LogErrorText)>(*this, lib, "SDL_LogErrorText", SideEffects::worstDefault, "SDL_LogErrorText");
+        addExtern<DAS_BIND_FUN(SDL_LogCriticalText)>(*this, lib, "SDL_LogCriticalText", SideEffects::worstDefault, "SDL_LogCriticalText");
+        addExtern<DAS_BIND_FUN(SDL_GetHintCopy)>(*this, lib, "SDL_GetHintCopy", SideEffects::worstDefault, "SDL_GetHintCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetAppMetadataPropertyCopy)>(*this, lib, "SDL_GetAppMetadataPropertyCopy", SideEffects::worstDefault, "SDL_GetAppMetadataPropertyCopy");
+        addExtern<DAS_BIND_FUN(SDL_ClearAppMetadataProperty)>(*this, lib, "SDL_ClearAppMetadataProperty", SideEffects::worstDefault, "SDL_ClearAppMetadataProperty");
+        addExtern<DAS_BIND_FUN(SDL_GetStringPropertyCopy)>(*this, lib, "SDL_GetStringPropertyCopy", SideEffects::worstDefault, "SDL_GetStringPropertyCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetPropertyNamesCopy)>(*this, lib, "SDL_GetPropertyNamesCopy", SideEffects::worstDefault, "SDL_GetPropertyNamesCopy");
+#ifdef DASSDL3_TESTING
+        addExtern<DAS_BIND_FUN(SDLTestCreateDormantTimer)>(*this, lib, "SDLTestCreateDormantTimer", SideEffects::worstDefault, "SDLTestCreateDormantTimer");
+        addExtern<DAS_BIND_FUN(SDLTestBeginLog)>(*this, lib, "SDLTestBeginLog", SideEffects::worstDefault, "SDLTestBeginLog");
+        addExtern<DAS_BIND_FUN(SDLTestLogMatches)>(*this, lib, "SDLTestLogMatches", SideEffects::worstDefault, "SDLTestLogMatches");
+        addExtern<DAS_BIND_FUN(SDLTestEndLog)>(*this, lib, "SDLTestEndLog", SideEffects::worstDefault, "SDLTestEndLog");
+        addExtern<DAS_BIND_FUN(SDLTestThreadError)>(*this, lib, "SDLTestThreadError", SideEffects::worstDefault, "SDLTestThreadError");
+        addExtern<DAS_BIND_FUN(SDLTestPropertyPointer)>(*this, lib, "SDLTestPropertyPointer", SideEffects::worstDefault, "SDLTestPropertyPointer");
+        addExtern<DAS_BIND_FUN(SDLTestAttachPropertyCleanup)>(*this, lib, "SDLTestAttachPropertyCleanup", SideEffects::worstDefault, "SDLTestAttachPropertyCleanup");
+        addExtern<DAS_BIND_FUN(SDLTestPropertyCleanupCount)>(*this, lib, "SDLTestPropertyCleanupCount", SideEffects::worstDefault, "SDLTestPropertyCleanupCount");
+        addExtern<DAS_BIND_FUN(SDLTestPropertiesOtherThread)>(*this, lib, "SDLTestPropertiesOtherThread", SideEffects::worstDefault, "SDLTestPropertiesOtherThread");
+#endif
         addExtern<DAS_BIND_FUN(SDL_CreateGPUDeviceDefault)>(*this, lib, "SDL_CreateGPUDeviceDefault", SideEffects::worstDefault, "SDL_CreateGPUDeviceDefault");
         addExtern<DAS_BIND_FUN(SDL_CreateGPUShaderBytes)>(*this, lib, "SDL_CreateGPUShaderBytes", SideEffects::worstDefault, "SDL_CreateGPUShaderBytes");
         addExtern<DAS_BIND_FUN(SDL_CreateGPUComputePipelineBytes)>(*this, lib, "SDL_CreateGPUComputePipelineBytes", SideEffects::worstDefault, "SDL_CreateGPUComputePipelineBytes");

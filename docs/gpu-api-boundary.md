@@ -46,7 +46,7 @@ GPU object should be added to work around an unbound SDL operation.
 
 ## Coverage correction and next work
 
-The pinned Windows census is 145 generated / 8 adapted / 1073 pending of 1226.
+The pinned Windows census is 164 generated / 9 adapted / 1053 pending of 1226.
 GPU is 92 generated / 0 adapted / 0 pending of 92. Adapted is partial coverage.
 Framework removal previously returned debug labels/groups, copy-pass begin/end
 and blocking swapchain acquisition to pending. Those gaps are now closed by

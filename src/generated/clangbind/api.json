@@ -5,9 +5,151 @@
       "mem"
     ]
   },
+  "SDL_OutOfMemory": {
+    "signature": "bool (void)",
+    "arguments": []
+  },
   "SDL_GetError": {
     "signature": "const char *(void)",
     "arguments": []
+  },
+  "SDL_ClearError": {
+    "signature": "bool (void)",
+    "arguments": []
+  },
+  "SDL_GetGlobalProperties": {
+    "signature": "SDL_PropertiesID (void)",
+    "arguments": []
+  },
+  "SDL_CreateProperties": {
+    "signature": "SDL_PropertiesID (void)",
+    "arguments": []
+  },
+  "SDL_CopyProperties": {
+    "signature": "bool (SDL_PropertiesID, SDL_PropertiesID)",
+    "arguments": [
+      "src",
+      "dst"
+    ]
+  },
+  "SDL_LockProperties": {
+    "signature": "bool (SDL_PropertiesID)",
+    "arguments": [
+      "props"
+    ]
+  },
+  "SDL_UnlockProperties": {
+    "signature": "void (SDL_PropertiesID)",
+    "arguments": [
+      "props"
+    ]
+  },
+  "SDL_SetPointerProperty": {
+    "signature": "bool (SDL_PropertiesID, const char *, void *)",
+    "arguments": [
+      "props",
+      "name",
+      "value"
+    ]
+  },
+  "SDL_SetStringProperty": {
+    "signature": "bool (SDL_PropertiesID, const char *, const char *)",
+    "arguments": [
+      "props",
+      "name",
+      "value"
+    ]
+  },
+  "SDL_SetNumberProperty": {
+    "signature": "bool (SDL_PropertiesID, const char *, Sint64)",
+    "arguments": [
+      "props",
+      "name",
+      "value"
+    ]
+  },
+  "SDL_SetFloatProperty": {
+    "signature": "bool (SDL_PropertiesID, const char *, float)",
+    "arguments": [
+      "props",
+      "name",
+      "value"
+    ]
+  },
+  "SDL_SetBooleanProperty": {
+    "signature": "bool (SDL_PropertiesID, const char *, bool)",
+    "arguments": [
+      "props",
+      "name",
+      "value"
+    ]
+  },
+  "SDL_HasProperty": {
+    "signature": "bool (SDL_PropertiesID, const char *)",
+    "arguments": [
+      "props",
+      "name"
+    ]
+  },
+  "SDL_GetPropertyType": {
+    "signature": "SDL_PropertyType (SDL_PropertiesID, const char *)",
+    "arguments": [
+      "props",
+      "name"
+    ]
+  },
+  "SDL_GetPointerProperty": {
+    "signature": "void *(SDL_PropertiesID, const char *, void *)",
+    "arguments": [
+      "props",
+      "name",
+      "default_value"
+    ]
+  },
+  "SDL_GetStringProperty": {
+    "signature": "const char *(SDL_PropertiesID, const char *, const char *)",
+    "arguments": [
+      "props",
+      "name",
+      "default_value"
+    ]
+  },
+  "SDL_GetNumberProperty": {
+    "signature": "Sint64 (SDL_PropertiesID, const char *, Sint64)",
+    "arguments": [
+      "props",
+      "name",
+      "default_value"
+    ]
+  },
+  "SDL_GetFloatProperty": {
+    "signature": "float (SDL_PropertiesID, const char *, float)",
+    "arguments": [
+      "props",
+      "name",
+      "default_value"
+    ]
+  },
+  "SDL_GetBooleanProperty": {
+    "signature": "bool (SDL_PropertiesID, const char *, bool)",
+    "arguments": [
+      "props",
+      "name",
+      "default_value"
+    ]
+  },
+  "SDL_ClearProperty": {
+    "signature": "bool (SDL_PropertiesID, const char *)",
+    "arguments": [
+      "props",
+      "name"
+    ]
+  },
+  "SDL_DestroyProperties": {
+    "signature": "void (SDL_PropertiesID)",
+    "arguments": [
+      "props"
+    ]
   },
   "SDL_GetAudioStreamDevice": {
     "signature": "SDL_AudioDeviceID (SDL_AudioStream *)",
@@ -103,6 +245,14 @@
       "audio_len"
     ]
   },
+  "SDL_CreateSurface": {
+    "signature": "SDL_Surface *(int, int, SDL_PixelFormat)",
+    "arguments": [
+      "width",
+      "height",
+      "format"
+    ]
+  },
   "SDL_DestroySurface": {
     "signature": "void (SDL_Surface *)",
     "arguments": [
@@ -115,6 +265,188 @@
       "file"
     ]
   },
+  "SDL_FillSurfaceRect": {
+    "signature": "bool (SDL_Surface *, const SDL_Rect *, Uint32)",
+    "arguments": [
+      "dst",
+      "rect",
+      "color"
+    ]
+  },
+  "SDL_MapSurfaceRGBA": {
+    "signature": "Uint32 (SDL_Surface *, Uint8, Uint8, Uint8, Uint8)",
+    "arguments": [
+      "surface",
+      "r",
+      "g",
+      "b",
+      "a"
+    ]
+  },
+  "SDL_GetNumVideoDrivers": {
+    "signature": "int (void)",
+    "arguments": []
+  },
+  "SDL_GetVideoDriver": {
+    "signature": "const char *(int)",
+    "arguments": [
+      "index"
+    ]
+  },
+  "SDL_GetCurrentVideoDriver": {
+    "signature": "const char *(void)",
+    "arguments": []
+  },
+  "SDL_GetSystemTheme": {
+    "signature": "SDL_SystemTheme (void)",
+    "arguments": []
+  },
+  "SDL_GetDisplays": {
+    "signature": "SDL_DisplayID *(int *)",
+    "arguments": [
+      "count"
+    ]
+  },
+  "SDL_GetPrimaryDisplay": {
+    "signature": "SDL_DisplayID (void)",
+    "arguments": []
+  },
+  "SDL_GetDisplayProperties": {
+    "signature": "SDL_PropertiesID (SDL_DisplayID)",
+    "arguments": [
+      "displayID"
+    ]
+  },
+  "SDL_GetDisplayName": {
+    "signature": "const char *(SDL_DisplayID)",
+    "arguments": [
+      "displayID"
+    ]
+  },
+  "SDL_GetDisplayBounds": {
+    "signature": "bool (SDL_DisplayID, SDL_Rect *)",
+    "arguments": [
+      "displayID",
+      "rect"
+    ]
+  },
+  "SDL_GetDisplayUsableBounds": {
+    "signature": "bool (SDL_DisplayID, SDL_Rect *)",
+    "arguments": [
+      "displayID",
+      "rect"
+    ]
+  },
+  "SDL_GetNaturalDisplayOrientation": {
+    "signature": "SDL_DisplayOrientation (SDL_DisplayID)",
+    "arguments": [
+      "displayID"
+    ]
+  },
+  "SDL_GetCurrentDisplayOrientation": {
+    "signature": "SDL_DisplayOrientation (SDL_DisplayID)",
+    "arguments": [
+      "displayID"
+    ]
+  },
+  "SDL_GetDisplayContentScale": {
+    "signature": "float (SDL_DisplayID)",
+    "arguments": [
+      "displayID"
+    ]
+  },
+  "SDL_GetFullscreenDisplayModes": {
+    "signature": "SDL_DisplayMode **(SDL_DisplayID, int *)",
+    "arguments": [
+      "displayID",
+      "count"
+    ]
+  },
+  "SDL_GetClosestFullscreenDisplayMode": {
+    "signature": "bool (SDL_DisplayID, int, int, float, bool, SDL_DisplayMode *)",
+    "arguments": [
+      "displayID",
+      "w",
+      "h",
+      "refresh_rate",
+      "include_high_density_modes",
+      "closest"
+    ]
+  },
+  "SDL_GetDesktopDisplayMode": {
+    "signature": "const SDL_DisplayMode *(SDL_DisplayID)",
+    "arguments": [
+      "displayID"
+    ]
+  },
+  "SDL_GetCurrentDisplayMode": {
+    "signature": "const SDL_DisplayMode *(SDL_DisplayID)",
+    "arguments": [
+      "displayID"
+    ]
+  },
+  "SDL_GetDisplayForPoint": {
+    "signature": "SDL_DisplayID (const SDL_Point *)",
+    "arguments": [
+      "point"
+    ]
+  },
+  "SDL_GetDisplayForRect": {
+    "signature": "SDL_DisplayID (const SDL_Rect *)",
+    "arguments": [
+      "rect"
+    ]
+  },
+  "SDL_GetDisplayForWindow": {
+    "signature": "SDL_DisplayID (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetWindowPixelDensity": {
+    "signature": "float (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetWindowDisplayScale": {
+    "signature": "float (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_SetWindowFullscreenMode": {
+    "signature": "bool (SDL_Window *, const SDL_DisplayMode *)",
+    "arguments": [
+      "window",
+      "mode"
+    ]
+  },
+  "SDL_GetWindowFullscreenMode": {
+    "signature": "const SDL_DisplayMode *(SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetWindowICCProfile": {
+    "signature": "void *(SDL_Window *, size_t *)",
+    "arguments": [
+      "window",
+      "size"
+    ]
+  },
+  "SDL_GetWindowPixelFormat": {
+    "signature": "SDL_PixelFormat (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetWindows": {
+    "signature": "SDL_Window **(int *)",
+    "arguments": [
+      "count"
+    ]
+  },
   "SDL_CreateWindow": {
     "signature": "SDL_Window *(const char *, int, int, SDL_WindowFlags)",
     "arguments": [
@@ -122,6 +454,23 @@
       "w",
       "h",
       "flags"
+    ]
+  },
+  "SDL_CreatePopupWindow": {
+    "signature": "SDL_Window *(SDL_Window *, int, int, int, int, SDL_WindowFlags)",
+    "arguments": [
+      "parent",
+      "offset_x",
+      "offset_y",
+      "w",
+      "h",
+      "flags"
+    ]
+  },
+  "SDL_CreateWindowWithProperties": {
+    "signature": "SDL_Window *(SDL_PropertiesID)",
+    "arguments": [
+      "props"
     ]
   },
   "SDL_GetWindowID": {
@@ -136,6 +485,24 @@
       "id"
     ]
   },
+  "SDL_GetWindowParent": {
+    "signature": "SDL_Window *(SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetWindowProperties": {
+    "signature": "SDL_PropertiesID (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetWindowFlags": {
+    "signature": "SDL_WindowFlags (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
   "SDL_SetWindowTitle": {
     "signature": "bool (SDL_Window *, const char *)",
     "arguments": [
@@ -143,11 +510,356 @@
       "title"
     ]
   },
+  "SDL_GetWindowTitle": {
+    "signature": "const char *(SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_SetWindowIcon": {
+    "signature": "bool (SDL_Window *, SDL_Surface *)",
+    "arguments": [
+      "window",
+      "icon"
+    ]
+  },
+  "SDL_SetWindowPosition": {
+    "signature": "bool (SDL_Window *, int, int)",
+    "arguments": [
+      "window",
+      "x",
+      "y"
+    ]
+  },
+  "SDL_GetWindowPosition": {
+    "signature": "bool (SDL_Window *, int *, int *)",
+    "arguments": [
+      "window",
+      "x",
+      "y"
+    ]
+  },
+  "SDL_SetWindowSize": {
+    "signature": "bool (SDL_Window *, int, int)",
+    "arguments": [
+      "window",
+      "w",
+      "h"
+    ]
+  },
+  "SDL_GetWindowSize": {
+    "signature": "bool (SDL_Window *, int *, int *)",
+    "arguments": [
+      "window",
+      "w",
+      "h"
+    ]
+  },
+  "SDL_GetWindowSafeArea": {
+    "signature": "bool (SDL_Window *, SDL_Rect *)",
+    "arguments": [
+      "window",
+      "rect"
+    ]
+  },
+  "SDL_SetWindowAspectRatio": {
+    "signature": "bool (SDL_Window *, float, float)",
+    "arguments": [
+      "window",
+      "min_aspect",
+      "max_aspect"
+    ]
+  },
+  "SDL_GetWindowAspectRatio": {
+    "signature": "bool (SDL_Window *, float *, float *)",
+    "arguments": [
+      "window",
+      "min_aspect",
+      "max_aspect"
+    ]
+  },
+  "SDL_GetWindowBordersSize": {
+    "signature": "bool (SDL_Window *, int *, int *, int *, int *)",
+    "arguments": [
+      "window",
+      "top",
+      "left",
+      "bottom",
+      "right"
+    ]
+  },
+  "SDL_GetWindowSizeInPixels": {
+    "signature": "bool (SDL_Window *, int *, int *)",
+    "arguments": [
+      "window",
+      "w",
+      "h"
+    ]
+  },
+  "SDL_SetWindowMinimumSize": {
+    "signature": "bool (SDL_Window *, int, int)",
+    "arguments": [
+      "window",
+      "min_w",
+      "min_h"
+    ]
+  },
+  "SDL_GetWindowMinimumSize": {
+    "signature": "bool (SDL_Window *, int *, int *)",
+    "arguments": [
+      "window",
+      "w",
+      "h"
+    ]
+  },
+  "SDL_SetWindowMaximumSize": {
+    "signature": "bool (SDL_Window *, int, int)",
+    "arguments": [
+      "window",
+      "max_w",
+      "max_h"
+    ]
+  },
+  "SDL_GetWindowMaximumSize": {
+    "signature": "bool (SDL_Window *, int *, int *)",
+    "arguments": [
+      "window",
+      "w",
+      "h"
+    ]
+  },
+  "SDL_SetWindowBordered": {
+    "signature": "bool (SDL_Window *, bool)",
+    "arguments": [
+      "window",
+      "bordered"
+    ]
+  },
+  "SDL_SetWindowResizable": {
+    "signature": "bool (SDL_Window *, bool)",
+    "arguments": [
+      "window",
+      "resizable"
+    ]
+  },
+  "SDL_SetWindowAlwaysOnTop": {
+    "signature": "bool (SDL_Window *, bool)",
+    "arguments": [
+      "window",
+      "on_top"
+    ]
+  },
+  "SDL_ShowWindow": {
+    "signature": "bool (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_HideWindow": {
+    "signature": "bool (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_RaiseWindow": {
+    "signature": "bool (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_MaximizeWindow": {
+    "signature": "bool (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_MinimizeWindow": {
+    "signature": "bool (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_RestoreWindow": {
+    "signature": "bool (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_SetWindowFullscreen": {
+    "signature": "bool (SDL_Window *, bool)",
+    "arguments": [
+      "window",
+      "fullscreen"
+    ]
+  },
+  "SDL_SyncWindow": {
+    "signature": "bool (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_WindowHasSurface": {
+    "signature": "bool (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetWindowSurface": {
+    "signature": "SDL_Surface *(SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_SetWindowSurfaceVSync": {
+    "signature": "bool (SDL_Window *, int)",
+    "arguments": [
+      "window",
+      "vsync"
+    ]
+  },
+  "SDL_GetWindowSurfaceVSync": {
+    "signature": "bool (SDL_Window *, int *)",
+    "arguments": [
+      "window",
+      "vsync"
+    ]
+  },
+  "SDL_UpdateWindowSurface": {
+    "signature": "bool (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_UpdateWindowSurfaceRects": {
+    "signature": "bool (SDL_Window *, const SDL_Rect *, int)",
+    "arguments": [
+      "window",
+      "rects",
+      "numrects"
+    ]
+  },
+  "SDL_DestroyWindowSurface": {
+    "signature": "bool (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_SetWindowKeyboardGrab": {
+    "signature": "bool (SDL_Window *, bool)",
+    "arguments": [
+      "window",
+      "grabbed"
+    ]
+  },
+  "SDL_SetWindowMouseGrab": {
+    "signature": "bool (SDL_Window *, bool)",
+    "arguments": [
+      "window",
+      "grabbed"
+    ]
+  },
+  "SDL_GetWindowKeyboardGrab": {
+    "signature": "bool (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetWindowMouseGrab": {
+    "signature": "bool (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetGrabbedWindow": {
+    "signature": "SDL_Window *(void)",
+    "arguments": []
+  },
+  "SDL_SetWindowMouseRect": {
+    "signature": "bool (SDL_Window *, const SDL_Rect *)",
+    "arguments": [
+      "window",
+      "rect"
+    ]
+  },
+  "SDL_GetWindowMouseRect": {
+    "signature": "const SDL_Rect *(SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_SetWindowOpacity": {
+    "signature": "bool (SDL_Window *, float)",
+    "arguments": [
+      "window",
+      "opacity"
+    ]
+  },
+  "SDL_GetWindowOpacity": {
+    "signature": "float (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_SetWindowParent": {
+    "signature": "bool (SDL_Window *, SDL_Window *)",
+    "arguments": [
+      "window",
+      "parent"
+    ]
+  },
+  "SDL_SetWindowModal": {
+    "signature": "bool (SDL_Window *, bool)",
+    "arguments": [
+      "window",
+      "modal"
+    ]
+  },
+  "SDL_SetWindowFocusable": {
+    "signature": "bool (SDL_Window *, bool)",
+    "arguments": [
+      "window",
+      "focusable"
+    ]
+  },
+  "SDL_ShowWindowSystemMenu": {
+    "signature": "bool (SDL_Window *, int, int)",
+    "arguments": [
+      "window",
+      "x",
+      "y"
+    ]
+  },
+  "SDL_SetWindowShape": {
+    "signature": "bool (SDL_Window *, SDL_Surface *)",
+    "arguments": [
+      "window",
+      "shape"
+    ]
+  },
+  "SDL_FlashWindow": {
+    "signature": "bool (SDL_Window *, SDL_FlashOperation)",
+    "arguments": [
+      "window",
+      "operation"
+    ]
+  },
   "SDL_DestroyWindow": {
     "signature": "void (SDL_Window *)",
     "arguments": [
       "window"
     ]
+  },
+  "SDL_ScreenSaverEnabled": {
+    "signature": "bool (void)",
+    "arguments": []
+  },
+  "SDL_EnableScreenSaver": {
+    "signature": "bool (void)",
+    "arguments": []
+  },
+  "SDL_DisableScreenSaver": {
+    "signature": "bool (void)",
+    "arguments": []
   },
   "SDL_GetKeyboardState": {
     "signature": "const bool *(int *)",
@@ -911,8 +1623,58 @@
       "depth_or_layer_count"
     ]
   },
+  "SDL_SetHintWithPriority": {
+    "signature": "bool (const char *, const char *, SDL_HintPriority)",
+    "arguments": [
+      "name",
+      "value",
+      "priority"
+    ]
+  },
+  "SDL_SetHint": {
+    "signature": "bool (const char *, const char *)",
+    "arguments": [
+      "name",
+      "value"
+    ]
+  },
+  "SDL_ResetHint": {
+    "signature": "bool (const char *)",
+    "arguments": [
+      "name"
+    ]
+  },
+  "SDL_ResetHints": {
+    "signature": "void (void)",
+    "arguments": []
+  },
+  "SDL_GetHint": {
+    "signature": "const char *(const char *)",
+    "arguments": [
+      "name"
+    ]
+  },
+  "SDL_GetHintBoolean": {
+    "signature": "bool (const char *, bool)",
+    "arguments": [
+      "name",
+      "default_value"
+    ]
+  },
   "SDL_Init": {
     "signature": "bool (SDL_InitFlags)",
+    "arguments": [
+      "flags"
+    ]
+  },
+  "SDL_InitSubSystem": {
+    "signature": "bool (SDL_InitFlags)",
+    "arguments": [
+      "flags"
+    ]
+  },
+  "SDL_QuitSubSystem": {
+    "signature": "void (SDL_InitFlags)",
     "arguments": [
       "flags"
     ]
@@ -927,6 +1689,61 @@
     "signature": "void (void)",
     "arguments": []
   },
+  "SDL_IsMainThread": {
+    "signature": "bool (void)",
+    "arguments": []
+  },
+  "SDL_SetAppMetadata": {
+    "signature": "bool (const char *, const char *, const char *)",
+    "arguments": [
+      "appname",
+      "appversion",
+      "appidentifier"
+    ]
+  },
+  "SDL_SetAppMetadataProperty": {
+    "signature": "bool (const char *, const char *)",
+    "arguments": [
+      "name",
+      "value"
+    ]
+  },
+  "SDL_GetAppMetadataProperty": {
+    "signature": "const char *(const char *)",
+    "arguments": [
+      "name"
+    ]
+  },
+  "SDL_SetLogPriorities": {
+    "signature": "void (SDL_LogPriority)",
+    "arguments": [
+      "priority"
+    ]
+  },
+  "SDL_SetLogPriority": {
+    "signature": "void (int, SDL_LogPriority)",
+    "arguments": [
+      "category",
+      "priority"
+    ]
+  },
+  "SDL_GetLogPriority": {
+    "signature": "SDL_LogPriority (int)",
+    "arguments": [
+      "category"
+    ]
+  },
+  "SDL_ResetLogPriorities": {
+    "signature": "void (void)",
+    "arguments": []
+  },
+  "SDL_SetLogPriorityPrefix": {
+    "signature": "bool (SDL_LogPriority, const char *)",
+    "arguments": [
+      "priority",
+      "prefix"
+    ]
+  },
   "SDL_CreateRenderer": {
     "signature": "SDL_Renderer *(SDL_Window *, const char *)",
     "arguments": [
@@ -934,10 +1751,22 @@
       "name"
     ]
   },
+  "SDL_CreateSoftwareRenderer": {
+    "signature": "SDL_Renderer *(SDL_Surface *)",
+    "arguments": [
+      "surface"
+    ]
+  },
   "SDL_GetRenderer": {
     "signature": "SDL_Renderer *(SDL_Window *)",
     "arguments": [
       "window"
+    ]
+  },
+  "SDL_GetRenderWindow": {
+    "signature": "SDL_Window *(SDL_Renderer *)",
+    "arguments": [
+      "renderer"
     ]
   },
   "SDL_CreateTextureFromSurface": {
@@ -984,11 +1813,68 @@
       "renderer"
     ]
   },
+  "SDL_RenderPoint": {
+    "signature": "bool (SDL_Renderer *, float, float)",
+    "arguments": [
+      "renderer",
+      "x",
+      "y"
+    ]
+  },
+  "SDL_RenderPoints": {
+    "signature": "bool (SDL_Renderer *, const SDL_FPoint *, int)",
+    "arguments": [
+      "renderer",
+      "points",
+      "count"
+    ]
+  },
+  "SDL_RenderLine": {
+    "signature": "bool (SDL_Renderer *, float, float, float, float)",
+    "arguments": [
+      "renderer",
+      "x1",
+      "y1",
+      "x2",
+      "y2"
+    ]
+  },
+  "SDL_RenderLines": {
+    "signature": "bool (SDL_Renderer *, const SDL_FPoint *, int)",
+    "arguments": [
+      "renderer",
+      "points",
+      "count"
+    ]
+  },
+  "SDL_RenderRect": {
+    "signature": "bool (SDL_Renderer *, const SDL_FRect *)",
+    "arguments": [
+      "renderer",
+      "rect"
+    ]
+  },
+  "SDL_RenderRects": {
+    "signature": "bool (SDL_Renderer *, const SDL_FRect *, int)",
+    "arguments": [
+      "renderer",
+      "rects",
+      "count"
+    ]
+  },
   "SDL_RenderFillRect": {
     "signature": "bool (SDL_Renderer *, const SDL_FRect *)",
     "arguments": [
       "renderer",
       "rect"
+    ]
+  },
+  "SDL_RenderFillRects": {
+    "signature": "bool (SDL_Renderer *, const SDL_FRect *, int)",
+    "arguments": [
+      "renderer",
+      "rects",
+      "count"
     ]
   },
   "SDL_RenderTexture": {
@@ -1029,7 +1915,91 @@
       "renderer"
     ]
   },
+  "SDL_FlushRenderer": {
+    "signature": "bool (SDL_Renderer *)",
+    "arguments": [
+      "renderer"
+    ]
+  },
+  "SDL_GetDateTimeLocalePreferences": {
+    "signature": "bool (SDL_DateFormat *, SDL_TimeFormat *)",
+    "arguments": [
+      "dateFormat",
+      "timeFormat"
+    ]
+  },
+  "SDL_GetCurrentTime": {
+    "signature": "bool (SDL_Time *)",
+    "arguments": [
+      "ticks"
+    ]
+  },
+  "SDL_TimeToDateTime": {
+    "signature": "bool (SDL_Time, SDL_DateTime *, bool)",
+    "arguments": [
+      "ticks",
+      "dt",
+      "localTime"
+    ]
+  },
+  "SDL_DateTimeToTime": {
+    "signature": "bool (const SDL_DateTime *, SDL_Time *)",
+    "arguments": [
+      "dt",
+      "ticks"
+    ]
+  },
+  "SDL_TimeToWindows": {
+    "signature": "void (SDL_Time, Uint32 *, Uint32 *)",
+    "arguments": [
+      "ticks",
+      "dwLowDateTime",
+      "dwHighDateTime"
+    ]
+  },
+  "SDL_TimeFromWindows": {
+    "signature": "SDL_Time (Uint32, Uint32)",
+    "arguments": [
+      "dwLowDateTime",
+      "dwHighDateTime"
+    ]
+  },
+  "SDL_GetDaysInMonth": {
+    "signature": "int (int, int)",
+    "arguments": [
+      "year",
+      "month"
+    ]
+  },
+  "SDL_GetDayOfYear": {
+    "signature": "int (int, int, int)",
+    "arguments": [
+      "year",
+      "month",
+      "day"
+    ]
+  },
+  "SDL_GetDayOfWeek": {
+    "signature": "int (int, int, int)",
+    "arguments": [
+      "year",
+      "month",
+      "day"
+    ]
+  },
   "SDL_GetTicks": {
+    "signature": "Uint64 (void)",
+    "arguments": []
+  },
+  "SDL_GetTicksNS": {
+    "signature": "Uint64 (void)",
+    "arguments": []
+  },
+  "SDL_GetPerformanceCounter": {
+    "signature": "Uint64 (void)",
+    "arguments": []
+  },
+  "SDL_GetPerformanceFrequency": {
     "signature": "Uint64 (void)",
     "arguments": []
   },
@@ -1037,6 +2007,24 @@
     "signature": "void (Uint32)",
     "arguments": [
       "ms"
+    ]
+  },
+  "SDL_DelayNS": {
+    "signature": "void (Uint64)",
+    "arguments": [
+      "ns"
+    ]
+  },
+  "SDL_DelayPrecise": {
+    "signature": "void (Uint64)",
+    "arguments": [
+      "ns"
+    ]
+  },
+  "SDL_RemoveTimer": {
+    "signature": "bool (SDL_TimerID)",
+    "arguments": [
+      "id"
     ]
   },
   "SDL_GetVersion": {

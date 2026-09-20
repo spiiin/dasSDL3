@@ -17,12 +17,19 @@ addAnnotation(new DummyTypeAnnotation("SDL_GPUGraphicsPipeline", "SDL_GPUGraphic
 addAnnotation(new DummyTypeAnnotation("SDL_GPURenderPass", "SDL_GPURenderPass", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_GPUComputePass", "SDL_GPUComputePass", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_GPUCopyPass", "SDL_GPUCopyPass", 1, 1));
+addEnumeration(new Enumeration_SDL_PropertyType());
 addAnnotation(new SDL_AudioSpecAnnotation(lib));
+addEnumeration(new Enumeration_SDL_PixelFormat());
 addAnnotation(new SDL_FColorAnnotation(lib));
+addAnnotation(new SDL_PointAnnotation(lib));
 addAnnotation(new SDL_FPointAnnotation(lib));
 addAnnotation(new SDL_RectAnnotation(lib));
 addAnnotation(new SDL_FRectAnnotation(lib));
 addEnumeration(new Enumeration_SDL_FlipMode());
+addEnumeration(new Enumeration_SDL_SystemTheme());
+addAnnotation(new SDL_DisplayModeAnnotation(lib));
+addEnumeration(new Enumeration_SDL_DisplayOrientation());
+addEnumeration(new Enumeration_SDL_FlashOperation());
 addAnnotation(new SDL_KeyboardEventAnnotation(lib));
 addAnnotation(new SDL_MouseMotionEventAnnotation(lib));
 addAnnotation(new SDL_MouseButtonEventAnnotation(lib));
@@ -87,7 +94,13 @@ addAnnotation(new SDL_GPUBufferBindingAnnotation(lib));
 addAnnotation(new SDL_GPUTextureSamplerBindingAnnotation(lib));
 addAnnotation(new SDL_GPUStorageBufferReadWriteBindingAnnotation(lib));
 addAnnotation(new SDL_GPUStorageTextureReadWriteBindingAnnotation(lib));
+addEnumeration(new Enumeration_SDL_HintPriority());
+addEnumeration(new Enumeration_SDL_LogCategory());
+addEnumeration(new Enumeration_SDL_LogPriority());
 addAnnotation(new SDL_VertexAnnotation(lib));
+addAnnotation(new SDL_DateTimeAnnotation(lib));
+addEnumeration(new Enumeration_SDL_DateFormat());
+addEnumeration(new Enumeration_SDL_TimeFormat());
 static_assert(static_cast<uint32_t>(SDL_GPU_FILTER_NEAREST) == static_cast<uint32_t>(0x0ULL));
 addConstant(*this, "SDL_GPU_FILTER_NEAREST", static_cast<uint32_t>(0x0ULL));
 static_assert(static_cast<uint32_t>(SDL_GPU_FILTER_LINEAR) == static_cast<uint32_t>(0x1ULL));
@@ -462,12 +475,158 @@ static_assert(static_cast<uint32_t>(SDL_GPU_COLORCOMPONENT_B) == static_cast<uin
 addConstant(*this, "SDL_GPU_COLORCOMPONENT_B", static_cast<uint32_t>(0x4ULL));
 static_assert(static_cast<uint32_t>(SDL_GPU_COLORCOMPONENT_A) == static_cast<uint32_t>(0x8ULL));
 addConstant(*this, "SDL_GPU_COLORCOMPONENT_A", static_cast<uint32_t>(0x8ULL));
+static_assert(static_cast<uint32_t>(SDL_INIT_JOYSTICK) == static_cast<uint32_t>(0x200ULL));
+addConstant(*this, "SDL_INIT_JOYSTICK", static_cast<uint32_t>(0x200ULL));
+static_assert(static_cast<uint32_t>(SDL_INIT_HAPTIC) == static_cast<uint32_t>(0x1000ULL));
+addConstant(*this, "SDL_INIT_HAPTIC", static_cast<uint32_t>(0x1000ULL));
+static_assert(static_cast<uint32_t>(SDL_INIT_GAMEPAD) == static_cast<uint32_t>(0x2000ULL));
+addConstant(*this, "SDL_INIT_GAMEPAD", static_cast<uint32_t>(0x2000ULL));
+static_assert(static_cast<uint32_t>(SDL_INIT_EVENTS) == static_cast<uint32_t>(0x4000ULL));
+addConstant(*this, "SDL_INIT_EVENTS", static_cast<uint32_t>(0x4000ULL));
+static_assert(static_cast<uint32_t>(SDL_INIT_SENSOR) == static_cast<uint32_t>(0x8000ULL));
+addConstant(*this, "SDL_INIT_SENSOR", static_cast<uint32_t>(0x8000ULL));
+static_assert(static_cast<uint32_t>(SDL_INIT_CAMERA) == static_cast<uint32_t>(0x10000ULL));
+addConstant(*this, "SDL_INIT_CAMERA", static_cast<uint32_t>(0x10000ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_FULLSCREEN) == static_cast<uint64_t>(0x1ULL));
+addConstant(*this, "SDL_WINDOW_FULLSCREEN", static_cast<uint64_t>(0x1ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_OPENGL) == static_cast<uint64_t>(0x2ULL));
+addConstant(*this, "SDL_WINDOW_OPENGL", static_cast<uint64_t>(0x2ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_OCCLUDED) == static_cast<uint64_t>(0x4ULL));
+addConstant(*this, "SDL_WINDOW_OCCLUDED", static_cast<uint64_t>(0x4ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_BORDERLESS) == static_cast<uint64_t>(0x10ULL));
+addConstant(*this, "SDL_WINDOW_BORDERLESS", static_cast<uint64_t>(0x10ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_MINIMIZED) == static_cast<uint64_t>(0x40ULL));
+addConstant(*this, "SDL_WINDOW_MINIMIZED", static_cast<uint64_t>(0x40ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_MAXIMIZED) == static_cast<uint64_t>(0x80ULL));
+addConstant(*this, "SDL_WINDOW_MAXIMIZED", static_cast<uint64_t>(0x80ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_MOUSE_GRABBED) == static_cast<uint64_t>(0x100ULL));
+addConstant(*this, "SDL_WINDOW_MOUSE_GRABBED", static_cast<uint64_t>(0x100ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_INPUT_FOCUS) == static_cast<uint64_t>(0x200ULL));
+addConstant(*this, "SDL_WINDOW_INPUT_FOCUS", static_cast<uint64_t>(0x200ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_MOUSE_FOCUS) == static_cast<uint64_t>(0x400ULL));
+addConstant(*this, "SDL_WINDOW_MOUSE_FOCUS", static_cast<uint64_t>(0x400ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_EXTERNAL) == static_cast<uint64_t>(0x800ULL));
+addConstant(*this, "SDL_WINDOW_EXTERNAL", static_cast<uint64_t>(0x800ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_MODAL) == static_cast<uint64_t>(0x1000ULL));
+addConstant(*this, "SDL_WINDOW_MODAL", static_cast<uint64_t>(0x1000ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_HIGH_PIXEL_DENSITY) == static_cast<uint64_t>(0x2000ULL));
+addConstant(*this, "SDL_WINDOW_HIGH_PIXEL_DENSITY", static_cast<uint64_t>(0x2000ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_MOUSE_CAPTURE) == static_cast<uint64_t>(0x4000ULL));
+addConstant(*this, "SDL_WINDOW_MOUSE_CAPTURE", static_cast<uint64_t>(0x4000ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_MOUSE_RELATIVE_MODE) == static_cast<uint64_t>(0x8000ULL));
+addConstant(*this, "SDL_WINDOW_MOUSE_RELATIVE_MODE", static_cast<uint64_t>(0x8000ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_ALWAYS_ON_TOP) == static_cast<uint64_t>(0x10000ULL));
+addConstant(*this, "SDL_WINDOW_ALWAYS_ON_TOP", static_cast<uint64_t>(0x10000ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_UTILITY) == static_cast<uint64_t>(0x20000ULL));
+addConstant(*this, "SDL_WINDOW_UTILITY", static_cast<uint64_t>(0x20000ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_TOOLTIP) == static_cast<uint64_t>(0x40000ULL));
+addConstant(*this, "SDL_WINDOW_TOOLTIP", static_cast<uint64_t>(0x40000ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_POPUP_MENU) == static_cast<uint64_t>(0x80000ULL));
+addConstant(*this, "SDL_WINDOW_POPUP_MENU", static_cast<uint64_t>(0x80000ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_KEYBOARD_GRABBED) == static_cast<uint64_t>(0x100000ULL));
+addConstant(*this, "SDL_WINDOW_KEYBOARD_GRABBED", static_cast<uint64_t>(0x100000ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_VULKAN) == static_cast<uint64_t>(0x10000000ULL));
+addConstant(*this, "SDL_WINDOW_VULKAN", static_cast<uint64_t>(0x10000000ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_METAL) == static_cast<uint64_t>(0x20000000ULL));
+addConstant(*this, "SDL_WINDOW_METAL", static_cast<uint64_t>(0x20000000ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_TRANSPARENT) == static_cast<uint64_t>(0x40000000ULL));
+addConstant(*this, "SDL_WINDOW_TRANSPARENT", static_cast<uint64_t>(0x40000000ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_NOT_FOCUSABLE) == static_cast<uint64_t>(0x80000000ULL));
+addConstant(*this, "SDL_WINDOW_NOT_FOCUSABLE", static_cast<uint64_t>(0x80000000ULL));
+static_assert(static_cast<int32_t>(SDL_WINDOWPOS_UNDEFINED) == static_cast<int32_t>(536805376ULL));
+addConstant(*this, "SDL_WINDOWPOS_UNDEFINED", static_cast<int32_t>(536805376ULL));
+static_assert(static_cast<int32_t>(SDL_WINDOWPOS_CENTERED) == static_cast<int32_t>(805240832ULL));
+addConstant(*this, "SDL_WINDOWPOS_CENTERED", static_cast<int32_t>(805240832ULL));
+static_assert(static_cast<int32_t>(SDL_WINDOW_SURFACE_VSYNC_DISABLED) == static_cast<int32_t>(0ULL));
+addConstant(*this, "SDL_WINDOW_SURFACE_VSYNC_DISABLED", static_cast<int32_t>(0ULL));
+static_assert(static_cast<int32_t>(SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE) == static_cast<int32_t>(-1ULL));
+addConstant(*this, "SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE", static_cast<int32_t>(-1ULL));
 // from SDL3/SDL_stdinc.h:1405:34
 	makeExtern< void (*)(void *) , SDL_free , SimNode_ExtFuncCall >(lib,"SDL_free","SDL_free")
 		->args({"mem"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_error.h:121:34
+	makeExtern< bool (*)() , SDL_OutOfMemory , SimNode_ExtFuncCall >(lib,"SDL_OutOfMemory","SDL_OutOfMemory")
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_error.h:158:42
 	makeExtern< const char * (*)() , SDL_GetError , SimNode_ExtFuncCall >(lib,"SDL_GetError","SDL_GetError")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_error.h:172:34
+	makeExtern< bool (*)() , SDL_ClearError , SimNode_ExtFuncCall >(lib,"SDL_ClearError","SDL_ClearError")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_properties.h:91:46
+	makeExtern< unsigned int (*)() , SDL_GetGlobalProperties , SimNode_ExtFuncCall >(lib,"SDL_GetGlobalProperties","SDL_GetGlobalProperties")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_properties.h:107:46
+	makeExtern< unsigned int (*)() , SDL_CreateProperties , SimNode_ExtFuncCall >(lib,"SDL_CreateProperties","SDL_CreateProperties")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_properties.h:126:34
+	makeExtern< bool (*)(unsigned int,unsigned int) , SDL_CopyProperties , SimNode_ExtFuncCall >(lib,"SDL_CopyProperties","SDL_CopyProperties")
+		->args({"src","dst"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_properties.h:150:34
+	makeExtern< bool (*)(unsigned int) , SDL_LockProperties , SimNode_ExtFuncCall >(lib,"SDL_LockProperties","SDL_LockProperties")
+		->args({"props"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_properties.h:163:34
+	makeExtern< void (*)(unsigned int) , SDL_UnlockProperties , SimNode_ExtFuncCall >(lib,"SDL_UnlockProperties","SDL_UnlockProperties")
+		->args({"props"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_properties.h:241:34
+	makeExtern< bool (*)(unsigned int,const char *,void *) , SDL_SetPointerProperty , SimNode_ExtFuncCall >(lib,"SDL_SetPointerProperty","SDL_SetPointerProperty")
+		->args({"props","name","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_properties.h:261:34
+	makeExtern< bool (*)(unsigned int,const char *,const char *) , SDL_SetStringProperty , SimNode_ExtFuncCall >(lib,"SDL_SetStringProperty","SDL_SetStringProperty")
+		->args({"props","name","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_properties.h:278:34
+	makeExtern< bool (*)(unsigned int,const char *,Sint64) , SDL_SetNumberProperty , SimNode_ExtFuncCall >(lib,"SDL_SetNumberProperty","SDL_SetNumberProperty")
+		->args({"props","name","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_properties.h:295:34
+	makeExtern< bool (*)(unsigned int,const char *,float) , SDL_SetFloatProperty , SimNode_ExtFuncCall >(lib,"SDL_SetFloatProperty","SDL_SetFloatProperty")
+		->args({"props","name","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_properties.h:312:34
+	makeExtern< bool (*)(unsigned int,const char *,bool) , SDL_SetBooleanProperty , SimNode_ExtFuncCall >(lib,"SDL_SetBooleanProperty","SDL_SetBooleanProperty")
+		->args({"props","name","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_properties.h:327:34
+	makeExtern< bool (*)(unsigned int,const char *) , SDL_HasProperty , SimNode_ExtFuncCall >(lib,"SDL_HasProperty","SDL_HasProperty")
+		->args({"props","name"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_properties.h:343:46
+	makeExtern< enum SDL_PropertyType (*)(unsigned int,const char *) , SDL_GetPropertyType , SimNode_ExtFuncCall >(lib,"SDL_GetPropertyType","SDL_GetPropertyType")
+		->args({"props","name"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_properties.h:376:36
+	makeExtern< void * (*)(unsigned int,const char *,void *) , SDL_GetPointerProperty , SimNode_ExtFuncCall >(lib,"SDL_GetPointerProperty","SDL_GetPointerProperty")
+		->args({"props","name","default_value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_properties.h:400:42
+	makeExtern< const char * (*)(unsigned int,const char *,const char *) , SDL_GetStringProperty , SimNode_ExtFuncCall >(lib,"SDL_GetStringProperty","SDL_GetStringProperty")
+		->args({"props","name","default_value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_properties.h:422:36
+	makeExtern< Sint64 (*)(unsigned int,const char *,Sint64) , SDL_GetNumberProperty , SimNode_ExtFuncCall >(lib,"SDL_GetNumberProperty","SDL_GetNumberProperty")
+		->args({"props","name","default_value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_properties.h:444:35
+	makeExtern< float (*)(unsigned int,const char *,float) , SDL_GetFloatProperty , SimNode_ExtFuncCall >(lib,"SDL_GetFloatProperty","SDL_GetFloatProperty")
+		->args({"props","name","default_value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_properties.h:466:34
+	makeExtern< bool (*)(unsigned int,const char *,bool) , SDL_GetBooleanProperty , SimNode_ExtFuncCall >(lib,"SDL_GetBooleanProperty","SDL_GetBooleanProperty")
+		->args({"props","name","default_value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_properties.h:480:34
+	makeExtern< bool (*)(unsigned int,const char *) , SDL_ClearProperty , SimNode_ExtFuncCall >(lib,"SDL_ClearProperty","SDL_ClearProperty")
+		->args({"props","name"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_properties.h:535:34
+	makeExtern< void (*)(unsigned int) , SDL_DestroyProperties , SimNode_ExtFuncCall >(lib,"SDL_DestroyProperties","SDL_DestroyProperties")
+		->args({"props"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_audio.h:1039:47
 	makeExtern< unsigned int (*)(struct SDL_AudioStream *) , SDL_GetAudioStreamDevice , SimNode_ExtFuncCall >(lib,"SDL_GetAudioStreamDevice","SDL_GetAudioStreamDevice")
@@ -525,6 +684,10 @@ addConstant(*this, "SDL_GPU_COLORCOMPONENT_A", static_cast<uint32_t>(0x8ULL));
 	makeExtern< bool (*)(const char *,struct SDL_AudioSpec *,unsigned char **,unsigned int *) , SDL_LoadWAV , SimNode_ExtFuncCall >(lib,"SDL_LoadWAV","SDL_LoadWAV")
 		->args({"path","spec","audio_buf","audio_len"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_surface.h:167:43
+	makeExtern< struct SDL_Surface * (*)(int,int,enum SDL_PixelFormat) , SDL_CreateSurface , SimNode_ExtFuncCall >(lib,"SDL_CreateSurface","SDL_CreateSurface")
+		->args({"width","height","format"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_surface.h:213:34
 	makeExtern< void (*)(struct SDL_Surface *) , SDL_DestroySurface , SimNode_ExtFuncCall >(lib,"SDL_DestroySurface","SDL_DestroySurface")
 		->args({"surface"})
@@ -533,9 +696,129 @@ addConstant(*this, "SDL_GPU_COLORCOMPONENT_A", static_cast<uint32_t>(0x8ULL));
 	makeExtern< struct SDL_Surface * (*)(const char *) , SDL_LoadBMP , SimNode_ExtFuncCall >(lib,"SDL_LoadBMP","SDL_LoadBMP")
 		->args({"file"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_surface.h:1102:34
+	makeExtern< bool (*)(struct SDL_Surface *,const struct SDL_Rect *,unsigned int) , SDL_FillSurfaceRect , SimNode_ExtFuncCall >(lib,"SDL_FillSurfaceRect","SDL_FillSurfaceRect")
+		->args({"dst","rect","color"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_surface.h:1453:36
+	makeExtern< unsigned int (*)(struct SDL_Surface *,unsigned char,unsigned char,unsigned char,unsigned char) , SDL_MapSurfaceRGBA , SimNode_ExtFuncCall >(lib,"SDL_MapSurfaceRGBA","SDL_MapSurfaceRGBA")
+		->args({"surface","r","g","b","a"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:520:33
+	makeExtern< int (*)() , SDL_GetNumVideoDrivers , SimNode_ExtFuncCall >(lib,"SDL_GetNumVideoDrivers","SDL_GetNumVideoDrivers")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:541:42
+	makeExtern< const char * (*)(int) , SDL_GetVideoDriver , SimNode_ExtFuncCall >(lib,"SDL_GetVideoDriver","SDL_GetVideoDriver")
+		->args({"index"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:560:42
+	makeExtern< const char * (*)() , SDL_GetCurrentVideoDriver , SimNode_ExtFuncCall >(lib,"SDL_GetCurrentVideoDriver","SDL_GetCurrentVideoDriver")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:571:45
+	makeExtern< enum SDL_SystemTheme (*)() , SDL_GetSystemTheme , SimNode_ExtFuncCall >(lib,"SDL_GetSystemTheme","SDL_GetSystemTheme")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:586:45
+	makeExtern< unsigned int * (*)(int *) , SDL_GetDisplays , SimNode_ExtFuncCall >(lib,"SDL_GetDisplays","SDL_GetDisplays")
+		->args({"count"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:600:43
+	makeExtern< unsigned int (*)() , SDL_GetPrimaryDisplay , SimNode_ExtFuncCall >(lib,"SDL_GetPrimaryDisplay","SDL_GetPrimaryDisplay")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:628:46
+	makeExtern< unsigned int (*)(unsigned int) , SDL_GetDisplayProperties , SimNode_ExtFuncCall >(lib,"SDL_GetDisplayProperties","SDL_GetDisplayProperties")
+		->args({"displayID"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:646:42
+	makeExtern< const char * (*)(unsigned int) , SDL_GetDisplayName , SimNode_ExtFuncCall >(lib,"SDL_GetDisplayName","SDL_GetDisplayName")
+		->args({"displayID"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:666:34
+	makeExtern< bool (*)(unsigned int,struct SDL_Rect *) , SDL_GetDisplayBounds , SimNode_ExtFuncCall >(lib,"SDL_GetDisplayBounds","SDL_GetDisplayBounds")
+		->args({"displayID","rect"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:692:34
+	makeExtern< bool (*)(unsigned int,struct SDL_Rect *) , SDL_GetDisplayUsableBounds , SimNode_ExtFuncCall >(lib,"SDL_GetDisplayUsableBounds","SDL_GetDisplayUsableBounds")
+		->args({"displayID","rect"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:707:52
+	makeExtern< enum SDL_DisplayOrientation (*)(unsigned int) , SDL_GetNaturalDisplayOrientation , SimNode_ExtFuncCall >(lib,"SDL_GetNaturalDisplayOrientation","SDL_GetNaturalDisplayOrientation")
+		->args({"displayID"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:722:52
+	makeExtern< enum SDL_DisplayOrientation (*)(unsigned int) , SDL_GetCurrentDisplayOrientation , SimNode_ExtFuncCall >(lib,"SDL_GetCurrentDisplayOrientation","SDL_GetCurrentDisplayOrientation")
+		->args({"displayID"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:749:35
+	makeExtern< float (*)(unsigned int) , SDL_GetDisplayContentScale , SimNode_ExtFuncCall >(lib,"SDL_GetDisplayContentScale","SDL_GetDisplayContentScale")
+		->args({"displayID"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:777:48
+	makeExtern< struct SDL_DisplayMode ** (*)(unsigned int,int *) , SDL_GetFullscreenDisplayModes , SimNode_ExtFuncCall >(lib,"SDL_GetFullscreenDisplayModes","SDL_GetFullscreenDisplayModes")
+		->args({"displayID","count"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:808:34
+	makeExtern< bool (*)(unsigned int,int,int,float,bool,struct SDL_DisplayMode *) , SDL_GetClosestFullscreenDisplayMode , SimNode_ExtFuncCall >(lib,"SDL_GetClosestFullscreenDisplayMode","SDL_GetClosestFullscreenDisplayMode")
+		->args({"displayID","w","h","refresh_rate","include_high_density_modes","closest"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:829:53
+	makeExtern< const struct SDL_DisplayMode * (*)(unsigned int) , SDL_GetDesktopDisplayMode , SimNode_ExtFuncCall >(lib,"SDL_GetDesktopDisplayMode","SDL_GetDesktopDisplayMode")
+		->args({"displayID"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:850:53
+	makeExtern< const struct SDL_DisplayMode * (*)(unsigned int) , SDL_GetCurrentDisplayMode , SimNode_ExtFuncCall >(lib,"SDL_GetCurrentDisplayMode","SDL_GetCurrentDisplayMode")
+		->args({"displayID"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:866:43
+	makeExtern< unsigned int (*)(const struct SDL_Point *) , SDL_GetDisplayForPoint , SimNode_ExtFuncCall >(lib,"SDL_GetDisplayForPoint","SDL_GetDisplayForPoint")
+		->args({"point"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:883:43
+	makeExtern< unsigned int (*)(const struct SDL_Rect *) , SDL_GetDisplayForRect , SimNode_ExtFuncCall >(lib,"SDL_GetDisplayForRect","SDL_GetDisplayForRect")
+		->args({"rect"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:900:43
+	makeExtern< unsigned int (*)(struct SDL_Window *) , SDL_GetDisplayForWindow , SimNode_ExtFuncCall >(lib,"SDL_GetDisplayForWindow","SDL_GetDisplayForWindow")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:919:35
+	makeExtern< float (*)(struct SDL_Window *) , SDL_GetWindowPixelDensity , SimNode_ExtFuncCall >(lib,"SDL_GetWindowPixelDensity","SDL_GetWindowPixelDensity")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:943:35
+	makeExtern< float (*)(struct SDL_Window *) , SDL_GetWindowDisplayScale , SimNode_ExtFuncCall >(lib,"SDL_GetWindowDisplayScale","SDL_GetWindowDisplayScale")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:978:34
+	makeExtern< bool (*)(struct SDL_Window *,const struct SDL_DisplayMode *) , SDL_SetWindowFullscreenMode , SimNode_ExtFuncCall >(lib,"SDL_SetWindowFullscreenMode","SDL_SetWindowFullscreenMode")
+		->args({"window","mode"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:994:53
+	makeExtern< const struct SDL_DisplayMode * (*)(struct SDL_Window *) , SDL_GetWindowFullscreenMode , SimNode_ExtFuncCall >(lib,"SDL_GetWindowFullscreenMode","SDL_GetWindowFullscreenMode")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:1009:36
+	makeExtern< void * (*)(struct SDL_Window *,size_t *) , SDL_GetWindowICCProfile , SimNode_ExtFuncCall >(lib,"SDL_GetWindowICCProfile","SDL_GetWindowICCProfile")
+		->args({"window","size"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:1023:45
+	makeExtern< enum SDL_PixelFormat (*)(struct SDL_Window *) , SDL_GetWindowPixelFormat , SimNode_ExtFuncCall >(lib,"SDL_GetWindowPixelFormat","SDL_GetWindowPixelFormat")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:1039:43
+	makeExtern< struct SDL_Window ** (*)(int *) , SDL_GetWindows , SimNode_ExtFuncCall >(lib,"SDL_GetWindows","SDL_GetWindows")
+		->args({"count"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_video.h:1129:42
 	makeExtern< struct SDL_Window * (*)(const char *,int,int,SDL_WindowFlags) , SDL_CreateWindow , SimNode_ExtFuncCall >(lib,"SDL_CreateWindow","SDL_CreateWindow")
 		->args({"title","w","h","flags"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:1204:42
+	makeExtern< struct SDL_Window * (*)(struct SDL_Window *,int,int,int,int,SDL_WindowFlags) , SDL_CreatePopupWindow , SimNode_ExtFuncCall >(lib,"SDL_CreatePopupWindow","SDL_CreatePopupWindow")
+		->args({"parent","offset_x","offset_y","w","h","flags"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:1332:42
+	makeExtern< struct SDL_Window * (*)(unsigned int) , SDL_CreateWindowWithProperties , SimNode_ExtFuncCall >(lib,"SDL_CreateWindowWithProperties","SDL_CreateWindowWithProperties")
+		->args({"props"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_video.h:1386:42
 	makeExtern< unsigned int (*)(struct SDL_Window *) , SDL_GetWindowID , SimNode_ExtFuncCall >(lib,"SDL_GetWindowID","SDL_GetWindowID")
@@ -545,13 +828,225 @@ addConstant(*this, "SDL_GPU_COLORCOMPONENT_A", static_cast<uint32_t>(0x8ULL));
 	makeExtern< struct SDL_Window * (*)(unsigned int) , SDL_GetWindowFromID , SimNode_ExtFuncCall >(lib,"SDL_GetWindowFromID","SDL_GetWindowFromID")
 		->args({"id"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:1419:42
+	makeExtern< struct SDL_Window * (*)(struct SDL_Window *) , SDL_GetWindowParent , SimNode_ExtFuncCall >(lib,"SDL_GetWindowParent","SDL_GetWindowParent")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:1541:46
+	makeExtern< unsigned int (*)(struct SDL_Window *) , SDL_GetWindowProperties , SimNode_ExtFuncCall >(lib,"SDL_GetWindowProperties","SDL_GetWindowProperties")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:1597:45
+	makeExtern< SDL_WindowFlags (*)(struct SDL_Window *) , SDL_GetWindowFlags , SimNode_ExtFuncCall >(lib,"SDL_GetWindowFlags","SDL_GetWindowFlags")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_video.h:1615:34
 	makeExtern< bool (*)(struct SDL_Window *,const char *) , SDL_SetWindowTitle , SimNode_ExtFuncCall >(lib,"SDL_SetWindowTitle","SDL_SetWindowTitle")
 		->args({"window","title"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:1630:42
+	makeExtern< const char * (*)(struct SDL_Window *) , SDL_GetWindowTitle , SimNode_ExtFuncCall >(lib,"SDL_GetWindowTitle","SDL_GetWindowTitle")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:1654:34
+	makeExtern< bool (*)(struct SDL_Window *,struct SDL_Surface *) , SDL_SetWindowIcon , SimNode_ExtFuncCall >(lib,"SDL_SetWindowIcon","SDL_SetWindowIcon")
+		->args({"window","icon"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:1695:34
+	makeExtern< bool (*)(struct SDL_Window *,int,int) , SDL_SetWindowPosition , SimNode_ExtFuncCall >(lib,"SDL_SetWindowPosition","SDL_SetWindowPosition")
+		->args({"window","x","y"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:1720:34
+	makeExtern< bool (*)(struct SDL_Window *,int *,int *) , SDL_GetWindowPosition , SimNode_ExtFuncCall >(lib,"SDL_GetWindowPosition","SDL_GetWindowPosition")
+		->args({"window","x","y"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:1757:34
+	makeExtern< bool (*)(struct SDL_Window *,int,int) , SDL_SetWindowSize , SimNode_ExtFuncCall >(lib,"SDL_SetWindowSize","SDL_SetWindowSize")
+		->args({"window","w","h"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:1780:34
+	makeExtern< bool (*)(struct SDL_Window *,int *,int *) , SDL_GetWindowSize , SimNode_ExtFuncCall >(lib,"SDL_GetWindowSize","SDL_GetWindowSize")
+		->args({"window","w","h"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:1802:34
+	makeExtern< bool (*)(struct SDL_Window *,struct SDL_Rect *) , SDL_GetWindowSafeArea , SimNode_ExtFuncCall >(lib,"SDL_GetWindowSafeArea","SDL_GetWindowSafeArea")
+		->args({"window","rect"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:1843:34
+	makeExtern< bool (*)(struct SDL_Window *,float,float) , SDL_SetWindowAspectRatio , SimNode_ExtFuncCall >(lib,"SDL_SetWindowAspectRatio","SDL_SetWindowAspectRatio")
+		->args({"window","min_aspect","max_aspect"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:1862:34
+	makeExtern< bool (*)(struct SDL_Window *,float *,float *) , SDL_GetWindowAspectRatio , SimNode_ExtFuncCall >(lib,"SDL_GetWindowAspectRatio","SDL_GetWindowAspectRatio")
+		->args({"window","min_aspect","max_aspect"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:1899:34
+	makeExtern< bool (*)(struct SDL_Window *,int *,int *,int *,int *) , SDL_GetWindowBordersSize , SimNode_ExtFuncCall >(lib,"SDL_GetWindowBordersSize","SDL_GetWindowBordersSize")
+		->args({"window","top","left","bottom","right"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:1919:34
+	makeExtern< bool (*)(struct SDL_Window *,int *,int *) , SDL_GetWindowSizeInPixels , SimNode_ExtFuncCall >(lib,"SDL_GetWindowSizeInPixels","SDL_GetWindowSizeInPixels")
+		->args({"window","w","h"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:1937:34
+	makeExtern< bool (*)(struct SDL_Window *,int,int) , SDL_SetWindowMinimumSize , SimNode_ExtFuncCall >(lib,"SDL_SetWindowMinimumSize","SDL_SetWindowMinimumSize")
+		->args({"window","min_w","min_h"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:1957:34
+	makeExtern< bool (*)(struct SDL_Window *,int *,int *) , SDL_GetWindowMinimumSize , SimNode_ExtFuncCall >(lib,"SDL_GetWindowMinimumSize","SDL_GetWindowMinimumSize")
+		->args({"window","w","h"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:1975:34
+	makeExtern< bool (*)(struct SDL_Window *,int,int) , SDL_SetWindowMaximumSize , SimNode_ExtFuncCall >(lib,"SDL_SetWindowMaximumSize","SDL_SetWindowMaximumSize")
+		->args({"window","max_w","max_h"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:1995:34
+	makeExtern< bool (*)(struct SDL_Window *,int *,int *) , SDL_GetWindowMaximumSize , SimNode_ExtFuncCall >(lib,"SDL_GetWindowMaximumSize","SDL_GetWindowMaximumSize")
+		->args({"window","w","h"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2017:34
+	makeExtern< bool (*)(struct SDL_Window *,bool) , SDL_SetWindowBordered , SimNode_ExtFuncCall >(lib,"SDL_SetWindowBordered","SDL_SetWindowBordered")
+		->args({"window","bordered"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2039:34
+	makeExtern< bool (*)(struct SDL_Window *,bool) , SDL_SetWindowResizable , SimNode_ExtFuncCall >(lib,"SDL_SetWindowResizable","SDL_SetWindowResizable")
+		->args({"window","resizable"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2058:34
+	makeExtern< bool (*)(struct SDL_Window *,bool) , SDL_SetWindowAlwaysOnTop , SimNode_ExtFuncCall >(lib,"SDL_SetWindowAlwaysOnTop","SDL_SetWindowAlwaysOnTop")
+		->args({"window","on_top"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2074:34
+	makeExtern< bool (*)(struct SDL_Window *) , SDL_ShowWindow , SimNode_ExtFuncCall >(lib,"SDL_ShowWindow","SDL_ShowWindow")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2090:34
+	makeExtern< bool (*)(struct SDL_Window *) , SDL_HideWindow , SimNode_ExtFuncCall >(lib,"SDL_HideWindow","SDL_HideWindow")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2110:34
+	makeExtern< bool (*)(struct SDL_Window *) , SDL_RaiseWindow , SimNode_ExtFuncCall >(lib,"SDL_RaiseWindow","SDL_RaiseWindow")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2144:34
+	makeExtern< bool (*)(struct SDL_Window *) , SDL_MaximizeWindow , SimNode_ExtFuncCall >(lib,"SDL_MaximizeWindow","SDL_MaximizeWindow")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2173:34
+	makeExtern< bool (*)(struct SDL_Window *) , SDL_MinimizeWindow , SimNode_ExtFuncCall >(lib,"SDL_MinimizeWindow","SDL_MinimizeWindow")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2203:34
+	makeExtern< bool (*)(struct SDL_Window *) , SDL_RestoreWindow , SimNode_ExtFuncCall >(lib,"SDL_RestoreWindow","SDL_RestoreWindow")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2235:34
+	makeExtern< bool (*)(struct SDL_Window *,bool) , SDL_SetWindowFullscreen , SimNode_ExtFuncCall >(lib,"SDL_SetWindowFullscreen","SDL_SetWindowFullscreen")
+		->args({"window","fullscreen"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2266:34
+	makeExtern< bool (*)(struct SDL_Window *) , SDL_SyncWindow , SimNode_ExtFuncCall >(lib,"SDL_SyncWindow","SDL_SyncWindow")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2281:34
+	makeExtern< bool (*)(struct SDL_Window *) , SDL_WindowHasSurface , SimNode_ExtFuncCall >(lib,"SDL_WindowHasSurface","SDL_WindowHasSurface")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2310:43
+	makeExtern< struct SDL_Surface * (*)(struct SDL_Window *) , SDL_GetWindowSurface , SimNode_ExtFuncCall >(lib,"SDL_GetWindowSurface","SDL_GetWindowSurface")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2336:34
+	makeExtern< bool (*)(struct SDL_Window *,int) , SDL_SetWindowSurfaceVSync , SimNode_ExtFuncCall >(lib,"SDL_SetWindowSurfaceVSync","SDL_SetWindowSurfaceVSync")
+		->args({"window","vsync"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2356:34
+	makeExtern< bool (*)(struct SDL_Window *,int *) , SDL_GetWindowSurfaceVSync , SimNode_ExtFuncCall >(lib,"SDL_GetWindowSurfaceVSync","SDL_GetWindowSurfaceVSync")
+		->args({"window","vsync"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2377:34
+	makeExtern< bool (*)(struct SDL_Window *) , SDL_UpdateWindowSurface , SimNode_ExtFuncCall >(lib,"SDL_UpdateWindowSurface","SDL_UpdateWindowSurface")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2406:34
+	makeExtern< bool (*)(struct SDL_Window *,const struct SDL_Rect *,int) , SDL_UpdateWindowSurfaceRects , SimNode_ExtFuncCall >(lib,"SDL_UpdateWindowSurfaceRects","SDL_UpdateWindowSurfaceRects")
+		->args({"window","rects","numrects"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2422:34
+	makeExtern< bool (*)(struct SDL_Window *) , SDL_DestroyWindowSurface , SimNode_ExtFuncCall >(lib,"SDL_DestroyWindowSurface","SDL_DestroyWindowSurface")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2455:34
+	makeExtern< bool (*)(struct SDL_Window *,bool) , SDL_SetWindowKeyboardGrab , SimNode_ExtFuncCall >(lib,"SDL_SetWindowKeyboardGrab","SDL_SetWindowKeyboardGrab")
+		->args({"window","grabbed"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2476:34
+	makeExtern< bool (*)(struct SDL_Window *,bool) , SDL_SetWindowMouseGrab , SimNode_ExtFuncCall >(lib,"SDL_SetWindowMouseGrab","SDL_SetWindowMouseGrab")
+		->args({"window","grabbed"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2490:34
+	makeExtern< bool (*)(struct SDL_Window *) , SDL_GetWindowKeyboardGrab , SimNode_ExtFuncCall >(lib,"SDL_GetWindowKeyboardGrab","SDL_GetWindowKeyboardGrab")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2507:34
+	makeExtern< bool (*)(struct SDL_Window *) , SDL_GetWindowMouseGrab , SimNode_ExtFuncCall >(lib,"SDL_GetWindowMouseGrab","SDL_GetWindowMouseGrab")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2521:42
+	makeExtern< struct SDL_Window * (*)() , SDL_GetGrabbedWindow , SimNode_ExtFuncCall >(lib,"SDL_GetGrabbedWindow","SDL_GetGrabbedWindow")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2543:34
+	makeExtern< bool (*)(struct SDL_Window *,const struct SDL_Rect *) , SDL_SetWindowMouseRect , SimNode_ExtFuncCall >(lib,"SDL_SetWindowMouseRect","SDL_SetWindowMouseRect")
+		->args({"window","rect"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2560:46
+	makeExtern< const struct SDL_Rect * (*)(struct SDL_Window *) , SDL_GetWindowMouseRect , SimNode_ExtFuncCall >(lib,"SDL_GetWindowMouseRect","SDL_GetWindowMouseRect")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2581:34
+	makeExtern< bool (*)(struct SDL_Window *,float) , SDL_SetWindowOpacity , SimNode_ExtFuncCall >(lib,"SDL_SetWindowOpacity","SDL_SetWindowOpacity")
+		->args({"window","opacity"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2599:35
+	makeExtern< float (*)(struct SDL_Window *) , SDL_GetWindowOpacity , SimNode_ExtFuncCall >(lib,"SDL_GetWindowOpacity","SDL_GetWindowOpacity")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2633:34
+	makeExtern< bool (*)(struct SDL_Window *,struct SDL_Window *) , SDL_SetWindowParent , SimNode_ExtFuncCall >(lib,"SDL_SetWindowParent","SDL_SetWindowParent")
+		->args({"window","parent"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2653:34
+	makeExtern< bool (*)(struct SDL_Window *,bool) , SDL_SetWindowModal , SimNode_ExtFuncCall >(lib,"SDL_SetWindowModal","SDL_SetWindowModal")
+		->args({"window","modal"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2667:34
+	makeExtern< bool (*)(struct SDL_Window *,bool) , SDL_SetWindowFocusable , SimNode_ExtFuncCall >(lib,"SDL_SetWindowFocusable","SDL_SetWindowFocusable")
+		->args({"window","focusable"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2693:34
+	makeExtern< bool (*)(struct SDL_Window *,int,int) , SDL_ShowWindowSystemMenu , SimNode_ExtFuncCall >(lib,"SDL_ShowWindowSystemMenu","SDL_ShowWindowSystemMenu")
+		->args({"window","x","y"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2802:34
+	makeExtern< bool (*)(struct SDL_Window *,struct SDL_Surface *) , SDL_SetWindowShape , SimNode_ExtFuncCall >(lib,"SDL_SetWindowShape","SDL_SetWindowShape")
+		->args({"window","shape"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2816:34
+	makeExtern< bool (*)(struct SDL_Window *,enum SDL_FlashOperation) , SDL_FlashWindow , SimNode_ExtFuncCall >(lib,"SDL_FlashWindow","SDL_FlashWindow")
+		->args({"window","operation"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_video.h:2838:34
 	makeExtern< void (*)(struct SDL_Window *) , SDL_DestroyWindow , SimNode_ExtFuncCall >(lib,"SDL_DestroyWindow","SDL_DestroyWindow")
 		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2857:34
+	makeExtern< bool (*)() , SDL_ScreenSaverEnabled , SimNode_ExtFuncCall >(lib,"SDL_ScreenSaverEnabled","SDL_ScreenSaverEnabled")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2872:34
+	makeExtern< bool (*)() , SDL_EnableScreenSaver , SimNode_ExtFuncCall >(lib,"SDL_EnableScreenSaver","SDL_EnableScreenSaver")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2893:34
+	makeExtern< bool (*)() , SDL_DisableScreenSaver , SimNode_ExtFuncCall >(lib,"SDL_DisableScreenSaver","SDL_DisableScreenSaver")
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_keyboard.h:159:42
 	makeExtern< const bool * (*)(int *) , SDL_GetKeyboardState , SimNode_ExtFuncCall >(lib,"SDL_GetKeyboardState","SDL_GetKeyboardState")
@@ -958,8 +1453,39 @@ addConstant(*this, "SDL_GPU_COLORCOMPONENT_A", static_cast<uint32_t>(0x8ULL));
 	makeExtern< unsigned int (*)(enum SDL_GPUTextureFormat,unsigned int,unsigned int,unsigned int) , SDL_CalculateGPUTextureFormatSize , SimNode_ExtFuncCall >(lib,"SDL_CalculateGPUTextureFormatSize","SDL_CalculateGPUTextureFormatSize")
 		->args({"format","width","height","depth_or_layer_count"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_hints.h:4324:34
+	makeExtern< bool (*)(const char *,const char *,enum SDL_HintPriority) , SDL_SetHintWithPriority , SimNode_ExtFuncCall >(lib,"SDL_SetHintWithPriority","SDL_SetHintWithPriority")
+		->args({"name","value","priority"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_hints.h:4346:34
+	makeExtern< bool (*)(const char *,const char *) , SDL_SetHint , SimNode_ExtFuncCall >(lib,"SDL_SetHint","SDL_SetHint")
+		->args({"name","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_hints.h:4366:34
+	makeExtern< bool (*)(const char *) , SDL_ResetHint , SimNode_ExtFuncCall >(lib,"SDL_ResetHint","SDL_ResetHint")
+		->args({"name"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_hints.h:4381:34
+	makeExtern< void (*)() , SDL_ResetHints , SimNode_ExtFuncCall >(lib,"SDL_ResetHints","SDL_ResetHints")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_hints.h:4401:42
+	makeExtern< const char * (*)(const char *) , SDL_GetHint , SimNode_ExtFuncCall >(lib,"SDL_GetHint","SDL_GetHint")
+		->args({"name"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_hints.h:4418:34
+	makeExtern< bool (*)(const char *,bool) , SDL_GetHintBoolean , SimNode_ExtFuncCall >(lib,"SDL_GetHintBoolean","SDL_GetHintBoolean")
+		->args({"name","default_value"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_init.h:236:34
 	makeExtern< bool (*)(unsigned int) , SDL_Init , SimNode_ExtFuncCall >(lib,"SDL_Init","SDL_Init")
+		->args({"flags"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_init.h:253:34
+	makeExtern< bool (*)(unsigned int) , SDL_InitSubSystem , SimNode_ExtFuncCall >(lib,"SDL_InitSubSystem","SDL_InitSubSystem")
+		->args({"flags"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_init.h:268:34
+	makeExtern< void (*)(unsigned int) , SDL_QuitSubSystem , SimNode_ExtFuncCall >(lib,"SDL_QuitSubSystem","SDL_QuitSubSystem")
 		->args({"flags"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_init.h:282:43
@@ -969,13 +1495,55 @@ addConstant(*this, "SDL_GPU_COLORCOMPONENT_A", static_cast<uint32_t>(0x8ULL));
 // from SDL3/SDL_init.h:300:34
 	makeExtern< void (*)() , SDL_Quit , SimNode_ExtFuncCall >(lib,"SDL_Quit","SDL_Quit")
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_init.h:320:34
+	makeExtern< bool (*)() , SDL_IsMainThread , SimNode_ExtFuncCall >(lib,"SDL_IsMainThread","SDL_IsMainThread")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_init.h:395:34
+	makeExtern< bool (*)(const char *,const char *,const char *) , SDL_SetAppMetadata , SimNode_ExtFuncCall >(lib,"SDL_SetAppMetadata","SDL_SetAppMetadata")
+		->args({"appname","appversion","appidentifier"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_init.h:458:34
+	makeExtern< bool (*)(const char *,const char *) , SDL_SetAppMetadataProperty , SimNode_ExtFuncCall >(lib,"SDL_SetAppMetadataProperty","SDL_SetAppMetadataProperty")
+		->args({"name","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_init.h:489:42
+	makeExtern< const char * (*)(const char *) , SDL_GetAppMetadataProperty , SimNode_ExtFuncCall >(lib,"SDL_GetAppMetadataProperty","SDL_GetAppMetadataProperty")
+		->args({"name"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_log.h:156:34
+	makeExtern< void (*)(enum SDL_LogPriority) , SDL_SetLogPriorities , SimNode_ExtFuncCall >(lib,"SDL_SetLogPriorities","SDL_SetLogPriorities")
+		->args({"priority"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_log.h:172:34
+	makeExtern< void (*)(int,enum SDL_LogPriority) , SDL_SetLogPriority , SimNode_ExtFuncCall >(lib,"SDL_SetLogPriority","SDL_SetLogPriority")
+		->args({"category","priority"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_log.h:186:45
+	makeExtern< enum SDL_LogPriority (*)(int) , SDL_GetLogPriority , SimNode_ExtFuncCall >(lib,"SDL_GetLogPriority","SDL_GetLogPriority")
+		->args({"category"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_log.h:200:34
+	makeExtern< void (*)() , SDL_ResetLogPriorities , SimNode_ExtFuncCall >(lib,"SDL_ResetLogPriorities","SDL_ResetLogPriorities")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_log.h:222:34
+	makeExtern< bool (*)(enum SDL_LogPriority,const char *) , SDL_SetLogPriorityPrefix , SimNode_ExtFuncCall >(lib,"SDL_SetLogPriorityPrefix","SDL_SetLogPriorityPrefix")
+		->args({"priority","prefix"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_render.h:246:44
 	makeExtern< struct SDL_Renderer * (*)(struct SDL_Window *,const char *) , SDL_CreateRenderer , SimNode_ExtFuncCall >(lib,"SDL_CreateRenderer","SDL_CreateRenderer")
 		->args({"window","name"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:332:44
+	makeExtern< struct SDL_Renderer * (*)(struct SDL_Surface *) , SDL_CreateSoftwareRenderer , SimNode_ExtFuncCall >(lib,"SDL_CreateSoftwareRenderer","SDL_CreateSoftwareRenderer")
+		->args({"surface"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_render.h:345:44
 	makeExtern< struct SDL_Renderer * (*)(struct SDL_Window *) , SDL_GetRenderer , SimNode_ExtFuncCall >(lib,"SDL_GetRenderer","SDL_GetRenderer")
 		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:358:42
+	makeExtern< struct SDL_Window * (*)(struct SDL_Renderer *) , SDL_GetRenderWindow , SimNode_ExtFuncCall >(lib,"SDL_GetRenderWindow","SDL_GetRenderWindow")
+		->args({"renderer"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_render.h:584:43
 	makeExtern< struct SDL_Texture * (*)(struct SDL_Renderer *,struct SDL_Surface *) , SDL_CreateTextureFromSurface , SimNode_ExtFuncCall >(lib,"SDL_CreateTextureFromSurface","SDL_CreateTextureFromSurface")
@@ -1001,9 +1569,37 @@ addConstant(*this, "SDL_GPU_COLORCOMPONENT_A", static_cast<uint32_t>(0x8ULL));
 	makeExtern< bool (*)(struct SDL_Renderer *) , SDL_RenderClear , SimNode_ExtFuncCall >(lib,"SDL_RenderClear","SDL_RenderClear")
 		->args({"renderer"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1966:34
+	makeExtern< bool (*)(struct SDL_Renderer *,float,float) , SDL_RenderPoint , SimNode_ExtFuncCall >(lib,"SDL_RenderPoint","SDL_RenderPoint")
+		->args({"renderer","x","y"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1983:34
+	makeExtern< bool (*)(struct SDL_Renderer *,const struct SDL_FPoint *,int) , SDL_RenderPoints , SimNode_ExtFuncCall >(lib,"SDL_RenderPoints","SDL_RenderPoints")
+		->args({"renderer","points","count"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2002:34
+	makeExtern< bool (*)(struct SDL_Renderer *,float,float,float,float) , SDL_RenderLine , SimNode_ExtFuncCall >(lib,"SDL_RenderLine","SDL_RenderLine")
+		->args({"renderer","x1","y1","x2","y2"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2020:34
+	makeExtern< bool (*)(struct SDL_Renderer *,const struct SDL_FPoint *,int) , SDL_RenderLines , SimNode_ExtFuncCall >(lib,"SDL_RenderLines","SDL_RenderLines")
+		->args({"renderer","points","count"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2037:34
+	makeExtern< bool (*)(struct SDL_Renderer *,const struct SDL_FRect *) , SDL_RenderRect , SimNode_ExtFuncCall >(lib,"SDL_RenderRect","SDL_RenderRect")
+		->args({"renderer","rect"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2055:34
+	makeExtern< bool (*)(struct SDL_Renderer *,const struct SDL_FRect *,int) , SDL_RenderRects , SimNode_ExtFuncCall >(lib,"SDL_RenderRects","SDL_RenderRects")
+		->args({"renderer","rects","count"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_render.h:2073:34
 	makeExtern< bool (*)(struct SDL_Renderer *,const struct SDL_FRect *) , SDL_RenderFillRect , SimNode_ExtFuncCall >(lib,"SDL_RenderFillRect","SDL_RenderFillRect")
 		->args({"renderer","rect"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2091:34
+	makeExtern< bool (*)(struct SDL_Renderer *,const struct SDL_FRect *,int) , SDL_RenderFillRects , SimNode_ExtFuncCall >(lib,"SDL_RenderFillRects","SDL_RenderFillRects")
+		->args({"renderer","rects","count"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_render.h:2113:34
 	makeExtern< bool (*)(struct SDL_Renderer *,struct SDL_Texture *,const struct SDL_FRect *,const struct SDL_FRect *) , SDL_RenderTexture , SimNode_ExtFuncCall >(lib,"SDL_RenderTexture","SDL_RenderTexture")
@@ -1025,12 +1621,73 @@ addConstant(*this, "SDL_GPU_COLORCOMPONENT_A", static_cast<uint32_t>(0x8ULL));
 	makeExtern< void (*)(struct SDL_Renderer *) , SDL_DestroyRenderer , SimNode_ExtFuncCall >(lib,"SDL_DestroyRenderer","SDL_DestroyRenderer")
 		->args({"renderer"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2440:34
+	makeExtern< bool (*)(struct SDL_Renderer *) , SDL_FlushRenderer , SimNode_ExtFuncCall >(lib,"SDL_FlushRenderer","SDL_FlushRenderer")
+		->args({"renderer"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_time.h:111:34
+	makeExtern< bool (*)(enum SDL_DateFormat *,enum SDL_TimeFormat *) , SDL_GetDateTimeLocalePreferences , SimNode_ExtFuncCall >(lib,"SDL_GetDateTimeLocalePreferences","SDL_GetDateTimeLocalePreferences")
+		->args({"dateFormat","timeFormat"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_time.h:123:34
+	makeExtern< bool (*)(SDL_Time *) , SDL_GetCurrentTime , SimNode_ExtFuncCall >(lib,"SDL_GetCurrentTime","SDL_GetCurrentTime")
+		->args({"ticks"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_time.h:139:34
+	makeExtern< bool (*)(SDL_Time,struct SDL_DateTime *,bool) , SDL_TimeToDateTime , SimNode_ExtFuncCall >(lib,"SDL_TimeToDateTime","SDL_TimeToDateTime")
+		->args({"ticks","dt","localTime"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_time.h:154:34
+	makeExtern< bool (*)(const struct SDL_DateTime *,SDL_Time *) , SDL_DateTimeToTime , SimNode_ExtFuncCall >(lib,"SDL_DateTimeToTime","SDL_DateTimeToTime")
+		->args({"dt","ticks"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_time.h:170:34
+	makeExtern< void (*)(SDL_Time,unsigned int *,unsigned int *) , SDL_TimeToWindows , SimNode_ExtFuncCall >(lib,"SDL_TimeToWindows","SDL_TimeToWindows")
+		->args({"ticks","dwLowDateTime","dwHighDateTime"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_time.h:185:38
+	makeExtern< SDL_Time (*)(unsigned int,unsigned int) , SDL_TimeFromWindows , SimNode_ExtFuncCall >(lib,"SDL_TimeFromWindows","SDL_TimeFromWindows")
+		->args({"dwLowDateTime","dwHighDateTime"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_time.h:197:33
+	makeExtern< int (*)(int,int) , SDL_GetDaysInMonth , SimNode_ExtFuncCall >(lib,"SDL_GetDaysInMonth","SDL_GetDaysInMonth")
+		->args({"year","month"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_time.h:210:33
+	makeExtern< int (*)(int,int,int) , SDL_GetDayOfYear , SimNode_ExtFuncCall >(lib,"SDL_GetDayOfYear","SDL_GetDayOfYear")
+		->args({"year","month","day"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_time.h:223:33
+	makeExtern< int (*)(int,int,int) , SDL_GetDayOfWeek , SimNode_ExtFuncCall >(lib,"SDL_GetDayOfWeek","SDL_GetDayOfWeek")
+		->args({"year","month","day"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_timer.h:197:36
 	makeExtern< Uint64 (*)() , SDL_GetTicks , SimNode_ExtFuncCall >(lib,"SDL_GetTicks","SDL_GetTicks")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_timer.h:209:36
+	makeExtern< Uint64 (*)() , SDL_GetTicksNS , SimNode_ExtFuncCall >(lib,"SDL_GetTicksNS","SDL_GetTicksNS")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_timer.h:228:36
+	makeExtern< Uint64 (*)() , SDL_GetPerformanceCounter , SimNode_ExtFuncCall >(lib,"SDL_GetPerformanceCounter","SDL_GetPerformanceCounter")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_timer.h:241:36
+	makeExtern< Uint64 (*)() , SDL_GetPerformanceFrequency , SimNode_ExtFuncCall >(lib,"SDL_GetPerformanceFrequency","SDL_GetPerformanceFrequency")
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_timer.h:259:34
 	makeExtern< void (*)(unsigned int) , SDL_Delay , SimNode_ExtFuncCall >(lib,"SDL_Delay","SDL_Delay")
 		->args({"ms"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_timer.h:277:34
+	makeExtern< void (*)(Uint64) , SDL_DelayNS , SimNode_ExtFuncCall >(lib,"SDL_DelayNS","SDL_DelayNS")
+		->args({"ns"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_timer.h:295:34
+	makeExtern< void (*)(Uint64) , SDL_DelayPrecise , SimNode_ExtFuncCall >(lib,"SDL_DelayPrecise","SDL_DelayPrecise")
+		->args({"ns"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_timer.h:441:34
+	makeExtern< bool (*)(unsigned int) , SDL_RemoveTimer , SimNode_ExtFuncCall >(lib,"SDL_RemoveTimer","SDL_RemoveTimer")
+		->args({"id"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_version.h:148:33
 	makeExtern< int (*)() , SDL_GetVersion , SimNode_ExtFuncCall >(lib,"SDL_GetVersion","SDL_GetVersion")

@@ -69,6 +69,26 @@ DAS_BIND_ENUM_CAST(SDL_GPUSwapchainComposition);
 DAS_BASE_BIND_ENUM_GEN(SDL_GPUSwapchainComposition,SDL_GPUSwapchainComposition);
 DAS_BIND_ENUM_CAST(SDL_FlipMode);
 DAS_BASE_BIND_ENUM_GEN(SDL_FlipMode,SDL_FlipMode);
+DAS_BIND_ENUM_CAST(SDL_PropertyType);
+DAS_BASE_BIND_ENUM_GEN(SDL_PropertyType,SDL_PropertyType);
+DAS_BIND_ENUM_CAST(SDL_HintPriority);
+DAS_BASE_BIND_ENUM_GEN(SDL_HintPriority,SDL_HintPriority);
+DAS_BIND_ENUM_CAST(SDL_LogCategory);
+DAS_BASE_BIND_ENUM_GEN(SDL_LogCategory,SDL_LogCategory);
+DAS_BIND_ENUM_CAST(SDL_LogPriority);
+DAS_BASE_BIND_ENUM_GEN(SDL_LogPriority,SDL_LogPriority);
+DAS_BIND_ENUM_CAST(SDL_DateFormat);
+DAS_BASE_BIND_ENUM_GEN(SDL_DateFormat,SDL_DateFormat);
+DAS_BIND_ENUM_CAST(SDL_TimeFormat);
+DAS_BASE_BIND_ENUM_GEN(SDL_TimeFormat,SDL_TimeFormat);
+DAS_BIND_ENUM_CAST(SDL_SystemTheme);
+DAS_BASE_BIND_ENUM_GEN(SDL_SystemTheme,SDL_SystemTheme);
+DAS_BIND_ENUM_CAST(SDL_DisplayOrientation);
+DAS_BASE_BIND_ENUM_GEN(SDL_DisplayOrientation,SDL_DisplayOrientation);
+DAS_BIND_ENUM_CAST(SDL_PixelFormat);
+DAS_BASE_BIND_ENUM_GEN(SDL_PixelFormat,SDL_PixelFormat);
+DAS_BIND_ENUM_CAST(SDL_FlashOperation);
+DAS_BASE_BIND_ENUM_GEN(SDL_FlashOperation,SDL_FlashOperation);
 MAKE_TYPE_FACTORY(SDL_GPUViewport, SDL_GPUViewport);
 MAKE_TYPE_FACTORY(SDL_GPUIndirectDrawCommand, SDL_GPUIndirectDrawCommand);
 MAKE_TYPE_FACTORY(SDL_GPUIndexedIndirectDrawCommand, SDL_GPUIndexedIndirectDrawCommand);
@@ -115,6 +135,26 @@ MAKE_TYPE_FACTORY(SDL_GPUTextureSamplerBinding, SDL_GPUTextureSamplerBinding);
 MAKE_TYPE_FACTORY(SDL_GPUStorageBufferReadWriteBinding, SDL_GPUStorageBufferReadWriteBinding);
 MAKE_TYPE_FACTORY(SDL_GPUStorageTextureReadWriteBinding, SDL_GPUStorageTextureReadWriteBinding);
 MAKE_TYPE_FACTORY(SDL_Rect, SDL_Rect);
+MAKE_TYPE_FACTORY(SDL_DateTime, SDL_DateTime);
+MAKE_TYPE_FACTORY(SDL_Point, SDL_Point);
+MAKE_TYPE_FACTORY(SDL_DisplayMode, SDL_DisplayMode);
+static_assert(sizeof(SDL_PropertyType) == 4 && alignof(SDL_PropertyType) == 4);
+class Enumeration_SDL_PropertyType : public das::Enumeration {
+public: Enumeration_SDL_PropertyType() : das::Enumeration("SDL_PropertyType") {
+external=true; cppName="SDL_PropertyType"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_PropertyType>::type>::type;
+static_assert(int64_t(SDL_PROPERTY_TYPE_INVALID) == 0LL);
+addIEx("PROPERTY_TYPE_INVALID","SDL_PROPERTY_TYPE_INVALID",int64_t(SDL_PROPERTY_TYPE_INVALID),das::LineInfo());
+static_assert(int64_t(SDL_PROPERTY_TYPE_POINTER) == 1LL);
+addIEx("PROPERTY_TYPE_POINTER","SDL_PROPERTY_TYPE_POINTER",int64_t(SDL_PROPERTY_TYPE_POINTER),das::LineInfo());
+static_assert(int64_t(SDL_PROPERTY_TYPE_STRING) == 2LL);
+addIEx("PROPERTY_TYPE_STRING","SDL_PROPERTY_TYPE_STRING",int64_t(SDL_PROPERTY_TYPE_STRING),das::LineInfo());
+static_assert(int64_t(SDL_PROPERTY_TYPE_NUMBER) == 3LL);
+addIEx("PROPERTY_TYPE_NUMBER","SDL_PROPERTY_TYPE_NUMBER",int64_t(SDL_PROPERTY_TYPE_NUMBER),das::LineInfo());
+static_assert(int64_t(SDL_PROPERTY_TYPE_FLOAT) == 4LL);
+addIEx("PROPERTY_TYPE_FLOAT","SDL_PROPERTY_TYPE_FLOAT",int64_t(SDL_PROPERTY_TYPE_FLOAT),das::LineInfo());
+static_assert(int64_t(SDL_PROPERTY_TYPE_BOOLEAN) == 5LL);
+addIEx("PROPERTY_TYPE_BOOLEAN","SDL_PROPERTY_TYPE_BOOLEAN",int64_t(SDL_PROPERTY_TYPE_BOOLEAN),das::LineInfo());
+} };
 static_assert(sizeof(SDL_AudioSpec) == 12 && alignof(SDL_AudioSpec) == 4);
 namespace das { struct SDL_AudioSpecAnnotation : ManagedStructureAnnotation<SDL_AudioSpec, false> {
 SDL_AudioSpecAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_AudioSpec", lib) {
@@ -124,6 +164,157 @@ static_assert(offsetof(SDL_AudioSpec, freq) == 8);
 addField<DAS_BIND_MANAGED_FIELD(freq)>("freq", "freq");
 }
 }; }
+static_assert(sizeof(SDL_PixelFormat) == 4 && alignof(SDL_PixelFormat) == 4);
+class Enumeration_SDL_PixelFormat : public das::Enumeration {
+public: Enumeration_SDL_PixelFormat() : das::Enumeration("SDL_PixelFormat") {
+external=true; cppName="SDL_PixelFormat"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_PixelFormat>::type>::type;
+static_assert(int64_t(SDL_PIXELFORMAT_UNKNOWN) == 0LL);
+addIEx("PIXELFORMAT_UNKNOWN","SDL_PIXELFORMAT_UNKNOWN",int64_t(SDL_PIXELFORMAT_UNKNOWN),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_INDEX1LSB) == 286261504LL);
+addIEx("PIXELFORMAT_INDEX1LSB","SDL_PIXELFORMAT_INDEX1LSB",int64_t(SDL_PIXELFORMAT_INDEX1LSB),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_INDEX1MSB) == 287310080LL);
+addIEx("PIXELFORMAT_INDEX1MSB","SDL_PIXELFORMAT_INDEX1MSB",int64_t(SDL_PIXELFORMAT_INDEX1MSB),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_INDEX2LSB) == 470811136LL);
+addIEx("PIXELFORMAT_INDEX2LSB","SDL_PIXELFORMAT_INDEX2LSB",int64_t(SDL_PIXELFORMAT_INDEX2LSB),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_INDEX2MSB) == 471859712LL);
+addIEx("PIXELFORMAT_INDEX2MSB","SDL_PIXELFORMAT_INDEX2MSB",int64_t(SDL_PIXELFORMAT_INDEX2MSB),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_INDEX4LSB) == 303039488LL);
+addIEx("PIXELFORMAT_INDEX4LSB","SDL_PIXELFORMAT_INDEX4LSB",int64_t(SDL_PIXELFORMAT_INDEX4LSB),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_INDEX4MSB) == 304088064LL);
+addIEx("PIXELFORMAT_INDEX4MSB","SDL_PIXELFORMAT_INDEX4MSB",int64_t(SDL_PIXELFORMAT_INDEX4MSB),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_INDEX8) == 318769153LL);
+addIEx("PIXELFORMAT_INDEX8","SDL_PIXELFORMAT_INDEX8",int64_t(SDL_PIXELFORMAT_INDEX8),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_RGB332) == 336660481LL);
+addIEx("PIXELFORMAT_RGB332","SDL_PIXELFORMAT_RGB332",int64_t(SDL_PIXELFORMAT_RGB332),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_XRGB4444) == 353504258LL);
+addIEx("PIXELFORMAT_XRGB4444","SDL_PIXELFORMAT_XRGB4444",int64_t(SDL_PIXELFORMAT_XRGB4444),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_XBGR4444) == 357698562LL);
+addIEx("PIXELFORMAT_XBGR4444","SDL_PIXELFORMAT_XBGR4444",int64_t(SDL_PIXELFORMAT_XBGR4444),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_XRGB1555) == 353570562LL);
+addIEx("PIXELFORMAT_XRGB1555","SDL_PIXELFORMAT_XRGB1555",int64_t(SDL_PIXELFORMAT_XRGB1555),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_XBGR1555) == 357764866LL);
+addIEx("PIXELFORMAT_XBGR1555","SDL_PIXELFORMAT_XBGR1555",int64_t(SDL_PIXELFORMAT_XBGR1555),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_ARGB4444) == 355602434LL);
+addIEx("PIXELFORMAT_ARGB4444","SDL_PIXELFORMAT_ARGB4444",int64_t(SDL_PIXELFORMAT_ARGB4444),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_RGBA4444) == 356651010LL);
+addIEx("PIXELFORMAT_RGBA4444","SDL_PIXELFORMAT_RGBA4444",int64_t(SDL_PIXELFORMAT_RGBA4444),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_ABGR4444) == 359796738LL);
+addIEx("PIXELFORMAT_ABGR4444","SDL_PIXELFORMAT_ABGR4444",int64_t(SDL_PIXELFORMAT_ABGR4444),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_BGRA4444) == 360845314LL);
+addIEx("PIXELFORMAT_BGRA4444","SDL_PIXELFORMAT_BGRA4444",int64_t(SDL_PIXELFORMAT_BGRA4444),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_ARGB1555) == 355667970LL);
+addIEx("PIXELFORMAT_ARGB1555","SDL_PIXELFORMAT_ARGB1555",int64_t(SDL_PIXELFORMAT_ARGB1555),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_RGBA5551) == 356782082LL);
+addIEx("PIXELFORMAT_RGBA5551","SDL_PIXELFORMAT_RGBA5551",int64_t(SDL_PIXELFORMAT_RGBA5551),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_ABGR1555) == 359862274LL);
+addIEx("PIXELFORMAT_ABGR1555","SDL_PIXELFORMAT_ABGR1555",int64_t(SDL_PIXELFORMAT_ABGR1555),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_BGRA5551) == 360976386LL);
+addIEx("PIXELFORMAT_BGRA5551","SDL_PIXELFORMAT_BGRA5551",int64_t(SDL_PIXELFORMAT_BGRA5551),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_RGB565) == 353701890LL);
+addIEx("PIXELFORMAT_RGB565","SDL_PIXELFORMAT_RGB565",int64_t(SDL_PIXELFORMAT_RGB565),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_BGR565) == 357896194LL);
+addIEx("PIXELFORMAT_BGR565","SDL_PIXELFORMAT_BGR565",int64_t(SDL_PIXELFORMAT_BGR565),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_RGB24) == 386930691LL);
+addIEx("PIXELFORMAT_RGB24","SDL_PIXELFORMAT_RGB24",int64_t(SDL_PIXELFORMAT_RGB24),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_BGR24) == 390076419LL);
+addIEx("PIXELFORMAT_BGR24","SDL_PIXELFORMAT_BGR24",int64_t(SDL_PIXELFORMAT_BGR24),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_XRGB8888) == 370546692LL);
+addIEx("PIXELFORMAT_XRGB8888","SDL_PIXELFORMAT_XRGB8888",int64_t(SDL_PIXELFORMAT_XRGB8888),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_RGBX8888) == 371595268LL);
+addIEx("PIXELFORMAT_RGBX8888","SDL_PIXELFORMAT_RGBX8888",int64_t(SDL_PIXELFORMAT_RGBX8888),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_XBGR8888) == 374740996LL);
+addIEx("PIXELFORMAT_XBGR8888","SDL_PIXELFORMAT_XBGR8888",int64_t(SDL_PIXELFORMAT_XBGR8888),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_BGRX8888) == 375789572LL);
+addIEx("PIXELFORMAT_BGRX8888","SDL_PIXELFORMAT_BGRX8888",int64_t(SDL_PIXELFORMAT_BGRX8888),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_ARGB8888) == 372645892LL);
+addIEx("PIXELFORMAT_ARGB8888","SDL_PIXELFORMAT_ARGB8888",int64_t(SDL_PIXELFORMAT_ARGB8888),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_RGBA8888) == 373694468LL);
+addIEx("PIXELFORMAT_RGBA8888","SDL_PIXELFORMAT_RGBA8888",int64_t(SDL_PIXELFORMAT_RGBA8888),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_ABGR8888) == 376840196LL);
+addIEx("PIXELFORMAT_ABGR8888","SDL_PIXELFORMAT_ABGR8888",int64_t(SDL_PIXELFORMAT_ABGR8888),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_BGRA8888) == 377888772LL);
+addIEx("PIXELFORMAT_BGRA8888","SDL_PIXELFORMAT_BGRA8888",int64_t(SDL_PIXELFORMAT_BGRA8888),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_XRGB2101010) == 370614276LL);
+addIEx("PIXELFORMAT_XRGB2101010","SDL_PIXELFORMAT_XRGB2101010",int64_t(SDL_PIXELFORMAT_XRGB2101010),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_XBGR2101010) == 374808580LL);
+addIEx("PIXELFORMAT_XBGR2101010","SDL_PIXELFORMAT_XBGR2101010",int64_t(SDL_PIXELFORMAT_XBGR2101010),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_ARGB2101010) == 372711428LL);
+addIEx("PIXELFORMAT_ARGB2101010","SDL_PIXELFORMAT_ARGB2101010",int64_t(SDL_PIXELFORMAT_ARGB2101010),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_ABGR2101010) == 376905732LL);
+addIEx("PIXELFORMAT_ABGR2101010","SDL_PIXELFORMAT_ABGR2101010",int64_t(SDL_PIXELFORMAT_ABGR2101010),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_RGB48) == 403714054LL);
+addIEx("PIXELFORMAT_RGB48","SDL_PIXELFORMAT_RGB48",int64_t(SDL_PIXELFORMAT_RGB48),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_BGR48) == 406859782LL);
+addIEx("PIXELFORMAT_BGR48","SDL_PIXELFORMAT_BGR48",int64_t(SDL_PIXELFORMAT_BGR48),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_RGBA64) == 404766728LL);
+addIEx("PIXELFORMAT_RGBA64","SDL_PIXELFORMAT_RGBA64",int64_t(SDL_PIXELFORMAT_RGBA64),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_ARGB64) == 405815304LL);
+addIEx("PIXELFORMAT_ARGB64","SDL_PIXELFORMAT_ARGB64",int64_t(SDL_PIXELFORMAT_ARGB64),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_BGRA64) == 407912456LL);
+addIEx("PIXELFORMAT_BGRA64","SDL_PIXELFORMAT_BGRA64",int64_t(SDL_PIXELFORMAT_BGRA64),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_ABGR64) == 408961032LL);
+addIEx("PIXELFORMAT_ABGR64","SDL_PIXELFORMAT_ABGR64",int64_t(SDL_PIXELFORMAT_ABGR64),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_RGB48_FLOAT) == 437268486LL);
+addIEx("PIXELFORMAT_RGB48_FLOAT","SDL_PIXELFORMAT_RGB48_FLOAT",int64_t(SDL_PIXELFORMAT_RGB48_FLOAT),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_BGR48_FLOAT) == 440414214LL);
+addIEx("PIXELFORMAT_BGR48_FLOAT","SDL_PIXELFORMAT_BGR48_FLOAT",int64_t(SDL_PIXELFORMAT_BGR48_FLOAT),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_RGBA64_FLOAT) == 438321160LL);
+addIEx("PIXELFORMAT_RGBA64_FLOAT","SDL_PIXELFORMAT_RGBA64_FLOAT",int64_t(SDL_PIXELFORMAT_RGBA64_FLOAT),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_ARGB64_FLOAT) == 439369736LL);
+addIEx("PIXELFORMAT_ARGB64_FLOAT","SDL_PIXELFORMAT_ARGB64_FLOAT",int64_t(SDL_PIXELFORMAT_ARGB64_FLOAT),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_BGRA64_FLOAT) == 441466888LL);
+addIEx("PIXELFORMAT_BGRA64_FLOAT","SDL_PIXELFORMAT_BGRA64_FLOAT",int64_t(SDL_PIXELFORMAT_BGRA64_FLOAT),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_ABGR64_FLOAT) == 442515464LL);
+addIEx("PIXELFORMAT_ABGR64_FLOAT","SDL_PIXELFORMAT_ABGR64_FLOAT",int64_t(SDL_PIXELFORMAT_ABGR64_FLOAT),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_RGB96_FLOAT) == 454057996LL);
+addIEx("PIXELFORMAT_RGB96_FLOAT","SDL_PIXELFORMAT_RGB96_FLOAT",int64_t(SDL_PIXELFORMAT_RGB96_FLOAT),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_BGR96_FLOAT) == 457203724LL);
+addIEx("PIXELFORMAT_BGR96_FLOAT","SDL_PIXELFORMAT_BGR96_FLOAT",int64_t(SDL_PIXELFORMAT_BGR96_FLOAT),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_RGBA128_FLOAT) == 455114768LL);
+addIEx("PIXELFORMAT_RGBA128_FLOAT","SDL_PIXELFORMAT_RGBA128_FLOAT",int64_t(SDL_PIXELFORMAT_RGBA128_FLOAT),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_ARGB128_FLOAT) == 456163344LL);
+addIEx("PIXELFORMAT_ARGB128_FLOAT","SDL_PIXELFORMAT_ARGB128_FLOAT",int64_t(SDL_PIXELFORMAT_ARGB128_FLOAT),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_BGRA128_FLOAT) == 458260496LL);
+addIEx("PIXELFORMAT_BGRA128_FLOAT","SDL_PIXELFORMAT_BGRA128_FLOAT",int64_t(SDL_PIXELFORMAT_BGRA128_FLOAT),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_ABGR128_FLOAT) == 459309072LL);
+addIEx("PIXELFORMAT_ABGR128_FLOAT","SDL_PIXELFORMAT_ABGR128_FLOAT",int64_t(SDL_PIXELFORMAT_ABGR128_FLOAT),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_YV12) == 842094169LL);
+addIEx("PIXELFORMAT_YV12","SDL_PIXELFORMAT_YV12",int64_t(SDL_PIXELFORMAT_YV12),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_IYUV) == 1448433993LL);
+addIEx("PIXELFORMAT_IYUV","SDL_PIXELFORMAT_IYUV",int64_t(SDL_PIXELFORMAT_IYUV),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_YUY2) == 844715353LL);
+addIEx("PIXELFORMAT_YUY2","SDL_PIXELFORMAT_YUY2",int64_t(SDL_PIXELFORMAT_YUY2),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_UYVY) == 1498831189LL);
+addIEx("PIXELFORMAT_UYVY","SDL_PIXELFORMAT_UYVY",int64_t(SDL_PIXELFORMAT_UYVY),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_YVYU) == 1431918169LL);
+addIEx("PIXELFORMAT_YVYU","SDL_PIXELFORMAT_YVYU",int64_t(SDL_PIXELFORMAT_YVYU),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_NV12) == 842094158LL);
+addIEx("PIXELFORMAT_NV12","SDL_PIXELFORMAT_NV12",int64_t(SDL_PIXELFORMAT_NV12),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_NV21) == 825382478LL);
+addIEx("PIXELFORMAT_NV21","SDL_PIXELFORMAT_NV21",int64_t(SDL_PIXELFORMAT_NV21),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_P010) == 808530000LL);
+addIEx("PIXELFORMAT_P010","SDL_PIXELFORMAT_P010",int64_t(SDL_PIXELFORMAT_P010),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_EXTERNAL_OES) == 542328143LL);
+addIEx("PIXELFORMAT_EXTERNAL_OES","SDL_PIXELFORMAT_EXTERNAL_OES",int64_t(SDL_PIXELFORMAT_EXTERNAL_OES),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_MJPG) == 1196444237LL);
+addIEx("PIXELFORMAT_MJPG","SDL_PIXELFORMAT_MJPG",int64_t(SDL_PIXELFORMAT_MJPG),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_RGBA32) == 376840196LL);
+addIEx("PIXELFORMAT_RGBA32","SDL_PIXELFORMAT_RGBA32",int64_t(SDL_PIXELFORMAT_RGBA32),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_ARGB32) == 377888772LL);
+addIEx("PIXELFORMAT_ARGB32","SDL_PIXELFORMAT_ARGB32",int64_t(SDL_PIXELFORMAT_ARGB32),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_BGRA32) == 372645892LL);
+addIEx("PIXELFORMAT_BGRA32","SDL_PIXELFORMAT_BGRA32",int64_t(SDL_PIXELFORMAT_BGRA32),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_ABGR32) == 373694468LL);
+addIEx("PIXELFORMAT_ABGR32","SDL_PIXELFORMAT_ABGR32",int64_t(SDL_PIXELFORMAT_ABGR32),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_RGBX32) == 374740996LL);
+addIEx("PIXELFORMAT_RGBX32","SDL_PIXELFORMAT_RGBX32",int64_t(SDL_PIXELFORMAT_RGBX32),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_XRGB32) == 375789572LL);
+addIEx("PIXELFORMAT_XRGB32","SDL_PIXELFORMAT_XRGB32",int64_t(SDL_PIXELFORMAT_XRGB32),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_BGRX32) == 370546692LL);
+addIEx("PIXELFORMAT_BGRX32","SDL_PIXELFORMAT_BGRX32",int64_t(SDL_PIXELFORMAT_BGRX32),das::LineInfo());
+static_assert(int64_t(SDL_PIXELFORMAT_XBGR32) == 371595268LL);
+addIEx("PIXELFORMAT_XBGR32","SDL_PIXELFORMAT_XBGR32",int64_t(SDL_PIXELFORMAT_XBGR32),das::LineInfo());
+} };
 static_assert(sizeof(SDL_FColor) == 16 && alignof(SDL_FColor) == 4);
 namespace das { struct SDL_FColorAnnotation : ManagedStructureAnnotation<SDL_FColor, false> {
 SDL_FColorAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_FColor", lib) {
@@ -135,6 +326,15 @@ static_assert(offsetof(SDL_FColor, b) == 8);
 addField<DAS_BIND_MANAGED_FIELD(b)>("b", "b");
 static_assert(offsetof(SDL_FColor, a) == 12);
 addField<DAS_BIND_MANAGED_FIELD(a)>("a", "a");
+}
+}; }
+static_assert(sizeof(SDL_Point) == 8 && alignof(SDL_Point) == 4);
+namespace das { struct SDL_PointAnnotation : ManagedStructureAnnotation<SDL_Point, false> {
+SDL_PointAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_Point", lib) {
+static_assert(offsetof(SDL_Point, x) == 0);
+addField<DAS_BIND_MANAGED_FIELD(x)>("x", "x");
+static_assert(offsetof(SDL_Point, y) == 4);
+addField<DAS_BIND_MANAGED_FIELD(y)>("y", "y");
 }
 }; }
 static_assert(sizeof(SDL_FPoint) == 8 && alignof(SDL_FPoint) == 4);
@@ -182,6 +382,64 @@ static_assert(int64_t(SDL_FLIP_HORIZONTAL) == 1LL);
 addIEx("FLIP_HORIZONTAL","SDL_FLIP_HORIZONTAL",int64_t(SDL_FLIP_HORIZONTAL),das::LineInfo());
 static_assert(int64_t(SDL_FLIP_VERTICAL) == 2LL);
 addIEx("FLIP_VERTICAL","SDL_FLIP_VERTICAL",int64_t(SDL_FLIP_VERTICAL),das::LineInfo());
+} };
+static_assert(sizeof(SDL_SystemTheme) == 4 && alignof(SDL_SystemTheme) == 4);
+class Enumeration_SDL_SystemTheme : public das::Enumeration {
+public: Enumeration_SDL_SystemTheme() : das::Enumeration("SDL_SystemTheme") {
+external=true; cppName="SDL_SystemTheme"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_SystemTheme>::type>::type;
+static_assert(int64_t(SDL_SYSTEM_THEME_UNKNOWN) == 0LL);
+addIEx("SYSTEM_THEME_UNKNOWN","SDL_SYSTEM_THEME_UNKNOWN",int64_t(SDL_SYSTEM_THEME_UNKNOWN),das::LineInfo());
+static_assert(int64_t(SDL_SYSTEM_THEME_LIGHT) == 1LL);
+addIEx("SYSTEM_THEME_LIGHT","SDL_SYSTEM_THEME_LIGHT",int64_t(SDL_SYSTEM_THEME_LIGHT),das::LineInfo());
+static_assert(int64_t(SDL_SYSTEM_THEME_DARK) == 2LL);
+addIEx("SYSTEM_THEME_DARK","SDL_SYSTEM_THEME_DARK",int64_t(SDL_SYSTEM_THEME_DARK),das::LineInfo());
+} };
+static_assert(sizeof(SDL_DisplayMode) == 40 && alignof(SDL_DisplayMode) == 8);
+namespace das { struct SDL_DisplayModeAnnotation : ManagedStructureAnnotation<SDL_DisplayMode, false> {
+SDL_DisplayModeAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_DisplayMode", lib) {
+static_assert(offsetof(SDL_DisplayMode, displayID) == 0);
+addField<DAS_BIND_MANAGED_FIELD(displayID)>("displayID", "displayID");
+static_assert(offsetof(SDL_DisplayMode, format) == 4);
+addField<DAS_BIND_MANAGED_FIELD(format)>("format", "format");
+static_assert(offsetof(SDL_DisplayMode, w) == 8);
+addField<DAS_BIND_MANAGED_FIELD(w)>("w", "w");
+static_assert(offsetof(SDL_DisplayMode, h) == 12);
+addField<DAS_BIND_MANAGED_FIELD(h)>("h", "h");
+static_assert(offsetof(SDL_DisplayMode, pixel_density) == 16);
+addField<DAS_BIND_MANAGED_FIELD(pixel_density)>("pixel_density", "pixel_density");
+static_assert(offsetof(SDL_DisplayMode, refresh_rate) == 20);
+addField<DAS_BIND_MANAGED_FIELD(refresh_rate)>("refresh_rate", "refresh_rate");
+static_assert(offsetof(SDL_DisplayMode, refresh_rate_numerator) == 24);
+addField<DAS_BIND_MANAGED_FIELD(refresh_rate_numerator)>("refresh_rate_numerator", "refresh_rate_numerator");
+static_assert(offsetof(SDL_DisplayMode, refresh_rate_denominator) == 28);
+addField<DAS_BIND_MANAGED_FIELD(refresh_rate_denominator)>("refresh_rate_denominator", "refresh_rate_denominator");
+}
+}; }
+static_assert(sizeof(SDL_DisplayOrientation) == 4 && alignof(SDL_DisplayOrientation) == 4);
+class Enumeration_SDL_DisplayOrientation : public das::Enumeration {
+public: Enumeration_SDL_DisplayOrientation() : das::Enumeration("SDL_DisplayOrientation") {
+external=true; cppName="SDL_DisplayOrientation"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_DisplayOrientation>::type>::type;
+static_assert(int64_t(SDL_ORIENTATION_UNKNOWN) == 0LL);
+addIEx("ORIENTATION_UNKNOWN","SDL_ORIENTATION_UNKNOWN",int64_t(SDL_ORIENTATION_UNKNOWN),das::LineInfo());
+static_assert(int64_t(SDL_ORIENTATION_LANDSCAPE) == 1LL);
+addIEx("ORIENTATION_LANDSCAPE","SDL_ORIENTATION_LANDSCAPE",int64_t(SDL_ORIENTATION_LANDSCAPE),das::LineInfo());
+static_assert(int64_t(SDL_ORIENTATION_LANDSCAPE_FLIPPED) == 2LL);
+addIEx("ORIENTATION_LANDSCAPE_FLIPPED","SDL_ORIENTATION_LANDSCAPE_FLIPPED",int64_t(SDL_ORIENTATION_LANDSCAPE_FLIPPED),das::LineInfo());
+static_assert(int64_t(SDL_ORIENTATION_PORTRAIT) == 3LL);
+addIEx("ORIENTATION_PORTRAIT","SDL_ORIENTATION_PORTRAIT",int64_t(SDL_ORIENTATION_PORTRAIT),das::LineInfo());
+static_assert(int64_t(SDL_ORIENTATION_PORTRAIT_FLIPPED) == 4LL);
+addIEx("ORIENTATION_PORTRAIT_FLIPPED","SDL_ORIENTATION_PORTRAIT_FLIPPED",int64_t(SDL_ORIENTATION_PORTRAIT_FLIPPED),das::LineInfo());
+} };
+static_assert(sizeof(SDL_FlashOperation) == 4 && alignof(SDL_FlashOperation) == 4);
+class Enumeration_SDL_FlashOperation : public das::Enumeration {
+public: Enumeration_SDL_FlashOperation() : das::Enumeration("SDL_FlashOperation") {
+external=true; cppName="SDL_FlashOperation"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_FlashOperation>::type>::type;
+static_assert(int64_t(SDL_FLASH_CANCEL) == 0LL);
+addIEx("FLASH_CANCEL","SDL_FLASH_CANCEL",int64_t(SDL_FLASH_CANCEL),das::LineInfo());
+static_assert(int64_t(SDL_FLASH_BRIEFLY) == 1LL);
+addIEx("FLASH_BRIEFLY","SDL_FLASH_BRIEFLY",int64_t(SDL_FLASH_BRIEFLY),das::LineInfo());
+static_assert(int64_t(SDL_FLASH_UNTIL_FOCUSED) == 2LL);
+addIEx("FLASH_UNTIL_FOCUSED","SDL_FLASH_UNTIL_FOCUSED",int64_t(SDL_FLASH_UNTIL_FOCUSED),das::LineInfo());
 } };
 static_assert(sizeof(SDL_KeyboardEvent) == 40 && alignof(SDL_KeyboardEvent) == 8);
 namespace das { struct SDL_KeyboardEventAnnotation : ManagedStructureAnnotation<SDL_KeyboardEvent, false> {
@@ -1429,6 +1687,85 @@ static_assert(offsetof(SDL_GPUStorageTextureReadWriteBinding, cycle) == 16);
 addField<DAS_BIND_MANAGED_FIELD(cycle)>("cycle", "cycle");
 }
 }; }
+static_assert(sizeof(SDL_HintPriority) == 4 && alignof(SDL_HintPriority) == 4);
+class Enumeration_SDL_HintPriority : public das::Enumeration {
+public: Enumeration_SDL_HintPriority() : das::Enumeration("SDL_HintPriority") {
+external=true; cppName="SDL_HintPriority"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_HintPriority>::type>::type;
+static_assert(int64_t(SDL_HINT_DEFAULT) == 0LL);
+addIEx("HINT_DEFAULT","SDL_HINT_DEFAULT",int64_t(SDL_HINT_DEFAULT),das::LineInfo());
+static_assert(int64_t(SDL_HINT_NORMAL) == 1LL);
+addIEx("HINT_NORMAL","SDL_HINT_NORMAL",int64_t(SDL_HINT_NORMAL),das::LineInfo());
+static_assert(int64_t(SDL_HINT_OVERRIDE) == 2LL);
+addIEx("HINT_OVERRIDE","SDL_HINT_OVERRIDE",int64_t(SDL_HINT_OVERRIDE),das::LineInfo());
+} };
+static_assert(sizeof(SDL_LogCategory) == 4 && alignof(SDL_LogCategory) == 4);
+class Enumeration_SDL_LogCategory : public das::Enumeration {
+public: Enumeration_SDL_LogCategory() : das::Enumeration("SDL_LogCategory") {
+external=true; cppName="SDL_LogCategory"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_LogCategory>::type>::type;
+static_assert(int64_t(SDL_LOG_CATEGORY_APPLICATION) == 0LL);
+addIEx("LOG_CATEGORY_APPLICATION","SDL_LOG_CATEGORY_APPLICATION",int64_t(SDL_LOG_CATEGORY_APPLICATION),das::LineInfo());
+static_assert(int64_t(SDL_LOG_CATEGORY_ERROR) == 1LL);
+addIEx("LOG_CATEGORY_ERROR","SDL_LOG_CATEGORY_ERROR",int64_t(SDL_LOG_CATEGORY_ERROR),das::LineInfo());
+static_assert(int64_t(SDL_LOG_CATEGORY_ASSERT) == 2LL);
+addIEx("LOG_CATEGORY_ASSERT","SDL_LOG_CATEGORY_ASSERT",int64_t(SDL_LOG_CATEGORY_ASSERT),das::LineInfo());
+static_assert(int64_t(SDL_LOG_CATEGORY_SYSTEM) == 3LL);
+addIEx("LOG_CATEGORY_SYSTEM","SDL_LOG_CATEGORY_SYSTEM",int64_t(SDL_LOG_CATEGORY_SYSTEM),das::LineInfo());
+static_assert(int64_t(SDL_LOG_CATEGORY_AUDIO) == 4LL);
+addIEx("LOG_CATEGORY_AUDIO","SDL_LOG_CATEGORY_AUDIO",int64_t(SDL_LOG_CATEGORY_AUDIO),das::LineInfo());
+static_assert(int64_t(SDL_LOG_CATEGORY_VIDEO) == 5LL);
+addIEx("LOG_CATEGORY_VIDEO","SDL_LOG_CATEGORY_VIDEO",int64_t(SDL_LOG_CATEGORY_VIDEO),das::LineInfo());
+static_assert(int64_t(SDL_LOG_CATEGORY_RENDER) == 6LL);
+addIEx("LOG_CATEGORY_RENDER","SDL_LOG_CATEGORY_RENDER",int64_t(SDL_LOG_CATEGORY_RENDER),das::LineInfo());
+static_assert(int64_t(SDL_LOG_CATEGORY_INPUT) == 7LL);
+addIEx("LOG_CATEGORY_INPUT","SDL_LOG_CATEGORY_INPUT",int64_t(SDL_LOG_CATEGORY_INPUT),das::LineInfo());
+static_assert(int64_t(SDL_LOG_CATEGORY_TEST) == 8LL);
+addIEx("LOG_CATEGORY_TEST","SDL_LOG_CATEGORY_TEST",int64_t(SDL_LOG_CATEGORY_TEST),das::LineInfo());
+static_assert(int64_t(SDL_LOG_CATEGORY_GPU) == 9LL);
+addIEx("LOG_CATEGORY_GPU","SDL_LOG_CATEGORY_GPU",int64_t(SDL_LOG_CATEGORY_GPU),das::LineInfo());
+static_assert(int64_t(SDL_LOG_CATEGORY_RESERVED2) == 10LL);
+addIEx("LOG_CATEGORY_RESERVED2","SDL_LOG_CATEGORY_RESERVED2",int64_t(SDL_LOG_CATEGORY_RESERVED2),das::LineInfo());
+static_assert(int64_t(SDL_LOG_CATEGORY_RESERVED3) == 11LL);
+addIEx("LOG_CATEGORY_RESERVED3","SDL_LOG_CATEGORY_RESERVED3",int64_t(SDL_LOG_CATEGORY_RESERVED3),das::LineInfo());
+static_assert(int64_t(SDL_LOG_CATEGORY_RESERVED4) == 12LL);
+addIEx("LOG_CATEGORY_RESERVED4","SDL_LOG_CATEGORY_RESERVED4",int64_t(SDL_LOG_CATEGORY_RESERVED4),das::LineInfo());
+static_assert(int64_t(SDL_LOG_CATEGORY_RESERVED5) == 13LL);
+addIEx("LOG_CATEGORY_RESERVED5","SDL_LOG_CATEGORY_RESERVED5",int64_t(SDL_LOG_CATEGORY_RESERVED5),das::LineInfo());
+static_assert(int64_t(SDL_LOG_CATEGORY_RESERVED6) == 14LL);
+addIEx("LOG_CATEGORY_RESERVED6","SDL_LOG_CATEGORY_RESERVED6",int64_t(SDL_LOG_CATEGORY_RESERVED6),das::LineInfo());
+static_assert(int64_t(SDL_LOG_CATEGORY_RESERVED7) == 15LL);
+addIEx("LOG_CATEGORY_RESERVED7","SDL_LOG_CATEGORY_RESERVED7",int64_t(SDL_LOG_CATEGORY_RESERVED7),das::LineInfo());
+static_assert(int64_t(SDL_LOG_CATEGORY_RESERVED8) == 16LL);
+addIEx("LOG_CATEGORY_RESERVED8","SDL_LOG_CATEGORY_RESERVED8",int64_t(SDL_LOG_CATEGORY_RESERVED8),das::LineInfo());
+static_assert(int64_t(SDL_LOG_CATEGORY_RESERVED9) == 17LL);
+addIEx("LOG_CATEGORY_RESERVED9","SDL_LOG_CATEGORY_RESERVED9",int64_t(SDL_LOG_CATEGORY_RESERVED9),das::LineInfo());
+static_assert(int64_t(SDL_LOG_CATEGORY_RESERVED10) == 18LL);
+addIEx("LOG_CATEGORY_RESERVED10","SDL_LOG_CATEGORY_RESERVED10",int64_t(SDL_LOG_CATEGORY_RESERVED10),das::LineInfo());
+static_assert(int64_t(SDL_LOG_CATEGORY_CUSTOM) == 19LL);
+addIEx("LOG_CATEGORY_CUSTOM","SDL_LOG_CATEGORY_CUSTOM",int64_t(SDL_LOG_CATEGORY_CUSTOM),das::LineInfo());
+} };
+static_assert(sizeof(SDL_LogPriority) == 4 && alignof(SDL_LogPriority) == 4);
+class Enumeration_SDL_LogPriority : public das::Enumeration {
+public: Enumeration_SDL_LogPriority() : das::Enumeration("SDL_LogPriority") {
+external=true; cppName="SDL_LogPriority"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_LogPriority>::type>::type;
+static_assert(int64_t(SDL_LOG_PRIORITY_INVALID) == 0LL);
+addIEx("LOG_PRIORITY_INVALID","SDL_LOG_PRIORITY_INVALID",int64_t(SDL_LOG_PRIORITY_INVALID),das::LineInfo());
+static_assert(int64_t(SDL_LOG_PRIORITY_TRACE) == 1LL);
+addIEx("LOG_PRIORITY_TRACE","SDL_LOG_PRIORITY_TRACE",int64_t(SDL_LOG_PRIORITY_TRACE),das::LineInfo());
+static_assert(int64_t(SDL_LOG_PRIORITY_VERBOSE) == 2LL);
+addIEx("LOG_PRIORITY_VERBOSE","SDL_LOG_PRIORITY_VERBOSE",int64_t(SDL_LOG_PRIORITY_VERBOSE),das::LineInfo());
+static_assert(int64_t(SDL_LOG_PRIORITY_DEBUG) == 3LL);
+addIEx("LOG_PRIORITY_DEBUG","SDL_LOG_PRIORITY_DEBUG",int64_t(SDL_LOG_PRIORITY_DEBUG),das::LineInfo());
+static_assert(int64_t(SDL_LOG_PRIORITY_INFO) == 4LL);
+addIEx("LOG_PRIORITY_INFO","SDL_LOG_PRIORITY_INFO",int64_t(SDL_LOG_PRIORITY_INFO),das::LineInfo());
+static_assert(int64_t(SDL_LOG_PRIORITY_WARN) == 5LL);
+addIEx("LOG_PRIORITY_WARN","SDL_LOG_PRIORITY_WARN",int64_t(SDL_LOG_PRIORITY_WARN),das::LineInfo());
+static_assert(int64_t(SDL_LOG_PRIORITY_ERROR) == 6LL);
+addIEx("LOG_PRIORITY_ERROR","SDL_LOG_PRIORITY_ERROR",int64_t(SDL_LOG_PRIORITY_ERROR),das::LineInfo());
+static_assert(int64_t(SDL_LOG_PRIORITY_CRITICAL) == 7LL);
+addIEx("LOG_PRIORITY_CRITICAL","SDL_LOG_PRIORITY_CRITICAL",int64_t(SDL_LOG_PRIORITY_CRITICAL),das::LineInfo());
+static_assert(int64_t(SDL_LOG_PRIORITY_COUNT) == 8LL);
+addIEx("LOG_PRIORITY_COUNT","SDL_LOG_PRIORITY_COUNT",int64_t(SDL_LOG_PRIORITY_COUNT),das::LineInfo());
+} };
 static_assert(sizeof(SDL_Vertex) == 32 && alignof(SDL_Vertex) == 4);
 namespace das { struct SDL_VertexAnnotation : ManagedStructureAnnotation<SDL_Vertex, false> {
 SDL_VertexAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_Vertex", lib) {
@@ -1440,3 +1777,46 @@ static_assert(offsetof(SDL_Vertex, tex_coord) == 24);
 addField<DAS_BIND_MANAGED_FIELD(tex_coord)>("tex_coord", "tex_coord");
 }
 }; }
+static_assert(sizeof(SDL_DateTime) == 36 && alignof(SDL_DateTime) == 4);
+namespace das { struct SDL_DateTimeAnnotation : ManagedStructureAnnotation<SDL_DateTime, false> {
+SDL_DateTimeAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_DateTime", lib) {
+static_assert(offsetof(SDL_DateTime, year) == 0);
+addField<DAS_BIND_MANAGED_FIELD(year)>("year", "year");
+static_assert(offsetof(SDL_DateTime, month) == 4);
+addField<DAS_BIND_MANAGED_FIELD(month)>("month", "month");
+static_assert(offsetof(SDL_DateTime, day) == 8);
+addField<DAS_BIND_MANAGED_FIELD(day)>("day", "day");
+static_assert(offsetof(SDL_DateTime, hour) == 12);
+addField<DAS_BIND_MANAGED_FIELD(hour)>("hour", "hour");
+static_assert(offsetof(SDL_DateTime, minute) == 16);
+addField<DAS_BIND_MANAGED_FIELD(minute)>("minute", "minute");
+static_assert(offsetof(SDL_DateTime, second) == 20);
+addField<DAS_BIND_MANAGED_FIELD(second)>("second", "second");
+static_assert(offsetof(SDL_DateTime, nanosecond) == 24);
+addField<DAS_BIND_MANAGED_FIELD(nanosecond)>("nanosecond", "nanosecond");
+static_assert(offsetof(SDL_DateTime, day_of_week) == 28);
+addField<DAS_BIND_MANAGED_FIELD(day_of_week)>("day_of_week", "day_of_week");
+static_assert(offsetof(SDL_DateTime, utc_offset) == 32);
+addField<DAS_BIND_MANAGED_FIELD(utc_offset)>("utc_offset", "utc_offset");
+}
+}; }
+static_assert(sizeof(SDL_DateFormat) == 4 && alignof(SDL_DateFormat) == 4);
+class Enumeration_SDL_DateFormat : public das::Enumeration {
+public: Enumeration_SDL_DateFormat() : das::Enumeration("SDL_DateFormat") {
+external=true; cppName="SDL_DateFormat"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_DateFormat>::type>::type;
+static_assert(int64_t(SDL_DATE_FORMAT_YYYYMMDD) == 0LL);
+addIEx("DATE_FORMAT_YYYYMMDD","SDL_DATE_FORMAT_YYYYMMDD",int64_t(SDL_DATE_FORMAT_YYYYMMDD),das::LineInfo());
+static_assert(int64_t(SDL_DATE_FORMAT_DDMMYYYY) == 1LL);
+addIEx("DATE_FORMAT_DDMMYYYY","SDL_DATE_FORMAT_DDMMYYYY",int64_t(SDL_DATE_FORMAT_DDMMYYYY),das::LineInfo());
+static_assert(int64_t(SDL_DATE_FORMAT_MMDDYYYY) == 2LL);
+addIEx("DATE_FORMAT_MMDDYYYY","SDL_DATE_FORMAT_MMDDYYYY",int64_t(SDL_DATE_FORMAT_MMDDYYYY),das::LineInfo());
+} };
+static_assert(sizeof(SDL_TimeFormat) == 4 && alignof(SDL_TimeFormat) == 4);
+class Enumeration_SDL_TimeFormat : public das::Enumeration {
+public: Enumeration_SDL_TimeFormat() : das::Enumeration("SDL_TimeFormat") {
+external=true; cppName="SDL_TimeFormat"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_TimeFormat>::type>::type;
+static_assert(int64_t(SDL_TIME_FORMAT_24HR) == 0LL);
+addIEx("TIME_FORMAT_24HR","SDL_TIME_FORMAT_24HR",int64_t(SDL_TIME_FORMAT_24HR),das::LineInfo());
+static_assert(int64_t(SDL_TIME_FORMAT_12HR) == 1LL);
+addIEx("TIME_FORMAT_12HR","SDL_TIME_FORMAT_12HR",int64_t(SDL_TIME_FORMAT_12HR),das::LineInfo());
+} };

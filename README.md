@@ -354,3 +354,49 @@ signatures, borrowed fence-array adapter and explicit defer ownership.
 
 [Creation/transfers/defer contract](docs/gpu-native-boost.md) ·
 [Validation and backend limits](docs/gpu-native-validation.md).
+
+## Properties
+
+```powershell
+./build/ninja/bin/dasSDL3_runner.exe examples/51_properties.das
+```
+
+[Properties contract](docs/properties.md): typed values, copied strings/names,
+owned groups and lock scopes. Retained script cleanup callbacks remain pending.
+
+Hints and subsystem initialization: [contract](docs/init-hints.md),
+[example 52](examples/52_init_hints.das). Run from the repository root:
+
+```powershell
+./build/ninja/bin/dasSDL3_runner.exe examples/52_init_hints.das
+```
+
+Error/log/time: [contract](docs/diagnostics-time.md),
+[example 53](examples/53_diagnostics_time.das).
+
+```powershell
+./build/ninja/bin/dasSDL3_runner.exe examples/53_diagnostics_time.das
+```
+
+Video discovery: [contract](docs/video-discovery.md), [example 54](examples/54_video_discovery.das).
+
+```powershell
+./build/ninja/bin/dasSDL3_runner.exe examples/54_video_discovery.das
+```
+
+Window creation/state: [contract](docs/window-state.md), [example 55](examples/55_window_properties.das).
+
+```powershell
+./build/ninja/bin/dasSDL3_runner.exe examples/55_window_properties.das
+```
+
+Window surfaces: [contract](docs/window-io.md), [example 56](examples/56_window_surface.das).
+
+```powershell
+./build/ninja/bin/dasSDL3_runner.exe examples/56_window_surface.das
+```
+
+Software renderer: [contract](docs/renderer-primitives.md), [example 57](examples/57_software_renderer.das).
+```powershell
+.\build\ninja\bin\dasSDL3_runner.exe examples/57_software_renderer.das
+```

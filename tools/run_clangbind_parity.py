@@ -124,7 +124,7 @@ def main():
     else:
         args.output.mkdir(parents=True, exist_ok=True)
         for name, value in outputs.items():
-            (args.output / name).write_text(value, encoding='utf-8')
+            (args.output / name).write_text(value, encoding='utf-8', newline='\n')
     print(f'CppGenBind parity: {len(actual)} functions, {len(spec["structs"])} records, '
           f'{len(spec["opaque_types"])} opaque types, {len(expected_fields)} fields, '
           f'{len(spec["constants"])} constants, {len(spec.get("enums", {}))} enums / {len(expected_members)} enum values; deterministic output PASS')

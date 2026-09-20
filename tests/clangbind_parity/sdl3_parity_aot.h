@@ -17,6 +17,13 @@
 #include "sdl3_gpu_fences.h"
 #include "sdl3_gpu_native.h"
 #include "sdl3_gpu_native_data.h"
+#include "sdl3_properties.h"
+#include "sdl3_init_hints.h"
+#include "sdl3_diagnostics.h"
+#include "sdl3_video.h"
+#include "sdl3_window.h"
+#include "sdl3_window_io.h"
+#include "sdl3_renderer_primitives.h"
 #include "parity_types.inc"
 #include "sdl3_texture_load.h"
 #include "aot_recover.h"
@@ -38,3 +45,6 @@
 #include "gpu_types_probe.h"
 #include "gpu_pipeline_types_probe.h"
 #endif
+
+#include "properties_probe.h"
+#include "diagnostics_probe.h"

@@ -12,8 +12,21 @@ Keep generated SDL declarations, necessary language/lifetime/array adapters, and
 small defaults/with_* boost helpers. Do not add new composite GPU objects to bypass
 missing SDL functions. Count exported contracts, not internal calls, helper names,
 examples or native test fixtures. Five native GPU follow-up steps are locally
-verified; the next library-wide batch is Properties (21 functions in pinned
-SDL_properties.h). Shader DSL and companion libraries follow separately.
+verified; Properties now has 19 generated functions plus copied enumeration; retained
+cleanup callback remains pending. Read docs/properties.md for the pinned numeric
+string-cache/CopyProperties double-free defect and copied-string adapter. Hints/Init adds 12 generated functions, copied getters and subsystem defer scopes;
+see docs/init-hints.md for pending callbacks and string constants. Next
+library-wide batch: Renderer state (viewport/clip/scale/output), then textures/Surface.
+Software renderer/primitives adds 10 raw functions; see docs/renderer-primitives.md
+for borrowed surface lifetime, array adapters and CPU pixel tests. Window IO adds 25 Video + 3 Surface
+raw functions; see docs/window-io.md for borrowed surfaces, conditional capabilities
+and the pinned NULL shape-removal defect. The raw ICC getter lacks native window
+validation; its copy adapter rejects NULL, while live-window/video preconditions remain. Video is 88/109; GL/EGL and hit-test
+callbacks remain separate.
+Window creation/state adds 27 raw functions and defer scopes; parent lifetime
+preconditions are documented in docs/window-state.md. Video discovery adds 31 raw
+queries and copied/ref adapters; see docs/video-discovery.md for native lifetimes. Error/log/time adds 22 raw functions
+and 10 fixed-text adapters; see docs/diagnostics-time.md for pending callback/va_list contracts. Shader DSL and companion libraries follow separately.
 Current queue: docs/full-binding-roadmap.md; GPU limitations: docs/gpu-roadmap.md;
 documentation index: docs/README.md. Run main, parity/AOT and consumer checks for
 binding changes; after fixes repeat affected tests rather than every suite
@@ -113,6 +126,9 @@ standalone clangbind checks, interpreter/AOT parity and no-LLVM consumer as appr
 Run tests/test_gpu_api_boundary.py against runners to prevent engine API reintroduction.
 Keep example numbers stable; removed numbers are documented in examples/README.md.
 Documents for removed GPU engine APIs were deleted; do not restore them as active instructions.
+
+Wait for parity builds to finish before executing their binaries: Windows locks
+executables during linking (WinError 32 is not an ACL failure).
 
 Do not overlap no-LLVM consumer configuration/build with clangbind-dependent
 builds or tests: they share daScript generated module configuration. Restore the
