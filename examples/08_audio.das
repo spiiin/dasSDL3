@@ -6,11 +6,11 @@ require dassdl3/sdl3_audio_boost
 
 def play_audio(wav : SDL_Wav?; stream : SDL_AudioStream?) : $Result<SdlUnit; SdlError> {
     var queue_wav_result <- stream |> queue_wav(wav)
-    if (is_err(queue_wav_result)) { return err(unwrap_err(queue_wav_result),type<SdlUnit>) }
+    if (is_err(queue_wav_result)) { return queue_wav_result }
     var flush_audio_result <- stream |> flush_audio()
-    if (is_err(flush_audio_result)) { return err(unwrap_err(flush_audio_result),type<SdlUnit>) }
+    if (is_err(flush_audio_result)) { return flush_audio_result }
     var resume_audio_result <- stream |> resume_audio()
-    if (is_err(resume_audio_result)) { return err(unwrap_err(resume_audio_result),type<SdlUnit>) }
+    if (is_err(resume_audio_result)) { return resume_audio_result }
     let start = SDL_GetTicks()
     while (true) {
         let pending=queued_audio(stream)

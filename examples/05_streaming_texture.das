@@ -24,13 +24,13 @@ def render_streaming(window : SDL_Window?; renderer : SDL_Renderer?; texture : S
             pixels[i+3] = uint8(255)
         }
         var upload_rgba8_result <- texture |> upload_rgba8(pixels, 600)
-        if (is_err(upload_rgba8_result)) { return err(unwrap_err(upload_rgba8_result),type<SdlUnit>) }
+        if (is_err(upload_rgba8_result)) { return upload_rgba8_result }
         var clear_result <- renderer |> clear(uint4(66u, 66u, 66u, 255u))
-        if (is_err(clear_result)) { return err(unwrap_err(clear_result),type<SdlUnit>) }
+        if (is_err(clear_result)) { return clear_result }
         var draw_texture_result <- renderer |> draw_texture(texture, SDL_MakeFRect(245.0, 165.0, 150.0, 150.0))
-        if (is_err(draw_texture_result)) { return err(unwrap_err(draw_texture_result),type<SdlUnit>) }
+        if (is_err(draw_texture_result)) { return draw_texture_result }
         var present_result <- renderer |> present()
-        if (is_err(present_result)) { return err(unwrap_err(present_result),type<SdlUnit>) }
+        if (is_err(present_result)) { return present_result }
         frames++
         if (smoke && frames >= 60) { break }
         SDL_Delay(16u)

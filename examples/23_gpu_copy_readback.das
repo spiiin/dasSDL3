@@ -10,16 +10,16 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
     return device |> with_gpu_buffer(source,SDL_GPU_BUFFERUSAGE_VERTEX) $(a : uint64) {
         return device |> with_gpu_buffer(zeros,SDL_GPU_BUFFERUSAGE_VERTEX) $(b : uint64) {
             var gpu_copy_buffer_result <- device |> gpu_copy_buffer(a,0u,b,0u,256u)
-            if (is_err(gpu_copy_buffer_result)) { return err(unwrap_err(gpu_copy_buffer_result),type<SdlUnit>) }
+            if (is_err(gpu_copy_buffer_result)) { return gpu_copy_buffer_result }
             return device |> with_gpu_readback(b,0u,256u) $(ticket : uint64) {
                 // Other CPU work can run here; no mapped GPU pointer escapes.
                 let state = device |> gpu_poll_readback(ticket)
                 if (is_err(state)) { return err(unwrap_err(state),type<SdlUnit>) }
                 let already_ready = unwrap(state)
                 var gpu_wait_readback_result <- device |> gpu_wait_readback(ticket)
-                if (is_err(gpu_wait_readback_result)) { return err(unwrap_err(gpu_wait_readback_result),type<SdlUnit>) }
+                if (is_err(gpu_wait_readback_result)) { return gpu_wait_readback_result }
                 var gpu_readback_bytes_result <- device |> gpu_readback_bytes(ticket,result)
-                if (is_err(gpu_readback_bytes_result)) { return err(unwrap_err(gpu_readback_bytes_result),type<SdlUnit>) }
+                if (is_err(gpu_readback_bytes_result)) { return gpu_readback_bytes_result }
                 for (i in 0 .. 256) { verify(result[i] == source[i]) }
                 print("GPU copy/readback: 256 bytes match; ready at first poll: {already_ready}\n")
 

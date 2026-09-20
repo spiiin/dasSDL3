@@ -9,16 +9,15 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
     info.enable_anisotropy = true
     info.max_anisotropy = 4.0
     return device |> with_gpu_sampler(info) $(sampler : uint64) {
-        var query_result_1 : SDL_GPUSamplerCreateInfo
-        var gpu_sampler_descriptor_result <- gpu_sampler_descriptor(device,sampler,query_result_1)
+        let gpu_sampler_descriptor_result = gpu_sampler_descriptor(device,sampler)
         if (is_err(gpu_sampler_descriptor_result)) { return err(unwrap_err(gpu_sampler_descriptor_result),type<SdlUnit>) }
-        let description = query_result_1
+        let description = unwrap(gpu_sampler_descriptor_result)
         print("Scoped sampler {sampler}: linear, repeat, anisotropy={description.max_anisotropy}\n")
         return device |> with_gpu_sampler() $(nearest : uint64) {
             verify(nearest != sampler)
             var query_result_2 : SDL_GPUSamplerCreateInfo
             var gpu_sampler_descriptor_result_2 <- gpu_sampler_descriptor(device,nearest,query_result_2)
-            if (is_err(gpu_sampler_descriptor_result_2)) { return err(unwrap_err(gpu_sampler_descriptor_result_2),type<SdlUnit>) }
+            if (is_err(gpu_sampler_descriptor_result_2)) { return gpu_sampler_descriptor_result_2 }
             verify(query_result_2.min_filter == SDL_GPUFilter.FILTER_NEAREST)
             print("Independent nearest/clamp sampler {nearest}\n")
 

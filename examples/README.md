@@ -90,3 +90,29 @@ canonical Result-returning scopes and deferred cleanup. This separate sequence p
 existing example numbers. It renders the BMP texture and propagates failures as
 values; `--smoke-test` renders three frames. Contracts and language caveats:
 [Result/Option plan](../docs/result-option-plan.md).
+
+## Structure of Result-based examples
+
+Keep acquisition callbacks short and return nested scope Results directly.
+Rendering loops, pipeline setup, uploads and readback checks are ordinary named
+functions in the example, returning `Result<SdlUnit,SdlError>`. They synchronously
+borrow their arguments; the calling `with_*` or explicit `defer` retains ownership.
+
+- Report an operation error once in `main`; forward its owned SdlError through helpers.
+- Use flat `is_err`/early-return checks for sequential commands. Use `and_then` when
+  transforming a value benefits from a short block, not around every SDL call.
+- Split at meaningful stages rather than introducing shared example frameworks or
+  compound public resource types. See [45](45_gpu_vertex_index_buffers.das),
+  [46](46_gpu_texture_uniform_bindings.das) and [48](48_gpu_native_graphics.das).
+- Never use a borrowed handle in an `and_then` after its owning scope has returned.
+  Mutable native handles and scalar output references retain their explicit `var`.
+- Unsupported GPU creation can produce smoke-test exit 77. A failure after creating
+  the device is an error, not an unavailable-device skip.
+
+Local validation of this refactor (2026-09-21, Windows x64/MSVC): 45 changed
+examples, 70 main smoke tests, 102 legacy/CppGenBind tests and 95 strict AOT tests
+passed, including Vulkan/D3D12 where applicable. Targeted error checks cover failed
+video initialization, unavailable GPU creation and missing shader after successful
+device creation; the latter remains an error (exit 1), never a smoke skip.
+Examples 45 and 46 now have at most three nested resource scopes in one function,
+compared with nine before extraction. Public SDL/boost declarations are unchanged.

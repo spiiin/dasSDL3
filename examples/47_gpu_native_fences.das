@@ -15,39 +15,41 @@ def create_native_device : SDL_GPUDevice? {
     }
     return null
 }
-def submit_and_wait(device : SDL_GPUDevice?) : bool {
+def submit_and_wait(device : SDL_GPUDevice?) : $Result<SdlUnit; SdlError> {
     var command = SDL_AcquireGPUCommandBuffer(device)
-    if (command == null) { return false }
+    if (command == null) { return err(sdl_error("submit_and_wait"),type<SdlUnit>) }
     {
         defer() { if (command != null) { SDL_CancelGPUCommandBuffer(command) } }
         // An empty command buffer is sufficient to demonstrate the synchronization API.
         var fence = SDL_SubmitGPUCommandBufferAndAcquireFence(command)
         command = null // SDL consumes it even if submission fails.
-        if (fence == null) { return false }
+        if (fence == null) { return err(sdl_error("submit_and_wait"),type<SdlUnit>) }
         {
             defer() { SDL_ReleaseGPUFence(device,fence) }
             var fences : array<SDL_GPUFence?>
             resize(fences,1); fences[0] = fence
-            if (!SDL_WaitForGPUFencesArray(device,true,fences)) { return false }
-            if (!SDL_QueryGPUFence(device,fence)) { return false }
+            if (!SDL_WaitForGPUFencesArray(device,true,fences)) { return err(sdl_error("submit_and_wait"),type<SdlUnit>) }
+            if (!SDL_QueryGPUFence(device,fence)) { return err(sdl_error("submit_and_wait"),type<SdlUnit>) }
             print("Native SDL fence signaled: {SDL_GetGPUDeviceDriver(device)}\n")
-            return true
+            return sdl_ok()
         }
     }
 }
 
 [export]
 def main(smoke : bool) : int {
-    var operation_result_1 <- sdl_init()
-    if (is_err(operation_result_1)) { print("SDL_Init: {unwrap_err(operation_result_1).message}\n"); return 1 }
-    {
-        defer() { SDL_Quit() }
-        let device = create_native_device()
-        if (device == null) { print("GPU device: {SDL_GetError()}\n"); return smoke ? 77 : 1 }
+    let result = with_sdl() {
+        let device=create_native_device()
+        if(device==null) {return err(sdl_error("create_native_device"),type<SdlUnit>)}
         {
-            defer() { SDL_DestroyGPUDevice(device) }
-            if (!submit_and_wait(device)) { print("GPU submission: {SDL_GetError()}\n"); return 1 }
-            return 0
+            defer(){SDL_DestroyGPUDevice(device)}
+            return submit_and_wait(device)
         }
     }
+    if (is_err(result)) {
+        let error=unwrap_err(result)
+        print("{error.operation}: {error.message}\n")
+        return smoke && error.operation=="create_native_device" ? 77 : 1
+    }
+    return 0
 }

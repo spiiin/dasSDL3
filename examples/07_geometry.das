@@ -27,13 +27,13 @@ def render_geometry(window : SDL_Window?; renderer : SDL_Renderer?; texture : SD
         triangle[1] = vertex(float2(210.0 + size, 240.0 + size), float4(0.0, 1.0, 0.0, 1.0))
         triangle[2] = vertex(float2(210.0 - size, 240.0 + size), float4(0.0, 0.0, 1.0, 1.0))
         var clear_result <- renderer |> clear()
-        if (is_err(clear_result)) { return err(unwrap_err(clear_result),type<SdlUnit>) }
+        if (is_err(clear_result)) { return clear_result }
         var draw_geometry_result <- renderer |> draw_geometry(triangle)
-        if (is_err(draw_geometry_result)) { return err(unwrap_err(draw_geometry_result),type<SdlUnit>) }
+        if (is_err(draw_geometry_result)) { return draw_geometry_result }
         var draw_geometry_result_2 <- renderer |> draw_geometry(quad, indices, texture)
-        if (is_err(draw_geometry_result_2)) { return err(unwrap_err(draw_geometry_result_2),type<SdlUnit>) }
+        if (is_err(draw_geometry_result_2)) { return draw_geometry_result_2 }
         var present_result <- renderer |> present()
-        if (is_err(present_result)) { return err(unwrap_err(present_result),type<SdlUnit>) }
+        if (is_err(present_result)) { return present_result }
         frames++
         if (smoke && frames >= 60) { break }
         SDL_Delay(16u)

@@ -13,10 +13,9 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
     return device |> with_gpu_shader_file("{base}.vert.{extension}",vertex_info) $(vertex : uint64) {
         return device |> with_gpu_shader_file("{base}.frag.{extension}",fragment_info) $(fragment : uint64) {
             verify(vertex != fragment)
-            var query_result_1 : SDL_GPUShaderCreateInfo
-            var gpu_shader_descriptor_result <- gpu_shader_descriptor(device,fragment,query_result_1)
+            let gpu_shader_descriptor_result = gpu_shader_descriptor(device,fragment)
             if (is_err(gpu_shader_descriptor_result)) { return err(unwrap_err(gpu_shader_descriptor_result),type<SdlUnit>) }
-            let description = query_result_1
+            let description = unwrap(gpu_shader_descriptor_result)
             print("Owned {extension} shaders: vertex={vertex}, fragment={fragment}, entry={unwrap_or(gpu_shader_entrypoint(device,fragment),"")}, samplers={description.num_samplers}\n")
 
             return sdl_ok()
@@ -29,10 +28,7 @@ def main(smoke : bool) : int {
     let result = with_sdl() {
         return with_gpu_device(GPU_SHADER_FORMATS,true,"") $(device : SDL_GPUDevice?) {
             return run_gpu_example(device, smoke)
-        } |> is_ok
-        if (!available) { print("GPU unavailable: {SDL_GetError()}\n") }
-
-        return sdl_ok()
+        }
     }
     if (is_err(result)) {
         let error = unwrap_err(result)

@@ -6,13 +6,13 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
         return device |> with_gpu_window(window) {
             for (count in 1u .. 4u) {
                 var gpu_frames_in_flight_result <- device |> gpu_frames_in_flight(count)
-                if (is_err(gpu_frames_in_flight_result)) { return err(unwrap_err(gpu_frames_in_flight_result),type<SdlUnit>) }
+                if (is_err(gpu_frames_in_flight_result)) { return gpu_frames_in_flight_result }
                 print("Allowed frames in flight: {count} (not an FPS cap)\n")
                 for (i in 0 .. (smoke ? 3 : 60)) {
                     var event = SDL_MakeEvent()
                     while (is_some(poll_event(event))) {}
                     var gpu_wait_swapchain_result <- device |> gpu_wait_swapchain(window)
-                    if (is_err(gpu_wait_swapchain_result)) { return err(unwrap_err(gpu_wait_swapchain_result),type<SdlUnit>) }
+                    if (is_err(gpu_wait_swapchain_result)) { return gpu_wait_swapchain_result }
                 }
             }
 

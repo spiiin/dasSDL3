@@ -14,13 +14,13 @@ def render_loop(renderer : SDL_Renderer?; smoke : bool; var frames : int&) : $Re
         let t = float(SDL_GetTicks() - start) / 1000.0
         let square = SDL_MakeFRect(360.0 + 200.0 * sin(t), 260.0, 80.0, 80.0)
         var clear_result <- renderer |> clear()
-        if (is_err(clear_result)) { return err(unwrap_err(clear_result),type<SdlUnit>) }
+        if (is_err(clear_result)) { return clear_result }
         var set_color_result <- renderer |> set_color(uint4(70u, 200u, 160u, 255u))
-        if (is_err(set_color_result)) { return err(unwrap_err(set_color_result),type<SdlUnit>) }
+        if (is_err(set_color_result)) { return set_color_result }
         var fill_rect_result <- renderer |> fill_rect(square)
-        if (is_err(fill_rect_result)) { return err(unwrap_err(fill_rect_result),type<SdlUnit>) }
+        if (is_err(fill_rect_result)) { return fill_rect_result }
         var present_result <- renderer |> present()
-        if (is_err(present_result)) { return err(unwrap_err(present_result),type<SdlUnit>) }
+        if (is_err(present_result)) { return present_result }
         frames++
         if (smoke && frames >= 60) { break }
         SDL_Delay(16u)

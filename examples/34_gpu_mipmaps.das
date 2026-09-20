@@ -12,20 +12,20 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
     } }
     return device |> with_gpu_color_target_texture(4u,4u,1u,3u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM) $(texture : uint64) {
         var gpu_upload_texture_result <- device |> gpu_upload_texture(texture,uint2(0u),uint4(0u,0u,4u,4u),base,16u)
-        if (is_err(gpu_upload_texture_result)) { return err(unwrap_err(gpu_upload_texture_result),type<SdlUnit>) }
+        if (is_err(gpu_upload_texture_result)) { return gpu_upload_texture_result }
         var gpu_generate_mipmaps_result <- device |> gpu_generate_mipmaps(texture)
-        if (is_err(gpu_generate_mipmaps_result)) { return err(unwrap_err(gpu_generate_mipmaps_result),type<SdlUnit>) }
+        if (is_err(gpu_generate_mipmaps_result)) { return gpu_generate_mipmaps_result }
         let gpu_texture_readback_result = device |> with_gpu_texture_readback(texture,uint2(2u,0u),uint4(0u,0u,1u,1u)) $(ticket : uint64) {
             var gpu_wait_readback_result <- device |> gpu_wait_readback(ticket)
-            if (is_err(gpu_wait_readback_result)) { return err(unwrap_err(gpu_wait_readback_result),type<SdlUnit>) }
+            if (is_err(gpu_wait_readback_result)) { return gpu_wait_readback_result }
             var gpu_readback_bytes_result <- device |> gpu_readback_bytes(ticket,tiny)
-            if (is_err(gpu_readback_bytes_result)) { return err(unwrap_err(gpu_readback_bytes_result),type<SdlUnit>) }
+            if (is_err(gpu_readback_bytes_result)) { return gpu_readback_bytes_result }
             verify(abs(int(tiny[0])-60) <= 1 && abs(int(tiny[1])-60) <= 1)
             verify(tiny[2] == uint8(24) && tiny[3] == uint8(255))
 
             return sdl_ok()
         }
-        if (is_err(gpu_texture_readback_result)) { return err(unwrap_err(gpu_texture_readback_result),type<SdlUnit>) }
+        if (is_err(gpu_texture_readback_result)) { return gpu_texture_readback_result }
         print("Mip chain 4x4 -> 2x2 -> 1x1 matches the CPU average\n")
 
         return sdl_ok()

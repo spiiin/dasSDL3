@@ -7,14 +7,14 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
         resize(pixels,64)
         let gpu_texture_readback_result = device |> with_gpu_texture_readback(texture,uint2(0u,1u),uint4(0u,0u,4u,4u)) $(ticket : uint64) {
             var gpu_wait_readback_result <- device |> gpu_wait_readback(ticket)
-            if (is_err(gpu_wait_readback_result)) { return err(unwrap_err(gpu_wait_readback_result),type<SdlUnit>) }
+            if (is_err(gpu_wait_readback_result)) { return gpu_wait_readback_result }
             var gpu_readback_bytes_result <- device |> gpu_readback_bytes(ticket,pixels)
-            if (is_err(gpu_readback_bytes_result)) { return err(unwrap_err(gpu_readback_bytes_result),type<SdlUnit>) }
+            if (is_err(gpu_readback_bytes_result)) { return gpu_readback_bytes_result }
             for (byte in pixels) { verify(byte == uint8(0)) }
 
             return sdl_ok()
         }
-        if (is_err(gpu_texture_readback_result)) { return err(unwrap_err(gpu_texture_readback_result),type<SdlUnit>) }
+        if (is_err(gpu_texture_readback_result)) { return gpu_texture_readback_result }
         print("Owned SAMPLER|COLOR_TARGET texture: two layers, three initialized levels\n")
 
         return sdl_ok()

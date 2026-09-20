@@ -8,24 +8,24 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
         for (layer in 0u .. 6u) {
             for (i in 0 .. 64) { face[i] = uint8(int(layer)*31+i) }
             var gpu_upload_texture_result <- device |> gpu_upload_texture(cube,uint2(0u,layer),uint4(0u,0u,4u,4u),face,16u)
-            if (is_err(gpu_upload_texture_result)) { return err(unwrap_err(gpu_upload_texture_result),type<SdlUnit>) }
+            if (is_err(gpu_upload_texture_result)) { return gpu_upload_texture_result }
         }
         for (layer in 0u .. 6u) {
             let gpu_texture_readback_result = device |> with_gpu_texture_readback(cube,uint2(0u,layer),uint4(0u,0u,4u,4u)) $(ticket : uint64) {
                 var gpu_wait_readback_result <- device |> gpu_wait_readback(ticket)
-                if (is_err(gpu_wait_readback_result)) { return err(unwrap_err(gpu_wait_readback_result),type<SdlUnit>) }
+                if (is_err(gpu_wait_readback_result)) { return gpu_wait_readback_result }
                 var gpu_readback_bytes_result <- device |> gpu_readback_bytes(ticket,result)
-                if (is_err(gpu_readback_bytes_result)) { return err(unwrap_err(gpu_readback_bytes_result),type<SdlUnit>) }
+                if (is_err(gpu_readback_bytes_result)) { return gpu_readback_bytes_result }
                 for (i in 0 .. 64) { verify(result[i] == uint8(int(layer)*31+i)) }
 
                 return sdl_ok()
             }
-            if (is_err(gpu_texture_readback_result)) { return err(unwrap_err(gpu_texture_readback_result),type<SdlUnit>) }
+            if (is_err(gpu_texture_readback_result)) { return gpu_texture_readback_result }
         }
 
         return sdl_ok()
     }
-    if (is_err(gpu_transfer_texture_result)) { return err(unwrap_err(gpu_transfer_texture_result),type<SdlUnit>) }
+    if (is_err(gpu_transfer_texture_result)) { return gpu_transfer_texture_result }
     print("Six independent cubemap faces verified\n")
 
     return sdl_ok()

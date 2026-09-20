@@ -9,12 +9,12 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
     for (i in 0 .. 15) { gray[i] = uint8(i*17) }
     return device |> with_gpu_color_texture(5u,3u,1u,1u,format) $(texture : uint64) {
         var gpu_upload_texture_result <- device |> gpu_upload_texture(texture,uint2(0u),uint4(0u,0u,5u,3u),gray,5u)
-        if (is_err(gpu_upload_texture_result)) { return err(unwrap_err(gpu_upload_texture_result),type<SdlUnit>) }
+        if (is_err(gpu_upload_texture_result)) { return gpu_upload_texture_result }
         return device |> with_gpu_texture_readback(texture,uint2(0u),uint4(0u,0u,5u,3u)) $(ticket : uint64) {
             var gpu_wait_readback_result <- device |> gpu_wait_readback(ticket)
-            if (is_err(gpu_wait_readback_result)) { return err(unwrap_err(gpu_wait_readback_result),type<SdlUnit>) }
+            if (is_err(gpu_wait_readback_result)) { return gpu_wait_readback_result }
             var gpu_readback_bytes_result <- device |> gpu_readback_bytes(ticket,result)
-            if (is_err(gpu_readback_bytes_result)) { return err(unwrap_err(gpu_readback_bytes_result),type<SdlUnit>) }
+            if (is_err(gpu_readback_bytes_result)) { return gpu_readback_bytes_result }
             for (i in 0 .. 15) { verify(gray[i] == result[i]) }
             print("R8 5x3: 15 bytes match ({SDL_GetGPUDeviceDriver(device)})\n")
 

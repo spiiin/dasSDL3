@@ -9,16 +9,16 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
     for (pixel_byte in 0 .. 60) { let y = pixel_byte / 20; let x = pixel_byte % 20; pixels[y*27+x] = uint8((y*71+x*13)%256) }
     return device |> with_gpu_rgba_texture(9u,7u) $(source : uint64) {
         var gpu_upload_texture_result <- device |> gpu_upload_texture(source,uint2(0u),uint4(2u,1u,5u,3u),pixels,27u)
-        if (is_err(gpu_upload_texture_result)) { return err(unwrap_err(gpu_upload_texture_result),type<SdlUnit>) }
+        if (is_err(gpu_upload_texture_result)) { return gpu_upload_texture_result }
         return device |> with_gpu_rgba_texture(10u,8u,2u,2u) $(destination : uint64) {
             // Copy the rectangle into mip 1, layer 1 of an array texture.
             var gpu_copy_texture_result <- device |> gpu_copy_texture(source,uint2(0u),uint4(2u,1u,5u,3u),destination,uint2(1u,1u),uint2(0u))
-            if (is_err(gpu_copy_texture_result)) { return err(unwrap_err(gpu_copy_texture_result),type<SdlUnit>) }
+            if (is_err(gpu_copy_texture_result)) { return gpu_copy_texture_result }
             return device |> with_gpu_texture_readback(destination,uint2(1u,1u),uint4(0u,0u,5u,3u)) $(ticket : uint64) {
                 var gpu_wait_readback_result <- device |> gpu_wait_readback(ticket)
-                if (is_err(gpu_wait_readback_result)) { return err(unwrap_err(gpu_wait_readback_result),type<SdlUnit>) }
+                if (is_err(gpu_wait_readback_result)) { return gpu_wait_readback_result }
                 var gpu_readback_bytes_result <- device |> gpu_readback_bytes(ticket,result)
-                if (is_err(gpu_readback_bytes_result)) { return err(unwrap_err(gpu_readback_bytes_result),type<SdlUnit>) }
+                if (is_err(gpu_readback_bytes_result)) { return gpu_readback_bytes_result }
                 for (pixel_byte in 0 .. 60) { let y = pixel_byte / 20; let x = pixel_byte % 20; verify(result[y*20+x] == pixels[y*27+x]) }
                 print("GPU texture upload/copy/readback: 5x3 RGBA pixels match, mip 1 / layer 1 ({SDL_GetGPUDeviceDriver(device)})\n")
 

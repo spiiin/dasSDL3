@@ -21,34 +21,36 @@ def draw_and_check(device : SDL_GPUDevice?; pipeline, vb, ib, target : uint64) :
     var buffers <- array<uint64>(vb)
     var offsets <- array<uint>(0u)
     let gpu_command_buffer_result = device |> with_gpu_command_buffer() $(command : uint64) {
-        let render_pass = unwrap_or(device |> gpu_begin_render_pass(command,target,uint2(0u),SDL_GPULoadOp.LOADOP_CLEAR,black), 0ul)
+        let begun = device |> gpu_begin_render_pass(command,target,uint2(0u),SDL_GPULoadOp.LOADOP_CLEAR,black)
+        if (is_err(begun)) {return err(unwrap_err(begun),type<SdlUnit>)}
+        let render_pass = unwrap(begun)
         var gpu_bind_pipeline_result <- device |> gpu_bind_pipeline(render_pass,pipeline)
-        if (is_err(gpu_bind_pipeline_result)) { return err(unwrap_err(gpu_bind_pipeline_result),type<SdlUnit>) }
+        if (is_err(gpu_bind_pipeline_result)) { return gpu_bind_pipeline_result }
         var gpu_bind_vertex_buffers_result <- device |> gpu_bind_vertex_buffers(render_pass,0u,buffers,offsets)
-        if (is_err(gpu_bind_vertex_buffers_result)) { return err(unwrap_err(gpu_bind_vertex_buffers_result),type<SdlUnit>) }
+        if (is_err(gpu_bind_vertex_buffers_result)) { return gpu_bind_vertex_buffers_result }
         var gpu_bind_index_buffer_result <- device |> gpu_bind_index_buffer(render_pass,ib)
-        if (is_err(gpu_bind_index_buffer_result)) { return err(unwrap_err(gpu_bind_index_buffer_result),type<SdlUnit>) }
+        if (is_err(gpu_bind_index_buffer_result)) { return gpu_bind_index_buffer_result }
         var gpu_draw_indexed_primitives_result <- device |> gpu_draw_indexed_primitives(render_pass,3u)
-        if (is_err(gpu_draw_indexed_primitives_result)) { return err(unwrap_err(gpu_draw_indexed_primitives_result),type<SdlUnit>) }
+        if (is_err(gpu_draw_indexed_primitives_result)) { return gpu_draw_indexed_primitives_result }
         var gpu_end_render_pass_result <- device |> gpu_end_render_pass(render_pass)
-        if (is_err(gpu_end_render_pass_result)) { return err(unwrap_err(gpu_end_render_pass_result),type<SdlUnit>) }
+        if (is_err(gpu_end_render_pass_result)) { return gpu_end_render_pass_result }
         var gpu_submit_command_buffer_result <- device |> gpu_submit_command_buffer(command)
-        if (is_err(gpu_submit_command_buffer_result)) { return err(unwrap_err(gpu_submit_command_buffer_result),type<SdlUnit>) }
+        if (is_err(gpu_submit_command_buffer_result)) { return gpu_submit_command_buffer_result }
 
         return sdl_ok()
     }
-    if (is_err(gpu_command_buffer_result)) { return err(unwrap_err(gpu_command_buffer_result),type<SdlUnit>) }
+    if (is_err(gpu_command_buffer_result)) { return gpu_command_buffer_result }
     var pixels : array<uint8>
     resize(pixels,64*64*4)
     let gpu_texture_readback_result = device |> with_gpu_texture_readback(target,uint2(0u),uint4(0u,0u,64u,64u)) $(ticket : uint64) {
         var gpu_wait_readback_result <- device |> gpu_wait_readback(ticket)
-        if (is_err(gpu_wait_readback_result)) { return err(unwrap_err(gpu_wait_readback_result),type<SdlUnit>) }
+        if (is_err(gpu_wait_readback_result)) { return gpu_wait_readback_result }
         var gpu_readback_bytes_result <- device |> gpu_readback_bytes(ticket,pixels)
-        if (is_err(gpu_readback_bytes_result)) { return err(unwrap_err(gpu_readback_bytes_result),type<SdlUnit>) }
+        if (is_err(gpu_readback_bytes_result)) { return gpu_readback_bytes_result }
 
         return sdl_ok()
     }
-    if (is_err(gpu_texture_readback_result)) { return err(unwrap_err(gpu_texture_readback_result),type<SdlUnit>) }
+    if (is_err(gpu_texture_readback_result)) { return gpu_texture_readback_result }
     let center = (32*64+32)*4
     verify(int(pixels[center]) > 40 && int(pixels[center+1]) > 100 && int(pixels[center+2]) > 40)
     verify(pixels[0] == uint8(0) && pixels[3] == uint8(255))

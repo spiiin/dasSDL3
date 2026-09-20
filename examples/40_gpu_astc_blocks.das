@@ -24,17 +24,17 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
     for (y in 0 .. 2) { for (x in 0 .. 32) { expected[y*32+x] = padded[y*35+x] } }
     let gpu_transfer_texture_result = device |> with_gpu_transfer_texture(region.z,region.w,1u,1u,selected,SDL_GPU_TEXTURETYPE_2D) $(texture : uint64) {
         var gpu_upload_texture_result <- device |> gpu_upload_texture(texture,uint2(0u),region,padded,35u,true)
-        if (is_err(gpu_upload_texture_result)) { return err(unwrap_err(gpu_upload_texture_result),type<SdlUnit>) }
+        if (is_err(gpu_upload_texture_result)) { return gpu_upload_texture_result }
         return device |> with_gpu_texture_readback(texture,uint2(0u),region) $(ticket : uint64) {
             var gpu_wait_readback_result <- device |> gpu_wait_readback(ticket)
-            if (is_err(gpu_wait_readback_result)) { return err(unwrap_err(gpu_wait_readback_result),type<SdlUnit>) }
+            if (is_err(gpu_wait_readback_result)) { return gpu_wait_readback_result }
             var gpu_readback_bytes_result <- device |> gpu_readback_bytes(ticket,actual)
-            if (is_err(gpu_readback_bytes_result)) { return err(unwrap_err(gpu_readback_bytes_result),type<SdlUnit>) }
+            if (is_err(gpu_readback_bytes_result)) { return gpu_readback_bytes_result }
 
             return sdl_ok()
         }
     }
-    if (is_err(gpu_transfer_texture_result)) { return err(unwrap_err(gpu_transfer_texture_result),type<SdlUnit>) }
+    if (is_err(gpu_transfer_texture_result)) { return gpu_transfer_texture_result }
     for (i in 0 .. 64) { verify(actual[i] == expected[i]) }
     print("ASTC encoded 2x2 blocks, padded upload and 64-byte readback PASS ({SDL_GetGPUDeviceDriver(device)})\n")
 
