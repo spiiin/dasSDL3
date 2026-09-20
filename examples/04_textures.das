@@ -1,4 +1,5 @@
 options gen2
+require dassdl3/sdl3_try
 require dassdl3/sdl3_boost
 require math
 
@@ -6,36 +7,30 @@ require math
 // (public domain). Uses our own BMP and explicit scoped ownership instead of callbacks.
 
 def render_textures(renderer : SDL_Renderer?; texture : SDL_Texture?; smoke : bool; var frames : int&) : $Result<SdlUnit; SdlError> {
-    return texture_size(texture) |> and_then() $(size : float2) {
-        var event = SDL_MakeEvent()
-        var running = true
-        let start = SDL_GetTicks()
-        while (running) {
-            while (is_some(poll_event(event))) {
-                if (should_close(event)) { running = false }
-            }
-            if (!running) { break }
-            let phase = float(SDL_GetTicks() - start) / 1000.0
-            let scale = 1.5 + 0.5 * sin(phase)
-            var cleared <- renderer |> clear()
-            if (is_err(cleared)) { return <- cleared }
-            // Moving original, scaled copy, and a cropped quadrant.
-            var original <- renderer |> draw_texture(texture, SDL_MakeFRect(30.0 + 20.0 * sin(phase), 30.0, size.x, size.y))
-            if (is_err(original)) { return <- original }
-            var scaled <- renderer |> draw_texture(texture, SDL_MakeFRect(220.0, 150.0, size.x * scale, size.y * scale))
-            if (is_err(scaled)) { return <- scaled }
-            let crop = SDL_MakeFRect(0.0, 0.0, size.x / 2.0, size.y / 2.0)
-            var cropped <- renderer |> draw_texture(texture, crop, SDL_MakeFRect(480.0, 330.0, 128.0, 128.0))
-            if (is_err(cropped)) { return <- cropped }
-            var presented <- renderer |> present()
-            if (is_err(presented)) { return <- presented }
-            frames++
-            if (smoke && frames >= 60) { break }
-            SDL_Delay(16u)
+    let size = texture_size(texture) |> sdl_try
+    var event = SDL_MakeEvent()
+    var running = true
+    let start = SDL_GetTicks()
+    while (running) {
+        while (is_some(poll_event(event))) {
+            if (should_close(event)) { running = false }
         }
-
-        return sdl_ok()
+        if (!running) { break }
+        let phase = float(SDL_GetTicks() - start) / 1000.0
+        let scale = 1.5 + 0.5 * sin(phase)
+        renderer |> clear() |> sdl_try
+        // Moving original, scaled copy, and a cropped quadrant.
+        renderer |> draw_texture(texture, SDL_MakeFRect(30.0 + 20.0 * sin(phase), 30.0, size.x, size.y)) |> sdl_try
+        renderer |> draw_texture(texture, SDL_MakeFRect(220.0, 150.0, size.x * scale, size.y * scale)) |> sdl_try
+        let crop = SDL_MakeFRect(0.0, 0.0, size.x / 2.0, size.y / 2.0)
+        renderer |> draw_texture(texture, crop, SDL_MakeFRect(480.0, 330.0, 128.0, 128.0)) |> sdl_try
+        renderer |> present() |> sdl_try
+        frames++
+        if (smoke && frames >= 60) { break }
+        SDL_Delay(16u)
     }
+
+    return sdl_ok()
 }
 
 [export]

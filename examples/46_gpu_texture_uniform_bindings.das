@@ -1,4 +1,5 @@
 options gen2
+require dassdl3/sdl3_try
 require dassdl3/sdl3_gpu_recording_boost
 
 def render_quad(device : SDL_GPUDevice?; pipeline, target, vb, ib, vertex_texture, texture, sampler : uint64) : $Result<SdlUnit; SdlError> {
@@ -11,48 +12,31 @@ def render_quad(device : SDL_GPUDevice?; pipeline, target, vb, ib, vertex_textur
     var samplers <- array<uint64>(sampler)
     var transform <- array<float4>(float4(0.75,0.0,0.0,0.125),float4(0.0,0.75,0.0,-0.125))
     var tint <- array<float4>(float4(1.0,0.5,1.0,1.0))
-    let gpu_command_buffer_result = device |> with_gpu_command_buffer() $(command : uint64) {
-        var gpu_push_uniform_result_2 <- device |> gpu_push_uniform(command,SDL_GPUShaderStage.SHADERSTAGE_VERTEX,0u,transform)
-        if (is_err(gpu_push_uniform_result_2)) { return gpu_push_uniform_result_2 }
-        var gpu_push_uniform_result <- device |> gpu_push_uniform(command,SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT,0u,tint)
-        if (is_err(gpu_push_uniform_result)) { return gpu_push_uniform_result }
-        let begun = device |> gpu_begin_render_pass(command,target,uint2(0u),SDL_GPULoadOp.LOADOP_CLEAR,black)
-        if (is_err(begun)) {return err(unwrap_err(begun),type<SdlUnit>)}
-        let render_pass = unwrap(begun)
-        var gpu_bind_pipeline_result <- device |> gpu_bind_pipeline(render_pass,pipeline)
-        if (is_err(gpu_bind_pipeline_result)) { return gpu_bind_pipeline_result }
-        var gpu_bind_vertex_buffers_result <- device |> gpu_bind_vertex_buffers(render_pass,0u,buffers,offsets)
-        if (is_err(gpu_bind_vertex_buffers_result)) { return gpu_bind_vertex_buffers_result }
-        var gpu_bind_index_buffer_result <- device |> gpu_bind_index_buffer(render_pass,ib)
-        if (is_err(gpu_bind_index_buffer_result)) { return gpu_bind_index_buffer_result }
-        var gpu_bind_samplers_result <- device |> gpu_bind_samplers(render_pass,SDL_GPUShaderStage.SHADERSTAGE_VERTEX,vertex_images,samplers)
-        if (is_err(gpu_bind_samplers_result)) { return gpu_bind_samplers_result }
-        var gpu_bind_samplers_result_2 <- device |> gpu_bind_samplers(render_pass,SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT,fragment_images,samplers)
-        if (is_err(gpu_bind_samplers_result_2)) { return gpu_bind_samplers_result_2 }
+    device |> with_gpu_command_buffer() $(command : uint64) {
+        device |> gpu_push_uniform(command,SDL_GPUShaderStage.SHADERSTAGE_VERTEX,0u,transform) |> sdl_try
+        device |> gpu_push_uniform(command,SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT,0u,tint) |> sdl_try
+        let render_pass = device |> gpu_begin_render_pass(command,target,uint2(0u),SDL_GPULoadOp.LOADOP_CLEAR,black) |> sdl_try
+        device |> gpu_bind_pipeline(render_pass,pipeline) |> sdl_try
+        device |> gpu_bind_vertex_buffers(render_pass,0u,buffers,offsets) |> sdl_try
+        device |> gpu_bind_index_buffer(render_pass,ib) |> sdl_try
+        device |> gpu_bind_samplers(render_pass,SDL_GPUShaderStage.SHADERSTAGE_VERTEX,vertex_images,samplers) |> sdl_try
+        device |> gpu_bind_samplers(render_pass,SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT,fragment_images,samplers) |> sdl_try
         // Two triangles, two direct draw calls in one real SDL render render_pass.
-        var gpu_draw_indexed_primitives_result_2 <- device |> gpu_draw_indexed_primitives(render_pass,3u)
-        if (is_err(gpu_draw_indexed_primitives_result_2)) { return gpu_draw_indexed_primitives_result_2 }
-        var gpu_draw_indexed_primitives_result <- device |> gpu_draw_indexed_primitives(render_pass,3u,1u,3u)
-        if (is_err(gpu_draw_indexed_primitives_result)) { return gpu_draw_indexed_primitives_result }
-        var gpu_end_render_pass_result <- device |> gpu_end_render_pass(render_pass)
-        if (is_err(gpu_end_render_pass_result)) { return gpu_end_render_pass_result }
-        var gpu_submit_command_buffer_result <- device |> gpu_submit_command_buffer(command)
-        if (is_err(gpu_submit_command_buffer_result)) { return gpu_submit_command_buffer_result }
+        device |> gpu_draw_indexed_primitives(render_pass,3u) |> sdl_try
+        device |> gpu_draw_indexed_primitives(render_pass,3u,1u,3u) |> sdl_try
+        device |> gpu_end_render_pass(render_pass) |> sdl_try
+        device |> gpu_submit_command_buffer(command) |> sdl_try
 
         return sdl_ok()
-    }
-    if (is_err(gpu_command_buffer_result)) { return gpu_command_buffer_result }
+    } |> sdl_try
     var bytes : array<uint8>
     resize(bytes,64*64*4)
-    let gpu_texture_readback_result = device |> with_gpu_texture_readback(target,uint2(0u),uint4(0u,0u,64u,64u)) $(ticket : uint64) {
-        var gpu_wait_readback_result <- device |> gpu_wait_readback(ticket)
-        if (is_err(gpu_wait_readback_result)) { return gpu_wait_readback_result }
-        var gpu_readback_bytes_result <- device |> gpu_readback_bytes(ticket,bytes)
-        if (is_err(gpu_readback_bytes_result)) { return gpu_readback_bytes_result }
+    device |> with_gpu_texture_readback(target,uint2(0u),uint4(0u,0u,64u,64u)) $(ticket : uint64) {
+        device |> gpu_wait_readback(ticket) |> sdl_try
+        device |> gpu_readback_bytes(ticket,bytes) |> sdl_try
 
         return sdl_ok()
-    }
-    if (is_err(gpu_texture_readback_result)) { return gpu_texture_readback_result }
+    } |> sdl_try
     verify(int(bytes[(24*64+24)*4]) == 128)
     verify(int(bytes[(24*64+48)*4+1]) >= 127 && int(bytes[(24*64+48)*4+1]) <= 128)
     verify(bytes[0] == uint8(0) && bytes[3] == uint8(255))
@@ -77,13 +61,11 @@ def run(device : SDL_GPUDevice?; linear : bool) : $Result<SdlUnit; SdlError> {
 
 def upload_textures(device : SDL_GPUDevice?; pipeline, vb, ib, vertex_texture : uint64; linear : bool) : $Result<SdlUnit; SdlError> {
     var vertex_color <- array<uint8>(uint8(128),uint8(255),uint8(128),uint8(255))
-    var gpu_upload_texture_result_2 <- device |> gpu_upload_texture(vertex_texture,uint2(0u),uint4(0u,0u,1u,1u),vertex_color,4u)
-    if (is_err(gpu_upload_texture_result_2)) { return gpu_upload_texture_result_2 }
+    device |> gpu_upload_texture(vertex_texture,uint2(0u),uint4(0u,0u,1u,1u),vertex_color,4u) |> sdl_try
     return device |> with_gpu_rgba_texture(2u,2u) $(texture : uint64) {
         var image <- array<uint8>(uint8(255),uint8(0),uint8(0),uint8(255), uint8(0),uint8(255),uint8(0),uint8(255),
             uint8(0),uint8(0),uint8(255),uint8(255), uint8(255),uint8(255),uint8(255),uint8(255))
-        var gpu_upload_texture_result <- device |> gpu_upload_texture(texture,uint2(0u),uint4(0u,0u,2u,2u),image,8u)
-        if (is_err(gpu_upload_texture_result)) { return gpu_upload_texture_result }
+        device |> gpu_upload_texture(texture,uint2(0u),uint4(0u,0u,2u,2u),image,8u) |> sdl_try
         let filter_mode = linear ? SDL_GPUFilter.FILTER_LINEAR : SDL_GPUFilter.FILTER_NEAREST
         return device |> with_gpu_sampler(gpu_sampler_info(filter_mode)) $(sampler : uint64) {
             return device |> with_gpu_color_target_texture(64u,64u,1u,1u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM) $(target : uint64) {
@@ -124,8 +106,7 @@ def create_pipeline(device : SDL_GPUDevice?; vertex, fragment : uint64; linear :
 def main(smoke : bool) : int {
     let result = with_sdl() {
         return with_gpu_device(GPU_SHADER_FORMATS,true,"") $(device : SDL_GPUDevice?) {
-            let drawn=run(device,false)
-            if(is_err(drawn)) {return drawn}
+            run(device,false) |> sdl_try
             print("Texture/sampler and uniform bindings: {SDL_GetGPUDeviceDriver(device)}\n")
 
             return sdl_ok()

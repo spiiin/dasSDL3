@@ -1,4 +1,5 @@
 options gen2
+require dassdl3/sdl3_try
 require dassdl3/sdl3_gpu_native_boost
 require daslib/defer
 
@@ -24,8 +25,8 @@ def copy_and_check(device : SDL_GPUDevice?; var source, destination : SDL_GPUBuf
         for (i in 0..100) { bytes[i]=uint8((i*7+3)%256) }
         if (!SDL_WriteGPUTransferBufferBytes(device,upload,256u,32u,bytes,true)) { return err(sdl_error("transfer_roundtrip"),type<SdlUnit>) }
         var completed=false
-        let acquired=with_native_gpu_commands(device) $(var command : SDL_GPUCommandBuffer?&) {
-            let copied=with_native_gpu_copy_pass(command) $(copy_pass : SDL_GPUCopyPass?) {
+        with_native_gpu_commands(device) $(var command : SDL_GPUCommandBuffer?&) {
+            with_native_gpu_copy_pass(command) $(copy_pass : SDL_GPUCopyPass?) {
                 var location : SDL_GPUTransferBufferLocation; location.transfer_buffer=upload; location.offset=32u
                 var region : SDL_GPUBufferRegion; region.buffer=source; region.offset=16u; region.size=100u
                 SDL_UploadToGPUBufferRef(copy_pass,location,region,true)
@@ -37,11 +38,8 @@ def copy_and_check(device : SDL_GPUDevice?; var source, destination : SDL_GPUBuf
                 SDL_DownloadFromGPUBufferRef(copy_pass,region,location)
 
                 return sdl_ok()
-            }
-            if (is_err(copied)) { return err(unwrap_err(copied),type<SdlUnit>) }
-            var submitted <- native_gpu_submit_fence(command)
-        if(is_err(submitted)){return err(unwrap_err(submitted),type<SdlUnit>)}
-        var fence=move_unwrap(submitted)
+            } |> sdl_try
+            var fence = native_gpu_submit_fence(command) |> sdl_try
             if (fence==null) {return err(sdl_error("50_gpu_native_transfer"),type<SdlUnit>)}
             var fences : array<SDL_GPUFence?>; resize(fences,1); fences[0]=fence
             if (!SDL_WaitForGPUFencesArray(device,true,fences)) {return err(sdl_error("50_gpu_native_transfer"),type<SdlUnit>)}
@@ -52,8 +50,7 @@ def copy_and_check(device : SDL_GPUDevice?; var source, destination : SDL_GPUBuf
             for (i in 0..100) { if (result[i]!=bytes[i]) { completed=false } }
 
             return sdl_ok()
-        }
-        if(is_err(acquired)) {return acquired}
+        } |> sdl_try
     if(!completed) {return err(SdlError(operation="transfer_roundtrip",message="Readback differs from expected values"),type<SdlUnit>)}
     return sdl_ok()
 }

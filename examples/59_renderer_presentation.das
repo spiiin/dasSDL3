@@ -1,4 +1,5 @@
 options gen2
+require dassdl3/sdl3_try
 require dassdl3/sdl3_renderer_presentation_boost
 def render_example(window : SDL_Window?; renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; SdlError> {
     var rendered=false
@@ -9,8 +10,7 @@ def render_example(window : SDL_Window?; renderer : SDL_Renderer?; smoke : bool)
     for(i in 0 .. 3) {rects[i].x=float(10+i*30);rects[i].y=float(15+i*15);rects[i].w=20.0;rects[i].h=40.0}
     if(!SDL_SetRenderDrawColor(renderer,60u,180u,230u,255u) || !SDL_RenderFillRectsArray(renderer,rects)) {return err(sdl_error("59_renderer_presentation"),type<SdlUnit>)}
     var wx,wy : float
-    var render_to_window_result <- render_to_window(renderer,50.0,50.0,wx,wy)
-    if (is_err(render_to_window_result)) {return err(unwrap_err(render_to_window_result),type<SdlUnit>)}
+    render_to_window(renderer,50.0,50.0,wx,wy) |> sdl_try
     print("Logical center (50,50) in window coordinates: {wx}, {wy}\n")
     rendered=SDL_RenderPresent(renderer)
     if(!rendered) {return err(sdl_error("59_renderer_presentation"),type<SdlUnit>)}

@@ -1,4 +1,5 @@
 options gen2
+require dassdl3/sdl3_try
 require dassdl3/sdl3_gpu_pipeline_boost
 
 // Independent pipeline creation; direct command recording is shown in example 44.
@@ -13,9 +14,7 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
     return device |> with_gpu_shader_file("{base}.vert.{extension}",vi) $(vertex : uint64) {
         return device |> with_gpu_shader_file("{base}.frag.{extension}",fi) $(fragment : uint64) {
             return device |> with_gpu_graphics_pipeline(vertex,fragment,SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM) $(pipeline : uint64) {
-                let gpu_graphics_pipeline_descriptor_result = gpu_graphics_pipeline_descriptor(device,pipeline)
-                if (is_err(gpu_graphics_pipeline_descriptor_result)) { return err(unwrap_err(gpu_graphics_pipeline_descriptor_result),type<SdlUnit>) }
-                let info = unwrap(gpu_graphics_pipeline_descriptor_result)
+                let info = gpu_graphics_pipeline_descriptor(device,pipeline) |> sdl_try
                 verify(info.primitive_type == SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST)
                 print("Owned graphics pipeline {pipeline}: {SDL_GetGPUDeviceDriver(device)}, sample 1, RGBA8\n")
 

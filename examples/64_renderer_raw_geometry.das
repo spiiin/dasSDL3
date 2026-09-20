@@ -1,4 +1,5 @@
 options gen2
+require dassdl3/sdl3_try
 require dassdl3/sdl3_renderer_final_boost
 def render_example(renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; SdlError> {
     var rendered=false
@@ -8,8 +9,7 @@ def render_example(renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; Sd
     colors[0].r=1.0;colors[1].g=1.0;colors[2].b=1.0
     for(c in colors) {c.a=1.0}
     if(!SDL_SetRenderDrawColor(renderer,20u,25u,35u,255u) || !SDL_RenderClear(renderer)) {return err(sdl_error("64_renderer_raw_geometry"),type<SdlUnit>)}
-    var render_geometry_raw_result <- render_geometry_raw(renderer,null,xy,colors,uv)
-    if (is_err(render_geometry_raw_result)) {return err(unwrap_err(render_geometry_raw_result),type<SdlUnit>)}
+    render_geometry_raw(renderer,null,xy,colors,uv) |> sdl_try
     if(!SDL_SetRenderDrawColor(renderer,255u,255u,255u,255u) || !SDL_RenderDebugTextFormatText(renderer,8.0,8.0,"SDL geometry: 100%")) {return err(sdl_error("64_renderer_raw_geometry"),type<SdlUnit>)}
     rendered=SDL_RenderPresent(renderer)
     if(!rendered) {return err(sdl_error("64_renderer_raw_geometry"),type<SdlUnit>)}

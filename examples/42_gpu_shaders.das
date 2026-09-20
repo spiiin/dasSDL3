@@ -1,4 +1,5 @@
 options gen2
+require dassdl3/sdl3_try
 require dassdl3/sdl3_gpu_shader_boost
 
 // Trusted compiled assets. General script pipeline creation is the next stage.
@@ -13,10 +14,9 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
     return device |> with_gpu_shader_file("{base}.vert.{extension}",vertex_info) $(vertex : uint64) {
         return device |> with_gpu_shader_file("{base}.frag.{extension}",fragment_info) $(fragment : uint64) {
             verify(vertex != fragment)
-            let gpu_shader_descriptor_result = gpu_shader_descriptor(device,fragment)
-            if (is_err(gpu_shader_descriptor_result)) { return err(unwrap_err(gpu_shader_descriptor_result),type<SdlUnit>) }
-            let description = unwrap(gpu_shader_descriptor_result)
-            print("Owned {extension} shaders: vertex={vertex}, fragment={fragment}, entry={unwrap_or(gpu_shader_entrypoint(device,fragment),"")}, samplers={description.num_samplers}\n")
+            let description = gpu_shader_descriptor(device,fragment) |> sdl_try
+            let entrypoint = gpu_shader_entrypoint(device,fragment) |> sdl_try
+            print("Owned {extension} shaders: vertex={vertex}, fragment={fragment}, entry={entrypoint}, samplers={description.num_samplers}\n")
 
             return sdl_ok()
         }

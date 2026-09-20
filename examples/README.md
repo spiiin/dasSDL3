@@ -91,6 +91,11 @@ existing example numbers. It renders the BMP texture and propagates failures as
 values; `--smoke-test` renders three frames. Contracts and language caveats:
 [Result/Option plan](../docs/result-option-plan.md).
 
+[results/02_sdl_try.das](results/02_sdl_try.das) shows the same application with
+[`sdl_try`](../docs/sdl-try.md). Numbered examples now use this macro for sequential
+Result operations; `01_results` intentionally retains explicit checks and
+`and_then` for comparison. Raw SDL checks and deliberate Option defaults remain.
+
 ## Structure of Result-based examples
 
 Keep acquisition callbacks short and return nested scope Results directly.
@@ -99,8 +104,13 @@ functions in the example, returning `Result<SdlUnit,SdlError>`. They synchronous
 borrow their arguments; the calling `with_*` or explicit `defer` retains ownership.
 
 - Report an operation error once in `main`; forward its owned SdlError through helpers.
-- Use flat `is_err`/early-return checks for sequential commands. Use `and_then` when
-  transforming a value benefits from a short block, not around every SDL call.
+- Import `dassdl3/sdl3_try` for sequential commands: `renderer |> clear() |> sdl_try`
+  or `let size = texture_size(texture) |> sdl_try`. Put it only in statements or
+  single-variable initializers inside Result-returning helpers/blocks. Arrays use
+  move initializers; keep `return sdl_ok()` for successful void-like work.
+- Handle Option and successful false values separately. Do not turn Result errors
+  into placeholder values with `unwrap_or`. An explicit `is_err` remains appropriate
+  when reporting an error in `main` or deliberately recovering from it.
 - Split at meaningful stages rather than introducing shared example frameworks or
   compound public resource types. See [45](45_gpu_vertex_index_buffers.das),
   [46](46_gpu_texture_uniform_bindings.das) and [48](48_gpu_native_graphics.das).
@@ -109,10 +119,18 @@ borrow their arguments; the calling `with_*` or explicit `defer` retains ownersh
 - Unsupported GPU creation can produce smoke-test exit 77. A failure after creating
   the device is an error, not an unavailable-device skip.
 
-Local validation of this refactor (2026-09-21, Windows x64/MSVC): 45 changed
+Local validation of the helper-extraction refactor (2026-09-21, Windows x64/MSVC): 45 changed
 examples, 70 main smoke tests, 102 legacy/CppGenBind tests and 95 strict AOT tests
 passed, including Vulkan/D3D12 where applicable. Targeted error checks cover failed
 video initialization, unavailable GPU creation and missing shader after successful
 device creation; the latter remains an error (exit 1), never a smoke skip.
 Examples 45 and 46 now have at most three nested resource scopes in one function,
 compared with nine before extraction. Public SDL/boost declarations are unchanged.
+
+The subsequent `sdl_try` migration changed 45 numbered examples. All 69 main smoke
+checks, 102 legacy/CppGenBind checks and 93 strict AOT checks passed, covering every
+changed example and Vulkan/D3D12 where applicable. Error-path checks preserved
+initialization failures, GPU-unavailable smoke skips and post-creation failures;
+an injected texture-size failure propagated through the macro with exit 1.
+The LLVM-free consumer ran the textures and diagnostics examples and the macro's
+runtime contracts. The macro and public binding signatures needed no changes.

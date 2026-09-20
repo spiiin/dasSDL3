@@ -1,4 +1,5 @@
 options gen2
+require dassdl3/sdl3_try
 require dassdl3/sdl3_renderer_yuv_blend_boost
 def render_example(renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; SdlError> {
     var rendered=false
@@ -6,11 +7,11 @@ def render_example(renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; Sd
         var y,u,v : array<uint8>;resize(y,1024);resize(u,256);resize(v,256)
         for(i in 0 .. 1024) {y[i]=uint8(((i%32)/8+i/256)%2==0 ? 81 : 180)}
         for(i in 0 .. 256) {u[i]=uint8(90);v[i]=uint8(240)}
-        var update_yuv_texture_result <- update_yuv_texture(texture,y,32,u,16,v,16)
-        if (is_err(update_yuv_texture_result)) {return err(unwrap_err(update_yuv_texture_result),type<SdlUnit>)}
+        update_yuv_texture(texture,y,32,u,16,v,16) |> sdl_try
         if(!SDL_SetRenderDrawColorFloat(renderer,0.08,0.1,0.14,1.0) || !SDL_RenderClear(renderer)) {return err(sdl_error("62_renderer_yuv_blend"),type<SdlUnit>)}
         var dst : SDL_FRect;dst.x=60.0;dst.y=20.0;dst.w=200.0;dst.h=200.0
-        rendered=is_ok(draw_texture(renderer,texture,dst)) && SDL_RenderPresent(renderer)
+        draw_texture(renderer,texture,dst) |> sdl_try
+        rendered=SDL_RenderPresent(renderer)
         if(!rendered) {return err(sdl_error("62_renderer_yuv_blend"),type<SdlUnit>)}
         if(rendered && !smoke) {SDL_Delay(1200u)}
 

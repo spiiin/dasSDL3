@@ -18,6 +18,8 @@ def draw(renderer : SDL_Renderer?; texture : SDL_Texture?) {
 The function also needs the usual boost import for these SDL operations.
 See [the complete runnable example](../examples/results/02_sdl_try.das), based on
 [01_results](../examples/results/01_results.das).
+The numbered examples also use the macro for linear Result operations. The first
+Result example deliberately remains the explicit-check/`and_then` comparison.
 
 ## Contract
 

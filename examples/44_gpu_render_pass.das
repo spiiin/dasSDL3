@@ -1,4 +1,5 @@
 options gen2
+require dassdl3/sdl3_try
 require dassdl3/sdl3_gpu_recording_boost
 require daslib/defer
 
@@ -34,24 +35,17 @@ def render_triangle(device : SDL_GPUDevice?) : $Result<SdlUnit; SdlError> {
     if (command == 0ul) { return err(sdl_error("render_triangle"),type<SdlUnit>) }
     var black : SDL_FColor
     black.a = 1.0
-    let render_pass = unwrap_or(gpu_begin_render_pass(device,command,target,uint2(0u),SDL_GPULoadOp.LOADOP_CLEAR,black), 0ul)
-    if (render_pass == 0ul) { return err(sdl_error("render_triangle"),type<SdlUnit>) }
-    var gpu_bind_pipeline_result <- gpu_bind_pipeline(device,render_pass,pipeline)
-    if (is_err(gpu_bind_pipeline_result)) { return gpu_bind_pipeline_result }
-    var gpu_draw_primitives_result <- gpu_draw_primitives(device,render_pass,3u)
-    if (is_err(gpu_draw_primitives_result)) { return gpu_draw_primitives_result }
-    var gpu_end_render_pass_result <- gpu_end_render_pass(device,render_pass)
-    if (is_err(gpu_end_render_pass_result)) { return gpu_end_render_pass_result }
-    var gpu_submit_command_buffer_result <- gpu_submit_command_buffer(device,command)
-    if (is_err(gpu_submit_command_buffer_result)) { return gpu_submit_command_buffer_result }
+    let render_pass = gpu_begin_render_pass(device,command,target,uint2(0u),SDL_GPULoadOp.LOADOP_CLEAR,black) |> sdl_try
+    gpu_bind_pipeline(device,render_pass,pipeline) |> sdl_try
+    gpu_draw_primitives(device,render_pass,3u) |> sdl_try
+    gpu_end_render_pass(device,render_pass) |> sdl_try
+    gpu_submit_command_buffer(device,command) |> sdl_try
     var pixels : array<uint8>
     resize(pixels,64*64*4)
     ticket = SDL_RequestGPUTextureReadback(device,target,uint2(0u),uint4(0u,0u,64u,64u))
     if (ticket == 0ul) { return err(sdl_error("render_triangle"),type<SdlUnit>) }
-    var gpu_wait_readback_result <- gpu_wait_readback(device,ticket)
-    if (is_err(gpu_wait_readback_result)) { return gpu_wait_readback_result }
-    var gpu_readback_bytes_result <- gpu_readback_bytes(device,ticket,pixels)
-    if (is_err(gpu_readback_bytes_result)) { return gpu_readback_bytes_result }
+    gpu_wait_readback(device,ticket) |> sdl_try
+    gpu_readback_bytes(device,ticket,pixels) |> sdl_try
     let center = (32*64+32)*4
     if (int(pixels[center]) <= 40 || int(pixels[center+1]) <= 100 || int(pixels[center+2]) <= 40 ||
             pixels[0] != uint8(0) || pixels[3] != uint8(255)) {

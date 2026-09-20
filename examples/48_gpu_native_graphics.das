@@ -1,4 +1,5 @@
 options gen2
+require dassdl3/sdl3_try
 require dassdl3/sdl3_gpu_native_boost
 require daslib/defer
 
@@ -26,7 +27,7 @@ def draw_frames(device : SDL_GPUDevice?; window : SDL_Window?; smoke : bool) : $
 def render_loop(device : SDL_GPUDevice?; window : SDL_Window?; pipeline : SDL_GPUGraphicsPipeline?; smoke : bool) : $Result<SdlUnit; SdlError> {
     var frame=0
     while (frame<(smoke ? 3 : 180)) {
-        let acquired=with_native_gpu_swapchain(device,window) $(command : SDL_GPUCommandBuffer?; var texture : SDL_GPUTexture?; width,height : uint) {
+        with_native_gpu_swapchain(device,window) $(command : SDL_GPUCommandBuffer?; var texture : SDL_GPUTexture?; width,height : uint) {
             var targets : array<SDL_GPUColorTargetInfo>; resize(targets,1)
             targets[0].texture=texture; targets[0].load_op=SDL_GPULoadOp.LOADOP_CLEAR
             targets[0].store_op=SDL_GPUStoreOp.STOREOP_STORE
@@ -37,8 +38,7 @@ def render_loop(device : SDL_GPUDevice?; window : SDL_Window?; pipeline : SDL_GP
 
                 return sdl_ok()
             }
-        }
-        if (is_err(acquired)) {return err(unwrap_err(acquired),type<SdlUnit>)}
+        } |> sdl_try
         SDL_PumpEvents(); SDL_Delay(16u); frame++
     }
     return sdl_status(SDL_WaitForGPUIdle(device),"SDL_WaitForGPUIdle")

@@ -1,4 +1,5 @@
 options gen2
+require dassdl3/sdl3_try
 require dassdl3/sdl3_gpu_native_boost
 require daslib/defer
 
@@ -25,29 +26,25 @@ def compute_values(device : SDL_GPUDevice?) : $Result<SdlUnit; SdlError> {
 
 def dispatch_and_check(device : SDL_GPUDevice?; pipeline : SDL_GPUComputePipeline?; var output : SDL_GPUBuffer?; var download : SDL_GPUTransferBuffer?) : $Result<SdlUnit; SdlError> {
     var finished=false
-    let acquired=with_native_gpu_commands(device) $(var command : SDL_GPUCommandBuffer?&) {
+    with_native_gpu_commands(device) $(var command : SDL_GPUCommandBuffer?&) {
         var textures : array<SDL_GPUStorageTextureReadWriteBinding>
         var buffers : array<SDL_GPUStorageBufferReadWriteBinding>; resize(buffers,1); buffers[0].buffer=output
         var uniforms : array<uint8>; resize(uniforms,16); uniforms[0]=uint8(10)
         if (!SDL_PushGPUComputeUniformDataArray(command,0u,uniforms)) {return err(sdl_error("49_gpu_native_compute"),type<SdlUnit>)}
-        let begun=with_native_gpu_compute_pass(command,textures,buffers) $(compute_pass : SDL_GPUComputePass?) {
+        with_native_gpu_compute_pass(command,textures,buffers) $(compute_pass : SDL_GPUComputePass?) {
             SDL_BindGPUComputePipeline(compute_pass,pipeline)
             SDL_DispatchGPUCompute(compute_pass,2u,1u,1u)
 
             return sdl_ok()
-        }
-        if (is_err(begun)) { return err(unwrap_err(begun),type<SdlUnit>) }
-        let copied=with_native_gpu_copy_pass(command) $(copy_pass : SDL_GPUCopyPass?) {
+        } |> sdl_try
+        with_native_gpu_copy_pass(command) $(copy_pass : SDL_GPUCopyPass?) {
             var source : SDL_GPUBufferRegion; source.buffer=output; source.size=32u
             var destination : SDL_GPUTransferBufferLocation; destination.transfer_buffer=download
             SDL_DownloadFromGPUBufferRef(copy_pass,source,destination)
 
             return sdl_ok()
-        }
-        if (is_err(copied)) { return err(unwrap_err(copied),type<SdlUnit>) }
-        var submitted <- native_gpu_submit_fence(command)
-        if(is_err(submitted)){return err(unwrap_err(submitted),type<SdlUnit>)}
-        var fence=move_unwrap(submitted)
+        } |> sdl_try
+        var fence = native_gpu_submit_fence(command) |> sdl_try
         if (fence==null) {return err(sdl_error("49_gpu_native_compute"),type<SdlUnit>)}
         var fences : array<SDL_GPUFence?>; resize(fences,1); fences[0]=fence
         if (!SDL_WaitForGPUFencesArray(device,true,fences)) {return err(sdl_error("49_gpu_native_compute"),type<SdlUnit>)}
@@ -63,8 +60,7 @@ def dispatch_and_check(device : SDL_GPUDevice?; pipeline : SDL_GPUComputePipelin
         print("\n")
 
         return sdl_ok()
-    }
-    if(is_err(acquired)) {return acquired}
+    } |> sdl_try
     if(!finished) {return err(SdlError(operation="compute_values",message="Readback differs from expected values"),type<SdlUnit>)}
     return sdl_ok()
 }

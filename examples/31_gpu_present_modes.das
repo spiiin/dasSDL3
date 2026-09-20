@@ -1,11 +1,13 @@
 options gen2
+require dassdl3/sdl3_try
 require dassdl3/sdl3_gpu_swapchain_boost
 
 def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; SdlError> {
     return with_window("SDL GPU swapchain",320,240,0ul) $(window : SDL_Window?) {
         return device |> with_gpu_window(window) {
             for (mode in SDL_GPU_PRESENTMODE_VSYNC .. SDL_GPU_PRESENTMODE_MAILBOX+1u) {
-                if (unwrap_or(gpu_configure_swapchain(device,window,SDL_GPU_SWAPCHAINCOMPOSITION_SDR,mode), false)) {
+                let configured = gpu_configure_swapchain(device,window,SDL_GPU_SWAPCHAINCOMPOSITION_SDR,mode) |> sdl_try
+                if (configured) {
                     print("Present mode {mode} selected\n")
                     for (i in 0 .. (smoke ? 3 : 60)) {
                         var event = SDL_MakeEvent()

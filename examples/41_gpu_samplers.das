@@ -1,4 +1,5 @@
 options gen2
+require dassdl3/sdl3_try
 require dassdl3/sdl3_gpu_sampler_boost
 
 // Samplers are independent resources. Binding them to a general render pass
@@ -9,15 +10,12 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
     info.enable_anisotropy = true
     info.max_anisotropy = 4.0
     return device |> with_gpu_sampler(info) $(sampler : uint64) {
-        let gpu_sampler_descriptor_result = gpu_sampler_descriptor(device,sampler)
-        if (is_err(gpu_sampler_descriptor_result)) { return err(unwrap_err(gpu_sampler_descriptor_result),type<SdlUnit>) }
-        let description = unwrap(gpu_sampler_descriptor_result)
+        let description = gpu_sampler_descriptor(device,sampler) |> sdl_try
         print("Scoped sampler {sampler}: linear, repeat, anisotropy={description.max_anisotropy}\n")
         return device |> with_gpu_sampler() $(nearest : uint64) {
             verify(nearest != sampler)
             var query_result_2 : SDL_GPUSamplerCreateInfo
-            var gpu_sampler_descriptor_result_2 <- gpu_sampler_descriptor(device,nearest,query_result_2)
-            if (is_err(gpu_sampler_descriptor_result_2)) { return gpu_sampler_descriptor_result_2 }
+            gpu_sampler_descriptor(device,nearest,query_result_2) |> sdl_try
             verify(query_result_2.min_filter == SDL_GPUFilter.FILTER_NEAREST)
             print("Independent nearest/clamp sampler {nearest}\n")
 

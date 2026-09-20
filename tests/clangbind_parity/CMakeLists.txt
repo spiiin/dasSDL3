@@ -66,7 +66,7 @@ list(APPEND AOT_MODULES dassdl3/sdl3_gpu_image_boost dassdl3/sdl3_gpu_swapchain_
 list(APPEND AOT_MODULES dassdl3/sdl3_gpu_recording_boost dassdl3/sdl3_gpu_buffers_boost dassdl3/sdl3_gpu_volume_boost dassdl3/sdl3_gpu_sampler_boost dassdl3/sdl3_gpu_shader_boost dassdl3/sdl3_gpu_pipeline_boost)
 foreach(script IN LISTS AOT_SCRIPTS AOT_MODULES)
     set(try_dependency)
-    if(script MATCHES "sdl3_try|02_sdl_try")
+    if(script MATCHES "^examples/|sdl3_try")
         set(try_dependency "${ROOT}/dassdl3/sdl3_try.das")
     endif()
     string(REPLACE "/" "_" name "${script}")

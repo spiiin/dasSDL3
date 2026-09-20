@@ -1,4 +1,5 @@
 options gen2
+require dassdl3/sdl3_try
 require daslib/defer
 require dassdl3/sdl3_surface_pixels_boost
 require dassdl3/sdl3_renderer_operations_boost
@@ -13,7 +14,8 @@ def render_example(renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; Sd
             if(texture==null) {return err(sdl_error("66_surface_pixels"),type<SdlUnit>)}
             {
                 defer(){SDL_DestroyTexture(texture)}
-                if(!SDL_SetTextureScaleMode(texture,SDL_ScaleMode.SCALEMODE_NEAREST) || !is_ok(draw_texture(renderer,texture))) {return err(sdl_error("66_surface_pixels"),type<SdlUnit>)}
+                if(!SDL_SetTextureScaleMode(texture,SDL_ScaleMode.SCALEMODE_NEAREST)) {return err(sdl_error("66_surface_pixels"),type<SdlUnit>)}
+                draw_texture(renderer,texture) |> sdl_try
                 rendered=SDL_RenderPresent(renderer)
                 if(!rendered) {return err(sdl_error("66_surface_pixels"),type<SdlUnit>)}
                 if(rendered && !smoke) {SDL_Delay(1200u)}

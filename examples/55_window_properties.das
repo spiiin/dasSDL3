@@ -1,10 +1,11 @@
 options gen2
+require dassdl3/sdl3_try
 require dassdl3/sdl3_window_boost
 require dassdl3/sdl3_properties_boost
 def show_popup(window : SDL_Window?) : $Result<SdlUnit; SdlError> {
     if(!SDL_SetWindowResizable(window,true)) {return err(sdl_error("55_window_properties"),type<SdlUnit>)}
     return with_popup_window(window,10,10,100,40,SDL_WINDOW_TOOLTIP|SDL_WINDOW_HIDDEN) $(popup : SDL_Window?) {
-        let title=unwrap_or(window_title(window), "")
+        let title=window_title(window) |> sdl_try
         print("{title}: popup created; child cleanup runs before parent cleanup\n")
 
         return sdl_ok()

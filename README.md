@@ -111,11 +111,13 @@ SDL_Window и SDL_Renderer доступны как непрозрачные ук
 время жизни задают блоки:
 
 ```das
+require dassdl3/sdl3_boost
+require dassdl3/sdl3_try
+
 let result = with_sdl() {
     return with_window("Hello", 800, 600, SDL_WINDOW_RESIZABLE) $(window : SDL_Window?) {
         return window |> with_renderer() $(renderer : SDL_Renderer?) {
-            let cleared = renderer |> clear()
-            if (is_err(cleared)) { return cleared }
+            renderer |> clear() |> sdl_try
             return renderer |> present()
         }
     }

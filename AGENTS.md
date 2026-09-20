@@ -110,6 +110,9 @@ as a standalone statement or the sole initializer of one let/var in a Result
 function/block. It performs ordinary early return, preserving defer; do not use
 it in cleanup, nested expressions or as a function pointer. Arrays require move
 initializers. Keep an ordinary success return so the enclosing Result type is known.
+Numbered examples use sdl_try; keep examples/results/01_results.das as the explicit
+Result/and_then comparison to examples/results/02_sdl_try.das. Report errors in main;
+retain Option defaults and normal false/pending/unsupported states.
 Prefer receiver-first pipes. Scalar out parameters require explicit references;
 managed structs differ. `pass`, `block` and `variant` are reserved identifiers.
 Keep public examples free of unsafe/address expressions; never relax language pointer

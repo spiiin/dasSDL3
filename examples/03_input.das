@@ -1,4 +1,5 @@
 options gen2
+require dassdl3/sdl3_try
 require dassdl3/sdl3_boost
 require math
 
@@ -51,16 +52,11 @@ def input_loop(window : SDL_Window?; renderer : SDL_Renderer?; smoke : bool; var
         if (key_down(SDL_SCANCODE_DOWN)) { position.y += 240.0 * dt }
         position.x = clamp(position.x, size / 2.0, 800.0 - size / 2.0)
         position.y = clamp(position.y, size / 2.0, 600.0 - size / 2.0)
-        var set_title_result <- window |> set_title("dasSDL3 | {typed} [{composition}] | mouse/arrows, click, wheel; Esc exits")
-        if (is_err(set_title_result)) { return set_title_result }
-        var clear_result <- renderer |> clear()
-        if (is_err(clear_result)) { return clear_result }
-        var set_color_result <- renderer |> set_color(alternate ? uint4(245u, 190u, 60u, 255u) : uint4(70u, 200u, 160u, 255u))
-        if (is_err(set_color_result)) { return set_color_result }
-        var fill_rect_result <- renderer |> fill_rect(SDL_MakeFRect(position.x - size / 2.0, position.y - size / 2.0, size, size))
-        if (is_err(fill_rect_result)) { return fill_rect_result }
-        var present_result <- renderer |> present()
-        if (is_err(present_result)) { return present_result }
+        window |> set_title("dasSDL3 | {typed} [{composition}] | mouse/arrows, click, wheel; Esc exits") |> sdl_try
+        renderer |> clear() |> sdl_try
+        renderer |> set_color(alternate ? uint4(245u, 190u, 60u, 255u) : uint4(70u, 200u, 160u, 255u)) |> sdl_try
+        renderer |> fill_rect(SDL_MakeFRect(position.x - size / 2.0, position.y - size / 2.0, size, size)) |> sdl_try
+        renderer |> present() |> sdl_try
         frames++
         if (smoke && frames >= 60) { break }
         SDL_Delay(16u)

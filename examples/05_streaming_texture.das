@@ -1,4 +1,5 @@
 options gen2
+require dassdl3/sdl3_try
 require dassdl3/sdl3_pixels_boost
 
 // Scenario adapted from SDL release-3.2.18 examples/renderer/07-streaming-textures
@@ -6,7 +7,8 @@ require dassdl3/sdl3_pixels_boost
 
 def render_streaming(window : SDL_Window?; renderer : SDL_Renderer?; texture : SDL_Texture?; smoke : bool; var frames : int&) : $Result<SdlUnit; SdlError> {
     var pixels : array<uint8>
-    pixels |> resize(unwrap_or(rgba8_buffer_size(150, 150, 600), -1))
+    let byte_count = rgba8_buffer_size(150, 150, 600) |> sdl_try
+    pixels |> resize(byte_count)
     var event = SDL_MakeEvent()
     var running = true
     while (running) {
@@ -23,14 +25,10 @@ def render_streaming(window : SDL_Window?; renderer : SDL_Renderer?; texture : S
             pixels[i+2] = uint8(0)
             pixels[i+3] = uint8(255)
         }
-        var upload_rgba8_result <- texture |> upload_rgba8(pixels, 600)
-        if (is_err(upload_rgba8_result)) { return upload_rgba8_result }
-        var clear_result <- renderer |> clear(uint4(66u, 66u, 66u, 255u))
-        if (is_err(clear_result)) { return clear_result }
-        var draw_texture_result <- renderer |> draw_texture(texture, SDL_MakeFRect(245.0, 165.0, 150.0, 150.0))
-        if (is_err(draw_texture_result)) { return draw_texture_result }
-        var present_result <- renderer |> present()
-        if (is_err(present_result)) { return present_result }
+        texture |> upload_rgba8(pixels, 600) |> sdl_try
+        renderer |> clear(uint4(66u, 66u, 66u, 255u)) |> sdl_try
+        renderer |> draw_texture(texture, SDL_MakeFRect(245.0, 165.0, 150.0, 150.0)) |> sdl_try
+        renderer |> present() |> sdl_try
         frames++
         if (smoke && frames >= 60) { break }
         SDL_Delay(16u)

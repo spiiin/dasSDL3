@@ -1,20 +1,18 @@
 options gen2
+require dassdl3/sdl3_try
 require dassdl3/sdl3_gpu_utilities_boost
 
 def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; SdlError> {
     var data : array<uint8>
     resize(data,16)
-    let gpu_buffer_result = device |> with_gpu_buffer(data,SDL_GPU_BUFFERUSAGE_VERTEX) $(buffer : uint64) {
-        var gpu_buffer_name_result <- device |> gpu_buffer_name(buffer,"example29 vertices")
-        if (is_err(gpu_buffer_name_result)) { return gpu_buffer_name_result }
+    device |> with_gpu_buffer(data,SDL_GPU_BUFFERUSAGE_VERTEX) $(buffer : uint64) {
+        device |> gpu_buffer_name(buffer,"example29 vertices") |> sdl_try
         return device |> with_gpu_rgba_texture(2u,2u) $(texture : uint64) {
-            var gpu_texture_name_result <- device |> gpu_texture_name(texture,"example29 texture")
-            if (is_err(gpu_texture_name_result)) { return gpu_texture_name_result }
+            device |> gpu_texture_name(texture,"example29 texture") |> sdl_try
 
             return sdl_ok()
         }
-    }
-    if (is_err(gpu_buffer_result)) { return gpu_buffer_result }
+    } |> sdl_try
     print("GPU resource names assigned (visibility depends on debug tools)\n")
 
     return sdl_ok()

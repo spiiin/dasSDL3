@@ -1,4 +1,5 @@
 options gen2
+require dassdl3/sdl3_try
 require dassdl3/sdl3_properties_boost
 [export]
 def main(smoke : bool) : int {
@@ -9,9 +10,8 @@ def main(smoke : bool) : int {
             if(!SDL_SetNumberProperty(props,"width",800l)) {return err(sdl_error("51_properties"),type<SdlUnit>)}
             if(!SDL_SetBooleanProperty(props,"resizable",true)) {return err(sdl_error("51_properties"),type<SdlUnit>)}
             var names : array<string>
-            var property_names_result <- property_names(props,names)
-            if (is_err(property_names_result)) { return property_names_result }
-            let title=unwrap_or(property_string(props,"title"), "")
+            property_names(props,names) |> sdl_try
+            let title=property_string(props,"title") |> sdl_try
             let width=SDL_GetNumberProperty(props,"width",0l)
             print("{title}: {width}\n")
             for(name in names) { print("property: {name}\n") }
