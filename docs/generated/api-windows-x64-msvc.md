@@ -4,7 +4,7 @@ SDL 3.2.18; profile `windows-x64-msvc`.
 
 Active declarations/macros only; inactive platform branches are NOT counted. Record and typedef entries are distinct declarations.
 
-Generated functions: **359/1226** active non-excluded functions.
+Generated functions: **428/1226** active non-excluded functions.
 Adapted coverage and boost coverage are not inferred from function names.
 
 | Category | Functions | Generated | Adapted | Pending |
@@ -22,14 +22,14 @@ Adapted coverage and boost coverage are not inferred from function names.
 | Endian | 1 | 0 | 0 | 1 |
 | Error | 5 | 3 | 1 | 1 |
 | Events | 19 | 3 | 0 | 16 |
-| Filesystem | 11 | 1 | 0 | 10 |
+| Filesystem | 11 | 2 | 0 | 9 |
 | GPU | 92 | 92 | 0 | 0 |
 | GUID | 2 | 0 | 0 | 2 |
 | Gamepad | 73 | 0 | 0 | 73 |
 | HIDAPI | 22 | 0 | 0 | 22 |
 | Haptic | 31 | 0 | 0 | 31 |
 | Hints | 8 | 6 | 0 | 2 |
-| IOStream | 48 | 0 | 0 | 48 |
+| IOStream | 48 | 4 | 0 | 44 |
 | Init | 10 | 9 | 0 | 1 |
 | Joystick | 58 | 0 | 0 | 58 |
 | Keyboard | 24 | 5 | 0 | 19 |
@@ -41,7 +41,7 @@ Adapted coverage and boost coverage are not inferred from function names.
 | Misc | 1 | 0 | 0 | 1 |
 | Mouse | 22 | 1 | 0 | 21 |
 | Mutex | 28 | 0 | 0 | 28 |
-| Pixels | 11 | 0 | 0 | 11 |
+| Pixels | 11 | 11 | 0 | 0 |
 | Platform | 1 | 0 | 0 | 1 |
 | Power | 1 | 0 | 0 | 1 |
 | Process | 9 | 0 | 0 | 9 |
@@ -52,7 +52,7 @@ Adapted coverage and boost coverage are not inferred from function names.
 | SharedObject | 3 | 0 | 0 | 3 |
 | Stdinc | 170 | 1 | 0 | 169 |
 | Storage | 17 | 0 | 0 | 17 |
-| Surface | 58 | 5 | 3 | 50 |
+| Surface | 58 | 58 | 0 | 0 |
 | System | 13 | 0 | 0 | 13 |
 | Thread | 12 | 0 | 0 | 12 |
 | Time | 9 | 9 | 0 | 0 |

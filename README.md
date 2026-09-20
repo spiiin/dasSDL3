@@ -435,3 +435,13 @@ Renderer raw geometry: [contract](docs/renderer-final-api.md), [example 64](exam
 ```powershell
 .\build\ninja\bin\dasSDL3_runner.exe examples/64_renderer_raw_geometry.das
 ```
+
+Surface state: [contract](docs/surface-state.md), [example 65](examples/65_surface_state.das).
+```powershell
+.\build\ninja\bin\dasSDL3_runner.exe examples/65_surface_state.das
+```
+
+Surface/Pixels: [contract](docs/surface-pixels.md), [example 66](examples/66_surface_pixels.das).
+```powershell
+.\build\ninja\bin\dasSDL3_runner.exe examples/66_surface_pixels.das
+```

@@ -78,3 +78,7 @@ See [native GPU guide](../docs/gpu-native-boost.md) for ownership and execution.
 - [63_renderer_operations.das](63_renderer_operations.das): paired creation, rotated texture and debug text.
 
 - [64_renderer_raw_geometry.das](64_renderer_raw_geometry.das): split position/color arrays and literal debug text.
+
+- [65_surface_state.das](65_surface_state.das): clipped surface fill, color key and modulation captured by a texture.
+
+- [66_surface_pixels.das](66_surface_pixels.das): per-pixel surface data and scaled tiling with direct SDL.

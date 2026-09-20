@@ -861,7 +861,7 @@
       "line": 1011,
       "id": "enum:SDL_Colorspace",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1301,7 +1301,7 @@
       "line": 71,
       "id": "enum:SDL_IOWhence",
       "category": "IOStream",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2325,7 +2325,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_COLORSPACE_BT2020_FULL",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2336,7 +2336,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_COLORSPACE_BT2020_LIMITED",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2347,7 +2347,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_COLORSPACE_BT601_FULL",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2358,7 +2358,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_COLORSPACE_BT601_LIMITED",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2369,7 +2369,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_COLORSPACE_BT709_FULL",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2380,7 +2380,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_COLORSPACE_BT709_LIMITED",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2391,7 +2391,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_COLORSPACE_HDR10",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2402,7 +2402,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_COLORSPACE_JPEG",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2413,7 +2413,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_COLORSPACE_RGB_DEFAULT",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2424,7 +2424,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_COLORSPACE_SRGB",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2435,7 +2435,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_COLORSPACE_SRGB_LINEAR",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2446,7 +2446,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_COLORSPACE_UNKNOWN",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2457,7 +2457,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_COLORSPACE_YUV_DEFAULT",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8045,7 +8045,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_IO_SEEK_CUR",
       "category": "IOStream",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8056,7 +8056,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_IO_SEEK_END",
       "category": "IOStream",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8067,7 +8067,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_IO_SEEK_SET",
       "category": "IOStream",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -14351,8 +14351,13 @@
       ],
       "id": "function:SDL_AddSurfaceAlternateImage",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_AddTimer",
@@ -15135,8 +15140,13 @@
       ],
       "id": "function:SDL_BlitSurface",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_BlitSurface9Grid",
@@ -15189,8 +15199,13 @@
       ],
       "id": "function:SDL_BlitSurface9Grid",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_BlitSurfaceScaled",
@@ -15223,8 +15238,13 @@
       ],
       "id": "function:SDL_BlitSurfaceScaled",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_BlitSurfaceTiled",
@@ -15253,8 +15273,13 @@
       ],
       "id": "function:SDL_BlitSurfaceTiled",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_BlitSurfaceTiledWithScale",
@@ -15291,8 +15316,13 @@
       ],
       "id": "function:SDL_BlitSurfaceTiledWithScale",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_BlitSurfaceUnchecked",
@@ -15321,8 +15351,13 @@
       ],
       "id": "function:SDL_BlitSurfaceUnchecked",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_BlitSurfaceUncheckedScaled",
@@ -15355,8 +15390,13 @@
       ],
       "id": "function:SDL_BlitSurfaceUncheckedScaled",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_BroadcastCondition",
@@ -15616,8 +15656,13 @@
       ],
       "id": "function:SDL_ClearSurface",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_ClickTrayEntry",
@@ -15754,8 +15799,13 @@
       ],
       "id": "function:SDL_CloseIO",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_CloseJoystick",
@@ -16040,8 +16090,13 @@
       ],
       "id": "function:SDL_ConvertPixels",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_ConvertPixelsAndColorspace",
@@ -16102,8 +16157,13 @@
       ],
       "id": "function:SDL_ConvertPixelsAndColorspace",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_ConvertSurface",
@@ -16124,14 +16184,13 @@
       ],
       "id": "function:SDL_ConvertSurface",
       "category": "Surface",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "RGBA32 copy only; temporary conversion surface stays native",
-      "adapter": "SDL_CopySurfaceRGBA8",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
       "tests": [
-        "tests/pixels.das"
-      ],
-      "contract": "docs/pixels.md"
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_ConvertSurfaceAndColorspace",
@@ -16164,8 +16223,13 @@
       ],
       "id": "function:SDL_ConvertSurfaceAndColorspace",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_CopyFile",
@@ -16780,8 +16844,13 @@
       ],
       "id": "function:SDL_CreatePalette",
       "category": "Pixels",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_CreatePopupWindow",
@@ -17062,8 +17131,13 @@
       ],
       "id": "function:SDL_CreateSurfaceFrom",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_CreateSurfacePalette",
@@ -17080,8 +17154,13 @@
       ],
       "id": "function:SDL_CreateSurfacePalette",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_CreateSystemCursor",
@@ -17676,8 +17755,13 @@
       ],
       "id": "function:SDL_DestroyPalette",
       "category": "Pixels",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_DestroyProcess",
@@ -18212,8 +18296,13 @@
       ],
       "id": "function:SDL_DuplicateSurface",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_EGL_GetCurrentConfig",
@@ -18592,8 +18681,13 @@
       ],
       "id": "function:SDL_FillSurfaceRects",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_FilterEvents",
@@ -18663,8 +18757,13 @@
       ],
       "id": "function:SDL_FlipSurface",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_FlushAudioStream",
@@ -23046,8 +23145,13 @@
       ],
       "id": "function:SDL_GetMasksForPixelFormat",
       "category": "Pixels",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_GetMaxHapticEffects",
@@ -23588,8 +23692,13 @@
       ],
       "id": "function:SDL_GetPixelFormatDetails",
       "category": "Pixels",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_GetPixelFormatForMasks",
@@ -23622,8 +23731,13 @@
       ],
       "id": "function:SDL_GetPixelFormatForMasks",
       "category": "Pixels",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_GetPixelFormatName",
@@ -23640,8 +23754,13 @@
       ],
       "id": "function:SDL_GetPixelFormatName",
       "category": "Pixels",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_GetPlatform",
@@ -23886,8 +24005,13 @@
       ],
       "id": "function:SDL_GetRGB",
       "category": "Pixels",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_GetRGBA",
@@ -23928,8 +24052,13 @@
       ],
       "id": "function:SDL_GetRGBA",
       "category": "Pixels",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_GetRealGamepadType",
@@ -25240,8 +25369,13 @@
       ],
       "id": "function:SDL_GetSurfaceAlphaMod",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
     },
     {
       "name": "SDL_GetSurfaceBlendMode",
@@ -25262,8 +25396,13 @@
       ],
       "id": "function:SDL_GetSurfaceBlendMode",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
     },
     {
       "name": "SDL_GetSurfaceClipRect",
@@ -25284,8 +25423,13 @@
       ],
       "id": "function:SDL_GetSurfaceClipRect",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
     },
     {
       "name": "SDL_GetSurfaceColorKey",
@@ -25306,8 +25450,13 @@
       ],
       "id": "function:SDL_GetSurfaceColorKey",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
     },
     {
       "name": "SDL_GetSurfaceColorMod",
@@ -25336,8 +25485,13 @@
       ],
       "id": "function:SDL_GetSurfaceColorMod",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
     },
     {
       "name": "SDL_GetSurfaceColorspace",
@@ -25354,8 +25508,13 @@
       ],
       "id": "function:SDL_GetSurfaceColorspace",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
     },
     {
       "name": "SDL_GetSurfaceImages",
@@ -25376,8 +25535,13 @@
       ],
       "id": "function:SDL_GetSurfaceImages",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_GetSurfacePalette",
@@ -25394,8 +25558,13 @@
       ],
       "id": "function:SDL_GetSurfacePalette",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_GetSurfaceProperties",
@@ -25412,8 +25581,13 @@
       ],
       "id": "function:SDL_GetSurfaceProperties",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
     },
     {
       "name": "SDL_GetSystemRAM",
@@ -27372,8 +27546,13 @@
       ],
       "id": "function:SDL_IOFromConstMem",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_IOFromDynamicMem",
@@ -27429,8 +27608,13 @@
       ],
       "id": "function:SDL_IOFromMem",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_IOprintf",
@@ -27830,8 +28014,13 @@
       ],
       "id": "function:SDL_LoadBMP_IO",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_LoadFile",
@@ -28147,14 +28336,13 @@
       ],
       "id": "function:SDL_LockSurface",
       "category": "Surface",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Internal lock of converted readback surface; no borrowed pixels exposed",
-      "adapter": "SDL_CopySurfaceRGBA8",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
       "tests": [
-        "tests/pixels.das"
-      ],
-      "contract": "docs/pixels.md"
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_LockTexture",
@@ -28569,8 +28757,13 @@
       ],
       "id": "function:SDL_MapRGB",
       "category": "Pixels",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_MapRGBA",
@@ -28607,8 +28800,13 @@
       ],
       "id": "function:SDL_MapRGBA",
       "category": "Pixels",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_MapSurfaceRGB",
@@ -28637,8 +28835,13 @@
       ],
       "id": "function:SDL_MapSurfaceRGB",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_MapSurfaceRGBA",
@@ -29507,8 +29710,13 @@
       ],
       "id": "function:SDL_PremultiplyAlpha",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_PremultiplySurfaceAlpha",
@@ -29529,8 +29737,13 @@
       ],
       "id": "function:SDL_PremultiplySurfaceAlpha",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_PumpEvents",
@@ -30117,8 +30330,13 @@
       ],
       "id": "function:SDL_ReadSurfacePixel",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_ReadSurfacePixelFloat",
@@ -30159,8 +30377,13 @@
       ],
       "id": "function:SDL_ReadSurfacePixelFloat",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_ReadU16BE",
@@ -30841,8 +31064,13 @@
       ],
       "id": "function:SDL_RemovePath",
       "category": "Filesystem",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_RemoveStoragePath",
@@ -30881,8 +31109,13 @@
       ],
       "id": "function:SDL_RemoveSurfaceAlternateImages",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_RemoveTimer",
@@ -32213,8 +32446,13 @@
       ],
       "id": "function:SDL_SaveBMP",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_SaveBMP_IO",
@@ -32239,8 +32477,13 @@
       ],
       "id": "function:SDL_SaveBMP_IO",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_SaveFile",
@@ -32325,8 +32568,13 @@
       ],
       "id": "function:SDL_ScaleSurface",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_ScreenKeyboardShown",
@@ -32387,8 +32635,13 @@
       ],
       "id": "function:SDL_SeekIO",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_SendGamepadEffect",
@@ -34019,8 +34272,13 @@
       ],
       "id": "function:SDL_SetPaletteColors",
       "category": "Pixels",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_SetPointerProperty",
@@ -34469,8 +34727,13 @@
       ],
       "id": "function:SDL_SetSurfaceAlphaMod",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
     },
     {
       "name": "SDL_SetSurfaceBlendMode",
@@ -34491,8 +34754,13 @@
       ],
       "id": "function:SDL_SetSurfaceBlendMode",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
     },
     {
       "name": "SDL_SetSurfaceClipRect",
@@ -34513,8 +34781,13 @@
       ],
       "id": "function:SDL_SetSurfaceClipRect",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
     },
     {
       "name": "SDL_SetSurfaceColorKey",
@@ -34539,8 +34812,13 @@
       ],
       "id": "function:SDL_SetSurfaceColorKey",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
     },
     {
       "name": "SDL_SetSurfaceColorMod",
@@ -34569,8 +34847,13 @@
       ],
       "id": "function:SDL_SetSurfaceColorMod",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
     },
     {
       "name": "SDL_SetSurfaceColorspace",
@@ -34591,8 +34874,13 @@
       ],
       "id": "function:SDL_SetSurfaceColorspace",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
     },
     {
       "name": "SDL_SetSurfacePalette",
@@ -34613,8 +34901,13 @@
       ],
       "id": "function:SDL_SetSurfacePalette",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_SetSurfaceRLE",
@@ -34635,8 +34928,13 @@
       ],
       "id": "function:SDL_SetSurfaceRLE",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
     },
     {
       "name": "SDL_SetTLS",
@@ -36242,8 +36540,13 @@
       ],
       "id": "function:SDL_StretchSurface",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_StringToGUID",
@@ -36326,8 +36629,13 @@
       ],
       "id": "function:SDL_SurfaceHasAlternateImages",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_SurfaceHasColorKey",
@@ -36344,8 +36652,13 @@
       ],
       "id": "function:SDL_SurfaceHasColorKey",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
     },
     {
       "name": "SDL_SurfaceHasRLE",
@@ -36362,8 +36675,13 @@
       ],
       "id": "function:SDL_SurfaceHasRLE",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
     },
     {
       "name": "SDL_SwapFloat",
@@ -36819,14 +37137,13 @@
       ],
       "id": "function:SDL_UnlockSurface",
       "category": "Surface",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Internal cleanup of converted readback surface",
-      "adapter": "SDL_CopySurfaceRGBA8",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
       "tests": [
-        "tests/pixels.das"
-      ],
-      "contract": "docs/pixels.md"
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_UnlockTexture",
@@ -38162,8 +38479,13 @@
       ],
       "id": "function:SDL_WriteSurfacePixel",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_WriteSurfacePixelFloat",
@@ -38204,8 +38526,13 @@
       ],
       "id": "function:SDL_WriteSurfacePixelFloat",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
     },
     {
       "name": "SDL_WriteU16BE",
@@ -63852,8 +64179,14 @@
       ],
       "id": "record:SDL_Color",
       "category": "Pixels",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "r",
+        "g",
+        "b",
+        "a"
+      ]
     },
     {
       "name": "SDL_CommonEvent",
@@ -67032,7 +67365,7 @@
       "fields": [],
       "id": "record:SDL_IOStream",
       "category": "IOStream",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -67891,7 +68224,7 @@
       ],
       "id": "record:SDL_Palette",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -68245,8 +68578,25 @@
       ],
       "id": "record:SDL_PixelFormatDetails",
       "category": "Pixels",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "format",
+        "bits_per_pixel",
+        "bytes_per_pixel",
+        "Rmask",
+        "Gmask",
+        "Bmask",
+        "Amask",
+        "Rbits",
+        "Gbits",
+        "Bbits",
+        "Abits",
+        "Rshift",
+        "Gshift",
+        "Bshift",
+        "Ashift"
+      ]
     },
     {
       "name": "SDL_Point",
@@ -69754,8 +70104,14 @@
       "callback": false,
       "id": "typedef:SDL_Color",
       "category": "Pixels",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "r",
+        "g",
+        "b",
+        "a"
+      ]
     },
     {
       "name": "SDL_ColorPrimaries",
@@ -69802,7 +70158,7 @@
       "callback": false,
       "id": "typedef:SDL_Colorspace",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -71947,7 +72303,7 @@
       "callback": false,
       "id": "typedef:SDL_IOStream",
       "category": "IOStream",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -71971,7 +72327,7 @@
       "callback": false,
       "id": "typedef:SDL_IOWhence",
       "category": "IOStream",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -72540,7 +72896,7 @@
       "callback": false,
       "id": "typedef:SDL_Palette",
       "category": "Pixels",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -72684,8 +73040,25 @@
       "callback": false,
       "id": "typedef:SDL_PixelFormatDetails",
       "category": "Pixels",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "format",
+        "bits_per_pixel",
+        "bytes_per_pixel",
+        "Rmask",
+        "Gmask",
+        "Bmask",
+        "Amask",
+        "Rbits",
+        "Gbits",
+        "Bbits",
+        "Abits",
+        "Rshift",
+        "Gshift",
+        "Bshift",
+        "Ashift"
+      ]
     },
     {
       "name": "SDL_PixelType",

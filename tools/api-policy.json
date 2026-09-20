@@ -686,34 +686,28 @@
       ]
     },
     "function:SDL_ConvertSurface": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "RGBA32 copy only; temporary conversion surface stays native",
-      "adapter": "SDL_CopySurfaceRGBA8",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
       "tests": [
-        "tests/pixels.das"
-      ],
-      "contract": "docs/pixels.md"
+        "tests/surface_pixels.das"
+      ]
     },
     "function:SDL_LockSurface": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Internal lock of converted readback surface; no borrowed pixels exposed",
-      "adapter": "SDL_CopySurfaceRGBA8",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
       "tests": [
-        "tests/pixels.das"
-      ],
-      "contract": "docs/pixels.md"
+        "tests/surface_pixels.das"
+      ]
     },
     "function:SDL_UnlockSurface": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Internal cleanup of converted readback surface",
-      "adapter": "SDL_CopySurfaceRGBA8",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
       "tests": [
-        "tests/pixels.das"
-      ],
-      "contract": "docs/pixels.md"
+        "tests/surface_pixels.das"
+      ]
     },
     "function:SDL_GetRenderTarget": {
       "boost_status": "scoped",
@@ -2457,6 +2451,534 @@
       "contract": "docs/renderer-final-api.md",
       "tests": [
         "tests/renderer_final_api.das"
+      ]
+    },
+    "function:SDL_GetSurfaceProperties": {
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
+    },
+    "function:SDL_SetSurfaceColorspace": {
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
+    },
+    "function:SDL_GetSurfaceColorspace": {
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
+    },
+    "function:SDL_SetSurfaceRLE": {
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
+    },
+    "function:SDL_SurfaceHasRLE": {
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
+    },
+    "function:SDL_SetSurfaceColorKey": {
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
+    },
+    "function:SDL_SurfaceHasColorKey": {
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
+    },
+    "function:SDL_GetSurfaceColorKey": {
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
+    },
+    "function:SDL_SetSurfaceColorMod": {
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
+    },
+    "function:SDL_GetSurfaceColorMod": {
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
+    },
+    "function:SDL_SetSurfaceAlphaMod": {
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
+    },
+    "function:SDL_GetSurfaceAlphaMod": {
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
+    },
+    "function:SDL_SetSurfaceBlendMode": {
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
+    },
+    "function:SDL_GetSurfaceBlendMode": {
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
+    },
+    "function:SDL_SetSurfaceClipRect": {
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
+    },
+    "function:SDL_GetSurfaceClipRect": {
+      "boost_status": "partial",
+      "reason": "Native surface state signature with scalar/rectangle reference adapters. Properties are borrowed; colorspace assignment does not convert pixels.",
+      "contract": "docs/surface-state.md",
+      "tests": [
+        "tests/surface_state.das"
+      ]
+    },
+    "function:SDL_AddSurfaceAlternateImage": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_BlitSurface": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_BlitSurface9Grid": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_BlitSurfaceScaled": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_BlitSurfaceTiled": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_BlitSurfaceTiledWithScale": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_BlitSurfaceUnchecked": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_BlitSurfaceUncheckedScaled": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_ClearSurface": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_ConvertPixels": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_ConvertPixelsAndColorspace": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_ConvertSurfaceAndColorspace": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_CreatePalette": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_CreateSurfaceFrom": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_CreateSurfacePalette": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_DestroyPalette": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_DuplicateSurface": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_FillSurfaceRects": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_FlipSurface": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_GetMasksForPixelFormat": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_GetPixelFormatDetails": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_GetPixelFormatForMasks": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_GetPixelFormatName": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_GetRGB": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_GetRGBA": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_GetSurfaceImages": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_GetSurfacePalette": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_LoadBMP_IO": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_MapRGB": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_MapRGBA": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_MapSurfaceRGB": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_PremultiplyAlpha": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_PremultiplySurfaceAlpha": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_ReadSurfacePixel": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_ReadSurfacePixelFloat": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_RemoveSurfaceAlternateImages": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_SaveBMP": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_SaveBMP_IO": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_ScaleSurface": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_SetPaletteColors": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_SetSurfacePalette": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_StretchSurface": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_SurfaceHasAlternateImages": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_WriteSurfacePixel": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_WriteSurfacePixelFloat": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_IOFromMem": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_IOFromConstMem": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_CloseIO": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_SeekIO": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
+      ]
+    },
+    "function:SDL_RemovePath": {
+      "boost_status": "partial",
+      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
+      "contract": "docs/surface-pixels.md",
+      "tests": [
+        "tests/surface_pixels.das"
       ]
     }
   }

@@ -31,6 +31,8 @@
 #include "sdl3_renderer_yuv_blend.h"
 #include "sdl3_renderer_operations.h"
 #include "sdl3_renderer_final_api.h"
+#include "sdl3_surface_state.h"
+#include "sdl3_surface_pixels.h"
 #include "parity_types.inc"
 #include "sdl3_texture_load.h"
 #include "aot_recover.h"

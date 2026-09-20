@@ -60,3 +60,7 @@
 - [Renderer operations](renderer-operations.md): creation, transformed drawing, readback, VSync and debug text.
 
 - [Renderer final APIs](renderer-final-api.md): raw geometry, event conversion, fixed-text format and native interop limits.
+
+- [Surface state](surface-state.md): properties, colorspace, RLE, color key, modulation, blending and clipping.
+
+- [Surface and Pixels](surface-pixels.md): full native function inventory, palette/image lifetimes, blits, buffers and BMP IO.

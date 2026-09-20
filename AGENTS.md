@@ -16,7 +16,11 @@ verified; Properties now has 19 generated functions plus copied enumeration; ret
 cleanup callback remains pending. Read docs/properties.md for the pinned numeric
 string-cache/CopyProperties double-free defect and copied-string adapter. Hints/Init adds 12 generated functions, copied getters and subsystem defer scopes;
 see docs/init-hints.md for pending callbacks and string constants. Next
-library-wide batch: Surface. Render has 88 generated signatures and one fixed-text
+library-wide queue: follow docs/full-binding-roadmap.md after Surface/Pixels.
+All 58 Surface and 11 Pixels functions now have raw signatures; see
+docs/surface-pixels.md for memory, palette and BMP ownership limits. Surface state adds 16 raw functions and scalar/rect adapters;
+see docs/surface-state.md. Choose cohesive behavioral packages, not a fixed function
+count; implement a package before testing it as a whole. Render has 88 generated signatures and one fixed-text
 variadic adapter; positive native Metal/Vulkan interop remains unverified.
 See docs/renderer-final-api.md. Renderer operations adds 10 raw functions;
 see docs/renderer-operations.md for paired creation, borrowed draw refs, owned

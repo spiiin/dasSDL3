@@ -66,7 +66,7 @@ Renderer queries/logical presentation: 10 raw функций, все режим�
 Byte modulation/blend modes и texture updates/locking: 10 raw функций, RGBA32 region updates и surface-lock scope; [контракт](texture-transfer.md).
 YUV/NV, renderer color/blend и custom blend composition: 10 raw функций; [контракт](renderer-yuv-blend.md).
 Renderer creation/draw/readback/VSync/debug: 10 raw функций и scopes; [контракт](renderer-operations.md).
-Render: 88 generated / 1 adapted / 0 pending. [GeometryRaw/events/interop](renderer-final-api.md); DebugTextFormat ограничен fixed-text адаптером, положительные Metal/Vulkan interop сценарии не проверены. Далее — Surface API.
+Render: 88 generated / 1 adapted / 0 pending. [GeometryRaw/events/interop](renderer-final-api.md); DebugTextFormat ограничен fixed-text адаптером, положительные Metal/Vulkan interop сценарии не проверены. Surface state: 16 raw функций, ref-адаптеры и пиксельные тесты; [контракт](surface-state.md). Все 58 Surface и 11 Pixels функций имеют raw-привязки, включая palettes/alternate images, внешнюю память, blit и BMP IO; [контракт](surface-pixels.md). Проверка относится к закреплённому Windows-профилю; не означает все форматы и межплатформенные сценарии. Пакеты формируются по связанному поведению, без фиксированного числа функций.
 Ниже сохраняются критерии пакета; callback-пункт 5 остаётся открытым.
 
 1. Генерация 19 сигнатур без callbacks, SDL_PropertyType и SDL_PropertiesID;

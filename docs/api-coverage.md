@@ -1,12 +1,15 @@
 # Покрытие SDL3
 
-Baseline: SDL 3.2.18, Windows x64/MSVC. Generated: 359; adapted: 16;
-pending: 851 of 1226 functions. GPU: 92 generated / 0 adapted / 0 pending.
+Baseline: SDL 3.2.18, Windows x64/MSVC. Generated: 428; adapted: 13;
+pending: 785 of 1226 functions. GPU: 92 generated / 0 adapted / 0 pending.
 `adapted` means a documented partial adapter, not full raw API coverage.
 See [API boundary](gpu-api-boundary.md) and the generated header census.
 
 | Подсистема / сценарий | Raw API | Идиоматичный слой | Проверка / оставшаяся работа |
 | --- | --- | --- | --- |
+| Surface/Pixels | Surface 58/58, Pixels 11/11 raw | Refs, packed arrays, copied pointer list, defer scopes | Native function execution, pixels and ownership; [contract](surface-pixels.md) |
+| Surface state | 16 generated | Scalar/rect refs | State, key/modulation and clip pixels; [contract](surface-state.md) |
+| Renderer final APIs | 5 generated, fixed-text variadic adapter | Geometry arrays, event refs | [Interop limitations](renderer-final-api.md) |
 | Renderer operations | 10 новых generated; ReadPixels больше не adapted | Ref draw/readback/VSync, creation scopes | Spatial pixels, clipped readback, lifetime; [контракт](renderer-operations.md) |
 | Renderer YUV/color/blend | 10 новых generated, blend enums | Bounded whole-texture plane arrays, scalar refs | Odd/padded YUV pixels, color and blend; [контракт](renderer-yuv-blend.md) |
 | Texture bytes/transfer | 10 новых generated; lock/unlock больше не adapted | uint refs, checked RGBA32 update, borrowed surface lock | Padded region pixels, blending, unlock; [контракт](texture-transfer.md) |

@@ -1051,6 +1051,52 @@ addIEx("BLENDFACTOR_DST_ALPHA","SDL_BLENDFACTOR_DST_ALPHA",int64_t(SDL_BLENDFACT
 static_assert(int64_t(SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA) == 10LL);
 addIEx("BLENDFACTOR_ONE_MINUS_DST_ALPHA","SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA",int64_t(SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA),das::LineInfo());
 } };
+DAS_BIND_ENUM_CAST(SDL_Colorspace);
+DAS_BASE_BIND_ENUM_GEN(SDL_Colorspace,SDL_Colorspace);
+static_assert(sizeof(SDL_Colorspace) == 4);
+class Enumeration_SDL_Colorspace : public das::Enumeration {
+public: Enumeration_SDL_Colorspace() : das::Enumeration("SDL_Colorspace") {
+external=true; cppName="SDL_Colorspace"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_Colorspace>::type>::type;
+static_assert(int64_t(SDL_COLORSPACE_UNKNOWN) == 0LL);
+addIEx("COLORSPACE_UNKNOWN","SDL_COLORSPACE_UNKNOWN",int64_t(SDL_COLORSPACE_UNKNOWN),das::LineInfo());
+static_assert(int64_t(SDL_COLORSPACE_SRGB) == 301991328LL);
+addIEx("COLORSPACE_SRGB","SDL_COLORSPACE_SRGB",int64_t(SDL_COLORSPACE_SRGB),das::LineInfo());
+static_assert(int64_t(SDL_COLORSPACE_SRGB_LINEAR) == 301991168LL);
+addIEx("COLORSPACE_SRGB_LINEAR","SDL_COLORSPACE_SRGB_LINEAR",int64_t(SDL_COLORSPACE_SRGB_LINEAR),das::LineInfo());
+static_assert(int64_t(SDL_COLORSPACE_HDR10) == 301999616LL);
+addIEx("COLORSPACE_HDR10","SDL_COLORSPACE_HDR10",int64_t(SDL_COLORSPACE_HDR10),das::LineInfo());
+static_assert(int64_t(SDL_COLORSPACE_JPEG) == 570426566LL);
+addIEx("COLORSPACE_JPEG","SDL_COLORSPACE_JPEG",int64_t(SDL_COLORSPACE_JPEG),das::LineInfo());
+static_assert(int64_t(SDL_COLORSPACE_BT601_LIMITED) == 554703046LL);
+addIEx("COLORSPACE_BT601_LIMITED","SDL_COLORSPACE_BT601_LIMITED",int64_t(SDL_COLORSPACE_BT601_LIMITED),das::LineInfo());
+static_assert(int64_t(SDL_COLORSPACE_BT601_FULL) == 571480262LL);
+addIEx("COLORSPACE_BT601_FULL","SDL_COLORSPACE_BT601_FULL",int64_t(SDL_COLORSPACE_BT601_FULL),das::LineInfo());
+static_assert(int64_t(SDL_COLORSPACE_BT709_LIMITED) == 554697761LL);
+addIEx("COLORSPACE_BT709_LIMITED","SDL_COLORSPACE_BT709_LIMITED",int64_t(SDL_COLORSPACE_BT709_LIMITED),das::LineInfo());
+static_assert(int64_t(SDL_COLORSPACE_BT709_FULL) == 571474977LL);
+addIEx("COLORSPACE_BT709_FULL","SDL_COLORSPACE_BT709_FULL",int64_t(SDL_COLORSPACE_BT709_FULL),das::LineInfo());
+static_assert(int64_t(SDL_COLORSPACE_BT2020_LIMITED) == 554706441LL);
+addIEx("COLORSPACE_BT2020_LIMITED","SDL_COLORSPACE_BT2020_LIMITED",int64_t(SDL_COLORSPACE_BT2020_LIMITED),das::LineInfo());
+static_assert(int64_t(SDL_COLORSPACE_BT2020_FULL) == 571483657LL);
+addIEx("COLORSPACE_BT2020_FULL","SDL_COLORSPACE_BT2020_FULL",int64_t(SDL_COLORSPACE_BT2020_FULL),das::LineInfo());
+static_assert(int64_t(SDL_COLORSPACE_RGB_DEFAULT) == 301991328LL);
+addIEx("COLORSPACE_RGB_DEFAULT","SDL_COLORSPACE_RGB_DEFAULT",int64_t(SDL_COLORSPACE_RGB_DEFAULT),das::LineInfo());
+static_assert(int64_t(SDL_COLORSPACE_YUV_DEFAULT) == 570426566LL);
+addIEx("COLORSPACE_YUV_DEFAULT","SDL_COLORSPACE_YUV_DEFAULT",int64_t(SDL_COLORSPACE_YUV_DEFAULT),das::LineInfo());
+} };
+DAS_BIND_ENUM_CAST(SDL_IOWhence);
+DAS_BASE_BIND_ENUM_GEN(SDL_IOWhence,SDL_IOWhence);
+static_assert(sizeof(SDL_IOWhence) == 4);
+class Enumeration_SDL_IOWhence : public das::Enumeration {
+public: Enumeration_SDL_IOWhence() : das::Enumeration("SDL_IOWhence") {
+external=true; cppName="SDL_IOWhence"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_IOWhence>::type>::type;
+static_assert(int64_t(SDL_IO_SEEK_SET) == 0LL);
+addIEx("IO_SEEK_SET","SDL_IO_SEEK_SET",int64_t(SDL_IO_SEEK_SET),das::LineInfo());
+static_assert(int64_t(SDL_IO_SEEK_CUR) == 1LL);
+addIEx("IO_SEEK_CUR","SDL_IO_SEEK_CUR",int64_t(SDL_IO_SEEK_CUR),das::LineInfo());
+static_assert(int64_t(SDL_IO_SEEK_END) == 2LL);
+addIEx("IO_SEEK_END","SDL_IO_SEEK_END",int64_t(SDL_IO_SEEK_END),das::LineInfo());
+} };
 MAKE_TYPE_FACTORY(SDL_Window, SDL_Window);
 MAKE_TYPE_FACTORY(SDL_Renderer, SDL_Renderer);
 MAKE_TYPE_FACTORY(SDL_Surface, SDL_Surface);
@@ -1070,6 +1116,8 @@ MAKE_TYPE_FACTORY(SDL_GPUGraphicsPipeline, SDL_GPUGraphicsPipeline);
 MAKE_TYPE_FACTORY(SDL_GPURenderPass, SDL_GPURenderPass);
 MAKE_TYPE_FACTORY(SDL_GPUComputePass, SDL_GPUComputePass);
 MAKE_TYPE_FACTORY(SDL_GPUCopyPass, SDL_GPUCopyPass);
+MAKE_TYPE_FACTORY(SDL_Palette, SDL_Palette);
+MAKE_TYPE_FACTORY(SDL_IOStream, SDL_IOStream);
 MAKE_TYPE_FACTORY(SDL_GPUViewport, SDL_GPUViewport);
 MAKE_TYPE_FACTORY(SDL_GPUIndirectDrawCommand, SDL_GPUIndirectDrawCommand);
 MAKE_TYPE_FACTORY(SDL_GPUIndexedIndirectDrawCommand, SDL_GPUIndexedIndirectDrawCommand);
@@ -1119,6 +1167,8 @@ MAKE_TYPE_FACTORY(SDL_Rect, SDL_Rect);
 MAKE_TYPE_FACTORY(SDL_DateTime, SDL_DateTime);
 MAKE_TYPE_FACTORY(SDL_Point, SDL_Point);
 MAKE_TYPE_FACTORY(SDL_DisplayMode, SDL_DisplayMode);
+MAKE_TYPE_FACTORY(SDL_Color, SDL_Color);
+MAKE_TYPE_FACTORY(SDL_PixelFormatDetails, SDL_PixelFormatDetails);
 namespace das {
 struct SDL_GPUViewportAnnotation : ManagedStructureAnnotation<SDL_GPUViewport, false> {
     SDL_GPUViewportAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_GPUViewport", lib) {
@@ -1585,6 +1635,33 @@ struct SDL_DisplayModeAnnotation : ManagedStructureAnnotation<SDL_DisplayMode, f
         addField<DAS_BIND_MANAGED_FIELD(refresh_rate)>("refresh_rate", "refresh_rate");
         addField<DAS_BIND_MANAGED_FIELD(refresh_rate_numerator)>("refresh_rate_numerator", "refresh_rate_numerator");
         addField<DAS_BIND_MANAGED_FIELD(refresh_rate_denominator)>("refresh_rate_denominator", "refresh_rate_denominator");
+    }
+};
+struct SDL_ColorAnnotation : ManagedStructureAnnotation<SDL_Color, false> {
+    SDL_ColorAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_Color", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(r)>("r", "r");
+        addField<DAS_BIND_MANAGED_FIELD(g)>("g", "g");
+        addField<DAS_BIND_MANAGED_FIELD(b)>("b", "b");
+        addField<DAS_BIND_MANAGED_FIELD(a)>("a", "a");
+    }
+};
+struct SDL_PixelFormatDetailsAnnotation : ManagedStructureAnnotation<SDL_PixelFormatDetails, false> {
+    SDL_PixelFormatDetailsAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_PixelFormatDetails", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(format)>("format", "format");
+        addField<DAS_BIND_MANAGED_FIELD(bits_per_pixel)>("bits_per_pixel", "bits_per_pixel");
+        addField<DAS_BIND_MANAGED_FIELD(bytes_per_pixel)>("bytes_per_pixel", "bytes_per_pixel");
+        addField<DAS_BIND_MANAGED_FIELD(Rmask)>("Rmask", "Rmask");
+        addField<DAS_BIND_MANAGED_FIELD(Gmask)>("Gmask", "Gmask");
+        addField<DAS_BIND_MANAGED_FIELD(Bmask)>("Bmask", "Bmask");
+        addField<DAS_BIND_MANAGED_FIELD(Amask)>("Amask", "Amask");
+        addField<DAS_BIND_MANAGED_FIELD(Rbits)>("Rbits", "Rbits");
+        addField<DAS_BIND_MANAGED_FIELD(Gbits)>("Gbits", "Gbits");
+        addField<DAS_BIND_MANAGED_FIELD(Bbits)>("Bbits", "Bbits");
+        addField<DAS_BIND_MANAGED_FIELD(Abits)>("Abits", "Abits");
+        addField<DAS_BIND_MANAGED_FIELD(Rshift)>("Rshift", "Rshift");
+        addField<DAS_BIND_MANAGED_FIELD(Gshift)>("Gshift", "Gshift");
+        addField<DAS_BIND_MANAGED_FIELD(Bshift)>("Bshift", "Bshift");
+        addField<DAS_BIND_MANAGED_FIELD(Ashift)>("Ashift", "Ashift");
     }
 };
 } // namespace das

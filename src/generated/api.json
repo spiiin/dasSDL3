@@ -2561,5 +2561,588 @@
       "wait_semaphore",
       "signal_semaphore"
     ]
+  },
+  "SDL_GetSurfaceProperties": {
+    "signature": "SDL_PropertiesID (SDL_Surface *) __attribute__((cdecl))",
+    "arguments": [
+      "surface"
+    ]
+  },
+  "SDL_SetSurfaceColorspace": {
+    "signature": "bool (SDL_Surface *, SDL_Colorspace) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "colorspace"
+    ]
+  },
+  "SDL_GetSurfaceColorspace": {
+    "signature": "SDL_Colorspace (SDL_Surface *) __attribute__((cdecl))",
+    "arguments": [
+      "surface"
+    ]
+  },
+  "SDL_SetSurfaceRLE": {
+    "signature": "bool (SDL_Surface *, bool) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "enabled"
+    ]
+  },
+  "SDL_SurfaceHasRLE": {
+    "signature": "bool (SDL_Surface *) __attribute__((cdecl))",
+    "arguments": [
+      "surface"
+    ]
+  },
+  "SDL_SetSurfaceColorKey": {
+    "signature": "bool (SDL_Surface *, bool, Uint32) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "enabled",
+      "key"
+    ]
+  },
+  "SDL_SurfaceHasColorKey": {
+    "signature": "bool (SDL_Surface *) __attribute__((cdecl))",
+    "arguments": [
+      "surface"
+    ]
+  },
+  "SDL_GetSurfaceColorKey": {
+    "signature": "bool (SDL_Surface *, Uint32 *) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "key"
+    ]
+  },
+  "SDL_SetSurfaceColorMod": {
+    "signature": "bool (SDL_Surface *, Uint8, Uint8, Uint8) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "r",
+      "g",
+      "b"
+    ]
+  },
+  "SDL_GetSurfaceColorMod": {
+    "signature": "bool (SDL_Surface *, Uint8 *, Uint8 *, Uint8 *) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "r",
+      "g",
+      "b"
+    ]
+  },
+  "SDL_SetSurfaceAlphaMod": {
+    "signature": "bool (SDL_Surface *, Uint8) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "alpha"
+    ]
+  },
+  "SDL_GetSurfaceAlphaMod": {
+    "signature": "bool (SDL_Surface *, Uint8 *) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "alpha"
+    ]
+  },
+  "SDL_SetSurfaceBlendMode": {
+    "signature": "bool (SDL_Surface *, SDL_BlendMode) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "blendMode"
+    ]
+  },
+  "SDL_GetSurfaceBlendMode": {
+    "signature": "bool (SDL_Surface *, SDL_BlendMode *) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "blendMode"
+    ]
+  },
+  "SDL_SetSurfaceClipRect": {
+    "signature": "bool (SDL_Surface *, const SDL_Rect *) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "rect"
+    ]
+  },
+  "SDL_GetSurfaceClipRect": {
+    "signature": "bool (SDL_Surface *, SDL_Rect *) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "rect"
+    ]
+  },
+  "SDL_AddSurfaceAlternateImage": {
+    "signature": "bool (SDL_Surface *, SDL_Surface *) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "image"
+    ]
+  },
+  "SDL_BlitSurface": {
+    "signature": "bool (SDL_Surface *, const SDL_Rect *, SDL_Surface *, const SDL_Rect *) __attribute__((cdecl))",
+    "arguments": [
+      "src",
+      "srcrect",
+      "dst",
+      "dstrect"
+    ]
+  },
+  "SDL_BlitSurface9Grid": {
+    "signature": "bool (SDL_Surface *, const SDL_Rect *, int, int, int, int, float, SDL_ScaleMode, SDL_Surface *, const SDL_Rect *) __attribute__((cdecl))",
+    "arguments": [
+      "src",
+      "srcrect",
+      "left_width",
+      "right_width",
+      "top_height",
+      "bottom_height",
+      "scale",
+      "scaleMode",
+      "dst",
+      "dstrect"
+    ]
+  },
+  "SDL_BlitSurfaceScaled": {
+    "signature": "bool (SDL_Surface *, const SDL_Rect *, SDL_Surface *, const SDL_Rect *, SDL_ScaleMode) __attribute__((cdecl))",
+    "arguments": [
+      "src",
+      "srcrect",
+      "dst",
+      "dstrect",
+      "scaleMode"
+    ]
+  },
+  "SDL_BlitSurfaceTiled": {
+    "signature": "bool (SDL_Surface *, const SDL_Rect *, SDL_Surface *, const SDL_Rect *) __attribute__((cdecl))",
+    "arguments": [
+      "src",
+      "srcrect",
+      "dst",
+      "dstrect"
+    ]
+  },
+  "SDL_BlitSurfaceTiledWithScale": {
+    "signature": "bool (SDL_Surface *, const SDL_Rect *, float, SDL_ScaleMode, SDL_Surface *, const SDL_Rect *) __attribute__((cdecl))",
+    "arguments": [
+      "src",
+      "srcrect",
+      "scale",
+      "scaleMode",
+      "dst",
+      "dstrect"
+    ]
+  },
+  "SDL_BlitSurfaceUnchecked": {
+    "signature": "bool (SDL_Surface *, const SDL_Rect *, SDL_Surface *, const SDL_Rect *) __attribute__((cdecl))",
+    "arguments": [
+      "src",
+      "srcrect",
+      "dst",
+      "dstrect"
+    ]
+  },
+  "SDL_BlitSurfaceUncheckedScaled": {
+    "signature": "bool (SDL_Surface *, const SDL_Rect *, SDL_Surface *, const SDL_Rect *, SDL_ScaleMode) __attribute__((cdecl))",
+    "arguments": [
+      "src",
+      "srcrect",
+      "dst",
+      "dstrect",
+      "scaleMode"
+    ]
+  },
+  "SDL_ClearSurface": {
+    "signature": "bool (SDL_Surface *, float, float, float, float) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "r",
+      "g",
+      "b",
+      "a"
+    ]
+  },
+  "SDL_ConvertPixels": {
+    "signature": "bool (int, int, SDL_PixelFormat, const void *, int, SDL_PixelFormat, void *, int) __attribute__((cdecl))",
+    "arguments": [
+      "width",
+      "height",
+      "src_format",
+      "src",
+      "src_pitch",
+      "dst_format",
+      "dst",
+      "dst_pitch"
+    ]
+  },
+  "SDL_ConvertPixelsAndColorspace": {
+    "signature": "bool (int, int, SDL_PixelFormat, SDL_Colorspace, SDL_PropertiesID, const void *, int, SDL_PixelFormat, SDL_Colorspace, SDL_PropertiesID, void *, int) __attribute__((cdecl))",
+    "arguments": [
+      "width",
+      "height",
+      "src_format",
+      "src_colorspace",
+      "src_properties",
+      "src",
+      "src_pitch",
+      "dst_format",
+      "dst_colorspace",
+      "dst_properties",
+      "dst",
+      "dst_pitch"
+    ]
+  },
+  "SDL_ConvertSurface": {
+    "signature": "SDL_Surface *(SDL_Surface *, SDL_PixelFormat) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "format"
+    ]
+  },
+  "SDL_ConvertSurfaceAndColorspace": {
+    "signature": "SDL_Surface *(SDL_Surface *, SDL_PixelFormat, SDL_Palette *, SDL_Colorspace, SDL_PropertiesID) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "format",
+      "palette",
+      "colorspace",
+      "props"
+    ]
+  },
+  "SDL_CreatePalette": {
+    "signature": "SDL_Palette *(int) __attribute__((cdecl))",
+    "arguments": [
+      "ncolors"
+    ]
+  },
+  "SDL_CreateSurfaceFrom": {
+    "signature": "SDL_Surface *(int, int, SDL_PixelFormat, void *, int) __attribute__((cdecl))",
+    "arguments": [
+      "width",
+      "height",
+      "format",
+      "pixels",
+      "pitch"
+    ]
+  },
+  "SDL_CreateSurfacePalette": {
+    "signature": "SDL_Palette *(SDL_Surface *) __attribute__((cdecl))",
+    "arguments": [
+      "surface"
+    ]
+  },
+  "SDL_DestroyPalette": {
+    "signature": "void (SDL_Palette *) __attribute__((cdecl))",
+    "arguments": [
+      "palette"
+    ]
+  },
+  "SDL_DuplicateSurface": {
+    "signature": "SDL_Surface *(SDL_Surface *) __attribute__((cdecl))",
+    "arguments": [
+      "surface"
+    ]
+  },
+  "SDL_FillSurfaceRects": {
+    "signature": "bool (SDL_Surface *, const SDL_Rect *, int, Uint32) __attribute__((cdecl))",
+    "arguments": [
+      "dst",
+      "rects",
+      "count",
+      "color"
+    ]
+  },
+  "SDL_FlipSurface": {
+    "signature": "bool (SDL_Surface *, SDL_FlipMode) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "flip"
+    ]
+  },
+  "SDL_GetMasksForPixelFormat": {
+    "signature": "bool (SDL_PixelFormat, int *, Uint32 *, Uint32 *, Uint32 *, Uint32 *) __attribute__((cdecl))",
+    "arguments": [
+      "format",
+      "bpp",
+      "Rmask",
+      "Gmask",
+      "Bmask",
+      "Amask"
+    ]
+  },
+  "SDL_GetPixelFormatDetails": {
+    "signature": "const SDL_PixelFormatDetails *(SDL_PixelFormat) __attribute__((cdecl))",
+    "arguments": [
+      "format"
+    ]
+  },
+  "SDL_GetPixelFormatForMasks": {
+    "signature": "SDL_PixelFormat (int, Uint32, Uint32, Uint32, Uint32) __attribute__((cdecl))",
+    "arguments": [
+      "bpp",
+      "Rmask",
+      "Gmask",
+      "Bmask",
+      "Amask"
+    ]
+  },
+  "SDL_GetPixelFormatName": {
+    "signature": "const char *(SDL_PixelFormat) __attribute__((cdecl))",
+    "arguments": [
+      "format"
+    ]
+  },
+  "SDL_GetRGB": {
+    "signature": "void (Uint32, const SDL_PixelFormatDetails *, const SDL_Palette *, Uint8 *, Uint8 *, Uint8 *) __attribute__((cdecl))",
+    "arguments": [
+      "pixel",
+      "format",
+      "palette",
+      "r",
+      "g",
+      "b"
+    ]
+  },
+  "SDL_GetRGBA": {
+    "signature": "void (Uint32, const SDL_PixelFormatDetails *, const SDL_Palette *, Uint8 *, Uint8 *, Uint8 *, Uint8 *) __attribute__((cdecl))",
+    "arguments": [
+      "pixel",
+      "format",
+      "palette",
+      "r",
+      "g",
+      "b",
+      "a"
+    ]
+  },
+  "SDL_GetSurfaceImages": {
+    "signature": "SDL_Surface **(SDL_Surface *, int *) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "count"
+    ]
+  },
+  "SDL_GetSurfacePalette": {
+    "signature": "SDL_Palette *(SDL_Surface *) __attribute__((cdecl))",
+    "arguments": [
+      "surface"
+    ]
+  },
+  "SDL_LoadBMP_IO": {
+    "signature": "SDL_Surface *(SDL_IOStream *, bool) __attribute__((cdecl))",
+    "arguments": [
+      "src",
+      "closeio"
+    ]
+  },
+  "SDL_LockSurface": {
+    "signature": "bool (SDL_Surface *) __attribute__((cdecl))",
+    "arguments": [
+      "surface"
+    ]
+  },
+  "SDL_MapRGB": {
+    "signature": "Uint32 (const SDL_PixelFormatDetails *, const SDL_Palette *, Uint8, Uint8, Uint8) __attribute__((cdecl))",
+    "arguments": [
+      "format",
+      "palette",
+      "r",
+      "g",
+      "b"
+    ]
+  },
+  "SDL_MapRGBA": {
+    "signature": "Uint32 (const SDL_PixelFormatDetails *, const SDL_Palette *, Uint8, Uint8, Uint8, Uint8) __attribute__((cdecl))",
+    "arguments": [
+      "format",
+      "palette",
+      "r",
+      "g",
+      "b",
+      "a"
+    ]
+  },
+  "SDL_MapSurfaceRGB": {
+    "signature": "Uint32 (SDL_Surface *, Uint8, Uint8, Uint8) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "r",
+      "g",
+      "b"
+    ]
+  },
+  "SDL_PremultiplyAlpha": {
+    "signature": "bool (int, int, SDL_PixelFormat, const void *, int, SDL_PixelFormat, void *, int, bool) __attribute__((cdecl))",
+    "arguments": [
+      "width",
+      "height",
+      "src_format",
+      "src",
+      "src_pitch",
+      "dst_format",
+      "dst",
+      "dst_pitch",
+      "linear"
+    ]
+  },
+  "SDL_PremultiplySurfaceAlpha": {
+    "signature": "bool (SDL_Surface *, bool) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "linear"
+    ]
+  },
+  "SDL_ReadSurfacePixel": {
+    "signature": "bool (SDL_Surface *, int, int, Uint8 *, Uint8 *, Uint8 *, Uint8 *) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "x",
+      "y",
+      "r",
+      "g",
+      "b",
+      "a"
+    ]
+  },
+  "SDL_ReadSurfacePixelFloat": {
+    "signature": "bool (SDL_Surface *, int, int, float *, float *, float *, float *) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "x",
+      "y",
+      "r",
+      "g",
+      "b",
+      "a"
+    ]
+  },
+  "SDL_RemoveSurfaceAlternateImages": {
+    "signature": "void (SDL_Surface *) __attribute__((cdecl))",
+    "arguments": [
+      "surface"
+    ]
+  },
+  "SDL_SaveBMP": {
+    "signature": "bool (SDL_Surface *, const char *) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "file"
+    ]
+  },
+  "SDL_SaveBMP_IO": {
+    "signature": "bool (SDL_Surface *, SDL_IOStream *, bool) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "dst",
+      "closeio"
+    ]
+  },
+  "SDL_ScaleSurface": {
+    "signature": "SDL_Surface *(SDL_Surface *, int, int, SDL_ScaleMode) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "width",
+      "height",
+      "scaleMode"
+    ]
+  },
+  "SDL_SetPaletteColors": {
+    "signature": "bool (SDL_Palette *, const SDL_Color *, int, int) __attribute__((cdecl))",
+    "arguments": [
+      "palette",
+      "colors",
+      "firstcolor",
+      "ncolors"
+    ]
+  },
+  "SDL_SetSurfacePalette": {
+    "signature": "bool (SDL_Surface *, SDL_Palette *) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "palette"
+    ]
+  },
+  "SDL_StretchSurface": {
+    "signature": "bool (SDL_Surface *, const SDL_Rect *, SDL_Surface *, const SDL_Rect *, SDL_ScaleMode) __attribute__((cdecl))",
+    "arguments": [
+      "src",
+      "srcrect",
+      "dst",
+      "dstrect",
+      "scaleMode"
+    ]
+  },
+  "SDL_SurfaceHasAlternateImages": {
+    "signature": "bool (SDL_Surface *) __attribute__((cdecl))",
+    "arguments": [
+      "surface"
+    ]
+  },
+  "SDL_UnlockSurface": {
+    "signature": "void (SDL_Surface *) __attribute__((cdecl))",
+    "arguments": [
+      "surface"
+    ]
+  },
+  "SDL_WriteSurfacePixel": {
+    "signature": "bool (SDL_Surface *, int, int, Uint8, Uint8, Uint8, Uint8) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "x",
+      "y",
+      "r",
+      "g",
+      "b",
+      "a"
+    ]
+  },
+  "SDL_WriteSurfacePixelFloat": {
+    "signature": "bool (SDL_Surface *, int, int, float, float, float, float) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "x",
+      "y",
+      "r",
+      "g",
+      "b",
+      "a"
+    ]
+  },
+  "SDL_IOFromMem": {
+    "signature": "SDL_IOStream *(void *, size_t) __attribute__((cdecl))",
+    "arguments": [
+      "mem",
+      "size"
+    ]
+  },
+  "SDL_IOFromConstMem": {
+    "signature": "SDL_IOStream *(const void *, size_t) __attribute__((cdecl))",
+    "arguments": [
+      "mem",
+      "size"
+    ]
+  },
+  "SDL_CloseIO": {
+    "signature": "bool (SDL_IOStream *) __attribute__((cdecl))",
+    "arguments": [
+      "context"
+    ]
+  },
+  "SDL_SeekIO": {
+    "signature": "Sint64 (SDL_IOStream *, Sint64, SDL_IOWhence) __attribute__((cdecl))",
+    "arguments": [
+      "context",
+      "offset",
+      "whence"
+    ]
+  },
+  "SDL_RemovePath": {
+    "signature": "bool (const char *) __attribute__((cdecl))",
+    "arguments": [
+      "path"
+    ]
   }
 }

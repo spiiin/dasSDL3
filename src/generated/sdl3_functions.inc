@@ -39,6 +39,8 @@ addEnumeration(new Enumeration_SDL_TextureAccess());
 addEnumeration(new Enumeration_SDL_ScaleMode());
 addEnumeration(new Enumeration_SDL_BlendOperation());
 addEnumeration(new Enumeration_SDL_BlendFactor());
+addEnumeration(new Enumeration_SDL_Colorspace());
+addEnumeration(new Enumeration_SDL_IOWhence());
 addAnnotation(new DummyTypeAnnotation("SDL_Window", "SDL_Window", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Renderer", "SDL_Renderer", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Surface", "SDL_Surface", 1, 1));
@@ -58,6 +60,8 @@ addAnnotation(new DummyTypeAnnotation("SDL_GPUGraphicsPipeline", "SDL_GPUGraphic
 addAnnotation(new DummyTypeAnnotation("SDL_GPURenderPass", "SDL_GPURenderPass", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_GPUComputePass", "SDL_GPUComputePass", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_GPUCopyPass", "SDL_GPUCopyPass", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_Palette", "SDL_Palette", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_IOStream", "SDL_IOStream", 1, 1));
 addAnnotation(new SDL_GPUViewportAnnotation(lib));
 addAnnotation(new SDL_GPUIndirectDrawCommandAnnotation(lib));
 addAnnotation(new SDL_GPUIndexedIndirectDrawCommandAnnotation(lib));
@@ -107,6 +111,8 @@ addAnnotation(new SDL_RectAnnotation(lib));
 addAnnotation(new SDL_DateTimeAnnotation(lib));
 addAnnotation(new SDL_PointAnnotation(lib));
 addAnnotation(new SDL_DisplayModeAnnotation(lib));
+addAnnotation(new SDL_ColorAnnotation(lib));
+addAnnotation(new SDL_PixelFormatDetailsAnnotation(lib));
 addConstant(*this, "SDL_GPU_FILTER_NEAREST", static_cast<uint32_t>(SDL_GPU_FILTER_NEAREST));
 addConstant(*this, "SDL_GPU_FILTER_LINEAR", static_cast<uint32_t>(SDL_GPU_FILTER_LINEAR));
 addConstant(*this, "SDL_GPU_PRESENTMODE_VSYNC", static_cast<uint32_t>(SDL_GPU_PRESENTMODE_VSYNC));
@@ -1055,3 +1061,141 @@ addExtern<DAS_BIND_FUN(SDL_GetRenderMetalLayer)>(*this, lib, "SDL_GetRenderMetal
 addExtern<DAS_BIND_FUN(SDL_GetRenderMetalCommandEncoder)>(*this, lib, "SDL_GetRenderMetalCommandEncoder", SideEffects::worstDefault, "SDL_GetRenderMetalCommandEncoder")->args({"renderer"});
 // bool (SDL_Renderer *, Uint32, Sint64, Sint64) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_AddVulkanRenderSemaphores)>(*this, lib, "SDL_AddVulkanRenderSemaphores", SideEffects::worstDefault, "SDL_AddVulkanRenderSemaphores")->args({"renderer", "wait_stage_mask", "wait_semaphore", "signal_semaphore"});
+// SDL_PropertiesID (SDL_Surface *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSurfaceProperties)>(*this, lib, "SDL_GetSurfaceProperties", SideEffects::worstDefault, "SDL_GetSurfaceProperties")->args({"surface"});
+// bool (SDL_Surface *, SDL_Colorspace) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetSurfaceColorspace)>(*this, lib, "SDL_SetSurfaceColorspace", SideEffects::worstDefault, "SDL_SetSurfaceColorspace")->args({"surface", "colorspace"});
+// SDL_Colorspace (SDL_Surface *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSurfaceColorspace)>(*this, lib, "SDL_GetSurfaceColorspace", SideEffects::worstDefault, "SDL_GetSurfaceColorspace")->args({"surface"});
+// bool (SDL_Surface *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetSurfaceRLE)>(*this, lib, "SDL_SetSurfaceRLE", SideEffects::worstDefault, "SDL_SetSurfaceRLE")->args({"surface", "enabled"});
+// bool (SDL_Surface *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SurfaceHasRLE)>(*this, lib, "SDL_SurfaceHasRLE", SideEffects::worstDefault, "SDL_SurfaceHasRLE")->args({"surface"});
+// bool (SDL_Surface *, bool, Uint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetSurfaceColorKey)>(*this, lib, "SDL_SetSurfaceColorKey", SideEffects::worstDefault, "SDL_SetSurfaceColorKey")->args({"surface", "enabled", "key"});
+// bool (SDL_Surface *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SurfaceHasColorKey)>(*this, lib, "SDL_SurfaceHasColorKey", SideEffects::worstDefault, "SDL_SurfaceHasColorKey")->args({"surface"});
+// bool (SDL_Surface *, Uint32 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSurfaceColorKey)>(*this, lib, "SDL_GetSurfaceColorKey", SideEffects::worstDefault, "SDL_GetSurfaceColorKey")->args({"surface", "key"});
+// bool (SDL_Surface *, Uint8, Uint8, Uint8) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetSurfaceColorMod)>(*this, lib, "SDL_SetSurfaceColorMod", SideEffects::worstDefault, "SDL_SetSurfaceColorMod")->args({"surface", "r", "g", "b"});
+// bool (SDL_Surface *, Uint8 *, Uint8 *, Uint8 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSurfaceColorMod)>(*this, lib, "SDL_GetSurfaceColorMod", SideEffects::worstDefault, "SDL_GetSurfaceColorMod")->args({"surface", "r", "g", "b"});
+// bool (SDL_Surface *, Uint8) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetSurfaceAlphaMod)>(*this, lib, "SDL_SetSurfaceAlphaMod", SideEffects::worstDefault, "SDL_SetSurfaceAlphaMod")->args({"surface", "alpha"});
+// bool (SDL_Surface *, Uint8 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSurfaceAlphaMod)>(*this, lib, "SDL_GetSurfaceAlphaMod", SideEffects::worstDefault, "SDL_GetSurfaceAlphaMod")->args({"surface", "alpha"});
+// bool (SDL_Surface *, SDL_BlendMode) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetSurfaceBlendMode)>(*this, lib, "SDL_SetSurfaceBlendMode", SideEffects::worstDefault, "SDL_SetSurfaceBlendMode")->args({"surface", "blendMode"});
+// bool (SDL_Surface *, SDL_BlendMode *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSurfaceBlendMode)>(*this, lib, "SDL_GetSurfaceBlendMode", SideEffects::worstDefault, "SDL_GetSurfaceBlendMode")->args({"surface", "blendMode"});
+// bool (SDL_Surface *, const SDL_Rect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetSurfaceClipRect)>(*this, lib, "SDL_SetSurfaceClipRect", SideEffects::worstDefault, "SDL_SetSurfaceClipRect")->args({"surface", "rect"});
+// bool (SDL_Surface *, SDL_Rect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSurfaceClipRect)>(*this, lib, "SDL_GetSurfaceClipRect", SideEffects::worstDefault, "SDL_GetSurfaceClipRect")->args({"surface", "rect"});
+// bool (SDL_Surface *, SDL_Surface *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_AddSurfaceAlternateImage)>(*this, lib, "SDL_AddSurfaceAlternateImage", SideEffects::worstDefault, "SDL_AddSurfaceAlternateImage")->args({"surface", "image"});
+// bool (SDL_Surface *, const SDL_Rect *, SDL_Surface *, const SDL_Rect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_BlitSurface)>(*this, lib, "SDL_BlitSurface", SideEffects::worstDefault, "SDL_BlitSurface")->args({"src", "srcrect", "dst", "dstrect"});
+// bool (SDL_Surface *, const SDL_Rect *, int, int, int, int, float, SDL_ScaleMode, SDL_Surface *, const SDL_Rect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_BlitSurface9Grid)>(*this, lib, "SDL_BlitSurface9Grid", SideEffects::worstDefault, "SDL_BlitSurface9Grid")->args({"src", "srcrect", "left_width", "right_width", "top_height", "bottom_height", "scale", "scaleMode", "dst", "dstrect"});
+// bool (SDL_Surface *, const SDL_Rect *, SDL_Surface *, const SDL_Rect *, SDL_ScaleMode) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_BlitSurfaceScaled)>(*this, lib, "SDL_BlitSurfaceScaled", SideEffects::worstDefault, "SDL_BlitSurfaceScaled")->args({"src", "srcrect", "dst", "dstrect", "scaleMode"});
+// bool (SDL_Surface *, const SDL_Rect *, SDL_Surface *, const SDL_Rect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_BlitSurfaceTiled)>(*this, lib, "SDL_BlitSurfaceTiled", SideEffects::worstDefault, "SDL_BlitSurfaceTiled")->args({"src", "srcrect", "dst", "dstrect"});
+// bool (SDL_Surface *, const SDL_Rect *, float, SDL_ScaleMode, SDL_Surface *, const SDL_Rect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_BlitSurfaceTiledWithScale)>(*this, lib, "SDL_BlitSurfaceTiledWithScale", SideEffects::worstDefault, "SDL_BlitSurfaceTiledWithScale")->args({"src", "srcrect", "scale", "scaleMode", "dst", "dstrect"});
+// bool (SDL_Surface *, const SDL_Rect *, SDL_Surface *, const SDL_Rect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_BlitSurfaceUnchecked)>(*this, lib, "SDL_BlitSurfaceUnchecked", SideEffects::worstDefault, "SDL_BlitSurfaceUnchecked")->args({"src", "srcrect", "dst", "dstrect"});
+// bool (SDL_Surface *, const SDL_Rect *, SDL_Surface *, const SDL_Rect *, SDL_ScaleMode) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_BlitSurfaceUncheckedScaled)>(*this, lib, "SDL_BlitSurfaceUncheckedScaled", SideEffects::worstDefault, "SDL_BlitSurfaceUncheckedScaled")->args({"src", "srcrect", "dst", "dstrect", "scaleMode"});
+// bool (SDL_Surface *, float, float, float, float) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ClearSurface)>(*this, lib, "SDL_ClearSurface", SideEffects::worstDefault, "SDL_ClearSurface")->args({"surface", "r", "g", "b", "a"});
+// bool (int, int, SDL_PixelFormat, const void *, int, SDL_PixelFormat, void *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ConvertPixels)>(*this, lib, "SDL_ConvertPixels", SideEffects::worstDefault, "SDL_ConvertPixels")->args({"width", "height", "src_format", "src", "src_pitch", "dst_format", "dst", "dst_pitch"});
+// bool (int, int, SDL_PixelFormat, SDL_Colorspace, SDL_PropertiesID, const void *, int, SDL_PixelFormat, SDL_Colorspace, SDL_PropertiesID, void *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ConvertPixelsAndColorspace)>(*this, lib, "SDL_ConvertPixelsAndColorspace", SideEffects::worstDefault, "SDL_ConvertPixelsAndColorspace")->args({"width", "height", "src_format", "src_colorspace", "src_properties", "src", "src_pitch", "dst_format", "dst_colorspace", "dst_properties", "dst", "dst_pitch"});
+// SDL_Surface *(SDL_Surface *, SDL_PixelFormat) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ConvertSurface)>(*this, lib, "SDL_ConvertSurface", SideEffects::worstDefault, "SDL_ConvertSurface")->args({"surface", "format"});
+// SDL_Surface *(SDL_Surface *, SDL_PixelFormat, SDL_Palette *, SDL_Colorspace, SDL_PropertiesID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ConvertSurfaceAndColorspace)>(*this, lib, "SDL_ConvertSurfaceAndColorspace", SideEffects::worstDefault, "SDL_ConvertSurfaceAndColorspace")->args({"surface", "format", "palette", "colorspace", "props"});
+// SDL_Palette *(int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreatePalette)>(*this, lib, "SDL_CreatePalette", SideEffects::worstDefault, "SDL_CreatePalette")->args({"ncolors"});
+// SDL_Surface *(int, int, SDL_PixelFormat, void *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateSurfaceFrom)>(*this, lib, "SDL_CreateSurfaceFrom", SideEffects::worstDefault, "SDL_CreateSurfaceFrom")->args({"width", "height", "format", "pixels", "pitch"});
+// SDL_Palette *(SDL_Surface *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateSurfacePalette)>(*this, lib, "SDL_CreateSurfacePalette", SideEffects::worstDefault, "SDL_CreateSurfacePalette")->args({"surface"});
+// void (SDL_Palette *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_DestroyPalette)>(*this, lib, "SDL_DestroyPalette", SideEffects::worstDefault, "SDL_DestroyPalette")->args({"palette"});
+// SDL_Surface *(SDL_Surface *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_DuplicateSurface)>(*this, lib, "SDL_DuplicateSurface", SideEffects::worstDefault, "SDL_DuplicateSurface")->args({"surface"});
+// bool (SDL_Surface *, const SDL_Rect *, int, Uint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_FillSurfaceRects)>(*this, lib, "SDL_FillSurfaceRects", SideEffects::worstDefault, "SDL_FillSurfaceRects")->args({"dst", "rects", "count", "color"});
+// bool (SDL_Surface *, SDL_FlipMode) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_FlipSurface)>(*this, lib, "SDL_FlipSurface", SideEffects::worstDefault, "SDL_FlipSurface")->args({"surface", "flip"});
+// bool (SDL_PixelFormat, int *, Uint32 *, Uint32 *, Uint32 *, Uint32 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetMasksForPixelFormat)>(*this, lib, "SDL_GetMasksForPixelFormat", SideEffects::worstDefault, "SDL_GetMasksForPixelFormat")->args({"format", "bpp", "Rmask", "Gmask", "Bmask", "Amask"});
+// const SDL_PixelFormatDetails *(SDL_PixelFormat) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetPixelFormatDetails)>(*this, lib, "SDL_GetPixelFormatDetails", SideEffects::worstDefault, "SDL_GetPixelFormatDetails")->args({"format"});
+// SDL_PixelFormat (int, Uint32, Uint32, Uint32, Uint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetPixelFormatForMasks)>(*this, lib, "SDL_GetPixelFormatForMasks", SideEffects::worstDefault, "SDL_GetPixelFormatForMasks")->args({"bpp", "Rmask", "Gmask", "Bmask", "Amask"});
+// const char *(SDL_PixelFormat) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetPixelFormatName)>(*this, lib, "SDL_GetPixelFormatName", SideEffects::worstDefault, "SDL_GetPixelFormatName")->args({"format"});
+// void (Uint32, const SDL_PixelFormatDetails *, const SDL_Palette *, Uint8 *, Uint8 *, Uint8 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRGB)>(*this, lib, "SDL_GetRGB", SideEffects::worstDefault, "SDL_GetRGB")->args({"pixel", "format", "palette", "r", "g", "b"});
+// void (Uint32, const SDL_PixelFormatDetails *, const SDL_Palette *, Uint8 *, Uint8 *, Uint8 *, Uint8 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRGBA)>(*this, lib, "SDL_GetRGBA", SideEffects::worstDefault, "SDL_GetRGBA")->args({"pixel", "format", "palette", "r", "g", "b", "a"});
+// SDL_Surface **(SDL_Surface *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSurfaceImages)>(*this, lib, "SDL_GetSurfaceImages", SideEffects::worstDefault, "SDL_GetSurfaceImages")->args({"surface", "count"});
+// SDL_Palette *(SDL_Surface *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSurfacePalette)>(*this, lib, "SDL_GetSurfacePalette", SideEffects::worstDefault, "SDL_GetSurfacePalette")->args({"surface"});
+// SDL_Surface *(SDL_IOStream *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_LoadBMP_IO)>(*this, lib, "SDL_LoadBMP_IO", SideEffects::worstDefault, "SDL_LoadBMP_IO")->args({"src", "closeio"});
+// bool (SDL_Surface *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_LockSurface)>(*this, lib, "SDL_LockSurface", SideEffects::worstDefault, "SDL_LockSurface")->args({"surface"});
+// Uint32 (const SDL_PixelFormatDetails *, const SDL_Palette *, Uint8, Uint8, Uint8) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_MapRGB)>(*this, lib, "SDL_MapRGB", SideEffects::worstDefault, "SDL_MapRGB")->args({"format", "palette", "r", "g", "b"});
+// Uint32 (const SDL_PixelFormatDetails *, const SDL_Palette *, Uint8, Uint8, Uint8, Uint8) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_MapRGBA)>(*this, lib, "SDL_MapRGBA", SideEffects::worstDefault, "SDL_MapRGBA")->args({"format", "palette", "r", "g", "b", "a"});
+// Uint32 (SDL_Surface *, Uint8, Uint8, Uint8) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_MapSurfaceRGB)>(*this, lib, "SDL_MapSurfaceRGB", SideEffects::worstDefault, "SDL_MapSurfaceRGB")->args({"surface", "r", "g", "b"});
+// bool (int, int, SDL_PixelFormat, const void *, int, SDL_PixelFormat, void *, int, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_PremultiplyAlpha)>(*this, lib, "SDL_PremultiplyAlpha", SideEffects::worstDefault, "SDL_PremultiplyAlpha")->args({"width", "height", "src_format", "src", "src_pitch", "dst_format", "dst", "dst_pitch", "linear"});
+// bool (SDL_Surface *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_PremultiplySurfaceAlpha)>(*this, lib, "SDL_PremultiplySurfaceAlpha", SideEffects::worstDefault, "SDL_PremultiplySurfaceAlpha")->args({"surface", "linear"});
+// bool (SDL_Surface *, int, int, Uint8 *, Uint8 *, Uint8 *, Uint8 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ReadSurfacePixel)>(*this, lib, "SDL_ReadSurfacePixel", SideEffects::worstDefault, "SDL_ReadSurfacePixel")->args({"surface", "x", "y", "r", "g", "b", "a"});
+// bool (SDL_Surface *, int, int, float *, float *, float *, float *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ReadSurfacePixelFloat)>(*this, lib, "SDL_ReadSurfacePixelFloat", SideEffects::worstDefault, "SDL_ReadSurfacePixelFloat")->args({"surface", "x", "y", "r", "g", "b", "a"});
+// void (SDL_Surface *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RemoveSurfaceAlternateImages)>(*this, lib, "SDL_RemoveSurfaceAlternateImages", SideEffects::worstDefault, "SDL_RemoveSurfaceAlternateImages")->args({"surface"});
+// bool (SDL_Surface *, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SaveBMP)>(*this, lib, "SDL_SaveBMP", SideEffects::worstDefault, "SDL_SaveBMP")->args({"surface", "file"});
+// bool (SDL_Surface *, SDL_IOStream *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SaveBMP_IO)>(*this, lib, "SDL_SaveBMP_IO", SideEffects::worstDefault, "SDL_SaveBMP_IO")->args({"surface", "dst", "closeio"});
+// SDL_Surface *(SDL_Surface *, int, int, SDL_ScaleMode) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ScaleSurface)>(*this, lib, "SDL_ScaleSurface", SideEffects::worstDefault, "SDL_ScaleSurface")->args({"surface", "width", "height", "scaleMode"});
+// bool (SDL_Palette *, const SDL_Color *, int, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetPaletteColors)>(*this, lib, "SDL_SetPaletteColors", SideEffects::worstDefault, "SDL_SetPaletteColors")->args({"palette", "colors", "firstcolor", "ncolors"});
+// bool (SDL_Surface *, SDL_Palette *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetSurfacePalette)>(*this, lib, "SDL_SetSurfacePalette", SideEffects::worstDefault, "SDL_SetSurfacePalette")->args({"surface", "palette"});
+// bool (SDL_Surface *, const SDL_Rect *, SDL_Surface *, const SDL_Rect *, SDL_ScaleMode) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_StretchSurface)>(*this, lib, "SDL_StretchSurface", SideEffects::worstDefault, "SDL_StretchSurface")->args({"src", "srcrect", "dst", "dstrect", "scaleMode"});
+// bool (SDL_Surface *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SurfaceHasAlternateImages)>(*this, lib, "SDL_SurfaceHasAlternateImages", SideEffects::worstDefault, "SDL_SurfaceHasAlternateImages")->args({"surface"});
+// void (SDL_Surface *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_UnlockSurface)>(*this, lib, "SDL_UnlockSurface", SideEffects::worstDefault, "SDL_UnlockSurface")->args({"surface"});
+// bool (SDL_Surface *, int, int, Uint8, Uint8, Uint8, Uint8) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WriteSurfacePixel)>(*this, lib, "SDL_WriteSurfacePixel", SideEffects::worstDefault, "SDL_WriteSurfacePixel")->args({"surface", "x", "y", "r", "g", "b", "a"});
+// bool (SDL_Surface *, int, int, float, float, float, float) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WriteSurfacePixelFloat)>(*this, lib, "SDL_WriteSurfacePixelFloat", SideEffects::worstDefault, "SDL_WriteSurfacePixelFloat")->args({"surface", "x", "y", "r", "g", "b", "a"});
+// SDL_IOStream *(void *, size_t) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_IOFromMem)>(*this, lib, "SDL_IOFromMem", SideEffects::worstDefault, "SDL_IOFromMem")->args({"mem", "size"});
+// SDL_IOStream *(const void *, size_t) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_IOFromConstMem)>(*this, lib, "SDL_IOFromConstMem", SideEffects::worstDefault, "SDL_IOFromConstMem")->args({"mem", "size"});
+// bool (SDL_IOStream *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CloseIO)>(*this, lib, "SDL_CloseIO", SideEffects::worstDefault, "SDL_CloseIO")->args({"context"});
+// Sint64 (SDL_IOStream *, Sint64, SDL_IOWhence) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SeekIO)>(*this, lib, "SDL_SeekIO", SideEffects::worstDefault, "SDL_SeekIO")->args({"context", "offset", "whence"});
+// bool (const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RemovePath)>(*this, lib, "SDL_RemovePath", SideEffects::worstDefault, "SDL_RemovePath")->args({"path"});
