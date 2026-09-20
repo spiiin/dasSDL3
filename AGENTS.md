@@ -84,8 +84,8 @@ equivalents; source inspection alone does not establish runtime correctness.
   Use value/reference helpers and scoped cleanup. Do not weaken pointer checks
   to make code compile. Hidden unsafe operations are not an ownership guarantee.
 - Prefer with_sdl/with_window/with_renderer for ownership scopes. In the pinned
-  interpreter, panic skips defer/finally (verified); these helpers catch locally,
-  clean up, then propagate the error. Do not replace them with defer-only cleanup.
+  interpreter, panic skips defer/finally (verified); native owner helpers catch once,
+  clean up, then rethrow. No script try/recover in boost wrappers. Do not replace them with defer-only cleanup.
   Verify renderer -> window -> SDL_Quit order on return, panic and partial init.
 - Resource blocks invoke callbacks through `src/sdl3_scopes.h`. It restores
   interpreter block arguments after panic; plain invoke can corrupt an outer
@@ -258,3 +258,10 @@ and failure invalidation. Pinned SDL 3.2.18 D3D12 debug groups raise debug-layer
 CORRUPTED_PARAMETER2/0x87a: reject with an explicit support query; labels work.
 Do not suppress validation or silently drop groups. General live command/pass
 handles remain pending. Current user cadence is 8-10 steps per combined run.
+
+User performance preference: no try/recover in boost wrappers. Read
+docs/native-scopes.md. Use a native owner helper combining one protected block
+invocation and cleanup. Keep one native catch boundary per resource block for
+pinned longjmp cleanup and argument restoration; none for ordinary SDL calls.
+Do not restore script failed/error/RTTI machinery or replace this with defer.
+Benchmark tools/benchmark_scopes.das keeps the old path only as a reference.

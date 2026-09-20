@@ -1,5 +1,6 @@
 #pragma once
 #include "daScript/daScript.h"
+#include <SDL3/SDL.h>
 
 // Context::invoke in the pinned interpreter does not restore BlockArguments
 // when a callback throws. Recovering inside an outer block then reads stale

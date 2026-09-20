@@ -40,8 +40,8 @@ reusable idioms and pinned upstream source links; this one describes our layer.
   The example and lifetime tests pass with these forms on the pinned interpreter.
   This changes call syntax only; cleanup remains implemented by the helpers.
 - Prefer nested with_sdl -> with_window -> with_renderer blocks. Each helper
-  catches panic from its callback, copies and trims the exception message,
-  destroys its resource and then propagates the panic. This preserves renderer
+  delegates callback and cleanup to one native owner helper, which restores
+  block arguments, destroys its resource and rethrows the original panic. This preserves renderer
   -> window -> SDL_Quit order on normal block exit, early return and errors.
 - Actual tests on the pinned interpreter showed that defer/finally is skipped
   on panic: the cleanup trace was 0 instead of 123. Defer worked for normal and
@@ -51,7 +51,8 @@ reusable idioms and pinned upstream source links; this one describes our layer.
   Context::invoke / SimNode_TryCatch: an outer block can read stale arguments
   after a nested callback panics. `src/sdl3_scopes.h` wraps resource callbacks
   with runWithCatch, restores BlockArguments and abiThisBlockArg, then rethrows.
-  Script scopes still own cleanup and error propagation. No upstream files are
+  Native owner helpers combine invocation and cleanup; no script try/recover
+  remains in boost wrappers (see native-scopes.md). No upstream files are
   modified. Recheck this version-specific workaround when updating daScript.
 - `with_bmp(path)` lends an opaque SDL_Surface. `create_texture(renderer, surface)`
   copies its pixels and leaves the surface owned by the caller. `load_texture`

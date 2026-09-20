@@ -22,7 +22,8 @@ Operations use device-first `gpu_plan_copy_buffer`, `gpu_plan_copy_texture`,
 `gpu_plan_mipmaps`, `gpu_plan_blit`, `gpu_plan_label`, `gpu_plan_push_group`,
 `gpu_plan_pop_group`. `gpu_submit_plan` explicitly submits it. Leaving the scope
 without submission discards the plan, including on return or panic; it never
-automatically submits. Existing protected block invocation is retained.
+automatically submits. Invocation and release now share one native owner helper; script try/recover
+is removed from every boost scope (see [native-scopes.md](native-scopes.md)).
 
 Plans copy parameters and strings and borrow resource IDs, not their contents.
 Changing buffer/texture contents before submission changes what the plan reads.
