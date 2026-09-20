@@ -1,10 +1,9 @@
 options gen2
 module sdl3_boost shared public
 require sdl3 public
-require daslib/rtti
-require daslib/strings_boost
 
 // Synchronous helpers. Raw pointers are borrowed inside the with_* blocks.
+[inline]
 def private check_sdl(ok : bool; operation : string) {
     if (!ok) { panic("{operation}: {SDL_GetError()}") }
 }
@@ -57,18 +56,10 @@ def public present(renderer : SDL_Renderer?) {
     check_sdl(SDL_RenderPresent(renderer), "SDL_RenderPresent")
 }
 
-// In the pinned daScript version panic skips defer/finally. Recover locally,
-// preserve the message, release the resource, then propagate the panic.
+// Native owned scopes release resources on normal return and panic.
 def public with_sdl(flags : uint; blk : block<() : void>) {
     sdl_init(flags)
-    var failed = false
-    var error = ""
-    try { SDL_InvokeScope(blk) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    SDL_Quit()
-    if (failed) { panic(error) }
+    SDL_ScopeSDL(blk)
 }
 
 def public with_sdl(blk : block<() : void>) {
@@ -78,26 +69,12 @@ def public with_sdl(blk : block<() : void>) {
 def public with_window(title : string; width, height : int; flags : uint64;
                        blk : block<(window : SDL_Window?) : void>) {
     var window = create_window(title, width, height, flags)
-    var failed = false
-    var error = ""
-    try { SDL_InvokeWindow(blk, window) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    destroy_window(window)
-    if (failed) { panic(error) }
+    SDL_ScopeWindow(window,blk)
 }
 
 def public with_renderer(window : SDL_Window?; blk : block<(renderer : SDL_Renderer?) : void>) {
     var renderer = create_renderer(window)
-    var failed = false
-    var error = ""
-    try { SDL_InvokeRenderer(blk, renderer) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    destroy_renderer(renderer)
-    if (failed) { panic(error) }
+    SDL_ScopeRenderer(renderer,blk)
 }
 
 def public load_bmp(path : string) {
@@ -150,36 +127,20 @@ def public draw_texture(renderer : SDL_Renderer?; texture : SDL_Texture?;
 
 def public with_bmp(path : string; blk : block<(surface : SDL_Surface?) : void>) {
     var surface = load_bmp(path)
-    var failed = false
-    var error = ""
-    try { SDL_InvokeSurface(blk, surface) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    destroy_surface(surface)
-    if (failed) { panic(error) }
+    SDL_ScopeSurface(surface,blk)
 }
 
 // Release the temporary CPU surface before returning the owned GPU texture.
 def public load_texture(renderer : SDL_Renderer?; path : string) {
-    var texture : SDL_Texture?
-    with_bmp(path) $(surface) {
-        texture = create_texture(renderer, surface)
-    }
+    var texture = SDL_LoadBMPTextureOwned(renderer,path)
+    if (texture == null) { panic("load_texture({path}): {SDL_GetError()}") }
     return texture
 }
 
 def public with_texture(renderer : SDL_Renderer?; path : string;
                         blk : block<(texture : SDL_Texture?) : void>) {
     var texture = load_texture(renderer, path)
-    var failed = false
-    var error = ""
-    try { SDL_InvokeTexture(blk, texture) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    destroy_texture(texture)
-    if (failed) { panic(error) }
+    SDL_ScopeTexture(texture,blk)
 }
 
 // Input reads are snapshots; poll events (or pump them) before querying key state.
@@ -233,13 +194,5 @@ def public with_text_input(window : SDL_Window?; blk : block<() : void>) {
     verify(window != null, "with_text_input: null window")
     let owned = !SDL_TextInputActive(window)
     if (owned) { check_sdl(SDL_StartTextInput(window), "SDL_StartTextInput") }
-    var failed = false
-    var error = ""
-    try { SDL_InvokeScope(blk) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    let stopped = owned ? SDL_StopTextInput(window) : true
-    if (failed) { panic(error) }
-    check_sdl(stopped, "SDL_StopTextInput")
+    SDL_ScopeTextInput(window,owned,blk)
 }

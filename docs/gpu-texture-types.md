@@ -73,5 +73,22 @@ stale/cross-device IDs, panic cleanup and snapshot survival after source release
 Cube and cube-array color plus BC1 cube transfers are exercised.
 `tests/gpu_utilities.das`: owned driver strings, invalid masks/indices,
 resource-name bounds, cross-kind/device/stale IDs, Unicode/empty names.
-Examples 26–29 demonstrate each package without a window. Full gate results
-are recorded after the combined verification run.
+Examples 26–29 demonstrate each package without a window.
+
+Combined verification on 2026-09-20:
+
+- Main project: 102/102 CTest; parity/interpreter/strict AOT: 227/227.
+- Standalone dasClangBind experiment: 4/4. All 12 selected BC formats ran on
+  both Vulkan and D3D12 here; none took the unsupported-format branch.
+- Examples 26–29 passed on both backends in the LLVM-free consumer build.
+  Clang/LLVM/Python package discovery and generators were disabled; build.ninja
+  has no libclang/libLLVM or binding-generator commands.
+- Completed main/parity logs contain no VUID, Validation Error or D3D12 ERROR.
+  The known FPS Monitor layer filter remains process-local. Linux/Metal and
+  actual debugger display of resource names were not tested.
+- Inventory: GPU 7 generated / 50 adapted / 35 pending; total SDL API
+  60 generated / 59 adapted / 1107 pending. Existing adapted APIs remain partial.
+- Developer generator configuration restored. Final snapshot/inventory/preflight
+  checks plus example 28: 7/7. After clarifying that example's driver-preference
+  output, its interpreter/AOT parity subset passed 5/5 and both consumer runs
+  passed again. No implementation changes followed the combined suite.

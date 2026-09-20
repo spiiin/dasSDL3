@@ -1,8 +1,6 @@
 options gen2
 module sdl3_gpu_instancing_boost shared public
 require dassdl3/sdl3_gpu_3d_boost public
-require daslib/rtti
-require daslib/strings_boost
 
 struct public GpuInstanceList {
     model_columns : array<float4>
@@ -19,16 +17,7 @@ def public with_gpu_instanced_mesh(device : SDL_GPUDevice?; window : SDL_Window?
         format : uint; instances : GpuInstanceList; blk : block<(mesh : uint64) : void>) {
     let mesh = SDL_CreateGPUInstancedMesh(device,window,positions,normals,uv,pixels,width,height,indices,instances.model_columns,vertex_file,fragment_file,format)
     if (mesh == 0ul) { panic("GPU lit mesh: {SDL_GetError()}") }
-    var failed = false
-    var error = ""
-    try { SDL_InvokeGPUHandle(blk,mesh) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    let released = SDL_ReleaseGPULitMesh(device,mesh)
-    if (!released && failed) { panic("{error}; {SDL_GetError()}") }
-    if (failed) { panic(error) }
-    if (!released) { panic("GPU lit release: {SDL_GetError()}") }
+    SDL_ScopeReleaseGPULitMesh(device,mesh,blk)
 }
 
 // Copies the entire list; count must match creation. GPU upload is asynchronous.

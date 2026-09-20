@@ -1,8 +1,6 @@
 options gen2
 module sdl3_gpu_instance_colors_boost shared public
 require dassdl3/sdl3_gpu_instancing_boost public
-require daslib/rtti
-require daslib/strings_boost
 
 struct public GpuColoredInstanceList {
     model_columns : array<float4>
@@ -21,16 +19,7 @@ def public with_gpu_colored_instanced_mesh(device : SDL_GPUDevice?; window : SDL
         format : uint; instances : GpuColoredInstanceList; blk : block<(mesh : uint64) : void>) {
     let mesh = SDL_CreateGPUColoredInstancedMesh(device,window,positions,normals,uv,pixels,width,height,indices,instances.model_columns,instances.colors,vertex_file,fragment_file,format)
     if (mesh == 0ul) { panic("GPU lit mesh: {SDL_GetError()}") }
-    var failed = false
-    var error = ""
-    try { SDL_InvokeGPUHandle(blk,mesh) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    let released = SDL_ReleaseGPULitMesh(device,mesh)
-    if (!released && failed) { panic("{error}; {SDL_GetError()}") }
-    if (failed) { panic(error) }
-    if (!released) { panic("GPU lit release: {SDL_GetError()}") }
+    SDL_ScopeReleaseGPULitMesh(device,mesh,blk)
 }
 
 // Copies the entire list; count must match creation. GPU upload is asynchronous.

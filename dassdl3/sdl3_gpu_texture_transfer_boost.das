@@ -1,40 +1,20 @@
 options gen2
 module sdl3_gpu_texture_transfer_boost shared public
 require dassdl3/sdl3_gpu_transfer_boost public
-require daslib/rtti
-require daslib/strings_boost
 
 // Uncompressed color format, sample count 1; every subresource starts zeroed.
 def public with_gpu_transfer_texture(device : SDL_GPUDevice?; width, height, layers, levels, format, texture_type : uint;
         blk : block<(texture : uint64) : void>) {
     let id = SDL_CreateGPUTypedTransferTexture(device,width,height,layers,levels,format,texture_type)
     if (id == 0ul) { panic("GPU texture create: {SDL_GetError()}") }
-    var failed = false
-    var error = ""
-    try { SDL_InvokeGPUHandle(blk,id) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    let released = SDL_ReleaseGPUTransferTexture(device,id)
-    if (!released && failed) { panic("{error}; {SDL_GetError()}") }
-    if (failed) { panic(error) }
-    if (!released) { panic("GPU texture release: {SDL_GetError()}") }
+    SDL_ScopeReleaseGPUTransferTexture(device,id,blk)
 }
 
 def public with_gpu_color_texture(device : SDL_GPUDevice?; width, height, layers, levels, format : uint;
         blk : block<(texture : uint64) : void>) {
     let id = SDL_CreateGPUColorTransferTexture(device,width,height,layers,levels,format)
     if (id == 0ul) { panic("GPU texture create: {SDL_GetError()}") }
-    var failed = false
-    var error = ""
-    try { SDL_InvokeGPUHandle(blk,id) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    let released = SDL_ReleaseGPUTransferTexture(device,id)
-    if (!released && failed) { panic("{error}; {SDL_GetError()}") }
-    if (failed) { panic(error) }
-    if (!released) { panic("GPU texture release: {SDL_GetError()}") }
+    SDL_ScopeReleaseGPUTransferTexture(device,id,blk)
 }
 
 def public with_gpu_rgba_texture(device : SDL_GPUDevice?; width, height, layers, levels : uint;
@@ -67,14 +47,5 @@ def public with_gpu_texture_readback(device : SDL_GPUDevice?; texture : uint64;
         sub : uint2; region : uint4; blk : block<(ticket : uint64) : void>) {
     let id = SDL_RequestGPUTextureReadback(device,texture,sub,region)
     if (id == 0ul) { panic("GPU texture readback: {SDL_GetError()}") }
-    var failed = false
-    var error = ""
-    try { SDL_InvokeGPUHandle(blk,id) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    let released = SDL_ReleaseGPUReadback(device,id)
-    if (!released && failed) { panic("{error}; {SDL_GetError()}") }
-    if (failed) { panic(error) }
-    if (!released) { panic("GPU texture readback release: {SDL_GetError()}") }
+    SDL_ScopeReleaseGPUReadback(device,id,blk)
 }

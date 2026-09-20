@@ -1,8 +1,6 @@
 options gen2
 module sdl3_gpu_batches_boost shared public
 require dassdl3/sdl3_gpu_instance_colors_boost public
-require daslib/rtti
-require daslib/strings_boost
 
 // Values only: referenced colored mesh/material bundles must remain alive.
 struct public GpuBatchList {
@@ -24,16 +22,7 @@ def public gpu_batch_clear(var list : GpuBatchList) {
 def public with_gpu_batch_scene(device : SDL_GPUDevice?; window : SDL_Window?; blk : block<(scene : uint64) : void>) {
     let scene = SDL_CreateGPUBatchScene(device,window)
     if (scene == 0ul) { panic("GPU scene: {SDL_GetError()}") }
-    var failed = false
-    var error = ""
-    try { SDL_InvokeGPUHandle(blk,scene) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    let released = SDL_ReleaseGPUBatchScene(device,scene)
-    if (!released && failed) { panic("{error}; {SDL_GetError()}") }
-    if (failed) { panic(error) }
-    if (!released) { panic("GPU scene release: {SDL_GetError()}") }
+    SDL_ScopeReleaseGPUBatchScene(device,scene,blk)
 }
 def public gpu_draw_batches(device : SDL_GPUDevice?; window : SDL_Window?; scene : uint64;
         list : GpuBatchList; camera : float4x4; light_direction : float3; ambient : float = 0.2) : bool {

@@ -185,3 +185,19 @@ invalid results; all texture constants are generated but enum types remain work.
 legacy color scopes keep their contracts. `sdl3_gpu_utilities_boost` adds owned
 compiled-driver names, checked shader-support queries and resource names.
 See `gpu-texture-types.md` for byte/pixel units, hint precedence and limitations.
+
+`sdl3_gpu_swapchain_boost` adds checked claimed-window capabilities/current
+format, configuration between frames, device-wide frames-in-flight and blocking
+availability. Unsupported differs from invalid; no automatic settings rollback.
+See `gpu-swapchain.md` for pipeline compatibility and scope/thread contracts.
+
+`sdl3_gpu_image_boost` adds initialized RGBA8/BGRA8 color-target texture scopes,
+all-layer mip generation and checked nearest/linear region blits. Existing
+transfer upload/readback work on the same IDs. See `gpu-image.md` for usage,
+format, filtering, failure-validity and outside-pass recording contracts.
+
+`sdl3_gpu_commands_boost` adds protected `with_gpu_command_plan`, value-only
+operation builders and explicit `gpu_submit_plan`. Scopes discard unsubmitted
+work; plans borrow resource IDs and are fully revalidated before native recording.
+Debug strings are copied, groups balanced; query support before using groups
+on pinned D3D12. See `gpu-command-plans.md` for state/error/lifetime contracts.

@@ -6,8 +6,11 @@
 #include "sdl3_pixels.h"
 #include "sdl3_geometry.h"
 #include "sdl3_gpu.h"
+#include "sdl3_gpu_swapchain.h"
 #include "sdl3_gpu_transfer.h"
 #include "sdl3_gpu_texture_transfer.h"
+#include "sdl3_gpu_image.h"
+#include "sdl3_gpu_commands.h"
 #include "sdl3_gpu_utilities.h"
 #include "sdl3_gpu_mesh.h"
 #include "sdl3_gpu_3d.h"
@@ -21,12 +24,14 @@
 #include "generated/sdl3_types.inc"
 #endif
 #include "sdl3_scopes.h"
+#include "sdl3_owned_scopes.h"
 #ifdef DASSDL3_TESTING
 #include "../tests/resource_probe.h"
 #include "../tests/input_probe.h"
 #include "../tests/audio_probe.h"
 #include "../tests/geometry_probe.h"
 #include "../tests/gpu_probe.h"
+#include "../tests/gpu_commands_probe.h"
 #include "../tests/gpu_triangle_probe.h"
 #include "../tests/gpu_mesh_probe.h"
 #include "../tests/gpu_3d_probe.h"
@@ -57,6 +62,51 @@ public:
         #else
         #include "generated/sdl3_functions.inc"
         #endif
+        addExtern<DAS_BIND_FUN(SDL_ScopeWindow)>(*this, lib, "SDL_ScopeWindow", SideEffects::invoke, "SDL_ScopeWindow");
+        addExtern<DAS_BIND_FUN(SDL_ScopeRenderer)>(*this, lib, "SDL_ScopeRenderer", SideEffects::invoke, "SDL_ScopeRenderer");
+        addExtern<DAS_BIND_FUN(SDL_ScopeSurface)>(*this, lib, "SDL_ScopeSurface", SideEffects::invoke, "SDL_ScopeSurface");
+        addExtern<DAS_BIND_FUN(SDL_ScopeTexture)>(*this, lib, "SDL_ScopeTexture", SideEffects::invoke, "SDL_ScopeTexture");
+        addExtern<DAS_BIND_FUN(SDL_ScopeWav)>(*this, lib, "SDL_ScopeWav", SideEffects::invoke, "SDL_ScopeWav");
+        addExtern<DAS_BIND_FUN(SDL_ScopeAudioStream)>(*this, lib, "SDL_ScopeAudioStream", SideEffects::invoke, "SDL_ScopeAudioStream");
+        addExtern<DAS_BIND_FUN(SDL_ScopeReleaseGPU3DMesh)>(*this, lib, "SDL_ScopeReleaseGPU3DMesh", SideEffects::invoke, "SDL_ScopeReleaseGPU3DMesh");
+        addExtern<DAS_BIND_FUN(SDL_ScopeReleaseGPUBatchScene)>(*this, lib, "SDL_ScopeReleaseGPUBatchScene", SideEffects::invoke, "SDL_ScopeReleaseGPUBatchScene");
+        addExtern<DAS_BIND_FUN(SDL_ScopeReleaseGPUCommandPlan)>(*this, lib, "SDL_ScopeReleaseGPUCommandPlan", SideEffects::invoke, "SDL_ScopeReleaseGPUCommandPlan");
+        addExtern<DAS_BIND_FUN(SDL_ScopeReleaseGPUDataBuffer)>(*this, lib, "SDL_ScopeReleaseGPUDataBuffer", SideEffects::invoke, "SDL_ScopeReleaseGPUDataBuffer");
+        addExtern<DAS_BIND_FUN(SDL_ScopeReleaseGPUGeometry)>(*this, lib, "SDL_ScopeReleaseGPUGeometry", SideEffects::invoke, "SDL_ScopeReleaseGPUGeometry");
+        addExtern<DAS_BIND_FUN(SDL_ScopeReleaseGPULitMesh)>(*this, lib, "SDL_ScopeReleaseGPULitMesh", SideEffects::invoke, "SDL_ScopeReleaseGPULitMesh");
+        addExtern<DAS_BIND_FUN(SDL_ScopeReleaseGPULitScene)>(*this, lib, "SDL_ScopeReleaseGPULitScene", SideEffects::invoke, "SDL_ScopeReleaseGPULitScene");
+        addExtern<DAS_BIND_FUN(SDL_ScopeReleaseGPUMaterial)>(*this, lib, "SDL_ScopeReleaseGPUMaterial", SideEffects::invoke, "SDL_ScopeReleaseGPUMaterial");
+        addExtern<DAS_BIND_FUN(SDL_ScopeReleaseGPUReadback)>(*this, lib, "SDL_ScopeReleaseGPUReadback", SideEffects::invoke, "SDL_ScopeReleaseGPUReadback");
+        addExtern<DAS_BIND_FUN(SDL_ScopeReleaseGPUSharedMesh)>(*this, lib, "SDL_ScopeReleaseGPUSharedMesh", SideEffects::invoke, "SDL_ScopeReleaseGPUSharedMesh");
+        addExtern<DAS_BIND_FUN(SDL_ScopeReleaseGPUTexturedMesh)>(*this, lib, "SDL_ScopeReleaseGPUTexturedMesh", SideEffects::invoke, "SDL_ScopeReleaseGPUTexturedMesh");
+        addExtern<DAS_BIND_FUN(SDL_ScopeReleaseGPUTransferTexture)>(*this, lib, "SDL_ScopeReleaseGPUTransferTexture", SideEffects::invoke, "SDL_ScopeReleaseGPUTransferTexture");
+        addExtern<DAS_BIND_FUN(SDL_ScopeReleaseGPUVertexIDPipeline)>(*this, lib, "SDL_ScopeReleaseGPUVertexIDPipeline", SideEffects::invoke, "SDL_ScopeReleaseGPUVertexIDPipeline");
+        addExtern<DAS_BIND_FUN(SDL_ScopeSDL)>(*this, lib, "SDL_ScopeSDL", SideEffects::invoke, "SDL_ScopeSDL");
+        addExtern<DAS_BIND_FUN(SDL_ScopeGPUDevice)>(*this, lib, "SDL_ScopeGPUDevice", SideEffects::invoke, "SDL_ScopeGPUDevice");
+        addExtern<DAS_BIND_FUN(SDL_ScopeGPUWindow)>(*this, lib, "SDL_ScopeGPUWindow", SideEffects::invoke, "SDL_ScopeGPUWindow");
+        addExtern<DAS_BIND_FUN(SDL_ScopeRenderTarget)>(*this, lib, "SDL_ScopeRenderTarget", SideEffects::invoke, "SDL_ScopeRenderTarget");
+        addExtern<DAS_BIND_FUN(SDL_ScopeTextInput)>(*this, lib, "SDL_ScopeTextInput", SideEffects::invoke, "SDL_ScopeTextInput");
+        addExtern<DAS_BIND_FUN(SDL_LoadBMPTextureOwned)>(*this, lib, "SDL_LoadBMPTextureOwned", SideEffects::worstDefault, "SDL_LoadBMPTextureOwned");
+        addExtern<DAS_BIND_FUN(SDL_GPUPlanDebugGroupsSupported)>(*this, lib, "SDL_GPUPlanDebugGroupsSupported", SideEffects::worstDefault, "SDL_GPUPlanDebugGroupsSupported");
+        addExtern<DAS_BIND_FUN(SDL_CreateGPUCommandPlan)>(*this, lib, "SDL_CreateGPUCommandPlan", SideEffects::worstDefault, "SDL_CreateGPUCommandPlan");
+        addExtern<DAS_BIND_FUN(SDL_ReleaseGPUCommandPlan)>(*this, lib, "SDL_ReleaseGPUCommandPlan", SideEffects::worstDefault, "SDL_ReleaseGPUCommandPlan");
+        addExtern<DAS_BIND_FUN(SDL_GPUPlanCopyBuffer)>(*this, lib, "SDL_GPUPlanCopyBuffer", SideEffects::worstDefault, "SDL_GPUPlanCopyBuffer");
+        addExtern<DAS_BIND_FUN(SDL_GPUPlanCopyTexture)>(*this, lib, "SDL_GPUPlanCopyTexture", SideEffects::worstDefault, "SDL_GPUPlanCopyTexture");
+        addExtern<DAS_BIND_FUN(SDL_GPUPlanMipmaps)>(*this, lib, "SDL_GPUPlanMipmaps", SideEffects::worstDefault, "SDL_GPUPlanMipmaps");
+        addExtern<DAS_BIND_FUN(SDL_GPUPlanBlit)>(*this, lib, "SDL_GPUPlanBlit", SideEffects::worstDefault, "SDL_GPUPlanBlit");
+        addExtern<DAS_BIND_FUN(SDL_GPUPlanLabel)>(*this, lib, "SDL_GPUPlanLabel", SideEffects::worstDefault, "SDL_GPUPlanLabel");
+        addExtern<DAS_BIND_FUN(SDL_GPUPlanPushGroup)>(*this, lib, "SDL_GPUPlanPushGroup", SideEffects::worstDefault, "SDL_GPUPlanPushGroup");
+        addExtern<DAS_BIND_FUN(SDL_GPUPlanPopGroup)>(*this, lib, "SDL_GPUPlanPopGroup", SideEffects::worstDefault, "SDL_GPUPlanPopGroup");
+        addExtern<DAS_BIND_FUN(SDL_SubmitGPUCommandPlan)>(*this, lib, "SDL_SubmitGPUCommandPlan", SideEffects::worstDefault, "SDL_SubmitGPUCommandPlan");
+        addExtern<DAS_BIND_FUN(SDL_CreateGPUColorTargetTexture)>(*this, lib, "SDL_CreateGPUColorTargetTexture", SideEffects::worstDefault, "SDL_CreateGPUColorTargetTexture");
+        addExtern<DAS_BIND_FUN(SDL_GenerateGPUTextureMipmapsChecked)>(*this, lib, "SDL_GenerateGPUTextureMipmapsChecked", SideEffects::worstDefault, "SDL_GenerateGPUTextureMipmapsChecked");
+        addExtern<DAS_BIND_FUN(SDL_BlitGPUTextureChecked)>(*this, lib, "SDL_BlitGPUTextureChecked", SideEffects::worstDefault, "SDL_BlitGPUTextureChecked");
+        addExtern<DAS_BIND_FUN(SDL_GPUWindowPresentSupported)>(*this, lib, "SDL_GPUWindowPresentSupported", SideEffects::worstDefault, "SDL_GPUWindowPresentSupported");
+        addExtern<DAS_BIND_FUN(SDL_GPUWindowCompositionSupported)>(*this, lib, "SDL_GPUWindowCompositionSupported", SideEffects::worstDefault, "SDL_GPUWindowCompositionSupported");
+        addExtern<DAS_BIND_FUN(SDL_GPUWindowFormatChecked)>(*this, lib, "SDL_GPUWindowFormatChecked", SideEffects::worstDefault, "SDL_GPUWindowFormatChecked");
+        addExtern<DAS_BIND_FUN(SDL_ConfigureGPUSwapchainChecked)>(*this, lib, "SDL_ConfigureGPUSwapchainChecked", SideEffects::worstDefault, "SDL_ConfigureGPUSwapchainChecked");
+        addExtern<DAS_BIND_FUN(SDL_SetGPUFramesInFlightChecked)>(*this, lib, "SDL_SetGPUFramesInFlightChecked", SideEffects::worstDefault, "SDL_SetGPUFramesInFlightChecked");
+        addExtern<DAS_BIND_FUN(SDL_WaitGPUSwapchainChecked)>(*this, lib, "SDL_WaitGPUSwapchainChecked", SideEffects::worstDefault, "SDL_WaitGPUSwapchainChecked");
         addExtern<DAS_BIND_FUN(SDL_CreateGPUTypedTransferTexture)>(*this, lib, "SDL_CreateGPUTypedTransferTexture", SideEffects::worstDefault, "SDL_CreateGPUTypedTransferTexture");
         addExtern<DAS_BIND_FUN(SDL_GPUDriverCountChecked)>(*this, lib, "SDL_GPUDriverCountChecked", SideEffects::worstDefault, "SDL_GPUDriverCountChecked");
         addExtern<DAS_BIND_FUN(SDL_GPUDriverNameCopy)>(*this, lib, "SDL_GPUDriverNameCopy", SideEffects::worstDefault, "SDL_GPUDriverNameCopy");
@@ -222,6 +272,11 @@ public:
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_foreign_pipeline)>(*this, lib, "SDLTestGPUForeignPipeline", SideEffects::worstDefault, "sdl3_test::gpu_foreign_pipeline");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_pipeline_failure)>(*this, lib, "SDLTestGPUPipelineFailure", SideEffects::worstDefault, "sdl3_test::gpu_pipeline_failure");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_triangle_pixels)>(*this, lib, "SDLTestGPUTrianglePixels", SideEffects::worstDefault, "sdl3_test::gpu_triangle_pixels");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_plan_fail_submit)>(*this, lib, "SDLTestGPUPlanFailSubmit", SideEffects::worstDefault, "sdl3_test::gpu_plan_fail_submit");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_plans)>(*this, lib, "SDLTestGPUPlans", SideEffects::worstDefault, "sdl3_test::gpu_plans");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_plan_faults)>(*this, lib, "SDLTestGPUPlanFaults", SideEffects::worstDefault, "sdl3_test::gpu_plan_faults");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_plan_no_acquire)>(*this, lib, "SDLTestGPUPlanNoAcquire", SideEffects::worstDefault, "sdl3_test::gpu_plan_no_acquire");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_plan_text_copy)>(*this, lib, "SDLTestGPUPlanTextCopy", SideEffects::worstDefault, "sdl3_test::gpu_plan_text_copy");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_devices)>(*this, lib, "SDLTestGPUDevices", SideEffects::worstDefault, "sdl3_test::gpu_devices");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_claims)>(*this, lib, "SDLTestGPUClaims", SideEffects::worstDefault, "sdl3_test::gpu_claims");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_resize)>(*this, lib, "SDLTestGPUResize", SideEffects::worstDefault, "sdl3_test::gpu_resize");

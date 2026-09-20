@@ -370,3 +370,26 @@ From the repository root, for example:
 ./build/ninja/bin/dasSDL3_runner.exe examples/26_gpu_bc_blocks.das
 ./build/ninja/bin/dasSDL3_runner.exe examples/27_gpu_cube_faces.das
 ```
+
+Swapchain API examples 30–32 cover supported present modes/compositions,
+configuration and frames-in-flight. [Contracts and tests](docs/gpu-swapchain.md).
+
+```powershell
+./build/ninja/bin/dasSDL3_runner.exe examples/31_gpu_present_modes.das
+./build/ninja/bin/dasSDL3_runner.exe examples/32_gpu_frame_latency.das
+```
+
+GPU image examples 33–35 cover color-target texture ownership, generated mips
+and scaled blits, with public readback. [Contracts and tests](docs/gpu-image.md).
+
+```powershell
+./build/ninja/bin/dasSDL3_runner.exe examples/34_gpu_mipmaps.das
+./build/ninja/bin/dasSDL3_runner.exe examples/35_gpu_scaled_blit.das
+```
+
+GPU example 36 groups dependent copies into one native submission, with copied
+debug labels and checked CPU plans. [Contracts and limits](docs/gpu-command-plans.md).
+
+```powershell
+./build/ninja/bin/dasSDL3_runner.exe examples/36_gpu_command_plan.das
+```

@@ -1,24 +1,13 @@
 options gen2
 module sdl3_gpu_transfer_boost shared public
 require dassdl3/sdl3_gpu_boost public
-require daslib/rtti
-require daslib/strings_boost
 
 // Inputs are copied before returning; buffers have fixed capacity in bytes.
 def public with_gpu_buffer(device : SDL_GPUDevice?; bytes : array<uint8>; usage : uint;
         blk : block<(buffer : uint64) : void>) {
     let id = SDL_CreateGPUDataBuffer(device,bytes,usage)
     if (id == 0ul) { panic("GPU buffer: {SDL_GetError()}") }
-    var failed = false
-    var error = ""
-    try { SDL_InvokeGPUHandle(blk,id) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    let released = SDL_ReleaseGPUDataBuffer(device,id)
-    if (!released && failed) { panic("{error}; {SDL_GetError()}") }
-    if (failed) { panic(error) }
-    if (!released) { panic("GPU buffer release: {SDL_GetError()}") }
+    SDL_ScopeReleaseGPUDataBuffer(device,id,blk)
 }
 
 // Partial updates preserve the rest of the buffer. Cycling requires a full update.
@@ -40,16 +29,7 @@ def public with_gpu_readback(device : SDL_GPUDevice?; buffer : uint64; offset, s
         blk : block<(readback : uint64) : void>) {
     let id = SDL_RequestGPUBufferReadback(device,buffer,offset,size)
     if (id == 0ul) { panic("GPU readback request: {SDL_GetError()}") }
-    var failed = false
-    var error = ""
-    try { SDL_InvokeGPUHandle(blk,id) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    let released = SDL_ReleaseGPUReadback(device,id)
-    if (!released && failed) { panic("{error}; {SDL_GetError()}") }
-    if (failed) { panic(error) }
-    if (!released) { panic("GPU readback release: {SDL_GetError()}") }
+    SDL_ScopeReleaseGPUReadback(device,id,blk)
 }
 
 def public gpu_readback_ready(device : SDL_GPUDevice?; ticket : uint64) : bool {

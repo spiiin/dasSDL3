@@ -3,8 +3,8 @@
 ## Текущий приоритет: завершить P6
 
 По явному выбору пользователя P6 продолжается раньше Properties/P1.
-Состояние после пакетов 26–29: **92 функции GPU: 7 generated, 50 adapted,
-35 pending** в закреплённом Windows-профиле. Adapted означает ограниченный
+Состояние после command-plan батча: **92 функции GPU: 7 generated, 60 adapted,
+25 pending** в закреплённом Windows-профиле. Adapted означает ограниченный
 контракт, а не завершённую функцию со всеми вариантами параметров.
 Пример 23 и [gpu-transfer.md](gpu-transfer.md) добавляют публичные byte buffers,
 копирование диапазонов и асинхронные readback tickets с fence. Это часть G3;
@@ -37,6 +37,23 @@ checked resource names. Общий прогон после четырёх пак
 порядок работы. Контракты и ограничения: [gpu-texture-types.md](gpu-texture-types.md).
 Обычные 2D/array color transfers и RGBA8 scopes сохраняются.
 
+Пакеты 30–32: swapchain capabilities/current format, проверенное переключение
+composition/present mode, frames-in-flight и ожидание доступности. См.
+[gpu-swapchain.md](gpu-swapchain.md). Проверяются между закрытыми native кадрами;
+общие command/pass handles ещё не реализованы.
+
+Пакеты 33–35: инициализированные RGBA8/BGRA8 COLOR_TARGET textures,
+mipmap generation и nearest/linear blit с CPU pixel oracle. Контракт:
+[gpu-image.md](gpu-image.md). Общие render-pass builders и произвольные
+formats/usage/resolve/flip ещё не реализованы.
+
+Батч command plans (9 шагов): scopes, buffer/texture copies, mipmaps, blits,
+labels/groups, полная предварительная проверка и однократный submit. Пример 36;
+[gpu-command-plans.md](gpu-command-plans.md). Три debug API теперь partial;
+D3D12 groups в SDL 3.2.18 явно неподдерживаемы из-за debug-layer ошибки.
+Живые command/pass handles и general compute/graphics ещё впереди.
+Текущий размер батча по запросу пользователя: 8–10 связанных шагов.
+
 Очередь закрытия P6:
 
 1. **Остаток G3:** добавить 3D/ASTC transfers;
@@ -48,13 +65,13 @@ checked resource names. Общий прогон после четырёх пак
    swapchain, shader/pipeline/create-info ABI, layouts, sampler/texture/buffer
    bindings. Существующие fixed mesh helpers остаются удобными фасадами.
 3. **G4 — graphics completeness:** viewport/scissor/blend/stencil, независимые
-   color/depth targets, render-to-texture, MSAA/resolve, mipmaps/blit, UINT16
+   color/depth targets, render-to-texture, MSAA/resolve, расширение mipmaps/blit за пределы RGBA8/BGRA8, UINT16
    и произвольные draw ranges, indirect draw с проверкой bounds/stride.
 4. **G5 — compute:** shader resource layout, storage buffers/textures, direct и
    indirect dispatch, uniform blocks; integer compute с точным CPU reference
    и публичным readback на обоих backend. DSL не является условием этой части.
 5. **G6 — остаток:** properties-based device,
-   swapchain modes/frames-in-flight, debug labels/groups; явно ограничить
+   nonblocking swapchain acquisition, debug labels/groups; явно ограничить
    main-thread API либо отдельно доказать разрешённую многопоточную запись.
 6. **Приёмка P6:** разобрать все 92 функции и используемые типы/flags, указать
    полные/ограниченные/платформенные контракты. Ноль pending сам по себе
@@ -66,11 +83,9 @@ checked resource names. Общий прогон после четырёх пак
 
 | Группа | Pending SDL functions (без префикса SDL_) |
 | --- | --- |
-| Texture data и format helpers | BlitGPUTexture, GenerateMipmapsForGPUTexture |
 | Compute | CreateGPUComputePipeline, ReleaseGPUComputePipeline, BeginGPUComputePass, EndGPUComputePass, BindGPUComputePipeline, BindGPUComputeSamplers, BindGPUComputeStorageBuffers, BindGPUComputeStorageTextures, PushGPUComputeUniformData, DispatchGPUCompute, DispatchGPUComputeIndirect |
 | Graphics state и bindings | BindGPUVertexSamplers, BindGPUVertexStorageBuffers, BindGPUVertexStorageTextures, BindGPUFragmentStorageBuffers, BindGPUFragmentStorageTextures, SetGPUViewport, SetGPUScissor, SetGPUBlendConstants, SetGPUStencilReference, DrawGPUPrimitivesIndirect, DrawGPUIndexedPrimitivesIndirect |
-| Device/window | AcquireGPUSwapchainTexture, WaitForGPUSwapchain, SetGPUSwapchainParameters, SetGPUAllowedFramesInFlight, WindowSupportsGPUPresentMode, WindowSupportsGPUSwapchainComposition, CreateGPUDeviceWithProperties, GPUSupportsProperties |
-| Debug | InsertGPUDebugLabel, PushGPUDebugGroup, PopGPUDebugGroup |
+| Device/window | AcquireGPUSwapchainTexture, CreateGPUDeviceWithProperties, GPUSupportsProperties |
 
 Следующие разделы сохраняют подробный исходный план G0–G6/S1–S3 и историю
 реализованных срезов. Ни один этап не закрывается только числом примеров.

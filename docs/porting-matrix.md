@@ -191,3 +191,17 @@ formats and backend rejection without treating unsupported as successful upload.
 Новые сценарии проверяются общим interpreter/AOT и Vulkan/D3D12 прогоном;
 контракты и CPU byte oracle — `gpu-texture-types.md`. Это API-примеры без окна,
 не новые scene helpers и не демонстрация сэмплирования cubemap.
+
+Примеры 30–32: swapchain capabilities, present mode switching, frames-in-flight
+and availability wait. Общий контрактный тест `tests/gpu_swapchain.das` проходит
+комбинации, подтверждённые backend, и проверяет lifetime/pipeline compatibility.
+Это не benchmark задержки и не доказательство корректного HDR color output.
+
+Примеры 33–35: GPU color targets, mipmap chain, scaled blit. Проверка через
+public readback и CPU pixel reference в `tests/gpu_image.das`; без окна.
+Не считать это general render-to-texture pipeline или полным Blit API.
+
+Пример 36: две зависимые GPU-копии в одном command buffer с debug labels и
+условными groups; byte-reference readback. `tests/gpu_commands.das` проверяет
+также mixed copy/mip/blit, BC edge, ID/state и fault injection. Это CPU command
+plan, а не общий live command/pass builder (gpu-command-plans.md).

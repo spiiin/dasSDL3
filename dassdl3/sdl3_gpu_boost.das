@@ -1,8 +1,6 @@
 options gen2
 module sdl3_gpu_boost shared public
 require dassdl3/sdl3_boost public
-require daslib/rtti
-require daslib/strings_boost
 
 // ClearScreen needs no shader binary. Future shader creation must check device formats.
 let public GPU_CLEAR_FORMATS = (SDL_GPU_SHADERFORMAT_SPIRV | SDL_GPU_SHADERFORMAT_DXBC |
@@ -12,16 +10,7 @@ def public try_with_gpu_device(formats : uint; debug : bool; driver : string;
                               blk : block<(device : SDL_GPUDevice?) : void>) : bool {
     let device = SDL_CreateGPUDeviceScoped(formats, debug, driver)
     if (device == null) { return false }
-    var failed = false
-    var error = ""
-    try { SDL_InvokeGPUDevice(blk, device) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    let destroyed = SDL_DestroyGPUDeviceScoped(device)
-    if (!destroyed && failed) { panic("{error}; {SDL_GetError()}") }
-    if (failed) { panic(error) }
-    if (!destroyed) { panic("GPU shutdown: {SDL_GetError()}") }
+    SDL_ScopeGPUDevice(device,blk)
     return true
 }
 
@@ -34,16 +23,7 @@ def public with_gpu_device(blk : block<(device : SDL_GPUDevice?) : void>) {
 // Window and device must outlive this scope. No renderer may use the same window.
 def public with_gpu_window(device : SDL_GPUDevice?; window : SDL_Window?; blk : block<() : void>) {
     if (!SDL_ClaimGPUWindowScoped(device, window)) { panic("GPU claim: {SDL_GetError()}") }
-    var failed = false
-    var error = ""
-    try { SDL_InvokeScope(blk) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    let released = SDL_ReleaseGPUWindowScoped(device, window)
-    if (!released && failed) { panic("{error}; {SDL_GetError()}") }
-    if (failed) { panic(error) }
-    if (!released) { panic("GPU release: {SDL_GetError()}") }
+    SDL_ScopeGPUWindow(device,window,blk)
 }
 
 // True means submitted; false means no drawable swapchain (e.g. minimized).
@@ -67,16 +47,7 @@ def public with_gpu_vertex_id_pipeline(device : SDL_GPUDevice?; window : SDL_Win
         vertex_file, fragment_file : string; format : uint; blk : block<(pipeline : uint64) : void>) {
     let pipeline = SDL_CreateGPUVertexIDPipeline(device, window, vertex_file, fragment_file, format)
     if (pipeline == 0ul) { panic("GPU pipeline: {SDL_GetError()}") }
-    var failed = false
-    var error = ""
-    try { SDL_InvokeGPUHandle(blk, pipeline) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    let released = SDL_ReleaseGPUVertexIDPipeline(device, pipeline)
-    if (!released && failed) { panic("{error}; {SDL_GetError()}") }
-    if (failed) { panic(error) }
-    if (!released) { panic("GPU pipeline release: {SDL_GetError()}") }
+    SDL_ScopeReleaseGPUVertexIDPipeline(device,pipeline,blk)
 }
 
 def public gpu_draw_triangle(device : SDL_GPUDevice?; window : SDL_Window?; pipeline : uint64) : bool {

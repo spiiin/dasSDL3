@@ -31,6 +31,13 @@
 | `27_gpu_cube_faces.das` | SDL GPU: независимые upload/readback шести граней cubemap |
 | `28_gpu_driver_discovery.das` | SDL GPU: compiled drivers и запрос поддержки shader formats |
 | `29_gpu_resource_names.das` | SDL GPU: имена checked buffer/texture ресурсов для отладки |
+| `30_gpu_swapchain_capabilities.das` | SDL GPU: поддержка present modes/compositions и текущий формат swapchain |
+| `31_gpu_present_modes.das` | SDL GPU: переключение поддерживаемых режимов представления между кадрами |
+| `32_gpu_frame_latency.das` | SDL GPU: 1–3 кадра в полёте и ожидание доступности swapchain |
+| `33_gpu_color_targets.das` | SDL GPU: initialized SAMPLER/COLOR_TARGET textures и readback |
+| `34_gpu_mipmaps.das` | SDL GPU: генерация mip-цепочки с CPU average reference |
+| `35_gpu_scaled_blit.das` | SDL GPU: nearest blit 2x2 → 4x4 с побайтной проверкой |
+| `36_gpu_command_plan.das` | SDL GPU: зависимые копии одним submit, labels/groups и readback |
 
 Из корня проекта:
 

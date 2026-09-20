@@ -16,7 +16,7 @@ target `x86_64-pc-windows-msvc`, C11. Это первый результат P0,
 значений. Это census, не ещё один генератор native bindings и не ABI validator.
 
 Сейчас 1226 активных функций, включая static inline и platform-visible
-декларации: 60 generated, 59 adapted, 1107 pending. Adapted включает 50 GPU,
+декларации: 60 generated, 69 adapted, 1097 pending. Adapted включает 60 GPU,
 семь Render/Surface, одну Video и одну Audio функцию; каждая имеет ограниченный
 контракт. Аудит после примера 22 исправил ранее неучтённый default-playback
 adapter OpenAudioDeviceStream. Внутренние вызовы SDL и test-only helpers не

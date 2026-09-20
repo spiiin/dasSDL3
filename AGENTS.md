@@ -220,7 +220,7 @@ BC/ASTC/depth transfers remain rejected; metadata queries do not enable upload.
 SDL D3D12 reports RGBA32 UINT unsupported for SAMPLER here: test rejection,
 do not bypass the capability query or claim that roundtrip succeeded.
 
-P6 cadence: user requests implementing 3-4 related packages before running the
+P6 cadence (updated by user): implement 8-10 related steps before running the
 combined regression/AOT/consumer suite; do not ask for each package.
 Packages 26-29: docs/gpu-texture-types.md. New typed transfer factory accepts
 BC and cube/array textures; legacy color factories still reject BC. BC input
@@ -232,3 +232,29 @@ Discovery returns copied compiled-driver names; SDL_GPU_DRIVER overrides an
 explicit preferred name. Do not label that query physical-device enumeration.
 Resource naming checks ID kind/device and length; SDL void setters cannot
 guarantee debugger visibility. Keep source and shader toolchain work separate.
+
+Packages 30-32: docs/gpu-swapchain.md and sdl3_gpu_swapchain_boost. All window
+control validates main thread, scoped device and live claimed window; compare
+SDL_GetWindows addresses before touching a borrowed window pointer. Pointers
+remain scope borrows (address reuse is not a generation check). Unsupported
+configuration returns false before mutation; setter failure has SDL semantics,
+not automatic rollback. Changing composition may change format: preserve stale
+pipeline rejection and restoration tests. Frames-in-flight is 1..3 device-wide
+and stalls/flushes SDL queues; wait-for-swapchain does not acquire or pump events.
+
+Packages 33-35: docs/gpu-image.md, sdl3_gpu_image_boost. Color-target textures
+share transfer IDs/cleanup and carry explicit usage; keep old factories SAMPLER
+only. Initial target contract: RGBA8/BGRA8 UNORM 2D/arrays, sample 1, initialized
+levels. GenerateMipmaps and Blit must be recorded outside any pass. Blit uses
+distinct same-format resources and LOAD, no cycling/flip; preserve CPU pixel
+references and neighbor/layer tests on both backends. Mip submit failure marks
+lower levels invalid, blit failure marks only its destination subresource.
+
+Command-plan batch (9 steps): docs/gpu-command-plans.md and
+sdl3_gpu_commands_boost. Plans own values/text and borrow IDs; validate again
+before acquisition. Scope exit discards, submit is explicit and one-shot after
+validation. Keep native-only recording, separate passes for dependent copies,
+and failure invalidation. Pinned SDL 3.2.18 D3D12 debug groups raise debug-layer
+CORRUPTED_PARAMETER2/0x87a: reject with an explicit support query; labels work.
+Do not suppress validation or silently drop groups. General live command/pass
+handles remain pending. Current user cadence is 8-10 steps per combined run.

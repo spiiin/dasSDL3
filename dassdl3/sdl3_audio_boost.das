@@ -1,9 +1,8 @@
 options gen2
 module sdl3_audio_boost shared public
 require dassdl3/sdl3_boost public
-require daslib/rtti
-require daslib/strings_boost
 
+[inline]
 def private check_audio(ok : bool; operation : string) {
     if (!ok) { panic("{operation}: {SDL_GetError()}") }
 }
@@ -27,14 +26,7 @@ def public audio_spec(format : uint; channels, frequency : int) {
 }
 def public with_wav(path : string; blk : block<(wav : SDL_Wav?) : void>) {
     var wav = load_wav(path)
-    var failed = false
-    var error = ""
-    try { SDL_InvokeWav(blk, wav) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    destroy_wav(wav)
-    if (failed) { panic(error) }
+    SDL_ScopeWav(wav,blk)
 }
 def public create_audio_stream(src, dst : SDL_AudioSpec) {
     var stream = SDL_CreateAudioStreamRef(src, dst)
@@ -51,14 +43,7 @@ def public destroy_audio_stream(stream : SDL_AudioStream?) {
 }
 def private with_owned_audio_stream(stream : SDL_AudioStream?;
                                    blk : block<(stream : SDL_AudioStream?) : void>) {
-    var failed = false
-    var error = ""
-    try { SDL_InvokeAudioStream(blk, stream) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    destroy_audio_stream(stream)
-    if (failed) { panic(error) }
+    SDL_ScopeAudioStream(stream,blk)
 }
 def public with_audio_stream(src, dst : SDL_AudioSpec;
                              blk : block<(stream : SDL_AudioStream?) : void>) {

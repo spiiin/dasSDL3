@@ -4,7 +4,7 @@
 о полном покрытии подсистем. `tools/bindings.json` задаёт точный перечень
 экспортов; `src/generated/api.json` содержит полученные из Clang сигнатуры.
 Сейчас генерируются 60 функций SDL. Ручные адаптеры перечислены отдельно.
-В актуальной policy: 59 adapted и 1107 pending (1226 функций Windows-профиля).
+В актуальной policy: 69 adapted и 1097 pending (1226 функций Windows-профиля).
 [Текущий приоритет](gpu-roadmap.md): завершение P6 GPU API; Properties отложен;
 увеличение числа GPU-примеров не является мерой полноты SDL3.
 
@@ -71,5 +71,21 @@ RenderReadPixels теперь также доступен через публи�
 
 Пакеты 26–29: typed transfers расширены на BC и cube/array, а пять новых
 публичных SDL-контрактов покрывают compiled-driver enumeration, shader-support
-query и naming checked buffer/texture IDs. Итого GPU: 7 generated, 50 adapted,
+query и naming checked buffer/texture IDs. После этого этапа: 7 generated, 50 adapted,
 35 pending. Границы и проверка: [gpu-texture-types.md](gpu-texture-types.md).
+
+Пакеты 30–32: пять новых частичных GPU-контрактов для swapchain capability
+queries, configuration, frames-in-flight и availability wait; существующий
+GetGPUSwapchainTextureFormat теперь доступен как checked uint query. После этого этапа
+GPU census: 7 generated / 55 adapted / 30 pending. См. `gpu-swapchain.md`.
+
+Пакеты 33–35: initialized color-target textures и два новых частичных SDL
+контракта — GenerateMipmapsForGPUTexture, BlitGPUTexture. Проверяются CPU pixel
+references, регионы, mip/layer и lifetime. Текущий GPU census:
+7 generated / 57 adapted / 28 pending; [gpu-image.md](gpu-image.md).
+
+Command-plan batch (9 steps): borrowed checked resource IDs, mixed operations
+and one native submission; labels and balanced groups add three partial SDL
+contracts. Current GPU census: 7 generated / 60 adapted / 25 pending.
+D3D12 groups explicitly unsupported on pinned SDL; labels supported on both
+backends. General command/pass API remains pending; see gpu-command-plans.md.

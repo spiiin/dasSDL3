@@ -3,8 +3,6 @@ module sdl3_gpu_3d_boost shared public
 require dassdl3/sdl3_gpu_boost public
 require daslib/math_boost public
 require math public
-require daslib/rtti
-require daslib/strings_boost
 
 // position=float4(x,y,z,1), color=float4(R,G,B,A), indices=UINT32 triangle list.
 def public with_gpu_3d_mesh(device : SDL_GPUDevice?; window : SDL_Window?;
@@ -12,16 +10,7 @@ def public with_gpu_3d_mesh(device : SDL_GPUDevice?; window : SDL_Window?;
         vertex_file, fragment_file : string; format : uint; blk : block<(mesh : uint64) : void>) {
     let mesh = SDL_CreateGPU3DMesh(device,window,positions,colors,indices,vertex_file,fragment_file,format)
     if (mesh == 0ul) { panic("GPU 3D mesh: {SDL_GetError()}") }
-    var failed = false
-    var error = ""
-    try { SDL_InvokeGPUHandle(blk,mesh) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    let released = SDL_ReleaseGPU3DMesh(device,mesh)
-    if (!released && failed) { panic("{error}; {SDL_GetError()}") }
-    if (failed) { panic(error) }
-    if (!released) { panic("GPU 3D release: {SDL_GetError()}") }
+    SDL_ScopeReleaseGPU3DMesh(device,mesh,blk)
 }
 
 def public gpu_draw_3d_mesh(device : SDL_GPUDevice?; window : SDL_Window?; mesh : uint64; mvp : float4x4) : bool {

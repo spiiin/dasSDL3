@@ -1,8 +1,6 @@
 options gen2
 module sdl3_gpu_lit_boost shared public
 require dassdl3/sdl3_gpu_3d_boost public
-require daslib/rtti
-require daslib/strings_boost
 
 // Copied position(x,y,z,1), normal(x,y,z,0), UV and packed linear RGBA8 arrays.
 def public with_gpu_lit_mesh(device : SDL_GPUDevice?; window : SDL_Window?;
@@ -11,16 +9,7 @@ def public with_gpu_lit_mesh(device : SDL_GPUDevice?; window : SDL_Window?;
         format : uint; blk : block<(mesh : uint64) : void>) {
     let mesh = SDL_CreateGPULitMesh(device,window,positions,normals,uv,pixels,width,height,indices,vertex_file,fragment_file,format)
     if (mesh == 0ul) { panic("GPU lit mesh: {SDL_GetError()}") }
-    var failed = false
-    var error = ""
-    try { SDL_InvokeGPUHandle(blk,mesh) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    let released = SDL_ReleaseGPULitMesh(device,mesh)
-    if (!released && failed) { panic("{error}; {SDL_GetError()}") }
-    if (failed) { panic(error) }
-    if (!released) { panic("GPU lit release: {SDL_GetError()}") }
+    SDL_ScopeReleaseGPULitMesh(device,mesh,blk)
 }
 
 // Light direction points toward the light in world space; ambient is 0..1.

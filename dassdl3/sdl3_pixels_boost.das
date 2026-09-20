@@ -1,9 +1,8 @@
 options gen2
 module sdl3_pixels_boost shared public
 require dassdl3/sdl3_boost public
-require daslib/rtti
-require daslib/strings_boost
 
+[inline]
 def private pixel_check(ok : bool; operation : string) {
     if (!ok) { panic("{operation}: {SDL_GetError()}") }
 }
@@ -19,14 +18,7 @@ def private with_rgba8_texture(renderer : SDL_Renderer?; width, height : int; ta
                               blk : block<(texture : SDL_Texture?) : void>) {
     let texture = SDL_CreateRGBA8Texture(renderer, width, height, target)
     pixel_check(texture != null, "create_rgba8_texture")
-    var failed = false
-    var error = ""
-    try { SDL_InvokeTexture(blk, texture) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    destroy_texture(texture)
-    if (failed) { panic(error) }
+    SDL_ScopeTexture(texture,blk)
 }
 
 def public with_streaming_texture(renderer : SDL_Renderer?; width, height : int;
@@ -51,30 +43,14 @@ def public with_render_target(renderer : SDL_Renderer?; texture : SDL_Texture?;
     verify(renderer != null, "with_render_target: null renderer")
     let previous = SDL_GetRenderTarget(renderer)
     pixel_check(SDL_SetRenderTarget(renderer, texture), "SDL_SetRenderTarget")
-    var failed = false
-    var error = ""
-    try { SDL_InvokeScope(blk) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    let restored = SDL_SetRenderTarget(renderer, previous)
-    if (!restored && failed) { panic("{error}; restore render target: {SDL_GetError()}") }
-    pixel_check(restored, "restore render target")
-    if (failed) { panic(error) }
+    SDL_ScopeRenderTarget(renderer,previous,blk)
 }
 
 // Owns the readback surface. For the window call before present().
 def public with_read_pixels(renderer : SDL_Renderer?; blk : block<(surface : SDL_Surface?) : void>) {
     let surface = SDL_ReadPixelsOwned(renderer)
     pixel_check(surface != null, "SDL_RenderReadPixels")
-    var failed = false
-    var error = ""
-    try { SDL_InvokeSurface(blk, surface) } recover {
-        failed = true
-        error := rtrim(this_context().last_exception)
-    }
-    destroy_surface(surface)
-    if (failed) { panic(error) }
+    SDL_ScopeSurface(surface,blk)
 }
 
 def public surface_size(surface : SDL_Surface?) : int2 {

@@ -5,7 +5,7 @@ struct SDL_GPUTransferTexture {
     SDL_GPUDevice * device;
     SDL_GPUTexture * texture;
     uint32_t width, height, layers, levels;
-    uint32_t format, bytesPerTexel, blockWidth;
+    uint32_t format, bytesPerTexel, blockWidth, usage;
     std::vector<bool> valid;
 };
 inline std::unordered_map<uint64_t,SDL_GPUTransferTexture> SDL_GPUTransferTextures;
@@ -52,7 +52,7 @@ inline bool SDL_GPUTextureSourceBytes(const das::TArray<uint8_t> & bytes,uint32_
         return SDL_SetError("GPU texture: source pitch/array too small or over 64 MiB");
     return true;
 }
-inline uint64_t SDL_CreateGPUTypedTransferTexture(SDL_GPUDevice * device,uint32_t width,uint32_t height,uint32_t layers,uint32_t levels,uint32_t format,uint32_t type) {
+inline uint64_t SDL_CreateGPUTransferTextureWithUsage(SDL_GPUDevice * device,uint32_t width,uint32_t height,uint32_t layers,uint32_t levels,uint32_t format,uint32_t type,uint32_t usage) {
     if (!SDL_GPUTransferDevice(device) || !SDL_GPUTransferIDAvailable()) return 0;
     const bool bc=(format>=SDL_GPU_TEXTUREFORMAT_BC1_RGBA_UNORM && format<=SDL_GPU_TEXTUREFORMAT_BC6H_RGB_UFLOAT) ||
         (format>=SDL_GPU_TEXTUREFORMAT_BC1_RGBA_UNORM_SRGB && format<=SDL_GPU_TEXTUREFORMAT_BC7_RGBA_UNORM_SRGB);
@@ -80,12 +80,12 @@ inline uint64_t SDL_CreateGPUTypedTransferTexture(SDL_GPUDevice * device,uint32_
     }
     if (total>SDL_GPUDataLimit) { SDL_SetError("GPU texture: complete mip/array footprint exceeds 64 MiB"); return 0; }
     SDL_GPUTextureCreateInfo info{}; info.type=SDL_GPUTextureType(type);
-    info.format=SDL_GPUTextureFormat(format); info.usage=SDL_GPU_TEXTUREUSAGE_SAMPLER;
+    info.format=SDL_GPUTextureFormat(format); info.usage=usage;
     info.width=width; info.height=height; info.layer_count_or_depth=layers; info.num_levels=levels; info.sample_count=SDL_GPU_SAMPLECOUNT_1;
     if (!SDL_GPUTextureSupportsFormat(device,info.format,info.type,info.usage)) {
         SDL_SetError("GPU texture: color format/type/usage unsupported"); return 0;
     }
-    SDL_GPUTransferTexture entry{device,nullptr,width,height,layers,levels,format,bytesPerTexel,blockWidth,std::vector<bool>(layers*levels,true)};
+    SDL_GPUTransferTexture entry{device,nullptr,width,height,layers,levels,format,bytesPerTexel,blockWidth,usage,std::vector<bool>(layers*levels,true)};
     SDL_GPUTransferBuild build{device}; build.texture=SDL_CreateGPUTexture(device,&info); if (!build.texture) return 0;
     if (!build.staging(base.size,SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD)) return 0;
     auto * mapped=SDL_MapGPUTransferBuffer(device,build.transfer,false); if (!mapped) return 0;
@@ -102,6 +102,9 @@ inline uint64_t SDL_CreateGPUTypedTransferTexture(SDL_GPUDevice * device,uint32_
     SDL_EndGPUCopyPass(pass); if (!build.submit()) return 0;
     entry.texture=build.texture; const auto id=SDL_GPUNextPipeline++;
     SDL_GPUTransferTextures.emplace(id,std::move(entry)); build.texture=nullptr; return id;
+}
+inline uint64_t SDL_CreateGPUTypedTransferTexture(SDL_GPUDevice * device,uint32_t width,uint32_t height,uint32_t layers,uint32_t levels,uint32_t format,uint32_t type) {
+    return SDL_CreateGPUTransferTextureWithUsage(device,width,height,layers,levels,format,type,SDL_GPU_TEXTUREUSAGE_SAMPLER);
 }
 inline uint64_t SDL_CreateGPUColorTransferTexture(SDL_GPUDevice * device,uint32_t width,uint32_t height,uint32_t layers,uint32_t levels,uint32_t format) {
     if (!SDL_GPUTransferColorBytes(format)) return 0;
