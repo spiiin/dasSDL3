@@ -1,9 +1,5 @@
 # Direct SDL GPU command buffers and render passes
 
-> Current error/lifetime contract: [error-handling.md](error-handling.md).
-> SDL failures return values; scopes use defer. Earlier panic/protected-scope
-> descriptions below are historical and no longer describe the public binding.
-
 The primary low-level GPU direction is now SDL's command-buffer/pass model.
 `dassdl3/sdl3_gpu_recording_boost.das` wraps checked native adapters in
 `src/sdl3_gpu_recording.h`. Example 46 uses this path. Command plans and renderer-framework APIs have been removed; see gpu-api-boundary.md.
@@ -70,7 +66,8 @@ selected immutable CPU index range. This is a checked adapter, not a claim of
 zero overhead or measured speedup. Native binding arrays are fixed-size; the
 adapter stores a list of written subresources only for submit-failure invalidation.
 It does not retain draw operations or uniform blobs. Broader format/storage,
-copy/compute passes, swapchain handles, fences and attachments remain follow-ups.
+copy/compute, swapchain, fences and attachments are available through the
+separate native pointer API; this checked subset keeps its stated restrictions.
 
 ## Validation
 
@@ -83,21 +80,8 @@ Native fixtures cover oversized arrays, wrong thread, injected submit failure,
 foreign-device handles and device destruction with a live pass while another
 device's command survives. Vulkan and D3D12 are the local runtime targets.
 
-The generated selection and census are unchanged: these contracts extend already
-adapted SDL functions. Do not count the number of new helper functions as new
-SDL coverage. The removed plan/engine tests are no longer part of the maintained suite.
-
-Historical gates before the framework removal (not the current test counts):
-
-- Targeted direct/plan regression: 14/14; complete main regression: 164/164.
-- Full baseline/CppGenBind/interpreter/AOT suite: 384/384.
-- Standalone clangbind checks: 4/4; final snapshot/inventory/preflight gates: 5/5.
-- Consumer build with generators, LLVM and Clang disabled: migrated example 46
-  passed on Vulkan and D3D12. No LLVM/Clang or binding-generation commands in its
-  build graph. Developer configuration restored afterward.
-- Main/parity detailed logs contain no Vulkan validation errors, D3D12 errors
-  or skipped tests. Separate D3D12 OutputDebugString capture also exited 0 with
-  no ERROR/CORRUPTION diagnostics. It does report warning 820 for a clear color
-  differing from the resource's optimized clear value; pixel results pass.
-
-This does not claim full direct GPU API coverage or a measured speedup.
+Latest combined verification: [gpu-native-validation.md](gpu-native-validation.md).
+Current function census: [api-coverage.md](api-coverage.md).
+This page describes the checked subset. Full native pointers/arrays and scopes
+are documented in [gpu-native-boost.md](gpu-native-boost.md); IDs and native
+handles are separate. Other platforms and all hardware formats are not certified.

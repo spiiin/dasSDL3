@@ -1,12 +1,8 @@
 # Checked standalone GPU samplers
 
-> Current error/lifetime contract: [error-handling.md](error-handling.md).
-> SDL failures return values; scopes use defer. Earlier panic/protected-scope
-> descriptions below are historical and no longer describe the public binding.
-
 Example 41 and `sdl3_gpu_sampler_boost` add independent sampler ownership above
 the generated `SDL_GPUSamplerCreateInfo`, enums and raw create/release bindings.
-They do not add a general render pass or change the samplers owned by mesh bundles.
+These uint64 IDs are separate from generated native sampler pointers.
 
 ```das
 var info = gpu_sampler_info(SDL_GPUFilter.FILTER_LINEAR,
@@ -66,24 +62,8 @@ failed creation without callback and two-device cleanup. Native probes exercise
 invalid enum values, nonfinite floats and hidden padding. Main and strict AOT
 tests run on Vulkan and D3D12. Example 41 is also an LLVM-free consumer scenario.
 
-These are creation/ownership tests, not sampling pixel tests. Public binding of
-sampler IDs to general graphics/compute passes, format/filter compatibility,
-comparison depth textures and shader declarations remain pending. Do not count
-this resource layer as completion of those contracts or ASTC positive GPU tests.
-The GPU census stays 13 generated / 54 adapted / 25 pending: sampler create/release
-were already generated, and their boost policy remains partial due to limits.
-
-Next: standalone shaders with owned bytecode and checked resource declarations,
-then graphics pipeline creation with copied layouts, then bindings in native
-command plans and pixel tests for standalone textures/samplers.
-
-Validation run (2026-09-20): main CTest 142/142; parity/AOT suite 328 passed and
-one skipped (`aot_gpu_instancing_direct3d12`, device creation unavailable, no
-driver error printed by that existing test). Its separate repeat passed 1/1.
-All new sampler tests passed without skips. Standalone dasClangBind gates 4/4.
-Full GPU logs contain no Vulkan VUID or D3D12 validation errors. The initial
-device-creation skip is unexplained; the successful repeat does not explain it.
-The LLVM/libclang-free consumer built and ran example 41 on both backends.
-
-Public render-plan sampling is covered by [shader bindings](gpu-shader-bindings.md):
-RGBA8/BGRA8 Texture2D and noncomparison samplers; nearest/linear CPU pixel tests.
+Latest combined verification: [gpu-native-validation.md](gpu-native-validation.md).
+Current function census: [api-coverage.md](api-coverage.md).
+This page describes the checked subset. Full native pointers/arrays and scopes
+are documented in [gpu-native-boost.md](gpu-native-boost.md); IDs and native
+handles are separate. Other platforms and all hardware formats are not certified.

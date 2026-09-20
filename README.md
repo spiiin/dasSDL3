@@ -3,7 +3,7 @@
 Привязки SDL3 к daScript / daslang. Публичный API следует объектам и операциям SDL;
 mesh/material/scene/batching и планы удалены из библиотеки.
 
-[Граница API](docs/gpu-api-boundary.md) · [Примеры](examples/README.md) · [GPU roadmap](docs/gpu-roadmap.md).
+[Документация](docs/README.md) · [Граница API](docs/gpu-api-boundary.md) · [Примеры](examples/README.md) · [GPU roadmap](docs/gpu-roadmap.md).
 
 ## План развития
 
@@ -27,8 +27,9 @@ mesh/material/scene/batching и планы удалены из библиоте�
 - SDL: `release-3.2.18`, загружается CMake FetchContent.
 - CMake 3.24+, Git, компилятор C++17. Проверено на Windows x64,
   MSVC 19.38, Ninja и CMake 3.31.6.
-- Только для повторной генерации: Python 3 и Clang. Проверено с Clang 16.0.5.
-  Python-пакеты устанавливать не нужно.
+- Только для повторной генерации: Python 3 и toolchain выбранного backend:
+  libclang 22.1.5/dasClangBind для CppGenBind, Clang 16.0.5 для baseline/census.
+  См. [настройку](docs/clangbind-setup.md); обычный consumer не требует LLVM.
 
 При клонировании проекта используйте `git clone --recurse-submodules`.
 В существующей копии: `git submodule update --init --recursive`.
@@ -85,7 +86,7 @@ Runner использует `daslib` из исходников daScript; кат�
 - `tools/generate_bindings.py` — анализ заголовков настоящим Clang AST.
 - `src/generated/` — сгенерированные регистрации и описание сигнатур.
 - `src/sdl3_adapters.h` — ручные фабрики значений и работа с событиями.
-- `src/sdl3_scopes.h` — восстановление аргументов блоков при исключениях.
+- `daslib/defer` в boost-модулях — освобождение ресурсов при обычном/раннем выходе.
 - `src/module_sdl3.cpp` — модуль и подключение ручных адаптеров.
 - `dassdl3/sdl3_boost.das` — идиоматичный слой daScript.
 - `examples/02_square.das` — цикл событий и вся логика отрисовки на daScript.
@@ -102,10 +103,9 @@ Runner использует `daslib` из исходников daScript; кат�
 Подход изучен на `dasBGFX/src/dasBGFX.cpp`, `dasBGFX.main.cpp` и
 `daScript/modules/dasClangBind/bind/bind_bgfx.das`: генерируемые регистрации
 отделены от ручных дополнений; аргументы Uint8/Uint16 доступны как uint.
-Здесь используется небольшой Python-генератор поверх JSON AST Clang,
-а не сам `CppGenBind`: текущему dasClangBind нужен LLVM/Clang 22.1,
-а установленный Clang 16 уже достаточен для разбора SDL. Это не полная
-автоматическая привязка всего API SDL.
+CppGenBind с libclang 22.1.5 — основной генератор для MSVC Windows x64.
+Python/Clang JSON AST остаётся baseline/fallback. Отбор экспортов общий;
+ownership и языковые адаптеры не выводятся автоматически из C-сигнатур.
 
 SDL_Window и SDL_Renderer доступны как непрозрачные указатели. В примере
 время жизни задают блоки:
@@ -238,7 +238,7 @@ scopes streaming/target texture и readback. Примеры не требуют 
 требует LLVM/Python. [Выбор backend, генерация и consumer](docs/clangbind-production.md).
 Ограниченная генерация CppGenBind и строгий AOT consumer проверены отдельно:
 [результаты и команды](docs/clangbind-experiment.md).
-Совместимость прежних 50 функций и текущих interpreter-примеров проверяется
+Совместимость текущих generated функций и interpreter-примеров проверяется
 отдельным [parity-проектом](docs/clangbind-parity.md). Теперь он также
 [генерирует типы/константы и проверяет ресурсный AOT](docs/clangbind-types-aot.md).
 
@@ -331,10 +331,13 @@ vertex/index buffers and textures/uniforms: examples 44–46.
 ./build/ninja/bin/dasSDL3_runner.exe examples/46_gpu_texture_uniform_bindings.das
 ```
 
-[Direct recording limits](docs/gpu-recording.md). GPU coverage is partial:
-public copy/compute pass handles, swapchain acquisition and broad attachment/storage
-contracts remain to be implemented. Examples 30–32 configure/query window properties;
-they do not present frames after removal of the closed-frame renderer helper.
+[Direct recording limits](docs/gpu-recording.md) describe the older checked-ID subset.
+The native binding now exposes all 92 GPU functions active in the pinned Windows
+headers, with array/ref adapters and defer scopes for render/copy/compute and
+swapchain presentation. See [native GPU guide](docs/gpu-native-boost.md) and
+[validation results](docs/gpu-native-validation.md) for the tested contracts and
+backend limits. Examples 30–32 query/configure window properties; example 48
+presents frames through the native API.
 
 Native SDL GPU command/fence lifecycle: [example 47](examples/47_gpu_native_fences.das)
 and [contract](docs/gpu-native-fences.md). Original SDL pointers/results, generated

@@ -1,9 +1,5 @@
 # Генерация типов/констант и AOT ресурсов
 
-> Current error/lifetime contract: [error-handling.md](error-handling.md).
-> SDL failures return values; scopes use defer. Earlier panic/protected-scope
-> descriptions below are historical and no longer describe the public binding.
-
 19 сентября 2026. Проверенный профиль: Windows x64, MSVC 19.38, Release /MD,
 SDL 3.2.18, daScript `35bf260c0d8a79b94c64005bd3d2435adcf7e261`, libclang 22.1.5.
 Это продолжение [проверки 50 функций](clangbind-parity.md).

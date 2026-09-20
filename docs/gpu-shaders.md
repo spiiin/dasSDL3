@@ -1,14 +1,10 @@
 # Standalone GPU shader resources
 
-> Current error/lifetime contract: [error-handling.md](error-handling.md).
-> SDL failures return values; scopes use defer. Earlier panic/protected-scope
-> descriptions below are historical and no longer describe the public binding.
-
 Example 42 and `sdl3_gpu_shader_boost` add checked shader IDs to the generated SDL
-types. The generated `SDL_GPUShaderCreateInfo` exposes seven value fields: format,
-stage, four resource counts and props. Its native `code`, `code_size`, `entrypoint`
-fields are hidden. This is a selected-field binding of a pointer-bearing record,
-not another fully pointer-free record. Raw SDL_CreateGPUShader is not exported.
+types. Raw SDL_CreateGPUShader and its native pointer-bearing descriptor are
+also generated. The checked adapter copies selected metadata; its getter is
+not a source of owned native bytecode. For script bytes/file construction with
+native pointers use [native adapters](gpu-native-boost.md).
 
 ```das
 let info = gpu_shader_info(SDL_GPU_SHADERFORMAT_SPIRV,
@@ -62,7 +58,7 @@ Raw/manual release inside an owning scope is unsupported and causes cleanup erro
 
 `tests/gpu_shader.das` exercises array and file input, source-array mutation,
 metadata copies, real lit fragment sampler/uniform declarations, invalid input,
-wrong thread/kind/device, stale IDs, nested recovery, early return and device
+wrong thread/kind/device, stale IDs, error returns, early return and device
 cleanup. Native invalid-enum probes complement script compile failures for hidden
 pointers and wrong enum assignments. Limits are validation tests; nonzero storage
 resource counts are not exercised by a real shader in this stage.
@@ -74,14 +70,8 @@ on the tested Vulkan/D3D12 drivers. It is not public general pipeline coverage.
 The shared oracle also retains the earlier triangle tests. Example 42 only loads
 and inspects shaders; it does not render.
 
-Next stage: copied graphics pipeline layouts and checked shader IDs, followed by
-resource bindings in native command plans and sampler/texture pixel tests.
-GPU function census remains 13 generated / 54 adapted / 25 pending. Generated
-selection now has 27 records / 145 exposed fields; functions and enums unchanged.
-
-Validation run (2026-09-20): main CTest 146/146, baseline/CppGenBind/strict AOT
-339/339 without skips, standalone dasClangBind gates 4/4. Vulkan and D3D12 shader
-creation and release-before-draw CPU pixel checks passed. Full logs contain no
-Vulkan VUID or D3D12 validation errors.
-The LLVM/libclang-free consumer built and ran example 42 with SPIR-V on Vulkan
-and DXIL on D3D12; no generator/LLVM references occur in its Ninja build graph.
+Latest combined verification: [gpu-native-validation.md](gpu-native-validation.md).
+Current function census: [api-coverage.md](api-coverage.md).
+This page describes the checked subset. Full native pointers/arrays and scopes
+are documented in [gpu-native-boost.md](gpu-native-boost.md); IDs and native
+handles are separate. Other platforms and all hardware formats are not certified.

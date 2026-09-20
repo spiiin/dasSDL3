@@ -1,9 +1,5 @@
 # Реестр API: первый рабочий профиль
 
-> Current declaration coverage: all 92 active Windows GPU functions are generated.
-> See [native GPU API](gpu-native-api.md). Runtime/AOT validation of the expanded
-> surface is pending; earlier gaps below describe the previous checked subset.
-
 Реализован 19 сентября 2026 для SDL 3.2.18, Clang 16.0.5,
 target `x86_64-pc-windows-msvc`, C11. Это первый результат P0,
 а не завершение всей инфраструктуры или межплатформенного census.
@@ -24,7 +20,7 @@ target `x86_64-pc-windows-msvc`, C11. Это первый результат P0,
 семь Render/Surface и одну Audio функцию; каждая имеет ограниченный
 контракт. Аудит после примера 22 исправил ранее неучтённый default-playback
 adapter OpenAudioDeviceStream. Внутренние вызовы SDL и test-only helpers не
-считаются автоматически публичными привязками. См. `binding-coverage-audit.md`.
+считаются автоматически публичными привязками. См. `full-binding-roadmap.md`.
 Это не число всех экспортов SDL DLL и не процент готовности boost.
 Structs с выбранными полями отмечены partial, opaque handles — opaque.
 Собственный wrapper SDL_Wav вынесен в policy `project_types` с местом

@@ -1,9 +1,5 @@
 # Geometry: проверяемые массивы вершин и индексов
 
-> Current error/lifetime contract: [error-handling.md](error-handling.md).
-> SDL failures return values; scopes use defer. Earlier panic/protected-scope
-> descriptions below are historical and no longer describe the public binding.
-
 Профиль: SDL 3.2.18, Windows x64/MSVC, закреплённый daScript.
 `require dassdl3/sdl3_geometry_boost` переэкспортирует базовый boost.
 Raw SDL_RenderGeometry также доступен; проверки ниже относятся к helpers.
@@ -83,7 +79,7 @@ callback loop заменён PollEvent и ресурсными scopes. Прим�
 побайтовое совпадение indexed/sequential quad, textured draw, сохранность
 команды после изменения массивов, пустые команды, неверные индексы/счётчики,
 неполные треугольники, цвет/UV вне диапазона, NaN/Infinity, неизменность target
-после отклонённой команды и продолжение после panic с исходным сообщением.
+после отклонённой команды и продолжение после результата ошибки SDL.
 Test-only `geometry_probe.h` передаёт переполненные счётчики с пустыми указателями
 в настоящий адаптер: отказ происходит до чтения памяти, без огромной аллокации.
 Тестовые exports отсутствуют в BUILD_TESTING=OFF.
@@ -91,15 +87,5 @@ Test-only `geometry_probe.h` передаёт переполненные счё�
 Эти же сценарий и пример включены в strict AOT; сам geometry boost также
 компилируется в AOT. Это SDL renderer geometry, ещё не SDL GPU pipeline.
 
-Проверено 2026-09-19: 20/20 основных CTest и 48/48 parity/AOT-проверок.
-Geometry-пример дополнительно выполнил 60 кадров в consumer с BUILD_TESTING=OFF,
-отключёнными генераторами и LLVM/ClangBind. Поиск Clang, LLVM и Python3 также
-отключён; использованы сохранённые привязки. C++ ABI assertions и проверка
-свежести генерации проходят. Теперь в allowlist 53 функции, 10 записей,
-49 полей, 6 opaque-типов и 42 константы. Другие ОС и GPU API не проверялись.
-
-Следующий этап: GPU ClearScreen → BasicTriangle с готовыми shader binaries,
-с отдельными контрактами command buffers, swapchain и pipeline lifetime.
-
-Справка: [SDL_RenderGeometry](https://wiki.libsdl.org/SDL3/SDL_RenderGeometry).
-Версии и ограничение UV сверены с закреплёнными заголовками/реализацией 3.2.18.
+Latest combined verification: [gpu-native-validation.md](gpu-native-validation.md).
+Current function census: [api-coverage.md](api-coverage.md).

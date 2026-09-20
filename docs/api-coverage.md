@@ -1,13 +1,5 @@
 # Покрытие SDL3
 
-> Current declaration coverage: all 92 active Windows GPU functions are generated.
-> See [native GPU API](gpu-native-api.md). Runtime/AOT validation of the expanded
-> surface is pending; earlier gaps below describe the previous checked subset.
-
-> Current error/lifetime contract: [error-handling.md](error-handling.md).
-> SDL failures return values; scopes use defer. Earlier panic/protected-scope
-> descriptions below are historical and no longer describe the public binding.
-
 Baseline: SDL 3.2.18, Windows x64/MSVC. Generated: 145; adapted: 8;
 pending: 1073 of 1226 functions. GPU: 92 generated / 0 adapted / 0 pending.
 `adapted` means a documented partial adapter, not full raw API coverage.
@@ -30,14 +22,13 @@ See [API boundary](gpu-api-boundary.md) and the generated header census.
 | Геймпады | Нет | Нет | Отдельный этап |
 | Callbacks, потоки | Нет | Нет | Нужен контракт времени жизни замыканий и потока вызова |
 | Файловый IO, остальные подсистемы | Нет | Нет | Отдельные этапы |
-| GPU device/window | Creation, claim/release, driver/capability/configuration queries | Scoped lifetime helpers | Ownership tests; direct swapchain acquisition remains pending |
-| GPU resource data | Bounded buffers/textures/volumes, upload/copy/readback, format queries | Array and ownership adapters | Transfer/format/volume/ASTC tests; no public copy-pass handles yet |
-| GPU shaders/pipelines/samplers | Independent SDL objects and generated descriptors | Descriptor defaults and scopes | Creation/lifetime/layout tests; shader ABI remains trusted |
-| GPU recording | Direct command buffer/render pass, bind/state/uniform/draw/submit | Checked handles and one command owner scope | gpu_recording; examples 44–46; offscreen single-color/sample-1 subset |
+| GPU native API | Все 92 функции SDL_gpu.h активного Windows профиля | Массивы/ref, creation data, native defer scopes | Raw: 92 Vulkan / 90 D3D12; debug-group исключения явные |
+| GPU attachments/compute/transfers | Render/copy/compute, swapchain/fences, storage/samplers/uniforms | Public примеры 48–50 без unsafe | MRT/MSAA/depth/stencil, offsets/cycling, CPU pixel/byte references |
+| GPU checked subset | Отдельные uint64 IDs, ограниченные formats/layouts | Примеры 23–46 | Ограничения конкретного checked helper не ограничивают generated raw API |
 
-Removed: mesh/material/scene/batching/culling, fixed triangle/mesh renderer and
-command/render plans, including their public native exports and boost modules.
-Six previously adapted functions returned to pending: debug label/group push/pop,
-copy-pass begin/end and WaitAndAcquireGPUSwapchainTexture. Internal uses do not
-establish a public direct binding. Retired engine tests/examples are not counted
-as coverage. Independent pixel/lifetime tests remain.
+Подробности: [native API](gpu-native-api.md), [scopes](gpu-native-boost.md),
+[проверки](gpu-native-validation.md). Положительный ASTC roundtrip и другие
+платформы не подтверждены. Генерация не доказывает все сочетания параметров.
+
+Удалённые engine helpers и внутренние вызовы SDL не считаются покрытием.
+Следующий пакет: [Properties и очередь](full-binding-roadmap.md).

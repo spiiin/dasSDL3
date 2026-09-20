@@ -1,12 +1,10 @@
 # P6: complete direct SDL GPU bindings
 
 > Current declaration coverage: all 92 active Windows GPU functions are generated.
-> See [native GPU API](gpu-native-api.md). Runtime/AOT validation of the expanded
-> surface is pending; earlier gaps below describe the previous checked subset.
-
-> Current error/lifetime contract: [error-handling.md](error-handling.md).
-> SDL failures return values; scopes use defer. Earlier panic/protected-scope
-> descriptions below are historical and no longer describe the public binding.
+> The five native-adapter follow-up steps are implemented and locally validated
+> on Vulkan/D3D12 (Windows x64). See [native guide](gpu-native-boost.md) and
+> [results and remaining limits](gpu-native-validation.md). This is not a
+> cross-platform completion claim.
 
 The binding follows SDL objects and operations. Renderer plans, meshes, materials,
 scenes and batching have been removed: see gpu-api-boundary.md. This replaces the
@@ -14,24 +12,29 @@ previous implementation chronology. Do not expand an engine layer to close an AP
 
 ## Current baseline
 
-SDL 3.2.18; Windows x64/MSVC; Vulkan and D3D12 locally tested. Generated GPU enums
-and selected descriptors, independent shader/pipeline/sampler objects, bounded
-buffer/texture/volume transfers and a direct offscreen graphics subset exist.
-The authoritative function census is generated from pinned headers: GPU 92 =
-92 generated + 0 adapted + 0 pending. Adapted does not mean complete.
-Read gpu-recording.md, gpu-transfer.md, gpu-texture-transfer.md, gpu-pipelines.md
-and api-coverage.md for the actual constraints. Public copy/compute passes and
-swapchain acquisition are not established by internal calls in a helper.
+SDL 3.2.18; Windows x64/MSVC. All 92 active Windows GPU declarations are
+available. Raw execution covers 92 Vulkan calls and 90 D3D12 calls; the two
+D3D12 debug-group calls are excluded for a pinned backend issue.
 
-Native command/fence lifecycle is now generated, including the original
-WaitForGPUFences signature and a borrowed-array adapter. See gpu-native-fences.md
-and example 47. Raw SDL pointers do not interoperate with checked uint64 command
-IDs. Native swapchain/render/copy/compute access is now generated as well; the
-remaining work is validating the expanded signatures, language adapters and
-direct examples together. The sequence below is the validation checklist now,
-not a list of declarations still absent from the generated binding.
+Completed follow-up:
+1. Shader/compute bytecode and file inputs; graphics pipeline descriptor arrays.
+2. Bounded byte-array transfer access, synchronous map/copy/unmap without escaping views.
+3. Native resource/pass/command defer scopes and swapchain submission cleanup.
+4. MRT, depth/stencil, MSAA/resolve, load/store/cycle, slots/offsets/first-instance
+   checked against CPU pixel and byte references.
+5. Public graphics/compute/transfer examples 48–50, interpreter/AOT parity and
+   no-LLVM consumer verification.
 
-## Implementation order
+The older checked-ID API remains separate from native SDL pointers. Native handles
+require the caller to obey SDL ownership, device, thread and synchronization rules.
+See gpu-native-boost.md; no registry or framework objects were added.
+
+The next library-wide vertical is P1 Properties, followed by Hints/Init,
+Video/Render and IOStream/Events. Keep GPU backend limitations visible; Metal,
+other operating systems and platform-specific declarations need their own tests.
+A shader DSL and companion libraries remain separate projects in the roadmap.
+
+## Retained GPU maintenance checklist
 
 1. Audit every GPU declaration against its exported signature and state/lifetime
    contract. Separate generated raw access from array/ownership adapters. Generate
@@ -57,8 +60,8 @@ not a list of declarations still absent from the generated binding.
 
 ## Verification rules
 
-Keep GPU resources scoped to their device; stale/wrong-kind/device handles must
-not reach native calls. No script per-call try/recover. Preserve script defer ownership and the asynchronous fence-retirement rule. Keep
+Keep GPU resources scoped to their device. Checked IDs validate provenance; native
+pointers require valid/live/same-device handles as caller preconditions. No script per-call try/recover. Preserve script defer ownership and the asynchronous fence-retirement rule. Keep
 validation enabled; machine-specific Vulkan layer filtering is opt-in only.
 
 Tests and examples should demonstrate SDL operations directly. Application code

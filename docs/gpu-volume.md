@@ -1,14 +1,9 @@
 # Checked 3D texture transfers
 
-> Current error/lifetime contract: [error-handling.md](error-handling.md).
-> SDL failures return values; scopes use defer. Earlier panic/protected-scope
-> descriptions below are historical and no longer describe the public binding.
-
 P6/G3 batch 39: `sdl3_gpu_volume_boost`, `src/sdl3_gpu_volume.h`,
 `examples/39_gpu_volume_transfers.das`. This extends the existing five texture
-create/release/upload/copy/download contracts to 3D volumes. Function census
-remains 13 generated / 54 adapted / 25 pending; parameters and ownership, rather
-than new SDL function names, are the coverage change.
+create/release/upload/copy/download contracts to 3D volumes. These checked
+conveniences are separate from the complete generated native signatures.
 
 The nine related steps are volume creation/zero initialization, 3D mip extents,
 checked regions, copied pitched uploads, volume copies, shared fence readback,
@@ -59,8 +54,8 @@ retires its fence until completion, preserving the Vulkan fence-pool workaround.
 
 Operations require the main thread and a live scoped device. IDs share the global
 monotonic namespace, but lookup checks resource kind and owner. Recording stays
-native-only. Volume scopes use one native owner boundary for cleanup on return
-or panic; ordinary calls add no try/recover. Device teardown waits for idle then
+native-only inside this adapter. Volume scopes use script defer on normal/early
+return; ordinary calls add no try/recover. Device teardown waits for idle then
 releases only that device's volumes and outstanding tickets.
 
 ## Verification scope
@@ -69,20 +64,13 @@ releases only that device's volumes and outstanding tickets.
 partial two-slice updates, nonzero source/destination z, untouched neighbors,
 mip copies, 1x1x1 mips and queued cycling snapshots. It exercises 1/2/4/8/16-byte
 formats when supported, overflow/short arrays/bad pitches, bounds, same-volume
-copy, wrong-kind/stale/foreign IDs, failure recovery, panic/early return, rapid
+copy, wrong-kind/stale/foreign IDs, failure recovery, SDL errors/early return, rapid
 ticket retirement, two live devices and pending-work teardown. A separate
 registry prevents volume IDs from being accepted by 2D transfer helpers.
 Example 39 uses only public helpers and needs no unsafe block or test exports.
 
-ASTC transfers, arbitrary mapping, command-plan integration and general shader/
-pipeline bindings remain open. Existing 2D/array/BC/cube/image behavior is covered
-by the combined regression suite; Windows results do not establish Metal/Linux
-support.
-
-Verified 2026-09-20 with the pinned Windows x64 toolchain: main suite 133/133,
-baseline/CppGenBind/strict AOT suite 306/306, standalone Clang preflight 4/4.
-All five selected volume formats ran on Vulkan and D3D12; no optional-format
-fallbacks, CTest skips or GPU validation errors occurred.
-The LLVM/Python-disabled consumer built from saved snapshots and passed example
-39 on both backends. Its build graph has no libclang, LLVM or binding-generator
-dependency. Developer generator configuration was restored afterward.
+Latest combined verification: [gpu-native-validation.md](gpu-native-validation.md).
+Current function census: [api-coverage.md](api-coverage.md).
+This page describes the checked subset. Full native pointers/arrays and scopes
+are documented in [gpu-native-boost.md](gpu-native-boost.md); IDs and native
+handles are separate. Other platforms and all hardware formats are not certified.

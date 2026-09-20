@@ -1,19 +1,15 @@
 # GPU packages 26–29
 
-> Current error/lifetime contract: [error-handling.md](error-handling.md).
-> SDL failures return values; scopes use defer. Earlier panic/protected-scope
-> descriptions below are historical and no longer describe the public binding.
-
 Pinned SDL 3.2.18. `sdl3_gpu_utilities_boost` re-exports format and texture
 transfer helpers. The four packages share one regression/build pass.
 
 ## 26: BC block transfers
 
 `with_gpu_transfer_texture(width,height,layers,levels,format,texture_type)`
-owns a checked texture ID, with the same protected panic/return cleanup as the
-older RGBA8/color scopes. It accepts supported uncompressed color formats and
+owns a checked texture ID, released by script defer on normal/early return. It accepts supported uncompressed color formats and
 the pinned BC1–BC7 formats, including available sRGB variants. Existing color
-factories still reject BC; ASTC/depth/3D transfers remain unsupported.
+factories still reject BC. ASTC has [separate restrictions](gpu-astc.md);
+3D uses [volume helpers](gpu-volume.md). Depth transfers are outside this factory.
 
 BC base dimensions must be multiples of four. Mips may be smaller or have a
 partial final block. Regions use pixel coordinates; origins must be multiples
@@ -65,43 +61,22 @@ particular shader/pipeline will compile. Discovery calls are main-thread only.
 the live scoped device, main thread, ID kind/owner and a 4096-byte limit before
 SDL. Empty names are accepted. SDL copies names; the caller can discard its
 string. IDs and contents are unchanged. SDL setters return void: successful
-validation/call is not a guarantee that a debugger displays the name. Debug
-groups/labels and names for internal mesh-bundle resources remain pending.
+validation/call is not a guarantee that a debugger displays the name. Native
+debug labels/groups are generated; D3D12 groups retain a pinned backend issue.
 
 ## Verification scope
 
 `tests/gpu_texture_types.das`: odd pitch and minimal last rows, all pinned BC
 formats (capability-gated), cropped block copies, partial edge and 1x1 mips,
 independent array layers/faces, zero neighbors, invalid descriptors/regions,
-stale/cross-device IDs, panic cleanup and snapshot survival after source release.
+stale/cross-device IDs, early-return cleanup and snapshot survival after source release.
 Cube and cube-array color plus BC1 cube transfers are exercised.
 `tests/gpu_utilities.das`: owned driver strings, invalid masks/indices,
 resource-name bounds, cross-kind/device/stale IDs, Unicode/empty names.
 Examples 26–29 demonstrate each package without a window.
 
-Combined verification on 2026-09-20:
-
-- Main project: 102/102 CTest; parity/interpreter/strict AOT: 227/227.
-- Standalone dasClangBind experiment: 4/4. All 12 selected BC formats ran on
-  both Vulkan and D3D12 here; none took the unsupported-format branch.
-- Examples 26–29 passed on both backends in the LLVM-free consumer build.
-  Clang/LLVM/Python package discovery and generators were disabled; build.ninja
-  has no libclang/libLLVM or binding-generator commands.
-- Completed main/parity logs contain no VUID, Validation Error or D3D12 ERROR.
-  The known FPS Monitor layer filter remains process-local. Linux/Metal and
-  actual debugger display of resource names were not tested.
-- Inventory: GPU 7 generated / 50 adapted / 35 pending; total SDL API
-  60 generated / 59 adapted / 1107 pending. Existing adapted APIs remain partial.
-- Developer generator configuration restored. Final snapshot/inventory/preflight
-  checks plus example 28: 7/7. After clarifying that example's driver-preference
-  output, its interpreter/AOT parity subset passed 5/5 and both consumer runs
-  passed again. No implementation changes followed the combined suite.
-
-3D color volumes are now available through a separate checked API and registry;
-see [gpu-volume.md](gpu-volume.md). Existing 2D/array/cube factories retain their
-original type restrictions. ASTC/depth transfers remain pending.
-
-ASTC infrastructure (example 40): rectangular block extents/regions and guarded
-transfer selection are implemented. Positive ASTC GPU roundtrip is unverified
-locally; pinned Vulkan HDR is conservatively excluded after a validation failure.
-See [ASTC limits and evidence](gpu-astc.md). G3 acceptance remains open.
+Latest combined verification: [gpu-native-validation.md](gpu-native-validation.md).
+Current function census: [api-coverage.md](api-coverage.md).
+This page describes the checked subset. Full native pointers/arrays and scopes
+are documented in [gpu-native-boost.md](gpu-native-boost.md); IDs and native
+handles are separate. Other platforms and all hardware formats are not certified.

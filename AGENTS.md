@@ -55,7 +55,7 @@ GPU checked IDs are monotonic, separate by native kind, device-specific and curr
 main-thread-only. Direct recording is src/sdl3_gpu_recording.h and
 sdl3_gpu_recording_boost; no operation list or per-draw uniform snapshots. End/submit/
 cancel consume IDs. Scope cleanup ends an open offscreen pass and cancels unsubmitted
-commands; future swapchain support must submit after acquiring a non-null texture.
+commands. Native swapchain scopes submit after acquiring a non-null texture.
 Cancel open recordings before resource release on device teardown. Failed submission
 invalidates written targets. Keep interpreter/AOT, two-device and CPU pixel tests.
 
@@ -65,8 +65,16 @@ example 47. They are NOT checked IDs and follow SDL manual ownership/thread rule
 Do not add a registry or bridge to checked IDs merely to expose the next raw API.
 The wait-array adapter borrows pointer storage only for the synchronous SDL call.
 All 92 active Windows GPU functions now have generated native signatures.
-See docs/gpu-native-api.md for array/out adapters, raw ownership and outstanding
-validation. Generation coverage is not runtime completeness; do not claim P6 done.
+See docs/gpu-native-api.md and gpu-native-boost.md for array/out adapters and
+native ownership. Five native follow-up steps have local Windows validation in
+gpu-native-validation.md; do not claim all-platform GPU completion.
+sdl3_gpu_native_boost uses defer and native pointers, without a registry/checked-ID
+bridge. Resource callbacks must not release/retain borrowed handles; swapchain
+callbacks must not consume their command. Offscreen command scopes use the
+ref-consuming submit/cancel helpers. Byte transfer capacity must equal creation
+size; handle validity, usage and fence completion remain caller preconditions.
+Examples 48–50 are public and fixture-free. gpu_native_adapters checks advanced
+attachments/lifetimes; gpu_native_array_operations covers array/ref conversions.
 Raw execution: tests/gpu_raw.das, gpu_raw_coverage.json and
 test_gpu_raw_execution.py exercise 92 Vulkan functions and 90 D3D12 functions
 through legacy/CppGenBind/AOT. D3D12 debug groups remain explicitly excluded.
@@ -103,4 +111,8 @@ Ninja with vcvars64 works; build with 6 parallel jobs. Run the project's CTest f
 standalone clangbind checks, interpreter/AOT parity and no-LLVM consumer as appropriate.
 Run tests/test_gpu_api_boundary.py against runners to prevent engine API reintroduction.
 Keep example numbers stable; removed numbers are documented in examples/README.md.
-Historical GPU engine documents are explicitly marked and are not current instructions.
+Documents for removed GPU engine APIs were deleted; do not restore them as active instructions.
+
+Do not overlap no-LLVM consumer configuration/build with clangbind-dependent
+builds or tests: they share daScript generated module configuration. Restore the
+production generator configuration after consumer checks before clangbind gates.

@@ -1,10 +1,6 @@
 # GPU data buffers and asynchronous readback
 
-> Current error/lifetime contract: [error-handling.md](error-handling.md).
-> SDL failures return values; scopes use defer. Earlier panic/protected-scope
-> descriptions below are historical and no longer describe the public binding.
-
-Public G3 slice after example 22, pinned SDL 3.2.18. Module:
+Checked buffer API, pinned SDL 3.2.18. Module:
 `dassdl3/sdl3_gpu_transfer_boost`; native adapter: `src/sdl3_gpu_transfer.h`.
 Example 23 needs a GPU device but no window or shaders. This does not complete P6.
 
@@ -50,18 +46,10 @@ Example 23 needs a GPU device but no window or shaders. This does not complete P
 
 ## Coverage and remaining work
 
-Six formerly pending SDL functions gain limited public adapters:
-CopyGPUBufferToBuffer, DownloadFromGPUBuffer,
-SubmitGPUCommandBufferAndAcquireFence, QueryGPUFence, WaitForGPUFences,
-ReleaseGPUFence. Create/update/map/release operations already used by meshes now
-also have the public data-buffer contract above. No claim of general raw fence
-arrays or public command-buffer recording is made.
-
-Texture upload/download/copy regions, row pitches, compressed formats, explicit
-transfer-buffer ownership/mapping and arbitrary pass recording remain separate
-G3 work. The fixed mesh resources are not interchangeable with data-buffer IDs.
-Graphics/compute binding of these buffers is still to be added; this slice
-establishes transfer and lifetime contracts first.
+The helpers submit their own copy operations and expose checked tickets. For
+explicit native transfer buffers, copy passes, fences and mapping, use the
+[native API](gpu-native-boost.md). Checked convenience restrictions above do
+not limit raw SDL. Texture/cube/volume variants have separate contracts.
 
 `tests/gpu_transfer.das` covers exact byte comparison, partial updates/copies,
 queued snapshots before cycling, repeated reads, release of the download source,
@@ -74,27 +62,8 @@ The rapid-discard regression submits 128 consecutive snapshots and closes their
 scopes immediately. Transfer CTests fail on Vulkan VUID/Validation Error or
 D3D12 ERROR output, even when byte assertions and the process exit code pass.
 
-## Verification (2026-09-19)
-
-- Final project CTest filter: 82/82 passed, including Vulkan/D3D12 transfer
-  contracts and example 23. No validation errors in the final GPU test logs.
-- After the fence-retirement fix: 13/13 focused parity/strict-AOT tests, including
-  both GPU backends, both interpreter binding backends, metadata parity and
-  missing-AOT rejection. The earlier broad 177-test run preceded this fix.
-- Standalone dasClangBind interpreter/AOT/negative experiment: 4/4.
-- BUILD_TESTING=OFF, generators/LLVM/Clang disabled source build: example 23
-  succeeds on Vulkan and D3D12; build.ninja has no libclang/libLLVM/generator.
-- Developer generator restored after the consumer build: 5/5 freshness,
-  inventory/contracts and Clang preflight checks. 60 generated functions,
-  53 constants; GPU inventory is 7 generated / 40 adapted / 45 pending.
-
-The initial unfiltered CTest command also selected unbuilt upstream daScript
-executables; those are not project binding failures. The final project filter
-above excludes them. A stale inventory fingerprint caused by preserving the
-bindings policy line endings was regenerated and passed the final freshness
-checks. Hardware device-loss and injected allocation/submission failures remain
-unverified. This slice is not a claim of complete G3 or P6.
-
-RGBA8 2D/array texture regions and mip/layer readback are now implemented in
-`gpu-texture-transfer.md`; generic/compressed formats and mapped views remain
-pending. Both buffer and texture tickets share the same fence retirement path.
+Latest combined verification: [gpu-native-validation.md](gpu-native-validation.md).
+Current function census: [api-coverage.md](api-coverage.md).
+This page describes the checked subset. Full native pointers/arrays and scopes
+are documented in [gpu-native-boost.md](gpu-native-boost.md); IDs and native
+handles are separate. Other platforms and all hardware formats are not certified.

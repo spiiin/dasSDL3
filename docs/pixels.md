@@ -1,9 +1,5 @@
 # Пиксельные буферы, streaming texture и render target
 
-> Current error/lifetime contract: [error-handling.md](error-handling.md).
-> SDL failures return values; scopes use defer. Earlier panic/protected-scope
-> descriptions below are historical and no longer describe the public binding.
-
 SDL 3.2.18, Windows x64/MSVC, закреплённый daScript. Публичный модуль:
 `require dassdl3/sdl3_pixels_boost`; он переэкспортирует базовый boost.
 Нативные адаптеры находятся в `src/sdl3_pixels.h`.
@@ -29,7 +25,7 @@ lock не читается. Это API копирования, не zero-copy ma
 
 Не предлагается блок `with_locked_pixels`: возвращать borrowed slice пока
 нет необходимости и доказанного запрета на его сохранение. Panic подготовки
-пикселей происходит до lock; panic после upload — уже после unlock.
+пикселей происходит до lock; upload возвращает результат после unlock.
 Проверено повторное обновление той же текстуры после отказа на неверном буфере.
 
 ## Render target и readback
@@ -92,20 +88,11 @@ SDL_Surface и SDL_Texture остаются opaque. Указатели из бл
   SDL property callbacks подтверждают порядок уничтожения поверхности и текстуры
   до teardown renderer. Stale pointers для теста не разыменовываются.
 
-В `tests/clangbind_parity` добавлены три сценария и AOT самого pixels boost.
-На 2026-09-19 прошли 42/42 проверки: обе interpreter-конфигурации, строгий AOT,
-метаданные и отрицательные генераторные проверки. Генераторы содержат 52 raw
-функции; GetRenderTarget/SetRenderTarget добавлены в allowlist, остальные
-пиксельные вызовы отмечены как частичные adapted в policy, а не полные raw API.
-Основной CTest: 18/18, включая freshness и census. Оба новых примера отдельно
-прошли по 60 кадров в consumer с BUILD_TESTING=OFF, отключёнными генераторами,
-CLANG_BIND/LLVM и поиском пакетов Clang/LLVM/Python3. Это проверка сборки из
-сохранённых привязок, не install/export-пакета и не другой ОС/backend GPU.
+Сценарии и boost компилируются и исполняются в interpreter/строгом AOT.
+Текущие сводные проверки: [gpu-native-validation.md](gpu-native-validation.md).
+Region uploads и другие форматы renderer остаются отдельной работой.
 
 Источники контрактов: [SDL_LockTexture](https://wiki.libsdl.org/SDL3/SDL_LockTexture),
 [SDL_SetRenderTarget](https://wiki.libsdl.org/SDL3/SDL_SetRenderTarget),
 [SDL_RenderReadPixels](https://wiki.libsdl.org/SDL3/SDL_RenderReadPixels);
 реализация сверена с локальными заголовками 3.2.18.
-
-Дальше: geometry с проверенными vertex/index arrays, region upload и явные
-форматы; затем GPU ClearScreen и BasicTriangle с готовыми шейдерами.

@@ -43,3 +43,10 @@ acquisition remains pending; do not infer it from these examples.
 - [46_gpu_texture_uniform_bindings.das](46_gpu_texture_uniform_bindings.das)
 
 - [47_gpu_native_fences.das](47_gpu_native_fences.das): native commands/fences, explicit results and defer.
+
+- [48_gpu_native_graphics.das](48_gpu_native_graphics.das): native shader/pipeline creation and deferred swapchain presentation.
+- [49_gpu_native_compute.das](49_gpu_native_compute.das): compute uniforms/storage buffer, fenced download and CPU reference.
+- [50_gpu_native_transfer.das](50_gpu_native_transfer.das): byte-array upload/copy/download with offsets and cycling.
+
+Examples 48–50 use public native modules without unsafe or private fixtures.
+See [native GPU guide](../docs/gpu-native-boost.md) for ownership and execution.

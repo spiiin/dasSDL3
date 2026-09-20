@@ -68,7 +68,7 @@ the original SDL function and AOT C++ signature remain unchanged.
 
 Both snapshots generated deterministically; the production C++ build passed.
 The combined existing suite has now passed with targeted corrections and reruns;
-see [validation report](gpu-validation-2026-09-20.md). Existing checked-adapter
+see [validation report](gpu-native-validation.md). Existing checked-adapter
 test results do not establish every new raw contract. Dedicated raw execution
 coverage has since been added: [raw GPU tests](gpu-raw-tests.md) execute all 92
 functions on Vulkan and 90 on D3D12, through both generators and AOT. The two

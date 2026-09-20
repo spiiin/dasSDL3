@@ -103,3 +103,9 @@ limitations in gpu-raw-tests.md also remain documented.
 Shader maintenance: `tools/build_native_gpu_shaders.py --dxc <path> --spirv-val
 <path> [--check]`. Normal builds use the committed SPIR-V/DXIL files; no shader
 compiler is required by consumers. No other platform/backend is certified here.
+
+`tests/gpu_native_array_operations.das` exercises sampler/storage arrays across
+shader stages, uniform arrays, render/compute arrays, swapchain outputs, fence
+arrays and descriptor-ref operations. It retains CPU-only shader/data fixtures
+and raw setup; the adapter calls and GPU operations execute in script, with
+independent pixel/byte checks. See [validation results](gpu-native-validation.md).

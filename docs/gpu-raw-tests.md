@@ -48,7 +48,7 @@ operations; it does not cover every format, depth attachment, MSAA or MRT layout
 Vulkan exercises all 92 functions. D3D12 explicitly excludes only
 SDL_PushGPUDebugGroup and SDL_PopGPUDebugGroup because pinned SDL 3.2.18 passes
 invalid BeginEvent metadata with its debug layer (see the historical diagnostic
-in gpu-command-plans.md). The test emits RAW_UNSUPPORTED for these two functions.
+in gpu-api-boundary.md). The test emits RAW_UNSUPPORTED for these two functions.
 Validation is not disabled. Individual debug labels execute on both backends.
 
 During test development a buffer combining VERTEX/INDEX/INDIRECT usage produced

@@ -1,9 +1,5 @@
 # Несколько SDL GPU devices и Vulkan layers
 
-> Current error/lifetime contract: [error-handling.md](error-handling.md).
-> SDL failures return values; scopes use defer. Earlier panic/protected-scope
-> descriptions below are historical and no longer describe the public binding.
-
 Исследование 2026-09-19, Windows x64, RTX 4080 Laptop, SDL 3.2.18.
 Прежний запрет второго scoped device снят. Устройства регистрируются независимо;
 при shutdown освобождаются только pipeline/mesh IDs соответствующего device.

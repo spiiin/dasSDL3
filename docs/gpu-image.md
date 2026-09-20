@@ -1,9 +1,5 @@
 # GPU packages 33–35: color targets, mipmaps and scaled blits
 
-> Current error/lifetime contract: [error-handling.md](error-handling.md).
-> SDL failures return values; scopes use defer. Earlier panic/protected-scope
-> descriptions below are historical and no longer describe the public binding.
-
 Pinned SDL 3.2.18. Script module: `sdl3_gpu_image_boost`; native adapter:
 `src/sdl3_gpu_image.h`. These are image-processing commands with CPU readback,
 not a general render-pass or material/pipeline API.
@@ -53,21 +49,12 @@ release apply. No new raw command/pass pointer reaches the script.
 base levels, two layers, regeneration, constant odd 7x5 mip chains, cropped
 nearest enlargement (exact bytes), linear downsampling into a mip, and sentinel
 pixels outside the blit, and selecting a cubemap source face. It checks invalid bounds/filter/usage, mismatched format,
-foreign/stale IDs, panic cleanup and ticket survival after source destruction.
+foreign/stale IDs, early-return cleanup and ticket survival after source destruction.
 Examples 33–35 demonstrate each package without a window. This does not verify
 SRGB behavior, general float filtering, Linux/Metal or arbitrary shader rendering.
 
-Combined verification on 2026-09-20:
-
-- Main project: 118/118 CTest; parity/interpreter/strict AOT: 267/267.
-- Standalone dasClangBind experiment: 4/4. Deterministic generated selection:
-  60 functions, 10 records, 7 opaque types, 49 fields, 183 constants (2 new).
-- Completed main/parity logs contain no VUID, Validation Error or D3D12 ERROR.
-  The existing FPS Monitor layer filter remained process-local.
-- GPU inventory: 7 generated / 57 adapted / 28 pending; total SDL API:
-  60 generated / 66 adapted / 1100 pending. Adapted contracts remain partial.
-- Examples 33–35 passed on both backends in the LLVM-free consumer build with
-  generators and Clang/LLVM/Python package discovery disabled. build.ninja has
-  no libclang/libLLVM or binding-generator commands.
-- Developer generator configuration restored; final snapshot freshness,
-  inventory and Clang preflight checks: 5/5 passed.
+Latest combined verification: [gpu-native-validation.md](gpu-native-validation.md).
+Current function census: [api-coverage.md](api-coverage.md).
+This page describes the checked subset. Full native pointers/arrays and scopes
+are documented in [gpu-native-boost.md](gpu-native-boost.md); IDs and native
+handles are separate. Other platforms and all hardware formats are not certified.

@@ -1,215 +1,56 @@
-> Current architectural decision: [SDL API boundary](gpu-api-boundary.md).
+# Примеры и следующие сценарии
 
-> Current error/lifetime contract: [error-handling.md](error-handling.md).
-> SDL failures return values; scopes use defer. Earlier panic/protected-scope
-> descriptions below are historical and no longer describe the public binding.
-> Renderer framework APIs and plans were removed; old implementation references below
-> are historical. Prioritize complete direct SDL access; see [GPU roadmap](gpu-roadmap.md).
+Текущий список файлов — [examples/README.md](../examples/README.md).
+Удалённые примеры 09–22 и 36 не восстанавливаются как engine API; номера
+сохранены, чтобы прежние ссылки не указывали на другой сценарий.
 
-# Примеры, туториалы и проверки для портирования
+## Уже поддержано
 
-GPU TexturedQuad реализован как собственный ограниченный сценарий:
-`examples/11_gpu_textured_quad.das`, `gpu-mesh.md`. Vertex buffer, RGBA8 upload,
-sampler и pixel reference проверены на Vulkan/D3D12 в interpreter и strict AOT.
-Это не буквальный порт upstream-примера; assets и shaders созданы в проекте.
-Его indexed вариант — `12_gpu_indexed_quad.das`, контракт в `gpu-indexed-mesh.md`.
-`13_gpu_transform_quad.das` добавляет собственный 2D vertex-uniform сценарий;
-проверки transforms и layout описаны в `gpu-transform.md`.
-`14_gpu_cube.das` — собственный 3D color/depth сценарий со стандартными матрицами
-daScript; pixel reference и порядок треугольников проверяются в `gpu-3d.md`.
-`15_gpu_lit_cube.das` добавляет собственные texture/normal/light shaders;
-CPU reference перспективных UV и Lambert lighting описан в `gpu-lit.md`.
-`16_gpu_scene.das` переиспользует lit mesh для трёх объектов в одном pass;
-`gpu-scene.md` описывает общий depth, draw list и cross-object pixel reference.
-
-Geometry также реализован: цветной triangle, indexed textured quad, точные
-pixel/array проверки в interpreter/AOT — `geometry.md`. Исходный C geometry
-пример собран и выполнен с smoke-wrapper на 60 кадров и нашим checker.bmp.
-
-Обновление: streaming_texture и собственный render_target/readback уже
-реализованы; contracts и 42 interpreter/AOT-проверки — в `pixels.md`.
-Первый lock API использует owned staging array и синхронный native upload;
-borrowed pixel block пока отложен. C-исходник streaming изучен, отдельно не запускался.
-
-19 сентября 2026. Это очередь будущих портов. Уже работающие square/textures/
-input/audio описаны в `api-coverage.md`; приведённые ниже upstream-примеры
-изучены как источники сценариев, но не объявляются запущенными в dasSDL3.
-
-## Как портировать
-
-Для каждого порта фиксировать upstream repo/revision/path, используемый SDL
-релиз и лицензию assets. Сначала версия C на том же backend, затем daScript raw
-при необходимости диагностики, затем короткий boost-пример без unsafe.
-Хранить конечный boost-пример и regression test; не обязательно поддерживать
-три пользовательские версии каждого demo постоянно.
-
-Официальный [tutorial index](https://wiki.libsdl.org/SDL3/Tutorials) рекомендует
-небольшие [SDL3 examples](https://examples.libsdl.org/SDL3/). Для нашего baseline
-приоритет — соответствующие исходники в `SDL release-3.2.18/examples`.
-Текущий сайт может использовать более новые функции. Исходники и version
-contracts полезнее видеозаписи для воспроизводимого порта.
-В локальном 3.2.18 input examples пока представлены joystick polling/events;
-gamepad-примеры текущего сайта требуют отдельной проверки совместимости.
-
-## Core SDL: матрица сценариев
-
-| Очередь | Источник / сценарий | Что раскрывает | Проверка результата |
-| --- | --- | --- | --- |
-| E1 | renderer/streaming-textures | Lock/unlock, pitch, writable pixels, panic cleanup | Детерминированный рисунок, размеры и пиксели, unlock на раннем выходе/ошибке |
-| E1 | renderer/geometry | Arrays vertices/indices, пустые массивы, POD layout | Сравнение image, неверный index/размер отсечён адаптером |
-| E1 | renderer/read-pixels + собственный target-texture вариант | GPU→surface, pixels ownership, смена render target | Размер/формат/контрольные пиксели, восстановление target и порядок destroy |
-| E2 | renderer/rotating-textures, scaling-textures, color-mods, viewport, cliprect | Float rect, origin, modulation, state restore | Несколько фиксированных кадров; точность/tolerance определены заранее |
-| E2 | input/gamepad-events и gamepad-polling; joystick варианты; rumble | Перечисление/горячее подключение, IDs, состояние и события | Synthetic/virtual device где поддержано + отдельный физический тест; no-device case |
-| E2 | misc/clipboard, locale, power | UTF-8 и SDL-owned arrays/strings; штатно неизвестные значения | Копия/освобождение и fallback; тест clipboard восстанавливает исходное содержимое |
-| E3 | storage/user | Readiness, sandboxed application storage, save/load | Временные данные, roundtrip, missing/corrupt data; не трогать реальные сохранения |
-| E3 | asyncio/load-bitmaps | Retained buffers, completion queue и cancellation | Завершение/ошибка/shutdown до completion, input lifetime |
-| E3 | audio/multiple-streams; simple-playback; load-wav | Mixing/conversion/queue lifecycle сверх текущего WAV smoke | CPU/dummy deterministic данные, bounded queue и завершение |
-| E4 | audio/simple-playback-callback | Callback bridge и real-time ограничения | Native producer/queue, отсутствие script вызова на audio thread, stop race |
-| E4 | camera/read-and-draw | Permissions, formats/pitch, borrowed frame release | Нет камеры/отказ, hot unplug, каждый acquired frame освобождён |
-| E4 | pen/drawing-lines | Device data/pressure и событие со своим payload | Записанная последовательность + физический pen smoke отдельно |
-| E5 | demos/snake | Интеграция loop/input/time/render и cleanup | Фиксированный seed/replay, ограниченный smoke режим |
-| E5 | demos/bytepusher или infinite-monkeys | Более длительная интеграция audio/IO/render | Длительный запуск, bounded allocations, нормальное завершение |
-
-Простые clear/points/lines/rectangles объединить в gallery и небольшие тесты,
-а не растягивать отдельную итерацию на каждый примитив. Новые affine/blending/
-planar-audio примеры включать только после проверки доступности в baseline.
-Добавить собственные тесты IME/UTF-8/event payload: красивый demo их не заменяет.
-
-## GPU
-
-Добавлен собственный `examples/10_gpu_triangle.das`: vertex-ID BasicTriangle,
-готовые SPIR-V/DXIL. `tests/gpu_triangle.das` проверяет CPU pixel reference,
-pipeline ID lifetime и partial failure на Vulkan/Direct3D 12. G2 ещё частичен:
-BasicVertexBuffer/TexturedQuad и shader resource bindings остаются впереди.
-
-Добавлен собственный `examples/09_gpu_clear.das`: 60 clear/submit кадров в smoke,
-scopes устройства/окна и resize в `tests/gpu.das`; ошибки записи кадра —
-`tests/gpu_state.das`. Это реализация сценария, не буквальный порт upstream.
-Minimize/restore и два одновременно claimed окна проверяются в
-`tests/gpu_windows.das`, включая отрисовку внешнего окна после cleanup внутреннего.
-На Vulkan подтверждены переходы состояния окна, но NULL drawable не наблюдался;
-этот путь покрывает mock. Общие command/pass handles остаются до завершения G1.
-Подробности — `gpu-clear.md`.
-
-Источник: [SDL_gpu_examples](https://github.com/TheSpydog/SDL_gpu_examples).
-Перед портом закрепить commit; названия ниже обнаружены в исследованном дереве.
-
-| Порядок | Примеры | Проверяемый контракт |
-| --- | --- | --- |
-| 1 | ClearScreen, ClearScreenMultiWindow, WindowResize | Device/window/commandbuffer, minimize и swapchain lifetime |
-| 2 | BasicTriangle, BasicVertexBuffer | Shader assets, vertex ABI, pipeline/pass state |
-| 3 | TexturedQuad, TexturedAnimatedQuad | Transfer upload, texture/sampler, uniform packing |
-| 4 | CopyAndReadback, CopyConsistency | Fence, completion, mapping bounds и точное сравнение данных |
-| 5 | TriangleMSAA, GenerateMipmaps, DepthSampler | Attachments/resolve/mips/depth и resize |
-| 6 | BasicCompute, ComputeUniforms, ComputeSampler | Dispatch, storage, slots/layout, CPU reference |
-| 7 | InstancedIndexed, ComputeSpriteBatch | Bulk bindings, indirect/instancing и perf boundary |
-| 8 | Bloom, ToneMapping | Несколько проходов, float formats, управление ресурсами |
-
-Отдельный текстовый tutorial:
-[Moonside: SDL GPU API Concepts — Sprite Batcher](https://moonside.games/posts/sdl-gpu-sprite-batcher/).
-Он полезен после textured quad: atlas, storage-buffer данные экземпляров,
-upload и явное разделение batch. В статье части host-кода — pseudocode;
-портировать с проверкой against headers и полным example source, а не копировать
-фрагменты как готовую программу. Измерять calls/copies/frame и CPU/GPU время,
-не переносить опубликованный FPS на нашу машину как ожидаемый результат.
-
-Startup tutorial: [SDL main functions](https://wiki.libsdl.org/SDL3/README-main-functions).
-Отдельно портировать AppInit/Iterate/Event/Quit через native runner bridge;
-проверить failure during init, event-driven quit и cleanup. Этот порт нужен
-для дальнейшей mobile/web поддержки, хотя desktop PollEvent loop остаётся.
-
-## dasBGFX: проверять идеи теми же сценами
-
-В [исследованной ревизии dasBGFX](https://github.com/borisbat/dasBGFX/tree/a569838d35a2a584946e784d5e013fb2f08ec4c1/examples):
-
-| Пример | Эквивалент / момент переноса |
+| Примеры | Контракт |
 | --- | --- |
-| 01 triangle | G2 external shaders; повторить после DSL и сравнить результат |
-| 02 image, 03 cube | Image module, sampler, transforms/depth; одновременно проверить matrix layout |
-| 04 render-to-texture | G4 offscreen pass и resize attachments |
-| 05 compute, readback | G5 CPU reference + fence; не переносить BGFX frame-id ожидание |
-| 06 ttf | L1 font/text engine и UTF-8 |
-| 07 geometry generation | Typed vertex buffers и move semantics, пустая геометрия |
-| 08 imgui | L3 backend integration и event capture |
+| 01–04 | daScript runner, окно/renderer, ввод, BMP/texture |
+| 05–08 | Streaming pixels, render target/readback, geometry, queued audio |
+| 23–29 | Checked buffer/texture transfers, formats, BC/cube, drivers/names |
+| 30–35 | Swapchain settings, color targets, mipmaps/blit |
+| 37–43 | GPU descriptors, volumes, guarded ASTC, sampler/shader/pipeline ownership |
+| 44–47 | Checked direct recording/vertex/index/sampling, native fences |
+| 48–50 | Public native graphics/swapchain, compute/CPU reference, byte transfers |
 
-Критерий DSL: одна и та же сцена с external shader и daScript shader даёт
-эквивалентные reflection/layout/output; меньше boilerplate без потери диагностики.
+GPU demos используют собственные assets и не объявляются буквальными портами
+SDL_gpu_examples. Положительный ASTC roundtrip пока не подтверждён.
+Результаты и backend исключения — [GPU validation](gpu-native-validation.md).
 
-## Языковые регрессии, которые стоит адаптировать
+## Очередь по новым контрактам SDL
 
-Исходники — `third_party/daScript` на закреплённом commit:
+| Очередь | Сценарий | Проверка |
+| --- | --- | --- |
+| P1 | Собственный Properties example | Типы/defaults, копии UTF-8, owned/borrowed IDs, lock/cleanup |
+| P1 | Hints и Init | Приоритеты, восстановление изменённых hints, subsystems, ошибки |
+| P2 | renderer rotating/scaling/color-mods, viewport/cliprect | Фиксированные кадры, state restore, CPU pixels |
+| P3 | joystick/gamepad polling/events | Virtual/synthetic и physical отдельно, hotplug/no-device |
+| P4 | IOStream/Storage/AsyncIO | Roundtrip временных данных, EOF/short read, lifetime до completion |
+| P5 | audio multiple-streams/callback, camera read-and-draw | Dummy/offline отдельно от hardware, thread и frame release |
+| Позже | Clipboard/Locale/Power, pen, demos/snake | Восстановление внешнего состояния, replay, отсутствие устройства |
 
-- `tests/option/test_result*.das`, `test_option*.das`: error/absence, move-only payload;
-- `tests/bare_block/test_assumed_pipe.das`, `test_piped_default_padding.das`:
-  trailing blocks, pipes, defaults и результаты блока;
-- `tests/language/variants.das`: полный dispatch typed events и unknown fallback;
-- `container_finalize.das`, `inscope_return_inscope.das`: normal/early exit,
-  explicit collection release; отдельно наш panic/nested recover regression;
-- `tests/spirv`: emitted binary/reflection/layout; настоящий spirv-val при наличии
-  инструмента, его отсутствие явно skip, а не проверка валидности;
-- `modules/dasClangBind/tests/test_const_preproc.das`: constants/preprocessor
-  плюс собственные enum/flags/struct ABI fixtures SDL.
+Для upstream-порта закрепить revision/path/license, проверить совместимость
+с SDL 3.2.18, запустить C-оригинал на том же backend и затем короткий public
+пример плюс regression test. Сайт SDL может содержать более новые API.
+Примеры выбираются по пробелам API, а не как повод добавлять сцены/материалы.
 
-Не требуется копировать весь чужой test suite. Нужны небольшие интеграционные
-регрессии именно на границе язык↔SDL: исключение, контейнер, handle, callback,
-buffer и AOT. Запуск upstream-тестов не заменяет проверку native adapter.
+Источники исследованной очереди: [SDL examples](https://examples.libsdl.org/SDL3/),
+[SDL_gpu_examples](https://github.com/TheSpydog/SDL_gpu_examples).
+Для GPU полезны CopyAndReadback, TriangleMSAA, BasicCompute/ComputeUniforms,
+InstancedIndexed; соответствующие операции уже имеют локальные тесты.
+Bloom/ToneMapping и sprite batching допустимы как application examples после
+подтверждения нового контракта, но не как новые публичные объекты обвязки.
 
-`17_gpu_instancing.das`: 64 copies of a lit cube in one indexed draw, separate
-instance-rate model/normal buffer and orbiting camera. This is the bounded
-InstancedIndexed learning step; ComputeSpriteBatch/indirect remain. Fixed-count
-instance updates follow in example 18.
+## Языковые и shader проверки
 
-`18_gpu_dynamic_instances.das`: CPU animation uploads all instance transforms
-with staging/destination cycling before a single indexed draw. Tests compare
-twelve queued snapshots after submission without per-frame fence waits.
+Проверять trailing blocks/ref outputs, ранний return/defer, массивы и копии,
+SDL enum/flags/record ABI, отсутствие script pointer retention и строгий AOT.
+Result/Option и variants — изученные варианты, не обязательный слой вокруг
+каждого SDL вызова. Никакого нового recover-механизма для ресурсных wrappers.
 
-`19_gpu_instance_colors.das`: 64 animated transforms and RGBA colors in one
-indexed draw. CPU references verify texture modulation, alpha, depth and queued
-color updates on both backends; transparency blending is not implemented.
-
-`20_gpu_material_batches.das`: 64 animated cubes / two textures / two indexed
-draws in one shared-depth pass. Exact mesh ID grouping, variable list counts,
-queued-buffer cycling and independent CPU-reference tests are covered in
-`gpu-material-batches.md`. Separate material resources and transparency remain future work.
-
-`21_gpu_frustum_culling.das`: 2304 cubes, local sphere visibility filtering before
-batch upload, C toggle / Space pause and visible/submitted/draw counters. Tests
-compare full/culled pixels, plane boundaries, shear and all-outside frames;
-see `gpu-frustum-culling.md`.
-
-`22_gpu_shared_geometry.das`: example 21's culled grid now shares one vertex/index
-allocation across two materials, without seed instance buffers. Parent lifetime,
-pair coalescing, native buffer identity and CPU pixels: `gpu-shared-resources.md`.
-
-Example 23 (`23_gpu_copy_readback.das`) is a small public buffer copy/readback
-scenario, not a literal upstream tutorial port. Exact byte comparison, both
-backends and ownership tests: `gpu-transfer.md`. General texture transfers and
-compute still need independent examples.
-
-Example 24 (`24_gpu_texture_transfers.das`) verifies RGBA8 rectangular upload
-with odd byte pitch, copy into a mip/layer of a texture array, and exact readback.
-No window/shader or visual-only success criterion; an independent binding
-contract example, not a literal upstream tutorial port. See `gpu-texture-transfer.md`.
-
-Example 25 (`25_gpu_formats.das`) queries compressed format metadata and verifies
-a one-byte R8 upload/readback. Additional tests exercise 1/2/4/8/16-byte color
-formats and backend rejection without treating unsupported as successful upload.
-
-Пакеты 26–29: примеры BC blocks, cube faces, driver discovery, resource names.
-Новые сценарии проверяются общим interpreter/AOT и Vulkan/D3D12 прогоном;
-контракты и CPU byte oracle — `gpu-texture-types.md`. Это API-примеры без окна,
-не новые scene helpers и не демонстрация сэмплирования cubemap.
-
-Примеры 30–32: swapchain capabilities, present mode switching, frames-in-flight
-and availability wait. Общий контрактный тест `tests/gpu_swapchain.das` проходит
-комбинации, подтверждённые backend, и проверяет lifetime/pipeline compatibility.
-Это не benchmark задержки и не доказательство корректного HDR color output.
-
-Примеры 33–35: GPU color targets, mipmap chain, scaled blit. Проверка через
-public readback и CPU pixel reference в `tests/gpu_image.das`; без окна.
-Не считать это general render-to-texture pipeline или полным Blit API.
-
-Пример 36: две зависимые GPU-копии в одном command buffer с debug labels и
-условными groups; byte-reference readback. `tests/gpu_commands.das` проверяет
-также mixed copy/mip/blit, BC edge, ID/state и fault injection. Это CPU command
-plan, а не общий live command/pass builder (gpu-command-plans.md).
+[dasBGFX idioms](bgfx-idioms.md) сохраняет источники и примеры triangle/image,
+render-to-texture, compute/readback, TTF и ImGui. Для SDL ждать fence, не BGFX
+frame-id. Будущий DSL должен дать те же layout и GPU pixels, что external shaders.

@@ -113,6 +113,7 @@ sdl3_gpu_pipeline_boost, sdl3_gpu_buffers_boost and sdl3_gpu_recording_boost.
 The direct recording module exposes SDL command-buffer/render-pass order and
 immediate bind/state/uniform/draw calls. Examples 44–46 use this path. It keeps
 deferred command cleanup and no exception interception. Read gpu-recording.md
-for current bounds; compute/copy passes and swapchain acquisition remain pending.
-Transfer/readback helpers are not full direct access to transfer/fence operations.
+for its checked bounds. `sdl3_gpu_native_boost` separately provides native
+copy/compute/render/swapchain scopes and byte-array creation/transfers; see
+gpu-native-boost.md and examples 48–50. Native handles do not interoperate with IDs.
 Do not add another composite object to compensate for missing SDL bindings.

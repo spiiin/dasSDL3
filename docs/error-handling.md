@@ -60,21 +60,5 @@ panic unwinding. dasSDL3 deliberately returns failure values instead.
 
 ## Verification
 
-Windows x64, pinned SDL/daScript: project CTest suite 101/101; targeted final
-error/generation checks 11/11; baseline/AOT/CppGenBind suite 250/250; standalone
-clangbind checks 4/4. Tests cover SDL failure results, skipped acquisition blocks,
-preserved creation errors, reverse cleanup order, early return, nested ownership,
-resource counters and independent GPU pixel comparisons. The API boundary test
-also rejects the former native scope/invoke names and panic/check macros in boost.
-
-The pinned AOT emitter exposed a deeply nested inline-block/for-iterator capture
-issue in tests/pixels.das (C++ functor emitted before the iterator declaration).
-The test uses an explicit while-loop variable; inlining and AOT remain enabled,
-and no upstream source was modified. D3D12 debug capture exits successfully with
-no ERROR/CORRUPTION messages; the preexisting optimized-clear warning 820 remains.
-
-The production consumer with tests/generators/LLVM/Clang disabled builds and runs
-examples 44 and 46 on both Vulkan and D3D12. The removed-API negative compilation
-check also passes against that runner. Volume declarations are included explicitly
-by the module/AOT header, independent of the removed scope header or test probes.
-The development configuration is restored after the consumer check.
+Latest combined verification: [gpu-native-validation.md](gpu-native-validation.md).
+Current function census: [api-coverage.md](api-coverage.md).

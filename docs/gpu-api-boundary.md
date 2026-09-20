@@ -1,8 +1,9 @@
 # SDL binding boundary
 
 > Current declaration coverage: all 92 active Windows GPU functions are generated.
-> See [native GPU API](gpu-native-api.md). Runtime/AOT validation of the expanded
-> surface is pending; earlier gaps below describe the previous checked subset.
+> See [native GPU API](gpu-native-api.md), [native scopes](gpu-native-boost.md)
+> and [local runtime/AOT results](gpu-native-validation.md). The older checked
+> subset and native pointer API have separate ownership contracts.
 
 The library binds SDL. It does not define a rendering engine. This decision
 supersedes the earlier choice to retain command plans as an optional public API.
@@ -49,8 +50,10 @@ The pinned Windows census is 145 generated / 8 adapted / 1073 pending of 1226.
 GPU is 92 generated / 0 adapted / 0 pending of 92. Adapted is partial coverage.
 Framework removal previously returned debug labels/groups, copy-pass begin/end
 and blocking swapchain acquisition to pending. Those gaps are now closed by
-direct generated exports, not by counting internal calls. Runtime validation of
-the new exports remains outstanding; the SDL version has not changed.
+direct generated exports, not by counting internal calls. Raw execution and
+native adapter validation now have CPU pixel/byte oracles and interpreter/AOT
+coverage on Vulkan/D3D12; see gpu-native-validation.md for exclusions. The SDL
+version has not changed.
 
 Follow gpu-roadmap.md: direct copy/compute/render passes and command lifecycle,
 swapchain acquisition/fences, complete resource bindings and attachments. Extend

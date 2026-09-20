@@ -1,14 +1,10 @@
 # Standalone graphics pipelines
 
-> Current error/lifetime contract: [error-handling.md](error-handling.md).
-> SDL failures return values; scopes use defer. Earlier panic/protected-scope
-> descriptions below are historical and no longer describe the public binding.
-
 Example 43 and `sdl3_gpu_pipeline_boost` add graphics pipeline ownership independent
-of fixed mesh/material bundles. Shader IDs must belong to the same live scoped
+of other checked resource IDs. Shader IDs must belong to the same live scoped
 device and have the vertex/fragment roles supplied. Creation copies descriptors,
 vertex layouts and color targets; pipelines remain valid after releasing shaders.
-The registry also snapshots shader resource counts for future pass validation.
+The registry also snapshots shader resource counts for checked pass validation.
 
 ```das
 device |> with_gpu_graphics_pipeline(vertex,fragment,
@@ -28,12 +24,10 @@ or pointers. Caller array/descriptor mutations never modify a created pipeline.
 
 ## Generated views and ownership
 
-Two selected-field records are generated: SDL_GPUGraphicsPipelineTargetInfo
-(depth format, has-depth flag) and SDL_GPUGraphicsPipelineCreateInfo (topology,
-raster/multisample/depth state, target info, props). Shader pointers, vertex input
-pointer/count state and color pointer/count are hidden. Native output clears all
-hidden fields. Padding and ignored disabled options are normalized. The generated
-selection is now 29 records / 153 fields; functions and enums are unchanged.
+Generated pipeline records now include native pointer/count fields. This checked
+adapter accepts shader IDs and array inputs, returning selected value state;
+it does not hand ownership of hidden native storage to script. For native
+pipeline creation and full descriptor semantics see gpu-native-boost.md.
 
 Creation, lookup and release require main thread and live scoped device. IDs use
 the shared monotonic namespace with a separate registry, rejecting stale IDs,
@@ -76,8 +70,7 @@ successful creation. Do not manually release a scope-owned pipeline.
 
 Shader binary ABI, matching vertex inputs/fragment outputs, point-size output for
 point topology and correct resource declarations remain the caller's trusted
-offline contract. This stage does not add shader reflection or public render-pass
-recording. Multiple target/depth/sample settings are creation contracts; they do
+offline contract. This stage does not add shader reflection or native pass ownership. Multiple target/depth/sample settings are creation contracts; they do
 not imply corresponding checked draw/binding coverage.
 
 ## Tests and next step
@@ -89,34 +82,11 @@ draw. A two-slot per-vertex/per-instance case verifies canonical ordering. Nativ
 probes test bad enums, layouts, nonfinite bias, reserved state and hidden padding.
 Lifetime tests cover nested SDL error results, early return, wrong kind/thread/device and
 device-specific cleanup. Supported depth/stencil and MSAA combinations are created
-and inspected, not rendered in this stage. MRT pixel and instanced two-slot pixel
-acceptance remain pending.
+and inspected by this test. MRT/depth/stencil/MSAA and indexed instance offsets
+have additional pixel tests in gpu_native_adapters.das.
 
-Rendering uses native test-only pass fixtures and existing CPU oracles. Example
-43 only creates a pipeline. Next: native command-plan render operations, checked
-buffer/texture/sampler bindings and target/pipeline compatibility at submission.
-GPU function census remains 13 generated / 54 adapted / 25 pending; create/release
-were already adapted. Their boost policy stays partial for the stated limits.
-
-The nested pipeline descriptor exposed a legacy-generator initialization bug:
-policy order registered its annotation before SDL_GPUDepthStencilState. The
-legacy generator now orders registrations by selected field-type dependencies,
-with a diagnostic for cycles. CppGenBind already emits a working declaration
-order. Baseline module startup, type-error checks and metadata parity cover this
-regression; changing policy order is not the workaround.
-
-Validation run (2026-09-20): main CTest 150/150, standalone dasClangBind gates
-4/4, full parity/AOT rerun after the registration-order fix 349/349 without skips.
-Vulkan and D3D12 pixel oracles passed with released shaders and mutated arrays.
-Both backends accepted four queried sample counts and four tested depth/stencil
-formats, plus 2..4 color-target creation. These extra states remain creation-only
-evidence. Full logs contain no Vulkan VUID or D3D12 validation errors.
-The LLVM/libclang-free consumer built and ran example 43 on both backends;
-its Ninja build graph contains no generator/LLVM references.
-
-Public offscreen rendering is now provided by [render plans](gpu-render-plans.md),
-for resource-free shaders and a matching single sample-1 color target. Other
-layout/resource/attachment combinations remain creation-only at this stage.
-
-Example 45 exercises standalone pipelines with interleaved, split and instance-rate
-vertex layouts through public render plans; see [vertex/index plans](gpu-vertex-plans.md).
+Latest combined verification: [gpu-native-validation.md](gpu-native-validation.md).
+Current function census: [api-coverage.md](api-coverage.md).
+This page describes the checked subset. Full native pointers/arrays and scopes
+are documented in [gpu-native-boost.md](gpu-native-boost.md); IDs and native
+handles are separate. Other platforms and all hardware formats are not certified.
