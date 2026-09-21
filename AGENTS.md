@@ -109,8 +109,9 @@ functions inside the example. Borrow handles synchronously; report errors once i
 main. Avoid global failure flags and blanket and_then nesting. Do not introduce
 public composite scopes or a shared rendering framework just to reduce indentation.
 For linear Result work, opt into dassdl3/sdl3_try; see docs/sdl-try.md. Use it only
-as a standalone statement or the sole initializer of one let/var in a Result
-function/block. It performs ordinary early return, preserving defer; do not use
+as a standalone statement, the sole initializer of one let/var, or the entire RHS
+of assignment to a variable in a Result function/block. Indexed/field targets
+remain unsupported. It performs ordinary early return, preserving defer; do not use
 it in cleanup, nested expressions or as a function pointer. Arrays require move
 initializers. Keep an ordinary success return so the enclosing Result type is known.
 Numbered examples use sdl_try; keep examples/results/01_results.das as the explicit
@@ -127,6 +128,9 @@ docs/gpu-handles.md. Keep checked scalar/array signatures nominal in native expo
 and boost. Do not reintroduce uint64 overloads, enum substitutes or duplicate script
 typedefs. Use explicit *handle only for diagnostics/test fixtures; runtime kind,
 liveness and device checks remain necessary. Raw SDL pointers stay unchanged.
+GPU Result factories use checked_handle_result (limited to the ten distinct handle
+types); see docs/gpu-factories.md. Prefer these factories and sdl_try over repeated
+zero/null guards in examples. They do not own resources: preserve deferred cleanup.
 Direct recording is src/sdl3_gpu_recording.h and
 sdl3_gpu_recording_boost; no operation list or per-draw uniform snapshots. End/submit/
 cancel consume IDs. Scope cleanup ends an open offscreen pass and cancels unsubmitted

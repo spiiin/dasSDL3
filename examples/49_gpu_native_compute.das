@@ -10,13 +10,11 @@ def compute_values(device : SDL_GPUDevice?) : $Result<SdlUnit; SdlError> {
     info.format=spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL
     info.num_readwrite_storage_buffers=1u; info.num_uniform_buffers=1u
     info.threadcount_x=4u; info.threadcount_y=1u; info.threadcount_z=1u
-    let pipeline=SDL_LoadGPUComputePipelineFile(device,info,"{SDL_GetBasePath()}assets/shaders/native.comp.{ext}","main")
-    if (pipeline==null) { return err(sdl_error("compute_values"),type<SdlUnit>) }
+    let pipeline = device |> load_native_gpu_compute_pipeline(info,"{SDL_GetBasePath()}assets/shaders/native.comp.{ext}","main") |> sdl_try
     {
         defer() { SDL_ReleaseGPUComputePipeline(device,pipeline) }
         var buffer_info : SDL_GPUBufferCreateInfo; buffer_info.usage=SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE; buffer_info.size=32u
-        var output=SDL_CreateGPUBufferRef(device,buffer_info)
-        if (output==null) { return err(sdl_error("compute_values"),type<SdlUnit>) }
+        var output = device |> create_native_gpu_buffer(buffer_info) |> sdl_try
         {
             defer() { SDL_ReleaseGPUBuffer(device,output) }
             return read_compute_output(device, pipeline, output)
@@ -45,7 +43,6 @@ def dispatch_and_check(device : SDL_GPUDevice?; pipeline : SDL_GPUComputePipelin
             return sdl_ok()
         } |> sdl_try
         var fence = native_gpu_submit_fence(command) |> sdl_try
-        if (fence==null) {return err(sdl_error("49_gpu_native_compute"),type<SdlUnit>)}
         var fences : array<SDL_GPUFence?>; resize(fences,1); fences[0]=fence
         if (!SDL_WaitForGPUFencesArray(device,true,fences)) {return err(sdl_error("49_gpu_native_compute"),type<SdlUnit>)}
         SDL_ReleaseGPUFence(device,fence)
@@ -67,8 +64,7 @@ def dispatch_and_check(device : SDL_GPUDevice?; pipeline : SDL_GPUComputePipelin
 
 def read_compute_output(device : SDL_GPUDevice?; pipeline : SDL_GPUComputePipeline?; var output : SDL_GPUBuffer?) : $Result<SdlUnit; SdlError> {
     var transfer_info : SDL_GPUTransferBufferCreateInfo; transfer_info.usage=SDL_GPUTransferBufferUsage.TRANSFERBUFFERUSAGE_DOWNLOAD; transfer_info.size=32u
-    var download=SDL_CreateGPUTransferBufferRef(device,transfer_info)
-    if (download==null) { return err(sdl_error("compute_values"),type<SdlUnit>) }
+    var download = device |> create_native_gpu_transfer_buffer(transfer_info) |> sdl_try
     {
         defer() { SDL_ReleaseGPUTransferBuffer(device,download) }
         return dispatch_and_check(device, pipeline, output, download)

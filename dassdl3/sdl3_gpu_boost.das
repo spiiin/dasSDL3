@@ -2,6 +2,7 @@ options gen2
 require daslib/defer
 module sdl3_gpu_boost shared public
 require dassdl3/sdl3_boost public
+require dassdl3/sdl3_gpu_result public
 
 // Formats permitted when creating a device; individual shaders still declare their format.
 let public GPU_SHADER_FORMATS = (SDL_GPU_SHADERFORMAT_SPIRV | SDL_GPU_SHADERFORMAT_DXBC |

@@ -4,12 +4,21 @@ module sdl3_gpu_transfer_boost shared public
 require dassdl3/sdl3_gpu_boost public
 
 // Inputs are copied before returning; buffers have fixed capacity in bytes.
+def public create_gpu_buffer(device : SDL_GPUDevice?; bytes : array<uint8>; usage : uint) {
+    return checked_handle_result(SDL_CreateGPUDataBuffer(device,bytes,usage),"SDL_CreateGPUDataBuffer")
+}
+
+def public request_gpu_buffer_readback(device : SDL_GPUDevice?; buffer : GpuBufferHandle; offset, size : uint) {
+    return checked_handle_result(SDL_RequestGPUBufferReadback(device,buffer,offset,size),"SDL_RequestGPUBufferReadback")
+}
+
 def public with_gpu_buffer(device : SDL_GPUDevice?; bytes : array<uint8>; usage : uint;
         blk : block<(buffer : GpuBufferHandle) : $Result<auto(TT); SdlError> >) {
     var scope_result : $Result<TT; SdlError>
 
-    let id = SDL_CreateGPUDataBuffer(device,bytes,usage)
-    if (*id == 0ul) { return err(sdl_error("with_gpu_buffer"), type<TT>) }
+    let acquired = create_gpu_buffer(device,bytes,usage)
+    if (is_err(acquired)) { return err(unwrap_err(acquired),type<TT>) }
+    let id = unwrap(acquired)
     {
         defer() { if (!SDL_ReleaseGPUDataBuffer(device,id) && is_ok(scope_result)) { scope_result <- err(sdl_error("SDL_ReleaseGPUDataBuffer"),type<TT>) } }
         static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(id) } else { scope_result <- blk(id) }
@@ -35,8 +44,9 @@ def public with_gpu_readback(device : SDL_GPUDevice?; buffer : GpuBufferHandle; 
         blk : block<(readback : GpuReadbackHandle) : $Result<auto(TT); SdlError> >) {
     var scope_result : $Result<TT; SdlError>
 
-    let id = SDL_RequestGPUBufferReadback(device,buffer,offset,size)
-    if (*id == 0ul) { return err(sdl_error("with_gpu_readback"), type<TT>) }
+    let acquired = request_gpu_buffer_readback(device,buffer,offset,size)
+    if (is_err(acquired)) { return err(unwrap_err(acquired),type<TT>) }
+    let id = unwrap(acquired)
     {
         defer() { if (!SDL_ReleaseGPUReadback(device,id) && is_ok(scope_result)) { scope_result <- err(sdl_error("SDL_ReleaseGPUReadback"),type<TT>) } }
         static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(id) } else { scope_result <- blk(id) }

@@ -4,12 +4,26 @@ module sdl3_gpu_texture_transfer_boost shared public
 require dassdl3/sdl3_gpu_transfer_boost public
 
 // Color or supported BC/ASTC block format, sample 1; every subresource starts with zero bits.
+def public create_gpu_transfer_texture(device : SDL_GPUDevice?; width, height, layers, levels, format, texture_type : uint) {
+    return checked_handle_result(SDL_CreateGPUTypedTransferTexture(device,width,height,layers,levels,format,texture_type),"SDL_CreateGPUTypedTransferTexture")
+}
+
+def public create_gpu_color_texture(device : SDL_GPUDevice?; width, height, layers, levels, format : uint) {
+    return checked_handle_result(SDL_CreateGPUColorTransferTexture(device,width,height,layers,levels,format),"SDL_CreateGPUColorTransferTexture")
+}
+
+def public request_gpu_texture_readback(device : SDL_GPUDevice?; texture : GpuTextureHandle;
+        sub : uint2; region : uint4) {
+    return checked_handle_result(SDL_RequestGPUTextureReadback(device,texture,sub,region),"SDL_RequestGPUTextureReadback")
+}
+
 def public with_gpu_transfer_texture(device : SDL_GPUDevice?; width, height, layers, levels, format, texture_type : uint;
         blk : block<(texture : GpuTextureHandle) : $Result<auto(TT); SdlError> >) {
     var scope_result : $Result<TT; SdlError>
 
-    let id = SDL_CreateGPUTypedTransferTexture(device,width,height,layers,levels,format,texture_type)
-    if (*id == 0ul) { return err(sdl_error("with_gpu_transfer_texture"), type<TT>) }
+    let acquired = create_gpu_transfer_texture(device,width,height,layers,levels,format,texture_type)
+    if (is_err(acquired)) { return err(unwrap_err(acquired),type<TT>) }
+    let id = unwrap(acquired)
     {
         defer() { if (!SDL_ReleaseGPUTransferTexture(device,id) && is_ok(scope_result)) { scope_result <- err(sdl_error("SDL_ReleaseGPUTransferTexture"),type<TT>) } }
         static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(id) } else { scope_result <- blk(id) }
@@ -22,8 +36,9 @@ def public with_gpu_color_texture(device : SDL_GPUDevice?; width, height, layers
         blk : block<(texture : GpuTextureHandle) : $Result<auto(TT); SdlError> >) {
     var scope_result : $Result<TT; SdlError>
 
-    let id = SDL_CreateGPUColorTransferTexture(device,width,height,layers,levels,format)
-    if (*id == 0ul) { return err(sdl_error("with_gpu_color_texture"), type<TT>) }
+    let acquired = create_gpu_color_texture(device,width,height,layers,levels,format)
+    if (is_err(acquired)) { return err(unwrap_err(acquired),type<TT>) }
+    let id = unwrap(acquired)
     {
         defer() { if (!SDL_ReleaseGPUTransferTexture(device,id) && is_ok(scope_result)) { scope_result <- err(sdl_error("SDL_ReleaseGPUTransferTexture"),type<TT>) } }
         static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(id) } else { scope_result <- blk(id) }
@@ -58,8 +73,9 @@ def public with_gpu_texture_readback(device : SDL_GPUDevice?; texture : GpuTextu
         sub : uint2; region : uint4; blk : block<(ticket : GpuReadbackHandle) : $Result<auto(TT); SdlError> >) {
     var scope_result : $Result<TT; SdlError>
 
-    let id = SDL_RequestGPUTextureReadback(device,texture,sub,region)
-    if (*id == 0ul) { return err(sdl_error("with_gpu_texture_readback"), type<TT>) }
+    let acquired = request_gpu_texture_readback(device,texture,sub,region)
+    if (is_err(acquired)) { return err(unwrap_err(acquired),type<TT>) }
+    let id = unwrap(acquired)
     {
         defer() { if (!SDL_ReleaseGPUReadback(device,id) && is_ok(scope_result)) { scope_result <- err(sdl_error("SDL_ReleaseGPUReadback"),type<TT>) } }
         static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(id) } else { scope_result <- blk(id) }

@@ -4,6 +4,16 @@ module sdl3_gpu_shader_boost shared public
 require dassdl3/sdl3_gpu_boost public
 
 // Resource counts must match trusted offline-validated code and SDL binding ABI.
+def public create_gpu_shader(device : SDL_GPUDevice?; bytes : array<uint8>; info : SDL_GPUShaderCreateInfo;
+        entrypoint : string) {
+    return checked_handle_result(SDL_CreateGPUCheckedShader(device,bytes,info,entrypoint),"SDL_CreateGPUCheckedShader")
+}
+
+def public load_gpu_shader(device : SDL_GPUDevice?; path : string; info : SDL_GPUShaderCreateInfo;
+        entrypoint : string) {
+    return checked_handle_result(SDL_LoadGPUCheckedShader(device,path,info,entrypoint),"SDL_LoadGPUCheckedShader")
+}
+
 def public gpu_shader_info(format : uint; stage : SDL_GPUShaderStage) : SDL_GPUShaderCreateInfo {
     var info : SDL_GPUShaderCreateInfo
     info.format = format; info.stage = stage
@@ -13,8 +23,9 @@ def public with_gpu_shader(device : SDL_GPUDevice?; bytes : array<uint8>; info :
         entrypoint : string; blk : block<(shader : GpuShaderHandle) : $Result<auto(TT); SdlError> >) {
     var scope_result : $Result<TT; SdlError>
 
-    let id = SDL_CreateGPUCheckedShader(device,bytes,info,entrypoint)
-    if (*id == 0ul) { return err(sdl_error("with_gpu_shader"), type<TT>) }
+    let acquired = create_gpu_shader(device,bytes,info,entrypoint)
+    if (is_err(acquired)) { return err(unwrap_err(acquired),type<TT>) }
+    let id = unwrap(acquired)
     {
         defer() { if (!SDL_ReleaseGPUCheckedShader(device,id) && is_ok(scope_result)) { scope_result <- err(sdl_error("SDL_ReleaseGPUCheckedShader"),type<TT>) } }
         static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(id) } else { scope_result <- blk(id) }
@@ -30,8 +41,9 @@ def public with_gpu_shader_file(device : SDL_GPUDevice?; path : string; info : S
         entrypoint : string; blk : block<(shader : GpuShaderHandle) : $Result<auto(TT); SdlError> >) {
     var scope_result : $Result<TT; SdlError>
 
-    let id = SDL_LoadGPUCheckedShader(device,path,info,entrypoint)
-    if (*id == 0ul) { return err(sdl_error("with_gpu_shader_file"), type<TT>) }
+    let acquired = load_gpu_shader(device,path,info,entrypoint)
+    if (is_err(acquired)) { return err(unwrap_err(acquired),type<TT>) }
+    let id = unwrap(acquired)
     {
         defer() { if (!SDL_ReleaseGPUCheckedShader(device,id) && is_ok(scope_result)) { scope_result <- err(sdl_error("SDL_ReleaseGPUCheckedShader"),type<TT>) } }
         static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(id) } else { scope_result <- blk(id) }

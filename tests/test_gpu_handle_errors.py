@@ -8,6 +8,8 @@ import tempfile
 KINDS = ('Buffer', 'IndexBuffer', 'Texture', 'Volume', 'Readback', 'Shader',
          'Sampler', 'Pipeline', 'CommandBuffer', 'RenderPass')
 CASES = {
+    'numeric_result': 'checked_handle_result(0ul,"test")',
+    'pointer_result': 'var p : SDL_GPUBuffer?; checked_handle_result(p,"test")',
     'integer': 'SDL_ReleaseGPUDataBuffer(null,0ul)',
     'pointer': 'var p : SDL_GPUBuffer?; SDL_ReleaseGPUDataBuffer(null,p)',
     'buffer_as_texture': 'SDL_ReleaseGPUTransferTexture(null,GpuBufferHandle(1ul))',
@@ -35,7 +37,9 @@ def main():
             if name == 'valid':
                 assert result.returncode == 0, output
             else:
-                assert result.returncode != 0 and 'error[30341]' in output and 'Gpu' in output, (name, output)
+                assert result.returncode != 0 and 'error[30341]' in output, (name, output)
+                if name.endswith('_result'):
+                    assert 'no matching functions or generics: is_invalid_gpu_handle(' in output, (name, output)
             print(name + ': ' + ('accepted' if name == 'valid' else 'rejected'))
 
 if __name__ == '__main__':

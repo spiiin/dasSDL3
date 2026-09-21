@@ -6,11 +6,16 @@ require dassdl3/sdl3_gpu_pipeline_boost public
 require dassdl3/sdl3_gpu_sampler_boost public
 
 // Real SDL command buffer. Explicit submit; scope exit cancels unfinished work.
+def public acquire_gpu_command_buffer(device : SDL_GPUDevice?) {
+    return checked_handle_result(SDL_AcquireGPUCommandBufferChecked(device),"SDL_AcquireGPUCommandBufferChecked")
+}
+
 def public with_gpu_command_buffer(device : SDL_GPUDevice?; blk : block<(command : GpuCommandBufferHandle) : $Result<auto(TT); SdlError> >) {
     var scope_result : $Result<TT; SdlError>
 
-    let command = SDL_AcquireGPUCommandBufferChecked(device)
-    if (*command == 0ul) { return err(sdl_error("with_gpu_command_buffer"), type<TT>) }
+    let acquired = acquire_gpu_command_buffer(device)
+    if (is_err(acquired)) { return err(unwrap_err(acquired),type<TT>) }
+    let command = unwrap(acquired)
     {
         defer() { if (!SDL_GPURecordingDiscard(device,command) && is_ok(scope_result)) { scope_result <- err(sdl_error("SDL_GPURecordingDiscard"),type<TT>) } }
         static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(command) } else { scope_result <- blk(command) }
@@ -20,10 +25,7 @@ def public with_gpu_command_buffer(device : SDL_GPUDevice?; blk : block<(command
 }
 def public gpu_begin_render_pass(device : SDL_GPUDevice?; command : GpuCommandBufferHandle; target : GpuTextureHandle; sub : uint2;
         load : SDL_GPULoadOp; clear : SDL_FColor) {
-    let render_pass = SDL_BeginGPURenderPassChecked(device,command,target,sub,load,clear)
-    let value = render_pass
-    if (*value == 0ul) { return err(sdl_error("gpu_begin_render_pass"), type<GpuRenderPassHandle>) }
-    return ok(value,type<SdlError>)
+    return checked_handle_result(SDL_BeginGPURenderPassChecked(device,command,target,sub,load,clear),"SDL_BeginGPURenderPassChecked")
 }
 def public gpu_end_render_pass(device : SDL_GPUDevice?; render_pass : GpuRenderPassHandle) {
     return sdl_status(SDL_EndGPURenderPassChecked(device,render_pass), "gpu_end_render_pass")

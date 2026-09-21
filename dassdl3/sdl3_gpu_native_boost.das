@@ -3,6 +3,36 @@ require daslib/defer
 module sdl3_gpu_native_boost shared public
 require dassdl3/sdl3_gpu_boost public
 
+// Only non-optional creation/acquisition uses this null-as-error conversion.
+// Swapchain texture absence retains its separate Result<Option<...>> contract.
+def private native_gpu_pointer_result(var handle : auto(T); operation : string) {
+    var value = handle
+    if (value == null) { return err(sdl_error(operation),type<T -const>) }
+    return <- move_ok(value,type<SdlError>)
+}
+def public create_native_gpu_device(formats : uint; debug : bool; driver : string = "") {
+    return <- native_gpu_pointer_result(SDL_CreateGPUDeviceDefault(formats,debug,driver),"SDL_CreateGPUDeviceDefault")
+}
+def public create_native_gpu_buffer(device : SDL_GPUDevice?; info : SDL_GPUBufferCreateInfo) {
+    return <- native_gpu_pointer_result(SDL_CreateGPUBufferRef(device,info),"SDL_CreateGPUBufferRef")
+}
+def public create_native_gpu_transfer_buffer(device : SDL_GPUDevice?; info : SDL_GPUTransferBufferCreateInfo) {
+    return <- native_gpu_pointer_result(SDL_CreateGPUTransferBufferRef(device,info),"SDL_CreateGPUTransferBufferRef")
+}
+def public load_native_gpu_shader(device : SDL_GPUDevice?; info : SDL_GPUShaderCreateInfo; path : string; entrypoint : string = "main") {
+    return <- native_gpu_pointer_result(SDL_LoadGPUShaderFile(device,info,path,entrypoint),"SDL_LoadGPUShaderFile")
+}
+def public load_native_gpu_compute_pipeline(device : SDL_GPUDevice?; info : SDL_GPUComputePipelineCreateInfo; path : string; entrypoint : string = "main") {
+    return <- native_gpu_pointer_result(SDL_LoadGPUComputePipelineFile(device,info,path,entrypoint),"SDL_LoadGPUComputePipelineFile")
+}
+def public create_native_gpu_graphics_pipeline(device : SDL_GPUDevice?; info : SDL_GPUGraphicsPipelineCreateInfo;
+        buffers : array<SDL_GPUVertexBufferDescription>; attributes : array<SDL_GPUVertexAttribute>; colors : array<SDL_GPUColorTargetDescription>) {
+    return <- native_gpu_pointer_result(SDL_CreateGPUGraphicsPipelineArrays(device,info,buffers,attributes,colors),"SDL_CreateGPUGraphicsPipelineArrays")
+}
+def public acquire_native_gpu_command_buffer(device : SDL_GPUDevice?) {
+    return <- native_gpu_pointer_result(SDL_AcquireGPUCommandBuffer(device),"SDL_AcquireGPUCommandBuffer")
+}
+
 // Native-pointer scopes: SDL ownership, not checked IDs. No resource may escape
 // its owner/device scope. Ordinary returns run defer; application panic may not.
 def public with_native_gpu_device(formats : uint; debug : bool; driver : string;

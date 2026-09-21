@@ -23,21 +23,16 @@ def render_triangle(device : SDL_GPUDevice?) : $Result<SdlUnit; SdlError> {
     let format = spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL
     let extension = spirv ? "spv" : "dxil"
     let base = "{SDL_GetBasePath()}assets/shaders/triangle"
-    vertex = SDL_LoadGPUCheckedShader(device,"{base}.vert.{extension}",gpu_shader_info(format,SDL_GPUShaderStage.SHADERSTAGE_VERTEX),"main")
-    if (*vertex == 0ul) { return err(sdl_error("render_triangle"),type<SdlUnit>) }
-    fragment = SDL_LoadGPUCheckedShader(device,"{base}.frag.{extension}",gpu_shader_info(format,SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT),"main")
-    if (*fragment == 0ul) { return err(sdl_error("render_triangle"),type<SdlUnit>) }
+    vertex = device |> load_gpu_shader("{base}.vert.{extension}",gpu_shader_info(format,SDL_GPUShaderStage.SHADERSTAGE_VERTEX),"main") |> sdl_try
+    fragment = device |> load_gpu_shader("{base}.frag.{extension}",gpu_shader_info(format,SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT),"main") |> sdl_try
     var buffers : array<SDL_GPUVertexBufferDescription>
     var attributes : array<SDL_GPUVertexAttribute>
     var colors : array<SDL_GPUColorTargetDescription>
     resize(colors,1)
     colors[0] = gpu_color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM)
-    pipeline = SDL_CreateGPUCheckedGraphicsPipeline(device,vertex,fragment,gpu_graphics_pipeline_info(),buffers,attributes,colors)
-    if (*pipeline == 0ul) { return err(sdl_error("render_triangle"),type<SdlUnit>) }
-    target = SDL_CreateGPUColorTargetTexture(device,64u,64u,1u,1u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM)
-    if (*target == 0ul) { return err(sdl_error("render_triangle"),type<SdlUnit>) }
-    command = SDL_AcquireGPUCommandBufferChecked(device)
-    if (*command == 0ul) { return err(sdl_error("render_triangle"),type<SdlUnit>) }
+    pipeline = device |> create_gpu_graphics_pipeline(vertex,fragment,gpu_graphics_pipeline_info(),buffers,attributes,colors) |> sdl_try
+    target = device |> create_gpu_color_target_texture(64u,64u,1u,1u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM) |> sdl_try
+    command = device |> acquire_gpu_command_buffer() |> sdl_try
     var black : SDL_FColor
     black.a = 1.0
     let render_pass = gpu_begin_render_pass(device,command,target,uint2(0u),SDL_GPULoadOp.LOADOP_CLEAR,black) |> sdl_try
@@ -47,8 +42,7 @@ def render_triangle(device : SDL_GPUDevice?) : $Result<SdlUnit; SdlError> {
     gpu_submit_command_buffer(device,command) |> sdl_try
     var pixels : array<uint8>
     resize(pixels,64*64*4)
-    ticket = SDL_RequestGPUTextureReadback(device,target,uint2(0u),uint4(0u,0u,64u,64u))
-    if (*ticket == 0ul) { return err(sdl_error("render_triangle"),type<SdlUnit>) }
+    ticket = device |> request_gpu_texture_readback(target,uint2(0u),uint4(0u,0u,64u,64u)) |> sdl_try
     gpu_wait_readback(device,ticket) |> sdl_try
     gpu_readback_bytes(device,ticket,pixels) |> sdl_try
     let center = (32*64+32)*4

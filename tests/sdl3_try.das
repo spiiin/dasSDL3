@@ -72,6 +72,14 @@ def nested(var reached : bool&) {
 
 [export]
 def main(smoke : bool) : int {
+    var assigned = 9
+    var assignment_calls = 0
+    var observed = 0
+    verify(is_err(assign(assigned,assignment_calls,observed,true)))
+    verify(assigned == 9 && observed == 9 && assignment_calls == 1)
+    verify(is_ok(assign(assigned,assignment_calls,observed,false)))
+    verify(assigned == 42 && observed == 42 && assignment_calls == 2)
+    verify(is_ok(move_assignment()))
     var calls = 0
     var cleanup = 0
     let failed = propagate(calls, cleanup, true)
@@ -88,4 +96,17 @@ def main(smoke : bool) : int {
     verify(is_ok(nested(reached)) && reached)
     print("sdl_try: values, moves, once-only evaluation, early returns and cleanup passed\n")
     return 0
+}
+
+def assign(var target, calls, observed : int&; fail : bool) {
+    defer() { observed = target }
+    target = counted(calls,fail) |> sdl_try
+    return sdl_ok()
+}
+def move_assignment {
+    var source <- array<int>(7,11)
+    var target : array<int>
+    target <- move_ok(source,type<SdlError>) |> sdl_try
+    verify(length(source) == 0 && length(target) == 2 && target[1] == 11)
+    return sdl_ok()
 }

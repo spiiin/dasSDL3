@@ -10,13 +10,11 @@ def draw_frames(device : SDL_GPUDevice?; window : SDL_Window?; smoke : bool) : $
     var shader : SDL_GPUShaderCreateInfo
     shader.format=spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL
     shader.stage=SDL_GPUShaderStage.SHADERSTAGE_VERTEX
-    var vertex=SDL_LoadGPUShaderFile(device,shader,"{base}.vert.{ext}","main")
-    if (vertex==null) { return err(sdl_error("draw_frames"),type<SdlUnit>) }
+    var vertex = device |> load_native_gpu_shader(shader,"{base}.vert.{ext}","main") |> sdl_try
     {
         defer() { SDL_ReleaseGPUShader(device,vertex) }
         shader.stage=SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT
-        var fragment=SDL_LoadGPUShaderFile(device,shader,"{base}.frag.{ext}","main")
-        if (fragment==null) { return err(sdl_error("draw_frames"),type<SdlUnit>) }
+        var fragment = device |> load_native_gpu_shader(shader,"{base}.frag.{ext}","main") |> sdl_try
         {
             defer() { SDL_ReleaseGPUShader(device,fragment) }
             return render_pipeline(device, window, vertex, fragment, smoke)
@@ -53,8 +51,7 @@ def render_pipeline(device : SDL_GPUDevice?; window : SDL_Window?; var vertex, f
     var attributes : array<SDL_GPUVertexAttribute>
     var colors : array<SDL_GPUColorTargetDescription>; resize(colors,1)
     colors[0].format=SDL_GetGPUSwapchainTextureFormat(device,window)
-    let pipeline=SDL_CreateGPUGraphicsPipelineArrays(device,info,buffers,attributes,colors)
-    if (pipeline==null) { return err(sdl_error("draw_frames"),type<SdlUnit>) }
+    let pipeline = device |> create_native_gpu_graphics_pipeline(info,buffers,attributes,colors) |> sdl_try
     {
         defer() { SDL_ReleaseGPUGraphicsPipeline(device,pipeline) }
         return render_loop(device, window, pipeline, smoke)

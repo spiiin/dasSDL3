@@ -3,6 +3,12 @@ require daslib/defer
 module sdl3_gpu_pipeline_boost shared public
 require dassdl3/sdl3_gpu_shader_boost public
 
+def public create_gpu_graphics_pipeline(device : SDL_GPUDevice?; vertex : GpuShaderHandle; fragment : GpuShaderHandle;
+        info : SDL_GPUGraphicsPipelineCreateInfo; buffers : array<SDL_GPUVertexBufferDescription>;
+        attributes : array<SDL_GPUVertexAttribute>; colors : array<SDL_GPUColorTargetDescription>) {
+    return checked_handle_result(SDL_CreateGPUCheckedGraphicsPipeline(device,vertex,fragment,info,buffers,attributes,colors),"SDL_CreateGPUCheckedGraphicsPipeline")
+}
+
 def public gpu_graphics_pipeline_info() : SDL_GPUGraphicsPipelineCreateInfo {
     var info : SDL_GPUGraphicsPipelineCreateInfo
     info.primitive_type = SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST
@@ -30,8 +36,9 @@ def public with_gpu_graphics_pipeline(device : SDL_GPUDevice?; vertex : GpuShade
         blk : block<(pipeline : GpuPipelineHandle) : $Result<auto(TT); SdlError> >) {
     var scope_result : $Result<TT; SdlError>
 
-    let id = SDL_CreateGPUCheckedGraphicsPipeline(device,vertex,fragment,info,buffers,attributes,colors)
-    if (*id == 0ul) { return err(sdl_error("with_gpu_graphics_pipeline"), type<TT>) }
+    let acquired = create_gpu_graphics_pipeline(device,vertex,fragment,info,buffers,attributes,colors)
+    if (is_err(acquired)) { return err(unwrap_err(acquired),type<TT>) }
+    let id = unwrap(acquired)
     {
         defer() { if (!SDL_ReleaseGPUCheckedGraphicsPipeline(device,id) && is_ok(scope_result)) { scope_result <- err(sdl_error("SDL_ReleaseGPUCheckedGraphicsPipeline"),type<TT>) } }
         static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(id) } else { scope_result <- blk(id) }

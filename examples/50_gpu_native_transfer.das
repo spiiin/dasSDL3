@@ -6,13 +6,11 @@ require daslib/defer
 def transfer_roundtrip(device : SDL_GPUDevice?) : $Result<SdlUnit; SdlError> {
     var info : SDL_GPUTransferBufferCreateInfo
     info.usage=SDL_GPUTransferBufferUsage.TRANSFERBUFFERUSAGE_UPLOAD; info.size=256u
-    var upload=SDL_CreateGPUTransferBufferRef(device,info)
-    if (upload==null) { return err(sdl_error("transfer_roundtrip"),type<SdlUnit>) }
+    var upload = device |> create_native_gpu_transfer_buffer(info) |> sdl_try
     {
         defer() { SDL_ReleaseGPUTransferBuffer(device,upload) }
         info.usage=SDL_GPUTransferBufferUsage.TRANSFERBUFFERUSAGE_DOWNLOAD
-        var download=SDL_CreateGPUTransferBufferRef(device,info)
-        if (download==null) { return err(sdl_error("transfer_roundtrip"),type<SdlUnit>) }
+        var download = device |> create_native_gpu_transfer_buffer(info) |> sdl_try
         {
             defer() { SDL_ReleaseGPUTransferBuffer(device,download) }
             return copy_buffers(device, upload, download)
@@ -40,7 +38,6 @@ def copy_and_check(device : SDL_GPUDevice?; var source, destination : SDL_GPUBuf
                 return sdl_ok()
             } |> sdl_try
             var fence = native_gpu_submit_fence(command) |> sdl_try
-            if (fence==null) {return err(sdl_error("50_gpu_native_transfer"),type<SdlUnit>)}
             var fences : array<SDL_GPUFence?>; resize(fences,1); fences[0]=fence
             if (!SDL_WaitForGPUFencesArray(device,true,fences)) {return err(sdl_error("50_gpu_native_transfer"),type<SdlUnit>)}
             SDL_ReleaseGPUFence(device,fence)
@@ -56,8 +53,7 @@ def copy_and_check(device : SDL_GPUDevice?; var source, destination : SDL_GPUBuf
 }
 
 def copy_to_destination(device : SDL_GPUDevice?; buffer_info : SDL_GPUBufferCreateInfo; var source : SDL_GPUBuffer?; var upload, download : SDL_GPUTransferBuffer?) : $Result<SdlUnit; SdlError> {
-    var destination=SDL_CreateGPUBufferRef(device,buffer_info)
-    if (destination==null) { return err(sdl_error("transfer_roundtrip"),type<SdlUnit>) }
+    var destination = device |> create_native_gpu_buffer(buffer_info) |> sdl_try
     {
         defer() { SDL_ReleaseGPUBuffer(device,destination) }
         return copy_and_check(device, source, destination, upload, download)
@@ -67,8 +63,7 @@ def copy_to_destination(device : SDL_GPUDevice?; buffer_info : SDL_GPUBufferCrea
 def copy_buffers(device : SDL_GPUDevice?; var upload, download : SDL_GPUTransferBuffer?) : $Result<SdlUnit; SdlError> {
     var buffer_info : SDL_GPUBufferCreateInfo
     buffer_info.usage=SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_READ; buffer_info.size=256u
-    var source=SDL_CreateGPUBufferRef(device,buffer_info)
-    if (source==null) { return err(sdl_error("transfer_roundtrip"),type<SdlUnit>) }
+    var source = device |> create_native_gpu_buffer(buffer_info) |> sdl_try
     {
         defer() { SDL_ReleaseGPUBuffer(device,source) }
         return copy_to_destination(device, buffer_info, source, upload, download)

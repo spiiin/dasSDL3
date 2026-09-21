@@ -52,6 +52,10 @@ class SdlTryVisitor : AstVisitor {
             var target = stmt
             if (stmt is ExprLet && length((stmt as ExprLet).variables) == 1) {
                 target = (stmt as ExprLet).variables[0].init
+            } elif (stmt is ExprCopy && (stmt as ExprCopy).left is ExprVar) {
+                target = (stmt as ExprCopy).right
+            } elif (stmt is ExprMove && (stmt as ExprMove).left is ExprVar) {
+                target = (stmt as ExprMove).right
             }
             if (target != null && target is ExprCall && is_sdl_try_function((target as ExprCall).func)) {
                 let call = target as ExprCall
@@ -81,6 +85,14 @@ class SdlTryVisitor : AstVisitor {
                     (stmt as ExprLet).variables[0].init = qmacro($i(tmp)._value)
                     var copy = stmt
                     expanded |> emplace(copy)
+                } elif (stmt is ExprCopy) {
+                    (stmt as ExprCopy).right = qmacro($i(tmp)._value)
+                    var copy = stmt
+                    expanded |> emplace(copy)
+                } elif (stmt is ExprMove) {
+                    (stmt as ExprMove).right = qmacro($i(tmp)._value)
+                    var copy = stmt
+                    expanded |> emplace(copy)
                 }
                 changed = true
                 func.not_inferred()
@@ -98,7 +110,7 @@ class SdlTryVisitor : AstVisitor {
 class SdlTryUnexpanded : AstVisitor {
     def override visitExprCall(var call : ExprCall?) : ExpressionPtr {
         if (is_sdl_try_function(call.func)) {
-            macro_sticky_error(compiling_program(), call.at, "sdl_try must be a standalone statement or the sole initializer of one let/var; it is forbidden in finally/defer")
+            macro_sticky_error(compiling_program(), call.at, "sdl_try must be a standalone statement, the sole initializer of one let/var, or the full RHS of assignment to a variable; it is forbidden in finally/defer")
         }
         return <- call
     }

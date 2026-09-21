@@ -45,6 +45,7 @@ target_link_libraries(parity_aot_tool PRIVATE cppgenbind_module)
 set(AOT_SCRIPTS tests/boost_result_contracts tests/gpu_result_contracts tests/sdl3_result examples/results/01_results tests/rect_clipboard tests/callback_lifetimes tests/window_hittest tests/surface_pixels examples/66_surface_pixels tests/surface_state examples/65_surface_state tests/renderer_final_api examples/64_renderer_raw_geometry tests/renderer_operations examples/63_renderer_operations tests/renderer_yuv_blend examples/62_renderer_yuv_blend tests/texture_transfer examples/61_texture_transfer tests/texture_state examples/60_texture_state tests/renderer_presentation examples/59_renderer_presentation tests/renderer_state examples/58_renderer_state tests/renderer_primitives examples/57_software_renderer tests/window_io examples/56_window_surface tests/window_state examples/55_window_properties tests/video_discovery examples/54_video_discovery tests/diagnostics examples/53_diagnostics_time tests/init_hints examples/52_init_hints tests/properties examples/51_properties tests/bindings tests/boost tests/textures tests/input tests/audio examples/02_square examples/04_textures examples/03_input examples/08_audio tests/clangbind_parity/recover)
 list(APPEND AOT_SCRIPTS tests/sdl3_try examples/results/02_sdl_try)
 list(APPEND AOT_SCRIPTS tests/gpu_handles)
+list(APPEND AOT_SCRIPTS tests/gpu_factories)
 list(APPEND AOT_SCRIPTS tests/events examples/67_event_variants)
 list(APPEND AOT_SCRIPTS tests/pixels examples/05_streaming_texture examples/06_render_target)
 list(APPEND AOT_SCRIPTS tests/geometry examples/07_geometry)
@@ -67,6 +68,7 @@ list(APPEND AOT_MODULES dassdl3/sdl3_gpu_boost)
 list(APPEND AOT_MODULES dassdl3/sdl3_gpu_image_boost dassdl3/sdl3_gpu_swapchain_boost dassdl3/sdl3_gpu_utilities_boost dassdl3/sdl3_gpu_formats_boost dassdl3/sdl3_gpu_texture_transfer_boost dassdl3/sdl3_gpu_transfer_boost)
 list(APPEND AOT_MODULES dassdl3/sdl3_gpu_recording_boost dassdl3/sdl3_gpu_buffers_boost dassdl3/sdl3_gpu_volume_boost dassdl3/sdl3_gpu_sampler_boost dassdl3/sdl3_gpu_shader_boost dassdl3/sdl3_gpu_pipeline_boost)
 list(APPEND AOT_MODULES dassdl3/sdl3_events)
+list(APPEND AOT_MODULES dassdl3/sdl3_gpu_result)
 foreach(script IN LISTS AOT_SCRIPTS AOT_MODULES)
     set(try_dependency)
     set(event_dependency)
@@ -81,6 +83,7 @@ foreach(script IN LISTS AOT_SCRIPTS AOT_MODULES)
     add_custom_command(OUTPUT "${output}"
         COMMAND parity_aot_tool "${ROOT}/${script}.das" "${output}"
         DEPENDS ${event_dependency}
+        DEPENDS "${ROOT}/dassdl3/sdl3_gpu_result.das"
         DEPENDS ${try_dependency} "${ROOT}/dassdl3/sdl3_result.das" "${ROOT}/dassdl3/sdl3_rect_clipboard_boost.das" "${ROOT}/dassdl3/sdl3_surface_pixels_boost.das" "${ROOT}/dassdl3/sdl3_surface_state_boost.das" "${ROOT}/dassdl3/sdl3_renderer_final_boost.das" "${ROOT}/dassdl3/sdl3_renderer_operations_boost.das" "${ROOT}/dassdl3/sdl3_renderer_yuv_blend_boost.das" "${ROOT}/dassdl3/sdl3_texture_transfer_boost.das" "${ROOT}/dassdl3/sdl3_texture_state_boost.das" "${ROOT}/dassdl3/sdl3_renderer_presentation_boost.das" "${ROOT}/dassdl3/sdl3_renderer_state_boost.das" "${ROOT}/dassdl3/sdl3_renderer_primitives_boost.das" "${ROOT}/dassdl3/sdl3_window_io_boost.das" "${ROOT}/dassdl3/sdl3_window_boost.das" "${ROOT}/dassdl3/sdl3_video_boost.das" "${ROOT}/dassdl3/sdl3_diagnostics_boost.das" "${ROOT}/dassdl3/sdl3_init_boost.das" "${ROOT}/dassdl3/sdl3_properties_boost.das" "${ROOT}/dassdl3/sdl3_gpu_native_boost.das" "${ROOT}/dassdl3/sdl3_gpu_recording_boost.das" "${ROOT}/dassdl3/sdl3_gpu_buffers_boost.das" "${ROOT}/dassdl3/sdl3_gpu_pipeline_boost.das" "${ROOT}/dassdl3/sdl3_gpu_shader_boost.das" "${ROOT}/dassdl3/sdl3_gpu_sampler_boost.das" "${ROOT}/dassdl3/sdl3_gpu_volume_boost.das" "${ROOT}/dassdl3/sdl3_gpu_image_boost.das" "${ROOT}/dassdl3/sdl3_gpu_swapchain_boost.das" "${ROOT}/dassdl3/sdl3_gpu_utilities_boost.das" "${ROOT}/dassdl3/sdl3_gpu_formats_boost.das" "${ROOT}/dassdl3/sdl3_gpu_texture_transfer_boost.das" "${ROOT}/dassdl3/sdl3_gpu_transfer_boost.das" parity_aot_tool "${ROOT}/${script}.das" "${ROOT}/dassdl3/sdl3_boost.das" "${ROOT}/dassdl3/sdl3_audio_boost.das" "${ROOT}/dassdl3/sdl3_pixels_boost.das" "${ROOT}/dassdl3/sdl3_geometry_boost.das" "${ROOT}/dassdl3/sdl3_gpu_boost.das"
         VERBATIM)
     list(APPEND AOT_OUTPUTS "${output}")

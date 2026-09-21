@@ -1834,5 +1834,143 @@
     "name": "window_icc_profile",
     "contract": "Result",
     "signature": "def public window_icc_profile(window : SDL_Window?)"
+  },
+  {
+    "module": "sdl3_gpu_buffers_boost",
+    "name": "create_gpu_vertex_buffer",
+    "contract": "Result",
+    "signature": "def public create_gpu_vertex_buffer(device : SDL_GPUDevice?; values : array<float>)"
+  },
+  {
+    "module": "sdl3_gpu_buffers_boost",
+    "name": "create_gpu_index_buffer",
+    "contract": "Result",
+    "signature": "def public create_gpu_index_buffer(device : SDL_GPUDevice?; values : array<uint>; element : SDL_GPUIndexElementSize)"
+  },
+  {
+    "module": "sdl3_gpu_image_boost",
+    "name": "create_gpu_color_target_texture",
+    "contract": "Result",
+    "signature": "def public create_gpu_color_target_texture(device : SDL_GPUDevice?; width, height, layers, levels, format : uint)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "create_native_gpu_device",
+    "contract": "Result",
+    "signature": "def public create_native_gpu_device(formats : uint; debug : bool; driver : string = \"\")"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "create_native_gpu_buffer",
+    "contract": "Result",
+    "signature": "def public create_native_gpu_buffer(device : SDL_GPUDevice?; info : SDL_GPUBufferCreateInfo)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "create_native_gpu_transfer_buffer",
+    "contract": "Result",
+    "signature": "def public create_native_gpu_transfer_buffer(device : SDL_GPUDevice?; info : SDL_GPUTransferBufferCreateInfo)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "load_native_gpu_shader",
+    "contract": "Result",
+    "signature": "def public load_native_gpu_shader(device : SDL_GPUDevice?; info : SDL_GPUShaderCreateInfo; path : string; entrypoint : string = \"main\")"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "load_native_gpu_compute_pipeline",
+    "contract": "Result",
+    "signature": "def public load_native_gpu_compute_pipeline(device : SDL_GPUDevice?; info : SDL_GPUComputePipelineCreateInfo; path : string; entrypoint : string = \"main\")"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "create_native_gpu_graphics_pipeline",
+    "contract": "Result",
+    "signature": "def public create_native_gpu_graphics_pipeline(device : SDL_GPUDevice?; info : SDL_GPUGraphicsPipelineCreateInfo; buffers : array<SDL_GPUVertexBufferDescription>; attributes : array<SDL_GPUVertexAttribute>; colors : array<SDL_GPUColorTargetDescription>)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "acquire_native_gpu_command_buffer",
+    "contract": "Result",
+    "signature": "def public acquire_native_gpu_command_buffer(device : SDL_GPUDevice?)"
+  },
+  {
+    "module": "sdl3_gpu_pipeline_boost",
+    "name": "create_gpu_graphics_pipeline",
+    "contract": "Result",
+    "signature": "def public create_gpu_graphics_pipeline(device : SDL_GPUDevice?; vertex : GpuShaderHandle; fragment : GpuShaderHandle; info : SDL_GPUGraphicsPipelineCreateInfo; buffers : array<SDL_GPUVertexBufferDescription>; attributes : array<SDL_GPUVertexAttribute>; colors : array<SDL_GPUColorTargetDescription>)"
+  },
+  {
+    "module": "sdl3_gpu_recording_boost",
+    "name": "acquire_gpu_command_buffer",
+    "contract": "Result",
+    "signature": "def public acquire_gpu_command_buffer(device : SDL_GPUDevice?)"
+  },
+  {
+    "module": "sdl3_gpu_result",
+    "name": "checked_handle_result",
+    "contract": "Result",
+    "signature": "def public checked_handle_result(handle : auto(T); operation : string)"
+  },
+  {
+    "module": "sdl3_gpu_sampler_boost",
+    "name": "create_gpu_sampler",
+    "contract": "Result",
+    "signature": "def public create_gpu_sampler(device : SDL_GPUDevice?; info : SDL_GPUSamplerCreateInfo)"
+  },
+  {
+    "module": "sdl3_gpu_shader_boost",
+    "name": "create_gpu_shader",
+    "contract": "Result",
+    "signature": "def public create_gpu_shader(device : SDL_GPUDevice?; bytes : array<uint8>; info : SDL_GPUShaderCreateInfo; entrypoint : string)"
+  },
+  {
+    "module": "sdl3_gpu_shader_boost",
+    "name": "load_gpu_shader",
+    "contract": "Result",
+    "signature": "def public load_gpu_shader(device : SDL_GPUDevice?; path : string; info : SDL_GPUShaderCreateInfo; entrypoint : string)"
+  },
+  {
+    "module": "sdl3_gpu_texture_transfer_boost",
+    "name": "create_gpu_transfer_texture",
+    "contract": "Result",
+    "signature": "def public create_gpu_transfer_texture(device : SDL_GPUDevice?; width, height, layers, levels, format, texture_type : uint)"
+  },
+  {
+    "module": "sdl3_gpu_texture_transfer_boost",
+    "name": "create_gpu_color_texture",
+    "contract": "Result",
+    "signature": "def public create_gpu_color_texture(device : SDL_GPUDevice?; width, height, layers, levels, format : uint)"
+  },
+  {
+    "module": "sdl3_gpu_texture_transfer_boost",
+    "name": "request_gpu_texture_readback",
+    "contract": "Result",
+    "signature": "def public request_gpu_texture_readback(device : SDL_GPUDevice?; texture : GpuTextureHandle; sub : uint2; region : uint4)"
+  },
+  {
+    "module": "sdl3_gpu_transfer_boost",
+    "name": "create_gpu_buffer",
+    "contract": "Result",
+    "signature": "def public create_gpu_buffer(device : SDL_GPUDevice?; bytes : array<uint8>; usage : uint)"
+  },
+  {
+    "module": "sdl3_gpu_transfer_boost",
+    "name": "request_gpu_buffer_readback",
+    "contract": "Result",
+    "signature": "def public request_gpu_buffer_readback(device : SDL_GPUDevice?; buffer : GpuBufferHandle; offset, size : uint)"
+  },
+  {
+    "module": "sdl3_gpu_volume_boost",
+    "name": "create_gpu_volume",
+    "contract": "Result",
+    "signature": "def public create_gpu_volume(device : SDL_GPUDevice?; size : uint3; levels : uint; format : SDL_GPUTextureFormat)"
+  },
+  {
+    "module": "sdl3_gpu_volume_boost",
+    "name": "request_gpu_volume_readback",
+    "contract": "Result",
+    "signature": "def public request_gpu_volume_readback(device : SDL_GPUDevice?; volume : GpuVolumeHandle; mip : uint; origin, size : uint3)"
   }
 ]

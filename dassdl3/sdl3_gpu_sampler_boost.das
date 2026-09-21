@@ -4,6 +4,10 @@ module sdl3_gpu_sampler_boost shared public
 require dassdl3/sdl3_gpu_boost public
 
 // Typed defaults: clamp all axes, no comparison/anisotropy, all mip levels.
+def public create_gpu_sampler(device : SDL_GPUDevice?; info : SDL_GPUSamplerCreateInfo) {
+    return checked_handle_result(SDL_CreateGPUCheckedSampler(device,info),"SDL_CreateGPUCheckedSampler")
+}
+
 def public gpu_sampler_info(filter : SDL_GPUFilter = SDL_GPUFilter.FILTER_NEAREST;
         address : SDL_GPUSamplerAddressMode = SDL_GPUSamplerAddressMode.SAMPLERADDRESSMODE_CLAMP_TO_EDGE) : SDL_GPUSamplerCreateInfo {
     var info : SDL_GPUSamplerCreateInfo
@@ -19,8 +23,9 @@ def public with_gpu_sampler(device : SDL_GPUDevice?; info : SDL_GPUSamplerCreate
         blk : block<(sampler : GpuSamplerHandle) : $Result<auto(TT); SdlError> >) {
     var scope_result : $Result<TT; SdlError>
 
-    let id = SDL_CreateGPUCheckedSampler(device,info)
-    if (*id == 0ul) { return err(sdl_error("with_gpu_sampler"), type<TT>) }
+    let acquired = create_gpu_sampler(device,info)
+    if (is_err(acquired)) { return err(unwrap_err(acquired),type<TT>) }
+    let id = unwrap(acquired)
     {
         defer() { if (!SDL_ReleaseGPUCheckedSampler(device,id) && is_ok(scope_result)) { scope_result <- err(sdl_error("SDL_ReleaseGPUCheckedSampler"),type<TT>) } }
         static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(id) } else { scope_result <- blk(id) }

@@ -7,7 +7,7 @@ import tempfile
 
 CASES = {
     "nested": ('def run { let x = 1 + (ok(2, type<SdlError>) |> sdl_try); return sdl_ok() }', "sdl_try must be a standalone"),
-    "assignment": ('def run { var x = 0; x = ok(2, type<SdlError>) |> sdl_try; return sdl_ok() }', "sdl_try must be a standalone"),
+    "indexed_assignment": ('def run { var x <- array<int>(0); x[0] = ok(2, type<SdlError>) |> sdl_try; return sdl_ok() }', "sdl_try must be a standalone"),
     "wrong_caller": ('def run : int { sdl_ok() |> sdl_try; return 0 }', "sdl_try requires an enclosing Result"),
     "wrong_caller_error": ('def run { sdl_ok() |> sdl_try; return ok(1, type<string>) }', "sdl_try requires an enclosing Result"),
     "wrong_error": ('def run { ok(2, type<string>) |> sdl_try; return sdl_ok() }', "no matching functions"),

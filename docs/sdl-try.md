@@ -46,10 +46,16 @@ Result example deliberately remains the explicit-check/`and_then` comparison.
 
 ## Supported placements
 
-Use a standalone statement or the entire initializer of a single `let`/`var`.
+Use a standalone statement, the entire initializer of a single `let`/`var`, or
+the entire right-hand side of an assignment to a variable (`=` or `<-`).
+For example, `pipeline = device |> create_gpu_graphics_pipeline(...) |> sdl_try`.
+On Err the target keeps its previous value and deferred cleanup observes it;
+on Ok the assignment runs once. Move assignment consumes move-only payloads.
 These forms work inside ordinary branches and loop bodies. Do not nest the macro
-inside arguments, arithmetic, conditions, assignments, return expressions, or
+inside arguments, arithmetic, conditions, return expressions, or
 multi-variable declarations. Split such expressions into local declarations first.
+Indexed/field assignment targets and compound assignments are unsupported; this
+avoids moving target evaluation across an early return.
 It is forbidden in `defer`/finally and cannot be taken as a function pointer.
 Unsupported calls fail compilation, rather than falling back to an unchecked unwrap.
 
@@ -69,6 +75,8 @@ rejects unexpanded uses with sticky compile errors before optimization.
 [Runtime contracts](../tests/sdl3_try.das) cover different success types, scalars,
 strings, pointers, arrays, nested Option, exactly-once evaluation, branches/loops,
 nearest-block propagation and cleanup with an overwritten SDL error string.
+They also cover copy/move assignment, once-only RHS evaluation and an unchanged
+target visible to defer after assignment failure.
 [Negative tests](../tests/test_sdl3_try_compile_errors.py) check unsupported
 placements, caller types, Option and non-SdlError inputs. CTest runs the runtime
 contracts and example in the main interpreter, both parity interpreters and strict

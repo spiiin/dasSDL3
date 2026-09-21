@@ -3,12 +3,17 @@ require daslib/defer
 module sdl3_gpu_image_boost shared public
 require dassdl3/sdl3_gpu_formats_boost public
 
+def public create_gpu_color_target_texture(device : SDL_GPUDevice?; width, height, layers, levels, format : uint) {
+    return checked_handle_result(SDL_CreateGPUColorTargetTexture(device,width,height,layers,levels,format),"SDL_CreateGPUColorTargetTexture")
+}
+
 def public with_gpu_color_target_texture(device : SDL_GPUDevice?; width, height, layers, levels, format : uint;
         blk : block<(texture : GpuTextureHandle) : $Result<auto(TT); SdlError> >) {
     var scope_result : $Result<TT; SdlError>
 
-    let id = SDL_CreateGPUColorTargetTexture(device,width,height,layers,levels,format)
-    if (*id == 0ul) { return err(sdl_error("with_gpu_color_target_texture"), type<TT>) }
+    let acquired = create_gpu_color_target_texture(device,width,height,layers,levels,format)
+    if (is_err(acquired)) { return err(unwrap_err(acquired),type<TT>) }
+    let id = unwrap(acquired)
     {
         defer() { if (!SDL_ReleaseGPUTransferTexture(device,id) && is_ok(scope_result)) { scope_result <- err(sdl_error("SDL_ReleaseGPUTransferTexture"),type<TT>) } }
         static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(id) } else { scope_result <- blk(id) }

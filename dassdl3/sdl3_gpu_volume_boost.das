@@ -4,12 +4,21 @@ module sdl3_gpu_volume_boost shared public
 require dassdl3/sdl3_gpu_formats_boost public
 
 // Uncompressed color 3D texture, sample 1, SAMPLER usage. All mips start zeroed.
+def public create_gpu_volume(device : SDL_GPUDevice?; size : uint3; levels : uint; format : SDL_GPUTextureFormat) {
+    return checked_handle_result(SDL_CreateGPUVolume(device,size,levels,uint(format)),"SDL_CreateGPUVolume")
+}
+
+def public request_gpu_volume_readback(device : SDL_GPUDevice?; volume : GpuVolumeHandle; mip : uint; origin, size : uint3) {
+    return checked_handle_result(SDL_RequestGPUVolumeReadback(device,volume,mip,origin,size),"SDL_RequestGPUVolumeReadback")
+}
+
 def public with_gpu_volume(device : SDL_GPUDevice?; size : uint3; levels : uint; format : SDL_GPUTextureFormat;
         blk : block<(volume : GpuVolumeHandle) : $Result<auto(TT); SdlError> >) {
     var scope_result : $Result<TT; SdlError>
 
-    let id = SDL_CreateGPUVolume(device,size,levels,uint(format))
-    if (*id == 0ul) { return err(sdl_error("with_gpu_volume"), type<TT>) }
+    let acquired = create_gpu_volume(device,size,levels,format)
+    if (is_err(acquired)) { return err(unwrap_err(acquired),type<TT>) }
+    let id = unwrap(acquired)
     {
         defer() { if (!SDL_ReleaseGPUVolume(device,id) && is_ok(scope_result)) { scope_result <- err(sdl_error("SDL_ReleaseGPUVolume"),type<TT>) } }
         static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(id) } else { scope_result <- blk(id) }
@@ -34,8 +43,9 @@ def public with_gpu_volume_readback(device : SDL_GPUDevice?; volume : GpuVolumeH
         blk : block<(ticket : GpuReadbackHandle) : $Result<auto(TT); SdlError> >) {
     var scope_result : $Result<TT; SdlError>
 
-    let id = SDL_RequestGPUVolumeReadback(device,volume,mip,origin,size)
-    if (*id == 0ul) { return err(sdl_error("with_gpu_volume_readback"), type<TT>) }
+    let acquired = request_gpu_volume_readback(device,volume,mip,origin,size)
+    if (is_err(acquired)) { return err(unwrap_err(acquired),type<TT>) }
+    let id = unwrap(acquired)
     {
         defer() { if (!SDL_ReleaseGPUReadback(device,id) && is_ok(scope_result)) { scope_result <- err(sdl_error("SDL_ReleaseGPUReadback"),type<TT>) } }
         static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(id) } else { scope_result <- blk(id) }
