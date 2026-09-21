@@ -19,11 +19,11 @@ def walk(node):
         yield from walk(child)
 
 
-def generate(clang, include):
-    spec = json.loads((ROOT / "tools/bindings.json").read_text())
+def generate(clang, include, spec_path=None, clang_args=()):
+    spec = json.loads((spec_path or ROOT / "tools/bindings.json").read_text())
     command = [clang, "-x", "c", "-std=c11", "-fsyntax-only", "-Wno-pragma-pack",
                "-I", str(include), "-Xclang", "-ast-dump=json",
-               str(include / "SDL3/SDL.h")]
+               str(include / "SDL3/SDL.h")] + list(clang_args)
     result = subprocess.run(command, capture_output=True, text=True, encoding="utf-8")
     if result.returncode:
         raise RuntimeError(result.stderr)
@@ -134,9 +134,12 @@ def main():
     parser.add_argument("--clang", default="clang")
     parser.add_argument("--sdl-include", required=True, type=Path)
     parser.add_argument("--check", action="store_true", help="Fail if committed output differs")
+    parser.add_argument("--spec", type=Path)
+    parser.add_argument("--output", type=Path, default=ROOT / "src/generated")
+    parser.add_argument("--clang-arg", action="append", default=[])
     args = parser.parse_args()
-    output = ROOT / "src/generated"
-    files = generate(args.clang, args.sdl_include.resolve())
+    output = args.output
+    files = generate(args.clang, args.sdl_include.resolve(), args.spec, args.clang_arg)
     if args.check:
         stale = [name for name, text in files.items()
                  if not (output / name).exists() or (output / name).read_text(encoding="utf-8") != text]

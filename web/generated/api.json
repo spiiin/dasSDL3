@@ -1,0 +1,425 @@
+{
+  "SDL_GetVersion": {
+    "signature": "int (void)",
+    "arguments": []
+  },
+  "SDL_Init": {
+    "signature": "bool (SDL_InitFlags)",
+    "arguments": [
+      "flags"
+    ]
+  },
+  "SDL_Quit": {
+    "signature": "void (void)",
+    "arguments": []
+  },
+  "SDL_GetError": {
+    "signature": "const char *(void)",
+    "arguments": []
+  },
+  "SDL_WasInit": {
+    "signature": "SDL_InitFlags (SDL_InitFlags)",
+    "arguments": [
+      "flags"
+    ]
+  },
+  "SDL_CreateWindow": {
+    "signature": "SDL_Window *(const char *, int, int, SDL_WindowFlags)",
+    "arguments": [
+      "title",
+      "w",
+      "h",
+      "flags"
+    ]
+  },
+  "SDL_DestroyWindow": {
+    "signature": "void (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_CreateRenderer": {
+    "signature": "SDL_Renderer *(SDL_Window *, const char *)",
+    "arguments": [
+      "window",
+      "name"
+    ]
+  },
+  "SDL_DestroyRenderer": {
+    "signature": "void (SDL_Renderer *)",
+    "arguments": [
+      "renderer"
+    ]
+  },
+  "SDL_GetWindowID": {
+    "signature": "SDL_WindowID (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_PollEvent": {
+    "signature": "bool (SDL_Event *)",
+    "arguments": [
+      "event"
+    ]
+  },
+  "SDL_PushEvent": {
+    "signature": "bool (SDL_Event *)",
+    "arguments": [
+      "event"
+    ]
+  },
+  "SDL_SetRenderDrawColor": {
+    "signature": "bool (SDL_Renderer *, Uint8, Uint8, Uint8, Uint8)",
+    "arguments": [
+      "renderer",
+      "r",
+      "g",
+      "b",
+      "a"
+    ]
+  },
+  "SDL_RenderClear": {
+    "signature": "bool (SDL_Renderer *)",
+    "arguments": [
+      "renderer"
+    ]
+  },
+  "SDL_RenderFillRect": {
+    "signature": "bool (SDL_Renderer *, const SDL_FRect *)",
+    "arguments": [
+      "renderer",
+      "rect"
+    ]
+  },
+  "SDL_RenderPresent": {
+    "signature": "bool (SDL_Renderer *)",
+    "arguments": [
+      "renderer"
+    ]
+  },
+  "SDL_GetTicks": {
+    "signature": "Uint64 (void)",
+    "arguments": []
+  },
+  "SDL_LoadBMP": {
+    "signature": "SDL_Surface *(const char *)",
+    "arguments": [
+      "file"
+    ]
+  },
+  "SDL_DestroySurface": {
+    "signature": "void (SDL_Surface *)",
+    "arguments": [
+      "surface"
+    ]
+  },
+  "SDL_CreateTextureFromSurface": {
+    "signature": "SDL_Texture *(SDL_Renderer *, SDL_Surface *)",
+    "arguments": [
+      "renderer",
+      "surface"
+    ]
+  },
+  "SDL_DestroyTexture": {
+    "signature": "void (SDL_Texture *)",
+    "arguments": [
+      "texture"
+    ]
+  },
+  "SDL_GetTextureSize": {
+    "signature": "bool (SDL_Texture *, float *, float *)",
+    "arguments": [
+      "texture",
+      "w",
+      "h"
+    ]
+  },
+  "SDL_RenderTexture": {
+    "signature": "bool (SDL_Renderer *, SDL_Texture *, const SDL_FRect *, const SDL_FRect *)",
+    "arguments": [
+      "renderer",
+      "texture",
+      "srcrect",
+      "dstrect"
+    ]
+  },
+  "SDL_StartTextInput": {
+    "signature": "bool (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_StopTextInput": {
+    "signature": "bool (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_TextInputActive": {
+    "signature": "bool (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetKeyboardState": {
+    "signature": "const bool *(int *)",
+    "arguments": [
+      "numkeys"
+    ]
+  },
+  "SDL_GetMouseState": {
+    "signature": "SDL_MouseButtonFlags (float *, float *)",
+    "arguments": [
+      "x",
+      "y"
+    ]
+  },
+  "SDL_SetWindowTitle": {
+    "signature": "bool (SDL_Window *, const char *)",
+    "arguments": [
+      "window",
+      "title"
+    ]
+  },
+  "SDL_ClearError": {
+    "signature": "bool (void)",
+    "arguments": []
+  },
+  "SDL_GetTicksNS": {
+    "signature": "Uint64 (void)",
+    "arguments": []
+  },
+  "SDL_GetWindowSize": {
+    "signature": "bool (SDL_Window *, int *, int *)",
+    "arguments": [
+      "window",
+      "w",
+      "h"
+    ]
+  },
+  "SDL_GetWindowSizeInPixels": {
+    "signature": "bool (SDL_Window *, int *, int *)",
+    "arguments": [
+      "window",
+      "w",
+      "h"
+    ]
+  },
+  "SDL_GetRenderOutputSize": {
+    "signature": "bool (SDL_Renderer *, int *, int *)",
+    "arguments": [
+      "renderer",
+      "w",
+      "h"
+    ]
+  },
+  "SDL_GetRendererName": {
+    "signature": "const char *(SDL_Renderer *)",
+    "arguments": [
+      "renderer"
+    ]
+  },
+  "SDL_SetRenderLogicalPresentation": {
+    "signature": "bool (SDL_Renderer *, int, int, SDL_RendererLogicalPresentation)",
+    "arguments": [
+      "renderer",
+      "w",
+      "h",
+      "mode"
+    ]
+  },
+  "SDL_CreateTexture": {
+    "signature": "SDL_Texture *(SDL_Renderer *, SDL_PixelFormat, SDL_TextureAccess, int, int)",
+    "arguments": [
+      "renderer",
+      "format",
+      "access",
+      "w",
+      "h"
+    ]
+  },
+  "SDL_UpdateTexture": {
+    "signature": "bool (SDL_Texture *, const SDL_Rect *, const void *, int)",
+    "arguments": [
+      "texture",
+      "rect",
+      "pixels",
+      "pitch"
+    ]
+  },
+  "SDL_LockTexture": {
+    "signature": "bool (SDL_Texture *, const SDL_Rect *, void **, int *)",
+    "arguments": [
+      "texture",
+      "rect",
+      "pixels",
+      "pitch"
+    ]
+  },
+  "SDL_UnlockTexture": {
+    "signature": "void (SDL_Texture *)",
+    "arguments": [
+      "texture"
+    ]
+  },
+  "SDL_GetRenderTarget": {
+    "signature": "SDL_Texture *(SDL_Renderer *)",
+    "arguments": [
+      "renderer"
+    ]
+  },
+  "SDL_SetRenderTarget": {
+    "signature": "bool (SDL_Renderer *, SDL_Texture *)",
+    "arguments": [
+      "renderer",
+      "texture"
+    ]
+  },
+  "SDL_RenderReadPixels": {
+    "signature": "SDL_Surface *(SDL_Renderer *, const SDL_Rect *)",
+    "arguments": [
+      "renderer",
+      "rect"
+    ]
+  },
+  "SDL_RenderGeometry": {
+    "signature": "bool (SDL_Renderer *, SDL_Texture *, const SDL_Vertex *, int, const int *, int)",
+    "arguments": [
+      "renderer",
+      "texture",
+      "vertices",
+      "num_vertices",
+      "indices",
+      "num_indices"
+    ]
+  },
+  "SDL_CreateAudioStream": {
+    "signature": "SDL_AudioStream *(const SDL_AudioSpec *, const SDL_AudioSpec *)",
+    "arguments": [
+      "src_spec",
+      "dst_spec"
+    ]
+  },
+  "SDL_DestroyAudioStream": {
+    "signature": "void (SDL_AudioStream *)",
+    "arguments": [
+      "stream"
+    ]
+  },
+  "SDL_PutAudioStreamData": {
+    "signature": "bool (SDL_AudioStream *, const void *, int)",
+    "arguments": [
+      "stream",
+      "buf",
+      "len"
+    ]
+  },
+  "SDL_GetAudioStreamData": {
+    "signature": "int (SDL_AudioStream *, void *, int)",
+    "arguments": [
+      "stream",
+      "buf",
+      "len"
+    ]
+  },
+  "SDL_GetAudioStreamQueued": {
+    "signature": "int (SDL_AudioStream *)",
+    "arguments": [
+      "stream"
+    ]
+  },
+  "SDL_GetAudioStreamAvailable": {
+    "signature": "int (SDL_AudioStream *)",
+    "arguments": [
+      "stream"
+    ]
+  },
+  "SDL_FlushAudioStream": {
+    "signature": "bool (SDL_AudioStream *)",
+    "arguments": [
+      "stream"
+    ]
+  },
+  "SDL_ClearAudioStream": {
+    "signature": "bool (SDL_AudioStream *)",
+    "arguments": [
+      "stream"
+    ]
+  },
+  "SDL_ResumeAudioStreamDevice": {
+    "signature": "bool (SDL_AudioStream *)",
+    "arguments": [
+      "stream"
+    ]
+  },
+  "SDL_PauseAudioStreamDevice": {
+    "signature": "bool (SDL_AudioStream *)",
+    "arguments": [
+      "stream"
+    ]
+  },
+  "SDL_GL_ResetAttributes": {
+    "signature": "void (void)",
+    "arguments": []
+  },
+  "SDL_GL_SetAttribute": {
+    "signature": "bool (SDL_GLAttr, int)",
+    "arguments": [
+      "attr",
+      "value"
+    ]
+  },
+  "SDL_GL_GetAttribute": {
+    "signature": "bool (SDL_GLAttr, int *)",
+    "arguments": [
+      "attr",
+      "value"
+    ]
+  },
+  "SDL_GL_CreateContext": {
+    "signature": "SDL_GLContext (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GL_MakeCurrent": {
+    "signature": "bool (SDL_Window *, SDL_GLContext)",
+    "arguments": [
+      "window",
+      "context"
+    ]
+  },
+  "SDL_GL_GetCurrentWindow": {
+    "signature": "SDL_Window *(void)",
+    "arguments": []
+  },
+  "SDL_GL_GetCurrentContext": {
+    "signature": "SDL_GLContext (void)",
+    "arguments": []
+  },
+  "SDL_GL_SetSwapInterval": {
+    "signature": "bool (int)",
+    "arguments": [
+      "interval"
+    ]
+  },
+  "SDL_GL_GetSwapInterval": {
+    "signature": "bool (int *)",
+    "arguments": [
+      "interval"
+    ]
+  },
+  "SDL_GL_SwapWindow": {
+    "signature": "bool (SDL_Window *)",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GL_DestroyContext": {
+    "signature": "bool (SDL_GLContext)",
+    "arguments": [
+      "context"
+    ]
+  }
+}

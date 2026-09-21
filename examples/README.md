@@ -167,3 +167,5 @@ runtime contracts. The macro and public binding signatures needed no changes.
 - [79_audio_conversion.das](79_audio_conversion.das): PCM mixing and complete-buffer format conversion.
 
 - [80_camera.das](80_camera.das): discover cameras; normal run opens the first camera for one metadata-only frame, smoke only enumerates.
+
+Web: [сборка и запуск HTML-галереи](../web/README.md), исходники восьми SDL-страниц в web/ и двух [OpenGL-страниц](web/opengl/README.md) в web/opengl/. Desktop-нумерация сохранена.

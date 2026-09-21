@@ -35,6 +35,11 @@ interpreter/AOT/consumer проверки. [Результаты и исключ
 
 ## Очередь
 
+Текущий приоритет по запросу пользователя — [Web / Emscripten и HTML-примеры](web-roadmap.md).
+P7 временно отложен. Первый Web bootstrap собран: 65 SDL raw-функций, десять
+HTML-страниц на SDL Renderer/WebGL и штатном dasOpenGL, проверки Edge/Firefox. Полный профиль,
+остальные примеры и AOT остаются в web-roadmap; SDL_GPU не поддерживается этим backend.
+
 P3 API: [очередь событий](event-queue.md) и [callbacks](event-callbacks.md) подключены — 19/19
 raw-функций Events. Есть ожидание/таймаут, пакетные peek/take, подсчёт, фильтрация
 по диапазону и регистрация пользовательских типов. [SdlEvent](event-variants.md)
@@ -82,7 +87,7 @@ cleanup-callback остаётся pending; ограничения и найде�
 Video discovery: 31 raw запроса и copy/ref adapters реализованы,
 [контракты](video-discovery.md). Создание и состояние окон также реализованы: [контракты](window-state.md).
 Fullscreen/surfaces и прочие оконные операции реализованы с ограничениями
-[window-io.md](window-io.md). Video: 89/109; оставшиеся 20 GL/EGL функций явно перенесены в P8. Hit-test, Rect и Clipboard подключены; [контракт](rect-clipboard-hittest.md). Следующий основной раздел — P7 (Threads/synchronization, Process/LoadSO и системные API); исключение IOvprintf и остаток P3 перечислены выше. Миграция [Result/Option boost API](result-option-plan.md) завершена и локально проверена. P2 не переоткрывается; GL/EGL остаётся в P8.
+[window-io.md](window-io.md). Video: 89/109; оставшиеся 20 GL/EGL функций явно перенесены в P8. Hit-test, Rect и Clipboard подключены; [контракт](rect-clipboard-hittest.md). После Web следующий основной раздел — P7 (Threads/synchronization, Process/LoadSO и системные API); исключение IOvprintf и остаток P3 перечислены выше. Миграция [Result/Option boost API](result-option-plan.md) завершена и локально проверена. P2 не переоткрывается; GL/EGL остаётся в P8.
 Software renderer/primitives: ещё 10 raw функций; [контракт](renderer-primitives.md).
 Состояние Renderer (viewport/clip/scale/output): 10 raw функций и ref adapters; [контракт](renderer-state.md).
 Renderer queries/logical presentation: 10 raw функций, все режимы и преобразование координат; [контракт](renderer-presentation.md).

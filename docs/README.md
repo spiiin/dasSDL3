@@ -95,3 +95,5 @@ Early-return syntax: [`sdl_try` macro and example](sdl-try.md).
 - [Audio final API](audio-final-api.md): native callbacks, WAV IO, PCM mixing and conversion.
 
 - [Camera](camera.md): 15 raw APIs, borrowed frames and dummy-only validation.
+
+- [Web / Emscripten и HTML-примеры](web-roadmap.md): текущий приоритет; первый bootstrap и четыре HTML-примера проверены в Edge/Firefox.
