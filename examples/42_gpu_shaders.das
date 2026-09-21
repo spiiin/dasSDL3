@@ -11,8 +11,8 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
     let base = "{SDL_GetBasePath()}assets/shaders/triangle"
     let vertex_info = gpu_shader_info(format,SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
     let fragment_info = gpu_shader_info(format,SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT)
-    return device |> with_gpu_shader_file("{base}.vert.{extension}",vertex_info) $(vertex : uint64) {
-        return device |> with_gpu_shader_file("{base}.frag.{extension}",fragment_info) $(fragment : uint64) {
+    return device |> with_gpu_shader_file("{base}.vert.{extension}",vertex_info) $(vertex : GpuShaderHandle) {
+        return device |> with_gpu_shader_file("{base}.frag.{extension}",fragment_info) $(fragment : GpuShaderHandle) {
             verify(vertex != fragment)
             let description = gpu_shader_descriptor(device,fragment) |> sdl_try
             let entrypoint = gpu_shader_entrypoint(device,fragment) |> sdl_try

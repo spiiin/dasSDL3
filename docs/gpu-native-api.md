@@ -15,7 +15,7 @@ shader and pipeline descriptors. SDL_Rect and SDL_FlipMode are also available.
 
 ## Native ownership
 
-These handles are SDL pointers, separate from the existing checked uint64 IDs.
+These handles are SDL pointers, separate from the [checked distinct IDs](gpu-handles.md).
 Follow SDL's device, thread, usage, pass and lifetime preconditions. A raw export
 does not validate stale pointers, ownership or buffer sizes. Pointer fields in
 descriptors borrow memory: keep their backing storage alive for the native call;

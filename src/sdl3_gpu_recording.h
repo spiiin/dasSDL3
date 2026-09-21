@@ -134,22 +134,23 @@ inline bool SDL_SetGPUBlendConstantsChecked(SDL_GPUDevice * device,uint64_t pass
     if (!SDL_GPURecordingColor(color)) return SDL_SetError("GPU recording: normalized blend color required");
     SDL_SetGPUBlendConstants(p->pass,color); return true;
 }
+template <typename BufferHandle>
 inline bool SDL_BindGPUVertexBuffersChecked(SDL_GPUDevice * device,uint64_t pass,uint32_t first,
-        const das::TArray<uint64_t> & buffers,const das::TArray<uint32_t> & offsets) {
+        const das::TArray<BufferHandle> & buffers,const das::TArray<uint32_t> & offsets) {
     auto * p=SDL_GPURecordingPassFind(device,pass); if (!p) return false;
     if (first>=16 || !buffers.size || buffers.size>16-first || offsets.size!=buffers.size || !buffers.data || !offsets.data)
         return SDL_SetError("GPU recording: nonempty matching vertex arrays fitting 16 slots required");
-    const auto * ids=reinterpret_cast<const uint64_t *>(buffers.data);
+    const auto * ids=reinterpret_cast<const BufferHandle *>(buffers.data);
     const auto * positions=reinterpret_cast<const uint32_t *>(offsets.data);
     std::array<SDL_GPUBufferBinding,16> bindings{};
     for (size_t i=0;i<buffers.size;++i) {
-        auto * b=SDL_GPUTransferFind(SDL_GPUDataBuffers,device,ids[i]); if (!b) return false;
+        auto * b=SDL_GPUTransferFind(SDL_GPUDataBuffers,device,uint64_t(ids[i])); if (!b) return false;
         if (!(b->usage&SDL_GPU_BUFFERUSAGE_VERTEX) || !b->valid || positions[i]%4 || positions[i]>=b->size)
             return SDL_SetError("GPU recording: valid VERTEX buffer and aligned in-range offset required");
         bindings[i]={b->buffer,positions[i]};
     }
     SDL_BindGPUVertexBuffers(p->pass,first,bindings.data(),uint32_t(buffers.size));
-    for (size_t i=0;i<buffers.size;++i) { p->vertices[first+i]=ids[i]; p->offsets[first+i]=positions[i]; }
+    for (size_t i=0;i<buffers.size;++i) { p->vertices[first+i]=uint64_t(ids[i]); p->offsets[first+i]=positions[i]; }
     return true;
 }
 inline bool SDL_BindGPUIndexBufferChecked(SDL_GPUDevice * device,uint64_t pass,uint64_t index) {
@@ -158,15 +159,17 @@ inline bool SDL_BindGPUIndexBufferChecked(SDL_GPUDevice * device,uint64_t pass,u
     const SDL_GPUBufferBinding binding{b->buffer,0}; SDL_BindGPUIndexBuffer(p->pass,&binding,b->element);
     p->index=index; return true;
 }
+template <typename TextureHandle, typename SamplerHandle>
 inline bool SDL_BindGPUSamplersChecked(SDL_GPUDevice * device,uint64_t pass,SDL_GPUShaderStage stage,
-        const das::TArray<uint64_t> & textures,const das::TArray<uint64_t> & samplers) {
+        const das::TArray<TextureHandle> & textures,const das::TArray<SamplerHandle> & samplers) {
     auto * p=SDL_GPURecordingPassFind(device,pass); if (!p) return false;
     if (uint32_t(stage)>1 || !textures.size || textures.size>16 || textures.size!=samplers.size || !textures.data || !samplers.data)
         return SDL_SetError("GPU recording: valid stage and 1..16 matching texture/sampler pairs required");
     SDL_GPURecordingPass::Sampled next;
-    const auto * t=reinterpret_cast<const uint64_t *>(textures.data), * s=reinterpret_cast<const uint64_t *>(samplers.data);
+    const auto * t=reinterpret_cast<const TextureHandle *>(textures.data);
+    const auto * s=reinterpret_cast<const SamplerHandle *>(samplers.data);
     next.count=size_t(textures.size);
-    std::copy_n(t,next.count,next.textures.data()); std::copy_n(s,next.count,next.samplers.data());
+    for (size_t i=0;i<next.count;++i) { next.textures[i]=uint64_t(t[i]); next.samplers[i]=uint64_t(s[i]); }
     std::array<SDL_GPUTextureSamplerBinding,16> bindings{};
     if (!SDL_GPUValidateSampledTextures(device,next.textures.data(),next.samplers.data(),next.count,p->target,bindings.data())) return false;
     if (stage==SDL_GPU_SHADERSTAGE_VERTEX) SDL_BindGPUVertexSamplers(p->pass,0,bindings.data(),uint32_t(textures.size));

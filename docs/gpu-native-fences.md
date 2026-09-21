@@ -7,7 +7,7 @@ SDL_CancelGPUCommandBuffer, SDL_WaitForGPUFences, SDL_QueryGPUFence and
 SDL_ReleaseGPUFence. SDL_WaitForGPUIdle was already generated. The new opaque
 pointer types are SDL_GPUCommandBuffer and SDL_GPUFence.
 
-These are the actual SDL signatures and handles, not checked uint64 IDs.
+These are the actual SDL signatures and handles, separate from [checked distinct IDs](gpu-handles.md).
 They introduce no new owner type or resource registry. Do not mix raw native
 pointers with the Checked recording API. Follow SDL ownership: acquire and
 submit/cancel on the same thread; submit/cancel consumes the command even on

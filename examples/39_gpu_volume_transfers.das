@@ -14,11 +14,11 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
     for (z in 0 .. 2) { for (y in 0 .. 2) { for (x in 0 .. 12) {
         expected[(z*2+y)*12+x] = source[(z+1)*int(slice_pitch)+y*int(row_pitch)+4+x]
     } } }
-    device |> with_gpu_volume(uint3(5u,3u,3u)) $(volume : uint64) {
-        return device |> with_gpu_volume(uint3(3u,2u,2u)) $(copy : uint64) {
+    device |> with_gpu_volume(uint3(5u,3u,3u)) $(volume : GpuVolumeHandle) {
+        return device |> with_gpu_volume(uint3(3u,2u,2u)) $(copy : GpuVolumeHandle) {
             device |> gpu_upload_volume(volume,0u,uint3(0u),uint3(5u,3u,3u),source,row_pitch,slice_pitch) |> sdl_try
             device |> gpu_copy_volume(volume,0u,uint3(1u,0u,1u),uint3(3u,2u,2u),copy,0u,uint3(0u)) |> sdl_try
-            return device |> with_gpu_volume_readback(copy,0u,uint3(0u),uint3(3u,2u,2u)) $(ticket : uint64) {
+            return device |> with_gpu_volume_readback(copy,0u,uint3(0u),uint3(3u,2u,2u)) $(ticket : GpuReadbackHandle) {
                 device |> gpu_wait_readback(ticket) |> sdl_try
                 device |> gpu_readback_bytes(ticket,actual) |> sdl_try
 

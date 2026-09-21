@@ -2,7 +2,7 @@
 
 Example 41 and `sdl3_gpu_sampler_boost` add independent sampler ownership above
 the generated `SDL_GPUSamplerCreateInfo`, enums and raw create/release bindings.
-These uint64 IDs are separate from generated native sampler pointers.
+These `GpuSamplerHandle` distinct IDs are separate from generated native sampler pointers; see [typed handles](gpu-handles.md).
 
 ```das
 var info = gpu_sampler_info(SDL_GPUFilter.FILTER_LINEAR,

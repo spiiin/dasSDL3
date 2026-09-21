@@ -24,9 +24,9 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
     resize(padded,67); resize(expected,64); resize(actual,64)
     for (i in 0 .. 67) { padded[i] = uint8(i*7+11) }
     for (y in 0 .. 2) { for (x in 0 .. 32) { expected[y*32+x] = padded[y*35+x] } }
-    device |> with_gpu_transfer_texture(region.z,region.w,1u,1u,selected,SDL_GPU_TEXTURETYPE_2D) $(texture : uint64) {
+    device |> with_gpu_transfer_texture(region.z,region.w,1u,1u,selected,SDL_GPU_TEXTURETYPE_2D) $(texture : GpuTextureHandle) {
         device |> gpu_upload_texture(texture,uint2(0u),region,padded,35u,true) |> sdl_try
-        return device |> with_gpu_texture_readback(texture,uint2(0u),region) $(ticket : uint64) {
+        return device |> with_gpu_texture_readback(texture,uint2(0u),region) $(ticket : GpuReadbackHandle) {
             device |> gpu_wait_readback(ticket) |> sdl_try
             device |> gpu_readback_bytes(ticket,actual) |> sdl_try
 

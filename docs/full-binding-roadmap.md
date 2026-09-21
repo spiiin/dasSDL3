@@ -1,6 +1,6 @@
 # План полной привязки SDL3
 
-Актуализирован 20 сентября 2026. База: SDL 3.2.18, daScript
+Актуализирован 21 сентября 2026. База: SDL 3.2.18, daScript
 `35bf260c0d8a79b94c64005bd3d2435adcf7e261`, Windows x64/MSVC.
 Текущее покрытие — [api-coverage.md](api-coverage.md); точные декларации и
 платформенные guards — [реестр заголовков](generated/api-windows-x64-msvc.md).
@@ -17,6 +17,9 @@ Raw сохраняет SDL bool/null/zero/sentinel. Boost возвращает R
 как aliases; scopes не обеспечивают borrow checker. Контракты:
 [ошибки и defer](error-handling.md), [граница API](gpu-api-boundary.md).
 Mesh/material/scene/batching/планы не входят в публичную привязку.
+Checked GPU ID имеют отдельные `distinct`-типы поверх `uint64` в native
+адаптерах и boost; [контракты и миграция](gpu-handles.md). Это проверка вида
+ресурса при компиляции, а не новый слой владения. Raw SDL-указатели сохранены.
 
 CppGenBind — основной backend Windows x64; Python/Clang остаётся baseline
 и fallback. Добавлять декларации через policy и генератор, не вручную в snapshots.

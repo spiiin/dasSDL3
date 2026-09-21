@@ -42,8 +42,10 @@
 #include "sdl3_texture_load.h"
 #include "sdl3_clipboard_hittest.h"
 #include "sdl3_result_adapters.h"
+#include "generated/gpu_handle_adapters.h"
 #ifdef DASSDL3_TESTING
 #include "../tests/resource_probe.h"
+#include "../tests/gpu_handle_probe.h"
 #include "../tests/clipboard_hittest_probe.h"
 #include "../tests/properties_probe.h"
 #include "../tests/diagnostics_probe.h"
@@ -78,6 +80,7 @@ public:
     Module_dasSDL3() : Module("sdl3") {
         ModuleLibrary lib(this);
         lib.addBuiltInModule();
+        #include "generated/gpu_handle_registration.inc"
         #ifdef DASSDL3_REGISTRATION_INCLUDE
         #include DASSDL3_REGISTRATION_INCLUDE
         #else
@@ -244,7 +247,7 @@ public:
         addExtern<DAS_BIND_FUN(SDL_GetRendererNameValue)>(*this,lib,"SDL_GetRendererNameValue",SideEffects::worstDefault,"SDL_GetRendererNameValue");
         addExtern<DAS_BIND_FUN(SDL_GetClipboardTextValue)>(*this,lib,"SDL_GetClipboardTextValue",SideEffects::worstDefault,"SDL_GetClipboardTextValue");
         addExtern<DAS_BIND_FUN(SDL_GetPrimarySelectionTextValue)>(*this,lib,"SDL_GetPrimarySelectionTextValue",SideEffects::worstDefault,"SDL_GetPrimarySelectionTextValue");
-        addExtern<DAS_BIND_FUN(SDL_GetGPUShaderEntryPointValue)>(*this,lib,"SDL_GetGPUShaderEntryPointValue",SideEffects::worstDefault,"SDL_GetGPUShaderEntryPointValue");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_GetGPUShaderEntryPointValue)>(*this,lib,"SDL_GetGPUShaderEntryPointValue",SideEffects::worstDefault,"sdl3_handles::SDL_GetGPUShaderEntryPointValue");
         addExtern<DAS_BIND_FUN(SDL_GetPropertyStringValue)>(*this,lib,"SDL_GetPropertyStringValue",SideEffects::worstDefault,"SDL_GetPropertyStringValue");
         addExtern<DAS_BIND_FUN(SDL_GetHintOptionalCopy)>(*this, lib, "SDL_GetHintOptionalCopy", SideEffects::worstDefault, "SDL_GetHintOptionalCopy");
         addExtern<DAS_BIND_FUN(SDL_GetHintCopy)>(*this, lib, "SDL_GetHintCopy", SideEffects::worstDefault, "SDL_GetHintCopy");
@@ -317,80 +320,80 @@ public:
         addExtern<DAS_BIND_FUN(sdl3_test::raw_check_copy)>(*this, lib, "SDLTest_raw_check_copy", SideEffects::worstDefault, "sdl3_test::raw_check_copy");
         addExtern<DAS_BIND_FUN(sdl3_test::native_fence_array_bounds)>(*this, lib, "SDLTestNativeFenceArrayBounds", SideEffects::worstDefault, "sdl3_test::native_fence_array_bounds");
         #endif
-        addExtern<DAS_BIND_FUN(SDL_AcquireGPUCommandBufferChecked)>(*this, lib, "SDL_AcquireGPUCommandBufferChecked", SideEffects::worstDefault, "SDL_AcquireGPUCommandBufferChecked");
-        addExtern<DAS_BIND_FUN(SDL_BeginGPURenderPassChecked)>(*this, lib, "SDL_BeginGPURenderPassChecked", SideEffects::worstDefault, "SDL_BeginGPURenderPassChecked");
-        addExtern<DAS_BIND_FUN(SDL_EndGPURenderPassChecked)>(*this, lib, "SDL_EndGPURenderPassChecked", SideEffects::worstDefault, "SDL_EndGPURenderPassChecked");
-        addExtern<DAS_BIND_FUN(SDL_CancelGPUCommandBufferChecked)>(*this, lib, "SDL_CancelGPUCommandBufferChecked", SideEffects::worstDefault, "SDL_CancelGPUCommandBufferChecked");
-        addExtern<DAS_BIND_FUN(SDL_SubmitGPUCommandBufferChecked)>(*this, lib, "SDL_SubmitGPUCommandBufferChecked", SideEffects::worstDefault, "SDL_SubmitGPUCommandBufferChecked");
-        addExtern<DAS_BIND_FUN(SDL_BindGPUGraphicsPipelineChecked)>(*this, lib, "SDL_BindGPUGraphicsPipelineChecked", SideEffects::worstDefault, "SDL_BindGPUGraphicsPipelineChecked");
-        addExtern<DAS_BIND_FUN(SDL_SetGPUViewportChecked)>(*this, lib, "SDL_SetGPUViewportChecked", SideEffects::worstDefault, "SDL_SetGPUViewportChecked");
-        addExtern<DAS_BIND_FUN(SDL_SetGPUScissorChecked)>(*this, lib, "SDL_SetGPUScissorChecked", SideEffects::worstDefault, "SDL_SetGPUScissorChecked");
-        addExtern<DAS_BIND_FUN(SDL_SetGPUBlendConstantsChecked)>(*this, lib, "SDL_SetGPUBlendConstantsChecked", SideEffects::worstDefault, "SDL_SetGPUBlendConstantsChecked");
-        addExtern<DAS_BIND_FUN(SDL_BindGPUVertexBuffersChecked)>(*this, lib, "SDL_BindGPUVertexBuffersChecked", SideEffects::worstDefault, "SDL_BindGPUVertexBuffersChecked");
-        addExtern<DAS_BIND_FUN(SDL_BindGPUIndexBufferChecked)>(*this, lib, "SDL_BindGPUIndexBufferChecked", SideEffects::worstDefault, "SDL_BindGPUIndexBufferChecked");
-        addExtern<DAS_BIND_FUN(SDL_BindGPUSamplersChecked)>(*this, lib, "SDL_BindGPUSamplersChecked", SideEffects::worstDefault, "SDL_BindGPUSamplersChecked");
-        addExtern<DAS_BIND_FUN(SDL_PushGPUUniformBytesChecked)>(*this, lib, "SDL_PushGPUUniformBytesChecked", SideEffects::worstDefault, "SDL_PushGPUUniformBytesChecked");
-        addExtern<DAS_BIND_FUN(SDL_PushGPUUniformVectorsChecked)>(*this, lib, "SDL_PushGPUUniformVectorsChecked", SideEffects::worstDefault, "SDL_PushGPUUniformVectorsChecked");
-        addExtern<DAS_BIND_FUN(SDL_DrawGPUPrimitivesChecked)>(*this, lib, "SDL_DrawGPUPrimitivesChecked", SideEffects::worstDefault, "SDL_DrawGPUPrimitivesChecked");
-        addExtern<DAS_BIND_FUN(SDL_DrawGPUIndexedPrimitivesChecked)>(*this, lib, "SDL_DrawGPUIndexedPrimitivesChecked", SideEffects::worstDefault, "SDL_DrawGPUIndexedPrimitivesChecked");
-        addExtern<DAS_BIND_FUN(SDL_CreateGPUCheckedGraphicsPipeline)>(*this, lib, "SDL_CreateGPUCheckedGraphicsPipeline", SideEffects::worstDefault, "SDL_CreateGPUCheckedGraphicsPipeline");
-        addExtern<DAS_BIND_FUN(SDL_ReleaseGPUCheckedGraphicsPipeline)>(*this, lib, "SDL_ReleaseGPUCheckedGraphicsPipeline", SideEffects::worstDefault, "SDL_ReleaseGPUCheckedGraphicsPipeline");
-        addExtern<DAS_BIND_FUN(SDL_GetGPUCheckedGraphicsPipelineInfo)>(*this, lib, "SDL_GetGPUCheckedGraphicsPipelineInfo", SideEffects::worstDefault, "SDL_GetGPUCheckedGraphicsPipelineInfo");
-        addExtern<DAS_BIND_FUN(SDL_CreateGPUCheckedShader)>(*this, lib, "SDL_CreateGPUCheckedShader", SideEffects::worstDefault, "SDL_CreateGPUCheckedShader");
-        addExtern<DAS_BIND_FUN(SDL_LoadGPUCheckedShader)>(*this, lib, "SDL_LoadGPUCheckedShader", SideEffects::worstDefault, "SDL_LoadGPUCheckedShader");
-        addExtern<DAS_BIND_FUN(SDL_ReleaseGPUCheckedShader)>(*this, lib, "SDL_ReleaseGPUCheckedShader", SideEffects::worstDefault, "SDL_ReleaseGPUCheckedShader");
-        addExtern<DAS_BIND_FUN(SDL_GetGPUCheckedShaderInfo)>(*this, lib, "SDL_GetGPUCheckedShaderInfo", SideEffects::worstDefault, "SDL_GetGPUCheckedShaderInfo");
-        addExtern<DAS_BIND_FUN(SDL_GetGPUCheckedShaderEntryPoint)>(*this, lib, "SDL_GetGPUCheckedShaderEntryPoint", SideEffects::worstDefault, "SDL_GetGPUCheckedShaderEntryPoint");
-        addExtern<DAS_BIND_FUN(SDL_CreateGPUCheckedSampler)>(*this, lib, "SDL_CreateGPUCheckedSampler", SideEffects::worstDefault, "SDL_CreateGPUCheckedSampler");
-        addExtern<DAS_BIND_FUN(SDL_ReleaseGPUCheckedSampler)>(*this, lib, "SDL_ReleaseGPUCheckedSampler", SideEffects::worstDefault, "SDL_ReleaseGPUCheckedSampler");
-        addExtern<DAS_BIND_FUN(SDL_GetGPUCheckedSamplerInfo)>(*this, lib, "SDL_GetGPUCheckedSamplerInfo", SideEffects::worstDefault, "SDL_GetGPUCheckedSamplerInfo");
-        addExtern<DAS_BIND_FUN(SDL_CreateGPUVolume)>(*this, lib, "SDL_CreateGPUVolume", SideEffects::worstDefault, "SDL_CreateGPUVolume");
-        addExtern<DAS_BIND_FUN(SDL_ReleaseGPUVolume)>(*this, lib, "SDL_ReleaseGPUVolume", SideEffects::worstDefault, "SDL_ReleaseGPUVolume");
-        addExtern<DAS_BIND_FUN(SDL_UploadGPUVolume)>(*this, lib, "SDL_UploadGPUVolume", SideEffects::worstDefault, "SDL_UploadGPUVolume");
-        addExtern<DAS_BIND_FUN(SDL_CopyGPUVolume)>(*this, lib, "SDL_CopyGPUVolume", SideEffects::worstDefault, "SDL_CopyGPUVolume");
-        addExtern<DAS_BIND_FUN(SDL_RequestGPUVolumeReadback)>(*this, lib, "SDL_RequestGPUVolumeReadback", SideEffects::worstDefault, "SDL_RequestGPUVolumeReadback");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_AcquireGPUCommandBufferChecked)>(*this, lib, "SDL_AcquireGPUCommandBufferChecked", SideEffects::worstDefault, "sdl3_handles::SDL_AcquireGPUCommandBufferChecked");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_BeginGPURenderPassChecked)>(*this, lib, "SDL_BeginGPURenderPassChecked", SideEffects::worstDefault, "sdl3_handles::SDL_BeginGPURenderPassChecked");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_EndGPURenderPassChecked)>(*this, lib, "SDL_EndGPURenderPassChecked", SideEffects::worstDefault, "sdl3_handles::SDL_EndGPURenderPassChecked");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_CancelGPUCommandBufferChecked)>(*this, lib, "SDL_CancelGPUCommandBufferChecked", SideEffects::worstDefault, "sdl3_handles::SDL_CancelGPUCommandBufferChecked");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_SubmitGPUCommandBufferChecked)>(*this, lib, "SDL_SubmitGPUCommandBufferChecked", SideEffects::worstDefault, "sdl3_handles::SDL_SubmitGPUCommandBufferChecked");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_BindGPUGraphicsPipelineChecked)>(*this, lib, "SDL_BindGPUGraphicsPipelineChecked", SideEffects::worstDefault, "sdl3_handles::SDL_BindGPUGraphicsPipelineChecked");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_SetGPUViewportChecked)>(*this, lib, "SDL_SetGPUViewportChecked", SideEffects::worstDefault, "sdl3_handles::SDL_SetGPUViewportChecked");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_SetGPUScissorChecked)>(*this, lib, "SDL_SetGPUScissorChecked", SideEffects::worstDefault, "sdl3_handles::SDL_SetGPUScissorChecked");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_SetGPUBlendConstantsChecked)>(*this, lib, "SDL_SetGPUBlendConstantsChecked", SideEffects::worstDefault, "sdl3_handles::SDL_SetGPUBlendConstantsChecked");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_BindGPUVertexBuffersChecked)>(*this, lib, "SDL_BindGPUVertexBuffersChecked", SideEffects::worstDefault, "sdl3_handles::SDL_BindGPUVertexBuffersChecked");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_BindGPUIndexBufferChecked)>(*this, lib, "SDL_BindGPUIndexBufferChecked", SideEffects::worstDefault, "sdl3_handles::SDL_BindGPUIndexBufferChecked");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_BindGPUSamplersChecked)>(*this, lib, "SDL_BindGPUSamplersChecked", SideEffects::worstDefault, "sdl3_handles::SDL_BindGPUSamplersChecked");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_PushGPUUniformBytesChecked)>(*this, lib, "SDL_PushGPUUniformBytesChecked", SideEffects::worstDefault, "sdl3_handles::SDL_PushGPUUniformBytesChecked");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_PushGPUUniformVectorsChecked)>(*this, lib, "SDL_PushGPUUniformVectorsChecked", SideEffects::worstDefault, "sdl3_handles::SDL_PushGPUUniformVectorsChecked");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_DrawGPUPrimitivesChecked)>(*this, lib, "SDL_DrawGPUPrimitivesChecked", SideEffects::worstDefault, "sdl3_handles::SDL_DrawGPUPrimitivesChecked");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_DrawGPUIndexedPrimitivesChecked)>(*this, lib, "SDL_DrawGPUIndexedPrimitivesChecked", SideEffects::worstDefault, "sdl3_handles::SDL_DrawGPUIndexedPrimitivesChecked");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_CreateGPUCheckedGraphicsPipeline)>(*this, lib, "SDL_CreateGPUCheckedGraphicsPipeline", SideEffects::worstDefault, "sdl3_handles::SDL_CreateGPUCheckedGraphicsPipeline");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_ReleaseGPUCheckedGraphicsPipeline)>(*this, lib, "SDL_ReleaseGPUCheckedGraphicsPipeline", SideEffects::worstDefault, "sdl3_handles::SDL_ReleaseGPUCheckedGraphicsPipeline");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_GetGPUCheckedGraphicsPipelineInfo)>(*this, lib, "SDL_GetGPUCheckedGraphicsPipelineInfo", SideEffects::worstDefault, "sdl3_handles::SDL_GetGPUCheckedGraphicsPipelineInfo");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_CreateGPUCheckedShader)>(*this, lib, "SDL_CreateGPUCheckedShader", SideEffects::worstDefault, "sdl3_handles::SDL_CreateGPUCheckedShader");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_LoadGPUCheckedShader)>(*this, lib, "SDL_LoadGPUCheckedShader", SideEffects::worstDefault, "sdl3_handles::SDL_LoadGPUCheckedShader");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_ReleaseGPUCheckedShader)>(*this, lib, "SDL_ReleaseGPUCheckedShader", SideEffects::worstDefault, "sdl3_handles::SDL_ReleaseGPUCheckedShader");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_GetGPUCheckedShaderInfo)>(*this, lib, "SDL_GetGPUCheckedShaderInfo", SideEffects::worstDefault, "sdl3_handles::SDL_GetGPUCheckedShaderInfo");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_GetGPUCheckedShaderEntryPoint)>(*this, lib, "SDL_GetGPUCheckedShaderEntryPoint", SideEffects::worstDefault, "sdl3_handles::SDL_GetGPUCheckedShaderEntryPoint");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_CreateGPUCheckedSampler)>(*this, lib, "SDL_CreateGPUCheckedSampler", SideEffects::worstDefault, "sdl3_handles::SDL_CreateGPUCheckedSampler");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_ReleaseGPUCheckedSampler)>(*this, lib, "SDL_ReleaseGPUCheckedSampler", SideEffects::worstDefault, "sdl3_handles::SDL_ReleaseGPUCheckedSampler");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_GetGPUCheckedSamplerInfo)>(*this, lib, "SDL_GetGPUCheckedSamplerInfo", SideEffects::worstDefault, "sdl3_handles::SDL_GetGPUCheckedSamplerInfo");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_CreateGPUVolume)>(*this, lib, "SDL_CreateGPUVolume", SideEffects::worstDefault, "sdl3_handles::SDL_CreateGPUVolume");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_ReleaseGPUVolume)>(*this, lib, "SDL_ReleaseGPUVolume", SideEffects::worstDefault, "sdl3_handles::SDL_ReleaseGPUVolume");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_UploadGPUVolume)>(*this, lib, "SDL_UploadGPUVolume", SideEffects::worstDefault, "sdl3_handles::SDL_UploadGPUVolume");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_CopyGPUVolume)>(*this, lib, "SDL_CopyGPUVolume", SideEffects::worstDefault, "sdl3_handles::SDL_CopyGPUVolume");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_RequestGPUVolumeReadback)>(*this, lib, "SDL_RequestGPUVolumeReadback", SideEffects::worstDefault, "sdl3_handles::SDL_RequestGPUVolumeReadback");
         addExtern<DAS_BIND_FUN(SDL_SetErrorMessage)>(*this, lib, "SDL_SetErrorMessage", SideEffects::worstDefault, "SDL_SetErrorMessage");
-        addExtern<DAS_BIND_FUN(SDL_GPURecordingDiscard)>(*this, lib, "SDL_GPURecordingDiscard", SideEffects::worstDefault, "SDL_GPURecordingDiscard");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_GPURecordingDiscard)>(*this, lib, "SDL_GPURecordingDiscard", SideEffects::worstDefault, "sdl3_handles::SDL_GPURecordingDiscard");
         addExtern<DAS_BIND_FUN(SDL_LoadBMPTextureOwned)>(*this, lib, "SDL_LoadBMPTextureOwned", SideEffects::worstDefault, "SDL_LoadBMPTextureOwned");
-        addExtern<DAS_BIND_FUN(SDL_CreateGPUFloatVertexBuffer)>(*this, lib, "SDL_CreateGPUFloatVertexBuffer", SideEffects::worstDefault, "SDL_CreateGPUFloatVertexBuffer");
-        addExtern<DAS_BIND_FUN(SDL_CreateGPUCheckedIndexBuffer)>(*this, lib, "SDL_CreateGPUCheckedIndexBuffer", SideEffects::worstDefault, "SDL_CreateGPUCheckedIndexBuffer");
-        addExtern<DAS_BIND_FUN(SDL_ReleaseGPUCheckedIndexBuffer)>(*this, lib, "SDL_ReleaseGPUCheckedIndexBuffer", SideEffects::worstDefault, "SDL_ReleaseGPUCheckedIndexBuffer");
-        addExtern<DAS_BIND_FUN(SDL_CreateGPUColorTargetTexture)>(*this, lib, "SDL_CreateGPUColorTargetTexture", SideEffects::worstDefault, "SDL_CreateGPUColorTargetTexture");
-        addExtern<DAS_BIND_FUN(SDL_GenerateGPUTextureMipmapsChecked)>(*this, lib, "SDL_GenerateGPUTextureMipmapsChecked", SideEffects::worstDefault, "SDL_GenerateGPUTextureMipmapsChecked");
-        addExtern<DAS_BIND_FUN(SDL_BlitGPUTextureChecked)>(*this, lib, "SDL_BlitGPUTextureChecked", SideEffects::worstDefault, "SDL_BlitGPUTextureChecked");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_CreateGPUFloatVertexBuffer)>(*this, lib, "SDL_CreateGPUFloatVertexBuffer", SideEffects::worstDefault, "sdl3_handles::SDL_CreateGPUFloatVertexBuffer");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_CreateGPUCheckedIndexBuffer)>(*this, lib, "SDL_CreateGPUCheckedIndexBuffer", SideEffects::worstDefault, "sdl3_handles::SDL_CreateGPUCheckedIndexBuffer");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_ReleaseGPUCheckedIndexBuffer)>(*this, lib, "SDL_ReleaseGPUCheckedIndexBuffer", SideEffects::worstDefault, "sdl3_handles::SDL_ReleaseGPUCheckedIndexBuffer");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_CreateGPUColorTargetTexture)>(*this, lib, "SDL_CreateGPUColorTargetTexture", SideEffects::worstDefault, "sdl3_handles::SDL_CreateGPUColorTargetTexture");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_GenerateGPUTextureMipmapsChecked)>(*this, lib, "SDL_GenerateGPUTextureMipmapsChecked", SideEffects::worstDefault, "sdl3_handles::SDL_GenerateGPUTextureMipmapsChecked");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_BlitGPUTextureChecked)>(*this, lib, "SDL_BlitGPUTextureChecked", SideEffects::worstDefault, "sdl3_handles::SDL_BlitGPUTextureChecked");
         addExtern<DAS_BIND_FUN(SDL_GPUWindowPresentSupported)>(*this, lib, "SDL_GPUWindowPresentSupported", SideEffects::worstDefault, "SDL_GPUWindowPresentSupported");
         addExtern<DAS_BIND_FUN(SDL_GPUWindowCompositionSupported)>(*this, lib, "SDL_GPUWindowCompositionSupported", SideEffects::worstDefault, "SDL_GPUWindowCompositionSupported");
         addExtern<DAS_BIND_FUN(SDL_GPUWindowFormatChecked)>(*this, lib, "SDL_GPUWindowFormatChecked", SideEffects::worstDefault, "SDL_GPUWindowFormatChecked");
         addExtern<DAS_BIND_FUN(SDL_ConfigureGPUSwapchainChecked)>(*this, lib, "SDL_ConfigureGPUSwapchainChecked", SideEffects::worstDefault, "SDL_ConfigureGPUSwapchainChecked");
         addExtern<DAS_BIND_FUN(SDL_SetGPUFramesInFlightChecked)>(*this, lib, "SDL_SetGPUFramesInFlightChecked", SideEffects::worstDefault, "SDL_SetGPUFramesInFlightChecked");
         addExtern<DAS_BIND_FUN(SDL_WaitGPUSwapchainChecked)>(*this, lib, "SDL_WaitGPUSwapchainChecked", SideEffects::worstDefault, "SDL_WaitGPUSwapchainChecked");
-        addExtern<DAS_BIND_FUN(SDL_CreateGPUTypedTransferTexture)>(*this, lib, "SDL_CreateGPUTypedTransferTexture", SideEffects::worstDefault, "SDL_CreateGPUTypedTransferTexture");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_CreateGPUTypedTransferTexture)>(*this, lib, "SDL_CreateGPUTypedTransferTexture", SideEffects::worstDefault, "sdl3_handles::SDL_CreateGPUTypedTransferTexture");
         addExtern<DAS_BIND_FUN(SDL_GPUDriverCountChecked)>(*this, lib, "SDL_GPUDriverCountChecked", SideEffects::worstDefault, "SDL_GPUDriverCountChecked");
         addExtern<DAS_BIND_FUN(SDL_GPUDriverNameCopy)>(*this, lib, "SDL_GPUDriverNameCopy", SideEffects::worstDefault, "SDL_GPUDriverNameCopy");
         addExtern<DAS_BIND_FUN(SDL_GPUShaderSupportChecked)>(*this, lib, "SDL_GPUShaderSupportChecked", SideEffects::worstDefault, "SDL_GPUShaderSupportChecked");
-        addExtern<DAS_BIND_FUN(SDL_SetGPUDataBufferNameChecked)>(*this, lib, "SDL_SetGPUDataBufferNameChecked", SideEffects::worstDefault, "SDL_SetGPUDataBufferNameChecked");
-        addExtern<DAS_BIND_FUN(SDL_SetGPUTransferTextureNameChecked)>(*this, lib, "SDL_SetGPUTransferTextureNameChecked", SideEffects::worstDefault, "SDL_SetGPUTransferTextureNameChecked");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_SetGPUDataBufferNameChecked)>(*this, lib, "SDL_SetGPUDataBufferNameChecked", SideEffects::worstDefault, "sdl3_handles::SDL_SetGPUDataBufferNameChecked");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_SetGPUTransferTextureNameChecked)>(*this, lib, "SDL_SetGPUTransferTextureNameChecked", SideEffects::worstDefault, "sdl3_handles::SDL_SetGPUTransferTextureNameChecked");
         addExtern<DAS_BIND_FUN(SDL_GPUTextureTransferSupportedChecked)>(*this, lib, "SDL_GPUTextureTransferSupportedChecked", SideEffects::worstDefault, "SDL_GPUTextureTransferSupportedChecked");
         addExtern<DAS_BIND_FUN(SDL_GPUFormatBlockExtentChecked)>(*this, lib, "SDL_GPUFormatBlockExtentChecked", SideEffects::worstDefault, "SDL_GPUFormatBlockExtentChecked");
         addExtern<DAS_BIND_FUN(SDL_GPUFormatBlockSizeChecked)>(*this, lib, "SDL_GPUFormatBlockSizeChecked", SideEffects::worstDefault, "SDL_GPUFormatBlockSizeChecked");
         addExtern<DAS_BIND_FUN(SDL_GPUFormatSizeChecked)>(*this, lib, "SDL_GPUFormatSizeChecked", SideEffects::worstDefault, "SDL_GPUFormatSizeChecked");
         addExtern<DAS_BIND_FUN(SDL_GPUFormatSupportedChecked)>(*this, lib, "SDL_GPUFormatSupportedChecked", SideEffects::worstDefault, "SDL_GPUFormatSupportedChecked");
         addExtern<DAS_BIND_FUN(SDL_GPUSampleCountSupportedChecked)>(*this, lib, "SDL_GPUSampleCountSupportedChecked", SideEffects::worstDefault, "SDL_GPUSampleCountSupportedChecked");
-        addExtern<DAS_BIND_FUN(SDL_CreateGPUColorTransferTexture)>(*this, lib, "SDL_CreateGPUColorTransferTexture", SideEffects::worstDefault, "SDL_CreateGPUColorTransferTexture");
-        addExtern<DAS_BIND_FUN(SDL_CreateGPUTransferTexture)>(*this, lib, "SDL_CreateGPUTransferTexture", SideEffects::worstDefault, "SDL_CreateGPUTransferTexture");
-        addExtern<DAS_BIND_FUN(SDL_ReleaseGPUTransferTexture)>(*this, lib, "SDL_ReleaseGPUTransferTexture", SideEffects::worstDefault, "SDL_ReleaseGPUTransferTexture");
-        addExtern<DAS_BIND_FUN(SDL_UploadGPUTextureRegion)>(*this, lib, "SDL_UploadGPUTextureRegion", SideEffects::worstDefault, "SDL_UploadGPUTextureRegion");
-        addExtern<DAS_BIND_FUN(SDL_CopyGPUTextureRegion)>(*this, lib, "SDL_CopyGPUTextureRegion", SideEffects::worstDefault, "SDL_CopyGPUTextureRegion");
-        addExtern<DAS_BIND_FUN(SDL_RequestGPUTextureReadback)>(*this, lib, "SDL_RequestGPUTextureReadback", SideEffects::worstDefault, "SDL_RequestGPUTextureReadback");
-        addExtern<DAS_BIND_FUN(SDL_CreateGPUDataBuffer)>(*this, lib, "SDL_CreateGPUDataBuffer", SideEffects::worstDefault, "SDL_CreateGPUDataBuffer");
-        addExtern<DAS_BIND_FUN(SDL_ReleaseGPUDataBuffer)>(*this, lib, "SDL_ReleaseGPUDataBuffer", SideEffects::worstDefault, "SDL_ReleaseGPUDataBuffer");
-        addExtern<DAS_BIND_FUN(SDL_UpdateGPUDataBuffer)>(*this, lib, "SDL_UpdateGPUDataBuffer", SideEffects::worstDefault, "SDL_UpdateGPUDataBuffer");
-        addExtern<DAS_BIND_FUN(SDL_CopyGPUDataBuffer)>(*this, lib, "SDL_CopyGPUDataBuffer", SideEffects::worstDefault, "SDL_CopyGPUDataBuffer");
-        addExtern<DAS_BIND_FUN(SDL_RequestGPUBufferReadback)>(*this, lib, "SDL_RequestGPUBufferReadback", SideEffects::worstDefault, "SDL_RequestGPUBufferReadback");
-        addExtern<DAS_BIND_FUN(SDL_PollGPUReadback)>(*this, lib, "SDL_PollGPUReadback", SideEffects::worstDefault, "SDL_PollGPUReadback");
-        addExtern<DAS_BIND_FUN(SDL_WaitGPUReadback)>(*this, lib, "SDL_WaitGPUReadback", SideEffects::worstDefault, "SDL_WaitGPUReadback");
-        addExtern<DAS_BIND_FUN(SDL_ReadGPUReadback)>(*this, lib, "SDL_ReadGPUReadback", SideEffects::worstDefault, "SDL_ReadGPUReadback");
-        addExtern<DAS_BIND_FUN(SDL_ReleaseGPUReadback)>(*this, lib, "SDL_ReleaseGPUReadback", SideEffects::worstDefault, "SDL_ReleaseGPUReadback");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_CreateGPUColorTransferTexture)>(*this, lib, "SDL_CreateGPUColorTransferTexture", SideEffects::worstDefault, "sdl3_handles::SDL_CreateGPUColorTransferTexture");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_CreateGPUTransferTexture)>(*this, lib, "SDL_CreateGPUTransferTexture", SideEffects::worstDefault, "sdl3_handles::SDL_CreateGPUTransferTexture");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_ReleaseGPUTransferTexture)>(*this, lib, "SDL_ReleaseGPUTransferTexture", SideEffects::worstDefault, "sdl3_handles::SDL_ReleaseGPUTransferTexture");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_UploadGPUTextureRegion)>(*this, lib, "SDL_UploadGPUTextureRegion", SideEffects::worstDefault, "sdl3_handles::SDL_UploadGPUTextureRegion");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_CopyGPUTextureRegion)>(*this, lib, "SDL_CopyGPUTextureRegion", SideEffects::worstDefault, "sdl3_handles::SDL_CopyGPUTextureRegion");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_RequestGPUTextureReadback)>(*this, lib, "SDL_RequestGPUTextureReadback", SideEffects::worstDefault, "sdl3_handles::SDL_RequestGPUTextureReadback");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_CreateGPUDataBuffer)>(*this, lib, "SDL_CreateGPUDataBuffer", SideEffects::worstDefault, "sdl3_handles::SDL_CreateGPUDataBuffer");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_ReleaseGPUDataBuffer)>(*this, lib, "SDL_ReleaseGPUDataBuffer", SideEffects::worstDefault, "sdl3_handles::SDL_ReleaseGPUDataBuffer");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_UpdateGPUDataBuffer)>(*this, lib, "SDL_UpdateGPUDataBuffer", SideEffects::worstDefault, "sdl3_handles::SDL_UpdateGPUDataBuffer");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_CopyGPUDataBuffer)>(*this, lib, "SDL_CopyGPUDataBuffer", SideEffects::worstDefault, "sdl3_handles::SDL_CopyGPUDataBuffer");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_RequestGPUBufferReadback)>(*this, lib, "SDL_RequestGPUBufferReadback", SideEffects::worstDefault, "sdl3_handles::SDL_RequestGPUBufferReadback");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_PollGPUReadback)>(*this, lib, "SDL_PollGPUReadback", SideEffects::worstDefault, "sdl3_handles::SDL_PollGPUReadback");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_WaitGPUReadback)>(*this, lib, "SDL_WaitGPUReadback", SideEffects::worstDefault, "sdl3_handles::SDL_WaitGPUReadback");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_ReadGPUReadback)>(*this, lib, "SDL_ReadGPUReadback", SideEffects::worstDefault, "sdl3_handles::SDL_ReadGPUReadback");
+        addExtern<DAS_BIND_FUN(sdl3_handles::SDL_ReleaseGPUReadback)>(*this, lib, "SDL_ReleaseGPUReadback", SideEffects::worstDefault, "sdl3_handles::SDL_ReleaseGPUReadback");
         addExtern<DAS_BIND_FUN(SDL_CreateGPUDeviceScoped)>(*this, lib, "SDL_CreateGPUDeviceScoped", SideEffects::worstDefault, "SDL_CreateGPUDeviceScoped");
         addExtern<DAS_BIND_FUN(SDL_DestroyGPUDeviceScoped)>(*this, lib, "SDL_DestroyGPUDeviceScoped", SideEffects::worstDefault, "SDL_DestroyGPUDeviceScoped");
         addExtern<DAS_BIND_FUN(SDL_ClaimGPUWindowScoped)>(*this, lib, "SDL_ClaimGPUWindowScoped", SideEffects::worstDefault, "SDL_ClaimGPUWindowScoped");
@@ -513,6 +516,7 @@ public:
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_index_buffers)>(*this, lib, "SDLTestGPUIndexBuffers", SideEffects::worstDefault, "sdl3_test::gpu_index_buffers");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_index_bad_arrays)>(*this, lib, "SDLTestGPUIndexBadArrays", SideEffects::worstDefault, "sdl3_test::gpu_index_bad_arrays");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_recordings)>(*this, lib, "SDLTestGPURecordings", SideEffects::worstDefault, "sdl3_test::gpu_recordings");
+        addExtern<DAS_BIND_FUN(sdl3_test::gpu_handle_echo)>(*this, lib, "SDLTestGPUHandleEcho", SideEffects::worstDefault, "sdl3_test::gpu_handle_echo");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_recording_pixels)>(*this, lib, "SDLTestGPURecordingPixels", SideEffects::worstDefault, "sdl3_test::gpu_recording_pixels");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_recording_values)>(*this, lib, "SDLTestGPURecordingValues", SideEffects::worstDefault, "sdl3_test::gpu_recording_values");
         addExtern<DAS_BIND_FUN(sdl3_test::gpu_recording_failure)>(*this, lib, "SDLTestGPURecordingFailure", SideEffects::worstDefault, "sdl3_test::gpu_recording_failure");

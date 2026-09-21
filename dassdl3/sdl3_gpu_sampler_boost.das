@@ -16,11 +16,11 @@ def public gpu_sampler_info(filter : SDL_GPUFilter = SDL_GPUFilter.FILTER_NEARES
     return info
 }
 def public with_gpu_sampler(device : SDL_GPUDevice?; info : SDL_GPUSamplerCreateInfo;
-        blk : block<(sampler : uint64) : $Result<auto(TT); SdlError> >) {
+        blk : block<(sampler : GpuSamplerHandle) : $Result<auto(TT); SdlError> >) {
     var scope_result : $Result<TT; SdlError>
 
     let id = SDL_CreateGPUCheckedSampler(device,info)
-    if (id == 0ul) { return err(sdl_error("with_gpu_sampler"), type<TT>) }
+    if (*id == 0ul) { return err(sdl_error("with_gpu_sampler"), type<TT>) }
     {
         defer() { if (!SDL_ReleaseGPUCheckedSampler(device,id) && is_ok(scope_result)) { scope_result <- err(sdl_error("SDL_ReleaseGPUCheckedSampler"),type<TT>) } }
         static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(id) } else { scope_result <- blk(id) }
@@ -28,14 +28,14 @@ def public with_gpu_sampler(device : SDL_GPUDevice?; info : SDL_GPUSamplerCreate
 
     return <- scope_result
 }
-def public with_gpu_sampler(device : SDL_GPUDevice?; blk : block<(sampler : uint64) : $Result<auto(TT); SdlError> >) {
+def public with_gpu_sampler(device : SDL_GPUDevice?; blk : block<(sampler : GpuSamplerHandle) : $Result<auto(TT); SdlError> >) {
     return <- with_gpu_sampler(device,gpu_sampler_info(),blk)
 }
-def public gpu_sampler_descriptor(device : SDL_GPUDevice?; sampler : uint64; var info : SDL_GPUSamplerCreateInfo) {
+def public gpu_sampler_descriptor(device : SDL_GPUDevice?; sampler : GpuSamplerHandle; var info : SDL_GPUSamplerCreateInfo) {
     return sdl_status(SDL_GetGPUCheckedSamplerInfo(device,sampler,info), "gpu_sampler_descriptor")
 }
 
-def public gpu_sampler_descriptor(device : SDL_GPUDevice?; sampler : uint64) {
+def public gpu_sampler_descriptor(device : SDL_GPUDevice?; sampler : GpuSamplerHandle) {
     var info : SDL_GPUSamplerCreateInfo
     let status = gpu_sampler_descriptor(device,sampler,info)
     if (is_err(status)) { return err(unwrap_err(status),type<SDL_GPUSamplerCreateInfo>) }

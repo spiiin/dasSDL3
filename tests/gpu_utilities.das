@@ -22,16 +22,16 @@ def main(smoke : bool) : int {
             verify(unwrap_or(gpu_supports_shaders(GPU_SHADER_FORMATS,SDL_GetGPUDeviceDriver(device)), false))
             var bytes : array<uint8>
             resize(bytes,16)
-            var dead = 0ul
-            let scope_ok_1 = device |> with_gpu_buffer(bytes,SDL_GPU_BUFFERUSAGE_VERTEX) $(buffer : uint64) {
+            var dead : GpuBufferHandle
+            let scope_ok_1 = device |> with_gpu_buffer(bytes,SDL_GPU_BUFFERUSAGE_VERTEX) $(buffer : GpuBufferHandle) {
                 dead = buffer
                 is_ok(device |> gpu_buffer_name(buffer,"данные / vertex"))
                 is_ok(device |> gpu_buffer_name(buffer,""))
-                let scope_ok_2 = device |> with_gpu_rgba_texture(2u,2u) $(texture : uint64) {
+                let scope_ok_2 = device |> with_gpu_rgba_texture(2u,2u) $(texture : GpuTextureHandle) {
                     is_ok(device |> gpu_texture_name(texture,"текстура / RGBA"))
                     is_ok(device |> gpu_texture_name(texture,""))
-                    verify(!SDL_SetGPUDataBufferNameChecked(device,texture,"wrong kind"))
-                    verify(!SDL_SetGPUTransferTextureNameChecked(device,buffer,"wrong kind"))
+                    verify(!SDL_SetGPUDataBufferNameChecked(device,GpuBufferHandle(*texture),"wrong kind"))
+                    verify(!SDL_SetGPUTransferTextureNameChecked(device,GpuTextureHandle(*buffer),"wrong kind"))
                     var long_name = ""
                     for (i in 0 .. 4097) { long_name = "{long_name}x" }
                     verify(!SDL_SetGPUTransferTextureNameChecked(device,texture,long_name))
@@ -53,7 +53,7 @@ def main(smoke : bool) : int {
             } |> is_ok
             verify(scope_ok_1)
             verify(!SDL_SetGPUDataBufferNameChecked(device,dead,"stale"))
-            verify(!SDL_SetGPUTransferTextureNameChecked(device,0ul,"invalid"))
+            verify(!SDL_SetGPUTransferTextureNameChecked(device,GpuTextureHandle(0ul),"invalid"))
             verify(!SDL_SetGPUDataBufferNameChecked(null,dead,"null device"))
             print("GPU discovery and checked resource names PASS\n")
 

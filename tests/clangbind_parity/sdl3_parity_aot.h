@@ -39,9 +39,11 @@
 #include "sdl3_texture_load.h"
 #include "sdl3_clipboard_hittest.h"
 #include "sdl3_result_adapters.h"
+#include "generated/gpu_handle_adapters.h"
 #include "aot_recover.h"
 #ifdef DASSDL3_TESTING
 #include "resource_probe.h"
+#include "gpu_handle_probe.h"
 #include "clipboard_hittest_probe.h"
 #include "input_probe.h"
 #include "audio_probe.h"

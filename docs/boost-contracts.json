@@ -507,13 +507,13 @@
     "module": "sdl3_gpu_buffers_boost",
     "name": "with_gpu_vertex_buffer",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_gpu_vertex_buffer(device : SDL_GPUDevice?; values : array<float>; blk : block<(buffer : uint64) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_gpu_vertex_buffer(device : SDL_GPUDevice?; values : array<float>; blk : block<(buffer : GpuBufferHandle) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_buffers_boost",
     "name": "with_gpu_index_buffer",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_gpu_index_buffer(device : SDL_GPUDevice?; values : array<uint>; element : SDL_GPUIndexElementSize; blk : block<(buffer : uint64) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_gpu_index_buffer(device : SDL_GPUDevice?; values : array<uint>; element : SDL_GPUIndexElementSize; blk : block<(buffer : GpuIndexBufferHandle) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_buffers_boost",
@@ -561,19 +561,19 @@
     "module": "sdl3_gpu_image_boost",
     "name": "with_gpu_color_target_texture",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_gpu_color_target_texture(device : SDL_GPUDevice?; width, height, layers, levels, format : uint; blk : block<(texture : uint64) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_gpu_color_target_texture(device : SDL_GPUDevice?; width, height, layers, levels, format : uint; blk : block<(texture : GpuTextureHandle) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_image_boost",
     "name": "gpu_generate_mipmaps",
     "contract": "Result",
-    "signature": "def public gpu_generate_mipmaps(device : SDL_GPUDevice?; texture : uint64)"
+    "signature": "def public gpu_generate_mipmaps(device : SDL_GPUDevice?; texture : GpuTextureHandle)"
   },
   {
     "module": "sdl3_gpu_image_boost",
     "name": "gpu_blit_texture",
     "contract": "Result",
-    "signature": "def public gpu_blit_texture(device : SDL_GPUDevice?; source : uint64; source_sub : uint2; source_rect : uint4; destination : uint64; dest_sub : uint2; dest_rect : uint4; filter_mode : uint = SDL_GPU_FILTER_NEAREST)"
+    "signature": "def public gpu_blit_texture(device : SDL_GPUDevice?; source : GpuTextureHandle; source_sub : uint2; source_rect : uint4; destination : GpuTextureHandle; dest_sub : uint2; dest_rect : uint4; filter_mode : uint = SDL_GPU_FILTER_NEAREST)"
   },
   {
     "module": "sdl3_gpu_native_boost",
@@ -711,121 +711,121 @@
     "module": "sdl3_gpu_pipeline_boost",
     "name": "with_gpu_graphics_pipeline",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_gpu_graphics_pipeline(device : SDL_GPUDevice?; vertex, fragment : uint64; info : SDL_GPUGraphicsPipelineCreateInfo; buffers : array<SDL_GPUVertexBufferDescription>; attributes : array<SDL_GPUVertexAttribute>; colors : array<SDL_GPUColorTargetDescription>; blk : block<(pipeline : uint64) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_gpu_graphics_pipeline(device : SDL_GPUDevice?; vertex : GpuShaderHandle; fragment : GpuShaderHandle; info : SDL_GPUGraphicsPipelineCreateInfo; buffers : array<SDL_GPUVertexBufferDescription>; attributes : array<SDL_GPUVertexAttribute>; colors : array<SDL_GPUColorTargetDescription>; blk : block<(pipeline : GpuPipelineHandle) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_pipeline_boost",
     "name": "with_gpu_graphics_pipeline",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_gpu_graphics_pipeline(device : SDL_GPUDevice?; vertex, fragment : uint64; format : SDL_GPUTextureFormat; blk : block<(pipeline : uint64) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_gpu_graphics_pipeline(device : SDL_GPUDevice?; vertex : GpuShaderHandle; fragment : GpuShaderHandle; format : SDL_GPUTextureFormat; blk : block<(pipeline : GpuPipelineHandle) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_pipeline_boost",
     "name": "gpu_graphics_pipeline_descriptor",
     "contract": "Result",
-    "signature": "def public gpu_graphics_pipeline_descriptor(device : SDL_GPUDevice?; pipeline : uint64; var info : SDL_GPUGraphicsPipelineCreateInfo)"
+    "signature": "def public gpu_graphics_pipeline_descriptor(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle; var info : SDL_GPUGraphicsPipelineCreateInfo)"
   },
   {
     "module": "sdl3_gpu_pipeline_boost",
     "name": "gpu_graphics_pipeline_descriptor",
     "contract": "Result",
-    "signature": "def public gpu_graphics_pipeline_descriptor(device : SDL_GPUDevice?; pipeline : uint64)"
+    "signature": "def public gpu_graphics_pipeline_descriptor(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle)"
   },
   {
     "module": "sdl3_gpu_recording_boost",
     "name": "with_gpu_command_buffer",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_gpu_command_buffer(device : SDL_GPUDevice?; blk : block<(command : uint64) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_gpu_command_buffer(device : SDL_GPUDevice?; blk : block<(command : GpuCommandBufferHandle) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_recording_boost",
     "name": "gpu_begin_render_pass",
     "contract": "Result",
-    "signature": "def public gpu_begin_render_pass(device : SDL_GPUDevice?; command, target : uint64; sub : uint2; load : SDL_GPULoadOp; clear : SDL_FColor)"
+    "signature": "def public gpu_begin_render_pass(device : SDL_GPUDevice?; command : GpuCommandBufferHandle; target : GpuTextureHandle; sub : uint2; load : SDL_GPULoadOp; clear : SDL_FColor)"
   },
   {
     "module": "sdl3_gpu_recording_boost",
     "name": "gpu_end_render_pass",
     "contract": "Result",
-    "signature": "def public gpu_end_render_pass(device : SDL_GPUDevice?; render_pass : uint64)"
+    "signature": "def public gpu_end_render_pass(device : SDL_GPUDevice?; render_pass : GpuRenderPassHandle)"
   },
   {
     "module": "sdl3_gpu_recording_boost",
     "name": "gpu_submit_command_buffer",
     "contract": "Result",
-    "signature": "def public gpu_submit_command_buffer(device : SDL_GPUDevice?; command : uint64)"
+    "signature": "def public gpu_submit_command_buffer(device : SDL_GPUDevice?; command : GpuCommandBufferHandle)"
   },
   {
     "module": "sdl3_gpu_recording_boost",
     "name": "gpu_cancel_command_buffer",
     "contract": "Result",
-    "signature": "def public gpu_cancel_command_buffer(device : SDL_GPUDevice?; command : uint64)"
+    "signature": "def public gpu_cancel_command_buffer(device : SDL_GPUDevice?; command : GpuCommandBufferHandle)"
   },
   {
     "module": "sdl3_gpu_recording_boost",
     "name": "gpu_bind_pipeline",
     "contract": "Result",
-    "signature": "def public gpu_bind_pipeline(device : SDL_GPUDevice?; render_pass, pipeline : uint64)"
+    "signature": "def public gpu_bind_pipeline(device : SDL_GPUDevice?; render_pass : GpuRenderPassHandle; pipeline : GpuPipelineHandle)"
   },
   {
     "module": "sdl3_gpu_recording_boost",
     "name": "gpu_set_viewport",
     "contract": "Result",
-    "signature": "def public gpu_set_viewport(device : SDL_GPUDevice?; render_pass : uint64; viewport : SDL_GPUViewport)"
+    "signature": "def public gpu_set_viewport(device : SDL_GPUDevice?; render_pass : GpuRenderPassHandle; viewport : SDL_GPUViewport)"
   },
   {
     "module": "sdl3_gpu_recording_boost",
     "name": "gpu_set_scissor",
     "contract": "Result",
-    "signature": "def public gpu_set_scissor(device : SDL_GPUDevice?; render_pass : uint64; rect : uint4)"
+    "signature": "def public gpu_set_scissor(device : SDL_GPUDevice?; render_pass : GpuRenderPassHandle; rect : uint4)"
   },
   {
     "module": "sdl3_gpu_recording_boost",
     "name": "gpu_set_blend_constants",
     "contract": "Result",
-    "signature": "def public gpu_set_blend_constants(device : SDL_GPUDevice?; render_pass : uint64; color : SDL_FColor)"
+    "signature": "def public gpu_set_blend_constants(device : SDL_GPUDevice?; render_pass : GpuRenderPassHandle; color : SDL_FColor)"
   },
   {
     "module": "sdl3_gpu_recording_boost",
     "name": "gpu_bind_vertex_buffers",
     "contract": "Result",
-    "signature": "def public gpu_bind_vertex_buffers(device : SDL_GPUDevice?; render_pass : uint64; first : uint; buffers : array<uint64>; offsets : array<uint>)"
+    "signature": "def public gpu_bind_vertex_buffers(device : SDL_GPUDevice?; render_pass : GpuRenderPassHandle; first : uint; buffers : array<GpuBufferHandle>; offsets : array<uint>)"
   },
   {
     "module": "sdl3_gpu_recording_boost",
     "name": "gpu_bind_index_buffer",
     "contract": "Result",
-    "signature": "def public gpu_bind_index_buffer(device : SDL_GPUDevice?; render_pass, index : uint64)"
+    "signature": "def public gpu_bind_index_buffer(device : SDL_GPUDevice?; render_pass : GpuRenderPassHandle; index : GpuIndexBufferHandle)"
   },
   {
     "module": "sdl3_gpu_recording_boost",
     "name": "gpu_bind_samplers",
     "contract": "Result",
-    "signature": "def public gpu_bind_samplers(device : SDL_GPUDevice?; render_pass : uint64; stage : SDL_GPUShaderStage; textures, samplers : array<uint64>)"
+    "signature": "def public gpu_bind_samplers(device : SDL_GPUDevice?; render_pass : GpuRenderPassHandle; stage : SDL_GPUShaderStage; textures : array<GpuTextureHandle>; samplers : array<GpuSamplerHandle>)"
   },
   {
     "module": "sdl3_gpu_recording_boost",
     "name": "gpu_push_uniform",
     "contract": "Result",
-    "signature": "def public gpu_push_uniform(device : SDL_GPUDevice?; command : uint64; stage : SDL_GPUShaderStage; slot : uint; values : array<float4>)"
+    "signature": "def public gpu_push_uniform(device : SDL_GPUDevice?; command : GpuCommandBufferHandle; stage : SDL_GPUShaderStage; slot : uint; values : array<float4>)"
   },
   {
     "module": "sdl3_gpu_recording_boost",
     "name": "gpu_push_uniform_bytes",
     "contract": "Result",
-    "signature": "def public gpu_push_uniform_bytes(device : SDL_GPUDevice?; command : uint64; stage : SDL_GPUShaderStage; slot : uint; bytes : array<uint8>)"
+    "signature": "def public gpu_push_uniform_bytes(device : SDL_GPUDevice?; command : GpuCommandBufferHandle; stage : SDL_GPUShaderStage; slot : uint; bytes : array<uint8>)"
   },
   {
     "module": "sdl3_gpu_recording_boost",
     "name": "gpu_draw_primitives",
     "contract": "Result",
-    "signature": "def public gpu_draw_primitives(device : SDL_GPUDevice?; render_pass : uint64; vertices : uint; instances : uint = 1u; first_vertex : uint = 0u)"
+    "signature": "def public gpu_draw_primitives(device : SDL_GPUDevice?; render_pass : GpuRenderPassHandle; vertices : uint; instances : uint = 1u; first_vertex : uint = 0u)"
   },
   {
     "module": "sdl3_gpu_recording_boost",
     "name": "gpu_draw_indexed_primitives",
     "contract": "Result",
-    "signature": "def public gpu_draw_indexed_primitives(device : SDL_GPUDevice?; render_pass : uint64; indices : uint; instances : uint = 1u; first_index : uint = 0u; base_vertex : int = 0)"
+    "signature": "def public gpu_draw_indexed_primitives(device : SDL_GPUDevice?; render_pass : GpuRenderPassHandle; indices : uint; instances : uint = 1u; first_index : uint = 0u; base_vertex : int = 0)"
   },
   {
     "module": "sdl3_gpu_sampler_boost",
@@ -837,25 +837,25 @@
     "module": "sdl3_gpu_sampler_boost",
     "name": "with_gpu_sampler",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_gpu_sampler(device : SDL_GPUDevice?; info : SDL_GPUSamplerCreateInfo; blk : block<(sampler : uint64) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_gpu_sampler(device : SDL_GPUDevice?; info : SDL_GPUSamplerCreateInfo; blk : block<(sampler : GpuSamplerHandle) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_sampler_boost",
     "name": "with_gpu_sampler",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_gpu_sampler(device : SDL_GPUDevice?; blk : block<(sampler : uint64) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_gpu_sampler(device : SDL_GPUDevice?; blk : block<(sampler : GpuSamplerHandle) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_sampler_boost",
     "name": "gpu_sampler_descriptor",
     "contract": "Result",
-    "signature": "def public gpu_sampler_descriptor(device : SDL_GPUDevice?; sampler : uint64; var info : SDL_GPUSamplerCreateInfo)"
+    "signature": "def public gpu_sampler_descriptor(device : SDL_GPUDevice?; sampler : GpuSamplerHandle; var info : SDL_GPUSamplerCreateInfo)"
   },
   {
     "module": "sdl3_gpu_sampler_boost",
     "name": "gpu_sampler_descriptor",
     "contract": "Result",
-    "signature": "def public gpu_sampler_descriptor(device : SDL_GPUDevice?; sampler : uint64)"
+    "signature": "def public gpu_sampler_descriptor(device : SDL_GPUDevice?; sampler : GpuSamplerHandle)"
   },
   {
     "module": "sdl3_gpu_shader_boost",
@@ -867,43 +867,43 @@
     "module": "sdl3_gpu_shader_boost",
     "name": "with_gpu_shader",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_gpu_shader(device : SDL_GPUDevice?; bytes : array<uint8>; info : SDL_GPUShaderCreateInfo; entrypoint : string; blk : block<(shader : uint64) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_gpu_shader(device : SDL_GPUDevice?; bytes : array<uint8>; info : SDL_GPUShaderCreateInfo; entrypoint : string; blk : block<(shader : GpuShaderHandle) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_shader_boost",
     "name": "with_gpu_shader",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_gpu_shader(device : SDL_GPUDevice?; bytes : array<uint8>; info : SDL_GPUShaderCreateInfo; blk : block<(shader : uint64) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_gpu_shader(device : SDL_GPUDevice?; bytes : array<uint8>; info : SDL_GPUShaderCreateInfo; blk : block<(shader : GpuShaderHandle) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_shader_boost",
     "name": "with_gpu_shader_file",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_gpu_shader_file(device : SDL_GPUDevice?; path : string; info : SDL_GPUShaderCreateInfo; entrypoint : string; blk : block<(shader : uint64) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_gpu_shader_file(device : SDL_GPUDevice?; path : string; info : SDL_GPUShaderCreateInfo; entrypoint : string; blk : block<(shader : GpuShaderHandle) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_shader_boost",
     "name": "with_gpu_shader_file",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_gpu_shader_file(device : SDL_GPUDevice?; path : string; info : SDL_GPUShaderCreateInfo; blk : block<(shader : uint64) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_gpu_shader_file(device : SDL_GPUDevice?; path : string; info : SDL_GPUShaderCreateInfo; blk : block<(shader : GpuShaderHandle) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_shader_boost",
     "name": "gpu_shader_descriptor",
     "contract": "Result",
-    "signature": "def public gpu_shader_descriptor(device : SDL_GPUDevice?; shader : uint64; var info : SDL_GPUShaderCreateInfo)"
+    "signature": "def public gpu_shader_descriptor(device : SDL_GPUDevice?; shader : GpuShaderHandle; var info : SDL_GPUShaderCreateInfo)"
   },
   {
     "module": "sdl3_gpu_shader_boost",
     "name": "gpu_shader_entrypoint",
     "contract": "Result",
-    "signature": "def public gpu_shader_entrypoint(device : SDL_GPUDevice?; shader : uint64)"
+    "signature": "def public gpu_shader_entrypoint(device : SDL_GPUDevice?; shader : GpuShaderHandle)"
   },
   {
     "module": "sdl3_gpu_shader_boost",
     "name": "gpu_shader_descriptor",
     "contract": "Result",
-    "signature": "def public gpu_shader_descriptor(device : SDL_GPUDevice?; shader : uint64)"
+    "signature": "def public gpu_shader_descriptor(device : SDL_GPUDevice?; shader : GpuShaderHandle)"
   },
   {
     "module": "sdl3_gpu_swapchain_boost",
@@ -945,85 +945,85 @@
     "module": "sdl3_gpu_texture_transfer_boost",
     "name": "with_gpu_transfer_texture",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_gpu_transfer_texture(device : SDL_GPUDevice?; width, height, layers, levels, format, texture_type : uint; blk : block<(texture : uint64) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_gpu_transfer_texture(device : SDL_GPUDevice?; width, height, layers, levels, format, texture_type : uint; blk : block<(texture : GpuTextureHandle) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_texture_transfer_boost",
     "name": "with_gpu_color_texture",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_gpu_color_texture(device : SDL_GPUDevice?; width, height, layers, levels, format : uint; blk : block<(texture : uint64) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_gpu_color_texture(device : SDL_GPUDevice?; width, height, layers, levels, format : uint; blk : block<(texture : GpuTextureHandle) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_texture_transfer_boost",
     "name": "with_gpu_rgba_texture",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_gpu_rgba_texture(device : SDL_GPUDevice?; width, height, layers, levels : uint; blk : block<(texture : uint64) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_gpu_rgba_texture(device : SDL_GPUDevice?; width, height, layers, levels : uint; blk : block<(texture : GpuTextureHandle) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_texture_transfer_boost",
     "name": "with_gpu_rgba_texture",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_gpu_rgba_texture(device : SDL_GPUDevice?; width, height : uint; blk : block<(texture : uint64) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_gpu_rgba_texture(device : SDL_GPUDevice?; width, height : uint; blk : block<(texture : GpuTextureHandle) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_texture_transfer_boost",
     "name": "gpu_upload_texture",
     "contract": "Result",
-    "signature": "def public gpu_upload_texture(device : SDL_GPUDevice?; texture : uint64; sub : uint2; region : uint4; bytes : array<uint8>; pitch : uint; cycle : bool = false)"
+    "signature": "def public gpu_upload_texture(device : SDL_GPUDevice?; texture : GpuTextureHandle; sub : uint2; region : uint4; bytes : array<uint8>; pitch : uint; cycle : bool = false)"
   },
   {
     "module": "sdl3_gpu_texture_transfer_boost",
     "name": "gpu_copy_texture",
     "contract": "Result",
-    "signature": "def public gpu_copy_texture(device : SDL_GPUDevice?; source : uint64; source_sub : uint2; source_region : uint4; destination : uint64; dest_sub, dest_origin : uint2)"
+    "signature": "def public gpu_copy_texture(device : SDL_GPUDevice?; source : GpuTextureHandle; source_sub : uint2; source_region : uint4; destination : GpuTextureHandle; dest_sub, dest_origin : uint2)"
   },
   {
     "module": "sdl3_gpu_texture_transfer_boost",
     "name": "with_gpu_texture_readback",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_gpu_texture_readback(device : SDL_GPUDevice?; texture : uint64; sub : uint2; region : uint4; blk : block<(ticket : uint64) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_gpu_texture_readback(device : SDL_GPUDevice?; texture : GpuTextureHandle; sub : uint2; region : uint4; blk : block<(ticket : GpuReadbackHandle) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_transfer_boost",
     "name": "with_gpu_buffer",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_gpu_buffer(device : SDL_GPUDevice?; bytes : array<uint8>; usage : uint; blk : block<(buffer : uint64) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_gpu_buffer(device : SDL_GPUDevice?; bytes : array<uint8>; usage : uint; blk : block<(buffer : GpuBufferHandle) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_transfer_boost",
     "name": "gpu_update_buffer",
     "contract": "Result",
-    "signature": "def public gpu_update_buffer(device : SDL_GPUDevice?; buffer : uint64; offset : uint; bytes : array<uint8>; cycle : bool = false)"
+    "signature": "def public gpu_update_buffer(device : SDL_GPUDevice?; buffer : GpuBufferHandle; offset : uint; bytes : array<uint8>; cycle : bool = false)"
   },
   {
     "module": "sdl3_gpu_transfer_boost",
     "name": "gpu_copy_buffer",
     "contract": "Result",
-    "signature": "def public gpu_copy_buffer(device : SDL_GPUDevice?; source : uint64; source_offset : uint; destination : uint64; destination_offset, size : uint)"
+    "signature": "def public gpu_copy_buffer(device : SDL_GPUDevice?; source : GpuBufferHandle; source_offset : uint; destination : GpuBufferHandle; destination_offset, size : uint)"
   },
   {
     "module": "sdl3_gpu_transfer_boost",
     "name": "with_gpu_readback",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_gpu_readback(device : SDL_GPUDevice?; buffer : uint64; offset, size : uint; blk : block<(readback : uint64) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_gpu_readback(device : SDL_GPUDevice?; buffer : GpuBufferHandle; offset, size : uint; blk : block<(readback : GpuReadbackHandle) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_transfer_boost",
     "name": "gpu_poll_readback",
     "contract": "Result",
-    "signature": "def public gpu_poll_readback(device : SDL_GPUDevice?; ticket : uint64)"
+    "signature": "def public gpu_poll_readback(device : SDL_GPUDevice?; ticket : GpuReadbackHandle)"
   },
   {
     "module": "sdl3_gpu_transfer_boost",
     "name": "gpu_wait_readback",
     "contract": "Result",
-    "signature": "def public gpu_wait_readback(device : SDL_GPUDevice?; ticket : uint64)"
+    "signature": "def public gpu_wait_readback(device : SDL_GPUDevice?; ticket : GpuReadbackHandle)"
   },
   {
     "module": "sdl3_gpu_transfer_boost",
     "name": "gpu_readback_bytes",
     "contract": "Result",
-    "signature": "def public gpu_readback_bytes(device : SDL_GPUDevice?; ticket : uint64; var bytes : array<uint8>)"
+    "signature": "def public gpu_readback_bytes(device : SDL_GPUDevice?; ticket : GpuReadbackHandle; var bytes : array<uint8>)"
   },
   {
     "module": "sdl3_gpu_utilities_boost",
@@ -1041,43 +1041,43 @@
     "module": "sdl3_gpu_utilities_boost",
     "name": "gpu_buffer_name",
     "contract": "Result",
-    "signature": "def public gpu_buffer_name(device : SDL_GPUDevice?; buffer : uint64; name : string)"
+    "signature": "def public gpu_buffer_name(device : SDL_GPUDevice?; buffer : GpuBufferHandle; name : string)"
   },
   {
     "module": "sdl3_gpu_utilities_boost",
     "name": "gpu_texture_name",
     "contract": "Result",
-    "signature": "def public gpu_texture_name(device : SDL_GPUDevice?; texture : uint64; name : string)"
+    "signature": "def public gpu_texture_name(device : SDL_GPUDevice?; texture : GpuTextureHandle; name : string)"
   },
   {
     "module": "sdl3_gpu_volume_boost",
     "name": "with_gpu_volume",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_gpu_volume(device : SDL_GPUDevice?; size : uint3; levels : uint; format : SDL_GPUTextureFormat; blk : block<(volume : uint64) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_gpu_volume(device : SDL_GPUDevice?; size : uint3; levels : uint; format : SDL_GPUTextureFormat; blk : block<(volume : GpuVolumeHandle) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_volume_boost",
     "name": "with_gpu_volume",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_gpu_volume(device : SDL_GPUDevice?; size : uint3; blk : block<(volume : uint64) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_gpu_volume(device : SDL_GPUDevice?; size : uint3; blk : block<(volume : GpuVolumeHandle) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_volume_boost",
     "name": "gpu_upload_volume",
     "contract": "Result",
-    "signature": "def public gpu_upload_volume(device : SDL_GPUDevice?; volume : uint64; mip : uint; origin, size : uint3; bytes : array<uint8>; row_pitch, slice_pitch : uint; cycle : bool = false)"
+    "signature": "def public gpu_upload_volume(device : SDL_GPUDevice?; volume : GpuVolumeHandle; mip : uint; origin, size : uint3; bytes : array<uint8>; row_pitch, slice_pitch : uint; cycle : bool = false)"
   },
   {
     "module": "sdl3_gpu_volume_boost",
     "name": "gpu_copy_volume",
     "contract": "Result",
-    "signature": "def public gpu_copy_volume(device : SDL_GPUDevice?; source : uint64; source_mip : uint; source_origin, size : uint3; destination : uint64; dest_mip : uint; dest_origin : uint3)"
+    "signature": "def public gpu_copy_volume(device : SDL_GPUDevice?; source : GpuVolumeHandle; source_mip : uint; source_origin, size : uint3; destination : GpuVolumeHandle; dest_mip : uint; dest_origin : uint3)"
   },
   {
     "module": "sdl3_gpu_volume_boost",
     "name": "with_gpu_volume_readback",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_gpu_volume_readback(device : SDL_GPUDevice?; volume : uint64; mip : uint; origin, size : uint3; blk : block<(ticket : uint64) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_gpu_volume_readback(device : SDL_GPUDevice?; volume : GpuVolumeHandle; mip : uint; origin, size : uint3; blk : block<(ticket : GpuReadbackHandle) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_init_boost",

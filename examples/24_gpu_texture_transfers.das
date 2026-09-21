@@ -8,12 +8,12 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
     resize(pixels,74) // 2*27 + 5*4; no final-row padding required.
     resize(result,60)
     for (pixel_byte in 0 .. 60) { let y = pixel_byte / 20; let x = pixel_byte % 20; pixels[y*27+x] = uint8((y*71+x*13)%256) }
-    return device |> with_gpu_rgba_texture(9u,7u) $(source : uint64) {
+    return device |> with_gpu_rgba_texture(9u,7u) $(source : GpuTextureHandle) {
         device |> gpu_upload_texture(source,uint2(0u),uint4(2u,1u,5u,3u),pixels,27u) |> sdl_try
-        return device |> with_gpu_rgba_texture(10u,8u,2u,2u) $(destination : uint64) {
+        return device |> with_gpu_rgba_texture(10u,8u,2u,2u) $(destination : GpuTextureHandle) {
             // Copy the rectangle into mip 1, layer 1 of an array texture.
             device |> gpu_copy_texture(source,uint2(0u),uint4(2u,1u,5u,3u),destination,uint2(1u,1u),uint2(0u)) |> sdl_try
-            return device |> with_gpu_texture_readback(destination,uint2(1u,1u),uint4(0u,0u,5u,3u)) $(ticket : uint64) {
+            return device |> with_gpu_texture_readback(destination,uint2(1u,1u),uint4(0u,0u,5u,3u)) $(ticket : GpuReadbackHandle) {
                 device |> gpu_wait_readback(ticket) |> sdl_try
                 device |> gpu_readback_bytes(ticket,result) |> sdl_try
                 for (pixel_byte in 0 .. 60) { let y = pixel_byte / 20; let x = pixel_byte % 20; verify(result[y*20+x] == pixels[y*27+x]) }

@@ -5,26 +5,26 @@ require daslib/defer
 
 [export]
 def main(smoke : bool) : int {
-    verify(is_err(gpu_poll_readback(null,0ul)))
+    verify(is_err(gpu_poll_readback(null,GpuReadbackHandle(0ul))))
     verify(is_err(native_gpu_swapchain(null,null)))
     let result=with_sdl(SDL_INIT_VIDEO) {
         return with_gpu_device() $(device : SDL_GPUDevice?) {
             var bytes : array<uint8>
             resize(bytes,64)
             // Intentional checked-ID misuse: registry rejects the second release safely.
-            let cleanup_error=with_gpu_buffer(device,bytes,SDL_GPU_BUFFERUSAGE_VERTEX) $(buffer : uint64) {
+            let cleanup_error=with_gpu_buffer(device,bytes,SDL_GPU_BUFFERUSAGE_VERTEX) $(buffer : GpuBufferHandle) {
                 verify(SDL_ReleaseGPUDataBuffer(device,buffer))
                 return sdl_ok()
             }
             verify(is_err(cleanup_error) && unwrap_err(cleanup_error).operation=="SDL_ReleaseGPUDataBuffer")
-            let primary=with_gpu_buffer(device,bytes,SDL_GPU_BUFFERUSAGE_VERTEX) $(buffer : uint64) {
+            let primary=with_gpu_buffer(device,bytes,SDL_GPU_BUFFERUSAGE_VERTEX) $(buffer : GpuBufferHandle) {
                 verify(SDL_ReleaseGPUDataBuffer(device,buffer))
                 SDL_SetErrorText("body wins")
                 return err(sdl_error("body"),type<SdlUnit>)
             }
             verify(is_err(primary) && unwrap_err(primary).message=="body wins")
-            let readback=with_gpu_buffer(device,bytes,SDL_GPU_BUFFERUSAGE_VERTEX) $(buffer : uint64) {
-                return with_gpu_readback(device,buffer,0u,64u) $(ticket : uint64) {
+            let readback=with_gpu_buffer(device,bytes,SDL_GPU_BUFFERUSAGE_VERTEX) $(buffer : GpuBufferHandle) {
+                return with_gpu_readback(device,buffer,0u,64u) $(ticket : GpuReadbackHandle) {
                     SDL_SetErrorText("old error must not turn pending into failure")
                     let before=gpu_poll_readback(device,ticket)
                     verify(is_ok(before)) // Either pending or ready is valid at this instant.

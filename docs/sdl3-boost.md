@@ -116,6 +116,9 @@ for its checked bounds. `sdl3_gpu_native_boost` separately provides native
 copy/compute/render/swapchain scopes and byte-array creation/transfers; see
 gpu-native-boost.md and examples 48–50. Native handles do not interoperate with IDs.
 Do not add another composite object to compensate for missing SDL bindings.
+Checked GPU IDs use [uint64-backed distinct handles](gpu-handles.md) in native
+adapter signatures, boost, arrays and Result/Option. Keep explicit nominal
+callback annotations; copies do not transfer ownership.
 
 - `sdl3_rect_clipboard_boost` uses copied clipboard payloads and a lexical
   `with_window_hit_test` block. Keep `[never_inline]` on that scope: inline

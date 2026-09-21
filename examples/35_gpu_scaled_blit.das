@@ -6,11 +6,11 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
     var pixels, scaled : array<uint8>
     resize(pixels,16); resize(scaled,64)
     for (i in 0 .. 16) { pixels[i] = uint8(i*16) }
-    return device |> with_gpu_rgba_texture(2u,2u) $(source : uint64) {
+    return device |> with_gpu_rgba_texture(2u,2u) $(source : GpuTextureHandle) {
         device |> gpu_upload_texture(source,uint2(0u),uint4(0u,0u,2u,2u),pixels,8u) |> sdl_try
-        return device |> with_gpu_color_target_texture(4u,4u,1u,1u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM) $(target : uint64) {
+        return device |> with_gpu_color_target_texture(4u,4u,1u,1u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM) $(target : GpuTextureHandle) {
             device |> gpu_blit_texture(source,uint2(0u),uint4(0u,0u,2u,2u),target,uint2(0u),uint4(0u,0u,4u,4u)) |> sdl_try
-            device |> with_gpu_texture_readback(target,uint2(0u),uint4(0u,0u,4u,4u)) $(ticket : uint64) {
+            device |> with_gpu_texture_readback(target,uint2(0u),uint4(0u,0u,4u,4u)) $(ticket : GpuReadbackHandle) {
                 device |> gpu_wait_readback(ticket) |> sdl_try
                 device |> gpu_readback_bytes(ticket,scaled) |> sdl_try
                 for (y in 0 .. 4) { for (x in 0 .. 4) { for (c in 0 .. 4) {

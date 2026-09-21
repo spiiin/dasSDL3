@@ -9,9 +9,9 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
     var gray, result : array<uint8>
     resize(gray,15); resize(result,15)
     for (i in 0 .. 15) { gray[i] = uint8(i*17) }
-    return device |> with_gpu_color_texture(5u,3u,1u,1u,format) $(texture : uint64) {
+    return device |> with_gpu_color_texture(5u,3u,1u,1u,format) $(texture : GpuTextureHandle) {
         device |> gpu_upload_texture(texture,uint2(0u),uint4(0u,0u,5u,3u),gray,5u) |> sdl_try
-        return device |> with_gpu_texture_readback(texture,uint2(0u),uint4(0u,0u,5u,3u)) $(ticket : uint64) {
+        return device |> with_gpu_texture_readback(texture,uint2(0u),uint4(0u,0u,5u,3u)) $(ticket : GpuReadbackHandle) {
             device |> gpu_wait_readback(ticket) |> sdl_try
             device |> gpu_readback_bytes(ticket,result) |> sdl_try
             for (i in 0 .. 15) { verify(gray[i] == result[i]) }

@@ -1,7 +1,7 @@
 # Native GPU adapters and scopes
 
 `require dassdl3/sdl3_gpu_native_boost` exposes native SDL pointers and small
-`defer` scopes. This module is separate from the older checked uint64 adapters.
+`defer` scopes. This module is separate from the [checked distinct-handle adapters](gpu-handles.md).
 Never interchange their resource handles. No plan, mesh, material or scene is
 introduced, and no callback is invoked through a native catch bridge.
 

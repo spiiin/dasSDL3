@@ -5,9 +5,9 @@ require dassdl3/sdl3_gpu_utilities_boost
 def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; SdlError> {
     var data : array<uint8>
     resize(data,16)
-    device |> with_gpu_buffer(data,SDL_GPU_BUFFERUSAGE_VERTEX) $(buffer : uint64) {
+    device |> with_gpu_buffer(data,SDL_GPU_BUFFERUSAGE_VERTEX) $(buffer : GpuBufferHandle) {
         device |> gpu_buffer_name(buffer,"example29 vertices") |> sdl_try
-        return device |> with_gpu_rgba_texture(2u,2u) $(texture : uint64) {
+        return device |> with_gpu_rgba_texture(2u,2u) $(texture : GpuTextureHandle) {
             device |> gpu_texture_name(texture,"example29 texture") |> sdl_try
 
             return sdl_ok()

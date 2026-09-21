@@ -19,7 +19,7 @@
 - [Ввод](input.md), [аудио](audio.md), [пиксели](pixels.md), [geometry](geometry.md).
 - GPU: [native API](gpu-native-api.md), [native boost](gpu-native-boost.md),
   [результаты](gpu-native-validation.md), [raw tests](gpu-raw-tests.md).
-- Checked GPU subset: [recording](gpu-recording.md), [buffers](gpu-transfer.md),
+- Checked GPU subset: [distinct handles](gpu-handles.md), [recording](gpu-recording.md), [buffers](gpu-transfer.md),
   [textures](gpu-texture-transfer.md), [formats](gpu-formats.md), [BC/cube](gpu-texture-types.md),
   [volumes](gpu-volume.md), [ASTC](gpu-astc.md), [image operations](gpu-image.md),
   [swapchain settings](gpu-swapchain.md), [shaders](gpu-shaders.md),

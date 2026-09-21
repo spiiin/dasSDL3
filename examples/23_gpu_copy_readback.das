@@ -8,10 +8,10 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
     resize(zeros,256)
     resize(result,256)
     for (i in 0 .. 256) { source[i] = uint8((i*37+11)%256) }
-    return device |> with_gpu_buffer(source,SDL_GPU_BUFFERUSAGE_VERTEX) $(a : uint64) {
-        return device |> with_gpu_buffer(zeros,SDL_GPU_BUFFERUSAGE_VERTEX) $(b : uint64) {
+    return device |> with_gpu_buffer(source,SDL_GPU_BUFFERUSAGE_VERTEX) $(a : GpuBufferHandle) {
+        return device |> with_gpu_buffer(zeros,SDL_GPU_BUFFERUSAGE_VERTEX) $(b : GpuBufferHandle) {
             device |> gpu_copy_buffer(a,0u,b,0u,256u) |> sdl_try
-            return device |> with_gpu_readback(b,0u,256u) $(ticket : uint64) {
+            return device |> with_gpu_readback(b,0u,256u) $(ticket : GpuReadbackHandle) {
                 // Other CPU work can run here; no mapped GPU pointer escapes.
                 let already_ready = device |> gpu_poll_readback(ticket) |> sdl_try
                 device |> gpu_wait_readback(ticket) |> sdl_try

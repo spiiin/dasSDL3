@@ -9,10 +9,10 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
     var info = gpu_sampler_info(SDL_GPUFilter.FILTER_LINEAR,SDL_GPUSamplerAddressMode.SAMPLERADDRESSMODE_REPEAT)
     info.enable_anisotropy = true
     info.max_anisotropy = 4.0
-    return device |> with_gpu_sampler(info) $(sampler : uint64) {
+    return device |> with_gpu_sampler(info) $(sampler : GpuSamplerHandle) {
         let description = gpu_sampler_descriptor(device,sampler) |> sdl_try
         print("Scoped sampler {sampler}: linear, repeat, anisotropy={description.max_anisotropy}\n")
-        return device |> with_gpu_sampler() $(nearest : uint64) {
+        return device |> with_gpu_sampler() $(nearest : GpuSamplerHandle) {
             verify(nearest != sampler)
             var query_result_2 : SDL_GPUSamplerCreateInfo
             gpu_sampler_descriptor(device,nearest,query_result_2) |> sdl_try

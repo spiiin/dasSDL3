@@ -7,9 +7,9 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
     var blocks, result : array<uint8>
     resize(blocks,32); resize(result,32)
     for (i in 0 .. 32) { blocks[i] = uint8(i*7) }
-    device |> with_gpu_transfer_texture(8u,8u,1u,1u,format,SDL_GPU_TEXTURETYPE_2D) $(texture : uint64) {
+    device |> with_gpu_transfer_texture(8u,8u,1u,1u,format,SDL_GPU_TEXTURETYPE_2D) $(texture : GpuTextureHandle) {
         device |> gpu_upload_texture(texture,uint2(0u),uint4(0u,0u,8u,8u),blocks,16u) |> sdl_try
-        return device |> with_gpu_texture_readback(texture,uint2(0u),uint4(0u,0u,8u,8u)) $(ticket : uint64) {
+        return device |> with_gpu_texture_readback(texture,uint2(0u),uint4(0u,0u,8u,8u)) $(ticket : GpuReadbackHandle) {
             device |> gpu_wait_readback(ticket) |> sdl_try
             device |> gpu_readback_bytes(ticket,result) |> sdl_try
             for (i in 0 .. 32) { verify(blocks[i] == result[i]) }

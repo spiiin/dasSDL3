@@ -10,6 +10,7 @@ if outputs[0] != outputs[1]:
     raise SystemExit(''.join(difflib.unified_diff(outputs[0].splitlines(True), outputs[1].splitlines(True),
                                               fromfile='baseline', tofile='CppGenBind')))
 rows = outputs[0].splitlines()
-counts = {kind: sum(row.startswith(kind + '\t') for row in rows) for kind in ('TYPE', 'FIELD', 'CONST', 'ENUM', 'ENUM_VALUE')}
+counts = {kind: sum(row.startswith(kind + '\t') for row in rows) for kind in ('TYPE', 'FIELD', 'CONST', 'ENUM', 'ENUM_VALUE', 'DISTINCT')}
+assert counts['DISTINCT'] == 10, 'Expected all ten nominal GPU handle types'
 functions = len(rows) - sum(counts.values())
-print(f'Contract matches: {functions} functions, {counts["TYPE"]} types, {counts["FIELD"]} fields, {counts["CONST"]} constants, {counts["ENUM"]} enums / {counts["ENUM_VALUE"]} enum values')
+print(f'Contract matches: {functions} functions, {counts["TYPE"]} types, {counts["DISTINCT"]} distinct handles, {counts["FIELD"]} fields, {counts["CONST"]} constants, {counts["ENUM"]} enums / {counts["ENUM_VALUE"]} enum values')

@@ -118,8 +118,13 @@ managed structs differ. `pass`, `block` and `variant` are reserved identifiers.
 Keep public examples free of unsafe/address expressions; never relax language pointer
 checking to make them compile. A hidden unsafe operation is not an ownership proof.
 
-GPU checked IDs are monotonic, separate by native kind, device-specific and currently
-main-thread-only. Direct recording is src/sdl3_gpu_recording.h and
+GPU checked IDs are monotonic, separate by native kind, device-specific and
+main-thread-only. They use native-registered uint64-backed distinct Gpu*Handle types; see
+docs/gpu-handles.md. Keep checked scalar/array signatures nominal in native exports
+and boost. Do not reintroduce uint64 overloads, enum substitutes or duplicate script
+typedefs. Use explicit *handle only for diagnostics/test fixtures; runtime kind,
+liveness and device checks remain necessary. Raw SDL pointers stay unchanged.
+Direct recording is src/sdl3_gpu_recording.h and
 sdl3_gpu_recording_boost; no operation list or per-draw uniform snapshots. End/submit/
 cancel consume IDs. Scope cleanup ends an open offscreen pass and cancels unsubmitted
 commands. Native swapchain scopes submit after acquiring a non-null texture.

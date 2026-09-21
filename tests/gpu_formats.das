@@ -6,7 +6,7 @@ def check_format(device : SDL_GPUDevice?; format, bpp : uint; optional : bool = 
     verify(unwrap_or(gpu_format_bytes(format,5u,3u,2u), 0u) == 30u*bpp)
     if (!(unwrap_or(device |> gpu_supports_format(format,SDL_GPU_TEXTURETYPE_2D_ARRAY,SDL_GPU_TEXTUREUSAGE_SAMPLER), false))) {
         verify(optional)
-        verify(SDL_CreateGPUColorTransferTexture(device,5u,3u,2u,2u,format) == 0ul)
+        verify(*SDL_CreateGPUColorTransferTexture(device,5u,3u,2u,2u,format) == 0ul)
         print("Optional sampler format {format} unsupported by SDL backend; creation rejected\n")
         return
     }
@@ -28,10 +28,10 @@ def check_format(device : SDL_GPUDevice?; format, bpp : uint; optional : bool = 
         tight[i] = value
         expected[i] = uint8(0)
     }
-    let scope_ok_0 = device |> with_gpu_color_texture(5u,3u,2u,2u,format) $(a : uint64) {
+    let scope_ok_0 = device |> with_gpu_color_texture(5u,3u,2u,2u,format) $(a : GpuTextureHandle) {
         is_ok(device |> gpu_upload_texture(a,uint2(0u,1u),uint4(0u,0u,5u,3u),source,uint(pitch)))
         clear(source)
-        let scope_ok_1 = device |> with_gpu_texture_readback(a,uint2(0u,1u),uint4(0u,0u,5u,3u)) $(ticket : uint64) {
+        let scope_ok_1 = device |> with_gpu_texture_readback(a,uint2(0u,1u),uint4(0u,0u,5u,3u)) $(ticket : GpuReadbackHandle) {
             is_ok(device |> gpu_wait_readback(ticket))
             is_ok(device |> gpu_readback_bytes(ticket,actual))
             for (i in 0 .. length(tight)) { verify(actual[i] == tight[i]) }
@@ -39,14 +39,14 @@ def check_format(device : SDL_GPUDevice?; format, bpp : uint; optional : bool = 
             return sdl_ok()
         } |> is_ok
         verify(scope_ok_1)
-        let scope_ok_2 = device |> with_gpu_color_texture(5u,3u,2u,2u,format) $(b : uint64) {
+        let scope_ok_2 = device |> with_gpu_color_texture(5u,3u,2u,2u,format) $(b : GpuTextureHandle) {
             is_ok(device |> gpu_copy_texture(a,uint2(0u,1u),uint4(1u,1u,3u,2u),b,uint2(0u,0u),uint2(0u)))
             for (i in 0 .. int(6u*bpp)) {
                 let y = i / int(3u*bpp)
                 let x = i % int(3u*bpp)
                 expected[y*row+x] = tight[(y+1)*row+int(bpp)+x]
             }
-            let scope_ok_3 = device |> with_gpu_texture_readback(b,uint2(0u),uint4(0u,0u,5u,3u)) $(ticket : uint64) {
+            let scope_ok_3 = device |> with_gpu_texture_readback(b,uint2(0u),uint4(0u,0u,5u,3u)) $(ticket : GpuReadbackHandle) {
                 is_ok(device |> gpu_wait_readback(ticket))
                 is_ok(device |> gpu_readback_bytes(ticket,actual))
                 for (i in 0 .. length(expected)) { verify(actual[i] == expected[i]) }
@@ -56,7 +56,7 @@ def check_format(device : SDL_GPUDevice?; format, bpp : uint; optional : bool = 
             verify(scope_ok_3)
             // Separate mip stays zero, with format-dependent tight size.
             resize(actual,int(2u*bpp))
-            let scope_ok_4 = device |> with_gpu_texture_readback(b,uint2(1u,1u),uint4(0u,0u,2u,1u)) $(ticket : uint64) {
+            let scope_ok_4 = device |> with_gpu_texture_readback(b,uint2(1u,1u),uint4(0u,0u,2u,1u)) $(ticket : GpuReadbackHandle) {
                 is_ok(device |> gpu_wait_readback(ticket))
                 is_ok(device |> gpu_readback_bytes(ticket,actual))
                 for (v in actual) { verify(v == uint8(0)) }
@@ -100,8 +100,8 @@ def main(smoke : bool) : int {
             verify(SDL_GPUSampleCountSupportedChecked(device,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM,999u) == -1)
             verify(unwrap_or(device |> gpu_supports_samples(SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM,SDL_GPU_SAMPLECOUNT_1), false))
             let supports4 = unwrap_or(device |> gpu_supports_samples(SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM,SDL_GPU_SAMPLECOUNT_4), false)
-            verify(SDL_CreateGPUColorTransferTexture(device,4u,4u,1u,1u,SDL_GPU_TEXTUREFORMAT_BC1_RGBA_UNORM) == 0ul)
-            verify(SDL_CreateGPUColorTransferTexture(device,4u,4u,1u,1u,SDL_GPU_TEXTUREFORMAT_D16_UNORM) == 0ul)
+            verify(*SDL_CreateGPUColorTransferTexture(device,4u,4u,1u,1u,SDL_GPU_TEXTUREFORMAT_BC1_RGBA_UNORM) == 0ul)
+            verify(*SDL_CreateGPUColorTransferTexture(device,4u,4u,1u,1u,SDL_GPU_TEXTUREFORMAT_D16_UNORM) == 0ul)
             check_format(device,SDL_GPU_TEXTUREFORMAT_R8_UNORM,1u)
             check_format(device,SDL_GPU_TEXTUREFORMAT_R8G8_UNORM,2u)
             check_format(device,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM,4u)
@@ -111,8 +111,8 @@ def main(smoke : bool) : int {
             check_format(device,SDL_GPU_TEXTUREFORMAT_R32G32B32A32_FLOAT,16u)
             check_format(device,SDL_GPU_TEXTUREFORMAT_R32_FLOAT,4u)
             check_format(device,SDL_GPU_TEXTUREFORMAT_R16G16B16A16_FLOAT,8u)
-            let scope_ok_6 = device |> with_gpu_color_texture(2u,2u,1u,1u,SDL_GPU_TEXTUREFORMAT_R8_UNORM) $(a : uint64) {
-                let scope_ok_7 = device |> with_gpu_rgba_texture(2u,2u) $(b : uint64) {
+            let scope_ok_6 = device |> with_gpu_color_texture(2u,2u,1u,1u,SDL_GPU_TEXTUREFORMAT_R8_UNORM) $(a : GpuTextureHandle) {
+                let scope_ok_7 = device |> with_gpu_rgba_texture(2u,2u) $(b : GpuTextureHandle) {
                     verify(!SDL_CopyGPUTextureRegion(device,a,uint2(0u),uint4(0u,0u,2u,2u),b,uint2(0u),uint2(0u)))
 
                     return sdl_ok()

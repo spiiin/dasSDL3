@@ -41,7 +41,7 @@ See [API boundary](gpu-api-boundary.md) and the generated header census.
 | Файловый IO, остальные подсистемы | Нет | Нет | Отдельные этапы |
 | GPU native API | Все 92 функции SDL_gpu.h активного Windows профиля | Массивы/ref, creation data, native defer scopes | Raw: 92 Vulkan / 90 D3D12; debug-group исключения явные |
 | GPU attachments/compute/transfers | Render/copy/compute, swapchain/fences, storage/samplers/uniforms | Public примеры 48–50 без unsafe | MRT/MSAA/depth/stencil, offsets/cycling, CPU pixel/byte references |
-| GPU checked subset | Отдельные uint64 IDs, ограниченные formats/layouts | Примеры 23–46 | Ограничения конкретного checked helper не ограничивают generated raw API |
+| GPU checked subset | Типизированные distinct IDs поверх uint64, ограниченные formats/layouts | Примеры 23–46 | Ограничения конкретного checked helper не ограничивают generated raw API |
 
 Подробности: [native API](gpu-native-api.md), [scopes](gpu-native-boost.md),
 [проверки](gpu-native-validation.md). Положительный ASTC roundtrip и другие

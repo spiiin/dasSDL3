@@ -14,6 +14,13 @@ int main() {
     if (!module) return 1;
     std::vector<std::string> rows;
     for (auto &[key, annotation] : module->handleTypes) {
+        if (annotation->rtti_isDistinctTypeAnnotation()) {
+            auto type = static_cast<das::DistinctTypeAnnotation *>(annotation);
+            rows.push_back("DISTINCT\t" + type->name + "\t" + type->cppName + "\t" +
+                type->underlyingType->getMangledName() + "\t" + std::to_string(type->getSizeOf()) + "\t" +
+                std::to_string(type->getAlignOf()));
+            continue;
+        }
         if (!annotation->rtti_isHandledTypeAnnotation()) continue;
         auto type = static_cast<das::TypeAnnotation *>(annotation);
         std::ostringstream row;

@@ -2,11 +2,11 @@ options gen2
 require math
 require dassdl3/sdl3_gpu_image_boost
 
-def assert_pixels(device : SDL_GPUDevice?; texture : uint64; sub : uint2; rect : uint4;
+def assert_pixels(device : SDL_GPUDevice?; texture : GpuTextureHandle; sub : uint2; rect : uint4;
         expected : array<uint8>; tolerance : int = 0) {
     var actual : array<uint8>
     resize(actual,length(expected))
-    let scope_ok_0 = device |> with_gpu_texture_readback(texture,sub,rect) $(ticket : uint64) {
+    let scope_ok_0 = device |> with_gpu_texture_readback(texture,sub,rect) $(ticket : GpuReadbackHandle) {
         is_ok(device |> gpu_wait_readback(ticket))
         is_ok(device |> gpu_readback_bytes(ticket,actual))
 
@@ -43,7 +43,7 @@ def half_image(input : array<uint8>; width : int) : array<uint8> {
 def check_image(device : SDL_GPUDevice?; format : uint) {
     var bytes, zero : array<uint8>
     resize(zero,64)
-    let scope_ok_1 = device |> with_gpu_color_target_texture(4u,4u,2u,3u,format) $(image : uint64) {
+    let scope_ok_1 = device |> with_gpu_color_target_texture(4u,4u,2u,3u,format) $(image : GpuTextureHandle) {
         for (layer in 0u .. 2u) {
             assert_pixels(device,image,uint2(0u,layer),uint4(0u,0u,4u,4u),zero)
             pattern(bytes,int(layer))
@@ -72,7 +72,7 @@ def check_image(device : SDL_GPUDevice?; format : uint) {
     } |> is_ok
     verify(scope_ok_1)
     // Odd dimensions: each allocated level keeps a spatially constant color.
-    let scope_ok_2 = device |> with_gpu_color_target_texture(7u,5u,1u,3u,format) $(odd : uint64) {
+    let scope_ok_2 = device |> with_gpu_color_target_texture(7u,5u,1u,3u,format) $(odd : GpuTextureHandle) {
         resize(bytes,140)
         for (i in 0 .. 140) { bytes[i] = uint8(48) }
         is_ok(device |> gpu_upload_texture(odd,uint2(0u),uint4(0u,0u,7u,5u),bytes,28u))
@@ -85,11 +85,11 @@ def check_image(device : SDL_GPUDevice?; format : uint) {
         return sdl_ok()
     } |> is_ok
     verify(scope_ok_2)
-    let scope_ok_3 = device |> with_gpu_color_texture(4u,4u,1u,1u,format) $(source : uint64) {
+    let scope_ok_3 = device |> with_gpu_color_texture(4u,4u,1u,1u,format) $(source : GpuTextureHandle) {
         pattern(bytes,0)
         is_ok(device |> gpu_upload_texture(source,uint2(0u),uint4(0u,0u,4u,4u),bytes,16u))
         verify(!SDL_GenerateGPUTextureMipmapsChecked(device,source))
-        let scope_ok_4 = device |> with_gpu_color_target_texture(6u,6u,2u,2u,format) $(target : uint64) {
+        let scope_ok_4 = device |> with_gpu_color_target_texture(6u,6u,2u,2u,format) $(target : GpuTextureHandle) {
             var expected : array<uint8>
             resize(expected,144)
             for (i in 0 .. 144) { expected[i] = uint8(17) }
@@ -135,23 +135,23 @@ def main(smoke : bool) : int {
     var available = false
     let scope_ok_6 = with_sdl() {
         available = with_gpu_device(GPU_SHADER_FORMATS,true,"") $(device : SDL_GPUDevice?) {
-            verify(SDL_CreateGPUColorTargetTexture(device,4u,4u,1u,1u,SDL_GPU_TEXTUREFORMAT_R32_FLOAT) == 0ul)
-            verify(SDL_CreateGPUColorTargetTexture(device,0u,4u,1u,1u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM) == 0ul)
-            verify(!SDL_GenerateGPUTextureMipmapsChecked(device,0ul))
+            verify(*SDL_CreateGPUColorTargetTexture(device,4u,4u,1u,1u,SDL_GPU_TEXTUREFORMAT_R32_FLOAT) == 0ul)
+            verify(*SDL_CreateGPUColorTargetTexture(device,0u,4u,1u,1u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM) == 0ul)
+            verify(!SDL_GenerateGPUTextureMipmapsChecked(device,GpuTextureHandle(0ul)))
             check_image(device,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM)
             check_image(device,SDL_GPU_TEXTUREFORMAT_B8G8R8A8_UNORM)
-            let scope_ok_7 = device |> with_gpu_color_texture(4u,4u,1u,3u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM) $(sampler_only : uint64) {
+            let scope_ok_7 = device |> with_gpu_color_texture(4u,4u,1u,3u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM) $(sampler_only : GpuTextureHandle) {
                 verify(!SDL_GenerateGPUTextureMipmapsChecked(device,sampler_only))
 
                 return sdl_ok()
             } |> is_ok
             verify(scope_ok_7)
-            let scope_ok_8 = device |> with_gpu_transfer_texture(2u,2u,6u,1u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM,SDL_GPU_TEXTURETYPE_CUBE) $(cube : uint64) {
+            let scope_ok_8 = device |> with_gpu_transfer_texture(2u,2u,6u,1u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM,SDL_GPU_TEXTURETYPE_CUBE) $(cube : GpuTextureHandle) {
                 var face : array<uint8>
                 resize(face,16)
                 for (i in 0 .. 16) { face[i] = uint8(104) }
                 is_ok(device |> gpu_upload_texture(cube,uint2(0u,5u),uint4(0u,0u,2u,2u),face,8u))
-                let scope_ok_9 = device |> with_gpu_color_target_texture(2u,2u,1u,1u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM) $(target : uint64) {
+                let scope_ok_9 = device |> with_gpu_color_target_texture(2u,2u,1u,1u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM) $(target : GpuTextureHandle) {
                     is_ok(device |> gpu_blit_texture(cube,uint2(0u,5u),uint4(0u,0u,2u,2u),target,uint2(0u),uint4(0u,0u,2u,2u)))
                     assert_pixels(device,target,uint2(0u),uint4(0u,0u,2u,2u),face)
 
@@ -162,8 +162,8 @@ def main(smoke : bool) : int {
                 return sdl_ok()
             } |> is_ok
             verify(scope_ok_8)
-            let scope_ok_10 = device |> with_gpu_rgba_texture(2u,2u) $(source : uint64) {
-                let scope_ok_11 = device |> with_gpu_color_target_texture(2u,2u,1u,1u,SDL_GPU_TEXTUREFORMAT_B8G8R8A8_UNORM) $(target : uint64) {
+            let scope_ok_10 = device |> with_gpu_rgba_texture(2u,2u) $(source : GpuTextureHandle) {
+                let scope_ok_11 = device |> with_gpu_color_target_texture(2u,2u,1u,1u,SDL_GPU_TEXTUREFORMAT_B8G8R8A8_UNORM) $(target : GpuTextureHandle) {
                     verify(!SDL_BlitGPUTextureChecked(device,source,uint2(0u),uint4(0u,0u,2u,2u),target,uint2(0u),uint4(0u,0u,2u,2u),0u))
 
                     return sdl_ok()
@@ -174,15 +174,15 @@ def main(smoke : bool) : int {
             } |> is_ok
             verify(scope_ok_10)
             // Public ticket owns the generated snapshot after texture destruction.
-            var ticket = 0ul
-            let scope_ok_12 = device |> with_gpu_color_target_texture(2u,2u,1u,2u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM) $(image : uint64) {
+            var ticket : GpuReadbackHandle
+            let scope_ok_12 = device |> with_gpu_color_target_texture(2u,2u,1u,2u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM) $(image : GpuTextureHandle) {
                 var data : array<uint8>
                 resize(data,16)
                 for (i in 0 .. 16) { data[i] = uint8(72) }
                 is_ok(device |> gpu_upload_texture(image,uint2(0u),uint4(0u,0u,2u,2u),data,8u))
                 is_ok(device |> gpu_generate_mipmaps(image))
                 ticket = SDL_RequestGPUTextureReadback(device,image,uint2(1u,0u),uint4(0u,0u,1u,1u))
-                verify(ticket != 0ul)
+                verify(*ticket != 0ul)
 
                 return sdl_ok()
             } |> is_ok
@@ -193,10 +193,10 @@ def main(smoke : bool) : int {
             is_ok(device |> gpu_readback_bytes(ticket,snapshot))
             for (byte in snapshot) { verify(byte == uint8(72)) }
             verify(SDL_ReleaseGPUReadback(device,ticket))
-            var stale = 0ul
+            var stale : GpuTextureHandle
             var caught = false
             {
-                let scope_ok_13 = device |> with_gpu_color_target_texture(2u,2u,1u,1u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM) $(id : uint64) {
+                let scope_ok_13 = device |> with_gpu_color_target_texture(2u,2u,1u,1u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM) $(id : GpuTextureHandle) {
                     stale = id
                     verify(!SDL_GenerateGPUTextureMipmapsChecked(device,id))
                     caught = !is_ok(set_title(null,"expected SDL failure")); return sdl_ok()

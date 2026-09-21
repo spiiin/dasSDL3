@@ -15,9 +15,9 @@ def public gpu_supports_shaders(formats : uint; driver : string = "") {
     if (state < 0) { return err(sdl_error("gpu_supports_shaders"), type<bool>) }
     return ok(state == 1, type<SdlError>)
 }
-def public gpu_buffer_name(device : SDL_GPUDevice?; buffer : uint64; name : string) {
+def public gpu_buffer_name(device : SDL_GPUDevice?; buffer : GpuBufferHandle; name : string) {
     return sdl_status(SDL_SetGPUDataBufferNameChecked(device,buffer,name), "gpu_buffer_name")
 }
-def public gpu_texture_name(device : SDL_GPUDevice?; texture : uint64; name : string) {
+def public gpu_texture_name(device : SDL_GPUDevice?; texture : GpuTextureHandle; name : string) {
     return sdl_status(SDL_SetGPUTransferTextureNameChecked(device,texture,name), "gpu_texture_name")
 }
