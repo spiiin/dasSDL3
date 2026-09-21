@@ -61,3 +61,11 @@ Tests: [runtime contracts](../tests/sdl3_scope.das) and
 They cover acquisition/cleanup order, partial failure, body errors, intermediate
 statements, typed/inferred Result payloads, moving arrays, mutable callback
 references, nested scopes and actual SDL window/renderer/texture scopes.
+
+Local validation (2026-09-21, Windows x64/MSVC): 80 selected main checks passed.
+The 206-check legacy/CppGenBind/AOT run passed after regenerating the expanded
+runtime test's stale AOT artifact; 13 affected checks passed on the rebuilt
+runner. Vulkan and D3D12 both exercised example 46. The existing no-LLVM,
+BUILD_TESTING=OFF consumer passed the current scope test, eight representative
+examples and all eleven compile-rejection cases. Production clangbind probe,
+documentation links and whitespace checks passed.

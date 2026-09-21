@@ -45,12 +45,27 @@ def moving(var trace : string&) {
     }
 }
 
+def failed_operation(var trace : string&) : $Result<SdlUnit; SdlError> {
+    return sdl_scope() {
+        let first : int = with_number(1,0,trace) |> sdl_use
+        defer() { trace += "body-defer;" }
+        let second : int = with_number(first+1,0,trace) |> sdl_use
+        err(SdlError(operation="operation",message="failed"),type<SdlUnit>) |> sdl_try
+        trace += "unreachable;"
+        return sdl_ok()
+    }
+}
+
 [export]
 def main(smoke : bool) : int {
     var trace = ""
     let good = run(0,false,trace)
     verify(is_ok(good) && unwrap(good) == 6)
     verify(trace == "acquire1;between;acquire2;acquire3;body;release3;release2;release1;")
+    trace = ""
+    let propagated = failed_operation(trace)
+    verify(is_err(propagated) && unwrap_err(propagated).operation == "operation")
+    verify(trace == "acquire1;acquire2;release2;body-defer;release1;")
     trace = ""
     let failed = run(2,false,trace)
     verify(is_err(failed) && unwrap_err(failed).operation == "acquire")

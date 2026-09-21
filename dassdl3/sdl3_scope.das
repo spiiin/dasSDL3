@@ -6,6 +6,8 @@ require daslib/ast_boost
 require daslib/templates_boost
 
 def private expand_scope(var body : ExprBlock?; prog : ProgramPtr) : bool {
+    // Rewrite only this lexical block. A marker in a branch/defer must belong
+    // to its own explicit sdl_scope, otherwise SdlUseMacro rejects it.
     for (index in range(length(body.list))) {
         let stmt = body.list[index]
         var marker = stmt
@@ -37,6 +39,8 @@ def private expand_scope(var body : ExprBlock?; prog : ProgramPtr) : bool {
             var item = body.list[next]
             tail.list |> emplace(item)
         }
+        // Nest the tail before attaching it; each owner's original block
+        // contract continues to control acquisition failure and cleanup.
         if (!expand_scope(tail,prog)) { return false }
         var callback : ExpressionPtr = new ExprMakeBlock(at=marker.at,_block=tail)
         owner.arguments |> emplace(callback)
@@ -51,6 +55,8 @@ def private expand_scope(var body : ExprBlock?; prog : ProgramPtr) : bool {
 
 [call_macro(name="sdl_scope")]
 class private SdlScopeMacro : AstCallMacro {
+    // The with_* calls are intentionally incomplete until their callbacks
+    // have been appended, so do not infer the body before this rewrite.
     def override canVisitArgument(call : ExprCallMacro?; argIndex : int) : bool { return false }
     def override visit(prog : ProgramPtr; mod : Module?; var call : ExprCallMacro?) : ExpressionPtr {
         if (length(call.arguments) != 1 || !(call.arguments[0] is ExprMakeBlock)) {
