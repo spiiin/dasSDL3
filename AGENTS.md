@@ -91,7 +91,10 @@ Boost uses standard Result/Option under canonical names; there are no legacy boo
 scopes, void-block scopes, *_result or *_status_result aliases. Scope blocks return
 Result; use sdl_ok() for successful void work. Preserve primary body error if cleanup
 also fails. Raw SDL signatures/sentinels stay unchanged. Optional event polling
-keeps its borrowed SDL_Event out parameter; do not claim owned payloads. Pure
+keeps its borrowed SDL_Event out parameter. The optional sdl3_events module adds
+poll_event() returning Option<SdlEvent> and decode_event(raw); see docs/event-variants.md.
+Only documented variant payloads are decoded; text is copied immediately into
+daScript storage, unknown events preserve type/timestamp without native pointers. Pure
 predicates remain bool; push_event retains SDL's ambiguous acceptance bool.
 Read docs/result-option-plan.md and docs/error-handling.md for the contract inventory.
 Capture errors before cleanup; pending/absent/unsupported are not SDL failures.

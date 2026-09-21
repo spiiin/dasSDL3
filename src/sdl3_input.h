@@ -3,6 +3,13 @@
 #include "daScript/daScript.h"
 
 // Copy only the active union member. A mismatch clears output and returns false.
+inline uint64_t SDL_EventTimestamp(const SDL_Event & event) { return event.common.timestamp; }
+inline bool SDL_ReadWindowEventData(const SDL_Event & event, das::int2 & out) {
+    out = {};
+    if (event.type < SDL_EVENT_WINDOW_FIRST || event.type > SDL_EVENT_WINDOW_LAST) return false;
+    out = {event.window.data1, event.window.data2};
+    return true;
+}
 inline bool SDL_ReadKeyEvent(const SDL_Event & event, SDL_KeyboardEvent & out) {
     out = {};
     if (event.type != SDL_EVENT_KEY_DOWN && event.type != SDL_EVENT_KEY_UP) return false;

@@ -53,8 +53,10 @@ finally; Result does not promise cleanup after arbitrary application panic.
 
 `poll_event(var event)` returns Option<SdlUnit> as a presence marker while
 writing the borrowed SDL_Event. Decode pointer-bearing text before polling again.
-The typed text readers return copied script strings. This migration does not
-claim full owned event payloads; that remains a separate P3 concern.
+The typed text readers return copied script strings. The opt-in
+[sdl3_events module](event-variants.md) provides `poll_event() : Option<SdlEvent>`
+with owned text for the documented input/window variants. Other payloads remain
+unknown (type/timestamp only), pending further P3 coverage.
 
 For nested generic blocks, explicit argument types stabilize inference. Mutable
 native block arguments must retain `var`. Check a scope after assigning its result,

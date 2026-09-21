@@ -568,6 +568,8 @@ public:
             *this, lib, "SDL_MakeFRect", SideEffects::none, "SDL_MakeFRect")->args({"x", "y", "w", "h"});
         addExtern<DAS_BIND_FUN(SDL_EventIsQuit)>(*this, lib, "SDL_EventIsQuit",
             SideEffects::none, "SDL_EventIsQuit")->args({"event"});
+        addExtern<DAS_BIND_FUN(SDL_EventTimestamp)>(*this, lib, "SDL_EventTimestamp", SideEffects::none, "SDL_EventTimestamp");
+        addExtern<DAS_BIND_FUN(SDL_ReadWindowEventData)>(*this, lib, "SDL_ReadWindowEventData", SideEffects::modifyArgument, "SDL_ReadWindowEventData");
         addExtern<DAS_BIND_FUN(SDL_EventIsEscape)>(*this, lib, "SDL_EventIsEscape",
             SideEffects::none, "SDL_EventIsEscape")->args({"event"});
         addExtern<DAS_BIND_FUN(SDL_MakeKeyEvent), SimNode_ExtFuncCallAndCopyOrMove>(

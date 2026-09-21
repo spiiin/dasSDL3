@@ -74,7 +74,8 @@ A real minimized Vulkan window in the pinned local build still returned a
 texture; the API therefore preserves both Some and None instead of assuming
 minimization guarantees None.
 
-Owned Event payload design, further raw P3 coverage, P8 GL/EGL and companion
+Owned input/window [event variants](event-variants.md) are now available separately.
+Other event payloads, further raw P3 coverage, P8 GL/EGL and companion
 libraries remain separate binding work. They are not reasons to retain the old
 bool/void boost API. See [error handling](error-handling.md) and
 [complete contract inventory](boost-contracts.json).
@@ -95,6 +96,7 @@ Windows x64/MSVC, pinned SDL 3.2.18 and daScript; Vulkan and D3D12.
 - Documentation links and whitespace checks pass. Production generator configuration
   is restored after the consumer build.
 
-The inventory lists 304 public boost overloads, including pure helpers. This is
+The inventory lists 306 public boost overloads, including pure helpers and the
+two opt-in [event variant](event-variants.md) helpers. This is
 an API migration, not additional raw SDL declaration coverage. No cross-platform,
 JIT or arbitrary-panic cleanup guarantee is implied.

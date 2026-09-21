@@ -5,6 +5,11 @@
 
 ## События
 
+Для нового кода доступен [SdlEvent tagged variant](event-variants.md):
+`require dassdl3/sdl3_events`, `poll_event()` возвращает `Option<SdlEvent>`.
+Текст сохраняется в собственных строках daScript, разбор — через `daslib/match`.
+Ниже описан сохранённый низкоуровневый путь с borrowed `SDL_Event`.
+
 ```das
 var event = SDL_MakeEvent()
 var key : SDL_KeyboardEvent

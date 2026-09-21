@@ -17,6 +17,7 @@
 - [Properties](properties.md): values, copied strings/names and defer ownership.
 
 - [Ввод](input.md), [аудио](audio.md), [пиксели](pixels.md), [geometry](geometry.md).
+- [Event variants](event-variants.md): `SdlEvent`, pattern matching и собственный текст.
 - GPU: [native API](gpu-native-api.md), [native boost](gpu-native-boost.md),
   [результаты](gpu-native-validation.md), [raw tests](gpu-raw-tests.md).
 - Checked GPU subset: [distinct handles](gpu-handles.md), [recording](gpu-recording.md), [buffers](gpu-transfer.md),

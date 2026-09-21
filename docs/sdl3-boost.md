@@ -128,3 +128,5 @@ callback annotations; copies do not transfer ownership.
 
 Result/Option boost API: [contracts and migration plan](result-option-plan.md).
 Opt-in [`sdl_try`](sdl-try.md) removes repetitive error guards without exceptions.
+Opt-in [`sdl3_events`](event-variants.md) adds tagged `SdlEvent` values and
+`poll_event() : Option<SdlEvent>` with owned text snapshots.

@@ -1,5 +1,7 @@
 # Examples
 
+- [67_event_variants.das](67_event_variants.das): owned event variants, `match`, text and IME composition.
+
 Run from the repository root with `./build/ninja/bin/dasSDL3_runner.exe examples/<file>.das`.
 01 uses the standalone daslang runner. Examples 01–08 cover core SDL/renderer/input/audio.
 23–35 cover resource transfers, queries and window configuration; 37–43 descriptors

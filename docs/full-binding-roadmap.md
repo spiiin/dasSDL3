@@ -35,6 +35,10 @@ interpreter/AOT/consumer проверки. [Результаты и исключ
 
 ## Очередь
 
+P3 API: добавлен [SdlEvent](event-variants.md) с 11 вариантами для текущего
+ввода, окон и Quit; `poll_event()` возвращает Option, текст копируется.
+Остальные payloads пока Unknown; это не полное покрытие Events.
+
 | Этап | Объём | Критерий |
 | --- | --- | --- |
 | P1, остаток | Properties/Hints/Init/Error/Log/Timer callbacks, va_list и строковые макросы | Базовые пакеты реализованы; retained callbacks требуют отдельных контрактов |

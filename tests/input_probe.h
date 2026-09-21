@@ -11,6 +11,7 @@ inline void mutate_input_text() {
 inline SDL_Event input_event(uint32_t type, uint32_t window_id) {
     SDL_Event event{};
     event.type = type;
+    event.common.timestamp = 0xfedcba9876543210ull;
     switch (type) {
     case SDL_EVENT_KEY_DOWN: case SDL_EVENT_KEY_UP:
         event.key.windowID = window_id; event.key.which = 4242;
@@ -46,6 +47,7 @@ inline SDL_Event input_event(uint32_t type, uint32_t window_id) {
         break;
     case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
         event.window.windowID = window_id;
+        event.window.data1 = -17; event.window.data2 = 29;
         break;
     default: break;
     }

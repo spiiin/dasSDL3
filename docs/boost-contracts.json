@@ -1,5 +1,17 @@
 [
   {
+    "module": "sdl3_events",
+    "name": "decode_event",
+    "contract": "value",
+    "signature": "def public decode_event(event : SDL_Event) : SdlEvent"
+  },
+  {
+    "module": "sdl3_events",
+    "name": "poll_event",
+    "contract": "Option",
+    "signature": "def public poll_event() : $Option<SdlEvent>"
+  },
+  {
     "module": "sdl3_audio_boost",
     "name": "load_wav",
     "contract": "Result",
