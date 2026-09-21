@@ -2584,5 +2584,767 @@
     "name": "hid_read_timeout",
     "contract": "Result",
     "signature": "def public hid_read_timeout(device : SDL_hid_device?; var data : array<uint8>; milliseconds : int)"
+  },
+  {
+    "module": "sdl3_filesystem_boost",
+    "name": "base_path",
+    "contract": "Result",
+    "signature": "def public base_path()"
+  },
+  {
+    "module": "sdl3_filesystem_boost",
+    "name": "pref_path",
+    "contract": "Result",
+    "signature": "def public pref_path(org,app : string)"
+  },
+  {
+    "module": "sdl3_filesystem_boost",
+    "name": "user_folder",
+    "contract": "Result",
+    "signature": "def public user_folder(folder : SDL_Folder)"
+  },
+  {
+    "module": "sdl3_filesystem_boost",
+    "name": "current_directory",
+    "contract": "Result",
+    "signature": "def public current_directory()"
+  },
+  {
+    "module": "sdl3_filesystem_boost",
+    "name": "create_directory",
+    "contract": "Result",
+    "signature": "def public create_directory(path : string)"
+  },
+  {
+    "module": "sdl3_filesystem_boost",
+    "name": "remove_path",
+    "contract": "Result",
+    "signature": "def public remove_path(path : string)"
+  },
+  {
+    "module": "sdl3_filesystem_boost",
+    "name": "rename_path",
+    "contract": "Result",
+    "signature": "def public rename_path(oldpath,newpath : string)"
+  },
+  {
+    "module": "sdl3_filesystem_boost",
+    "name": "copy_file",
+    "contract": "Result",
+    "signature": "def public copy_file(oldpath,newpath : string)"
+  },
+  {
+    "module": "sdl3_filesystem_boost",
+    "name": "path_info",
+    "contract": "Result",
+    "signature": "def public path_info(path : string)"
+  },
+  {
+    "module": "sdl3_filesystem_boost",
+    "name": "glob_directory",
+    "contract": "Result",
+    "signature": "def public glob_directory(path : string; pattern : string = \"*\"; flags : uint = 0u)"
+  },
+  {
+    "module": "sdl3_filesystem_boost",
+    "name": "enumerate_directory",
+    "contract": "Result",
+    "signature": "def public enumerate_directory(path : string)"
+  },
+  {
+    "module": "sdl3_iostream_boost",
+    "name": "open_io_file",
+    "contract": "Result",
+    "signature": "def public open_io_file(path,mode : string)"
+  },
+  {
+    "module": "sdl3_iostream_boost",
+    "name": "open_io_dynamic",
+    "contract": "Result",
+    "signature": "def public open_io_dynamic()"
+  },
+  {
+    "module": "sdl3_iostream_boost",
+    "name": "open_io",
+    "contract": "Result",
+    "signature": "def public open_io(iface : SDL_IOStreamInterface; userdata : void?)"
+  },
+  {
+    "module": "sdl3_iostream_boost",
+    "name": "close_io",
+    "contract": "Result",
+    "signature": "def public close_io(var io : SDL_IOStream?&)"
+  },
+  {
+    "module": "sdl3_iostream_boost",
+    "name": "flush_io",
+    "contract": "Result",
+    "signature": "def public flush_io(io : SDL_IOStream?)"
+  },
+  {
+    "module": "sdl3_iostream_boost",
+    "name": "io_size",
+    "contract": "Result",
+    "signature": "def public io_size(io : SDL_IOStream?)"
+  },
+  {
+    "module": "sdl3_iostream_boost",
+    "name": "tell_io",
+    "contract": "Result",
+    "signature": "def public tell_io(io : SDL_IOStream?)"
+  },
+  {
+    "module": "sdl3_iostream_boost",
+    "name": "seek_io",
+    "contract": "Result",
+    "signature": "def public seek_io(io : SDL_IOStream?; offset : int64; whence : SDL_IOWhence = SDL_IOWhence.IO_SEEK_SET)"
+  },
+  {
+    "module": "sdl3_iostream_boost",
+    "name": "read_io",
+    "contract": "Result",
+    "signature": "def public read_io(io : SDL_IOStream?; var bytes : array<uint8>; count : uint64; var transferred : uint64&; offset : uint64 = 0ul)"
+  },
+  {
+    "module": "sdl3_iostream_boost",
+    "name": "write_io",
+    "contract": "Result",
+    "signature": "def public write_io(io : SDL_IOStream?; bytes : array<uint8>; count : uint64; var transferred : uint64&; offset : uint64 = 0ul)"
+  },
+  {
+    "module": "sdl3_iostream_boost",
+    "name": "load_file",
+    "contract": "Result",
+    "signature": "def public load_file(path : string)"
+  },
+  {
+    "module": "sdl3_iostream_boost",
+    "name": "load_io",
+    "contract": "Result",
+    "signature": "def public load_io(io : SDL_IOStream?)"
+  },
+  {
+    "module": "sdl3_iostream_boost",
+    "name": "save_file",
+    "contract": "Result",
+    "signature": "def public save_file(path : string; bytes : array<uint8>)"
+  },
+  {
+    "module": "sdl3_iostream_boost",
+    "name": "save_io",
+    "contract": "Result",
+    "signature": "def public save_io(io : SDL_IOStream?; bytes : array<uint8>)"
+  },
+  {
+    "module": "sdl3_iostream_boost",
+    "name": "with_io",
+    "contract": "Result",
+    "signature": "def public with_io(io : SDL_IOStream?; body : block<(stream : SDL_IOStream?) : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_iostream_boost",
+    "name": "with_io_file",
+    "contract": "Result",
+    "signature": "def public with_io_file(path,mode : string; body : block<(stream : SDL_IOStream?) : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_iostream_boost",
+    "name": "with_io_dynamic",
+    "contract": "Result",
+    "signature": "def public with_io_dynamic(body : block<(stream : SDL_IOStream?) : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_storage_boost",
+    "name": "storage_ready",
+    "contract": "value",
+    "signature": "def public storage_ready(storage : SDL_Storage?) : bool"
+  },
+  {
+    "module": "sdl3_storage_boost",
+    "name": "storage_space_remaining",
+    "contract": "value",
+    "signature": "def public storage_space_remaining(storage : SDL_Storage?) : uint64"
+  },
+  {
+    "module": "sdl3_storage_boost",
+    "name": "close_storage",
+    "contract": "Result",
+    "signature": "def public close_storage(var storage : SDL_Storage?&)"
+  },
+  {
+    "module": "sdl3_storage_boost",
+    "name": "open_file_storage",
+    "contract": "Result",
+    "signature": "def public open_file_storage(path : string)"
+  },
+  {
+    "module": "sdl3_storage_boost",
+    "name": "open_title_storage",
+    "contract": "Result",
+    "signature": "def public open_title_storage(path : string; props : uint = 0u)"
+  },
+  {
+    "module": "sdl3_storage_boost",
+    "name": "open_user_storage",
+    "contract": "Result",
+    "signature": "def public open_user_storage(org,app : string; props : uint = 0u)"
+  },
+  {
+    "module": "sdl3_storage_boost",
+    "name": "open_storage",
+    "contract": "Result",
+    "signature": "def public open_storage(iface : SDL_StorageInterface; userdata : void?)"
+  },
+  {
+    "module": "sdl3_storage_boost",
+    "name": "storage_file_size",
+    "contract": "Result",
+    "signature": "def public storage_file_size(storage : SDL_Storage?; path : string)"
+  },
+  {
+    "module": "sdl3_storage_boost",
+    "name": "storage_path_info",
+    "contract": "Result",
+    "signature": "def public storage_path_info(storage : SDL_Storage?; path : string)"
+  },
+  {
+    "module": "sdl3_storage_boost",
+    "name": "read_storage_file",
+    "contract": "Result",
+    "signature": "def public read_storage_file(storage : SDL_Storage?; path : string; var bytes : array<uint8>; count : uint64)"
+  },
+  {
+    "module": "sdl3_storage_boost",
+    "name": "write_storage_file",
+    "contract": "Result",
+    "signature": "def public write_storage_file(storage : SDL_Storage?; path : string; bytes : array<uint8>)"
+  },
+  {
+    "module": "sdl3_storage_boost",
+    "name": "create_storage_directory",
+    "contract": "Result",
+    "signature": "def public create_storage_directory(storage : SDL_Storage?; path : string)"
+  },
+  {
+    "module": "sdl3_storage_boost",
+    "name": "remove_storage_path",
+    "contract": "Result",
+    "signature": "def public remove_storage_path(storage : SDL_Storage?; path : string)"
+  },
+  {
+    "module": "sdl3_storage_boost",
+    "name": "rename_storage_path",
+    "contract": "Result",
+    "signature": "def public rename_storage_path(storage : SDL_Storage?; oldpath,newpath : string)"
+  },
+  {
+    "module": "sdl3_storage_boost",
+    "name": "copy_storage_file",
+    "contract": "Result",
+    "signature": "def public copy_storage_file(storage : SDL_Storage?; oldpath,newpath : string)"
+  },
+  {
+    "module": "sdl3_storage_boost",
+    "name": "load_storage_file",
+    "contract": "Result",
+    "signature": "def public load_storage_file(storage : SDL_Storage?; path : string)"
+  },
+  {
+    "module": "sdl3_storage_boost",
+    "name": "enumerate_storage_directory",
+    "contract": "Result",
+    "signature": "def public enumerate_storage_directory(storage : SDL_Storage?; path : string = \"\")"
+  },
+  {
+    "module": "sdl3_storage_boost",
+    "name": "glob_storage_directory",
+    "contract": "Result",
+    "signature": "def public glob_storage_directory(storage : SDL_Storage?; path : string; pattern : string = \"*\"; flags : uint = 0u)"
+  },
+  {
+    "module": "sdl3_storage_boost",
+    "name": "with_storage",
+    "contract": "Result",
+    "signature": "def public with_storage(storage : SDL_Storage?; body : block<(store : SDL_Storage?) : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_storage_boost",
+    "name": "with_file_storage",
+    "contract": "Result",
+    "signature": "def public with_file_storage(path : string; body : block<(store : SDL_Storage?) : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_storage_boost",
+    "name": "with_title_storage",
+    "contract": "Result",
+    "signature": "def public with_title_storage(path : string; props : uint; body : block<(store : SDL_Storage?) : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_storage_boost",
+    "name": "with_user_storage",
+    "contract": "Result",
+    "signature": "def public with_user_storage(org,app : string; props : uint; body : block<(store : SDL_Storage?) : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_asyncio_boost",
+    "name": "open_async_io",
+    "contract": "Result",
+    "signature": "def public open_async_io(path,mode : string)"
+  },
+  {
+    "module": "sdl3_asyncio_boost",
+    "name": "async_io_size",
+    "contract": "Result",
+    "signature": "def public async_io_size(io : SDL_AsyncIO?)"
+  },
+  {
+    "module": "sdl3_asyncio_boost",
+    "name": "read_async_io",
+    "contract": "Result",
+    "signature": "def public read_async_io(io : SDL_AsyncIO?; buffer : void?; offset,size : uint64; queue : SDL_AsyncIOQueue?; userdata : void?)"
+  },
+  {
+    "module": "sdl3_asyncio_boost",
+    "name": "write_async_io",
+    "contract": "Result",
+    "signature": "def public write_async_io(io : SDL_AsyncIO?; buffer : void?; offset,size : uint64; queue : SDL_AsyncIOQueue?; userdata : void?)"
+  },
+  {
+    "module": "sdl3_asyncio_boost",
+    "name": "close_async_io",
+    "contract": "Result",
+    "signature": "def public close_async_io(var io : SDL_AsyncIO?&; flush : bool; queue : SDL_AsyncIOQueue?; userdata : void?)"
+  },
+  {
+    "module": "sdl3_asyncio_boost",
+    "name": "create_async_io_queue",
+    "contract": "Result",
+    "signature": "def public create_async_io_queue()"
+  },
+  {
+    "module": "sdl3_asyncio_boost",
+    "name": "get_async_io_result",
+    "contract": "Option",
+    "signature": "def public get_async_io_result(queue : SDL_AsyncIOQueue?)"
+  },
+  {
+    "module": "sdl3_asyncio_boost",
+    "name": "wait_async_io_result",
+    "contract": "Option",
+    "signature": "def public wait_async_io_result(queue : SDL_AsyncIOQueue?; timeout_ms : int)"
+  },
+  {
+    "module": "sdl3_asyncio_boost",
+    "name": "load_file_async",
+    "contract": "Result",
+    "signature": "def public load_file_async(path : string; queue : SDL_AsyncIOQueue?; userdata : void?)"
+  },
+  {
+    "module": "sdl3_asyncio_boost",
+    "name": "take_async_file_bytes",
+    "contract": "Result",
+    "signature": "def public take_async_file_bytes(var outcome : SDL_AsyncIOOutcome&)"
+  },
+  {
+    "module": "sdl3_asyncio_boost",
+    "name": "with_async_io_queue",
+    "contract": "Result",
+    "signature": "def public with_async_io_queue(body : block<(queue : SDL_AsyncIOQueue?) : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_audio_devices_boost",
+    "name": "audio_playback_devices",
+    "contract": "Result",
+    "signature": "def public audio_playback_devices()"
+  },
+  {
+    "module": "sdl3_audio_devices_boost",
+    "name": "audio_recording_devices",
+    "contract": "Result",
+    "signature": "def public audio_recording_devices()"
+  },
+  {
+    "module": "sdl3_audio_devices_boost",
+    "name": "audio_driver",
+    "contract": "Option",
+    "signature": "def public audio_driver(index : int)"
+  },
+  {
+    "module": "sdl3_audio_devices_boost",
+    "name": "current_audio_driver",
+    "contract": "Option",
+    "signature": "def public current_audio_driver()"
+  },
+  {
+    "module": "sdl3_audio_devices_boost",
+    "name": "audio_device_name",
+    "contract": "Result",
+    "signature": "def public audio_device_name(device : uint)"
+  },
+  {
+    "module": "sdl3_audio_devices_boost",
+    "name": "audio_device_format",
+    "contract": "Result",
+    "signature": "def public audio_device_format(device : uint; var sample_frames : int&)"
+  },
+  {
+    "module": "sdl3_audio_devices_boost",
+    "name": "audio_device_channel_map",
+    "contract": "Result",
+    "signature": "def public audio_device_channel_map(device : uint)"
+  },
+  {
+    "module": "sdl3_audio_devices_boost",
+    "name": "open_audio_device",
+    "contract": "Result",
+    "signature": "def public open_audio_device(device : uint)"
+  },
+  {
+    "module": "sdl3_audio_devices_boost",
+    "name": "open_audio_device",
+    "contract": "Result",
+    "signature": "def public open_audio_device(device : uint; spec : SDL_AudioSpec)"
+  },
+  {
+    "module": "sdl3_audio_devices_boost",
+    "name": "close_audio_device",
+    "contract": "value",
+    "signature": "def public close_audio_device(var device : uint&)"
+  },
+  {
+    "module": "sdl3_audio_devices_boost",
+    "name": "pause_audio_device",
+    "contract": "Result",
+    "signature": "def public pause_audio_device(device : uint)"
+  },
+  {
+    "module": "sdl3_audio_devices_boost",
+    "name": "resume_audio_device",
+    "contract": "Result",
+    "signature": "def public resume_audio_device(device : uint)"
+  },
+  {
+    "module": "sdl3_audio_devices_boost",
+    "name": "audio_device_paused",
+    "contract": "value",
+    "signature": "def public audio_device_paused(device : uint) : bool"
+  },
+  {
+    "module": "sdl3_audio_devices_boost",
+    "name": "audio_device_gain",
+    "contract": "Result",
+    "signature": "def public audio_device_gain(device : uint)"
+  },
+  {
+    "module": "sdl3_audio_devices_boost",
+    "name": "set_audio_device_gain",
+    "contract": "Result",
+    "signature": "def public set_audio_device_gain(device : uint; gain : float)"
+  },
+  {
+    "module": "sdl3_audio_devices_boost",
+    "name": "bind_audio_stream",
+    "contract": "Result",
+    "signature": "def public bind_audio_stream(device : uint; stream : SDL_AudioStream?)"
+  },
+  {
+    "module": "sdl3_audio_devices_boost",
+    "name": "bind_audio_streams",
+    "contract": "Result",
+    "signature": "def public bind_audio_streams(device : uint; streams : array<SDL_AudioStream?>)"
+  },
+  {
+    "module": "sdl3_audio_devices_boost",
+    "name": "unbind_audio_stream",
+    "contract": "value",
+    "signature": "def public unbind_audio_stream(stream : SDL_AudioStream?)"
+  },
+  {
+    "module": "sdl3_audio_devices_boost",
+    "name": "unbind_audio_streams",
+    "contract": "Result",
+    "signature": "def public unbind_audio_streams(streams : array<SDL_AudioStream?>)"
+  },
+  {
+    "module": "sdl3_audio_devices_boost",
+    "name": "with_audio_device",
+    "contract": "Result",
+    "signature": "def public with_audio_device(device : uint; body : block<(id : uint) : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_audio_devices_boost",
+    "name": "with_audio_device",
+    "contract": "Result",
+    "signature": "def public with_audio_device(device : uint; spec : SDL_AudioSpec; body : block<(id : uint) : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_audio_stream_controls",
+    "name": "audio_stream_properties",
+    "contract": "Result",
+    "signature": "def public audio_stream_properties(stream : SDL_AudioStream?)"
+  },
+  {
+    "module": "sdl3_audio_stream_controls",
+    "name": "audio_stream_formats",
+    "contract": "Result",
+    "signature": "def public audio_stream_formats(stream : SDL_AudioStream?; var src,dst : SDL_AudioSpec&)"
+  },
+  {
+    "module": "sdl3_audio_stream_controls",
+    "name": "set_audio_stream_formats",
+    "contract": "Result",
+    "signature": "def public set_audio_stream_formats(stream : SDL_AudioStream?; src,dst : SDL_AudioSpec)"
+  },
+  {
+    "module": "sdl3_audio_stream_controls",
+    "name": "set_audio_stream_input_format",
+    "contract": "Result",
+    "signature": "def public set_audio_stream_input_format(stream : SDL_AudioStream?; src : SDL_AudioSpec)"
+  },
+  {
+    "module": "sdl3_audio_stream_controls",
+    "name": "set_audio_stream_output_format",
+    "contract": "Result",
+    "signature": "def public set_audio_stream_output_format(stream : SDL_AudioStream?; dst : SDL_AudioSpec)"
+  },
+  {
+    "module": "sdl3_audio_stream_controls",
+    "name": "audio_stream_frequency_ratio",
+    "contract": "Result",
+    "signature": "def public audio_stream_frequency_ratio(stream : SDL_AudioStream?)"
+  },
+  {
+    "module": "sdl3_audio_stream_controls",
+    "name": "set_audio_stream_frequency_ratio",
+    "contract": "Result",
+    "signature": "def public set_audio_stream_frequency_ratio(stream : SDL_AudioStream?; value : float)"
+  },
+  {
+    "module": "sdl3_audio_stream_controls",
+    "name": "audio_stream_gain",
+    "contract": "Result",
+    "signature": "def public audio_stream_gain(stream : SDL_AudioStream?)"
+  },
+  {
+    "module": "sdl3_audio_stream_controls",
+    "name": "set_audio_stream_gain",
+    "contract": "Result",
+    "signature": "def public set_audio_stream_gain(stream : SDL_AudioStream?; value : float)"
+  },
+  {
+    "module": "sdl3_audio_stream_controls",
+    "name": "set_audio_stream_input_channel_map",
+    "contract": "Result",
+    "signature": "def public set_audio_stream_input_channel_map(stream : SDL_AudioStream?; map : array<int>)"
+  },
+  {
+    "module": "sdl3_audio_stream_controls",
+    "name": "reset_audio_stream_input_channel_map",
+    "contract": "Result",
+    "signature": "def public reset_audio_stream_input_channel_map(stream : SDL_AudioStream?; channels : int)"
+  },
+  {
+    "module": "sdl3_audio_stream_controls",
+    "name": "set_audio_stream_output_channel_map",
+    "contract": "Result",
+    "signature": "def public set_audio_stream_output_channel_map(stream : SDL_AudioStream?; map : array<int>)"
+  },
+  {
+    "module": "sdl3_audio_stream_controls",
+    "name": "reset_audio_stream_output_channel_map",
+    "contract": "Result",
+    "signature": "def public reset_audio_stream_output_channel_map(stream : SDL_AudioStream?; channels : int)"
+  },
+  {
+    "module": "sdl3_audio_stream_controls",
+    "name": "lock_audio_stream",
+    "contract": "Result",
+    "signature": "def public lock_audio_stream(stream : SDL_AudioStream?)"
+  },
+  {
+    "module": "sdl3_audio_stream_controls",
+    "name": "unlock_audio_stream",
+    "contract": "Result",
+    "signature": "def public unlock_audio_stream(stream : SDL_AudioStream?)"
+  },
+  {
+    "module": "sdl3_audio_stream_controls",
+    "name": "with_audio_stream_lock",
+    "contract": "Result",
+    "signature": "def public with_audio_stream_lock(stream : SDL_AudioStream?; body : block<() : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_audio_final",
+    "name": "audio_spec",
+    "contract": "value",
+    "signature": "def public audio_spec(format : SDL_AudioFormat; channels,frequency : int)"
+  },
+  {
+    "module": "sdl3_audio_final",
+    "name": "audio_format_name",
+    "contract": "value",
+    "signature": "def public audio_format_name(format : SDL_AudioFormat) : string"
+  },
+  {
+    "module": "sdl3_audio_final",
+    "name": "audio_silence_value",
+    "contract": "value",
+    "signature": "def public audio_silence_value(format : SDL_AudioFormat) : int"
+  },
+  {
+    "module": "sdl3_audio_final",
+    "name": "set_audio_stream_get_callback",
+    "contract": "Result",
+    "signature": "def public set_audio_stream_get_callback(stream : SDL_AudioStream?; callback,userdata : void?)"
+  },
+  {
+    "module": "sdl3_audio_final",
+    "name": "set_audio_stream_put_callback",
+    "contract": "Result",
+    "signature": "def public set_audio_stream_put_callback(stream : SDL_AudioStream?; callback,userdata : void?)"
+  },
+  {
+    "module": "sdl3_audio_final",
+    "name": "set_audio_postmix_callback",
+    "contract": "Result",
+    "signature": "def public set_audio_postmix_callback(device : uint; callback,userdata : void?)"
+  },
+  {
+    "module": "sdl3_audio_final",
+    "name": "open_audio_device_stream",
+    "contract": "Result",
+    "signature": "def public open_audio_device_stream(device : uint; spec : SDL_AudioSpec; callback : void? = null; userdata : void? = null)"
+  },
+  {
+    "module": "sdl3_audio_final",
+    "name": "with_audio_device_stream",
+    "contract": "Result",
+    "signature": "def public with_audio_device_stream(device : uint; spec : SDL_AudioSpec; callback,userdata : void?; body : block<(stream : SDL_AudioStream?) : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_audio_final",
+    "name": "load_wav_io",
+    "contract": "Result",
+    "signature": "def public load_wav_io(io : SDL_IOStream?; var spec : SDL_AudioSpec&)"
+  },
+  {
+    "module": "sdl3_audio_final",
+    "name": "mix_audio",
+    "contract": "Result",
+    "signature": "def public mix_audio(var dst : array<uint8>; src : array<uint8>; format : SDL_AudioFormat; count : uint; volume : float = 1.0)"
+  },
+  {
+    "module": "sdl3_audio_final",
+    "name": "convert_audio_samples",
+    "contract": "Result",
+    "signature": "def public convert_audio_samples(src_spec : SDL_AudioSpec; bytes : array<uint8>; dst_spec : SDL_AudioSpec)"
+  },
+  {
+    "module": "sdl3_camera_boost",
+    "name": "cameras",
+    "contract": "Result",
+    "signature": "def public cameras()"
+  },
+  {
+    "module": "sdl3_camera_boost",
+    "name": "camera_supported_formats",
+    "contract": "Result",
+    "signature": "def public camera_supported_formats(id : uint)"
+  },
+  {
+    "module": "sdl3_camera_boost",
+    "name": "camera_driver",
+    "contract": "Option",
+    "signature": "def public camera_driver(index : int)"
+  },
+  {
+    "module": "sdl3_camera_boost",
+    "name": "current_camera_driver",
+    "contract": "Option",
+    "signature": "def public current_camera_driver()"
+  },
+  {
+    "module": "sdl3_camera_boost",
+    "name": "camera_name",
+    "contract": "Result",
+    "signature": "def public camera_name(id : uint)"
+  },
+  {
+    "module": "sdl3_camera_boost",
+    "name": "camera_position",
+    "contract": "value",
+    "signature": "def public camera_position(id : uint)"
+  },
+  {
+    "module": "sdl3_camera_boost",
+    "name": "camera_permission_state",
+    "contract": "value",
+    "signature": "def public camera_permission_state(camera : SDL_Camera?) : int"
+  },
+  {
+    "module": "sdl3_camera_boost",
+    "name": "camera_id",
+    "contract": "Result",
+    "signature": "def public camera_id(camera : SDL_Camera?)"
+  },
+  {
+    "module": "sdl3_camera_boost",
+    "name": "camera_properties",
+    "contract": "Result",
+    "signature": "def public camera_properties(camera : SDL_Camera?)"
+  },
+  {
+    "module": "sdl3_camera_boost",
+    "name": "camera_format",
+    "contract": "Result",
+    "signature": "def public camera_format(camera : SDL_Camera?)"
+  },
+  {
+    "module": "sdl3_camera_boost",
+    "name": "open_camera",
+    "contract": "Result",
+    "signature": "def public open_camera(id : uint)"
+  },
+  {
+    "module": "sdl3_camera_boost",
+    "name": "open_camera",
+    "contract": "Result",
+    "signature": "def public open_camera(id : uint; spec : SDL_CameraSpec)"
+  },
+  {
+    "module": "sdl3_camera_boost",
+    "name": "close_camera",
+    "contract": "value",
+    "signature": "def public close_camera(var camera : SDL_Camera?&)"
+  },
+  {
+    "module": "sdl3_camera_boost",
+    "name": "acquire_camera_frame",
+    "contract": "Result",
+    "signature": "def public acquire_camera_frame(camera : SDL_Camera?)"
+  },
+  {
+    "module": "sdl3_camera_boost",
+    "name": "release_camera_frame",
+    "contract": "value",
+    "signature": "def public release_camera_frame(camera : SDL_Camera?; var frame : CameraFrame)"
+  },
+  {
+    "module": "sdl3_camera_boost",
+    "name": "with_camera",
+    "contract": "Result",
+    "signature": "def public with_camera(id : uint; body : block<(camera : SDL_Camera?) : $Result<auto(CameraValue); SdlError>>)"
+  },
+  {
+    "module": "sdl3_camera_boost",
+    "name": "with_camera",
+    "contract": "Result",
+    "signature": "def public with_camera(id : uint; spec : SDL_CameraSpec; body : block<(camera : SDL_Camera?) : $Result<auto(CameraValue); SdlError>>)"
+  },
+  {
+    "module": "sdl3_camera_boost",
+    "name": "with_camera_frame",
+    "contract": "Result",
+    "signature": "def public with_camera_frame(camera : SDL_Camera?; body : block<(frame : CameraFrame) : $Result<auto(CameraValue); SdlError>>)"
   }
 ]

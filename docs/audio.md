@@ -2,7 +2,11 @@
 
 Подключение: `require dassdl3/sdl3_audio_boost` (переэкспортирует sdl3_boost).
 Слой рассчитан на SDL 3.2.18; пока поддерживается воспроизведение через очередь,
-без вызова daScript из фонового аудиопотока и без записи с микрофона.
+без вызова daScript из фонового аудиопотока. Выбор устройств и запись через
+потоки добавлены в [Audio devices](audio-devices.md); запись проверена только на dummy.
+
+Native callbacks, WAV IO, mixing и conversion: [audio-final-api.md](audio-final-api.md).
+Callbacks принимают только native C адреса, не daScript blocks.
 
 Полный пример обработки Result и времени жизни: [08_audio.das](../examples/08_audio.das).
 Все with_* блоки возвращают Result; успешный выход без значения — `sdl_ok()`.
@@ -66,7 +70,7 @@ mono PCM16 22050 Гц. Генератор: `tools/make_audio_fixture.py`. CMake 
 ctest --test-dir build/ninja -R '^sdl3_audio' --output-on-failure
 ```
 
-CTest устанавливает SDL_AUDIO_DRIVER=dummy только для двух аудиотестов.
+CTest устанавливает SDL_AUDIO_DRIVER=dummy для аудиотестов.
 Прямой запуск (в том числе с --smoke-test) использует обычное устройство и
 проигрывает сигнал один раз. Пример ограничивает ожидание очереди пятью секундами.
 
@@ -78,4 +82,5 @@ CTest устанавливает SDL_AUDIO_DRIVER=dummy только для дв
 Тестовые SDLTest* и счётчик WAV отсутствуют при BUILD_TESTING=OFF.
 
 Акустический результат на настоящем устройстве, другие ОС, JIT,
-микрофон, выбор устройств и фоновые callbacks пока не проверены/не реализованы.
+физический микрофон пока не проверен. Native callbacks проверены с dummy и native worker;
+script callbacks из аудиопотока не поддерживаются.

@@ -1,12 +1,20 @@
 # Покрытие SDL3
 
-Baseline: SDL 3.2.18, Windows x64/MSVC. Generated: 716; adapted: 13;
-pending: 497 of 1226 functions. GPU: 92 generated / 0 adapted / 0 pending.
+Baseline: SDL 3.2.18, Windows x64/MSVC. Generated: 852; adapted: 14;
+pending: 360 of 1226 functions. GPU: 92 generated / 0 adapted / 0 pending.
 `adapted` means a documented partial adapter, not full raw API coverage.
 See [API boundary](gpu-api-boundary.md) and the generated header census.
 
 | Подсистема / сценарий | Raw API | Идиоматичный слой | Проверка / оставшаяся работа |
 | --- | --- | --- | --- |
+| Audio final API | 9 additional generated; Audio raw 56/56 | Native callback addresses, WAV IO and PCM arrays | [Contracts](audio-final-api.md); known map getter/postmix exceptions |
+| Audio stream controls | 12 additional generated | Format refs, map setters, gain/ratio and deferred lock | [Contracts](audio-stream-controls.md); PCM and cross-thread unlock tests |
+| Camera | 15/15 generated | Copied discovery, Result/Option frames and defer scopes | [Contracts and hardware limits](camera.md) |
+| Audio devices | 21 additional generated; Audio total 56/56 | Copied discovery, logical scopes, binding and dummy recording | [Contracts](audio-devices.md); stream/callback/conversion connected; physical-device checks remain |
+| AsyncIO | 11/11 generated | Submission Result, completion Option, copied file bytes and queue defer | [Lifetime contracts](asyncio.md); synthetic cancellation only |
+| Storage | 17/17 generated | Native interfaces, copied lists/bytes, bounds and defer scopes | [Contracts](storage.md); positive user/cloud storage remains unverified |
+| IOStream | 46 generated / 1 fixed-text adapted / 1 va_list pending | Bounded byte transfers, counts/status, scalar refs and defer scopes | [Contracts and pinned bulk IO limits](iostream.md) |
+| Filesystem | 11/11 generated | Copied paths/lists and Result helpers | [Contracts](filesystem.md) |
 | Rect/Clipboard/hit-test | 18 + 11 + 1 generated | Ref/copy and lexical callback scopes | [Contracts](rect-clipboard-hittest.md); GL/EGL moved to P8 |
 | Surface/Pixels | Surface 58/58, Pixels 11/11 raw | Refs, packed arrays, copied pointer list, defer scopes | Native function execution, pixels and ownership; [contract](surface-pixels.md) |
 | Surface state | 16 generated | Scalar/rect refs | State, key/modulation and clip pixels; [contract](surface-state.md) |

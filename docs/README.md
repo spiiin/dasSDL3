@@ -83,3 +83,15 @@ Early-return syntax: [`sdl_try` macro and example](sdl-try.md).
 - [Touch/Pen/Sensor/Haptic/HIDAPI](peripherals.md): raw functions, owned metadata, effects and report buffers.
 
 - [IME/MIME event lists and user pointers](event-list-payloads.md): copied lists, move-only events, borrowed raw data.
+
+- [Filesystem](filesystem.md): paths, copied directory lists, native callbacks and Result contracts.
+
+- [IOStream](iostream.md): byte transfers, endian values, native callbacks and stream ownership.
+
+- [Storage](storage.md): file/title/user/custom storage, native callbacks and ownership.
+- [AsyncIO](asyncio.md): submission, completion, stable buffers and queue shutdown.
+- [Audio devices](audio-devices.md): discovery, logical ownership, stream binding and dummy capture.
+- [Audio stream controls](audio-stream-controls.md): format, gain, ratio, channel maps, pinned getter defect and deferred unlock.
+- [Audio final API](audio-final-api.md): native callbacks, WAV IO, PCM mixing and conversion.
+
+- [Camera](camera.md): 15 raw APIs, borrowed frames and dummy-only validation.

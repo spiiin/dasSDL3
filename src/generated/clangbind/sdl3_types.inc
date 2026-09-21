@@ -28,6 +28,10 @@ MAKE_TYPE_FACTORY(SDL_Gamepad, SDL_Gamepad);
 MAKE_TYPE_FACTORY(SDL_Sensor, SDL_Sensor);
 MAKE_TYPE_FACTORY(SDL_Haptic, SDL_Haptic);
 MAKE_TYPE_FACTORY(SDL_hid_device, SDL_hid_device);
+MAKE_TYPE_FACTORY(SDL_Storage, SDL_Storage);
+MAKE_TYPE_FACTORY(SDL_AsyncIO, SDL_AsyncIO);
+MAKE_TYPE_FACTORY(SDL_AsyncIOQueue, SDL_AsyncIOQueue);
+MAKE_TYPE_FACTORY(SDL_Camera, SDL_Camera);
 DAS_BIND_ENUM_CAST(SDL_GPUTextureType);
 DAS_BASE_BIND_ENUM_GEN(SDL_GPUTextureType,SDL_GPUTextureType);
 DAS_BIND_ENUM_CAST(SDL_GPUTextureFormat);
@@ -148,6 +152,22 @@ DAS_BIND_ENUM_CAST(SDL_PenAxis);
 DAS_BASE_BIND_ENUM_GEN(SDL_PenAxis,SDL_PenAxis);
 DAS_BIND_ENUM_CAST(SDL_hid_bus_type);
 DAS_BASE_BIND_ENUM_GEN(SDL_hid_bus_type,SDL_hid_bus_type);
+DAS_BIND_ENUM_CAST(SDL_Folder);
+DAS_BASE_BIND_ENUM_GEN(SDL_Folder,SDL_Folder);
+DAS_BIND_ENUM_CAST(SDL_PathType);
+DAS_BASE_BIND_ENUM_GEN(SDL_PathType,SDL_PathType);
+DAS_BIND_ENUM_CAST(SDL_EnumerationResult);
+DAS_BASE_BIND_ENUM_GEN(SDL_EnumerationResult,SDL_EnumerationResult);
+DAS_BIND_ENUM_CAST(SDL_IOStatus);
+DAS_BASE_BIND_ENUM_GEN(SDL_IOStatus,SDL_IOStatus);
+DAS_BIND_ENUM_CAST(SDL_AsyncIOTaskType);
+DAS_BASE_BIND_ENUM_GEN(SDL_AsyncIOTaskType,SDL_AsyncIOTaskType);
+DAS_BIND_ENUM_CAST(SDL_AsyncIOResult);
+DAS_BASE_BIND_ENUM_GEN(SDL_AsyncIOResult,SDL_AsyncIOResult);
+DAS_BIND_ENUM_CAST(SDL_AudioFormat);
+DAS_BASE_BIND_ENUM_GEN(SDL_AudioFormat,SDL_AudioFormat);
+DAS_BIND_ENUM_CAST(SDL_CameraPosition);
+DAS_BASE_BIND_ENUM_GEN(SDL_CameraPosition,SDL_CameraPosition);
 MAKE_TYPE_FACTORY(SDL_GPUViewport, SDL_GPUViewport);
 MAKE_TYPE_FACTORY(SDL_GPUIndirectDrawCommand, SDL_GPUIndirectDrawCommand);
 MAKE_TYPE_FACTORY(SDL_GPUIndexedIndirectDrawCommand, SDL_GPUIndexedIndirectDrawCommand);
@@ -234,6 +254,54 @@ MAKE_TYPE_FACTORY(SDL_PenAxisEvent, SDL_PenAxisEvent);
 MAKE_TYPE_FACTORY(SDL_SensorEvent, SDL_SensorEvent);
 MAKE_TYPE_FACTORY(SDL_TextEditingCandidatesEvent, SDL_TextEditingCandidatesEvent);
 MAKE_TYPE_FACTORY(SDL_ClipboardEvent, SDL_ClipboardEvent);
+MAKE_TYPE_FACTORY(SDL_PathInfo, SDL_PathInfo);
+MAKE_TYPE_FACTORY(SDL_IOStreamInterface, SDL_IOStreamInterface);
+MAKE_TYPE_FACTORY(SDL_StorageInterface, SDL_StorageInterface);
+MAKE_TYPE_FACTORY(SDL_AsyncIOOutcome, SDL_AsyncIOOutcome);
+MAKE_TYPE_FACTORY(SDL_CameraSpec, SDL_CameraSpec);
+static_assert(sizeof(SDL_AsyncIOTaskType) == 4 && alignof(SDL_AsyncIOTaskType) == 4);
+class Enumeration_SDL_AsyncIOTaskType : public das::Enumeration {
+public: Enumeration_SDL_AsyncIOTaskType() : das::Enumeration("SDL_AsyncIOTaskType") {
+external=true; cppName="SDL_AsyncIOTaskType"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_AsyncIOTaskType>::type>::type;
+static_assert(int64_t(SDL_ASYNCIO_TASK_READ) == 0LL);
+addIEx("ASYNCIO_TASK_READ","SDL_ASYNCIO_TASK_READ",int64_t(SDL_ASYNCIO_TASK_READ),das::LineInfo());
+static_assert(int64_t(SDL_ASYNCIO_TASK_WRITE) == 1LL);
+addIEx("ASYNCIO_TASK_WRITE","SDL_ASYNCIO_TASK_WRITE",int64_t(SDL_ASYNCIO_TASK_WRITE),das::LineInfo());
+static_assert(int64_t(SDL_ASYNCIO_TASK_CLOSE) == 2LL);
+addIEx("ASYNCIO_TASK_CLOSE","SDL_ASYNCIO_TASK_CLOSE",int64_t(SDL_ASYNCIO_TASK_CLOSE),das::LineInfo());
+} };
+static_assert(sizeof(SDL_AsyncIOResult) == 4 && alignof(SDL_AsyncIOResult) == 4);
+class Enumeration_SDL_AsyncIOResult : public das::Enumeration {
+public: Enumeration_SDL_AsyncIOResult() : das::Enumeration("SDL_AsyncIOResult") {
+external=true; cppName="SDL_AsyncIOResult"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_AsyncIOResult>::type>::type;
+static_assert(int64_t(SDL_ASYNCIO_COMPLETE) == 0LL);
+addIEx("ASYNCIO_COMPLETE","SDL_ASYNCIO_COMPLETE",int64_t(SDL_ASYNCIO_COMPLETE),das::LineInfo());
+static_assert(int64_t(SDL_ASYNCIO_FAILURE) == 1LL);
+addIEx("ASYNCIO_FAILURE","SDL_ASYNCIO_FAILURE",int64_t(SDL_ASYNCIO_FAILURE),das::LineInfo());
+static_assert(int64_t(SDL_ASYNCIO_CANCELED) == 2LL);
+addIEx("ASYNCIO_CANCELED","SDL_ASYNCIO_CANCELED",int64_t(SDL_ASYNCIO_CANCELED),das::LineInfo());
+} };
+static_assert(sizeof(SDL_AsyncIOOutcome) == 56 && alignof(SDL_AsyncIOOutcome) == 8);
+namespace das { struct SDL_AsyncIOOutcomeAnnotation : ManagedStructureAnnotation<SDL_AsyncIOOutcome, false> {
+SDL_AsyncIOOutcomeAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_AsyncIOOutcome", lib) {
+static_assert(offsetof(SDL_AsyncIOOutcome, asyncio) == 0);
+addField<DAS_BIND_MANAGED_FIELD(asyncio)>("asyncio", "asyncio");
+static_assert(offsetof(SDL_AsyncIOOutcome, type) == 8);
+addField<DAS_BIND_MANAGED_FIELD(type)>("task_type", "type");
+static_assert(offsetof(SDL_AsyncIOOutcome, result) == 12);
+addField<DAS_BIND_MANAGED_FIELD(result)>("result", "result");
+static_assert(offsetof(SDL_AsyncIOOutcome, buffer) == 16);
+addField<DAS_BIND_MANAGED_FIELD(buffer)>("buffer", "buffer");
+static_assert(offsetof(SDL_AsyncIOOutcome, offset) == 24);
+addField<DAS_BIND_MANAGED_FIELD(offset)>("offset", "offset");
+static_assert(offsetof(SDL_AsyncIOOutcome, bytes_requested) == 32);
+addField<DAS_BIND_MANAGED_FIELD(bytes_requested)>("bytes_requested", "bytes_requested");
+static_assert(offsetof(SDL_AsyncIOOutcome, bytes_transferred) == 40);
+addField<DAS_BIND_MANAGED_FIELD(bytes_transferred)>("bytes_transferred", "bytes_transferred");
+static_assert(offsetof(SDL_AsyncIOOutcome, userdata) == 48);
+addField<DAS_BIND_MANAGED_FIELD(userdata)>("userdata", "userdata");
+}
+}; }
 static_assert(sizeof(SDL_PropertyType) == 4 && alignof(SDL_PropertyType) == 4);
 class Enumeration_SDL_PropertyType : public das::Enumeration {
 public: Enumeration_SDL_PropertyType() : das::Enumeration("SDL_PropertyType") {
@@ -251,6 +319,23 @@ addIEx("PROPERTY_TYPE_FLOAT","SDL_PROPERTY_TYPE_FLOAT",int64_t(SDL_PROPERTY_TYPE
 static_assert(int64_t(SDL_PROPERTY_TYPE_BOOLEAN) == 5LL);
 addIEx("PROPERTY_TYPE_BOOLEAN","SDL_PROPERTY_TYPE_BOOLEAN",int64_t(SDL_PROPERTY_TYPE_BOOLEAN),das::LineInfo());
 } };
+static_assert(sizeof(SDL_IOStatus) == 4 && alignof(SDL_IOStatus) == 4);
+class Enumeration_SDL_IOStatus : public das::Enumeration {
+public: Enumeration_SDL_IOStatus() : das::Enumeration("SDL_IOStatus") {
+external=true; cppName="SDL_IOStatus"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_IOStatus>::type>::type;
+static_assert(int64_t(SDL_IO_STATUS_READY) == 0LL);
+addIEx("IO_STATUS_READY","SDL_IO_STATUS_READY",int64_t(SDL_IO_STATUS_READY),das::LineInfo());
+static_assert(int64_t(SDL_IO_STATUS_ERROR) == 1LL);
+addIEx("IO_STATUS_ERROR","SDL_IO_STATUS_ERROR",int64_t(SDL_IO_STATUS_ERROR),das::LineInfo());
+static_assert(int64_t(SDL_IO_STATUS_EOF) == 2LL);
+addIEx("IO_STATUS_EOF","SDL_IO_STATUS_EOF",int64_t(SDL_IO_STATUS_EOF),das::LineInfo());
+static_assert(int64_t(SDL_IO_STATUS_NOT_READY) == 3LL);
+addIEx("IO_STATUS_NOT_READY","SDL_IO_STATUS_NOT_READY",int64_t(SDL_IO_STATUS_NOT_READY),das::LineInfo());
+static_assert(int64_t(SDL_IO_STATUS_READONLY) == 4LL);
+addIEx("IO_STATUS_READONLY","SDL_IO_STATUS_READONLY",int64_t(SDL_IO_STATUS_READONLY),das::LineInfo());
+static_assert(int64_t(SDL_IO_STATUS_WRITEONLY) == 5LL);
+addIEx("IO_STATUS_WRITEONLY","SDL_IO_STATUS_WRITEONLY",int64_t(SDL_IO_STATUS_WRITEONLY),das::LineInfo());
+} };
 static_assert(sizeof(SDL_IOWhence) == 4 && alignof(SDL_IOWhence) == 4);
 class Enumeration_SDL_IOWhence : public das::Enumeration {
 public: Enumeration_SDL_IOWhence() : das::Enumeration("SDL_IOWhence") {
@@ -262,9 +347,47 @@ addIEx("IO_SEEK_CUR","SDL_IO_SEEK_CUR",int64_t(SDL_IO_SEEK_CUR),das::LineInfo())
 static_assert(int64_t(SDL_IO_SEEK_END) == 2LL);
 addIEx("IO_SEEK_END","SDL_IO_SEEK_END",int64_t(SDL_IO_SEEK_END),das::LineInfo());
 } };
+static_assert(sizeof(SDL_IOStreamInterface) == 56 && alignof(SDL_IOStreamInterface) == 8);
+namespace das { struct SDL_IOStreamInterfaceAnnotation : ManagedStructureAnnotation<SDL_IOStreamInterface, false> {
+SDL_IOStreamInterfaceAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_IOStreamInterface", lib) {
+static_assert(offsetof(SDL_IOStreamInterface, version) == 0);
+addField<DAS_BIND_MANAGED_FIELD(version)>("version", "version");
+}
+}; }
+static_assert(sizeof(SDL_AudioFormat) == 4 && alignof(SDL_AudioFormat) == 4);
+class Enumeration_SDL_AudioFormat : public das::Enumeration {
+public: Enumeration_SDL_AudioFormat() : das::Enumeration("SDL_AudioFormat") {
+external=true; cppName="SDL_AudioFormat"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_AudioFormat>::type>::type;
+static_assert(int64_t(SDL_AUDIO_UNKNOWN) == 0LL);
+addIEx("AUDIO_UNKNOWN","SDL_AUDIO_UNKNOWN",int64_t(SDL_AUDIO_UNKNOWN),das::LineInfo());
+static_assert(int64_t(SDL_AUDIO_U8) == 8LL);
+addIEx("AUDIO_U8","SDL_AUDIO_U8",int64_t(SDL_AUDIO_U8),das::LineInfo());
+static_assert(int64_t(SDL_AUDIO_S8) == 32776LL);
+addIEx("AUDIO_S8","SDL_AUDIO_S8",int64_t(SDL_AUDIO_S8),das::LineInfo());
+static_assert(int64_t(SDL_AUDIO_S16LE) == 32784LL);
+addIEx("AUDIO_S16LE","SDL_AUDIO_S16LE",int64_t(SDL_AUDIO_S16LE),das::LineInfo());
+static_assert(int64_t(SDL_AUDIO_S16BE) == 36880LL);
+addIEx("AUDIO_S16BE","SDL_AUDIO_S16BE",int64_t(SDL_AUDIO_S16BE),das::LineInfo());
+static_assert(int64_t(SDL_AUDIO_S32LE) == 32800LL);
+addIEx("AUDIO_S32LE","SDL_AUDIO_S32LE",int64_t(SDL_AUDIO_S32LE),das::LineInfo());
+static_assert(int64_t(SDL_AUDIO_S32BE) == 36896LL);
+addIEx("AUDIO_S32BE","SDL_AUDIO_S32BE",int64_t(SDL_AUDIO_S32BE),das::LineInfo());
+static_assert(int64_t(SDL_AUDIO_F32LE) == 33056LL);
+addIEx("AUDIO_F32LE","SDL_AUDIO_F32LE",int64_t(SDL_AUDIO_F32LE),das::LineInfo());
+static_assert(int64_t(SDL_AUDIO_F32BE) == 37152LL);
+addIEx("AUDIO_F32BE","SDL_AUDIO_F32BE",int64_t(SDL_AUDIO_F32BE),das::LineInfo());
+static_assert(int64_t(SDL_AUDIO_S16) == 32784LL);
+addIEx("AUDIO_S16","SDL_AUDIO_S16",int64_t(SDL_AUDIO_S16),das::LineInfo());
+static_assert(int64_t(SDL_AUDIO_S32) == 32800LL);
+addIEx("AUDIO_S32","SDL_AUDIO_S32",int64_t(SDL_AUDIO_S32),das::LineInfo());
+static_assert(int64_t(SDL_AUDIO_F32) == 33056LL);
+addIEx("AUDIO_F32","SDL_AUDIO_F32",int64_t(SDL_AUDIO_F32),das::LineInfo());
+} };
 static_assert(sizeof(SDL_AudioSpec) == 12 && alignof(SDL_AudioSpec) == 4);
 namespace das { struct SDL_AudioSpecAnnotation : ManagedStructureAnnotation<SDL_AudioSpec, false> {
 SDL_AudioSpecAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_AudioSpec", lib) {
+static_assert(offsetof(SDL_AudioSpec, format) == 0);
+addField<DAS_BIND_MANAGED_FIELD(format)>("format", "format");
 static_assert(offsetof(SDL_AudioSpec, channels) == 4);
 addField<DAS_BIND_MANAGED_FIELD(channels)>("channels", "channels");
 static_assert(offsetof(SDL_AudioSpec, freq) == 8);
@@ -619,6 +742,34 @@ static_assert(int64_t(SDL_FLIP_HORIZONTAL) == 1LL);
 addIEx("FLIP_HORIZONTAL","SDL_FLIP_HORIZONTAL",int64_t(SDL_FLIP_HORIZONTAL),das::LineInfo());
 static_assert(int64_t(SDL_FLIP_VERTICAL) == 2LL);
 addIEx("FLIP_VERTICAL","SDL_FLIP_VERTICAL",int64_t(SDL_FLIP_VERTICAL),das::LineInfo());
+} };
+static_assert(sizeof(SDL_CameraSpec) == 24 && alignof(SDL_CameraSpec) == 4);
+namespace das { struct SDL_CameraSpecAnnotation : ManagedStructureAnnotation<SDL_CameraSpec, false> {
+SDL_CameraSpecAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_CameraSpec", lib) {
+static_assert(offsetof(SDL_CameraSpec, format) == 0);
+addField<DAS_BIND_MANAGED_FIELD(format)>("format", "format");
+static_assert(offsetof(SDL_CameraSpec, colorspace) == 4);
+addField<DAS_BIND_MANAGED_FIELD(colorspace)>("colorspace", "colorspace");
+static_assert(offsetof(SDL_CameraSpec, width) == 8);
+addField<DAS_BIND_MANAGED_FIELD(width)>("width", "width");
+static_assert(offsetof(SDL_CameraSpec, height) == 12);
+addField<DAS_BIND_MANAGED_FIELD(height)>("height", "height");
+static_assert(offsetof(SDL_CameraSpec, framerate_numerator) == 16);
+addField<DAS_BIND_MANAGED_FIELD(framerate_numerator)>("framerate_numerator", "framerate_numerator");
+static_assert(offsetof(SDL_CameraSpec, framerate_denominator) == 20);
+addField<DAS_BIND_MANAGED_FIELD(framerate_denominator)>("framerate_denominator", "framerate_denominator");
+}
+}; }
+static_assert(sizeof(SDL_CameraPosition) == 4 && alignof(SDL_CameraPosition) == 4);
+class Enumeration_SDL_CameraPosition : public das::Enumeration {
+public: Enumeration_SDL_CameraPosition() : das::Enumeration("SDL_CameraPosition") {
+external=true; cppName="SDL_CameraPosition"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_CameraPosition>::type>::type;
+static_assert(int64_t(SDL_CAMERA_POSITION_UNKNOWN) == 0LL);
+addIEx("CAMERA_POSITION_UNKNOWN","SDL_CAMERA_POSITION_UNKNOWN",int64_t(SDL_CAMERA_POSITION_UNKNOWN),das::LineInfo());
+static_assert(int64_t(SDL_CAMERA_POSITION_FRONT_FACING) == 1LL);
+addIEx("CAMERA_POSITION_FRONT_FACING","SDL_CAMERA_POSITION_FRONT_FACING",int64_t(SDL_CAMERA_POSITION_FRONT_FACING),das::LineInfo());
+static_assert(int64_t(SDL_CAMERA_POSITION_BACK_FACING) == 2LL);
+addIEx("CAMERA_POSITION_BACK_FACING","SDL_CAMERA_POSITION_BACK_FACING",int64_t(SDL_CAMERA_POSITION_BACK_FACING),das::LineInfo());
 } };
 static_assert(sizeof(SDL_SystemTheme) == 4 && alignof(SDL_SystemTheme) == 4);
 class Enumeration_SDL_SystemTheme : public das::Enumeration {
@@ -2031,6 +2182,74 @@ static_assert(int64_t(SDL_PEEKEVENT) == 1LL);
 addIEx("PEEKEVENT","SDL_PEEKEVENT",int64_t(SDL_PEEKEVENT),das::LineInfo());
 static_assert(int64_t(SDL_GETEVENT) == 2LL);
 addIEx("GETEVENT","SDL_GETEVENT",int64_t(SDL_GETEVENT),das::LineInfo());
+} };
+static_assert(sizeof(SDL_Folder) == 4 && alignof(SDL_Folder) == 4);
+class Enumeration_SDL_Folder : public das::Enumeration {
+public: Enumeration_SDL_Folder() : das::Enumeration("SDL_Folder") {
+external=true; cppName="SDL_Folder"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_Folder>::type>::type;
+static_assert(int64_t(SDL_FOLDER_HOME) == 0LL);
+addIEx("FOLDER_HOME","SDL_FOLDER_HOME",int64_t(SDL_FOLDER_HOME),das::LineInfo());
+static_assert(int64_t(SDL_FOLDER_DESKTOP) == 1LL);
+addIEx("FOLDER_DESKTOP","SDL_FOLDER_DESKTOP",int64_t(SDL_FOLDER_DESKTOP),das::LineInfo());
+static_assert(int64_t(SDL_FOLDER_DOCUMENTS) == 2LL);
+addIEx("FOLDER_DOCUMENTS","SDL_FOLDER_DOCUMENTS",int64_t(SDL_FOLDER_DOCUMENTS),das::LineInfo());
+static_assert(int64_t(SDL_FOLDER_DOWNLOADS) == 3LL);
+addIEx("FOLDER_DOWNLOADS","SDL_FOLDER_DOWNLOADS",int64_t(SDL_FOLDER_DOWNLOADS),das::LineInfo());
+static_assert(int64_t(SDL_FOLDER_MUSIC) == 4LL);
+addIEx("FOLDER_MUSIC","SDL_FOLDER_MUSIC",int64_t(SDL_FOLDER_MUSIC),das::LineInfo());
+static_assert(int64_t(SDL_FOLDER_PICTURES) == 5LL);
+addIEx("FOLDER_PICTURES","SDL_FOLDER_PICTURES",int64_t(SDL_FOLDER_PICTURES),das::LineInfo());
+static_assert(int64_t(SDL_FOLDER_PUBLICSHARE) == 6LL);
+addIEx("FOLDER_PUBLICSHARE","SDL_FOLDER_PUBLICSHARE",int64_t(SDL_FOLDER_PUBLICSHARE),das::LineInfo());
+static_assert(int64_t(SDL_FOLDER_SAVEDGAMES) == 7LL);
+addIEx("FOLDER_SAVEDGAMES","SDL_FOLDER_SAVEDGAMES",int64_t(SDL_FOLDER_SAVEDGAMES),das::LineInfo());
+static_assert(int64_t(SDL_FOLDER_SCREENSHOTS) == 8LL);
+addIEx("FOLDER_SCREENSHOTS","SDL_FOLDER_SCREENSHOTS",int64_t(SDL_FOLDER_SCREENSHOTS),das::LineInfo());
+static_assert(int64_t(SDL_FOLDER_TEMPLATES) == 9LL);
+addIEx("FOLDER_TEMPLATES","SDL_FOLDER_TEMPLATES",int64_t(SDL_FOLDER_TEMPLATES),das::LineInfo());
+static_assert(int64_t(SDL_FOLDER_VIDEOS) == 10LL);
+addIEx("FOLDER_VIDEOS","SDL_FOLDER_VIDEOS",int64_t(SDL_FOLDER_VIDEOS),das::LineInfo());
+static_assert(int64_t(SDL_FOLDER_COUNT) == 11LL);
+addIEx("FOLDER_COUNT","SDL_FOLDER_COUNT",int64_t(SDL_FOLDER_COUNT),das::LineInfo());
+} };
+static_assert(sizeof(SDL_PathType) == 4 && alignof(SDL_PathType) == 4);
+class Enumeration_SDL_PathType : public das::Enumeration {
+public: Enumeration_SDL_PathType() : das::Enumeration("SDL_PathType") {
+external=true; cppName="SDL_PathType"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_PathType>::type>::type;
+static_assert(int64_t(SDL_PATHTYPE_NONE) == 0LL);
+addIEx("PATHTYPE_NONE","SDL_PATHTYPE_NONE",int64_t(SDL_PATHTYPE_NONE),das::LineInfo());
+static_assert(int64_t(SDL_PATHTYPE_FILE) == 1LL);
+addIEx("PATHTYPE_FILE","SDL_PATHTYPE_FILE",int64_t(SDL_PATHTYPE_FILE),das::LineInfo());
+static_assert(int64_t(SDL_PATHTYPE_DIRECTORY) == 2LL);
+addIEx("PATHTYPE_DIRECTORY","SDL_PATHTYPE_DIRECTORY",int64_t(SDL_PATHTYPE_DIRECTORY),das::LineInfo());
+static_assert(int64_t(SDL_PATHTYPE_OTHER) == 3LL);
+addIEx("PATHTYPE_OTHER","SDL_PATHTYPE_OTHER",int64_t(SDL_PATHTYPE_OTHER),das::LineInfo());
+} };
+static_assert(sizeof(SDL_PathInfo) == 40 && alignof(SDL_PathInfo) == 8);
+namespace das { struct SDL_PathInfoAnnotation : ManagedStructureAnnotation<SDL_PathInfo, false> {
+SDL_PathInfoAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_PathInfo", lib) {
+static_assert(offsetof(SDL_PathInfo, type) == 0);
+addField<DAS_BIND_MANAGED_FIELD(type)>("path_type", "type");
+static_assert(offsetof(SDL_PathInfo, size) == 8);
+addField<DAS_BIND_MANAGED_FIELD(size)>("size", "size");
+static_assert(offsetof(SDL_PathInfo, create_time) == 16);
+addField<DAS_BIND_MANAGED_FIELD(create_time)>("create_time", "create_time");
+static_assert(offsetof(SDL_PathInfo, modify_time) == 24);
+addField<DAS_BIND_MANAGED_FIELD(modify_time)>("modify_time", "modify_time");
+static_assert(offsetof(SDL_PathInfo, access_time) == 32);
+addField<DAS_BIND_MANAGED_FIELD(access_time)>("access_time", "access_time");
+}
+}; }
+static_assert(sizeof(SDL_EnumerationResult) == 4 && alignof(SDL_EnumerationResult) == 4);
+class Enumeration_SDL_EnumerationResult : public das::Enumeration {
+public: Enumeration_SDL_EnumerationResult() : das::Enumeration("SDL_EnumerationResult") {
+external=true; cppName="SDL_EnumerationResult"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_EnumerationResult>::type>::type;
+static_assert(int64_t(SDL_ENUM_CONTINUE) == 0LL);
+addIEx("ENUM_CONTINUE","SDL_ENUM_CONTINUE",int64_t(SDL_ENUM_CONTINUE),das::LineInfo());
+static_assert(int64_t(SDL_ENUM_SUCCESS) == 1LL);
+addIEx("ENUM_SUCCESS","SDL_ENUM_SUCCESS",int64_t(SDL_ENUM_SUCCESS),das::LineInfo());
+static_assert(int64_t(SDL_ENUM_FAILURE) == 2LL);
+addIEx("ENUM_FAILURE","SDL_ENUM_FAILURE",int64_t(SDL_ENUM_FAILURE),das::LineInfo());
 } };
 static_assert(sizeof(SDL_GPUPrimitiveType) == 4 && alignof(SDL_GPUPrimitiveType) == 4);
 class Enumeration_SDL_GPUPrimitiveType : public das::Enumeration {
@@ -3535,6 +3754,13 @@ addIEx("LOGICAL_PRESENTATION_OVERSCAN","SDL_LOGICAL_PRESENTATION_OVERSCAN",int64
 static_assert(int64_t(SDL_LOGICAL_PRESENTATION_INTEGER_SCALE) == 4LL);
 addIEx("LOGICAL_PRESENTATION_INTEGER_SCALE","SDL_LOGICAL_PRESENTATION_INTEGER_SCALE",int64_t(SDL_LOGICAL_PRESENTATION_INTEGER_SCALE),das::LineInfo());
 } };
+static_assert(sizeof(SDL_StorageInterface) == 96 && alignof(SDL_StorageInterface) == 8);
+namespace das { struct SDL_StorageInterfaceAnnotation : ManagedStructureAnnotation<SDL_StorageInterface, false> {
+SDL_StorageInterfaceAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_StorageInterface", lib) {
+static_assert(offsetof(SDL_StorageInterface, version) == 0);
+addField<DAS_BIND_MANAGED_FIELD(version)>("version", "version");
+}
+}; }
 static_assert(sizeof(SDL_DateTime) == 36 && alignof(SDL_DateTime) == 4);
 namespace das { struct SDL_DateTimeAnnotation : ManagedStructureAnnotation<SDL_DateTime, false> {
 SDL_DateTimeAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_DateTime", lib) {

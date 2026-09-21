@@ -146,7 +146,7 @@ class SdlParityGen : CppGenBind {
         let name=string(clang_getCursorSpelling(c))
         if(!key_exists(selected,name)) {return true}
         // Explicit native-address callback contracts; no script-function reinterpretation.
-        if(name=="SDL_SetClipboardData" || name=="SDL_SetWindowHitTest" || name=="SDL_SetEventFilter" || name=="SDL_GetEventFilter" || name=="SDL_AddEventWatch" || name=="SDL_RemoveEventWatch" || name=="SDL_FilterEvents") {return false}
+        if(name=="SDL_SetClipboardData" || name=="SDL_SetWindowHitTest" || name=="SDL_SetEventFilter" || name=="SDL_GetEventFilter" || name=="SDL_AddEventWatch" || name=="SDL_RemoveEventWatch" || name=="SDL_FilterEvents" || name=="SDL_EnumerateDirectory" || name=="SDL_EnumerateStorageDirectory" || name=="SDL_SetAudioStreamGetCallback" || name=="SDL_SetAudioStreamPutCallback" || name=="SDL_OpenAudioDeviceStream" || name=="SDL_SetAudioPostmixCallback") {return false}
         return AnyGenBind`skip_function(self, c)
     }
     def override skip_alias(var c : CXCursor) : bool { return true }
@@ -170,7 +170,7 @@ class SdlParityGen : CppGenBind {
             fwrite(signatures, "\t{string(clang_getCursorSpelling(arg))}")
         }
         fwrite(signatures, "\n")
-        if(name=="SDL_SetClipboardData" || name=="SDL_SetWindowHitTest" || name=="SDL_SetEventFilter" || name=="SDL_GetEventFilter" || name=="SDL_AddEventWatch" || name=="SDL_RemoveEventWatch" || name=="SDL_FilterEvents") {
+        if(name=="SDL_SetClipboardData" || name=="SDL_SetWindowHitTest" || name=="SDL_SetEventFilter" || name=="SDL_GetEventFilter" || name=="SDL_AddEventWatch" || name=="SDL_RemoveEventWatch" || name=="SDL_FilterEvents" || name=="SDL_EnumerateDirectory" || name=="SDL_EnumerateStorageDirectory" || name=="SDL_SetAudioStreamGetCallback" || name=="SDL_SetAudioStreamPutCallback" || name=="SDL_OpenAudioDeviceStream" || name=="SDL_SetAudioPostmixCallback") {
             fwrite(func_file,"makeExtern<decltype(&{name}), {name}, SimNode_ExtFuncCall>(lib,\"{name}\",\"{name}Address\")->args(\{")
             for(i in urange(clang_Cursor_getNumArguments(c))) {
                 if(i!=0u) {fwrite(func_file,",")}

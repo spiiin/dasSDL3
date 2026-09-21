@@ -4,32 +4,32 @@ SDL 3.2.18; profile `windows-x64-msvc`.
 
 Active declarations/macros only; inactive platform branches are NOT counted. Record and typedef entries are distinct declarations.
 
-Generated functions: **716/1226** active non-excluded functions.
+Generated functions: **852/1226** active non-excluded functions.
 Adapted coverage and boost coverage are not inferred from function names.
 
 | Category | Functions | Generated | Adapted | Pending |
 | --- | ---: | ---: | ---: | ---: |
 | Assert | 6 | 0 | 0 | 6 |
-| AsyncIO | 11 | 0 | 0 | 11 |
+| AsyncIO | 11 | 11 | 0 | 0 |
 | Atomic | 15 | 0 | 0 | 15 |
-| Audio | 56 | 14 | 1 | 41 |
+| Audio | 56 | 56 | 0 | 0 |
 | Bits | 2 | 0 | 0 | 2 |
 | Blendmode | 1 | 1 | 0 | 0 |
 | CPUInfo | 18 | 0 | 0 | 18 |
-| Camera | 15 | 0 | 0 | 15 |
+| Camera | 15 | 15 | 0 | 0 |
 | Clipboard | 11 | 11 | 0 | 0 |
 | Dialog | 4 | 0 | 0 | 4 |
 | Endian | 1 | 0 | 0 | 1 |
 | Error | 5 | 3 | 1 | 1 |
 | Events | 19 | 19 | 0 | 0 |
-| Filesystem | 11 | 2 | 0 | 9 |
+| Filesystem | 11 | 11 | 0 | 0 |
 | GPU | 92 | 92 | 0 | 0 |
 | GUID | 2 | 0 | 0 | 2 |
 | Gamepad | 73 | 73 | 0 | 0 |
 | HIDAPI | 22 | 22 | 0 | 0 |
 | Haptic | 31 | 31 | 0 | 0 |
 | Hints | 8 | 6 | 0 | 2 |
-| IOStream | 48 | 4 | 0 | 44 |
+| IOStream | 48 | 46 | 1 | 1 |
 | Init | 10 | 9 | 0 | 1 |
 | Joystick | 58 | 58 | 0 | 0 |
 | Keyboard | 24 | 24 | 0 | 0 |
@@ -51,7 +51,7 @@ Adapted coverage and boost coverage are not inferred from function names.
 | Sensor | 14 | 14 | 0 | 0 |
 | SharedObject | 3 | 0 | 0 | 3 |
 | Stdinc | 170 | 1 | 0 | 169 |
-| Storage | 17 | 0 | 0 | 17 |
+| Storage | 17 | 17 | 0 | 0 |
 | Surface | 58 | 58 | 0 | 0 |
 | System | 13 | 0 | 0 | 13 |
 | Thread | 12 | 0 | 0 | 12 |

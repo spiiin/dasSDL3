@@ -44,8 +44,16 @@ raw-функций Events. Есть ожидание/таймаут, пакет�
 ограничениями virtual balls/sensor queue. [Touch/Pen/Sensor/Haptic/HIDAPI](peripherals.md) подключены: 71 raw-функция и 13 event-тегов;
 Pen — только события в SDL 3.2.18. IME candidates, clipboard MIME arrays и raw user-pointer adapters подключены;
 [контракт и move-only SdlEvent](event-list-payloads.md). Явный остаток P3: payloads
-keyboard/mouse device hotplug, native virtual callbacks и проверка оборудования.
-Следующий основной пакет — P4 Filesystem/Storage/IOStream/AsyncIO. Retained callbacks
+keyboard/mouse device hotplug, native virtual callbacks, строковые имена properties
+Joystick/Gamepad и проверка оборудования.
+По решению пользователя остаток P3 отложен. P4 начат с полного раздела
+[Filesystem](filesystem.md): 11/11 raw, copied paths/lists и Result helpers.
+[IOStream](iostream.md): 46 raw, fixed-text IOprintf, IOvprintf остаётся pending.
+[Storage](storage.md): 17/17 raw, native callbacks, array/copy adapters и defer scopes.
+[AsyncIO](asyncio.md): 11/11 raw, outcome refs, owned file results и queue defer.
+P5: [Audio devices](audio-devices.md), 21 raw API и dummy recording.
+[Audio stream controls](audio-stream-controls.md): ещё 12 raw API; Audio now 56/56 после [native callbacks и WAV/conversion](audio-final-api.md).
+Camera: [15/15 raw](camera.md), dummy discovery/error contracts; далее P7. Аппаратные проверки и дефекты pinned SDL перечислены в Audio/Camera contracts. IOvprintf остаётся отдельным va_list исключением P4. Retained callbacks
 принимают нативные адреса; script-блок доступен только синхронному FilterEvents.
 
 | Этап | Объём | Критерий |
@@ -53,8 +61,8 @@ keyboard/mouse device hotplug, native virtual callbacks и проверка об
 | P1, остаток | Properties/Hints/Init/Error/Log/Timer callbacks, va_list и строковые макросы | Базовые пакеты реализованы; retained callbacks требуют отдельных контрактов |
 | P2, функции подключены | Video/display/window без GL/EGL, Render, Surface/Pixels/Blend/Rect, Clipboard | Rect 18/18, Clipboard 11/11, hit-test; RenderDebugTextFormat — fixed-text adapter. Платформенная валидация ограничена |
 | P3 | Events, Keyboard/Mouse, Joystick/Gamepad, Touch/Pen/Sensor/Haptic/HIDAPI | Union tags, owned payload, hotplug, device IDs, отсутствие оборудования |
-| P4 | Filesystem, Storage, IOStream, AsyncIO | EOF/short read/error, retained buffers, completion/cancellation, shutdown |
-| P5 | Audio/recording/mixing, Camera | Copy/borrow, release frames, callbacks, реальные устройства отдельно от dummy |
+| P4, основной API подключён | Filesystem 11/11; IOStream 46 raw + text adapter (IOvprintf pending); Storage 17/17; AsyncIO 11/11 | EOF/short read/error, retained buffers, completion/cancellation, shutdown |
+| P5, raw подключён | Audio 56/56; Camera 15/15 | Copy/borrow, release frames, callbacks, реальные устройства отдельно от dummy |
 | P6, сопровождение | GPU другие платформы и backend ограничения | Платформенные сборки, ABI и output tests; отдельный план ниже |
 | P7 | Threads/synchronization, Process/LoadSO, Power/Dialog/Tray/Locale/System | Context thread affinity, retained callbacks, отмена, shutdown |
 | P8 | Platform/CPUInfo/Stdinc/GUID, macros/inlines, GL/Vulkan/Metal integration (включая 20 GL/EGL функций Video, явно перенесённых из P2) | Явные exclusions, calling convention и startup host bridges |
@@ -74,7 +82,7 @@ cleanup-callback остаётся pending; ограничения и найде�
 Video discovery: 31 raw запроса и copy/ref adapters реализованы,
 [контракты](video-discovery.md). Создание и состояние окон также реализованы: [контракты](window-state.md).
 Fullscreen/surfaces и прочие оконные операции реализованы с ограничениями
-[window-io.md](window-io.md). Video: 89/109; оставшиеся 20 GL/EGL функций явно перенесены в P8. Hit-test, Rect и Clipboard подключены; [контракт](rect-clipboard-hittest.md). Следующий основной раздел — P4 IO; остаток P3 перечислен выше. Миграция [Result/Option boost API](result-option-plan.md) завершена и локально проверена. P2 не переоткрывается; GL/EGL остаётся в P8.
+[window-io.md](window-io.md). Video: 89/109; оставшиеся 20 GL/EGL функций явно перенесены в P8. Hit-test, Rect и Clipboard подключены; [контракт](rect-clipboard-hittest.md). Следующий основной раздел — P7 (Threads/synchronization, Process/LoadSO и системные API); исключение IOvprintf и остаток P3 перечислены выше. Миграция [Result/Option boost API](result-option-plan.md) завершена и локально проверена. P2 не переоткрывается; GL/EGL остаётся в P8.
 Software renderer/primitives: ещё 10 raw функций; [контракт](renderer-primitives.md).
 Состояние Renderer (viewport/clip/scale/output): 10 raw функций и ref adapters; [контракт](renderer-state.md).
 Renderer queries/logical presentation: 10 raw функций, все режимы и преобразование координат; [контракт](renderer-presentation.md).

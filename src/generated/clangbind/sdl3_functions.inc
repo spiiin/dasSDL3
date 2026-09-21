@@ -26,8 +26,18 @@ addAnnotation(new DummyTypeAnnotation("SDL_Gamepad", "SDL_Gamepad", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Sensor", "SDL_Sensor", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Haptic", "SDL_Haptic", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_hid_device", "SDL_hid_device", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_Storage", "SDL_Storage", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_AsyncIO", "SDL_AsyncIO", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_AsyncIOQueue", "SDL_AsyncIOQueue", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_Camera", "SDL_Camera", 1, 1));
+addEnumeration(new Enumeration_SDL_AsyncIOTaskType());
+addEnumeration(new Enumeration_SDL_AsyncIOResult());
+addAnnotation(new SDL_AsyncIOOutcomeAnnotation(lib));
 addEnumeration(new Enumeration_SDL_PropertyType());
+addEnumeration(new Enumeration_SDL_IOStatus());
 addEnumeration(new Enumeration_SDL_IOWhence());
+addAnnotation(new SDL_IOStreamInterfaceAnnotation(lib));
+addEnumeration(new Enumeration_SDL_AudioFormat());
 addAnnotation(new SDL_AudioSpecAnnotation(lib));
 addEnumeration(new Enumeration_SDL_BlendOperation());
 addEnumeration(new Enumeration_SDL_BlendFactor());
@@ -42,6 +52,8 @@ addAnnotation(new SDL_RectAnnotation(lib));
 addAnnotation(new SDL_FRectAnnotation(lib));
 addEnumeration(new Enumeration_SDL_ScaleMode());
 addEnumeration(new Enumeration_SDL_FlipMode());
+addAnnotation(new SDL_CameraSpecAnnotation(lib));
+addEnumeration(new Enumeration_SDL_CameraPosition());
 addEnumeration(new Enumeration_SDL_SystemTheme());
 addAnnotation(new SDL_DisplayModeAnnotation(lib));
 addEnumeration(new Enumeration_SDL_DisplayOrientation());
@@ -94,6 +106,10 @@ addAnnotation(new SDL_ClipboardEventAnnotation(lib));
 addAnnotation(new SDL_SensorEventAnnotation(lib));
 addAnnotation(new SDL_EventAnnotation(lib));
 addEnumeration(new Enumeration_SDL_EventAction());
+addEnumeration(new Enumeration_SDL_Folder());
+addEnumeration(new Enumeration_SDL_PathType());
+addAnnotation(new SDL_PathInfoAnnotation(lib));
+addEnumeration(new Enumeration_SDL_EnumerationResult());
 addEnumeration(new Enumeration_SDL_GPUPrimitiveType());
 addEnumeration(new Enumeration_SDL_GPULoadOp());
 addEnumeration(new Enumeration_SDL_GPUStoreOp());
@@ -169,6 +185,7 @@ addEnumeration(new Enumeration_SDL_LogPriority());
 addAnnotation(new SDL_VertexAnnotation(lib));
 addEnumeration(new Enumeration_SDL_TextureAccess());
 addEnumeration(new Enumeration_SDL_RendererLogicalPresentation());
+addAnnotation(new SDL_StorageInterfaceAnnotation(lib));
 addAnnotation(new SDL_DateTimeAnnotation(lib));
 addEnumeration(new Enumeration_SDL_DateFormat());
 addEnumeration(new Enumeration_SDL_TimeFormat());
@@ -1480,9 +1497,56 @@ static_assert(static_cast<uint64_t>(SDL_PEN_TOUCHID) == static_cast<uint64_t>(0x
 addConstant(*this, "SDL_PEN_TOUCHID", static_cast<uint64_t>(0xfffffffffffffffeULL));
 static_assert(static_cast<float>(SDL_STANDARD_GRAVITY) == static_cast<float>(9.806650161743164));
 addConstant(*this, "SDL_STANDARD_GRAVITY", static_cast<float>(9.806650161743164));
+static_assert(static_cast<uint32_t>(SDL_GLOB_CASEINSENSITIVE) == static_cast<uint32_t>(0x1ULL));
+addConstant(*this, "SDL_GLOB_CASEINSENSITIVE", static_cast<uint32_t>(0x1ULL));
+static_assert(static_cast<uint32_t>(SDL_AUDIO_DEVICE_DEFAULT_RECORDING) == static_cast<uint32_t>(0xfffffffeULL));
+addConstant(*this, "SDL_AUDIO_DEVICE_DEFAULT_RECORDING", static_cast<uint32_t>(0xfffffffeULL));
 // from SDL3/SDL_stdinc.h:1405:34
 	makeExtern< void (*)(void *) , SDL_free , SimNode_ExtFuncCall >(lib,"SDL_free","SDL_free")
 		->args({"mem"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_asyncio.h:222:43
+	makeExtern< struct SDL_AsyncIO * (*)(const char *,const char *) , SDL_AsyncIOFromFile , SimNode_ExtFuncCall >(lib,"SDL_AsyncIOFromFile","SDL_AsyncIOFromFile")
+		->args({"file","mode"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_asyncio.h:239:36
+	makeExtern< Sint64 (*)(struct SDL_AsyncIO *) , SDL_GetAsyncIOSize , SimNode_ExtFuncCall >(lib,"SDL_GetAsyncIOSize","SDL_GetAsyncIOSize")
+		->args({"asyncio"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_asyncio.h:277:34
+	makeExtern< bool (*)(struct SDL_AsyncIO *,void *,Uint64,Uint64,struct SDL_AsyncIOQueue *,void *) , SDL_ReadAsyncIO , SimNode_ExtFuncCall >(lib,"SDL_ReadAsyncIO","SDL_ReadAsyncIO")
+		->args({"asyncio","ptr","offset","size","queue","userdata"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_asyncio.h:314:34
+	makeExtern< bool (*)(struct SDL_AsyncIO *,void *,Uint64,Uint64,struct SDL_AsyncIOQueue *,void *) , SDL_WriteAsyncIO , SimNode_ExtFuncCall >(lib,"SDL_WriteAsyncIO","SDL_WriteAsyncIO")
+		->args({"asyncio","ptr","offset","size","queue","userdata"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_asyncio.h:363:34
+	makeExtern< bool (*)(struct SDL_AsyncIO *,bool,struct SDL_AsyncIOQueue *,void *) , SDL_CloseAsyncIO , SimNode_ExtFuncCall >(lib,"SDL_CloseAsyncIO","SDL_CloseAsyncIO")
+		->args({"asyncio","flush","queue","userdata"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_asyncio.h:382:48
+	makeExtern< struct SDL_AsyncIOQueue * (*)() , SDL_CreateAsyncIOQueue , SimNode_ExtFuncCall >(lib,"SDL_CreateAsyncIOQueue","SDL_CreateAsyncIOQueue")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_asyncio.h:412:34
+	makeExtern< void (*)(struct SDL_AsyncIOQueue *) , SDL_DestroyAsyncIOQueue , SimNode_ExtFuncCall >(lib,"SDL_DestroyAsyncIOQueue","SDL_DestroyAsyncIOQueue")
+		->args({"queue"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_asyncio.h:438:34
+	makeExtern< bool (*)(struct SDL_AsyncIOQueue *,struct SDL_AsyncIOOutcome *) , SDL_GetAsyncIOResult , SimNode_ExtFuncCall >(lib,"SDL_GetAsyncIOResult","SDL_GetAsyncIOResult")
+		->args({"queue","outcome"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_asyncio.h:482:34
+	makeExtern< bool (*)(struct SDL_AsyncIOQueue *,struct SDL_AsyncIOOutcome *,int) , SDL_WaitAsyncIOResult , SimNode_ExtFuncCall >(lib,"SDL_WaitAsyncIOResult","SDL_WaitAsyncIOResult")
+		->args({"queue","outcome","timeoutMS"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_asyncio.h:506:34
+	makeExtern< void (*)(struct SDL_AsyncIOQueue *) , SDL_SignalAsyncIOQueue , SimNode_ExtFuncCall >(lib,"SDL_SignalAsyncIOQueue","SDL_SignalAsyncIOQueue")
+		->args({"queue"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_asyncio.h:538:34
+	makeExtern< bool (*)(const char *,struct SDL_AsyncIOQueue *,void *) , SDL_LoadFileAsync , SimNode_ExtFuncCall >(lib,"SDL_LoadFileAsync","SDL_LoadFileAsync")
+		->args({"file","queue","userdata"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_error.h:121:34
 	makeExtern< bool (*)() , SDL_OutOfMemory , SimNode_ExtFuncCall >(lib,"SDL_OutOfMemory","SDL_OutOfMemory")
@@ -1567,6 +1631,10 @@ addConstant(*this, "SDL_STANDARD_GRAVITY", static_cast<float>(9.806650161743164)
 	makeExtern< void (*)(unsigned int) , SDL_DestroyProperties , SimNode_ExtFuncCall >(lib,"SDL_DestroyProperties","SDL_DestroyProperties")
 		->args({"props"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:274:44
+	makeExtern< struct SDL_IOStream * (*)(const char *,const char *) , SDL_IOFromFile , SimNode_ExtFuncCall >(lib,"SDL_IOFromFile","SDL_IOFromFile")
+		->args({"file","mode"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_iostream.h:320:44
 	makeExtern< struct SDL_IOStream * (*)(void *,size_t) , SDL_IOFromMem , SimNode_ExtFuncCall >(lib,"SDL_IOFromMem","SDL_IOFromMem")
 		->args({"mem","size"})
@@ -1575,13 +1643,258 @@ addConstant(*this, "SDL_STANDARD_GRAVITY", static_cast<float>(9.806650161743164)
 	makeExtern< struct SDL_IOStream * (*)(const void *,size_t) , SDL_IOFromConstMem , SimNode_ExtFuncCall >(lib,"SDL_IOFromConstMem","SDL_IOFromConstMem")
 		->args({"mem","size"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:394:44
+	makeExtern< struct SDL_IOStream * (*)() , SDL_IOFromDynamicMem , SimNode_ExtFuncCall >(lib,"SDL_IOFromDynamicMem","SDL_IOFromDynamicMem")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:429:44
+	makeExtern< struct SDL_IOStream * (*)(const struct SDL_IOStreamInterface *,void *) , SDL_OpenIO , SimNode_ExtFuncCall >(lib,"SDL_OpenIO","SDL_OpenIO")
+		->args({"iface","userdata"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_iostream.h:461:34
 	makeExtern< bool (*)(struct SDL_IOStream *) , SDL_CloseIO , SimNode_ExtFuncCall >(lib,"SDL_CloseIO","SDL_CloseIO")
+		->args({"context"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:474:46
+	makeExtern< unsigned int (*)(struct SDL_IOStream *) , SDL_GetIOProperties , SimNode_ExtFuncCall >(lib,"SDL_GetIOProperties","SDL_GetIOProperties")
+		->args({"context"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:494:42
+	makeExtern< enum SDL_IOStatus (*)(struct SDL_IOStream *) , SDL_GetIOStatus , SimNode_ExtFuncCall >(lib,"SDL_GetIOStatus","SDL_GetIOStatus")
+		->args({"context"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:508:36
+	makeExtern< Sint64 (*)(struct SDL_IOStream *) , SDL_GetIOSize , SimNode_ExtFuncCall >(lib,"SDL_GetIOSize","SDL_GetIOSize")
 		->args({"context"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_iostream.h:537:36
 	makeExtern< Sint64 (*)(struct SDL_IOStream *,Sint64,enum SDL_IOWhence) , SDL_SeekIO , SimNode_ExtFuncCall >(lib,"SDL_SeekIO","SDL_SeekIO")
 		->args({"context","offset","whence"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:557:36
+	makeExtern< Sint64 (*)(struct SDL_IOStream *) , SDL_TellIO , SimNode_ExtFuncCall >(lib,"SDL_TellIO","SDL_TellIO")
+		->args({"context"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:583:36
+	makeExtern< size_t (*)(struct SDL_IOStream *,void *,size_t) , SDL_ReadIO , SimNode_ExtFuncCall >(lib,"SDL_ReadIO","SDL_ReadIO")
+		->args({"context","ptr","size"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:615:36
+	makeExtern< size_t (*)(struct SDL_IOStream *,const void *,size_t) , SDL_WriteIO , SimNode_ExtFuncCall >(lib,"SDL_WriteIO","SDL_WriteIO")
+		->args({"context","ptr","size"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:676:34
+	makeExtern< bool (*)(struct SDL_IOStream *) , SDL_FlushIO , SimNode_ExtFuncCall >(lib,"SDL_FlushIO","SDL_FlushIO")
+		->args({"context"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:702:36
+	makeExtern< void * (*)(struct SDL_IOStream *,size_t *,bool) , SDL_LoadFile_IO , SimNode_ExtFuncCall >(lib,"SDL_LoadFile_IO","SDL_LoadFile_IO")
+		->args({"src","datasize","closeio"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:725:36
+	makeExtern< void * (*)(const char *,size_t *) , SDL_LoadFile , SimNode_ExtFuncCall >(lib,"SDL_LoadFile","SDL_LoadFile")
+		->args({"file","datasize"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:746:34
+	makeExtern< bool (*)(struct SDL_IOStream *,const void *,size_t,bool) , SDL_SaveFile_IO , SimNode_ExtFuncCall >(lib,"SDL_SaveFile_IO","SDL_SaveFile_IO")
+		->args({"src","data","datasize","closeio"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:765:34
+	makeExtern< bool (*)(const char *,const void *,size_t) , SDL_SaveFile , SimNode_ExtFuncCall >(lib,"SDL_SaveFile","SDL_SaveFile")
+		->args({"file","data","datasize"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:791:34
+	makeExtern< bool (*)(struct SDL_IOStream *,unsigned char *) , SDL_ReadU8 , SimNode_ExtFuncCall >(lib,"SDL_ReadU8","SDL_ReadU8")
+		->args({"src","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:810:34
+	makeExtern< bool (*)(struct SDL_IOStream *,signed char *) , SDL_ReadS8 , SimNode_ExtFuncCall >(lib,"SDL_ReadS8","SDL_ReadS8")
+		->args({"src","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:833:34
+	makeExtern< bool (*)(struct SDL_IOStream *,unsigned short *) , SDL_ReadU16LE , SimNode_ExtFuncCall >(lib,"SDL_ReadU16LE","SDL_ReadU16LE")
+		->args({"src","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:856:34
+	makeExtern< bool (*)(struct SDL_IOStream *,short *) , SDL_ReadS16LE , SimNode_ExtFuncCall >(lib,"SDL_ReadS16LE","SDL_ReadS16LE")
+		->args({"src","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:879:34
+	makeExtern< bool (*)(struct SDL_IOStream *,unsigned short *) , SDL_ReadU16BE , SimNode_ExtFuncCall >(lib,"SDL_ReadU16BE","SDL_ReadU16BE")
+		->args({"src","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:902:34
+	makeExtern< bool (*)(struct SDL_IOStream *,short *) , SDL_ReadS16BE , SimNode_ExtFuncCall >(lib,"SDL_ReadS16BE","SDL_ReadS16BE")
+		->args({"src","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:925:34
+	makeExtern< bool (*)(struct SDL_IOStream *,unsigned int *) , SDL_ReadU32LE , SimNode_ExtFuncCall >(lib,"SDL_ReadU32LE","SDL_ReadU32LE")
+		->args({"src","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:948:34
+	makeExtern< bool (*)(struct SDL_IOStream *,int *) , SDL_ReadS32LE , SimNode_ExtFuncCall >(lib,"SDL_ReadS32LE","SDL_ReadS32LE")
+		->args({"src","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:971:34
+	makeExtern< bool (*)(struct SDL_IOStream *,unsigned int *) , SDL_ReadU32BE , SimNode_ExtFuncCall >(lib,"SDL_ReadU32BE","SDL_ReadU32BE")
+		->args({"src","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:994:34
+	makeExtern< bool (*)(struct SDL_IOStream *,int *) , SDL_ReadS32BE , SimNode_ExtFuncCall >(lib,"SDL_ReadS32BE","SDL_ReadS32BE")
+		->args({"src","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:1017:34
+	makeExtern< bool (*)(struct SDL_IOStream *,Uint64 *) , SDL_ReadU64LE , SimNode_ExtFuncCall >(lib,"SDL_ReadU64LE","SDL_ReadU64LE")
+		->args({"src","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:1040:34
+	makeExtern< bool (*)(struct SDL_IOStream *,Sint64 *) , SDL_ReadS64LE , SimNode_ExtFuncCall >(lib,"SDL_ReadS64LE","SDL_ReadS64LE")
+		->args({"src","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:1063:34
+	makeExtern< bool (*)(struct SDL_IOStream *,Uint64 *) , SDL_ReadU64BE , SimNode_ExtFuncCall >(lib,"SDL_ReadU64BE","SDL_ReadU64BE")
+		->args({"src","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:1086:34
+	makeExtern< bool (*)(struct SDL_IOStream *,Sint64 *) , SDL_ReadS64BE , SimNode_ExtFuncCall >(lib,"SDL_ReadS64BE","SDL_ReadS64BE")
+		->args({"src","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:1108:34
+	makeExtern< bool (*)(struct SDL_IOStream *,unsigned char) , SDL_WriteU8 , SimNode_ExtFuncCall >(lib,"SDL_WriteU8","SDL_WriteU8")
+		->args({"dst","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:1122:34
+	makeExtern< bool (*)(struct SDL_IOStream *,signed char) , SDL_WriteS8 , SimNode_ExtFuncCall >(lib,"SDL_WriteS8","SDL_WriteS8")
+		->args({"dst","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:1141:34
+	makeExtern< bool (*)(struct SDL_IOStream *,unsigned short) , SDL_WriteU16LE , SimNode_ExtFuncCall >(lib,"SDL_WriteU16LE","SDL_WriteU16LE")
+		->args({"dst","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:1160:34
+	makeExtern< bool (*)(struct SDL_IOStream *,short) , SDL_WriteS16LE , SimNode_ExtFuncCall >(lib,"SDL_WriteS16LE","SDL_WriteS16LE")
+		->args({"dst","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:1178:34
+	makeExtern< bool (*)(struct SDL_IOStream *,unsigned short) , SDL_WriteU16BE , SimNode_ExtFuncCall >(lib,"SDL_WriteU16BE","SDL_WriteU16BE")
+		->args({"dst","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:1196:34
+	makeExtern< bool (*)(struct SDL_IOStream *,short) , SDL_WriteS16BE , SimNode_ExtFuncCall >(lib,"SDL_WriteS16BE","SDL_WriteS16BE")
+		->args({"dst","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:1215:34
+	makeExtern< bool (*)(struct SDL_IOStream *,unsigned int) , SDL_WriteU32LE , SimNode_ExtFuncCall >(lib,"SDL_WriteU32LE","SDL_WriteU32LE")
+		->args({"dst","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:1234:34
+	makeExtern< bool (*)(struct SDL_IOStream *,int) , SDL_WriteS32LE , SimNode_ExtFuncCall >(lib,"SDL_WriteS32LE","SDL_WriteS32LE")
+		->args({"dst","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:1252:34
+	makeExtern< bool (*)(struct SDL_IOStream *,unsigned int) , SDL_WriteU32BE , SimNode_ExtFuncCall >(lib,"SDL_WriteU32BE","SDL_WriteU32BE")
+		->args({"dst","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:1270:34
+	makeExtern< bool (*)(struct SDL_IOStream *,int) , SDL_WriteS32BE , SimNode_ExtFuncCall >(lib,"SDL_WriteS32BE","SDL_WriteS32BE")
+		->args({"dst","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:1289:34
+	makeExtern< bool (*)(struct SDL_IOStream *,Uint64) , SDL_WriteU64LE , SimNode_ExtFuncCall >(lib,"SDL_WriteU64LE","SDL_WriteU64LE")
+		->args({"dst","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:1308:34
+	makeExtern< bool (*)(struct SDL_IOStream *,Sint64) , SDL_WriteS64LE , SimNode_ExtFuncCall >(lib,"SDL_WriteS64LE","SDL_WriteS64LE")
+		->args({"dst","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:1326:34
+	makeExtern< bool (*)(struct SDL_IOStream *,Uint64) , SDL_WriteU64BE , SimNode_ExtFuncCall >(lib,"SDL_WriteU64BE","SDL_WriteU64BE")
+		->args({"dst","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_iostream.h:1344:34
+	makeExtern< bool (*)(struct SDL_IOStream *,Sint64) , SDL_WriteS64BE , SimNode_ExtFuncCall >(lib,"SDL_WriteS64BE","SDL_WriteS64BE")
+		->args({"dst","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:477:33
+	makeExtern< int (*)() , SDL_GetNumAudioDrivers , SimNode_ExtFuncCall >(lib,"SDL_GetNumAudioDrivers","SDL_GetNumAudioDrivers")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:501:42
+	makeExtern< const char * (*)(int) , SDL_GetAudioDriver , SimNode_ExtFuncCall >(lib,"SDL_GetAudioDriver","SDL_GetAudioDriver")
+		->args({"index"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:517:42
+	makeExtern< const char * (*)() , SDL_GetCurrentAudioDriver , SimNode_ExtFuncCall >(lib,"SDL_GetCurrentAudioDriver","SDL_GetCurrentAudioDriver")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:546:49
+	makeExtern< unsigned int * (*)(int *) , SDL_GetAudioPlaybackDevices , SimNode_ExtFuncCall >(lib,"SDL_GetAudioPlaybackDevices","SDL_GetAudioPlaybackDevices")
+		->args({"count"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:575:49
+	makeExtern< unsigned int * (*)(int *) , SDL_GetAudioRecordingDevices , SimNode_ExtFuncCall >(lib,"SDL_GetAudioRecordingDevices","SDL_GetAudioRecordingDevices")
+		->args({"count"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:591:42
+	makeExtern< const char * (*)(unsigned int) , SDL_GetAudioDeviceName , SimNode_ExtFuncCall >(lib,"SDL_GetAudioDeviceName","SDL_GetAudioDeviceName")
+		->args({"devid"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:626:34
+	makeExtern< bool (*)(unsigned int,struct SDL_AudioSpec *,int *) , SDL_GetAudioDeviceFormat , SimNode_ExtFuncCall >(lib,"SDL_GetAudioDeviceFormat","SDL_GetAudioDeviceFormat")
+		->args({"devid","spec","sample_frames"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:649:35
+	makeExtern< int * (*)(unsigned int,int *) , SDL_GetAudioDeviceChannelMap , SimNode_ExtFuncCall >(lib,"SDL_GetAudioDeviceChannelMap","SDL_GetAudioDeviceChannelMap")
+		->args({"devid","count"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:725:47
+	makeExtern< unsigned int (*)(unsigned int,const struct SDL_AudioSpec *) , SDL_OpenAudioDevice , SimNode_ExtFuncCall >(lib,"SDL_OpenAudioDevice","SDL_OpenAudioDevice")
+		->args({"devid","spec"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:750:34
+	makeExtern< bool (*)(unsigned int) , SDL_IsAudioDevicePhysical , SimNode_ExtFuncCall >(lib,"SDL_IsAudioDevicePhysical","SDL_IsAudioDevicePhysical")
+		->args({"devid"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:764:34
+	makeExtern< bool (*)(unsigned int) , SDL_IsAudioDevicePlayback , SimNode_ExtFuncCall >(lib,"SDL_IsAudioDevicePlayback","SDL_IsAudioDevicePlayback")
+		->args({"devid"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:795:34
+	makeExtern< bool (*)(unsigned int) , SDL_PauseAudioDevice , SimNode_ExtFuncCall >(lib,"SDL_PauseAudioDevice","SDL_PauseAudioDevice")
+		->args({"devid"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:823:34
+	makeExtern< bool (*)(unsigned int) , SDL_ResumeAudioDevice , SimNode_ExtFuncCall >(lib,"SDL_ResumeAudioDevice","SDL_ResumeAudioDevice")
+		->args({"devid"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:845:34
+	makeExtern< bool (*)(unsigned int) , SDL_AudioDevicePaused , SimNode_ExtFuncCall >(lib,"SDL_AudioDevicePaused","SDL_AudioDevicePaused")
+		->args({"devid"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:868:35
+	makeExtern< float (*)(unsigned int) , SDL_GetAudioDeviceGain , SimNode_ExtFuncCall >(lib,"SDL_GetAudioDeviceGain","SDL_GetAudioDeviceGain")
+		->args({"devid"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:903:34
+	makeExtern< bool (*)(unsigned int,float) , SDL_SetAudioDeviceGain , SimNode_ExtFuncCall >(lib,"SDL_SetAudioDeviceGain","SDL_SetAudioDeviceGain")
+		->args({"devid","gain"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:924:34
+	makeExtern< void (*)(unsigned int) , SDL_CloseAudioDevice , SimNode_ExtFuncCall >(lib,"SDL_CloseAudioDevice","SDL_CloseAudioDevice")
+		->args({"devid"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:961:34
+	makeExtern< bool (*)(unsigned int,struct SDL_AudioStream *const *,int) , SDL_BindAudioStreams , SimNode_ExtFuncCall >(lib,"SDL_BindAudioStreams","SDL_BindAudioStreams")
+		->args({"devid","streams","num_streams"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:982:34
+	makeExtern< bool (*)(unsigned int,struct SDL_AudioStream *) , SDL_BindAudioStream , SimNode_ExtFuncCall >(lib,"SDL_BindAudioStream","SDL_BindAudioStream")
+		->args({"devid","stream"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:1003:34
+	makeExtern< void (*)(struct SDL_AudioStream *const *,int) , SDL_UnbindAudioStreams , SimNode_ExtFuncCall >(lib,"SDL_UnbindAudioStreams","SDL_UnbindAudioStreams")
+		->args({"streams","num_streams"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:1019:34
+	makeExtern< void (*)(struct SDL_AudioStream *) , SDL_UnbindAudioStream , SimNode_ExtFuncCall >(lib,"SDL_UnbindAudioStream","SDL_UnbindAudioStream")
+		->args({"stream"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_audio.h:1039:47
 	makeExtern< unsigned int (*)(struct SDL_AudioStream *) , SDL_GetAudioStreamDevice , SimNode_ExtFuncCall >(lib,"SDL_GetAudioStreamDevice","SDL_GetAudioStreamDevice")
@@ -1591,9 +1904,49 @@ addConstant(*this, "SDL_STANDARD_GRAVITY", static_cast<float>(9.806650161743164)
 	makeExtern< struct SDL_AudioStream * (*)(const struct SDL_AudioSpec *,const struct SDL_AudioSpec *) , SDL_CreateAudioStream , SimNode_ExtFuncCall >(lib,"SDL_CreateAudioStream","SDL_CreateAudioStream")
 		->args({"src_spec","dst_spec"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:1074:46
+	makeExtern< unsigned int (*)(struct SDL_AudioStream *) , SDL_GetAudioStreamProperties , SimNode_ExtFuncCall >(lib,"SDL_GetAudioStreamProperties","SDL_GetAudioStreamProperties")
+		->args({"stream"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_audio.h:1092:34
 	makeExtern< bool (*)(struct SDL_AudioStream *,struct SDL_AudioSpec *,struct SDL_AudioSpec *) , SDL_GetAudioStreamFormat , SimNode_ExtFuncCall >(lib,"SDL_GetAudioStreamFormat","SDL_GetAudioStreamFormat")
 		->args({"stream","src_spec","dst_spec"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:1129:34
+	makeExtern< bool (*)(struct SDL_AudioStream *,const struct SDL_AudioSpec *,const struct SDL_AudioSpec *) , SDL_SetAudioStreamFormat , SimNode_ExtFuncCall >(lib,"SDL_SetAudioStreamFormat","SDL_SetAudioStreamFormat")
+		->args({"stream","src_spec","dst_spec"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:1145:35
+	makeExtern< float (*)(struct SDL_AudioStream *) , SDL_GetAudioStreamFrequencyRatio , SimNode_ExtFuncCall >(lib,"SDL_GetAudioStreamFrequencyRatio","SDL_GetAudioStreamFrequencyRatio")
+		->args({"stream"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:1173:34
+	makeExtern< bool (*)(struct SDL_AudioStream *,float) , SDL_SetAudioStreamFrequencyRatio , SimNode_ExtFuncCall >(lib,"SDL_SetAudioStreamFrequencyRatio","SDL_SetAudioStreamFrequencyRatio")
+		->args({"stream","ratio"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:1194:35
+	makeExtern< float (*)(struct SDL_AudioStream *) , SDL_GetAudioStreamGain , SimNode_ExtFuncCall >(lib,"SDL_GetAudioStreamGain","SDL_GetAudioStreamGain")
+		->args({"stream"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:1219:34
+	makeExtern< bool (*)(struct SDL_AudioStream *,float) , SDL_SetAudioStreamGain , SimNode_ExtFuncCall >(lib,"SDL_SetAudioStreamGain","SDL_SetAudioStreamGain")
+		->args({"stream","gain"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:1243:35
+	makeExtern< int * (*)(struct SDL_AudioStream *,int *) , SDL_GetAudioStreamInputChannelMap , SimNode_ExtFuncCall >(lib,"SDL_GetAudioStreamInputChannelMap","SDL_GetAudioStreamInputChannelMap")
+		->args({"stream","count"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:1267:35
+	makeExtern< int * (*)(struct SDL_AudioStream *,int *) , SDL_GetAudioStreamOutputChannelMap , SimNode_ExtFuncCall >(lib,"SDL_GetAudioStreamOutputChannelMap","SDL_GetAudioStreamOutputChannelMap")
+		->args({"stream","count"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:1327:34
+	makeExtern< bool (*)(struct SDL_AudioStream *,const int *,int) , SDL_SetAudioStreamInputChannelMap , SimNode_ExtFuncCall >(lib,"SDL_SetAudioStreamInputChannelMap","SDL_SetAudioStreamInputChannelMap")
+		->args({"stream","chmap","count"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:1385:34
+	makeExtern< bool (*)(struct SDL_AudioStream *,const int *,int) , SDL_SetAudioStreamOutputChannelMap , SimNode_ExtFuncCall >(lib,"SDL_SetAudioStreamOutputChannelMap","SDL_SetAudioStreamOutputChannelMap")
+		->args({"stream","chmap","count"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_audio.h:1415:34
 	makeExtern< bool (*)(struct SDL_AudioStream *,const void *,int) , SDL_PutAudioStreamData , SimNode_ExtFuncCall >(lib,"SDL_PutAudioStreamData","SDL_PutAudioStreamData")
@@ -1631,13 +1984,45 @@ addConstant(*this, "SDL_STANDARD_GRAVITY", static_cast<float>(9.806650161743164)
 	makeExtern< bool (*)(struct SDL_AudioStream *) , SDL_AudioStreamDevicePaused , SimNode_ExtFuncCall >(lib,"SDL_AudioStreamDevicePaused","SDL_AudioStreamDevicePaused")
 		->args({"stream"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:1647:34
+	makeExtern< bool (*)(struct SDL_AudioStream *) , SDL_LockAudioStream , SimNode_ExtFuncCall >(lib,"SDL_LockAudioStream","SDL_LockAudioStream")
+		->args({"stream"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:1666:34
+	makeExtern< bool (*)(struct SDL_AudioStream *) , SDL_UnlockAudioStream , SimNode_ExtFuncCall >(lib,"SDL_UnlockAudioStream","SDL_UnlockAudioStream")
+		->args({"stream"})
+		->addToModule(*this, SideEffects::worstDefault);
+makeExtern<decltype(&SDL_SetAudioStreamGetCallback), SDL_SetAudioStreamGetCallback, SimNode_ExtFuncCall>(lib,"SDL_SetAudioStreamGetCallback","SDL_SetAudioStreamGetCallbackAddress")->args({"stream","callback","userdata"})->addToModule(*this, SideEffects::worstDefault);
+makeExtern<decltype(&SDL_SetAudioStreamPutCallback), SDL_SetAudioStreamPutCallback, SimNode_ExtFuncCall>(lib,"SDL_SetAudioStreamPutCallback","SDL_SetAudioStreamPutCallbackAddress")->args({"stream","callback","userdata"})->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_audio.h:1825:34
 	makeExtern< void (*)(struct SDL_AudioStream *) , SDL_DestroyAudioStream , SimNode_ExtFuncCall >(lib,"SDL_DestroyAudioStream","SDL_DestroyAudioStream")
 		->args({"stream"})
 		->addToModule(*this, SideEffects::worstDefault);
+makeExtern<decltype(&SDL_OpenAudioDeviceStream), SDL_OpenAudioDeviceStream, SimNode_ExtFuncCall>(lib,"SDL_OpenAudioDeviceStream","SDL_OpenAudioDeviceStreamAddress")->args({"devid","spec","callback","userdata"})->addToModule(*this, SideEffects::worstDefault);
+makeExtern<decltype(&SDL_SetAudioPostmixCallback), SDL_SetAudioPostmixCallback, SimNode_ExtFuncCall>(lib,"SDL_SetAudioPostmixCallback","SDL_SetAudioPostmixCallbackAddress")->args({"devid","callback","userdata"})->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:2060:34
+	makeExtern< bool (*)(struct SDL_IOStream *,bool,struct SDL_AudioSpec *,unsigned char **,unsigned int *) , SDL_LoadWAV_IO , SimNode_ExtFuncCall >(lib,"SDL_LoadWAV_IO","SDL_LoadWAV_IO")
+		->args({"src","closeio","spec","audio_buf","audio_len"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_audio.h:2096:34
 	makeExtern< bool (*)(const char *,struct SDL_AudioSpec *,unsigned char **,unsigned int *) , SDL_LoadWAV , SimNode_ExtFuncCall >(lib,"SDL_LoadWAV","SDL_LoadWAV")
 		->args({"path","spec","audio_buf","audio_len"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:2132:34
+	makeExtern< bool (*)(unsigned char *,const unsigned char *,enum SDL_AudioFormat,unsigned int,float) , SDL_MixAudio , SimNode_ExtFuncCall >(lib,"SDL_MixAudio","SDL_MixAudio")
+		->args({"dst","src","format","len","volume"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:2162:34
+	makeExtern< bool (*)(const struct SDL_AudioSpec *,const unsigned char *,int,const struct SDL_AudioSpec *,unsigned char **,int *) , SDL_ConvertAudioSamples , SimNode_ExtFuncCall >(lib,"SDL_ConvertAudioSamples","SDL_ConvertAudioSamples")
+		->args({"src_spec","src_data","src_len","dst_spec","dst_data","dst_len"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:2175:42
+	makeExtern< const char * (*)(enum SDL_AudioFormat) , SDL_GetAudioFormatName , SimNode_ExtFuncCall >(lib,"SDL_GetAudioFormatName","SDL_GetAudioFormatName")
+		->args({"format"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:2191:33
+	makeExtern< int (*)(enum SDL_AudioFormat) , SDL_GetSilenceValueForFormat , SimNode_ExtFuncCall >(lib,"SDL_GetSilenceValueForFormat","SDL_GetSilenceValueForFormat")
+		->args({"format"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_blendmode.h:189:43
 	makeExtern< unsigned int (*)(enum SDL_BlendFactor,enum SDL_BlendFactor,enum SDL_BlendOperation,enum SDL_BlendFactor,enum SDL_BlendFactor,enum SDL_BlendOperation) , SDL_ComposeCustomBlendMode , SimNode_ExtFuncCall >(lib,"SDL_ComposeCustomBlendMode","SDL_ComposeCustomBlendMode")
@@ -1990,6 +2375,64 @@ addConstant(*this, "SDL_STANDARD_GRAVITY", static_cast<float>(9.806650161743164)
 // from SDL3/SDL_surface.h:1555:34
 	makeExtern< bool (*)(struct SDL_Surface *,int,int,float,float,float,float) , SDL_WriteSurfacePixelFloat , SimNode_ExtFuncCall >(lib,"SDL_WriteSurfacePixelFloat","SDL_WriteSurfacePixelFloat")
 		->args({"surface","x","y","r","g","b","a"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_camera.h:161:33
+	makeExtern< int (*)() , SDL_GetNumCameraDrivers , SimNode_ExtFuncCall >(lib,"SDL_GetNumCameraDrivers","SDL_GetNumCameraDrivers")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_camera.h:185:42
+	makeExtern< const char * (*)(int) , SDL_GetCameraDriver , SimNode_ExtFuncCall >(lib,"SDL_GetCameraDriver","SDL_GetCameraDriver")
+		->args({"index"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_camera.h:201:42
+	makeExtern< const char * (*)() , SDL_GetCurrentCameraDriver , SimNode_ExtFuncCall >(lib,"SDL_GetCurrentCameraDriver","SDL_GetCurrentCameraDriver")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_camera.h:218:44
+	makeExtern< unsigned int * (*)(int *) , SDL_GetCameras , SimNode_ExtFuncCall >(lib,"SDL_GetCameras","SDL_GetCameras")
+		->args({"count"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_camera.h:257:47
+	makeExtern< struct SDL_CameraSpec ** (*)(unsigned int,int *) , SDL_GetCameraSupportedFormats , SimNode_ExtFuncCall >(lib,"SDL_GetCameraSupportedFormats","SDL_GetCameraSupportedFormats")
+		->args({"instance_id","count"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_camera.h:272:42
+	makeExtern< const char * (*)(unsigned int) , SDL_GetCameraName , SimNode_ExtFuncCall >(lib,"SDL_GetCameraName","SDL_GetCameraName")
+		->args({"instance_id"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_camera.h:291:48
+	makeExtern< enum SDL_CameraPosition (*)(unsigned int) , SDL_GetCameraPosition , SimNode_ExtFuncCall >(lib,"SDL_GetCameraPosition","SDL_GetCameraPosition")
+		->args({"instance_id"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_camera.h:338:42
+	makeExtern< struct SDL_Camera * (*)(unsigned int,const struct SDL_CameraSpec *) , SDL_OpenCamera , SimNode_ExtFuncCall >(lib,"SDL_OpenCamera","SDL_OpenCamera")
+		->args({"instance_id","spec"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_camera.h:371:33
+	makeExtern< int (*)(struct SDL_Camera *) , SDL_GetCameraPermissionState , SimNode_ExtFuncCall >(lib,"SDL_GetCameraPermissionState","SDL_GetCameraPermissionState")
+		->args({"camera"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_camera.h:386:42
+	makeExtern< unsigned int (*)(struct SDL_Camera *) , SDL_GetCameraID , SimNode_ExtFuncCall >(lib,"SDL_GetCameraID","SDL_GetCameraID")
+		->args({"camera"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_camera.h:399:46
+	makeExtern< unsigned int (*)(struct SDL_Camera *) , SDL_GetCameraProperties , SimNode_ExtFuncCall >(lib,"SDL_GetCameraProperties","SDL_GetCameraProperties")
+		->args({"camera"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_camera.h:425:34
+	makeExtern< bool (*)(struct SDL_Camera *,struct SDL_CameraSpec *) , SDL_GetCameraFormat , SimNode_ExtFuncCall >(lib,"SDL_GetCameraFormat","SDL_GetCameraFormat")
+		->args({"camera","spec"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_camera.h:468:43
+	makeExtern< struct SDL_Surface * (*)(struct SDL_Camera *,Uint64 *) , SDL_AcquireCameraFrame , SimNode_ExtFuncCall >(lib,"SDL_AcquireCameraFrame","SDL_AcquireCameraFrame")
+		->args({"camera","timestampNS"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_camera.h:496:34
+	makeExtern< void (*)(struct SDL_Camera *,struct SDL_Surface *) , SDL_ReleaseCameraFrame , SimNode_ExtFuncCall >(lib,"SDL_ReleaseCameraFrame","SDL_ReleaseCameraFrame")
+		->args({"camera","frame"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_camera.h:511:34
+	makeExtern< void (*)(struct SDL_Camera *) , SDL_CloseCamera , SimNode_ExtFuncCall >(lib,"SDL_CloseCamera","SDL_CloseCamera")
+		->args({"camera"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_clipboard.h:104:34
 	makeExtern< bool (*)(const char *) , SDL_SetClipboardText , SimNode_ExtFuncCall >(lib,"SDL_SetClipboardText","SDL_SetClipboardText")
@@ -3193,9 +3636,41 @@ makeExtern<decltype(&SDL_FilterEvents), SDL_FilterEvents, SimNode_ExtFuncCall>(l
 // from SDL3/SDL_filesystem.h:96:42
 	makeExtern< const char * (*)() , SDL_GetBasePath , SimNode_ExtFuncCall >(lib,"SDL_GetBasePath","SDL_GetBasePath")
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_filesystem.h:151:36
+	makeExtern< char * (*)(const char *,const char *) , SDL_GetPrefPath , SimNode_ExtFuncCall >(lib,"SDL_GetPrefPath","SDL_GetPrefPath")
+		->args({"org","app"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_filesystem.h:221:42
+	makeExtern< const char * (*)(enum SDL_Folder) , SDL_GetUserFolder , SimNode_ExtFuncCall >(lib,"SDL_GetUserFolder","SDL_GetUserFolder")
+		->args({"folder"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_filesystem.h:288:34
+	makeExtern< bool (*)(const char *) , SDL_CreateDirectory , SimNode_ExtFuncCall >(lib,"SDL_CreateDirectory","SDL_CreateDirectory")
+		->args({"path"})
+		->addToModule(*this, SideEffects::worstDefault);
+makeExtern<decltype(&SDL_EnumerateDirectory), SDL_EnumerateDirectory, SimNode_ExtFuncCall>(lib,"SDL_EnumerateDirectory","SDL_EnumerateDirectoryAddress")->args({"path","callback","userdata"})->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_filesystem.h:365:34
 	makeExtern< bool (*)(const char *) , SDL_RemovePath , SimNode_ExtFuncCall >(lib,"SDL_RemovePath","SDL_RemovePath")
 		->args({"path"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_filesystem.h:388:34
+	makeExtern< bool (*)(const char *,const char *) , SDL_RenamePath , SimNode_ExtFuncCall >(lib,"SDL_RenamePath","SDL_RenamePath")
+		->args({"oldpath","newpath"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_filesystem.h:428:34
+	makeExtern< bool (*)(const char *,const char *) , SDL_CopyFile , SimNode_ExtFuncCall >(lib,"SDL_CopyFile","SDL_CopyFile")
+		->args({"oldpath","newpath"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_filesystem.h:441:34
+	makeExtern< bool (*)(const char *,struct SDL_PathInfo *) , SDL_GetPathInfo , SimNode_ExtFuncCall >(lib,"SDL_GetPathInfo","SDL_GetPathInfo")
+		->args({"path","info"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_filesystem.h:474:37
+	makeExtern< char ** (*)(const char *,const char *,unsigned int,int *) , SDL_GlobDirectory , SimNode_ExtFuncCall >(lib,"SDL_GlobDirectory","SDL_GlobDirectory")
+		->args({"path","pattern","flags","count"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_filesystem.h:495:36
+	makeExtern< char * (*)() , SDL_GetCurrentDirectory , SimNode_ExtFuncCall >(lib,"SDL_GetCurrentDirectory","SDL_GetCurrentDirectory")
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_gpu.h:2094:34
 	makeExtern< bool (*)(unsigned int,const char *) , SDL_GPUSupportsShaderFormats , SimNode_ExtFuncCall >(lib,"SDL_GPUSupportsShaderFormats","SDL_GPUSupportsShaderFormats")
@@ -4182,6 +4657,71 @@ makeExtern<decltype(&SDL_hid_get_indexed_string), SDL_hid_get_indexed_string, Si
 // from SDL3/SDL_render.h:2609:34
 	makeExtern< bool (*)(struct SDL_Renderer *,float,float,const char *) , SDL_RenderDebugText , SimNode_ExtFuncCall >(lib,"SDL_RenderDebugText","SDL_RenderDebugText")
 		->args({"renderer","x","y","str"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_storage.h:349:43
+	makeExtern< struct SDL_Storage * (*)(const char *,unsigned int) , SDL_OpenTitleStorage , SimNode_ExtFuncCall >(lib,"SDL_OpenTitleStorage","SDL_OpenTitleStorage")
+		->args({"override","props"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_storage.h:375:43
+	makeExtern< struct SDL_Storage * (*)(const char *,const char *,unsigned int) , SDL_OpenUserStorage , SimNode_ExtFuncCall >(lib,"SDL_OpenUserStorage","SDL_OpenUserStorage")
+		->args({"org","app","props"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_storage.h:399:43
+	makeExtern< struct SDL_Storage * (*)(const char *) , SDL_OpenFileStorage , SimNode_ExtFuncCall >(lib,"SDL_OpenFileStorage","SDL_OpenFileStorage")
+		->args({"path"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_storage.h:428:43
+	makeExtern< struct SDL_Storage * (*)(const struct SDL_StorageInterface *,void *) , SDL_OpenStorage , SimNode_ExtFuncCall >(lib,"SDL_OpenStorage","SDL_OpenStorage")
+		->args({"iface","userdata"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_storage.h:446:34
+	makeExtern< bool (*)(struct SDL_Storage *) , SDL_CloseStorage , SimNode_ExtFuncCall >(lib,"SDL_CloseStorage","SDL_CloseStorage")
+		->args({"storage"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_storage.h:461:34
+	makeExtern< bool (*)(struct SDL_Storage *) , SDL_StorageReady , SimNode_ExtFuncCall >(lib,"SDL_StorageReady","SDL_StorageReady")
+		->args({"storage"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_storage.h:477:34
+	makeExtern< bool (*)(struct SDL_Storage *,const char *,Uint64 *) , SDL_GetStorageFileSize , SimNode_ExtFuncCall >(lib,"SDL_GetStorageFileSize","SDL_GetStorageFileSize")
+		->args({"storage","path","length"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_storage.h:500:34
+	makeExtern< bool (*)(struct SDL_Storage *,const char *,void *,Uint64) , SDL_ReadStorageFile , SimNode_ExtFuncCall >(lib,"SDL_ReadStorageFile","SDL_ReadStorageFile")
+		->args({"storage","path","destination","length"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_storage.h:518:34
+	makeExtern< bool (*)(struct SDL_Storage *,const char *,const void *,Uint64) , SDL_WriteStorageFile , SimNode_ExtFuncCall >(lib,"SDL_WriteStorageFile","SDL_WriteStorageFile")
+		->args({"storage","path","source","length"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_storage.h:532:34
+	makeExtern< bool (*)(struct SDL_Storage *,const char *) , SDL_CreateStorageDirectory , SimNode_ExtFuncCall >(lib,"SDL_CreateStorageDirectory","SDL_CreateStorageDirectory")
+		->args({"storage","path"})
+		->addToModule(*this, SideEffects::worstDefault);
+makeExtern<decltype(&SDL_EnumerateStorageDirectory), SDL_EnumerateStorageDirectory, SimNode_ExtFuncCall>(lib,"SDL_EnumerateStorageDirectory","SDL_EnumerateStorageDirectoryAddress")->args({"storage","path","callback","userdata"})->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_storage.h:575:34
+	makeExtern< bool (*)(struct SDL_Storage *,const char *) , SDL_RemoveStoragePath , SimNode_ExtFuncCall >(lib,"SDL_RemoveStoragePath","SDL_RemoveStoragePath")
+		->args({"storage","path"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_storage.h:590:34
+	makeExtern< bool (*)(struct SDL_Storage *,const char *,const char *) , SDL_RenameStoragePath , SimNode_ExtFuncCall >(lib,"SDL_RenameStoragePath","SDL_RenameStoragePath")
+		->args({"storage","oldpath","newpath"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_storage.h:605:34
+	makeExtern< bool (*)(struct SDL_Storage *,const char *,const char *) , SDL_CopyStorageFile , SimNode_ExtFuncCall >(lib,"SDL_CopyStorageFile","SDL_CopyStorageFile")
+		->args({"storage","oldpath","newpath"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_storage.h:621:34
+	makeExtern< bool (*)(struct SDL_Storage *,const char *,struct SDL_PathInfo *) , SDL_GetStoragePathInfo , SimNode_ExtFuncCall >(lib,"SDL_GetStoragePathInfo","SDL_GetStoragePathInfo")
+		->args({"storage","path","info"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_storage.h:634:36
+	makeExtern< Uint64 (*)(struct SDL_Storage *) , SDL_GetStorageSpaceRemaining , SimNode_ExtFuncCall >(lib,"SDL_GetStorageSpaceRemaining","SDL_GetStorageSpaceRemaining")
+		->args({"storage"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_storage.h:674:37
+	makeExtern< char ** (*)(struct SDL_Storage *,const char *,const char *,unsigned int,int *) , SDL_GlobStorageDirectory , SimNode_ExtFuncCall >(lib,"SDL_GlobStorageDirectory","SDL_GlobStorageDirectory")
+		->args({"storage","path","pattern","flags","count"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_time.h:111:34
 	makeExtern< bool (*)(enum SDL_DateFormat *,enum SDL_TimeFormat *) , SDL_GetDateTimeLocalePreferences , SimNode_ExtFuncCall >(lib,"SDL_GetDateTimeLocalePreferences","SDL_GetDateTimeLocalePreferences")

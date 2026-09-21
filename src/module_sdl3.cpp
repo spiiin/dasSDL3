@@ -8,8 +8,16 @@
 #include "sdl3_joystick_gamepad.h"
 #include "sdl3_event_queue.h"
 #include "sdl3_event_lists.h"
+#include "sdl3_filesystem.h"
+#include "sdl3_iostream.h"
+#include "sdl3_storage.h"
+#include "sdl3_asyncio.h"
 #include "sdl3_event_callbacks.h"
 #include "sdl3_audio.h"
+#include "sdl3_audio_devices.h"
+#include "sdl3_audio_stream_controls.h"
+#include "sdl3_audio_final.h"
+#include "sdl3_camera.h"
 #include "sdl3_pixels.h"
 #include "sdl3_geometry.h"
 #include "sdl3_gpu.h"
@@ -61,6 +69,11 @@
 #include "../tests/peripheral_events_probe.h"
 #include "../tests/peripherals_probe.h"
 #include "../tests/event_lists_probe.h"
+#include "../tests/filesystem_probe.h"
+#include "../tests/iostream_probe.h"
+#include "../tests/storage_probe.h"
+#include "../tests/audio_stream_controls_probe.h"
+#include "../tests/audio_final_probe.h"
 #include "../tests/event_queue_probe.h"
 #include "../tests/event_callbacks_probe.h"
 #include "../tests/joystick_gamepad_probe.h"
@@ -482,6 +495,101 @@ public:
         addExtern<DAS_BIND_FUN(SDL_GetSensorNameCopy)>(*this,lib,"SDL_GetSensorNameCopy",SideEffects::worstDefault,"SDL_GetSensorNameCopy");
         addExtern<DAS_BIND_FUN(SDL_GetHapticNameCopy)>(*this,lib,"SDL_GetHapticNameCopy",SideEffects::worstDefault,"SDL_GetHapticNameCopy");
         addExtern<DAS_BIND_FUN(SDL_ReadTextEditingCandidatesEvent)>(*this,lib,"SDL_ReadTextEditingCandidatesEvent",SideEffects::worstDefault,"SDL_ReadTextEditingCandidatesEvent");
+        addExtern<DAS_BIND_FUN(SDL_MakeStorageInterface), SimNode_ExtFuncCallAndCopyOrMove>(*this,lib,"SDL_MakeStorageInterface",SideEffects::worstDefault,"SDL_MakeStorageInterface");
+        addExtern<DAS_BIND_FUN(SDL_OpenAudioDeviceStreamRef)>(*this,lib,"SDL_OpenAudioDeviceStreamRef",SideEffects::worstDefault,"SDL_OpenAudioDeviceStreamRef");
+        addExtern<DAS_BIND_FUN(SDL_LoadWAV_IOCopy)>(*this,lib,"SDL_LoadWAV_IOCopy",SideEffects::worstDefault,"SDL_LoadWAV_IOCopy");
+        addExtern<DAS_BIND_FUN(SDL_MixAudioArray)>(*this,lib,"SDL_MixAudioArray",SideEffects::worstDefault,"SDL_MixAudioArray");
+        addExtern<DAS_BIND_FUN(SDL_ConvertAudioSamplesArray)>(*this,lib,"SDL_ConvertAudioSamplesArray",SideEffects::worstDefault,"SDL_ConvertAudioSamplesArray");
+        addExtern<DAS_BIND_FUN(SDL_GetAudioStreamFormatsRef)>(*this,lib,"SDL_GetAudioStreamFormatsRef",SideEffects::worstDefault,"SDL_GetAudioStreamFormatsRef");
+        addExtern<DAS_BIND_FUN(SDL_SetAudioStreamFormatsRef)>(*this,lib,"SDL_SetAudioStreamFormatsRef",SideEffects::worstDefault,"SDL_SetAudioStreamFormatsRef");
+        addExtern<DAS_BIND_FUN(SDL_SetAudioStreamInputFormatRef)>(*this,lib,"SDL_SetAudioStreamInputFormatRef",SideEffects::worstDefault,"SDL_SetAudioStreamInputFormatRef");
+        addExtern<DAS_BIND_FUN(SDL_SetAudioStreamOutputFormatRef)>(*this,lib,"SDL_SetAudioStreamOutputFormatRef",SideEffects::worstDefault,"SDL_SetAudioStreamOutputFormatRef");
+        addExtern<DAS_BIND_FUN(SDL_SetAudioStreamInputChannelMapArray)>(*this,lib,"SDL_SetAudioStreamInputChannelMapArray",SideEffects::worstDefault,"SDL_SetAudioStreamInputChannelMapArray");
+        addExtern<DAS_BIND_FUN(SDL_ResetAudioStreamInputChannelMap)>(*this,lib,"SDL_ResetAudioStreamInputChannelMap",SideEffects::worstDefault,"SDL_ResetAudioStreamInputChannelMap");
+        addExtern<DAS_BIND_FUN(SDL_SetAudioStreamOutputChannelMapArray)>(*this,lib,"SDL_SetAudioStreamOutputChannelMapArray",SideEffects::worstDefault,"SDL_SetAudioStreamOutputChannelMapArray");
+        addExtern<DAS_BIND_FUN(SDL_ResetAudioStreamOutputChannelMap)>(*this,lib,"SDL_ResetAudioStreamOutputChannelMap",SideEffects::worstDefault,"SDL_ResetAudioStreamOutputChannelMap");
+        addExtern<DAS_BIND_FUN(SDL_GetAudioPlaybackDevicesCopy)>(*this,lib,"SDL_GetAudioPlaybackDevicesCopy",SideEffects::worstDefault,"SDL_GetAudioPlaybackDevicesCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetAudioRecordingDevicesCopy)>(*this,lib,"SDL_GetAudioRecordingDevicesCopy",SideEffects::worstDefault,"SDL_GetAudioRecordingDevicesCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetCamerasCopy)>(*this,lib,"SDL_GetCamerasCopy",SideEffects::worstDefault,"SDL_GetCamerasCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetCameraSupportedFormatsCopy)>(*this,lib,"SDL_GetCameraSupportedFormatsCopy",SideEffects::worstDefault,"SDL_GetCameraSupportedFormatsCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetCameraDriverCopy)>(*this,lib,"SDL_GetCameraDriverCopy",SideEffects::worstDefault,"SDL_GetCameraDriverCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetCurrentCameraDriverCopy)>(*this,lib,"SDL_GetCurrentCameraDriverCopy",SideEffects::worstDefault,"SDL_GetCurrentCameraDriverCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetCameraNameCopy)>(*this,lib,"SDL_GetCameraNameCopy",SideEffects::worstDefault,"SDL_GetCameraNameCopy");
+        addExtern<DAS_BIND_FUN(SDL_OpenCameraRef)>(*this,lib,"SDL_OpenCameraRef",SideEffects::worstDefault,"SDL_OpenCameraRef");
+        addExtern<DAS_BIND_FUN(SDL_GetCameraFormatRef)>(*this,lib,"SDL_GetCameraFormatRef",SideEffects::worstDefault,"SDL_GetCameraFormatRef");
+        addExtern<DAS_BIND_FUN(SDL_AcquireCameraFrameRef)>(*this,lib,"SDL_AcquireCameraFrameRef",SideEffects::worstDefault,"SDL_AcquireCameraFrameRef");
+        addExtern<DAS_BIND_FUN(SDL_GetAudioDriverCopy)>(*this,lib,"SDL_GetAudioDriverCopy",SideEffects::worstDefault,"SDL_GetAudioDriverCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetCurrentAudioDriverCopy)>(*this,lib,"SDL_GetCurrentAudioDriverCopy",SideEffects::worstDefault,"SDL_GetCurrentAudioDriverCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetAudioDeviceNameCopy)>(*this,lib,"SDL_GetAudioDeviceNameCopy",SideEffects::worstDefault,"SDL_GetAudioDeviceNameCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetAudioDeviceFormatRef)>(*this,lib,"SDL_GetAudioDeviceFormatRef",SideEffects::worstDefault,"SDL_GetAudioDeviceFormatRef");
+        addExtern<DAS_BIND_FUN(SDL_OpenAudioDeviceRef)>(*this,lib,"SDL_OpenAudioDeviceRef",SideEffects::worstDefault,"SDL_OpenAudioDeviceRef");
+        addExtern<DAS_BIND_FUN(SDL_GetAudioDeviceChannelMapCopy)>(*this,lib,"SDL_GetAudioDeviceChannelMapCopy",SideEffects::worstDefault,"SDL_GetAudioDeviceChannelMapCopy");
+        addExtern<DAS_BIND_FUN(SDL_BindAudioStreamsArray)>(*this,lib,"SDL_BindAudioStreamsArray",SideEffects::worstDefault,"SDL_BindAudioStreamsArray");
+        addExtern<DAS_BIND_FUN(SDL_UnbindAudioStreamsArray)>(*this,lib,"SDL_UnbindAudioStreamsArray",SideEffects::worstDefault,"SDL_UnbindAudioStreamsArray");
+        addExtern<DAS_BIND_FUN(SDL_GetAsyncIOResultRef)>(*this,lib,"SDL_GetAsyncIOResultRef",SideEffects::worstDefault,"SDL_GetAsyncIOResultRef");
+        addExtern<DAS_BIND_FUN(SDL_WaitAsyncIOResultRef)>(*this,lib,"SDL_WaitAsyncIOResultRef",SideEffects::worstDefault,"SDL_WaitAsyncIOResultRef");
+        addExtern<DAS_BIND_FUN(SDL_CloseAsyncIORef)>(*this,lib,"SDL_CloseAsyncIORef",SideEffects::worstDefault,"SDL_CloseAsyncIORef");
+        addExtern<DAS_BIND_FUN(SDL_TakeAsyncFileBytes)>(*this,lib,"SDL_TakeAsyncFileBytes",SideEffects::worstDefault,"SDL_TakeAsyncFileBytes");
+        addExtern<DAS_BIND_FUN(SDL_OpenStorageRef)>(*this,lib,"SDL_OpenStorageRef",SideEffects::worstDefault,"SDL_OpenStorageRef");
+        addExtern<DAS_BIND_FUN(SDL_CloseStorageRef)>(*this,lib,"SDL_CloseStorageRef",SideEffects::worstDefault,"SDL_CloseStorageRef");
+        addExtern<DAS_BIND_FUN(SDL_GetStorageFileSizeRef)>(*this,lib,"SDL_GetStorageFileSizeRef",SideEffects::worstDefault,"SDL_GetStorageFileSizeRef");
+        addExtern<DAS_BIND_FUN(SDL_GetStoragePathInfoRef)>(*this,lib,"SDL_GetStoragePathInfoRef",SideEffects::worstDefault,"SDL_GetStoragePathInfoRef");
+        addExtern<DAS_BIND_FUN(SDL_ReadStorageFileArray)>(*this,lib,"SDL_ReadStorageFileArray",SideEffects::worstDefault,"SDL_ReadStorageFileArray");
+        addExtern<DAS_BIND_FUN(SDL_WriteStorageFileArray)>(*this,lib,"SDL_WriteStorageFileArray",SideEffects::worstDefault,"SDL_WriteStorageFileArray");
+        addExtern<DAS_BIND_FUN(SDL_LoadStorageFileCopy)>(*this,lib,"SDL_LoadStorageFileCopy",SideEffects::worstDefault,"SDL_LoadStorageFileCopy");
+        addExtern<DAS_BIND_FUN(SDL_GlobStorageDirectoryCopy)>(*this,lib,"SDL_GlobStorageDirectoryCopy",SideEffects::worstDefault,"SDL_GlobStorageDirectoryCopy");
+        addExtern<DAS_BIND_FUN(SDL_EnumerateStorageDirectoryCopy)>(*this,lib,"SDL_EnumerateStorageDirectoryCopy",SideEffects::worstDefault,"SDL_EnumerateStorageDirectoryCopy");
+        addExtern<DAS_BIND_FUN(SDL_SetStorageInterface_close)>(*this,lib,"SDL_SetStorageInterface_close",SideEffects::worstDefault,"SDL_SetStorageInterface_close");
+        addExtern<DAS_BIND_FUN(SDL_SetStorageInterface_ready)>(*this,lib,"SDL_SetStorageInterface_ready",SideEffects::worstDefault,"SDL_SetStorageInterface_ready");
+        addExtern<DAS_BIND_FUN(SDL_SetStorageInterface_enumerate)>(*this,lib,"SDL_SetStorageInterface_enumerate",SideEffects::worstDefault,"SDL_SetStorageInterface_enumerate");
+        addExtern<DAS_BIND_FUN(SDL_SetStorageInterface_info)>(*this,lib,"SDL_SetStorageInterface_info",SideEffects::worstDefault,"SDL_SetStorageInterface_info");
+        addExtern<DAS_BIND_FUN(SDL_SetStorageInterface_read_file)>(*this,lib,"SDL_SetStorageInterface_read_file",SideEffects::worstDefault,"SDL_SetStorageInterface_read_file");
+        addExtern<DAS_BIND_FUN(SDL_SetStorageInterface_write_file)>(*this,lib,"SDL_SetStorageInterface_write_file",SideEffects::worstDefault,"SDL_SetStorageInterface_write_file");
+        addExtern<DAS_BIND_FUN(SDL_SetStorageInterface_mkdir)>(*this,lib,"SDL_SetStorageInterface_mkdir",SideEffects::worstDefault,"SDL_SetStorageInterface_mkdir");
+        addExtern<DAS_BIND_FUN(SDL_SetStorageInterface_remove)>(*this,lib,"SDL_SetStorageInterface_remove",SideEffects::worstDefault,"SDL_SetStorageInterface_remove");
+        addExtern<DAS_BIND_FUN(SDL_SetStorageInterface_rename)>(*this,lib,"SDL_SetStorageInterface_rename",SideEffects::worstDefault,"SDL_SetStorageInterface_rename");
+        addExtern<DAS_BIND_FUN(SDL_SetStorageInterface_copy)>(*this,lib,"SDL_SetStorageInterface_copy",SideEffects::worstDefault,"SDL_SetStorageInterface_copy");
+        addExtern<DAS_BIND_FUN(SDL_SetStorageInterface_space_remaining)>(*this,lib,"SDL_SetStorageInterface_space_remaining",SideEffects::worstDefault,"SDL_SetStorageInterface_space_remaining");
+        addExtern<DAS_BIND_FUN(SDL_MakeIOStreamInterface), SimNode_ExtFuncCallAndCopyOrMove>(*this,lib,"SDL_MakeIOStreamInterface",SideEffects::worstDefault,"SDL_MakeIOStreamInterface");
+        addExtern<DAS_BIND_FUN(SDL_SetIOStreamInterfaceCallbacks)>(*this,lib,"SDL_SetIOStreamInterfaceCallbacks",SideEffects::worstDefault,"SDL_SetIOStreamInterfaceCallbacks");
+        addExtern<DAS_BIND_FUN(SDL_OpenIORef)>(*this,lib,"SDL_OpenIORef",SideEffects::worstDefault,"SDL_OpenIORef");
+        addExtern<DAS_BIND_FUN(SDL_CloseIORef)>(*this,lib,"SDL_CloseIORef",SideEffects::worstDefault,"SDL_CloseIORef");
+        addExtern<DAS_BIND_FUN(SDL_IOprintfText)>(*this,lib,"SDL_IOprintfText",SideEffects::worstDefault,"SDL_IOprintfText");
+        addExtern<DAS_BIND_FUN(SDL_ReadIOArray)>(*this,lib,"SDL_ReadIOArray",SideEffects::worstDefault,"SDL_ReadIOArray");
+        addExtern<DAS_BIND_FUN(SDL_WriteIOArray)>(*this,lib,"SDL_WriteIOArray",SideEffects::worstDefault,"SDL_WriteIOArray");
+        addExtern<DAS_BIND_FUN(SDL_LoadFileCopy)>(*this,lib,"SDL_LoadFileCopy",SideEffects::worstDefault,"SDL_LoadFileCopy");
+        addExtern<DAS_BIND_FUN(SDL_LoadFileIOCopy)>(*this,lib,"SDL_LoadFileIOCopy",SideEffects::worstDefault,"SDL_LoadFileIOCopy");
+        addExtern<DAS_BIND_FUN(SDL_SaveFileArray)>(*this,lib,"SDL_SaveFileArray",SideEffects::worstDefault,"SDL_SaveFileArray");
+        addExtern<DAS_BIND_FUN(SDL_SaveFileIOArray)>(*this,lib,"SDL_SaveFileIOArray",SideEffects::worstDefault,"SDL_SaveFileIOArray");
+        addExtern<DAS_BIND_FUN(SDL_ReadU8Ref)>(*this,lib,"SDL_ReadU8Ref",SideEffects::worstDefault,"SDL_ReadU8Ref");
+        addExtern<DAS_BIND_FUN(SDL_ReadS8Ref)>(*this,lib,"SDL_ReadS8Ref",SideEffects::worstDefault,"SDL_ReadS8Ref");
+        addExtern<DAS_BIND_FUN(SDL_ReadU16LERef)>(*this,lib,"SDL_ReadU16LERef",SideEffects::worstDefault,"SDL_ReadU16LERef");
+        addExtern<DAS_BIND_FUN(SDL_ReadS16LERef)>(*this,lib,"SDL_ReadS16LERef",SideEffects::worstDefault,"SDL_ReadS16LERef");
+        addExtern<DAS_BIND_FUN(SDL_ReadU16BERef)>(*this,lib,"SDL_ReadU16BERef",SideEffects::worstDefault,"SDL_ReadU16BERef");
+        addExtern<DAS_BIND_FUN(SDL_ReadS16BERef)>(*this,lib,"SDL_ReadS16BERef",SideEffects::worstDefault,"SDL_ReadS16BERef");
+        addExtern<DAS_BIND_FUN(SDL_ReadU32LERef)>(*this,lib,"SDL_ReadU32LERef",SideEffects::worstDefault,"SDL_ReadU32LERef");
+        addExtern<DAS_BIND_FUN(SDL_ReadS32LERef)>(*this,lib,"SDL_ReadS32LERef",SideEffects::worstDefault,"SDL_ReadS32LERef");
+        addExtern<DAS_BIND_FUN(SDL_ReadU32BERef)>(*this,lib,"SDL_ReadU32BERef",SideEffects::worstDefault,"SDL_ReadU32BERef");
+        addExtern<DAS_BIND_FUN(SDL_ReadS32BERef)>(*this,lib,"SDL_ReadS32BERef",SideEffects::worstDefault,"SDL_ReadS32BERef");
+        addExtern<DAS_BIND_FUN(SDL_ReadU64LERef)>(*this,lib,"SDL_ReadU64LERef",SideEffects::worstDefault,"SDL_ReadU64LERef");
+        addExtern<DAS_BIND_FUN(SDL_ReadS64LERef)>(*this,lib,"SDL_ReadS64LERef",SideEffects::worstDefault,"SDL_ReadS64LERef");
+        addExtern<DAS_BIND_FUN(SDL_ReadU64BERef)>(*this,lib,"SDL_ReadU64BERef",SideEffects::worstDefault,"SDL_ReadU64BERef");
+        addExtern<DAS_BIND_FUN(SDL_ReadS64BERef)>(*this,lib,"SDL_ReadS64BERef",SideEffects::worstDefault,"SDL_ReadS64BERef");
+        addConstant(*this,"SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER",std::string(SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER));
+        addConstant(*this,"SDL_PROP_IOSTREAM_STDIO_FILE_POINTER",std::string(SDL_PROP_IOSTREAM_STDIO_FILE_POINTER));
+        addConstant(*this,"SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER",std::string(SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER));
+        addConstant(*this,"SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER",std::string(SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER));
+        addConstant(*this,"SDL_PROP_IOSTREAM_MEMORY_POINTER",std::string(SDL_PROP_IOSTREAM_MEMORY_POINTER));
+        addConstant(*this,"SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER",std::string(SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER));
+        addConstant(*this,"SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER",std::string(SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER));
+        addConstant(*this,"SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER",std::string(SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER));
+        addExtern<DAS_BIND_FUN(SDL_GetBasePathCopy)>(*this,lib,"SDL_GetBasePathCopy",SideEffects::worstDefault,"SDL_GetBasePathCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetPrefPathCopy)>(*this,lib,"SDL_GetPrefPathCopy",SideEffects::worstDefault,"SDL_GetPrefPathCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetUserFolderCopy)>(*this,lib,"SDL_GetUserFolderCopy",SideEffects::worstDefault,"SDL_GetUserFolderCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetCurrentDirectoryCopy)>(*this,lib,"SDL_GetCurrentDirectoryCopy",SideEffects::worstDefault,"SDL_GetCurrentDirectoryCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetPathInfoRef)>(*this,lib,"SDL_GetPathInfoRef",SideEffects::worstDefault,"SDL_GetPathInfoRef");
+        addExtern<DAS_BIND_FUN(SDL_GlobDirectoryCopy)>(*this,lib,"SDL_GlobDirectoryCopy",SideEffects::worstDefault,"SDL_GlobDirectoryCopy");
+        addExtern<DAS_BIND_FUN(SDL_EnumerateDirectoryCopy)>(*this,lib,"SDL_EnumerateDirectoryCopy",SideEffects::worstDefault,"SDL_EnumerateDirectoryCopy");
         addExtern<DAS_BIND_FUN(SDL_ReadClipboardEvent)>(*this,lib,"SDL_ReadClipboardEvent",SideEffects::worstDefault,"SDL_ReadClipboardEvent");
         addExtern<DAS_BIND_FUN(SDL_ReadUserEventData)>(*this,lib,"SDL_ReadUserEventData",SideEffects::worstDefault,"SDL_ReadUserEventData");
         addExtern<DAS_BIND_FUN(SDL_WriteUserEventData)>(*this,lib,"SDL_WriteUserEventData",SideEffects::worstDefault,"SDL_WriteUserEventData");
@@ -601,6 +709,24 @@ public:
         addExtern<DAS_BIND_FUN(sdl3_test::mutate_hid_info)>(*this,lib,"SDLTestMutateHidInfo",SideEffects::worstDefault,"sdl3_test::mutate_hid_info");
         addExtern<DAS_BIND_FUN(sdl3_test::haptic_payload)>(*this,lib,"SDLTestHapticPayload",SideEffects::worstDefault,"sdl3_test::haptic_payload");
         addExtern<DAS_BIND_FUN(sdl3_test::list_event),SimNode_ExtFuncCallAndCopyOrMove>(*this,lib,"SDLTestListEvent",SideEffects::worstDefault,"sdl3_test::list_event");
+        addExtern<DAS_BIND_FUN(sdl3_test::audio_final_reset)>(*this,lib,"SDLTestAudioFinalReset",SideEffects::worstDefault,"sdl3_test::audio_final_reset");
+        addExtern<DAS_BIND_FUN(sdl3_test::audio_final_data)>(*this,lib,"SDLTestAudioFinalData",SideEffects::worstDefault,"sdl3_test::audio_final_data");
+        addExtern<DAS_BIND_FUN(sdl3_test::audio_final_callback)>(*this,lib,"SDLTestAudioFinalCallback",SideEffects::worstDefault,"sdl3_test::audio_final_callback");
+        addExtern<DAS_BIND_FUN(sdl3_test::audio_final_count)>(*this,lib,"SDLTestAudioFinalCount",SideEffects::worstDefault,"sdl3_test::audio_final_count");
+        addExtern<DAS_BIND_FUN(sdl3_test::audio_final_read_on_thread)>(*this,lib,"SDLTestAudioFinalReadOnThread",SideEffects::worstDefault,"sdl3_test::audio_final_read_on_thread");
+        addExtern<DAS_BIND_FUN(sdl3_test::audio_stream_lock_from_thread)>(*this,lib,"SDLTestAudioStreamLockFromThread",SideEffects::worstDefault,"sdl3_test::audio_stream_lock_from_thread");
+        addExtern<DAS_BIND_FUN(sdl3_test::storage_reset)>(*this,lib,"SDLTestStorageReset",SideEffects::worstDefault,"sdl3_test::storage_reset");
+        addExtern<DAS_BIND_FUN(sdl3_test::storage_mask)>(*this,lib,"SDLTestStorageMask",SideEffects::worstDefault,"sdl3_test::storage_mask");
+        addExtern<DAS_BIND_FUN(sdl3_test::storage_closes)>(*this,lib,"SDLTestStorageCloses",SideEffects::worstDefault,"sdl3_test::storage_closes");
+        addExtern<DAS_BIND_FUN(sdl3_test::storage_callback)>(*this,lib,"SDLTestStorageCallback",SideEffects::worstDefault,"sdl3_test::storage_callback");
+        addExtern<DAS_BIND_FUN(sdl3_test::io_reset)>(*this,lib,"SDLTestIOReset",SideEffects::worstDefault,"sdl3_test::io_reset");
+        addExtern<DAS_BIND_FUN(sdl3_test::io_callback)>(*this,lib,"SDLTestIOCallback",SideEffects::worstDefault,"sdl3_test::io_callback");
+        addExtern<DAS_BIND_FUN(sdl3_test::io_closes)>(*this,lib,"SDLTestIOCloses",SideEffects::worstDefault,"sdl3_test::io_closes");
+        addExtern<DAS_BIND_FUN(sdl3_test::io_pinned_short_save)>(*this,lib,"SDLTestIOPinnedShortSave",SideEffects::worstDefault,"sdl3_test::io_pinned_short_save");
+        addExtern<DAS_BIND_FUN(sdl3_test::filesystem_file)>(*this,lib,"SDLTestFilesystemFile",SideEffects::worstDefault,"sdl3_test::filesystem_file");
+        addExtern<DAS_BIND_FUN(sdl3_test::filesystem_callback_address)>(*this,lib,"SDLTestFilesystemCallback",SideEffects::worstDefault,"sdl3_test::filesystem_callback_address");
+        addExtern<DAS_BIND_FUN(sdl3_test::filesystem_userdata)>(*this,lib,"SDLTestFilesystemUserdata",SideEffects::worstDefault,"sdl3_test::filesystem_userdata");
+        addExtern<DAS_BIND_FUN(sdl3_test::filesystem_count)>(*this,lib,"SDLTestFilesystemCount",SideEffects::worstDefault,"sdl3_test::filesystem_count");
         addExtern<DAS_BIND_FUN(sdl3_test::reset_event_lists)>(*this,lib,"SDLTestResetEventLists",SideEffects::worstDefault,"sdl3_test::reset_event_lists");
         addExtern<DAS_BIND_FUN(sdl3_test::mutate_event_lists)>(*this,lib,"SDLTestMutateEventLists",SideEffects::worstDefault,"sdl3_test::mutate_event_lists");
         addExtern<DAS_BIND_FUN(sdl3_test::user_pointer)>(*this,lib,"SDLTestUserPointer",SideEffects::worstDefault,"sdl3_test::user_pointer");

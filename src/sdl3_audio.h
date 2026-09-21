@@ -17,7 +17,7 @@ inline SDL_Wav * SDL_LoadWavOwned(const char * path) {
     auto * wav = new (std::nothrow) SDL_Wav;
     if (!wav) { SDL_OutOfMemory(); return nullptr; }
     if (!SDL_LoadWAV(path, &wav->spec, &wav->data, &wav->size)) {
-        SDL_free(wav->data);
+        // SDL_LoadWAV already frees failed output; its pinned failure out-pointer may be stale.
         delete wav;
         return nullptr;
     }

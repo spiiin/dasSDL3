@@ -745,7 +745,7 @@
       "line": 143,
       "id": "enum:SDL_AsyncIOResult",
       "category": "AsyncIO",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -755,7 +755,7 @@
       "line": 131,
       "id": "enum:SDL_AsyncIOTaskType",
       "category": "AsyncIO",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -765,7 +765,7 @@
       "line": 221,
       "id": "enum:SDL_AudioFormat",
       "category": "Audio",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -805,7 +805,7 @@
       "line": 132,
       "id": "enum:SDL_CameraPosition",
       "category": "Camera",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -905,7 +905,7 @@
       "line": 297,
       "id": "enum:SDL_EnumerationResult",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -965,7 +965,7 @@
       "line": 182,
       "id": "enum:SDL_Folder",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1295,7 +1295,7 @@
       "line": 53,
       "id": "enum:SDL_IOStatus",
       "category": "IOStream",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1415,7 +1415,7 @@
       "line": 237,
       "id": "enum:SDL_PathType",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1812,7 +1812,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_ASYNCIO_CANCELED",
       "category": "AsyncIO",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1823,7 +1823,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_ASYNCIO_COMPLETE",
       "category": "AsyncIO",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1834,7 +1834,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_ASYNCIO_FAILURE",
       "category": "AsyncIO",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1845,7 +1845,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_ASYNCIO_TASK_CLOSE",
       "category": "AsyncIO",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1856,7 +1856,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_ASYNCIO_TASK_READ",
       "category": "AsyncIO",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1867,7 +1867,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_ASYNCIO_TASK_WRITE",
       "category": "AsyncIO",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1889,7 +1889,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_AUDIO_F32BE",
       "category": "Audio",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1900,7 +1900,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_AUDIO_F32LE",
       "category": "Audio",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1922,7 +1922,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_AUDIO_S16BE",
       "category": "Audio",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1944,7 +1944,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_AUDIO_S32",
       "category": "Audio",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1955,7 +1955,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_AUDIO_S32BE",
       "category": "Audio",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1966,7 +1966,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_AUDIO_S32LE",
       "category": "Audio",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1977,7 +1977,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_AUDIO_S8",
       "category": "Audio",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1988,7 +1988,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_AUDIO_U8",
       "category": "Audio",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1999,7 +1999,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_AUDIO_UNKNOWN",
       "category": "Audio",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2208,7 +2208,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_CAMERA_POSITION_BACK_FACING",
       "category": "Camera",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2219,7 +2219,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_CAMERA_POSITION_FRONT_FACING",
       "category": "Camera",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2230,7 +2230,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_CAMERA_POSITION_UNKNOWN",
       "category": "Camera",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2725,7 +2725,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_ENUM_CONTINUE",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2736,7 +2736,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_ENUM_FAILURE",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -2747,7 +2747,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_ENUM_SUCCESS",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -4155,7 +4155,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_FOLDER_COUNT",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -4166,7 +4166,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_FOLDER_DESKTOP",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -4177,7 +4177,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_FOLDER_DOCUMENTS",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -4188,7 +4188,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_FOLDER_DOWNLOADS",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -4199,7 +4199,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_FOLDER_HOME",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -4210,7 +4210,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_FOLDER_MUSIC",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -4221,7 +4221,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_FOLDER_PICTURES",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -4232,7 +4232,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_FOLDER_PUBLICSHARE",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -4243,7 +4243,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_FOLDER_SAVEDGAMES",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -4254,7 +4254,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_FOLDER_SCREENSHOTS",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -4265,7 +4265,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_FOLDER_TEMPLATES",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -4276,7 +4276,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_FOLDER_VIDEOS",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8082,7 +8082,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_IO_STATUS_EOF",
       "category": "IOStream",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8093,7 +8093,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_IO_STATUS_ERROR",
       "category": "IOStream",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8104,7 +8104,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_IO_STATUS_NOT_READY",
       "category": "IOStream",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8115,7 +8115,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_IO_STATUS_READONLY",
       "category": "IOStream",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8126,7 +8126,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_IO_STATUS_READY",
       "category": "IOStream",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8137,7 +8137,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_IO_STATUS_WRITEONLY",
       "category": "IOStream",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9193,7 +9193,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PATHTYPE_DIRECTORY",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9204,7 +9204,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PATHTYPE_FILE",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9215,7 +9215,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PATHTYPE_NONE",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9226,7 +9226,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PATHTYPE_OTHER",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -14143,8 +14143,14 @@
       ],
       "id": "function:SDL_AcquireCameraFrame",
       "category": "Camera",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
     },
     {
       "name": "SDL_AcquireGPUCommandBuffer",
@@ -14493,8 +14499,13 @@
       ],
       "id": "function:SDL_AsyncIOFromFile",
       "category": "AsyncIO",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native async submission and completion stay separate; stable caller buffers, explicit close and queue drain.",
+      "contract": "docs/asyncio.md",
+      "tests": [
+        "tests/asyncio.das"
+      ]
     },
     {
       "name": "SDL_AttachVirtualJoystick",
@@ -14534,8 +14545,13 @@
       ],
       "id": "function:SDL_AudioDevicePaused",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
     },
     {
       "name": "SDL_AudioStreamDevicePaused",
@@ -14667,8 +14683,13 @@
       ],
       "id": "function:SDL_BindAudioStream",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
     },
     {
       "name": "SDL_BindAudioStreams",
@@ -14693,8 +14714,13 @@
       ],
       "id": "function:SDL_BindAudioStreams",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
     },
     {
       "name": "SDL_BindGPUComputePipeline",
@@ -15755,8 +15781,13 @@
       ],
       "id": "function:SDL_CloseAsyncIO",
       "category": "AsyncIO",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native async submission and completion stay separate; stable caller buffers, explicit close and queue drain.",
+      "contract": "docs/asyncio.md",
+      "tests": [
+        "tests/asyncio.das"
+      ]
     },
     {
       "name": "SDL_CloseAudioDevice",
@@ -15773,8 +15804,13 @@
       ],
       "id": "function:SDL_CloseAudioDevice",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
     },
     {
       "name": "SDL_CloseCamera",
@@ -15791,8 +15827,14 @@
       ],
       "id": "function:SDL_CloseCamera",
       "category": "Camera",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
     },
     {
       "name": "SDL_CloseGamepad",
@@ -15857,10 +15899,11 @@
       "category": "IOStream",
       "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
-      "contract": "docs/surface-pixels.md",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
       "tests": [
-        "tests/surface_pixels.das"
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
       ]
     },
     {
@@ -15924,8 +15967,13 @@
       ],
       "id": "function:SDL_CloseStorage",
       "category": "Storage",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
     },
     {
       "name": "SDL_CompareAndSwapAtomicInt",
@@ -16083,8 +16131,13 @@
       ],
       "id": "function:SDL_ConvertAudioSamples",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native C callback addresses only; bounded PCM arrays and owned WAV/conversion bytes.",
+      "contract": "docs/audio-final-api.md",
+      "tests": [
+        "tests/audio_final_api.das"
+      ]
     },
     {
       "name": "SDL_ConvertEventToRenderCoordinates",
@@ -16316,8 +16369,13 @@
       ],
       "id": "function:SDL_CopyFile",
       "category": "Filesystem",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; copied path/list adapters and Result helpers. Enumeration callback is a native C address, never a retained script block.",
+      "contract": "docs/filesystem.md",
+      "tests": [
+        "tests/filesystem.das"
+      ]
     },
     {
       "name": "SDL_CopyGPUBufferToBuffer",
@@ -16457,8 +16515,13 @@
       ],
       "id": "function:SDL_CopyStorageFile",
       "category": "Storage",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
     },
     {
       "name": "SDL_CreateAsyncIOQueue",
@@ -16470,8 +16533,13 @@
       "arguments": [],
       "id": "function:SDL_CreateAsyncIOQueue",
       "category": "AsyncIO",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native async submission and completion stay separate; stable caller buffers, explicit close and queue drain.",
+      "contract": "docs/asyncio.md",
+      "tests": [
+        "tests/asyncio.das"
+      ]
     },
     {
       "name": "SDL_CreateAudioStream",
@@ -16597,8 +16665,13 @@
       ],
       "id": "function:SDL_CreateDirectory",
       "category": "Filesystem",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; copied path/list adapters and Result helpers. Enumeration callback is a native C address, never a retained script block.",
+      "contract": "docs/filesystem.md",
+      "tests": [
+        "tests/filesystem.das"
+      ]
     },
     {
       "name": "SDL_CreateEnvironment",
@@ -17147,8 +17220,13 @@
       ],
       "id": "function:SDL_CreateStorageDirectory",
       "category": "Storage",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
     },
     {
       "name": "SDL_CreateSurface",
@@ -17692,8 +17770,13 @@
       ],
       "id": "function:SDL_DestroyAsyncIOQueue",
       "category": "AsyncIO",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native async submission and completion stay separate; stable caller buffers, explicit close and queue drain.",
+      "contract": "docs/asyncio.md",
+      "tests": [
+        "tests/asyncio.das"
+      ]
     },
     {
       "name": "SDL_DestroyAudioStream",
@@ -18646,8 +18729,13 @@
       ],
       "id": "function:SDL_EnumerateDirectory",
       "category": "Filesystem",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; copied path/list adapters and Result helpers. Enumeration callback is a native C address, never a retained script block.",
+      "contract": "docs/filesystem.md",
+      "tests": [
+        "tests/filesystem.das"
+      ]
     },
     {
       "name": "SDL_EnumerateProperties",
@@ -18708,8 +18796,13 @@
       ],
       "id": "function:SDL_EnumerateStorageDirectory",
       "category": "Storage",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
     },
     {
       "name": "SDL_EventEnabled",
@@ -18964,8 +19057,14 @@
       ],
       "id": "function:SDL_FlushIO",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_FlushRenderer",
@@ -19685,8 +19784,13 @@
       ],
       "id": "function:SDL_GetAsyncIOResult",
       "category": "AsyncIO",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native async submission and completion stay separate; stable caller buffers, explicit close and queue drain.",
+      "contract": "docs/asyncio.md",
+      "tests": [
+        "tests/asyncio.das"
+      ]
     },
     {
       "name": "SDL_GetAsyncIOSize",
@@ -19703,8 +19807,13 @@
       ],
       "id": "function:SDL_GetAsyncIOSize",
       "category": "AsyncIO",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native async submission and completion stay separate; stable caller buffers, explicit close and queue drain.",
+      "contract": "docs/asyncio.md",
+      "tests": [
+        "tests/asyncio.das"
+      ]
     },
     {
       "name": "SDL_GetAtomicInt",
@@ -19779,8 +19888,13 @@
       ],
       "id": "function:SDL_GetAudioDeviceChannelMap",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
     },
     {
       "name": "SDL_GetAudioDeviceFormat",
@@ -19805,8 +19919,13 @@
       ],
       "id": "function:SDL_GetAudioDeviceFormat",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
     },
     {
       "name": "SDL_GetAudioDeviceGain",
@@ -19823,8 +19942,13 @@
       ],
       "id": "function:SDL_GetAudioDeviceGain",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
     },
     {
       "name": "SDL_GetAudioDeviceName",
@@ -19841,8 +19965,13 @@
       ],
       "id": "function:SDL_GetAudioDeviceName",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
     },
     {
       "name": "SDL_GetAudioDriver",
@@ -19859,8 +19988,13 @@
       ],
       "id": "function:SDL_GetAudioDriver",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
     },
     {
       "name": "SDL_GetAudioFormatName",
@@ -19877,8 +20011,13 @@
       ],
       "id": "function:SDL_GetAudioFormatName",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native C callback addresses only; bounded PCM arrays and owned WAV/conversion bytes.",
+      "contract": "docs/audio-final-api.md",
+      "tests": [
+        "tests/audio_final_api.das"
+      ]
     },
     {
       "name": "SDL_GetAudioPlaybackDevices",
@@ -19895,8 +20034,13 @@
       ],
       "id": "function:SDL_GetAudioPlaybackDevices",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
     },
     {
       "name": "SDL_GetAudioRecordingDevices",
@@ -19913,8 +20057,13 @@
       ],
       "id": "function:SDL_GetAudioRecordingDevices",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
     },
     {
       "name": "SDL_GetAudioStreamAvailable",
@@ -20019,8 +20168,13 @@
       ],
       "id": "function:SDL_GetAudioStreamFrequencyRatio",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio stream controls, copied channel maps and same-thread deferred unlock.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
     },
     {
       "name": "SDL_GetAudioStreamGain",
@@ -20037,8 +20191,13 @@
       ],
       "id": "function:SDL_GetAudioStreamGain",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio stream controls, copied channel maps and same-thread deferred unlock.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
     },
     {
       "name": "SDL_GetAudioStreamInputChannelMap",
@@ -20059,8 +20218,13 @@
       ],
       "id": "function:SDL_GetAudioStreamInputChannelMap",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "pending",
+      "reason": "Pinned SDL 3.2.18 getter crashes for default null maps; raw custom-map execution tested, safe boost getter deferred.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
     },
     {
       "name": "SDL_GetAudioStreamOutputChannelMap",
@@ -20081,8 +20245,13 @@
       ],
       "id": "function:SDL_GetAudioStreamOutputChannelMap",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "pending",
+      "reason": "Pinned SDL 3.2.18 getter crashes for default null maps; raw custom-map execution tested, safe boost getter deferred.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
     },
     {
       "name": "SDL_GetAudioStreamProperties",
@@ -20099,8 +20268,13 @@
       ],
       "id": "function:SDL_GetAudioStreamProperties",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio stream controls, copied channel maps and same-thread deferred unlock.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
     },
     {
       "name": "SDL_GetAudioStreamQueued",
@@ -20131,7 +20305,12 @@
       "id": "function:SDL_GetBasePath",
       "category": "Filesystem",
       "raw_status": "generated",
-      "boost_status": "unreviewed"
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; copied path/list adapters and Result helpers. Enumeration callback is a native C address, never a retained script block.",
+      "contract": "docs/filesystem.md",
+      "tests": [
+        "tests/filesystem.das"
+      ]
     },
     {
       "name": "SDL_GetBooleanProperty",
@@ -20187,8 +20366,14 @@
       ],
       "id": "function:SDL_GetCameraDriver",
       "category": "Camera",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
     },
     {
       "name": "SDL_GetCameraFormat",
@@ -20209,8 +20394,14 @@
       ],
       "id": "function:SDL_GetCameraFormat",
       "category": "Camera",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
     },
     {
       "name": "SDL_GetCameraID",
@@ -20227,8 +20418,14 @@
       ],
       "id": "function:SDL_GetCameraID",
       "category": "Camera",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
     },
     {
       "name": "SDL_GetCameraName",
@@ -20245,8 +20442,14 @@
       ],
       "id": "function:SDL_GetCameraName",
       "category": "Camera",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
     },
     {
       "name": "SDL_GetCameraPermissionState",
@@ -20263,8 +20466,14 @@
       ],
       "id": "function:SDL_GetCameraPermissionState",
       "category": "Camera",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
     },
     {
       "name": "SDL_GetCameraPosition",
@@ -20281,8 +20490,14 @@
       ],
       "id": "function:SDL_GetCameraPosition",
       "category": "Camera",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
     },
     {
       "name": "SDL_GetCameraProperties",
@@ -20299,8 +20514,14 @@
       ],
       "id": "function:SDL_GetCameraProperties",
       "category": "Camera",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
     },
     {
       "name": "SDL_GetCameraSupportedFormats",
@@ -20321,8 +20542,14 @@
       ],
       "id": "function:SDL_GetCameraSupportedFormats",
       "category": "Camera",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
     },
     {
       "name": "SDL_GetCameras",
@@ -20339,8 +20566,14 @@
       ],
       "id": "function:SDL_GetCameras",
       "category": "Camera",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
     },
     {
       "name": "SDL_GetClipboardData",
@@ -20469,8 +20702,13 @@
       "arguments": [],
       "id": "function:SDL_GetCurrentAudioDriver",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
     },
     {
       "name": "SDL_GetCurrentCameraDriver",
@@ -20482,8 +20720,14 @@
       "arguments": [],
       "id": "function:SDL_GetCurrentCameraDriver",
       "category": "Camera",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
     },
     {
       "name": "SDL_GetCurrentDirectory",
@@ -20495,8 +20739,13 @@
       "arguments": [],
       "id": "function:SDL_GetCurrentDirectory",
       "category": "Filesystem",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; copied path/list adapters and Result helpers. Enumeration callback is a native C address, never a retained script block.",
+      "contract": "docs/filesystem.md",
+      "tests": [
+        "tests/filesystem.das"
+      ]
     },
     {
       "name": "SDL_GetCurrentDisplayMode",
@@ -22747,8 +22996,14 @@
       ],
       "id": "function:SDL_GetIOProperties",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_GetIOSize",
@@ -22765,8 +23020,14 @@
       ],
       "id": "function:SDL_GetIOSize",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_GetIOStatus",
@@ -22783,8 +23044,14 @@
       ],
       "id": "function:SDL_GetIOStatus",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_GetJoystickAxis",
@@ -24036,8 +24303,13 @@
       "arguments": [],
       "id": "function:SDL_GetNumAudioDrivers",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
     },
     {
       "name": "SDL_GetNumCameraDrivers",
@@ -24049,8 +24321,14 @@
       "arguments": [],
       "id": "function:SDL_GetNumCameraDrivers",
       "category": "Camera",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
     },
     {
       "name": "SDL_GetNumGPUDrivers",
@@ -24360,8 +24638,13 @@
       ],
       "id": "function:SDL_GetPathInfo",
       "category": "Filesystem",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; copied path/list adapters and Result helpers. Enumeration callback is a native C address, never a retained script block.",
+      "contract": "docs/filesystem.md",
+      "tests": [
+        "tests/filesystem.das"
+      ]
     },
     {
       "name": "SDL_GetPerformanceCounter",
@@ -24564,8 +24847,13 @@
       ],
       "id": "function:SDL_GetPrefPath",
       "category": "Filesystem",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; copied path/list adapters and Result helpers. Enumeration callback is a native C address, never a retained script block.",
+      "contract": "docs/filesystem.md",
+      "tests": [
+        "tests/filesystem.das"
+      ]
     },
     {
       "name": "SDL_GetPreferredLocales",
@@ -26121,8 +26409,13 @@
       ],
       "id": "function:SDL_GetSilenceValueForFormat",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native C callback addresses only; bounded PCM arrays and owned WAV/conversion bytes.",
+      "contract": "docs/audio-final-api.md",
+      "tests": [
+        "tests/audio_final_api.das"
+      ]
     },
     {
       "name": "SDL_GetStorageFileSize",
@@ -26147,8 +26440,13 @@
       ],
       "id": "function:SDL_GetStorageFileSize",
       "category": "Storage",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
     },
     {
       "name": "SDL_GetStoragePathInfo",
@@ -26173,8 +26471,13 @@
       ],
       "id": "function:SDL_GetStoragePathInfo",
       "category": "Storage",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
     },
     {
       "name": "SDL_GetStorageSpaceRemaining",
@@ -26191,8 +26494,13 @@
       ],
       "id": "function:SDL_GetStorageSpaceRemaining",
       "category": "Storage",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
     },
     {
       "name": "SDL_GetStringProperty",
@@ -27128,8 +27436,13 @@
       ],
       "id": "function:SDL_GetUserFolder",
       "category": "Filesystem",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; copied path/list adapters and Result helpers. Enumeration callback is a native C address, never a retained script block.",
+      "contract": "docs/filesystem.md",
+      "tests": [
+        "tests/filesystem.das"
+      ]
     },
     {
       "name": "SDL_GetVersion",
@@ -27904,8 +28217,13 @@
       ],
       "id": "function:SDL_GlobDirectory",
       "category": "Filesystem",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; copied path/list adapters and Result helpers. Enumeration callback is a native C address, never a retained script block.",
+      "contract": "docs/filesystem.md",
+      "tests": [
+        "tests/filesystem.das"
+      ]
     },
     {
       "name": "SDL_GlobStorageDirectory",
@@ -27938,8 +28256,13 @@
       ],
       "id": "function:SDL_GlobStorageDirectory",
       "category": "Storage",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
     },
     {
       "name": "SDL_HapticEffectSupported",
@@ -28538,10 +28861,11 @@
       "category": "IOStream",
       "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
-      "contract": "docs/surface-pixels.md",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
       "tests": [
-        "tests/surface_pixels.das"
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
       ]
     },
     {
@@ -28554,8 +28878,14 @@
       "arguments": [],
       "id": "function:SDL_IOFromDynamicMem",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_IOFromFile",
@@ -28576,8 +28906,14 @@
       ],
       "id": "function:SDL_IOFromFile",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_IOFromMem",
@@ -28600,10 +28936,11 @@
       "category": "IOStream",
       "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
-      "contract": "docs/surface-pixels.md",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
       "tests": [
-        "tests/surface_pixels.das"
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
       ]
     },
     {
@@ -28625,8 +28962,15 @@
       ],
       "id": "function:SDL_IOprintf",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "Fixed %s text adapter; arbitrary C varargs are not exposed.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ],
+      "adapter": "SDL_IOprintfText"
     },
     {
       "name": "SDL_IOvprintf",
@@ -28652,7 +28996,10 @@
       "id": "function:SDL_IOvprintf",
       "category": "IOStream",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "reason": "Native va_list ABI is not a script argument list; remains pending.",
+      "contract": "docs/iostream.md",
+      "tests": []
     },
     {
       "name": "SDL_Init",
@@ -28787,8 +29134,13 @@
       ],
       "id": "function:SDL_IsAudioDevicePhysical",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
     },
     {
       "name": "SDL_IsAudioDevicePlayback",
@@ -28805,8 +29157,13 @@
       ],
       "id": "function:SDL_IsAudioDevicePlayback",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
     },
     {
       "name": "SDL_IsGamepad",
@@ -29066,8 +29423,14 @@
       ],
       "id": "function:SDL_LoadFile",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_LoadFileAsync",
@@ -29092,8 +29455,13 @@
       ],
       "id": "function:SDL_LoadFileAsync",
       "category": "AsyncIO",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native async submission and completion stay separate; stable caller buffers, explicit close and queue drain.",
+      "contract": "docs/asyncio.md",
+      "tests": [
+        "tests/asyncio.das"
+      ]
     },
     {
       "name": "SDL_LoadFile_IO",
@@ -29118,8 +29486,14 @@
       ],
       "id": "function:SDL_LoadFile_IO",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_LoadFunction",
@@ -29222,8 +29596,13 @@
       ],
       "id": "function:SDL_LoadWAV_IO",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native C callback addresses only; bounded PCM arrays and owned WAV/conversion bytes.",
+      "contract": "docs/audio-final-api.md",
+      "tests": [
+        "tests/audio_final_api.das"
+      ]
     },
     {
       "name": "SDL_LockAudioStream",
@@ -29240,8 +29619,13 @@
       ],
       "id": "function:SDL_LockAudioStream",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio stream controls, copied channel maps and same-thread deferred unlock.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
     },
     {
       "name": "SDL_LockJoysticks",
@@ -30069,8 +30453,13 @@
       ],
       "id": "function:SDL_MixAudio",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native C callback addresses only; bounded PCM arrays and owned WAV/conversion bytes.",
+      "contract": "docs/audio-final-api.md",
+      "tests": [
+        "tests/audio_final_api.das"
+      ]
     },
     {
       "name": "SDL_MostSignificantBitIndex32",
@@ -30187,8 +30576,13 @@
       ],
       "id": "function:SDL_OpenAudioDevice",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
     },
     {
       "name": "SDL_OpenAudioDeviceStream",
@@ -30217,14 +30611,13 @@
       ],
       "id": "function:SDL_OpenAudioDeviceStream",
       "category": "Audio",
-      "raw_status": "adapted",
+      "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Default playback device only, null callback/userdata; scoped device-stream ownership, not general capture or callback support",
-      "adapter": "SDL_OpenPlaybackStream / with_playback",
+      "reason": "Native C callback addresses only; bounded PCM arrays and owned WAV/conversion bytes.",
+      "contract": "docs/audio-final-api.md",
       "tests": [
-        "tests/audio.das"
-      ],
-      "contract": "docs/audio.md"
+        "tests/audio_final_api.das"
+      ]
     },
     {
       "name": "SDL_OpenCamera",
@@ -30245,8 +30638,14 @@
       ],
       "id": "function:SDL_OpenCamera",
       "category": "Camera",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
     },
     {
       "name": "SDL_OpenFileStorage",
@@ -30263,8 +30662,13 @@
       ],
       "id": "function:SDL_OpenFileStorage",
       "category": "Storage",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
     },
     {
       "name": "SDL_OpenGamepad",
@@ -30372,8 +30776,14 @@
       ],
       "id": "function:SDL_OpenIO",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_OpenJoystick",
@@ -30440,8 +30850,13 @@
       ],
       "id": "function:SDL_OpenStorage",
       "category": "Storage",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
     },
     {
       "name": "SDL_OpenTitleStorage",
@@ -30462,8 +30877,13 @@
       ],
       "id": "function:SDL_OpenTitleStorage",
       "category": "Storage",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
     },
     {
       "name": "SDL_OpenURL",
@@ -30506,8 +30926,13 @@
       ],
       "id": "function:SDL_OpenUserStorage",
       "category": "Storage",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
     },
     {
       "name": "SDL_OutOfMemory",
@@ -30542,8 +30967,13 @@
       ],
       "id": "function:SDL_PauseAudioDevice",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
     },
     {
       "name": "SDL_PauseAudioStreamDevice",
@@ -31141,8 +31571,13 @@
       ],
       "id": "function:SDL_ReadAsyncIO",
       "category": "AsyncIO",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native async submission and completion stay separate; stable caller buffers, explicit close and queue drain.",
+      "contract": "docs/asyncio.md",
+      "tests": [
+        "tests/asyncio.das"
+      ]
     },
     {
       "name": "SDL_ReadIO",
@@ -31167,8 +31602,14 @@
       ],
       "id": "function:SDL_ReadIO",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_ReadProcess",
@@ -31215,8 +31656,14 @@
       ],
       "id": "function:SDL_ReadS16BE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_ReadS16LE",
@@ -31237,8 +31684,14 @@
       ],
       "id": "function:SDL_ReadS16LE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_ReadS32BE",
@@ -31259,8 +31712,14 @@
       ],
       "id": "function:SDL_ReadS32BE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_ReadS32LE",
@@ -31281,8 +31740,14 @@
       ],
       "id": "function:SDL_ReadS32LE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_ReadS64BE",
@@ -31303,8 +31768,14 @@
       ],
       "id": "function:SDL_ReadS64BE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_ReadS64LE",
@@ -31325,8 +31796,14 @@
       ],
       "id": "function:SDL_ReadS64LE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_ReadS8",
@@ -31347,8 +31824,14 @@
       ],
       "id": "function:SDL_ReadS8",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_ReadStorageFile",
@@ -31377,8 +31860,13 @@
       ],
       "id": "function:SDL_ReadStorageFile",
       "category": "Storage",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
     },
     {
       "name": "SDL_ReadSurfacePixel",
@@ -31493,8 +31981,14 @@
       ],
       "id": "function:SDL_ReadU16BE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_ReadU16LE",
@@ -31515,8 +32009,14 @@
       ],
       "id": "function:SDL_ReadU16LE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_ReadU32BE",
@@ -31537,8 +32037,14 @@
       ],
       "id": "function:SDL_ReadU32BE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_ReadU32LE",
@@ -31559,8 +32065,14 @@
       ],
       "id": "function:SDL_ReadU32LE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_ReadU64BE",
@@ -31581,8 +32093,14 @@
       ],
       "id": "function:SDL_ReadU64BE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_ReadU64LE",
@@ -31603,8 +32121,14 @@
       ],
       "id": "function:SDL_ReadU64LE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_ReadU8",
@@ -31625,8 +32149,14 @@
       ],
       "id": "function:SDL_ReadU8",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_RectEmpty",
@@ -31866,8 +32396,14 @@
       ],
       "id": "function:SDL_ReleaseCameraFrame",
       "category": "Camera",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
     },
     {
       "name": "SDL_ReleaseGPUBuffer",
@@ -32212,10 +32748,10 @@
       "category": "Filesystem",
       "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
-      "contract": "docs/surface-pixels.md",
+      "reason": "Raw SDL signature; copied path/list adapters and Result helpers. Enumeration callback is a native C address, never a retained script block.",
+      "contract": "docs/filesystem.md",
       "tests": [
-        "tests/surface_pixels.das"
+        "tests/filesystem.das"
       ]
     },
     {
@@ -32237,8 +32773,13 @@
       ],
       "id": "function:SDL_RemoveStoragePath",
       "category": "Storage",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
     },
     {
       "name": "SDL_RemoveSurfaceAlternateImages",
@@ -32323,8 +32864,13 @@
       ],
       "id": "function:SDL_RenamePath",
       "category": "Filesystem",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; copied path/list adapters and Result helpers. Enumeration callback is a native C address, never a retained script block.",
+      "contract": "docs/filesystem.md",
+      "tests": [
+        "tests/filesystem.das"
+      ]
     },
     {
       "name": "SDL_RenameStoragePath",
@@ -32349,8 +32895,13 @@
       ],
       "id": "function:SDL_RenameStoragePath",
       "category": "Storage",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
     },
     {
       "name": "SDL_RenderClear",
@@ -33335,8 +33886,13 @@
       ],
       "id": "function:SDL_ResumeAudioDevice",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
     },
     {
       "name": "SDL_ResumeAudioStreamDevice",
@@ -33689,8 +34245,14 @@
       ],
       "id": "function:SDL_SaveFile",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_SaveFile_IO",
@@ -33719,8 +34281,14 @@
       ],
       "id": "function:SDL_SaveFile_IO",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_ScaleSurface",
@@ -33823,10 +34391,11 @@
       "category": "IOStream",
       "raw_status": "generated",
       "boost_status": "partial",
-      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
-      "contract": "docs/surface-pixels.md",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
       "tests": [
-        "tests/surface_pixels.das"
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
       ]
     },
     {
@@ -34095,8 +34664,13 @@
       ],
       "id": "function:SDL_SetAudioDeviceGain",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
     },
     {
       "name": "SDL_SetAudioPostmixCallback",
@@ -34121,8 +34695,13 @@
       ],
       "id": "function:SDL_SetAudioPostmixCallback",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native C callback addresses only; bounded PCM arrays and owned WAV/conversion bytes.",
+      "contract": "docs/audio-final-api.md",
+      "tests": [
+        "tests/audio_final_api.das"
+      ]
     },
     {
       "name": "SDL_SetAudioStreamFormat",
@@ -34147,8 +34726,13 @@
       ],
       "id": "function:SDL_SetAudioStreamFormat",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio stream controls, copied channel maps and same-thread deferred unlock.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
     },
     {
       "name": "SDL_SetAudioStreamFrequencyRatio",
@@ -34169,8 +34753,13 @@
       ],
       "id": "function:SDL_SetAudioStreamFrequencyRatio",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio stream controls, copied channel maps and same-thread deferred unlock.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
     },
     {
       "name": "SDL_SetAudioStreamGain",
@@ -34191,8 +34780,13 @@
       ],
       "id": "function:SDL_SetAudioStreamGain",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio stream controls, copied channel maps and same-thread deferred unlock.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
     },
     {
       "name": "SDL_SetAudioStreamGetCallback",
@@ -34217,8 +34811,13 @@
       ],
       "id": "function:SDL_SetAudioStreamGetCallback",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native C callback addresses only; bounded PCM arrays and owned WAV/conversion bytes.",
+      "contract": "docs/audio-final-api.md",
+      "tests": [
+        "tests/audio_final_api.das"
+      ]
     },
     {
       "name": "SDL_SetAudioStreamInputChannelMap",
@@ -34243,8 +34842,13 @@
       ],
       "id": "function:SDL_SetAudioStreamInputChannelMap",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio stream controls, copied channel maps and same-thread deferred unlock.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
     },
     {
       "name": "SDL_SetAudioStreamOutputChannelMap",
@@ -34269,8 +34873,13 @@
       ],
       "id": "function:SDL_SetAudioStreamOutputChannelMap",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio stream controls, copied channel maps and same-thread deferred unlock.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
     },
     {
       "name": "SDL_SetAudioStreamPutCallback",
@@ -34295,8 +34904,13 @@
       ],
       "id": "function:SDL_SetAudioStreamPutCallback",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native C callback addresses only; bounded PCM arrays and owned WAV/conversion bytes.",
+      "contract": "docs/audio-final-api.md",
+      "tests": [
+        "tests/audio_final_api.das"
+      ]
     },
     {
       "name": "SDL_SetBooleanProperty",
@@ -37634,8 +38248,13 @@
       ],
       "id": "function:SDL_SignalAsyncIOQueue",
       "category": "AsyncIO",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native async submission and completion stay separate; stable caller buffers, explicit close and queue drain.",
+      "contract": "docs/asyncio.md",
+      "tests": [
+        "tests/asyncio.das"
+      ]
     },
     {
       "name": "SDL_SignalCondition",
@@ -37878,8 +38497,13 @@
       ],
       "id": "function:SDL_StorageReady",
       "category": "Storage",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
     },
     {
       "name": "SDL_StretchSurface",
@@ -38111,8 +38735,14 @@
       ],
       "id": "function:SDL_TellIO",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_TextInputActive",
@@ -38353,8 +38983,13 @@
       ],
       "id": "function:SDL_UnbindAudioStream",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
     },
     {
       "name": "SDL_UnbindAudioStreams",
@@ -38375,8 +39010,13 @@
       ],
       "id": "function:SDL_UnbindAudioStreams",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
     },
     {
       "name": "SDL_UnloadObject",
@@ -38411,8 +39051,13 @@
       ],
       "id": "function:SDL_UnlockAudioStream",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Audio stream controls, copied channel maps and same-thread deferred unlock.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
     },
     {
       "name": "SDL_UnlockJoysticks",
@@ -39174,8 +39819,13 @@
       ],
       "id": "function:SDL_WaitAsyncIOResult",
       "category": "AsyncIO",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native async submission and completion stay separate; stable caller buffers, explicit close and queue drain.",
+      "contract": "docs/asyncio.md",
+      "tests": [
+        "tests/asyncio.das"
+      ]
     },
     {
       "name": "SDL_WaitCondition",
@@ -39649,8 +40299,13 @@
       ],
       "id": "function:SDL_WriteAsyncIO",
       "category": "AsyncIO",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native async submission and completion stay separate; stable caller buffers, explicit close and queue drain.",
+      "contract": "docs/asyncio.md",
+      "tests": [
+        "tests/asyncio.das"
+      ]
     },
     {
       "name": "SDL_WriteIO",
@@ -39675,8 +40330,14 @@
       ],
       "id": "function:SDL_WriteIO",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_WriteS16BE",
@@ -39697,8 +40358,14 @@
       ],
       "id": "function:SDL_WriteS16BE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_WriteS16LE",
@@ -39719,8 +40386,14 @@
       ],
       "id": "function:SDL_WriteS16LE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_WriteS32BE",
@@ -39741,8 +40414,14 @@
       ],
       "id": "function:SDL_WriteS32BE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_WriteS32LE",
@@ -39763,8 +40442,14 @@
       ],
       "id": "function:SDL_WriteS32LE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_WriteS64BE",
@@ -39785,8 +40470,14 @@
       ],
       "id": "function:SDL_WriteS64BE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_WriteS64LE",
@@ -39807,8 +40498,14 @@
       ],
       "id": "function:SDL_WriteS64LE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_WriteS8",
@@ -39829,8 +40526,14 @@
       ],
       "id": "function:SDL_WriteS8",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_WriteStorageFile",
@@ -39859,8 +40562,13 @@
       ],
       "id": "function:SDL_WriteStorageFile",
       "category": "Storage",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
     },
     {
       "name": "SDL_WriteSurfacePixel",
@@ -39975,8 +40683,14 @@
       ],
       "id": "function:SDL_WriteU16BE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_WriteU16LE",
@@ -39997,8 +40711,14 @@
       ],
       "id": "function:SDL_WriteU16LE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_WriteU32BE",
@@ -40019,8 +40739,14 @@
       ],
       "id": "function:SDL_WriteU32BE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_WriteU32LE",
@@ -40041,8 +40767,14 @@
       ],
       "id": "function:SDL_WriteU32LE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_WriteU64BE",
@@ -40063,8 +40795,14 @@
       ],
       "id": "function:SDL_WriteU64BE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_WriteU64LE",
@@ -40085,8 +40823,14 @@
       ],
       "id": "function:SDL_WriteU64LE",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_WriteU8",
@@ -40107,8 +40851,14 @@
       ],
       "id": "function:SDL_WriteU8",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
     },
     {
       "name": "SDL_abs",
@@ -48236,7 +48986,7 @@
       "function_like": false,
       "id": "macro:SDL_AUDIO_DEVICE_DEFAULT_RECORDING",
       "category": "Audio",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -50772,7 +51522,7 @@
       "function_like": false,
       "id": "macro:SDL_GLOB_CASEINSENSITIVE",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -59322,8 +60072,14 @@
       "function_like": false,
       "id": "macro:SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "String constant registered directly from pinned native macro value.",
+      "adapter": "SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das"
+      ]
     },
     {
       "name": "SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER",
@@ -59334,8 +60090,14 @@
       "function_like": false,
       "id": "macro:SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "String constant registered directly from pinned native macro value.",
+      "adapter": "SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das"
+      ]
     },
     {
       "name": "SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER",
@@ -59346,8 +60108,14 @@
       "function_like": false,
       "id": "macro:SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "String constant registered directly from pinned native macro value.",
+      "adapter": "SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das"
+      ]
     },
     {
       "name": "SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER",
@@ -59358,8 +60126,14 @@
       "function_like": false,
       "id": "macro:SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "String constant registered directly from pinned native macro value.",
+      "adapter": "SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das"
+      ]
     },
     {
       "name": "SDL_PROP_IOSTREAM_MEMORY_POINTER",
@@ -59370,8 +60144,14 @@
       "function_like": false,
       "id": "macro:SDL_PROP_IOSTREAM_MEMORY_POINTER",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "String constant registered directly from pinned native macro value.",
+      "adapter": "SDL_PROP_IOSTREAM_MEMORY_POINTER",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das"
+      ]
     },
     {
       "name": "SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER",
@@ -59382,8 +60162,14 @@
       "function_like": false,
       "id": "macro:SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "String constant registered directly from pinned native macro value.",
+      "adapter": "SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das"
+      ]
     },
     {
       "name": "SDL_PROP_IOSTREAM_STDIO_FILE_POINTER",
@@ -59394,8 +60180,14 @@
       "function_like": false,
       "id": "macro:SDL_PROP_IOSTREAM_STDIO_FILE_POINTER",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "String constant registered directly from pinned native macro value.",
+      "adapter": "SDL_PROP_IOSTREAM_STDIO_FILE_POINTER",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das"
+      ]
     },
     {
       "name": "SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER",
@@ -59406,8 +60198,14 @@
       "function_like": false,
       "id": "macro:SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "String constant registered directly from pinned native macro value.",
+      "adapter": "SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das"
+      ]
     },
     {
       "name": "SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN",
@@ -65378,7 +66176,7 @@
       "fields": [],
       "id": "record:SDL_AsyncIO",
       "category": "AsyncIO",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -65424,8 +66222,18 @@
       ],
       "id": "record:SDL_AsyncIOOutcome",
       "category": "AsyncIO",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "asyncio",
+        "type",
+        "result",
+        "buffer",
+        "offset",
+        "bytes_requested",
+        "bytes_transferred",
+        "userdata"
+      ]
     },
     {
       "name": "SDL_AsyncIOQueue",
@@ -65437,7 +66245,7 @@
       "fields": [],
       "id": "record:SDL_AsyncIOQueue",
       "category": "AsyncIO",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -65548,6 +66356,7 @@
       "raw_status": "partial",
       "boost_status": "unreviewed",
       "exposed_fields": [
+        "format",
         "channels",
         "freq"
       ]
@@ -65575,7 +66384,7 @@
       "fields": [],
       "id": "record:SDL_Camera",
       "category": "Camera",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -65643,8 +66452,16 @@
       ],
       "id": "record:SDL_CameraSpec",
       "category": "Camera",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "format",
+        "colorspace",
+        "width",
+        "height",
+        "framerate_numerator",
+        "framerate_denominator"
+      ]
     },
     {
       "name": "SDL_ClipboardEvent",
@@ -69081,8 +69898,11 @@
       ],
       "id": "record:SDL_IOStreamInterface",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "version"
+      ]
     },
     {
       "name": "SDL_InitState",
@@ -69967,8 +70787,15 @@
       ],
       "id": "record:SDL_PathInfo",
       "category": "Filesystem",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "type",
+        "size",
+        "create_time",
+        "modify_time",
+        "access_time"
+      ]
     },
     {
       "name": "SDL_PenAxisEvent",
@@ -70600,7 +71427,7 @@
       "fields": [],
       "id": "record:SDL_Storage",
       "category": "Storage",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -70662,8 +71489,11 @@
       ],
       "id": "record:SDL_StorageInterface",
       "category": "Storage",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "version"
+      ]
     },
     {
       "name": "SDL_Surface",
@@ -71566,7 +72396,7 @@
       "callback": false,
       "id": "typedef:SDL_AsyncIO",
       "category": "AsyncIO",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -71578,8 +72408,18 @@
       "callback": false,
       "id": "typedef:SDL_AsyncIOOutcome",
       "category": "AsyncIO",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "asyncio",
+        "type",
+        "result",
+        "buffer",
+        "offset",
+        "bytes_requested",
+        "bytes_transferred",
+        "userdata"
+      ]
     },
     {
       "name": "SDL_AsyncIOQueue",
@@ -71590,7 +72430,7 @@
       "callback": false,
       "id": "typedef:SDL_AsyncIOQueue",
       "category": "AsyncIO",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -71602,7 +72442,7 @@
       "callback": false,
       "id": "typedef:SDL_AsyncIOResult",
       "category": "AsyncIO",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -71614,7 +72454,7 @@
       "callback": false,
       "id": "typedef:SDL_AsyncIOTaskType",
       "category": "AsyncIO",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -71674,7 +72514,7 @@
       "callback": false,
       "id": "typedef:SDL_AudioFormat",
       "category": "Audio",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -71701,6 +72541,7 @@
       "raw_status": "partial",
       "boost_status": "unreviewed",
       "exposed_fields": [
+        "format",
         "channels",
         "freq"
       ]
@@ -71786,7 +72627,7 @@
       "callback": false,
       "id": "typedef:SDL_Camera",
       "category": "Camera",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -71822,7 +72663,7 @@
       "callback": false,
       "id": "typedef:SDL_CameraPosition",
       "category": "Camera",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -71834,8 +72675,16 @@
       "callback": false,
       "id": "typedef:SDL_CameraSpec",
       "category": "Camera",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "format",
+        "colorspace",
+        "width",
+        "height",
+        "framerate_numerator",
+        "framerate_denominator"
+      ]
     },
     {
       "name": "SDL_Capitalization",
@@ -72310,7 +73159,7 @@
       "callback": false,
       "id": "typedef:SDL_EnumerationResult",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -72503,7 +73352,7 @@
       "callback": false,
       "id": "typedef:SDL_Folder",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -74247,7 +75096,7 @@
       "callback": false,
       "id": "typedef:SDL_IOStatus",
       "category": "IOStream",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -74271,8 +75120,11 @@
       "callback": false,
       "id": "typedef:SDL_IOStreamInterface",
       "category": "IOStream",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "version"
+      ]
     },
     {
       "name": "SDL_IOWhence",
@@ -74899,8 +75751,15 @@
       "callback": false,
       "id": "typedef:SDL_PathInfo",
       "category": "Filesystem",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "type",
+        "size",
+        "create_time",
+        "modify_time",
+        "access_time"
+      ]
     },
     {
       "name": "SDL_PathType",
@@ -74911,7 +75770,7 @@
       "callback": false,
       "id": "typedef:SDL_PathType",
       "category": "Filesystem",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -75395,7 +76254,7 @@
       "callback": false,
       "id": "typedef:SDL_Storage",
       "category": "Storage",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -75407,8 +76266,11 @@
       "callback": false,
       "id": "typedef:SDL_StorageInterface",
       "category": "Storage",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "version"
+      ]
     },
     {
       "name": "SDL_Surface",

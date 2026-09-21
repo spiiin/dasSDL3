@@ -59,6 +59,14 @@ addEnumeration(new Enumeration_SDL_PowerState());
 addEnumeration(new Enumeration_SDL_TouchDeviceType());
 addEnumeration(new Enumeration_SDL_PenAxis());
 addEnumeration(new Enumeration_SDL_hid_bus_type());
+addEnumeration(new Enumeration_SDL_Folder());
+addEnumeration(new Enumeration_SDL_PathType());
+addEnumeration(new Enumeration_SDL_EnumerationResult());
+addEnumeration(new Enumeration_SDL_IOStatus());
+addEnumeration(new Enumeration_SDL_AsyncIOTaskType());
+addEnumeration(new Enumeration_SDL_AsyncIOResult());
+addEnumeration(new Enumeration_SDL_AudioFormat());
+addEnumeration(new Enumeration_SDL_CameraPosition());
 addAnnotation(new DummyTypeAnnotation("SDL_Window", "SDL_Window", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Renderer", "SDL_Renderer", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Surface", "SDL_Surface", 1, 1));
@@ -87,6 +95,10 @@ addAnnotation(new DummyTypeAnnotation("SDL_Gamepad", "SDL_Gamepad", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Sensor", "SDL_Sensor", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Haptic", "SDL_Haptic", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_hid_device", "SDL_hid_device", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_Storage", "SDL_Storage", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_AsyncIO", "SDL_AsyncIO", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_AsyncIOQueue", "SDL_AsyncIOQueue", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_Camera", "SDL_Camera", 1, 1));
 addAnnotation(new SDL_GPUViewportAnnotation(lib));
 addAnnotation(new SDL_GPUIndirectDrawCommandAnnotation(lib));
 addAnnotation(new SDL_GPUIndexedIndirectDrawCommandAnnotation(lib));
@@ -173,6 +185,11 @@ addAnnotation(new SDL_PenAxisEventAnnotation(lib));
 addAnnotation(new SDL_SensorEventAnnotation(lib));
 addAnnotation(new SDL_TextEditingCandidatesEventAnnotation(lib));
 addAnnotation(new SDL_ClipboardEventAnnotation(lib));
+addAnnotation(new SDL_PathInfoAnnotation(lib));
+addAnnotation(new SDL_IOStreamInterfaceAnnotation(lib));
+addAnnotation(new SDL_StorageInterfaceAnnotation(lib));
+addAnnotation(new SDL_AsyncIOOutcomeAnnotation(lib));
+addAnnotation(new SDL_CameraSpecAnnotation(lib));
 addConstant(*this, "SDL_GPU_FILTER_NEAREST", static_cast<uint32_t>(SDL_GPU_FILTER_NEAREST));
 addConstant(*this, "SDL_GPU_FILTER_LINEAR", static_cast<uint32_t>(SDL_GPU_FILTER_LINEAR));
 addConstant(*this, "SDL_GPU_PRESENTMODE_VSYNC", static_cast<uint32_t>(SDL_GPU_PRESENTMODE_VSYNC));
@@ -827,6 +844,8 @@ addConstant(*this, "SDL_PEN_MOUSEID", static_cast<uint32_t>(SDL_PEN_MOUSEID));
 addConstant(*this, "SDL_MOUSE_TOUCHID", static_cast<uint64_t>(SDL_MOUSE_TOUCHID));
 addConstant(*this, "SDL_PEN_TOUCHID", static_cast<uint64_t>(SDL_PEN_TOUCHID));
 addConstant(*this, "SDL_STANDARD_GRAVITY", static_cast<float>(SDL_STANDARD_GRAVITY));
+addConstant(*this, "SDL_GLOB_CASEINSENSITIVE", static_cast<uint32_t>(SDL_GLOB_CASEINSENSITIVE));
+addConstant(*this, "SDL_AUDIO_DEVICE_DEFAULT_RECORDING", static_cast<uint32_t>(SDL_AUDIO_DEVICE_DEFAULT_RECORDING));
 // Uint32 (SDL_GPUTextureFormat) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_GPUTextureFormatTexelBlockSize)>(*this, lib, "SDL_GPUTextureFormatTexelBlockSize", SideEffects::worstDefault, "SDL_GPUTextureFormatTexelBlockSize")->args({"format"});
 // Uint32 (SDL_GPUTextureFormat, Uint32, Uint32, Uint32) __attribute__((cdecl))
@@ -2259,3 +2278,275 @@ addExtern<DAS_BIND_FUN(SDL_hid_get_device_info)>(*this, lib, "SDL_hid_get_device
 addExtern<DAS_BIND_FUN(SDL_hid_get_report_descriptor)>(*this, lib, "SDL_hid_get_report_descriptor", SideEffects::worstDefault, "SDL_hid_get_report_descriptor")->args({"dev", "buf", "buf_size"});
 // void (bool) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_hid_ble_scan)>(*this, lib, "SDL_hid_ble_scan", SideEffects::worstDefault, "SDL_hid_ble_scan")->args({"active"});
+// char *(const char *, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetPrefPath)>(*this, lib, "SDL_GetPrefPath", SideEffects::worstDefault, "SDL_GetPrefPath")->args({"org", "app"});
+// const char *(SDL_Folder) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetUserFolder)>(*this, lib, "SDL_GetUserFolder", SideEffects::worstDefault, "SDL_GetUserFolder")->args({"folder"});
+// bool (const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateDirectory)>(*this, lib, "SDL_CreateDirectory", SideEffects::worstDefault, "SDL_CreateDirectory")->args({"path"});
+// bool (const char *, SDL_EnumerateDirectoryCallback, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_EnumerateDirectory)>(*this, lib, "SDL_EnumerateDirectory", SideEffects::worstDefault, "SDL_EnumerateDirectoryAddress")->args({"path", "callback", "userdata"});
+// bool (const char *, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RenamePath)>(*this, lib, "SDL_RenamePath", SideEffects::worstDefault, "SDL_RenamePath")->args({"oldpath", "newpath"});
+// bool (const char *, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CopyFile)>(*this, lib, "SDL_CopyFile", SideEffects::worstDefault, "SDL_CopyFile")->args({"oldpath", "newpath"});
+// bool (const char *, SDL_PathInfo *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetPathInfo)>(*this, lib, "SDL_GetPathInfo", SideEffects::worstDefault, "SDL_GetPathInfo")->args({"path", "info"});
+// char **(const char *, const char *, SDL_GlobFlags, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GlobDirectory)>(*this, lib, "SDL_GlobDirectory", SideEffects::worstDefault, "SDL_GlobDirectory")->args({"path", "pattern", "flags", "count"});
+// char *(void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetCurrentDirectory)>(*this, lib, "SDL_GetCurrentDirectory", SideEffects::worstDefault, "SDL_GetCurrentDirectory");
+// SDL_IOStream *(const char *, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_IOFromFile)>(*this, lib, "SDL_IOFromFile", SideEffects::worstDefault, "SDL_IOFromFile")->args({"file", "mode"});
+// SDL_IOStream *(void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_IOFromDynamicMem)>(*this, lib, "SDL_IOFromDynamicMem", SideEffects::worstDefault, "SDL_IOFromDynamicMem");
+// SDL_IOStream *(const SDL_IOStreamInterface *, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_OpenIO)>(*this, lib, "SDL_OpenIO", SideEffects::worstDefault, "SDL_OpenIO")->args({"iface", "userdata"});
+// SDL_PropertiesID (SDL_IOStream *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetIOProperties)>(*this, lib, "SDL_GetIOProperties", SideEffects::worstDefault, "SDL_GetIOProperties")->args({"context"});
+// SDL_IOStatus (SDL_IOStream *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetIOStatus)>(*this, lib, "SDL_GetIOStatus", SideEffects::worstDefault, "SDL_GetIOStatus")->args({"context"});
+// Sint64 (SDL_IOStream *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetIOSize)>(*this, lib, "SDL_GetIOSize", SideEffects::worstDefault, "SDL_GetIOSize")->args({"context"});
+// Sint64 (SDL_IOStream *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_TellIO)>(*this, lib, "SDL_TellIO", SideEffects::worstDefault, "SDL_TellIO")->args({"context"});
+// size_t (SDL_IOStream *, void *, size_t) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ReadIO)>(*this, lib, "SDL_ReadIO", SideEffects::worstDefault, "SDL_ReadIO")->args({"context", "ptr", "size"});
+// size_t (SDL_IOStream *, const void *, size_t) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WriteIO)>(*this, lib, "SDL_WriteIO", SideEffects::worstDefault, "SDL_WriteIO")->args({"context", "ptr", "size"});
+// bool (SDL_IOStream *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_FlushIO)>(*this, lib, "SDL_FlushIO", SideEffects::worstDefault, "SDL_FlushIO")->args({"context"});
+// void *(SDL_IOStream *, size_t *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_LoadFile_IO)>(*this, lib, "SDL_LoadFile_IO", SideEffects::worstDefault, "SDL_LoadFile_IO")->args({"src", "datasize", "closeio"});
+// void *(const char *, size_t *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_LoadFile)>(*this, lib, "SDL_LoadFile", SideEffects::worstDefault, "SDL_LoadFile")->args({"file", "datasize"});
+// bool (SDL_IOStream *, const void *, size_t, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SaveFile_IO)>(*this, lib, "SDL_SaveFile_IO", SideEffects::worstDefault, "SDL_SaveFile_IO")->args({"src", "data", "datasize", "closeio"});
+// bool (const char *, const void *, size_t) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SaveFile)>(*this, lib, "SDL_SaveFile", SideEffects::worstDefault, "SDL_SaveFile")->args({"file", "data", "datasize"});
+// bool (SDL_IOStream *, Uint8 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ReadU8)>(*this, lib, "SDL_ReadU8", SideEffects::worstDefault, "SDL_ReadU8")->args({"src", "value"});
+// bool (SDL_IOStream *, Sint8 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ReadS8)>(*this, lib, "SDL_ReadS8", SideEffects::worstDefault, "SDL_ReadS8")->args({"src", "value"});
+// bool (SDL_IOStream *, Uint16 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ReadU16LE)>(*this, lib, "SDL_ReadU16LE", SideEffects::worstDefault, "SDL_ReadU16LE")->args({"src", "value"});
+// bool (SDL_IOStream *, Sint16 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ReadS16LE)>(*this, lib, "SDL_ReadS16LE", SideEffects::worstDefault, "SDL_ReadS16LE")->args({"src", "value"});
+// bool (SDL_IOStream *, Uint16 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ReadU16BE)>(*this, lib, "SDL_ReadU16BE", SideEffects::worstDefault, "SDL_ReadU16BE")->args({"src", "value"});
+// bool (SDL_IOStream *, Sint16 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ReadS16BE)>(*this, lib, "SDL_ReadS16BE", SideEffects::worstDefault, "SDL_ReadS16BE")->args({"src", "value"});
+// bool (SDL_IOStream *, Uint32 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ReadU32LE)>(*this, lib, "SDL_ReadU32LE", SideEffects::worstDefault, "SDL_ReadU32LE")->args({"src", "value"});
+// bool (SDL_IOStream *, Sint32 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ReadS32LE)>(*this, lib, "SDL_ReadS32LE", SideEffects::worstDefault, "SDL_ReadS32LE")->args({"src", "value"});
+// bool (SDL_IOStream *, Uint32 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ReadU32BE)>(*this, lib, "SDL_ReadU32BE", SideEffects::worstDefault, "SDL_ReadU32BE")->args({"src", "value"});
+// bool (SDL_IOStream *, Sint32 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ReadS32BE)>(*this, lib, "SDL_ReadS32BE", SideEffects::worstDefault, "SDL_ReadS32BE")->args({"src", "value"});
+// bool (SDL_IOStream *, Uint64 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ReadU64LE)>(*this, lib, "SDL_ReadU64LE", SideEffects::worstDefault, "SDL_ReadU64LE")->args({"src", "value"});
+// bool (SDL_IOStream *, Sint64 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ReadS64LE)>(*this, lib, "SDL_ReadS64LE", SideEffects::worstDefault, "SDL_ReadS64LE")->args({"src", "value"});
+// bool (SDL_IOStream *, Uint64 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ReadU64BE)>(*this, lib, "SDL_ReadU64BE", SideEffects::worstDefault, "SDL_ReadU64BE")->args({"src", "value"});
+// bool (SDL_IOStream *, Sint64 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ReadS64BE)>(*this, lib, "SDL_ReadS64BE", SideEffects::worstDefault, "SDL_ReadS64BE")->args({"src", "value"});
+// bool (SDL_IOStream *, Uint8) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WriteU8)>(*this, lib, "SDL_WriteU8", SideEffects::worstDefault, "SDL_WriteU8")->args({"dst", "value"});
+// bool (SDL_IOStream *, Sint8) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WriteS8)>(*this, lib, "SDL_WriteS8", SideEffects::worstDefault, "SDL_WriteS8")->args({"dst", "value"});
+// bool (SDL_IOStream *, Uint16) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WriteU16LE)>(*this, lib, "SDL_WriteU16LE", SideEffects::worstDefault, "SDL_WriteU16LE")->args({"dst", "value"});
+// bool (SDL_IOStream *, Sint16) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WriteS16LE)>(*this, lib, "SDL_WriteS16LE", SideEffects::worstDefault, "SDL_WriteS16LE")->args({"dst", "value"});
+// bool (SDL_IOStream *, Uint16) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WriteU16BE)>(*this, lib, "SDL_WriteU16BE", SideEffects::worstDefault, "SDL_WriteU16BE")->args({"dst", "value"});
+// bool (SDL_IOStream *, Sint16) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WriteS16BE)>(*this, lib, "SDL_WriteS16BE", SideEffects::worstDefault, "SDL_WriteS16BE")->args({"dst", "value"});
+// bool (SDL_IOStream *, Uint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WriteU32LE)>(*this, lib, "SDL_WriteU32LE", SideEffects::worstDefault, "SDL_WriteU32LE")->args({"dst", "value"});
+// bool (SDL_IOStream *, Sint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WriteS32LE)>(*this, lib, "SDL_WriteS32LE", SideEffects::worstDefault, "SDL_WriteS32LE")->args({"dst", "value"});
+// bool (SDL_IOStream *, Uint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WriteU32BE)>(*this, lib, "SDL_WriteU32BE", SideEffects::worstDefault, "SDL_WriteU32BE")->args({"dst", "value"});
+// bool (SDL_IOStream *, Sint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WriteS32BE)>(*this, lib, "SDL_WriteS32BE", SideEffects::worstDefault, "SDL_WriteS32BE")->args({"dst", "value"});
+// bool (SDL_IOStream *, Uint64) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WriteU64LE)>(*this, lib, "SDL_WriteU64LE", SideEffects::worstDefault, "SDL_WriteU64LE")->args({"dst", "value"});
+// bool (SDL_IOStream *, Sint64) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WriteS64LE)>(*this, lib, "SDL_WriteS64LE", SideEffects::worstDefault, "SDL_WriteS64LE")->args({"dst", "value"});
+// bool (SDL_IOStream *, Uint64) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WriteU64BE)>(*this, lib, "SDL_WriteU64BE", SideEffects::worstDefault, "SDL_WriteU64BE")->args({"dst", "value"});
+// bool (SDL_IOStream *, Sint64) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WriteS64BE)>(*this, lib, "SDL_WriteS64BE", SideEffects::worstDefault, "SDL_WriteS64BE")->args({"dst", "value"});
+// SDL_Storage *(const char *, SDL_PropertiesID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_OpenTitleStorage)>(*this, lib, "SDL_OpenTitleStorage", SideEffects::worstDefault, "SDL_OpenTitleStorage")->args({"override", "props"});
+// SDL_Storage *(const char *, const char *, SDL_PropertiesID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_OpenUserStorage)>(*this, lib, "SDL_OpenUserStorage", SideEffects::worstDefault, "SDL_OpenUserStorage")->args({"org", "app", "props"});
+// SDL_Storage *(const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_OpenFileStorage)>(*this, lib, "SDL_OpenFileStorage", SideEffects::worstDefault, "SDL_OpenFileStorage")->args({"path"});
+// SDL_Storage *(const SDL_StorageInterface *, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_OpenStorage)>(*this, lib, "SDL_OpenStorage", SideEffects::worstDefault, "SDL_OpenStorage")->args({"iface", "userdata"});
+// bool (SDL_Storage *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CloseStorage)>(*this, lib, "SDL_CloseStorage", SideEffects::worstDefault, "SDL_CloseStorage")->args({"storage"});
+// bool (SDL_Storage *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_StorageReady)>(*this, lib, "SDL_StorageReady", SideEffects::worstDefault, "SDL_StorageReady")->args({"storage"});
+// bool (SDL_Storage *, const char *, Uint64 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetStorageFileSize)>(*this, lib, "SDL_GetStorageFileSize", SideEffects::worstDefault, "SDL_GetStorageFileSize")->args({"storage", "path", "length"});
+// bool (SDL_Storage *, const char *, void *, Uint64) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ReadStorageFile)>(*this, lib, "SDL_ReadStorageFile", SideEffects::worstDefault, "SDL_ReadStorageFile")->args({"storage", "path", "destination", "length"});
+// bool (SDL_Storage *, const char *, const void *, Uint64) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WriteStorageFile)>(*this, lib, "SDL_WriteStorageFile", SideEffects::worstDefault, "SDL_WriteStorageFile")->args({"storage", "path", "source", "length"});
+// bool (SDL_Storage *, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateStorageDirectory)>(*this, lib, "SDL_CreateStorageDirectory", SideEffects::worstDefault, "SDL_CreateStorageDirectory")->args({"storage", "path"});
+// bool (SDL_Storage *, const char *, SDL_EnumerateDirectoryCallback, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_EnumerateStorageDirectory)>(*this, lib, "SDL_EnumerateStorageDirectory", SideEffects::worstDefault, "SDL_EnumerateStorageDirectoryAddress")->args({"storage", "path", "callback", "userdata"});
+// bool (SDL_Storage *, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RemoveStoragePath)>(*this, lib, "SDL_RemoveStoragePath", SideEffects::worstDefault, "SDL_RemoveStoragePath")->args({"storage", "path"});
+// bool (SDL_Storage *, const char *, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RenameStoragePath)>(*this, lib, "SDL_RenameStoragePath", SideEffects::worstDefault, "SDL_RenameStoragePath")->args({"storage", "oldpath", "newpath"});
+// bool (SDL_Storage *, const char *, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CopyStorageFile)>(*this, lib, "SDL_CopyStorageFile", SideEffects::worstDefault, "SDL_CopyStorageFile")->args({"storage", "oldpath", "newpath"});
+// bool (SDL_Storage *, const char *, SDL_PathInfo *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetStoragePathInfo)>(*this, lib, "SDL_GetStoragePathInfo", SideEffects::worstDefault, "SDL_GetStoragePathInfo")->args({"storage", "path", "info"});
+// Uint64 (SDL_Storage *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetStorageSpaceRemaining)>(*this, lib, "SDL_GetStorageSpaceRemaining", SideEffects::worstDefault, "SDL_GetStorageSpaceRemaining")->args({"storage"});
+// char **(SDL_Storage *, const char *, const char *, SDL_GlobFlags, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GlobStorageDirectory)>(*this, lib, "SDL_GlobStorageDirectory", SideEffects::worstDefault, "SDL_GlobStorageDirectory")->args({"storage", "path", "pattern", "flags", "count"});
+// SDL_AsyncIO *(const char *, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_AsyncIOFromFile)>(*this, lib, "SDL_AsyncIOFromFile", SideEffects::worstDefault, "SDL_AsyncIOFromFile")->args({"file", "mode"});
+// Sint64 (SDL_AsyncIO *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetAsyncIOSize)>(*this, lib, "SDL_GetAsyncIOSize", SideEffects::worstDefault, "SDL_GetAsyncIOSize")->args({"asyncio"});
+// bool (SDL_AsyncIO *, void *, Uint64, Uint64, SDL_AsyncIOQueue *, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ReadAsyncIO)>(*this, lib, "SDL_ReadAsyncIO", SideEffects::worstDefault, "SDL_ReadAsyncIO")->args({"asyncio", "ptr", "offset", "size", "queue", "userdata"});
+// bool (SDL_AsyncIO *, void *, Uint64, Uint64, SDL_AsyncIOQueue *, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WriteAsyncIO)>(*this, lib, "SDL_WriteAsyncIO", SideEffects::worstDefault, "SDL_WriteAsyncIO")->args({"asyncio", "ptr", "offset", "size", "queue", "userdata"});
+// bool (SDL_AsyncIO *, bool, SDL_AsyncIOQueue *, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CloseAsyncIO)>(*this, lib, "SDL_CloseAsyncIO", SideEffects::worstDefault, "SDL_CloseAsyncIO")->args({"asyncio", "flush", "queue", "userdata"});
+// SDL_AsyncIOQueue *(void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateAsyncIOQueue)>(*this, lib, "SDL_CreateAsyncIOQueue", SideEffects::worstDefault, "SDL_CreateAsyncIOQueue");
+// void (SDL_AsyncIOQueue *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_DestroyAsyncIOQueue)>(*this, lib, "SDL_DestroyAsyncIOQueue", SideEffects::worstDefault, "SDL_DestroyAsyncIOQueue")->args({"queue"});
+// bool (SDL_AsyncIOQueue *, SDL_AsyncIOOutcome *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetAsyncIOResult)>(*this, lib, "SDL_GetAsyncIOResult", SideEffects::worstDefault, "SDL_GetAsyncIOResult")->args({"queue", "outcome"});
+// bool (SDL_AsyncIOQueue *, SDL_AsyncIOOutcome *, Sint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WaitAsyncIOResult)>(*this, lib, "SDL_WaitAsyncIOResult", SideEffects::worstDefault, "SDL_WaitAsyncIOResult")->args({"queue", "outcome", "timeoutMS"});
+// void (SDL_AsyncIOQueue *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SignalAsyncIOQueue)>(*this, lib, "SDL_SignalAsyncIOQueue", SideEffects::worstDefault, "SDL_SignalAsyncIOQueue")->args({"queue"});
+// bool (const char *, SDL_AsyncIOQueue *, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_LoadFileAsync)>(*this, lib, "SDL_LoadFileAsync", SideEffects::worstDefault, "SDL_LoadFileAsync")->args({"file", "queue", "userdata"});
+// int (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetNumAudioDrivers)>(*this, lib, "SDL_GetNumAudioDrivers", SideEffects::worstDefault, "SDL_GetNumAudioDrivers");
+// const char *(int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetAudioDriver)>(*this, lib, "SDL_GetAudioDriver", SideEffects::worstDefault, "SDL_GetAudioDriver")->args({"index"});
+// const char *(void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetCurrentAudioDriver)>(*this, lib, "SDL_GetCurrentAudioDriver", SideEffects::worstDefault, "SDL_GetCurrentAudioDriver");
+// SDL_AudioDeviceID *(int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetAudioPlaybackDevices)>(*this, lib, "SDL_GetAudioPlaybackDevices", SideEffects::worstDefault, "SDL_GetAudioPlaybackDevices")->args({"count"});
+// SDL_AudioDeviceID *(int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetAudioRecordingDevices)>(*this, lib, "SDL_GetAudioRecordingDevices", SideEffects::worstDefault, "SDL_GetAudioRecordingDevices")->args({"count"});
+// const char *(SDL_AudioDeviceID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetAudioDeviceName)>(*this, lib, "SDL_GetAudioDeviceName", SideEffects::worstDefault, "SDL_GetAudioDeviceName")->args({"devid"});
+// bool (SDL_AudioDeviceID, SDL_AudioSpec *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetAudioDeviceFormat)>(*this, lib, "SDL_GetAudioDeviceFormat", SideEffects::worstDefault, "SDL_GetAudioDeviceFormat")->args({"devid", "spec", "sample_frames"});
+// int *(SDL_AudioDeviceID, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetAudioDeviceChannelMap)>(*this, lib, "SDL_GetAudioDeviceChannelMap", SideEffects::worstDefault, "SDL_GetAudioDeviceChannelMap")->args({"devid", "count"});
+// SDL_AudioDeviceID (SDL_AudioDeviceID, const SDL_AudioSpec *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_OpenAudioDevice)>(*this, lib, "SDL_OpenAudioDevice", SideEffects::worstDefault, "SDL_OpenAudioDevice")->args({"devid", "spec"});
+// bool (SDL_AudioDeviceID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_IsAudioDevicePhysical)>(*this, lib, "SDL_IsAudioDevicePhysical", SideEffects::worstDefault, "SDL_IsAudioDevicePhysical")->args({"devid"});
+// bool (SDL_AudioDeviceID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_IsAudioDevicePlayback)>(*this, lib, "SDL_IsAudioDevicePlayback", SideEffects::worstDefault, "SDL_IsAudioDevicePlayback")->args({"devid"});
+// bool (SDL_AudioDeviceID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_PauseAudioDevice)>(*this, lib, "SDL_PauseAudioDevice", SideEffects::worstDefault, "SDL_PauseAudioDevice")->args({"devid"});
+// bool (SDL_AudioDeviceID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ResumeAudioDevice)>(*this, lib, "SDL_ResumeAudioDevice", SideEffects::worstDefault, "SDL_ResumeAudioDevice")->args({"devid"});
+// bool (SDL_AudioDeviceID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_AudioDevicePaused)>(*this, lib, "SDL_AudioDevicePaused", SideEffects::worstDefault, "SDL_AudioDevicePaused")->args({"devid"});
+// float (SDL_AudioDeviceID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetAudioDeviceGain)>(*this, lib, "SDL_GetAudioDeviceGain", SideEffects::worstDefault, "SDL_GetAudioDeviceGain")->args({"devid"});
+// bool (SDL_AudioDeviceID, float) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetAudioDeviceGain)>(*this, lib, "SDL_SetAudioDeviceGain", SideEffects::worstDefault, "SDL_SetAudioDeviceGain")->args({"devid", "gain"});
+// void (SDL_AudioDeviceID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CloseAudioDevice)>(*this, lib, "SDL_CloseAudioDevice", SideEffects::worstDefault, "SDL_CloseAudioDevice")->args({"devid"});
+// bool (SDL_AudioDeviceID, SDL_AudioStream *const *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_BindAudioStreams)>(*this, lib, "SDL_BindAudioStreams", SideEffects::worstDefault, "SDL_BindAudioStreams")->args({"devid", "streams", "num_streams"});
+// bool (SDL_AudioDeviceID, SDL_AudioStream *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_BindAudioStream)>(*this, lib, "SDL_BindAudioStream", SideEffects::worstDefault, "SDL_BindAudioStream")->args({"devid", "stream"});
+// void (SDL_AudioStream *const *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_UnbindAudioStreams)>(*this, lib, "SDL_UnbindAudioStreams", SideEffects::worstDefault, "SDL_UnbindAudioStreams")->args({"streams", "num_streams"});
+// void (SDL_AudioStream *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_UnbindAudioStream)>(*this, lib, "SDL_UnbindAudioStream", SideEffects::worstDefault, "SDL_UnbindAudioStream")->args({"stream"});
+// SDL_PropertiesID (SDL_AudioStream *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetAudioStreamProperties)>(*this, lib, "SDL_GetAudioStreamProperties", SideEffects::worstDefault, "SDL_GetAudioStreamProperties")->args({"stream"});
+// bool (SDL_AudioStream *, const SDL_AudioSpec *, const SDL_AudioSpec *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetAudioStreamFormat)>(*this, lib, "SDL_SetAudioStreamFormat", SideEffects::worstDefault, "SDL_SetAudioStreamFormat")->args({"stream", "src_spec", "dst_spec"});
+// float (SDL_AudioStream *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetAudioStreamFrequencyRatio)>(*this, lib, "SDL_GetAudioStreamFrequencyRatio", SideEffects::worstDefault, "SDL_GetAudioStreamFrequencyRatio")->args({"stream"});
+// bool (SDL_AudioStream *, float) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetAudioStreamFrequencyRatio)>(*this, lib, "SDL_SetAudioStreamFrequencyRatio", SideEffects::worstDefault, "SDL_SetAudioStreamFrequencyRatio")->args({"stream", "ratio"});
+// float (SDL_AudioStream *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetAudioStreamGain)>(*this, lib, "SDL_GetAudioStreamGain", SideEffects::worstDefault, "SDL_GetAudioStreamGain")->args({"stream"});
+// bool (SDL_AudioStream *, float) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetAudioStreamGain)>(*this, lib, "SDL_SetAudioStreamGain", SideEffects::worstDefault, "SDL_SetAudioStreamGain")->args({"stream", "gain"});
+// int *(SDL_AudioStream *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetAudioStreamInputChannelMap)>(*this, lib, "SDL_GetAudioStreamInputChannelMap", SideEffects::worstDefault, "SDL_GetAudioStreamInputChannelMap")->args({"stream", "count"});
+// int *(SDL_AudioStream *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetAudioStreamOutputChannelMap)>(*this, lib, "SDL_GetAudioStreamOutputChannelMap", SideEffects::worstDefault, "SDL_GetAudioStreamOutputChannelMap")->args({"stream", "count"});
+// bool (SDL_AudioStream *, const int *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetAudioStreamInputChannelMap)>(*this, lib, "SDL_SetAudioStreamInputChannelMap", SideEffects::worstDefault, "SDL_SetAudioStreamInputChannelMap")->args({"stream", "chmap", "count"});
+// bool (SDL_AudioStream *, const int *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetAudioStreamOutputChannelMap)>(*this, lib, "SDL_SetAudioStreamOutputChannelMap", SideEffects::worstDefault, "SDL_SetAudioStreamOutputChannelMap")->args({"stream", "chmap", "count"});
+// bool (SDL_AudioStream *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_LockAudioStream)>(*this, lib, "SDL_LockAudioStream", SideEffects::worstDefault, "SDL_LockAudioStream")->args({"stream"});
+// bool (SDL_AudioStream *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_UnlockAudioStream)>(*this, lib, "SDL_UnlockAudioStream", SideEffects::worstDefault, "SDL_UnlockAudioStream")->args({"stream"});
+// bool (SDL_AudioStream *, SDL_AudioStreamCallback, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetAudioStreamGetCallback)>(*this, lib, "SDL_SetAudioStreamGetCallback", SideEffects::worstDefault, "SDL_SetAudioStreamGetCallbackAddress")->args({"stream", "callback", "userdata"});
+// bool (SDL_AudioStream *, SDL_AudioStreamCallback, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetAudioStreamPutCallback)>(*this, lib, "SDL_SetAudioStreamPutCallback", SideEffects::worstDefault, "SDL_SetAudioStreamPutCallbackAddress")->args({"stream", "callback", "userdata"});
+// SDL_AudioStream *(SDL_AudioDeviceID, const SDL_AudioSpec *, SDL_AudioStreamCallback, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_OpenAudioDeviceStream)>(*this, lib, "SDL_OpenAudioDeviceStream", SideEffects::worstDefault, "SDL_OpenAudioDeviceStreamAddress")->args({"devid", "spec", "callback", "userdata"});
+// bool (SDL_AudioDeviceID, SDL_AudioPostmixCallback, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetAudioPostmixCallback)>(*this, lib, "SDL_SetAudioPostmixCallback", SideEffects::worstDefault, "SDL_SetAudioPostmixCallbackAddress")->args({"devid", "callback", "userdata"});
+// bool (SDL_IOStream *, bool, SDL_AudioSpec *, Uint8 **, Uint32 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_LoadWAV_IO)>(*this, lib, "SDL_LoadWAV_IO", SideEffects::worstDefault, "SDL_LoadWAV_IO")->args({"src", "closeio", "spec", "audio_buf", "audio_len"});
+// bool (Uint8 *, const Uint8 *, SDL_AudioFormat, Uint32, float) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_MixAudio)>(*this, lib, "SDL_MixAudio", SideEffects::worstDefault, "SDL_MixAudio")->args({"dst", "src", "format", "len", "volume"});
+// bool (const SDL_AudioSpec *, const Uint8 *, int, const SDL_AudioSpec *, Uint8 **, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ConvertAudioSamples)>(*this, lib, "SDL_ConvertAudioSamples", SideEffects::worstDefault, "SDL_ConvertAudioSamples")->args({"src_spec", "src_data", "src_len", "dst_spec", "dst_data", "dst_len"});
+// const char *(SDL_AudioFormat) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetAudioFormatName)>(*this, lib, "SDL_GetAudioFormatName", SideEffects::worstDefault, "SDL_GetAudioFormatName")->args({"format"});
+// int (SDL_AudioFormat) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSilenceValueForFormat)>(*this, lib, "SDL_GetSilenceValueForFormat", SideEffects::worstDefault, "SDL_GetSilenceValueForFormat")->args({"format"});
+// int (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetNumCameraDrivers)>(*this, lib, "SDL_GetNumCameraDrivers", SideEffects::worstDefault, "SDL_GetNumCameraDrivers");
+// const char *(int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetCameraDriver)>(*this, lib, "SDL_GetCameraDriver", SideEffects::worstDefault, "SDL_GetCameraDriver")->args({"index"});
+// const char *(void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetCurrentCameraDriver)>(*this, lib, "SDL_GetCurrentCameraDriver", SideEffects::worstDefault, "SDL_GetCurrentCameraDriver");
+// SDL_CameraID *(int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetCameras)>(*this, lib, "SDL_GetCameras", SideEffects::worstDefault, "SDL_GetCameras")->args({"count"});
+// SDL_CameraSpec **(SDL_CameraID, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetCameraSupportedFormats)>(*this, lib, "SDL_GetCameraSupportedFormats", SideEffects::worstDefault, "SDL_GetCameraSupportedFormats")->args({"instance_id", "count"});
+// const char *(SDL_CameraID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetCameraName)>(*this, lib, "SDL_GetCameraName", SideEffects::worstDefault, "SDL_GetCameraName")->args({"instance_id"});
+// SDL_CameraPosition (SDL_CameraID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetCameraPosition)>(*this, lib, "SDL_GetCameraPosition", SideEffects::worstDefault, "SDL_GetCameraPosition")->args({"instance_id"});
+// SDL_Camera *(SDL_CameraID, const SDL_CameraSpec *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_OpenCamera)>(*this, lib, "SDL_OpenCamera", SideEffects::worstDefault, "SDL_OpenCamera")->args({"instance_id", "spec"});
+// int (SDL_Camera *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetCameraPermissionState)>(*this, lib, "SDL_GetCameraPermissionState", SideEffects::worstDefault, "SDL_GetCameraPermissionState")->args({"camera"});
+// SDL_CameraID (SDL_Camera *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetCameraID)>(*this, lib, "SDL_GetCameraID", SideEffects::worstDefault, "SDL_GetCameraID")->args({"camera"});
+// SDL_PropertiesID (SDL_Camera *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetCameraProperties)>(*this, lib, "SDL_GetCameraProperties", SideEffects::worstDefault, "SDL_GetCameraProperties")->args({"camera"});
+// bool (SDL_Camera *, SDL_CameraSpec *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetCameraFormat)>(*this, lib, "SDL_GetCameraFormat", SideEffects::worstDefault, "SDL_GetCameraFormat")->args({"camera", "spec"});
+// SDL_Surface *(SDL_Camera *, Uint64 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_AcquireCameraFrame)>(*this, lib, "SDL_AcquireCameraFrame", SideEffects::worstDefault, "SDL_AcquireCameraFrame")->args({"camera", "timestampNS"});
+// void (SDL_Camera *, SDL_Surface *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ReleaseCameraFrame)>(*this, lib, "SDL_ReleaseCameraFrame", SideEffects::worstDefault, "SDL_ReleaseCameraFrame")->args({"camera", "frame"});
+// void (SDL_Camera *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CloseCamera)>(*this, lib, "SDL_CloseCamera", SideEffects::worstDefault, "SDL_CloseCamera")->args({"camera"});

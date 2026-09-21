@@ -16,7 +16,13 @@ verified; Properties now has 19 generated functions plus copied enumeration; ret
 cleanup callback remains pending. Read docs/properties.md for the pinned numeric
 string-cache/CopyProperties double-free defect and copied-string adapter. Hints/Init adds 12 generated functions, copied getters and subsystem defer scopes;
 see docs/init-hints.md for pending callbacks and string constants. Next
-library-wide queue: P4 Filesystem/Storage/IOStream/AsyncIO. P3 follow-ups include keyboard/mouse device hotplug payloads, native virtual callback fields and physical-device validation.
+library-wide queue: P7. Camera is 15/15 raw; see docs/camera.md for borrowed frames, permission/null semantics and dummy-only validation. Audio is 56/56 raw; see docs/audio-final-api.md for native-only callbacks, ownership, bounded PCM conversion and pinned postmix/WAV failure-output behavior. Audio stream controls add 12 raw functions (Audio now 56/56); see docs/audio-stream-controls.md for map timing, the pinned default-map getter crash (safe boost getters deferred), silent bound-format ignores and same-thread defer unlock. Audio device discovery/open/binding adds 21 raw functions; see docs/audio-devices.md for logical ownership and dummy-only recording. AsyncIO has all 11 raw functions; see docs/asyncio.md for submission/completion separation and buffer ownership. Storage has all 17 raw functions; see
+docs/storage.md for native callback lifetime, readiness/space predicates, bounded
+file buffers and fallible close. Positive user/cloud storage is unverified. IOStream has 46 raw functions, fixed-text
+IOprintf and pending IOvprintf; see docs/iostream.md for partial counts/status,
+native callbacks, uint8/uint16 ref widening, close error precedence and the pinned
+SaveFile_IO short-write defect. Filesystem has all 11 raw
+functions and copied paths/lists; see docs/filesystem.md. P3 follow-ups include keyboard/mouse device hotplug payloads, native virtual callback fields and physical-device validation.
 IME candidates and clipboard MIME lists are owned arrays; SdlEvent/Option/Result
 are move-only. Use <-, move_unwrap and emplace, or explicit clone_to_move/push_clone.
 See docs/event-list-payloads.md for raw borrowed user data and list validation.

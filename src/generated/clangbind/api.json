@@ -5,6 +5,89 @@
       "mem"
     ]
   },
+  "SDL_AsyncIOFromFile": {
+    "signature": "SDL_AsyncIO *(const char *, const char *)",
+    "arguments": [
+      "file",
+      "mode"
+    ]
+  },
+  "SDL_GetAsyncIOSize": {
+    "signature": "Sint64 (SDL_AsyncIO *)",
+    "arguments": [
+      "asyncio"
+    ]
+  },
+  "SDL_ReadAsyncIO": {
+    "signature": "bool (SDL_AsyncIO *, void *, Uint64, Uint64, SDL_AsyncIOQueue *, void *)",
+    "arguments": [
+      "asyncio",
+      "ptr",
+      "offset",
+      "size",
+      "queue",
+      "userdata"
+    ]
+  },
+  "SDL_WriteAsyncIO": {
+    "signature": "bool (SDL_AsyncIO *, void *, Uint64, Uint64, SDL_AsyncIOQueue *, void *)",
+    "arguments": [
+      "asyncio",
+      "ptr",
+      "offset",
+      "size",
+      "queue",
+      "userdata"
+    ]
+  },
+  "SDL_CloseAsyncIO": {
+    "signature": "bool (SDL_AsyncIO *, bool, SDL_AsyncIOQueue *, void *)",
+    "arguments": [
+      "asyncio",
+      "flush",
+      "queue",
+      "userdata"
+    ]
+  },
+  "SDL_CreateAsyncIOQueue": {
+    "signature": "SDL_AsyncIOQueue *(void)",
+    "arguments": []
+  },
+  "SDL_DestroyAsyncIOQueue": {
+    "signature": "void (SDL_AsyncIOQueue *)",
+    "arguments": [
+      "queue"
+    ]
+  },
+  "SDL_GetAsyncIOResult": {
+    "signature": "bool (SDL_AsyncIOQueue *, SDL_AsyncIOOutcome *)",
+    "arguments": [
+      "queue",
+      "outcome"
+    ]
+  },
+  "SDL_WaitAsyncIOResult": {
+    "signature": "bool (SDL_AsyncIOQueue *, SDL_AsyncIOOutcome *, Sint32)",
+    "arguments": [
+      "queue",
+      "outcome",
+      "timeoutMS"
+    ]
+  },
+  "SDL_SignalAsyncIOQueue": {
+    "signature": "void (SDL_AsyncIOQueue *)",
+    "arguments": [
+      "queue"
+    ]
+  },
+  "SDL_LoadFileAsync": {
+    "signature": "bool (const char *, SDL_AsyncIOQueue *, void *)",
+    "arguments": [
+      "file",
+      "queue",
+      "userdata"
+    ]
+  },
   "SDL_OutOfMemory": {
     "signature": "bool (void)",
     "arguments": []
@@ -151,6 +234,13 @@
       "props"
     ]
   },
+  "SDL_IOFromFile": {
+    "signature": "SDL_IOStream *(const char *, const char *)",
+    "arguments": [
+      "file",
+      "mode"
+    ]
+  },
   "SDL_IOFromMem": {
     "signature": "SDL_IOStream *(void *, size_t)",
     "arguments": [
@@ -165,8 +255,37 @@
       "size"
     ]
   },
+  "SDL_IOFromDynamicMem": {
+    "signature": "SDL_IOStream *(void)",
+    "arguments": []
+  },
+  "SDL_OpenIO": {
+    "signature": "SDL_IOStream *(const SDL_IOStreamInterface *, void *)",
+    "arguments": [
+      "iface",
+      "userdata"
+    ]
+  },
   "SDL_CloseIO": {
     "signature": "bool (SDL_IOStream *)",
+    "arguments": [
+      "context"
+    ]
+  },
+  "SDL_GetIOProperties": {
+    "signature": "SDL_PropertiesID (SDL_IOStream *)",
+    "arguments": [
+      "context"
+    ]
+  },
+  "SDL_GetIOStatus": {
+    "signature": "SDL_IOStatus (SDL_IOStream *)",
+    "arguments": [
+      "context"
+    ]
+  },
+  "SDL_GetIOSize": {
+    "signature": "Sint64 (SDL_IOStream *)",
     "arguments": [
       "context"
     ]
@@ -177,6 +296,393 @@
       "context",
       "offset",
       "whence"
+    ]
+  },
+  "SDL_TellIO": {
+    "signature": "Sint64 (SDL_IOStream *)",
+    "arguments": [
+      "context"
+    ]
+  },
+  "SDL_ReadIO": {
+    "signature": "size_t (SDL_IOStream *, void *, size_t)",
+    "arguments": [
+      "context",
+      "ptr",
+      "size"
+    ]
+  },
+  "SDL_WriteIO": {
+    "signature": "size_t (SDL_IOStream *, const void *, size_t)",
+    "arguments": [
+      "context",
+      "ptr",
+      "size"
+    ]
+  },
+  "SDL_FlushIO": {
+    "signature": "bool (SDL_IOStream *)",
+    "arguments": [
+      "context"
+    ]
+  },
+  "SDL_LoadFile_IO": {
+    "signature": "void *(SDL_IOStream *, size_t *, bool)",
+    "arguments": [
+      "src",
+      "datasize",
+      "closeio"
+    ]
+  },
+  "SDL_LoadFile": {
+    "signature": "void *(const char *, size_t *)",
+    "arguments": [
+      "file",
+      "datasize"
+    ]
+  },
+  "SDL_SaveFile_IO": {
+    "signature": "bool (SDL_IOStream *, const void *, size_t, bool)",
+    "arguments": [
+      "src",
+      "data",
+      "datasize",
+      "closeio"
+    ]
+  },
+  "SDL_SaveFile": {
+    "signature": "bool (const char *, const void *, size_t)",
+    "arguments": [
+      "file",
+      "data",
+      "datasize"
+    ]
+  },
+  "SDL_ReadU8": {
+    "signature": "bool (SDL_IOStream *, Uint8 *)",
+    "arguments": [
+      "src",
+      "value"
+    ]
+  },
+  "SDL_ReadS8": {
+    "signature": "bool (SDL_IOStream *, Sint8 *)",
+    "arguments": [
+      "src",
+      "value"
+    ]
+  },
+  "SDL_ReadU16LE": {
+    "signature": "bool (SDL_IOStream *, Uint16 *)",
+    "arguments": [
+      "src",
+      "value"
+    ]
+  },
+  "SDL_ReadS16LE": {
+    "signature": "bool (SDL_IOStream *, Sint16 *)",
+    "arguments": [
+      "src",
+      "value"
+    ]
+  },
+  "SDL_ReadU16BE": {
+    "signature": "bool (SDL_IOStream *, Uint16 *)",
+    "arguments": [
+      "src",
+      "value"
+    ]
+  },
+  "SDL_ReadS16BE": {
+    "signature": "bool (SDL_IOStream *, Sint16 *)",
+    "arguments": [
+      "src",
+      "value"
+    ]
+  },
+  "SDL_ReadU32LE": {
+    "signature": "bool (SDL_IOStream *, Uint32 *)",
+    "arguments": [
+      "src",
+      "value"
+    ]
+  },
+  "SDL_ReadS32LE": {
+    "signature": "bool (SDL_IOStream *, Sint32 *)",
+    "arguments": [
+      "src",
+      "value"
+    ]
+  },
+  "SDL_ReadU32BE": {
+    "signature": "bool (SDL_IOStream *, Uint32 *)",
+    "arguments": [
+      "src",
+      "value"
+    ]
+  },
+  "SDL_ReadS32BE": {
+    "signature": "bool (SDL_IOStream *, Sint32 *)",
+    "arguments": [
+      "src",
+      "value"
+    ]
+  },
+  "SDL_ReadU64LE": {
+    "signature": "bool (SDL_IOStream *, Uint64 *)",
+    "arguments": [
+      "src",
+      "value"
+    ]
+  },
+  "SDL_ReadS64LE": {
+    "signature": "bool (SDL_IOStream *, Sint64 *)",
+    "arguments": [
+      "src",
+      "value"
+    ]
+  },
+  "SDL_ReadU64BE": {
+    "signature": "bool (SDL_IOStream *, Uint64 *)",
+    "arguments": [
+      "src",
+      "value"
+    ]
+  },
+  "SDL_ReadS64BE": {
+    "signature": "bool (SDL_IOStream *, Sint64 *)",
+    "arguments": [
+      "src",
+      "value"
+    ]
+  },
+  "SDL_WriteU8": {
+    "signature": "bool (SDL_IOStream *, Uint8)",
+    "arguments": [
+      "dst",
+      "value"
+    ]
+  },
+  "SDL_WriteS8": {
+    "signature": "bool (SDL_IOStream *, Sint8)",
+    "arguments": [
+      "dst",
+      "value"
+    ]
+  },
+  "SDL_WriteU16LE": {
+    "signature": "bool (SDL_IOStream *, Uint16)",
+    "arguments": [
+      "dst",
+      "value"
+    ]
+  },
+  "SDL_WriteS16LE": {
+    "signature": "bool (SDL_IOStream *, Sint16)",
+    "arguments": [
+      "dst",
+      "value"
+    ]
+  },
+  "SDL_WriteU16BE": {
+    "signature": "bool (SDL_IOStream *, Uint16)",
+    "arguments": [
+      "dst",
+      "value"
+    ]
+  },
+  "SDL_WriteS16BE": {
+    "signature": "bool (SDL_IOStream *, Sint16)",
+    "arguments": [
+      "dst",
+      "value"
+    ]
+  },
+  "SDL_WriteU32LE": {
+    "signature": "bool (SDL_IOStream *, Uint32)",
+    "arguments": [
+      "dst",
+      "value"
+    ]
+  },
+  "SDL_WriteS32LE": {
+    "signature": "bool (SDL_IOStream *, Sint32)",
+    "arguments": [
+      "dst",
+      "value"
+    ]
+  },
+  "SDL_WriteU32BE": {
+    "signature": "bool (SDL_IOStream *, Uint32)",
+    "arguments": [
+      "dst",
+      "value"
+    ]
+  },
+  "SDL_WriteS32BE": {
+    "signature": "bool (SDL_IOStream *, Sint32)",
+    "arguments": [
+      "dst",
+      "value"
+    ]
+  },
+  "SDL_WriteU64LE": {
+    "signature": "bool (SDL_IOStream *, Uint64)",
+    "arguments": [
+      "dst",
+      "value"
+    ]
+  },
+  "SDL_WriteS64LE": {
+    "signature": "bool (SDL_IOStream *, Sint64)",
+    "arguments": [
+      "dst",
+      "value"
+    ]
+  },
+  "SDL_WriteU64BE": {
+    "signature": "bool (SDL_IOStream *, Uint64)",
+    "arguments": [
+      "dst",
+      "value"
+    ]
+  },
+  "SDL_WriteS64BE": {
+    "signature": "bool (SDL_IOStream *, Sint64)",
+    "arguments": [
+      "dst",
+      "value"
+    ]
+  },
+  "SDL_GetNumAudioDrivers": {
+    "signature": "int (void)",
+    "arguments": []
+  },
+  "SDL_GetAudioDriver": {
+    "signature": "const char *(int)",
+    "arguments": [
+      "index"
+    ]
+  },
+  "SDL_GetCurrentAudioDriver": {
+    "signature": "const char *(void)",
+    "arguments": []
+  },
+  "SDL_GetAudioPlaybackDevices": {
+    "signature": "SDL_AudioDeviceID *(int *)",
+    "arguments": [
+      "count"
+    ]
+  },
+  "SDL_GetAudioRecordingDevices": {
+    "signature": "SDL_AudioDeviceID *(int *)",
+    "arguments": [
+      "count"
+    ]
+  },
+  "SDL_GetAudioDeviceName": {
+    "signature": "const char *(SDL_AudioDeviceID)",
+    "arguments": [
+      "devid"
+    ]
+  },
+  "SDL_GetAudioDeviceFormat": {
+    "signature": "bool (SDL_AudioDeviceID, SDL_AudioSpec *, int *)",
+    "arguments": [
+      "devid",
+      "spec",
+      "sample_frames"
+    ]
+  },
+  "SDL_GetAudioDeviceChannelMap": {
+    "signature": "int *(SDL_AudioDeviceID, int *)",
+    "arguments": [
+      "devid",
+      "count"
+    ]
+  },
+  "SDL_OpenAudioDevice": {
+    "signature": "SDL_AudioDeviceID (SDL_AudioDeviceID, const SDL_AudioSpec *)",
+    "arguments": [
+      "devid",
+      "spec"
+    ]
+  },
+  "SDL_IsAudioDevicePhysical": {
+    "signature": "bool (SDL_AudioDeviceID)",
+    "arguments": [
+      "devid"
+    ]
+  },
+  "SDL_IsAudioDevicePlayback": {
+    "signature": "bool (SDL_AudioDeviceID)",
+    "arguments": [
+      "devid"
+    ]
+  },
+  "SDL_PauseAudioDevice": {
+    "signature": "bool (SDL_AudioDeviceID)",
+    "arguments": [
+      "devid"
+    ]
+  },
+  "SDL_ResumeAudioDevice": {
+    "signature": "bool (SDL_AudioDeviceID)",
+    "arguments": [
+      "devid"
+    ]
+  },
+  "SDL_AudioDevicePaused": {
+    "signature": "bool (SDL_AudioDeviceID)",
+    "arguments": [
+      "devid"
+    ]
+  },
+  "SDL_GetAudioDeviceGain": {
+    "signature": "float (SDL_AudioDeviceID)",
+    "arguments": [
+      "devid"
+    ]
+  },
+  "SDL_SetAudioDeviceGain": {
+    "signature": "bool (SDL_AudioDeviceID, float)",
+    "arguments": [
+      "devid",
+      "gain"
+    ]
+  },
+  "SDL_CloseAudioDevice": {
+    "signature": "void (SDL_AudioDeviceID)",
+    "arguments": [
+      "devid"
+    ]
+  },
+  "SDL_BindAudioStreams": {
+    "signature": "bool (SDL_AudioDeviceID, SDL_AudioStream *const *, int)",
+    "arguments": [
+      "devid",
+      "streams",
+      "num_streams"
+    ]
+  },
+  "SDL_BindAudioStream": {
+    "signature": "bool (SDL_AudioDeviceID, SDL_AudioStream *)",
+    "arguments": [
+      "devid",
+      "stream"
+    ]
+  },
+  "SDL_UnbindAudioStreams": {
+    "signature": "void (SDL_AudioStream *const *, int)",
+    "arguments": [
+      "streams",
+      "num_streams"
+    ]
+  },
+  "SDL_UnbindAudioStream": {
+    "signature": "void (SDL_AudioStream *)",
+    "arguments": [
+      "stream"
     ]
   },
   "SDL_GetAudioStreamDevice": {
@@ -192,12 +698,82 @@
       "dst_spec"
     ]
   },
+  "SDL_GetAudioStreamProperties": {
+    "signature": "SDL_PropertiesID (SDL_AudioStream *)",
+    "arguments": [
+      "stream"
+    ]
+  },
   "SDL_GetAudioStreamFormat": {
     "signature": "bool (SDL_AudioStream *, SDL_AudioSpec *, SDL_AudioSpec *)",
     "arguments": [
       "stream",
       "src_spec",
       "dst_spec"
+    ]
+  },
+  "SDL_SetAudioStreamFormat": {
+    "signature": "bool (SDL_AudioStream *, const SDL_AudioSpec *, const SDL_AudioSpec *)",
+    "arguments": [
+      "stream",
+      "src_spec",
+      "dst_spec"
+    ]
+  },
+  "SDL_GetAudioStreamFrequencyRatio": {
+    "signature": "float (SDL_AudioStream *)",
+    "arguments": [
+      "stream"
+    ]
+  },
+  "SDL_SetAudioStreamFrequencyRatio": {
+    "signature": "bool (SDL_AudioStream *, float)",
+    "arguments": [
+      "stream",
+      "ratio"
+    ]
+  },
+  "SDL_GetAudioStreamGain": {
+    "signature": "float (SDL_AudioStream *)",
+    "arguments": [
+      "stream"
+    ]
+  },
+  "SDL_SetAudioStreamGain": {
+    "signature": "bool (SDL_AudioStream *, float)",
+    "arguments": [
+      "stream",
+      "gain"
+    ]
+  },
+  "SDL_GetAudioStreamInputChannelMap": {
+    "signature": "int *(SDL_AudioStream *, int *)",
+    "arguments": [
+      "stream",
+      "count"
+    ]
+  },
+  "SDL_GetAudioStreamOutputChannelMap": {
+    "signature": "int *(SDL_AudioStream *, int *)",
+    "arguments": [
+      "stream",
+      "count"
+    ]
+  },
+  "SDL_SetAudioStreamInputChannelMap": {
+    "signature": "bool (SDL_AudioStream *, const int *, int)",
+    "arguments": [
+      "stream",
+      "chmap",
+      "count"
+    ]
+  },
+  "SDL_SetAudioStreamOutputChannelMap": {
+    "signature": "bool (SDL_AudioStream *, const int *, int)",
+    "arguments": [
+      "stream",
+      "chmap",
+      "count"
     ]
   },
   "SDL_PutAudioStreamData": {
@@ -258,10 +834,65 @@
       "stream"
     ]
   },
+  "SDL_LockAudioStream": {
+    "signature": "bool (SDL_AudioStream *)",
+    "arguments": [
+      "stream"
+    ]
+  },
+  "SDL_UnlockAudioStream": {
+    "signature": "bool (SDL_AudioStream *)",
+    "arguments": [
+      "stream"
+    ]
+  },
+  "SDL_SetAudioStreamGetCallback": {
+    "signature": "bool (SDL_AudioStream *, SDL_AudioStreamCallback, void *)",
+    "arguments": [
+      "stream",
+      "callback",
+      "userdata"
+    ]
+  },
+  "SDL_SetAudioStreamPutCallback": {
+    "signature": "bool (SDL_AudioStream *, SDL_AudioStreamCallback, void *)",
+    "arguments": [
+      "stream",
+      "callback",
+      "userdata"
+    ]
+  },
   "SDL_DestroyAudioStream": {
     "signature": "void (SDL_AudioStream *)",
     "arguments": [
       "stream"
+    ]
+  },
+  "SDL_OpenAudioDeviceStream": {
+    "signature": "SDL_AudioStream *(SDL_AudioDeviceID, const SDL_AudioSpec *, SDL_AudioStreamCallback, void *)",
+    "arguments": [
+      "devid",
+      "spec",
+      "callback",
+      "userdata"
+    ]
+  },
+  "SDL_SetAudioPostmixCallback": {
+    "signature": "bool (SDL_AudioDeviceID, SDL_AudioPostmixCallback, void *)",
+    "arguments": [
+      "devid",
+      "callback",
+      "userdata"
+    ]
+  },
+  "SDL_LoadWAV_IO": {
+    "signature": "bool (SDL_IOStream *, bool, SDL_AudioSpec *, Uint8 **, Uint32 *)",
+    "arguments": [
+      "src",
+      "closeio",
+      "spec",
+      "audio_buf",
+      "audio_len"
     ]
   },
   "SDL_LoadWAV": {
@@ -271,6 +902,39 @@
       "spec",
       "audio_buf",
       "audio_len"
+    ]
+  },
+  "SDL_MixAudio": {
+    "signature": "bool (Uint8 *, const Uint8 *, SDL_AudioFormat, Uint32, float)",
+    "arguments": [
+      "dst",
+      "src",
+      "format",
+      "len",
+      "volume"
+    ]
+  },
+  "SDL_ConvertAudioSamples": {
+    "signature": "bool (const SDL_AudioSpec *, const Uint8 *, int, const SDL_AudioSpec *, Uint8 **, int *)",
+    "arguments": [
+      "src_spec",
+      "src_data",
+      "src_len",
+      "dst_spec",
+      "dst_data",
+      "dst_len"
+    ]
+  },
+  "SDL_GetAudioFormatName": {
+    "signature": "const char *(SDL_AudioFormat)",
+    "arguments": [
+      "format"
+    ]
+  },
+  "SDL_GetSilenceValueForFormat": {
+    "signature": "int (SDL_AudioFormat)",
+    "arguments": [
+      "format"
     ]
   },
   "SDL_ComposeCustomBlendMode": {
@@ -1008,6 +1672,97 @@
       "g",
       "b",
       "a"
+    ]
+  },
+  "SDL_GetNumCameraDrivers": {
+    "signature": "int (void)",
+    "arguments": []
+  },
+  "SDL_GetCameraDriver": {
+    "signature": "const char *(int)",
+    "arguments": [
+      "index"
+    ]
+  },
+  "SDL_GetCurrentCameraDriver": {
+    "signature": "const char *(void)",
+    "arguments": []
+  },
+  "SDL_GetCameras": {
+    "signature": "SDL_CameraID *(int *)",
+    "arguments": [
+      "count"
+    ]
+  },
+  "SDL_GetCameraSupportedFormats": {
+    "signature": "SDL_CameraSpec **(SDL_CameraID, int *)",
+    "arguments": [
+      "instance_id",
+      "count"
+    ]
+  },
+  "SDL_GetCameraName": {
+    "signature": "const char *(SDL_CameraID)",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetCameraPosition": {
+    "signature": "SDL_CameraPosition (SDL_CameraID)",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_OpenCamera": {
+    "signature": "SDL_Camera *(SDL_CameraID, const SDL_CameraSpec *)",
+    "arguments": [
+      "instance_id",
+      "spec"
+    ]
+  },
+  "SDL_GetCameraPermissionState": {
+    "signature": "int (SDL_Camera *)",
+    "arguments": [
+      "camera"
+    ]
+  },
+  "SDL_GetCameraID": {
+    "signature": "SDL_CameraID (SDL_Camera *)",
+    "arguments": [
+      "camera"
+    ]
+  },
+  "SDL_GetCameraProperties": {
+    "signature": "SDL_PropertiesID (SDL_Camera *)",
+    "arguments": [
+      "camera"
+    ]
+  },
+  "SDL_GetCameraFormat": {
+    "signature": "bool (SDL_Camera *, SDL_CameraSpec *)",
+    "arguments": [
+      "camera",
+      "spec"
+    ]
+  },
+  "SDL_AcquireCameraFrame": {
+    "signature": "SDL_Surface *(SDL_Camera *, Uint64 *)",
+    "arguments": [
+      "camera",
+      "timestampNS"
+    ]
+  },
+  "SDL_ReleaseCameraFrame": {
+    "signature": "void (SDL_Camera *, SDL_Surface *)",
+    "arguments": [
+      "camera",
+      "frame"
+    ]
+  },
+  "SDL_CloseCamera": {
+    "signature": "void (SDL_Camera *)",
+    "arguments": [
+      "camera"
     ]
   },
   "SDL_SetClipboardText": {
@@ -3021,11 +3776,72 @@
     "signature": "const char *(void)",
     "arguments": []
   },
+  "SDL_GetPrefPath": {
+    "signature": "char *(const char *, const char *)",
+    "arguments": [
+      "org",
+      "app"
+    ]
+  },
+  "SDL_GetUserFolder": {
+    "signature": "const char *(SDL_Folder)",
+    "arguments": [
+      "folder"
+    ]
+  },
+  "SDL_CreateDirectory": {
+    "signature": "bool (const char *)",
+    "arguments": [
+      "path"
+    ]
+  },
+  "SDL_EnumerateDirectory": {
+    "signature": "bool (const char *, SDL_EnumerateDirectoryCallback, void *)",
+    "arguments": [
+      "path",
+      "callback",
+      "userdata"
+    ]
+  },
   "SDL_RemovePath": {
     "signature": "bool (const char *)",
     "arguments": [
       "path"
     ]
+  },
+  "SDL_RenamePath": {
+    "signature": "bool (const char *, const char *)",
+    "arguments": [
+      "oldpath",
+      "newpath"
+    ]
+  },
+  "SDL_CopyFile": {
+    "signature": "bool (const char *, const char *)",
+    "arguments": [
+      "oldpath",
+      "newpath"
+    ]
+  },
+  "SDL_GetPathInfo": {
+    "signature": "bool (const char *, SDL_PathInfo *)",
+    "arguments": [
+      "path",
+      "info"
+    ]
+  },
+  "SDL_GlobDirectory": {
+    "signature": "char **(const char *, const char *, SDL_GlobFlags, int *)",
+    "arguments": [
+      "path",
+      "pattern",
+      "flags",
+      "count"
+    ]
+  },
+  "SDL_GetCurrentDirectory": {
+    "signature": "char *(void)",
+    "arguments": []
   },
   "SDL_GPUSupportsShaderFormats": {
     "signature": "bool (SDL_GPUShaderFormat, const char *)",
@@ -4897,6 +5713,135 @@
       "x",
       "y",
       "str"
+    ]
+  },
+  "SDL_OpenTitleStorage": {
+    "signature": "SDL_Storage *(const char *, SDL_PropertiesID)",
+    "arguments": [
+      "override",
+      "props"
+    ]
+  },
+  "SDL_OpenUserStorage": {
+    "signature": "SDL_Storage *(const char *, const char *, SDL_PropertiesID)",
+    "arguments": [
+      "org",
+      "app",
+      "props"
+    ]
+  },
+  "SDL_OpenFileStorage": {
+    "signature": "SDL_Storage *(const char *)",
+    "arguments": [
+      "path"
+    ]
+  },
+  "SDL_OpenStorage": {
+    "signature": "SDL_Storage *(const SDL_StorageInterface *, void *)",
+    "arguments": [
+      "iface",
+      "userdata"
+    ]
+  },
+  "SDL_CloseStorage": {
+    "signature": "bool (SDL_Storage *)",
+    "arguments": [
+      "storage"
+    ]
+  },
+  "SDL_StorageReady": {
+    "signature": "bool (SDL_Storage *)",
+    "arguments": [
+      "storage"
+    ]
+  },
+  "SDL_GetStorageFileSize": {
+    "signature": "bool (SDL_Storage *, const char *, Uint64 *)",
+    "arguments": [
+      "storage",
+      "path",
+      "length"
+    ]
+  },
+  "SDL_ReadStorageFile": {
+    "signature": "bool (SDL_Storage *, const char *, void *, Uint64)",
+    "arguments": [
+      "storage",
+      "path",
+      "destination",
+      "length"
+    ]
+  },
+  "SDL_WriteStorageFile": {
+    "signature": "bool (SDL_Storage *, const char *, const void *, Uint64)",
+    "arguments": [
+      "storage",
+      "path",
+      "source",
+      "length"
+    ]
+  },
+  "SDL_CreateStorageDirectory": {
+    "signature": "bool (SDL_Storage *, const char *)",
+    "arguments": [
+      "storage",
+      "path"
+    ]
+  },
+  "SDL_EnumerateStorageDirectory": {
+    "signature": "bool (SDL_Storage *, const char *, SDL_EnumerateDirectoryCallback, void *)",
+    "arguments": [
+      "storage",
+      "path",
+      "callback",
+      "userdata"
+    ]
+  },
+  "SDL_RemoveStoragePath": {
+    "signature": "bool (SDL_Storage *, const char *)",
+    "arguments": [
+      "storage",
+      "path"
+    ]
+  },
+  "SDL_RenameStoragePath": {
+    "signature": "bool (SDL_Storage *, const char *, const char *)",
+    "arguments": [
+      "storage",
+      "oldpath",
+      "newpath"
+    ]
+  },
+  "SDL_CopyStorageFile": {
+    "signature": "bool (SDL_Storage *, const char *, const char *)",
+    "arguments": [
+      "storage",
+      "oldpath",
+      "newpath"
+    ]
+  },
+  "SDL_GetStoragePathInfo": {
+    "signature": "bool (SDL_Storage *, const char *, SDL_PathInfo *)",
+    "arguments": [
+      "storage",
+      "path",
+      "info"
+    ]
+  },
+  "SDL_GetStorageSpaceRemaining": {
+    "signature": "Uint64 (SDL_Storage *)",
+    "arguments": [
+      "storage"
+    ]
+  },
+  "SDL_GlobStorageDirectory": {
+    "signature": "char **(SDL_Storage *, const char *, const char *, SDL_GlobFlags, int *)",
+    "arguments": [
+      "storage",
+      "path",
+      "pattern",
+      "flags",
+      "count"
     ]
   },
   "SDL_GetDateTimeLocalePreferences": {

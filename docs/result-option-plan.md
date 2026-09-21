@@ -1,9 +1,9 @@
 # Result/Option: full boost migration
 
 P2 declarations remain connected. The remaining 20 GL/EGL Video functions are
-assigned to P8. P3 Events/input was paused for this API migration; it is the next
-binding section after validation. Raw SDL signatures and the pinned inventory
-are unchanged.
+assigned to P8. P3 Events/input and P4 subsequently progressed; see the
+[current roadmap](full-binding-roadmap.md) for remaining work and the P5 queue.
+Result/Option migration preserves raw SDL signatures.
 
 ## Current API
 
@@ -96,7 +96,7 @@ Windows x64/MSVC, pinned SDL 3.2.18 and daScript; Vulkan and D3D12.
 - Documentation links and whitespace checks pass. Production generator configuration
   is restored after the consumer build.
 
-The inventory lists 431 public boost overloads, including pure helpers,
+The inventory lists 558 public boost overloads, including pure helpers,
 [event variants](event-variants.md) and [GPU Result factories](gpu-factories.md). This is
 an API migration, not additional raw SDL declaration coverage. No cross-platform,
 JIT or arbitrary-panic cleanup guarantee is implied.

@@ -150,3 +150,20 @@ runtime contracts. The macro and public binding signatures needed no changes.
 - [71_virtual_gamepad.das](71_virtual_gamepad.das): scoped virtual joystick/gamepad without hardware; typed axis/button event matching.
 
 - [72_peripherals.das](72_peripherals.das): device enumeration with scoped SDL/HID sessions; no hardware output.
+
+
+- [73_filesystem.das](73_filesystem.das): read-only directory enumeration, glob and path metadata with Result/sdl_try.
+
+- [74_iostream.das](74_iostream.das): dynamic stream, byte roundtrip and EOF with sdl_scope/sdl_try.
+
+- [75_storage.das](75_storage.das): read-only listing through file storage with sdl_scope/sdl_try.
+
+- [76_asyncio.das](76_asyncio.das): asynchronous file loading with owned result bytes.
+
+- [77_audio_devices.das](77_audio_devices.das): audio discovery and explicit device/stream binding.
+
+- [78_audio_stream_controls.das](78_audio_stream_controls.das): in-memory stereo mapping and gain with scoped locking.
+
+- [79_audio_conversion.das](79_audio_conversion.das): PCM mixing and complete-buffer format conversion.
+
+- [80_camera.das](80_camera.das): discover cameras; normal run opens the first camera for one metadata-only frame, smoke only enumerates.

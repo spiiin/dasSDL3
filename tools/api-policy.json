@@ -277,14 +277,12 @@
       "contract": "docs/gpu-native-api.md"
     },
     "function:SDL_OpenAudioDeviceStream": {
-      "raw_status": "adapted",
       "boost_status": "partial",
-      "reason": "Default playback device only, null callback/userdata; scoped device-stream ownership, not general capture or callback support",
-      "adapter": "SDL_OpenPlaybackStream / with_playback",
+      "reason": "Native C callback addresses only; bounded PCM arrays and owned WAV/conversion bytes.",
+      "contract": "docs/audio-final-api.md",
       "tests": [
-        "tests/audio.das"
-      ],
-      "contract": "docs/audio.md"
+        "tests/audio_final_api.das"
+      ]
     },
     "function:SDL_GetWindowSizeInPixels": {
       "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
@@ -2951,42 +2949,46 @@
     },
     "function:SDL_IOFromMem": {
       "boost_status": "partial",
-      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
-      "contract": "docs/surface-pixels.md",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
       "tests": [
-        "tests/surface_pixels.das"
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
       ]
     },
     "function:SDL_IOFromConstMem": {
       "boost_status": "partial",
-      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
-      "contract": "docs/surface-pixels.md",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
       "tests": [
-        "tests/surface_pixels.das"
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
       ]
     },
     "function:SDL_CloseIO": {
       "boost_status": "partial",
-      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
-      "contract": "docs/surface-pixels.md",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
       "tests": [
-        "tests/surface_pixels.das"
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
       ]
     },
     "function:SDL_SeekIO": {
       "boost_status": "partial",
-      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
-      "contract": "docs/surface-pixels.md",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
       "tests": [
-        "tests/surface_pixels.das"
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
       ]
     },
     "function:SDL_RemovePath": {
       "boost_status": "partial",
-      "reason": "Native signature; ref/array/owned scopes cover common use. Raw external memory, unchecked blits and IO follow native lifetime/bounds preconditions.",
-      "contract": "docs/surface-pixels.md",
+      "reason": "Raw SDL signature; copied path/list adapters and Result helpers. Enumeration callback is a native C address, never a retained script block.",
+      "contract": "docs/filesystem.md",
       "tests": [
-        "tests/surface_pixels.das"
+        "tests/filesystem.das"
       ]
     },
     "function:SDL_ClearClipboardData": {
@@ -5389,6 +5391,1249 @@
       "contract": "docs/peripherals.md",
       "tests": [
         "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetBasePath": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; copied path/list adapters and Result helpers. Enumeration callback is a native C address, never a retained script block.",
+      "contract": "docs/filesystem.md",
+      "tests": [
+        "tests/filesystem.das"
+      ]
+    },
+    "function:SDL_GetPrefPath": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; copied path/list adapters and Result helpers. Enumeration callback is a native C address, never a retained script block.",
+      "contract": "docs/filesystem.md",
+      "tests": [
+        "tests/filesystem.das"
+      ]
+    },
+    "function:SDL_GetUserFolder": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; copied path/list adapters and Result helpers. Enumeration callback is a native C address, never a retained script block.",
+      "contract": "docs/filesystem.md",
+      "tests": [
+        "tests/filesystem.das"
+      ]
+    },
+    "function:SDL_CreateDirectory": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; copied path/list adapters and Result helpers. Enumeration callback is a native C address, never a retained script block.",
+      "contract": "docs/filesystem.md",
+      "tests": [
+        "tests/filesystem.das"
+      ]
+    },
+    "function:SDL_EnumerateDirectory": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; copied path/list adapters and Result helpers. Enumeration callback is a native C address, never a retained script block.",
+      "contract": "docs/filesystem.md",
+      "tests": [
+        "tests/filesystem.das"
+      ]
+    },
+    "function:SDL_RenamePath": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; copied path/list adapters and Result helpers. Enumeration callback is a native C address, never a retained script block.",
+      "contract": "docs/filesystem.md",
+      "tests": [
+        "tests/filesystem.das"
+      ]
+    },
+    "function:SDL_CopyFile": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; copied path/list adapters and Result helpers. Enumeration callback is a native C address, never a retained script block.",
+      "contract": "docs/filesystem.md",
+      "tests": [
+        "tests/filesystem.das"
+      ]
+    },
+    "function:SDL_GetPathInfo": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; copied path/list adapters and Result helpers. Enumeration callback is a native C address, never a retained script block.",
+      "contract": "docs/filesystem.md",
+      "tests": [
+        "tests/filesystem.das"
+      ]
+    },
+    "function:SDL_GlobDirectory": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; copied path/list adapters and Result helpers. Enumeration callback is a native C address, never a retained script block.",
+      "contract": "docs/filesystem.md",
+      "tests": [
+        "tests/filesystem.das"
+      ]
+    },
+    "function:SDL_GetCurrentDirectory": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; copied path/list adapters and Result helpers. Enumeration callback is a native C address, never a retained script block.",
+      "contract": "docs/filesystem.md",
+      "tests": [
+        "tests/filesystem.das"
+      ]
+    },
+    "function:SDL_IOFromFile": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_IOFromDynamicMem": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_OpenIO": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_GetIOProperties": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_GetIOStatus": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_GetIOSize": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_TellIO": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_ReadIO": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_WriteIO": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_IOprintf": {
+      "boost_status": "partial",
+      "reason": "Fixed %s text adapter; arbitrary C varargs are not exposed.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ],
+      "raw_status": "adapted",
+      "adapter": "SDL_IOprintfText"
+    },
+    "function:SDL_IOvprintf": {
+      "boost_status": "pending",
+      "reason": "Native va_list ABI is not a script argument list; remains pending.",
+      "contract": "docs/iostream.md",
+      "tests": [],
+      "raw_status": "pending"
+    },
+    "function:SDL_FlushIO": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_LoadFile_IO": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_LoadFile": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_SaveFile_IO": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_SaveFile": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_ReadU8": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_ReadS8": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_ReadU16LE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_ReadS16LE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_ReadU16BE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_ReadS16BE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_ReadU32LE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_ReadS32LE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_ReadU32BE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_ReadS32BE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_ReadU64LE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_ReadS64LE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_ReadU64BE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_ReadS64BE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_WriteU8": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_WriteS8": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_WriteU16LE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_WriteS16LE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_WriteU16BE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_WriteS16BE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_WriteU32LE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_WriteS32LE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_WriteU32BE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_WriteS32BE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_WriteU64LE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_WriteS64LE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_WriteU64BE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "function:SDL_WriteS64BE": {
+      "boost_status": "partial",
+      "reason": "Raw SDL signature; bounded synchronous byte arrays, scalar references and defer ownership. Partial transfers retain count/status; pinned bulk IO limitations are documented.",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das",
+        "tests/iostream_endian.das"
+      ]
+    },
+    "macro:SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "String constant registered directly from pinned native macro value.",
+      "adapter": "SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das"
+      ]
+    },
+    "macro:SDL_PROP_IOSTREAM_STDIO_FILE_POINTER": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "String constant registered directly from pinned native macro value.",
+      "adapter": "SDL_PROP_IOSTREAM_STDIO_FILE_POINTER",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das"
+      ]
+    },
+    "macro:SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "String constant registered directly from pinned native macro value.",
+      "adapter": "SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das"
+      ]
+    },
+    "macro:SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "String constant registered directly from pinned native macro value.",
+      "adapter": "SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das"
+      ]
+    },
+    "macro:SDL_PROP_IOSTREAM_MEMORY_POINTER": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "String constant registered directly from pinned native macro value.",
+      "adapter": "SDL_PROP_IOSTREAM_MEMORY_POINTER",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das"
+      ]
+    },
+    "macro:SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "String constant registered directly from pinned native macro value.",
+      "adapter": "SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das"
+      ]
+    },
+    "macro:SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "String constant registered directly from pinned native macro value.",
+      "adapter": "SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das"
+      ]
+    },
+    "macro:SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER": {
+      "raw_status": "adapted",
+      "boost_status": "partial",
+      "reason": "String constant registered directly from pinned native macro value.",
+      "adapter": "SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER",
+      "contract": "docs/iostream.md",
+      "tests": [
+        "tests/iostream.das"
+      ]
+    },
+    "function:SDL_OpenTitleStorage": {
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
+    },
+    "function:SDL_OpenUserStorage": {
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
+    },
+    "function:SDL_OpenFileStorage": {
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
+    },
+    "function:SDL_OpenStorage": {
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
+    },
+    "function:SDL_CloseStorage": {
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
+    },
+    "function:SDL_StorageReady": {
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
+    },
+    "function:SDL_GetStorageFileSize": {
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
+    },
+    "function:SDL_ReadStorageFile": {
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
+    },
+    "function:SDL_WriteStorageFile": {
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
+    },
+    "function:SDL_CreateStorageDirectory": {
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
+    },
+    "function:SDL_EnumerateStorageDirectory": {
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
+    },
+    "function:SDL_RemoveStoragePath": {
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
+    },
+    "function:SDL_RenameStoragePath": {
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
+    },
+    "function:SDL_CopyStorageFile": {
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
+    },
+    "function:SDL_GetStoragePathInfo": {
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
+    },
+    "function:SDL_GetStorageSpaceRemaining": {
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
+    },
+    "function:SDL_GlobStorageDirectory": {
+      "boost_status": "partial",
+      "reason": "Direct SDL signature; native callback addresses, copied lists, bounded synchronous byte arrays and defer scopes. Readiness/space sentinel semantics preserved; positive user/cloud backend validation remains pending.",
+      "contract": "docs/storage.md",
+      "tests": [
+        "tests/storage.das"
+      ]
+    },
+    "function:SDL_AsyncIOFromFile": {
+      "boost_status": "partial",
+      "reason": "Native async submission and completion stay separate; stable caller buffers, explicit close and queue drain.",
+      "contract": "docs/asyncio.md",
+      "tests": [
+        "tests/asyncio.das"
+      ]
+    },
+    "function:SDL_GetAsyncIOSize": {
+      "boost_status": "partial",
+      "reason": "Native async submission and completion stay separate; stable caller buffers, explicit close and queue drain.",
+      "contract": "docs/asyncio.md",
+      "tests": [
+        "tests/asyncio.das"
+      ]
+    },
+    "function:SDL_ReadAsyncIO": {
+      "boost_status": "partial",
+      "reason": "Native async submission and completion stay separate; stable caller buffers, explicit close and queue drain.",
+      "contract": "docs/asyncio.md",
+      "tests": [
+        "tests/asyncio.das"
+      ]
+    },
+    "function:SDL_WriteAsyncIO": {
+      "boost_status": "partial",
+      "reason": "Native async submission and completion stay separate; stable caller buffers, explicit close and queue drain.",
+      "contract": "docs/asyncio.md",
+      "tests": [
+        "tests/asyncio.das"
+      ]
+    },
+    "function:SDL_CloseAsyncIO": {
+      "boost_status": "partial",
+      "reason": "Native async submission and completion stay separate; stable caller buffers, explicit close and queue drain.",
+      "contract": "docs/asyncio.md",
+      "tests": [
+        "tests/asyncio.das"
+      ]
+    },
+    "function:SDL_CreateAsyncIOQueue": {
+      "boost_status": "partial",
+      "reason": "Native async submission and completion stay separate; stable caller buffers, explicit close and queue drain.",
+      "contract": "docs/asyncio.md",
+      "tests": [
+        "tests/asyncio.das"
+      ]
+    },
+    "function:SDL_DestroyAsyncIOQueue": {
+      "boost_status": "partial",
+      "reason": "Native async submission and completion stay separate; stable caller buffers, explicit close and queue drain.",
+      "contract": "docs/asyncio.md",
+      "tests": [
+        "tests/asyncio.das"
+      ]
+    },
+    "function:SDL_GetAsyncIOResult": {
+      "boost_status": "partial",
+      "reason": "Native async submission and completion stay separate; stable caller buffers, explicit close and queue drain.",
+      "contract": "docs/asyncio.md",
+      "tests": [
+        "tests/asyncio.das"
+      ]
+    },
+    "function:SDL_WaitAsyncIOResult": {
+      "boost_status": "partial",
+      "reason": "Native async submission and completion stay separate; stable caller buffers, explicit close and queue drain.",
+      "contract": "docs/asyncio.md",
+      "tests": [
+        "tests/asyncio.das"
+      ]
+    },
+    "function:SDL_SignalAsyncIOQueue": {
+      "boost_status": "partial",
+      "reason": "Native async submission and completion stay separate; stable caller buffers, explicit close and queue drain.",
+      "contract": "docs/asyncio.md",
+      "tests": [
+        "tests/asyncio.das"
+      ]
+    },
+    "function:SDL_LoadFileAsync": {
+      "boost_status": "partial",
+      "reason": "Native async submission and completion stay separate; stable caller buffers, explicit close and queue drain.",
+      "contract": "docs/asyncio.md",
+      "tests": [
+        "tests/asyncio.das"
+      ]
+    },
+    "function:SDL_GetNumAudioDrivers": {
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
+    },
+    "function:SDL_GetAudioDriver": {
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
+    },
+    "function:SDL_GetCurrentAudioDriver": {
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
+    },
+    "function:SDL_GetAudioPlaybackDevices": {
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
+    },
+    "function:SDL_GetAudioRecordingDevices": {
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
+    },
+    "function:SDL_GetAudioDeviceName": {
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
+    },
+    "function:SDL_GetAudioDeviceFormat": {
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
+    },
+    "function:SDL_GetAudioDeviceChannelMap": {
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
+    },
+    "function:SDL_OpenAudioDevice": {
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
+    },
+    "function:SDL_IsAudioDevicePhysical": {
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
+    },
+    "function:SDL_IsAudioDevicePlayback": {
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
+    },
+    "function:SDL_PauseAudioDevice": {
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
+    },
+    "function:SDL_ResumeAudioDevice": {
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
+    },
+    "function:SDL_AudioDevicePaused": {
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
+    },
+    "function:SDL_GetAudioDeviceGain": {
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
+    },
+    "function:SDL_SetAudioDeviceGain": {
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
+    },
+    "function:SDL_CloseAudioDevice": {
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
+    },
+    "function:SDL_BindAudioStreams": {
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
+    },
+    "function:SDL_BindAudioStream": {
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
+    },
+    "function:SDL_UnbindAudioStreams": {
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
+    },
+    "function:SDL_UnbindAudioStream": {
+      "boost_status": "partial",
+      "reason": "Audio device discovery, logical ownership and explicit stream binding; dummy backend validation.",
+      "contract": "docs/audio-devices.md",
+      "tests": [
+        "tests/audio_devices.das"
+      ]
+    },
+    "function:SDL_GetAudioStreamProperties": {
+      "boost_status": "partial",
+      "reason": "Audio stream controls, copied channel maps and same-thread deferred unlock.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
+    },
+    "function:SDL_SetAudioStreamFormat": {
+      "boost_status": "partial",
+      "reason": "Audio stream controls, copied channel maps and same-thread deferred unlock.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
+    },
+    "function:SDL_GetAudioStreamFrequencyRatio": {
+      "boost_status": "partial",
+      "reason": "Audio stream controls, copied channel maps and same-thread deferred unlock.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
+    },
+    "function:SDL_SetAudioStreamFrequencyRatio": {
+      "boost_status": "partial",
+      "reason": "Audio stream controls, copied channel maps and same-thread deferred unlock.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
+    },
+    "function:SDL_GetAudioStreamGain": {
+      "boost_status": "partial",
+      "reason": "Audio stream controls, copied channel maps and same-thread deferred unlock.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
+    },
+    "function:SDL_SetAudioStreamGain": {
+      "boost_status": "partial",
+      "reason": "Audio stream controls, copied channel maps and same-thread deferred unlock.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
+    },
+    "function:SDL_GetAudioStreamInputChannelMap": {
+      "boost_status": "pending",
+      "reason": "Pinned SDL 3.2.18 getter crashes for default null maps; raw custom-map execution tested, safe boost getter deferred.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
+    },
+    "function:SDL_GetAudioStreamOutputChannelMap": {
+      "boost_status": "pending",
+      "reason": "Pinned SDL 3.2.18 getter crashes for default null maps; raw custom-map execution tested, safe boost getter deferred.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
+    },
+    "function:SDL_SetAudioStreamInputChannelMap": {
+      "boost_status": "partial",
+      "reason": "Audio stream controls, copied channel maps and same-thread deferred unlock.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
+    },
+    "function:SDL_SetAudioStreamOutputChannelMap": {
+      "boost_status": "partial",
+      "reason": "Audio stream controls, copied channel maps and same-thread deferred unlock.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
+    },
+    "function:SDL_LockAudioStream": {
+      "boost_status": "partial",
+      "reason": "Audio stream controls, copied channel maps and same-thread deferred unlock.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
+    },
+    "function:SDL_UnlockAudioStream": {
+      "boost_status": "partial",
+      "reason": "Audio stream controls, copied channel maps and same-thread deferred unlock.",
+      "contract": "docs/audio-stream-controls.md",
+      "tests": [
+        "tests/audio_stream_controls.das"
+      ]
+    },
+    "function:SDL_SetAudioStreamGetCallback": {
+      "boost_status": "partial",
+      "reason": "Native C callback addresses only; bounded PCM arrays and owned WAV/conversion bytes.",
+      "contract": "docs/audio-final-api.md",
+      "tests": [
+        "tests/audio_final_api.das"
+      ]
+    },
+    "function:SDL_SetAudioStreamPutCallback": {
+      "boost_status": "partial",
+      "reason": "Native C callback addresses only; bounded PCM arrays and owned WAV/conversion bytes.",
+      "contract": "docs/audio-final-api.md",
+      "tests": [
+        "tests/audio_final_api.das"
+      ]
+    },
+    "function:SDL_SetAudioPostmixCallback": {
+      "boost_status": "partial",
+      "reason": "Native C callback addresses only; bounded PCM arrays and owned WAV/conversion bytes.",
+      "contract": "docs/audio-final-api.md",
+      "tests": [
+        "tests/audio_final_api.das"
+      ]
+    },
+    "function:SDL_LoadWAV_IO": {
+      "boost_status": "partial",
+      "reason": "Native C callback addresses only; bounded PCM arrays and owned WAV/conversion bytes.",
+      "contract": "docs/audio-final-api.md",
+      "tests": [
+        "tests/audio_final_api.das"
+      ]
+    },
+    "function:SDL_MixAudio": {
+      "boost_status": "partial",
+      "reason": "Native C callback addresses only; bounded PCM arrays and owned WAV/conversion bytes.",
+      "contract": "docs/audio-final-api.md",
+      "tests": [
+        "tests/audio_final_api.das"
+      ]
+    },
+    "function:SDL_ConvertAudioSamples": {
+      "boost_status": "partial",
+      "reason": "Native C callback addresses only; bounded PCM arrays and owned WAV/conversion bytes.",
+      "contract": "docs/audio-final-api.md",
+      "tests": [
+        "tests/audio_final_api.das"
+      ]
+    },
+    "function:SDL_GetAudioFormatName": {
+      "boost_status": "partial",
+      "reason": "Native C callback addresses only; bounded PCM arrays and owned WAV/conversion bytes.",
+      "contract": "docs/audio-final-api.md",
+      "tests": [
+        "tests/audio_final_api.das"
+      ]
+    },
+    "function:SDL_GetSilenceValueForFormat": {
+      "boost_status": "partial",
+      "reason": "Native C callback addresses only; bounded PCM arrays and owned WAV/conversion bytes.",
+      "contract": "docs/audio-final-api.md",
+      "tests": [
+        "tests/audio_final_api.das"
+      ]
+    },
+    "function:SDL_GetNumCameraDrivers": {
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
+    },
+    "function:SDL_GetCameraDriver": {
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
+    },
+    "function:SDL_GetCurrentCameraDriver": {
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
+    },
+    "function:SDL_GetCameras": {
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
+    },
+    "function:SDL_GetCameraSupportedFormats": {
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
+    },
+    "function:SDL_GetCameraName": {
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
+    },
+    "function:SDL_GetCameraPosition": {
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
+    },
+    "function:SDL_OpenCamera": {
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
+    },
+    "function:SDL_GetCameraPermissionState": {
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
+    },
+    "function:SDL_GetCameraID": {
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
+    },
+    "function:SDL_GetCameraProperties": {
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
+    },
+    "function:SDL_GetCameraFormat": {
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
+    },
+    "function:SDL_AcquireCameraFrame": {
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
+    },
+    "function:SDL_ReleaseCameraFrame": {
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
+      ]
+    },
+    "function:SDL_CloseCamera": {
+      "boost_status": "partial",
+      "reason": "Raw Camera API plus copied queries and borrowed-frame defer scopes; hardware paths unverified.",
+      "contract": "docs/camera.md",
+      "tests": [
+        "tests/camera.das",
+        "examples/80_camera.das"
       ]
     }
   }
