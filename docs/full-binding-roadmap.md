@@ -35,9 +35,18 @@ interpreter/AOT/consumer проверки. [Результаты и исключ
 
 ## Очередь
 
-P3 API: добавлен [SdlEvent](event-variants.md) с 11 вариантами для текущего
-ввода, окон и Quit; `poll_event()` возвращает Option, текст копируется.
-Остальные payloads пока Unknown; это не полное покрытие Events.
+P3 API: [очередь событий](event-queue.md) и [callbacks](event-callbacks.md) подключены — 19/19
+raw-функций Events. Есть ожидание/таймаут, пакетные peek/take, подсчёт, фильтрация
+по диапазону и регистрация пользовательских типов. [SdlEvent](event-variants.md)
+содержит 53 варианта: ввод, окна, Quit, drop, user metadata, Joystick/Gamepad и Touch/Pen/Sensor;
+строки копируются. Остальные payloads пока Unknown. [Keyboard/Mouse](keyboard-mouse.md)
+подключены: 24/24 и 22/22 raw-функций. [Joystick/Gamepad](joystick-gamepad.md) — 58/58 и 73/73 raw-функций, с явными
+ограничениями virtual balls/sensor queue. [Touch/Pen/Sensor/Haptic/HIDAPI](peripherals.md) подключены: 71 raw-функция и 13 event-тегов;
+Pen — только события в SDL 3.2.18. IME candidates, clipboard MIME arrays и raw user-pointer adapters подключены;
+[контракт и move-only SdlEvent](event-list-payloads.md). Явный остаток P3: payloads
+keyboard/mouse device hotplug, native virtual callbacks и проверка оборудования.
+Следующий основной пакет — P4 Filesystem/Storage/IOStream/AsyncIO. Retained callbacks
+принимают нативные адреса; script-блок доступен только синхронному FilterEvents.
 
 | Этап | Объём | Критерий |
 | --- | --- | --- |
@@ -65,7 +74,7 @@ cleanup-callback остаётся pending; ограничения и найде�
 Video discovery: 31 raw запроса и copy/ref adapters реализованы,
 [контракты](video-discovery.md). Создание и состояние окон также реализованы: [контракты](window-state.md).
 Fullscreen/surfaces и прочие оконные операции реализованы с ограничениями
-[window-io.md](window-io.md). Video: 89/109; оставшиеся 20 GL/EGL функций явно перенесены в P8. Hit-test, Rect и Clipboard подключены; [контракт](rect-clipboard-hittest.md). Следующий основной раздел — P3 Events/input. Миграция [Result/Option boost API](result-option-plan.md) завершена и локально проверена. P2 не переоткрывается; GL/EGL остаётся в P8.
+[window-io.md](window-io.md). Video: 89/109; оставшиеся 20 GL/EGL функций явно перенесены в P8. Hit-test, Rect и Clipboard подключены; [контракт](rect-clipboard-hittest.md). Следующий основной раздел — P4 IO; остаток P3 перечислен выше. Миграция [Result/Option boost API](result-option-plan.md) завершена и локально проверена. P2 не переоткрывается; GL/EGL остаётся в P8.
 Software renderer/primitives: ещё 10 raw функций; [контракт](renderer-primitives.md).
 Состояние Renderer (viewport/clip/scale/output): 10 raw функций и ref adapters; [контракт](renderer-state.md).
 Renderer queries/logical presentation: 10 raw функций, все режимы и преобразование координат; [контракт](renderer-presentation.md).

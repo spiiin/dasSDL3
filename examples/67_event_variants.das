@@ -8,9 +8,9 @@ def event_loop(window : SDL_Window?; smoke : bool) {
     var frames = 0
     while (running) {
         while (true) {
-            let next = poll_event()
+            var next <- poll_event()
             if (is_none(next)) { break }
-            let event = unwrap(next)
+            let event <- move_unwrap(next)
             match (event) {
                 if (SdlEvent(quit=_)) { running = false }
                 if (SdlEvent(key_down=$v(key))) {
@@ -20,6 +20,14 @@ def event_loop(window : SDL_Window?; smoke : bool) {
                 if (SdlEvent(mouse_motion=$v(mouse))) { print("Mouse: {mouse.position}, delta: {mouse.delta}\n") }
                 if (SdlEvent(text_input=$v(input))) { print("Text entered: {input.text}\n") }
                 if (SdlEvent(text_editing=$v(edit))) { print("Composition: {edit.text} ({edit.start}, {edit.length})\n") }
+                if (SdlEvent(text_editing_candidates=$v(ime))) {
+                    print("IME candidates: {length(ime.candidates)}, selected: {ime.selected_candidate}\n")
+                    for(candidate in ime.candidates) {print("  {candidate}\n")}
+                }
+                if (SdlEvent(clipboard_update=$v(clipboard))) {
+                    print("Clipboard owner: {clipboard.owner}\n")
+                    for(mime in clipboard.mime_types) {print("  MIME: {mime}\n")}
+                }
                 if (SdlEvent(window=$v(value))) {
                     if (value.event_type == SDL_EVENT_WINDOW_CLOSE_REQUESTED && value.window_id == SDL_GetWindowID(window)) { running = false }
                 }

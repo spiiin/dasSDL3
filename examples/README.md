@@ -6,6 +6,7 @@ Result checks for comparison. Scopes with multiple callback parameters retain
 their trailing blocks.
 
 - [67_event_variants.das](67_event_variants.das): owned event variants, `match`, text and IME composition.
+- [68_event_queue.das](68_event_queue.das): timed waiting, non-consuming peek, custom event types and copied drop text.
 
 Run from the repository root with `./build/ninja/bin/dasSDL3_runner.exe examples/<file>.das`.
 01 uses the standalone daslang runner. Examples 01–08 cover core SDL/renderer/input/audio.
@@ -141,3 +142,11 @@ initialization failures, GPU-unavailable smoke skips and post-creation failures;
 an injected texture-size failure propagated through the macro with exit 1.
 The LLVM-free consumer ran the textures and diagnostics examples and the macro's
 runtime contracts. The macro and public binding signatures needed no changes.
+
+- [69_event_filter.das](69_event_filter.das): synchronous queue predicate, borrowed event and Result.
+
+- [70_keyboard_mouse.das](70_keyboard_mouse.das): keyboard/mouse discovery, typed scancodes and text input.
+
+- [71_virtual_gamepad.das](71_virtual_gamepad.das): scoped virtual joystick/gamepad without hardware; typed axis/button event matching.
+
+- [72_peripherals.das](72_peripherals.das): device enumeration with scoped SDL/HID sessions; no hardware output.

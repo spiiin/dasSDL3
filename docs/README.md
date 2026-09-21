@@ -19,6 +19,7 @@
 
 - [Ввод](input.md), [аудио](audio.md), [пиксели](pixels.md), [geometry](geometry.md).
 - [Event variants](event-variants.md): `SdlEvent`, pattern matching и собственный текст.
+- [Event queue](event-queue.md): raw Events 14/19, ожидание, batch peek/take, drop/user payloads.
 - GPU: [native API](gpu-native-api.md), [native boost](gpu-native-boost.md),
   [результаты](gpu-native-validation.md), [raw tests](gpu-raw-tests.md).
 - Checked GPU subset: [distinct handles](gpu-handles.md), [recording](gpu-recording.md), [buffers](gpu-transfer.md),
@@ -72,3 +73,13 @@
 
 Result/Option boost API: [contracts and migration plan](result-option-plan.md).
 Early-return syntax: [`sdl_try` macro and example](sdl-try.md).
+
+- [Events callback contracts](event-callbacks.md): native addresses and synchronous script filtering.
+
+- [Keyboard/mouse](keyboard-mouse.md): copied state/names, text input and cursor ownership.
+
+- [Joystick/gamepad](joystick-gamepad.md): virtual tests, ownership and pinned backend limits.
+
+- [Touch/Pen/Sensor/Haptic/HIDAPI](peripherals.md): raw functions, owned metadata, effects and report buffers.
+
+- [IME/MIME event lists and user pointers](event-list-payloads.md): copied lists, move-only events, borrowed raw data.

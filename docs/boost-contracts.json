@@ -1972,5 +1972,617 @@
     "name": "request_gpu_volume_readback",
     "contract": "Result",
     "signature": "def public request_gpu_volume_readback(device : SDL_GPUDevice?; volume : GpuVolumeHandle; mip : uint; origin, size : uint3)"
+  },
+  {
+    "module": "sdl3_event_queue",
+    "name": "wait_event",
+    "contract": "Result",
+    "signature": "def public wait_event(var event : SDL_Event)"
+  },
+  {
+    "module": "sdl3_event_queue",
+    "name": "wait_event",
+    "contract": "Result",
+    "signature": "def public wait_event()"
+  },
+  {
+    "module": "sdl3_event_queue",
+    "name": "wait_event_timeout",
+    "contract": "Result",
+    "signature": "def public wait_event_timeout(var event : SDL_Event; timeout_ms : int)"
+  },
+  {
+    "module": "sdl3_event_queue",
+    "name": "wait_event_timeout",
+    "contract": "Result",
+    "signature": "def public wait_event_timeout(timeout_ms : int)"
+  },
+  {
+    "module": "sdl3_event_queue",
+    "name": "peep_events",
+    "contract": "Result",
+    "signature": "def public peep_events(var events : array<SDL_Event>; action : SDL_EventAction; min_type : uint = SDL_EVENT_FIRST; max_type : uint = SDL_EVENT_LAST)"
+  },
+  {
+    "module": "sdl3_event_queue",
+    "name": "count_events",
+    "contract": "Result",
+    "signature": "def public count_events(min_type : uint = SDL_EVENT_FIRST; max_type : uint = SDL_EVENT_LAST)"
+  },
+  {
+    "module": "sdl3_event_queue",
+    "name": "peek_events",
+    "contract": "Result",
+    "signature": "def public peek_events(limit : int = 64; min_type : uint = SDL_EVENT_FIRST; max_type : uint = SDL_EVENT_LAST)"
+  },
+  {
+    "module": "sdl3_event_queue",
+    "name": "take_events",
+    "contract": "Result",
+    "signature": "def public take_events(limit : int = 64; min_type : uint = SDL_EVENT_FIRST; max_type : uint = SDL_EVENT_LAST)"
+  },
+  {
+    "module": "sdl3_event_queue",
+    "name": "register_events",
+    "contract": "Result",
+    "signature": "def public register_events(count : int)"
+  },
+  {
+    "module": "sdl3_event_queue",
+    "name": "event_window",
+    "contract": "Option",
+    "signature": "def public event_window(event : SDL_Event)"
+  },
+  {
+    "module": "sdl3_event_queue",
+    "name": "filter_events",
+    "contract": "Result",
+    "signature": "def public filter_events(predicate : block<(var event : SDL_Event) : bool>)"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "keyboards",
+    "contract": "Result",
+    "signature": "def public keyboards()"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "mice",
+    "contract": "Result",
+    "signature": "def public mice()"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "keyboard_state",
+    "contract": "value",
+    "signature": "def public keyboard_state()"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "keyboard_name",
+    "contract": "Result",
+    "signature": "def public keyboard_name(id : uint)"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "mouse_name",
+    "contract": "Result",
+    "signature": "def public mouse_name(id : uint)"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "key_name",
+    "contract": "value",
+    "signature": "def public key_name(key : uint) : string"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "scancode_name",
+    "contract": "value",
+    "signature": "def public scancode_name(code : SDL_Scancode) : string"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "scancode_from_key",
+    "contract": "value",
+    "signature": "def public scancode_from_key(key : uint; var mods : uint&) : SDL_Scancode"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "global_mouse_state",
+    "contract": "value",
+    "signature": "def public global_mouse_state(var position : float2&) : uint"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "relative_mouse_state",
+    "contract": "value",
+    "signature": "def public relative_mouse_state(var delta : float2&) : uint"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "set_text_input_area",
+    "contract": "Result",
+    "signature": "def public set_text_input_area(window : SDL_Window?; rect : SDL_Rect; cursor : int)"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "text_input_area",
+    "contract": "Result",
+    "signature": "def public text_input_area(window : SDL_Window?; var rect : SDL_Rect; var cursor : int&)"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "set_relative_mouse_mode",
+    "contract": "Result",
+    "signature": "def public set_relative_mouse_mode(window : SDL_Window?; enabled : bool)"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "capture_mouse",
+    "contract": "Result",
+    "signature": "def public capture_mouse(enabled : bool)"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "warp_mouse_global",
+    "contract": "Result",
+    "signature": "def public warp_mouse_global(position : float2)"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "set_cursor",
+    "contract": "Result",
+    "signature": "def public set_cursor(cursor : SDL_Cursor?)"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "show_cursor",
+    "contract": "Result",
+    "signature": "def public show_cursor()"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "hide_cursor",
+    "contract": "Result",
+    "signature": "def public hide_cursor()"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "keyboard_focus",
+    "contract": "Option",
+    "signature": "def public keyboard_focus()"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "mouse_focus",
+    "contract": "Option",
+    "signature": "def public mouse_focus()"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "current_cursor",
+    "contract": "Option",
+    "signature": "def public current_cursor()"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "default_cursor",
+    "contract": "Option",
+    "signature": "def public default_cursor()"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "create_system_cursor",
+    "contract": "Result",
+    "signature": "def public create_system_cursor(id : SDL_SystemCursor)"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "create_color_cursor",
+    "contract": "Result",
+    "signature": "def public create_color_cursor(surface : SDL_Surface?; hot_x,hot_y : int)"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "create_cursor",
+    "contract": "Result",
+    "signature": "def public create_cursor(data,mask : array<uint8>; w,h,hot_x,hot_y : int)"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "with_system_cursor",
+    "contract": "Result",
+    "signature": "def public with_system_cursor(id : SDL_SystemCursor; body : block<(cursor : SDL_Cursor?) : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "with_color_cursor",
+    "contract": "Result",
+    "signature": "def public with_color_cursor(surface : SDL_Surface?; hot_x,hot_y : int; body : block<(cursor : SDL_Cursor?) : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "with_cursor",
+    "contract": "Result",
+    "signature": "def public with_cursor(data,mask : array<uint8>; w,h,hot_x,hot_y : int; body : block<(cursor : SDL_Cursor?) : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "with_text_input_properties",
+    "contract": "Result",
+    "signature": "def public with_text_input_properties(window : SDL_Window?; props : uint; body : block<() : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "joysticks",
+    "contract": "Result",
+    "signature": "def public joysticks()"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "gamepads",
+    "contract": "Result",
+    "signature": "def public gamepads()"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "gamepad_bindings",
+    "contract": "Result",
+    "signature": "def public gamepad_bindings(gamepad : SDL_Gamepad?)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "gamepad_mappings",
+    "contract": "Result",
+    "signature": "def public gamepad_mappings()"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "open_joystick",
+    "contract": "Result",
+    "signature": "def public open_joystick(id : uint)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "with_joystick",
+    "contract": "Result",
+    "signature": "def public with_joystick(id : uint; body : block<(device : SDL_Joystick?) : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "joystick_name",
+    "contract": "Result",
+    "signature": "def public joystick_name(device : SDL_Joystick?)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "joystick_path",
+    "contract": "Option",
+    "signature": "def public joystick_path(device : SDL_Joystick?)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "joystick_serial",
+    "contract": "Option",
+    "signature": "def public joystick_serial(device : SDL_Joystick?)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "rumble_joystick",
+    "contract": "Result",
+    "signature": "def public rumble_joystick(device : SDL_Joystick?; low,high : uint; duration : uint)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "rumble_joystick_triggers",
+    "contract": "Result",
+    "signature": "def public rumble_joystick_triggers(device : SDL_Joystick?; left,right : uint; duration : uint)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "set_joystick_led",
+    "contract": "Result",
+    "signature": "def public set_joystick_led(device : SDL_Joystick?; red,green,blue : uint)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "send_joystick_effect",
+    "contract": "Result",
+    "signature": "def public send_joystick_effect(device : SDL_Joystick?; data : array<uint8>)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "open_gamepad",
+    "contract": "Result",
+    "signature": "def public open_gamepad(id : uint)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "with_gamepad",
+    "contract": "Result",
+    "signature": "def public with_gamepad(id : uint; body : block<(device : SDL_Gamepad?) : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "gamepad_name",
+    "contract": "Result",
+    "signature": "def public gamepad_name(device : SDL_Gamepad?)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "gamepad_path",
+    "contract": "Option",
+    "signature": "def public gamepad_path(device : SDL_Gamepad?)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "gamepad_serial",
+    "contract": "Option",
+    "signature": "def public gamepad_serial(device : SDL_Gamepad?)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "rumble_gamepad",
+    "contract": "Result",
+    "signature": "def public rumble_gamepad(device : SDL_Gamepad?; low,high : uint; duration : uint)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "rumble_gamepad_triggers",
+    "contract": "Result",
+    "signature": "def public rumble_gamepad_triggers(device : SDL_Gamepad?; left,right : uint; duration : uint)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "set_gamepad_led",
+    "contract": "Result",
+    "signature": "def public set_gamepad_led(device : SDL_Gamepad?; red,green,blue : uint)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "send_gamepad_effect",
+    "contract": "Result",
+    "signature": "def public send_gamepad_effect(device : SDL_Gamepad?; data : array<uint8>)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "with_joysticks_lock",
+    "contract": "Result",
+    "signature": "def public with_joysticks_lock(body : block<() : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "attach_virtual_joystick",
+    "contract": "Result",
+    "signature": "def public attach_virtual_joystick(desc : SDL_VirtualJoystickDesc; name : string; touchpads : array<SDL_VirtualJoystickTouchpadDesc>; sensors : array<SDL_VirtualJoystickSensorDesc>)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "with_virtual_joystick",
+    "contract": "Result",
+    "signature": "def public with_virtual_joystick(desc : SDL_VirtualJoystickDesc; name : string; touchpads : array<SDL_VirtualJoystickTouchpadDesc>; sensors : array<SDL_VirtualJoystickSensorDesc>; body : block<(id : uint) : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "gamepad_mapping",
+    "contract": "Result",
+    "signature": "def public gamepad_mapping(device : SDL_Gamepad?)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "add_gamepad_mapping",
+    "contract": "Result",
+    "signature": "def public add_gamepad_mapping(mapping : string)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "joystick_axis_initial_state",
+    "contract": "Option",
+    "signature": "def public joystick_axis_initial_state(device : SDL_Joystick?; axis : int)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "joystick_ball",
+    "contract": "Result",
+    "signature": "def public joystick_ball(device : SDL_Joystick?; ball : int)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "gamepad_touchpad_finger",
+    "contract": "Result",
+    "signature": "def public gamepad_touchpad_finger(device : SDL_Gamepad?; pad,finger : int; var down : bool&; var position : float2&; var pressure : float&)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "gamepad_sensor_data",
+    "contract": "Result",
+    "signature": "def public gamepad_sensor_data(device : SDL_Gamepad?; sensor : SDL_SensorType; count : int = 3)"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "send_virtual_sensor_data",
+    "contract": "Result",
+    "signature": "def public send_virtual_sensor_data(device : SDL_Joystick?; sensor : SDL_SensorType; timestamp : uint64; data : array<float>)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "touch_devices",
+    "contract": "Result",
+    "signature": "def public touch_devices()"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "touch_fingers",
+    "contract": "Result",
+    "signature": "def public touch_fingers(id : uint64)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "sensors",
+    "contract": "Result",
+    "signature": "def public sensors()"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "haptics",
+    "contract": "Result",
+    "signature": "def public haptics()"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "open_sensor",
+    "contract": "Result",
+    "signature": "def public open_sensor(id : uint)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "with_sensor",
+    "contract": "Result",
+    "signature": "def public with_sensor(id : uint; body : block<(device : SDL_Sensor?) : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "open_haptic",
+    "contract": "Result",
+    "signature": "def public open_haptic(id : uint)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "with_haptic",
+    "contract": "Result",
+    "signature": "def public with_haptic(id : uint; body : block<(device : SDL_Haptic?) : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "touch_device_name",
+    "contract": "Result",
+    "signature": "def public touch_device_name(device : uint64)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "sensor_name",
+    "contract": "Result",
+    "signature": "def public sensor_name(device : SDL_Sensor?)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "haptic_name",
+    "contract": "Result",
+    "signature": "def public haptic_name(device : SDL_Haptic?)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "sensor_data",
+    "contract": "Result",
+    "signature": "def public sensor_data(device : SDL_Sensor?; var data : array<float>)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "haptic_effect_supported",
+    "contract": "bool",
+    "signature": "def public haptic_effect_supported(device : SDL_Haptic?; effect : SDL_HapticEffect) : bool"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "create_haptic_effect",
+    "contract": "Result",
+    "signature": "def public create_haptic_effect(device : SDL_Haptic?; effect : SDL_HapticEffect)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "with_haptic_effect",
+    "contract": "Result",
+    "signature": "def public with_haptic_effect(device : SDL_Haptic?; effect : SDL_HapticEffect; body : block<(id : int) : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "update_haptic_effect",
+    "contract": "Result",
+    "signature": "def public update_haptic_effect(device : SDL_Haptic?; id : int; effect : SDL_HapticEffect)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "run_haptic_effect",
+    "contract": "Result",
+    "signature": "def public run_haptic_effect(device : SDL_Haptic?; id : int; iterations : uint)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "stop_haptic_effect",
+    "contract": "Result",
+    "signature": "def public stop_haptic_effect(device : SDL_Haptic?; id : int)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "hid_device_info",
+    "contract": "Option",
+    "signature": "def public hid_device_info(info : SDL_hid_device_info?) : $Option<HidDeviceInfo>"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "hid_devices",
+    "contract": "value",
+    "signature": "def public hid_devices(vendor : uint=0u; product : uint=0u)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "with_hid",
+    "contract": "Result",
+    "signature": "def public with_hid(body : block<() : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "open_hid",
+    "contract": "Result",
+    "signature": "def public open_hid(path : string)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "with_hid_device",
+    "contract": "Result",
+    "signature": "def public with_hid_device(path : string; body : block<(device : SDL_hid_device?) : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "hid_write",
+    "contract": "Result",
+    "signature": "def public hid_write(device : SDL_hid_device?; data : array<uint8>)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "hid_read",
+    "contract": "Result",
+    "signature": "def public hid_read(device : SDL_hid_device?; var data : array<uint8>)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "hid_send_feature_report",
+    "contract": "Result",
+    "signature": "def public hid_send_feature_report(device : SDL_hid_device?; data : array<uint8>)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "hid_get_feature_report",
+    "contract": "Result",
+    "signature": "def public hid_get_feature_report(device : SDL_hid_device?; var data : array<uint8>)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "hid_get_input_report",
+    "contract": "Result",
+    "signature": "def public hid_get_input_report(device : SDL_hid_device?; var data : array<uint8>)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "hid_get_report_descriptor",
+    "contract": "Result",
+    "signature": "def public hid_get_report_descriptor(device : SDL_hid_device?; var data : array<uint8>)"
+  },
+  {
+    "module": "sdl3_peripherals_boost",
+    "name": "hid_read_timeout",
+    "contract": "Result",
+    "signature": "def public hid_read_timeout(device : SDL_hid_device?; var data : array<uint8>; milliseconds : int)"
   }
 ]

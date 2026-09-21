@@ -54,9 +54,9 @@ def main(smoke : bool) : int {
     var saved : array<SdlEvent>
     for (i in 0 .. length(kinds)) {
         let raw = SDLTestInputEvent(kinds[i],42u)
-        let event = decode_event(raw)
+        var event <- decode_event(raw)
         verify(check(event) == i)
-        push(saved,event)
+        emplace(saved,event)
     }
     // Unknown and Quit must never dereference the poisoned inactive union member.
     var poisoned = SDLTestPoisonEvent()
@@ -71,17 +71,18 @@ def main(smoke : bool) : int {
     }
     let result = with_sdl() {
         var queued : array<SdlEvent>
-        var retained = none(type<SdlEvent>)
+        var retained <- none(type<SdlEvent>)
         while (is_some(poll_event())) { }
         for (kind in kinds) {
             var raw = SDLTestInputEvent(kind,42u)
             verify(push_event(raw))
         }
         for (i in 0 .. length(kinds)) {
-            let next = poll_event()
+            var next <- poll_event()
             verify(is_some(next) && check(unwrap(next)) == i)
-            push(queued,unwrap(next))
-            if (i == 7) { retained = next }
+            if (i == 7) { retained := next }
+            var queued_event <- move_unwrap(next)
+            emplace(queued,queued_event)
         }
         SDLTestMutateInputText()
         SDL_PumpEvents()

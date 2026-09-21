@@ -16,7 +16,24 @@ verified; Properties now has 19 generated functions plus copied enumeration; ret
 cleanup callback remains pending. Read docs/properties.md for the pinned numeric
 string-cache/CopyProperties double-free defect and copied-string adapter. Hints/Init adds 12 generated functions, copied getters and subsystem defer scopes;
 see docs/init-hints.md for pending callbacks and string constants. Next
-library-wide queue: P3 Events/input. Full Result/Option migration is locally validated;
+library-wide queue: P4 Filesystem/Storage/IOStream/AsyncIO. P3 follow-ups include keyboard/mouse device hotplug payloads, native virtual callback fields and physical-device validation.
+IME candidates and clipboard MIME lists are owned arrays; SdlEvent/Option/Result
+are move-only. Use <-, move_unwrap and emplace, or explicit clone_to_move/push_clone.
+See docs/event-list-payloads.md for raw borrowed user data and list validation.
+Touch/Sensor/Haptic/HIDAPI have 71 raw declarations; Pen is event-only. Read
+docs/peripherals.md for native HID wchar_t/AOT storage, report counts and
+custom haptic pointer lifetime. Physical peripheral I/O remains unverified.
+Joystick/Gamepad raw declarations are 58/58 + 73/73; see docs/joystick-gamepad.md
+for retained native callback descriptors, copied configuration, GUID ABI and pinned
+virtual-driver defects (one pending sensor event before Update; no virtual balls;
+Uint8 update-index limit). Keyboard/Mouse is 24/24 + 22/22 raw
+and Events (19/19 raw). See docs/keyboard-mouse.md for retained scancode names,
+layout-aware keys, uint16 native mask storage, cursor ownership and backend limits.
+See docs/event-callbacks.md for native callback addresses and synchronous filtering.
+See docs/event-queue.md for timeout/error convention,
+partial ADD counts, registration limits and borrowed versus copied payloads.
+SdlEvent now has 53 alternatives, including all 13 Touch/Pen/Sensor and 21 Joystick/Gamepad tags, copied drop strings and user metadata;
+application user pointers remain raw. Full Result/Option migration is locally validated;
 see docs/result-option-plan.md for contracts and verification. P2 function declarations are connected, with
 RenderDebugTextFormat limited to fixed text and 20 GL/EGL Video functions explicitly
 deferred to P8. Rect/Clipboard/hit-test contracts: docs/rect-clipboard-hittest.md.
@@ -57,7 +74,7 @@ a user request.
 
 Callback rules: native callback arguments are C function addresses, not script Func/Block
 values. Only explicitly reviewed callback APIs bypass dasclang's callback filter.
-The two callback setters use generated AOT cpp names for native address casts;
+Callback APIs use generated AOT cpp names for native address casts;
 keep both generators in sync. with_window_hit_test pins the lexical block/context
 until deferred unregister; keep its never_inline annotation so AOT temporaries live
 through the entire scope call. Do not store arbitrary script blocks for later callbacks.

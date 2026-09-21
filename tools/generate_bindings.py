@@ -117,8 +117,10 @@ def generate(clang, include):
         argnames = [n.get("name", f"arg{i}") for i, n in enumerate(args)]
         signature = decl["type"]["qualType"]
         manifest[name] = {"signature": signature, "arguments": argnames}
-        cpp_name = name + "Address" if name in ("SDL_SetClipboardData", "SDL_SetWindowHitTest") else name
-        registrations.append(f'// {signature}\naddExtern<DAS_BIND_FUN({name})>(*this, lib, "{name}", '
+        cpp_name = name + "Address" if name in ('SDL_SetClipboardData', 'SDL_SetWindowHitTest', 'SDL_SetEventFilter', 'SDL_GetEventFilter', 'SDL_AddEventWatch', 'SDL_RemoveEventWatch', 'SDL_FilterEvents') else name
+        if name in ('SDL_hid_open', 'SDL_hid_get_manufacturer_string', 'SDL_hid_get_product_string', 'SDL_hid_get_serial_number_string', 'SDL_hid_get_indexed_string'): cpp_name = name + "Wide"
+        node = ", SimNode_ExtFuncCallAndCopyOrMove" if signature.split("(", 1)[0].strip() in spec["structs"] else ""
+        registrations.append(f'// {signature}\naddExtern<DAS_BIND_FUN({name}){node}>(*this, lib, "{name}", '
                              f'SideEffects::worstDefault, "{cpp_name}")')
         if argnames:
             registrations.append("->args({" + ", ".join(json.dumps(a) for a in argnames) + "})")

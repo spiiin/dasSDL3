@@ -3352,5 +3352,1661 @@
       "callback",
       "callback_data"
     ]
+  },
+  "SDL_PeepEvents": {
+    "signature": "int (SDL_Event *, int, SDL_EventAction, Uint32, Uint32) __attribute__((cdecl))",
+    "arguments": [
+      "events",
+      "numevents",
+      "action",
+      "minType",
+      "maxType"
+    ]
+  },
+  "SDL_HasEvent": {
+    "signature": "bool (Uint32) __attribute__((cdecl))",
+    "arguments": [
+      "type"
+    ]
+  },
+  "SDL_HasEvents": {
+    "signature": "bool (Uint32, Uint32) __attribute__((cdecl))",
+    "arguments": [
+      "minType",
+      "maxType"
+    ]
+  },
+  "SDL_FlushEvent": {
+    "signature": "void (Uint32) __attribute__((cdecl))",
+    "arguments": [
+      "type"
+    ]
+  },
+  "SDL_FlushEvents": {
+    "signature": "void (Uint32, Uint32) __attribute__((cdecl))",
+    "arguments": [
+      "minType",
+      "maxType"
+    ]
+  },
+  "SDL_WaitEvent": {
+    "signature": "bool (SDL_Event *) __attribute__((cdecl))",
+    "arguments": [
+      "event"
+    ]
+  },
+  "SDL_WaitEventTimeout": {
+    "signature": "bool (SDL_Event *, Sint32) __attribute__((cdecl))",
+    "arguments": [
+      "event",
+      "timeoutMS"
+    ]
+  },
+  "SDL_SetEventEnabled": {
+    "signature": "void (Uint32, bool) __attribute__((cdecl))",
+    "arguments": [
+      "type",
+      "enabled"
+    ]
+  },
+  "SDL_EventEnabled": {
+    "signature": "bool (Uint32) __attribute__((cdecl))",
+    "arguments": [
+      "type"
+    ]
+  },
+  "SDL_RegisterEvents": {
+    "signature": "Uint32 (int) __attribute__((cdecl))",
+    "arguments": [
+      "numevents"
+    ]
+  },
+  "SDL_GetWindowFromEvent": {
+    "signature": "SDL_Window *(const SDL_Event *) __attribute__((cdecl))",
+    "arguments": [
+      "event"
+    ]
+  },
+  "SDL_SetEventFilter": {
+    "signature": "void (SDL_EventFilter, void *) __attribute__((cdecl))",
+    "arguments": [
+      "filter",
+      "userdata"
+    ]
+  },
+  "SDL_GetEventFilter": {
+    "signature": "bool (SDL_EventFilter *, void **) __attribute__((cdecl))",
+    "arguments": [
+      "filter",
+      "userdata"
+    ]
+  },
+  "SDL_AddEventWatch": {
+    "signature": "bool (SDL_EventFilter, void *) __attribute__((cdecl))",
+    "arguments": [
+      "filter",
+      "userdata"
+    ]
+  },
+  "SDL_RemoveEventWatch": {
+    "signature": "void (SDL_EventFilter, void *) __attribute__((cdecl))",
+    "arguments": [
+      "filter",
+      "userdata"
+    ]
+  },
+  "SDL_FilterEvents": {
+    "signature": "void (SDL_EventFilter, void *) __attribute__((cdecl))",
+    "arguments": [
+      "filter",
+      "userdata"
+    ]
+  },
+  "SDL_HasKeyboard": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetKeyboards": {
+    "signature": "SDL_KeyboardID *(int *) __attribute__((cdecl))",
+    "arguments": [
+      "count"
+    ]
+  },
+  "SDL_GetKeyboardNameForID": {
+    "signature": "const char *(SDL_KeyboardID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetKeyboardFocus": {
+    "signature": "SDL_Window *(void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_ResetKeyboard": {
+    "signature": "void (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetModState": {
+    "signature": "SDL_Keymod (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_SetModState": {
+    "signature": "void (SDL_Keymod) __attribute__((cdecl))",
+    "arguments": [
+      "modstate"
+    ]
+  },
+  "SDL_GetKeyFromScancode": {
+    "signature": "SDL_Keycode (SDL_Scancode, SDL_Keymod, bool) __attribute__((cdecl))",
+    "arguments": [
+      "scancode",
+      "modstate",
+      "key_event"
+    ]
+  },
+  "SDL_GetScancodeFromKey": {
+    "signature": "SDL_Scancode (SDL_Keycode, SDL_Keymod *) __attribute__((cdecl))",
+    "arguments": [
+      "key",
+      "modstate"
+    ]
+  },
+  "SDL_SetScancodeName": {
+    "signature": "bool (SDL_Scancode, const char *) __attribute__((cdecl))",
+    "arguments": [
+      "scancode",
+      "name"
+    ]
+  },
+  "SDL_GetScancodeName": {
+    "signature": "const char *(SDL_Scancode) __attribute__((cdecl))",
+    "arguments": [
+      "scancode"
+    ]
+  },
+  "SDL_GetScancodeFromName": {
+    "signature": "SDL_Scancode (const char *) __attribute__((cdecl))",
+    "arguments": [
+      "name"
+    ]
+  },
+  "SDL_GetKeyName": {
+    "signature": "const char *(SDL_Keycode) __attribute__((cdecl))",
+    "arguments": [
+      "key"
+    ]
+  },
+  "SDL_GetKeyFromName": {
+    "signature": "SDL_Keycode (const char *) __attribute__((cdecl))",
+    "arguments": [
+      "name"
+    ]
+  },
+  "SDL_StartTextInputWithProperties": {
+    "signature": "bool (SDL_Window *, SDL_PropertiesID) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "props"
+    ]
+  },
+  "SDL_SetTextInputArea": {
+    "signature": "bool (SDL_Window *, const SDL_Rect *, int) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "rect",
+      "cursor"
+    ]
+  },
+  "SDL_GetTextInputArea": {
+    "signature": "bool (SDL_Window *, SDL_Rect *, int *) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "rect",
+      "cursor"
+    ]
+  },
+  "SDL_HasScreenKeyboardSupport": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_ScreenKeyboardShown": {
+    "signature": "bool (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_HasMouse": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetMice": {
+    "signature": "SDL_MouseID *(int *) __attribute__((cdecl))",
+    "arguments": [
+      "count"
+    ]
+  },
+  "SDL_GetMouseNameForID": {
+    "signature": "const char *(SDL_MouseID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetMouseFocus": {
+    "signature": "SDL_Window *(void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetGlobalMouseState": {
+    "signature": "SDL_MouseButtonFlags (float *, float *) __attribute__((cdecl))",
+    "arguments": [
+      "x",
+      "y"
+    ]
+  },
+  "SDL_GetRelativeMouseState": {
+    "signature": "SDL_MouseButtonFlags (float *, float *) __attribute__((cdecl))",
+    "arguments": [
+      "x",
+      "y"
+    ]
+  },
+  "SDL_WarpMouseInWindow": {
+    "signature": "void (SDL_Window *, float, float) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "x",
+      "y"
+    ]
+  },
+  "SDL_WarpMouseGlobal": {
+    "signature": "bool (float, float) __attribute__((cdecl))",
+    "arguments": [
+      "x",
+      "y"
+    ]
+  },
+  "SDL_SetWindowRelativeMouseMode": {
+    "signature": "bool (SDL_Window *, bool) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "enabled"
+    ]
+  },
+  "SDL_GetWindowRelativeMouseMode": {
+    "signature": "bool (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_CaptureMouse": {
+    "signature": "bool (bool) __attribute__((cdecl))",
+    "arguments": [
+      "enabled"
+    ]
+  },
+  "SDL_CreateCursor": {
+    "signature": "SDL_Cursor *(const Uint8 *, const Uint8 *, int, int, int, int) __attribute__((cdecl))",
+    "arguments": [
+      "data",
+      "mask",
+      "w",
+      "h",
+      "hot_x",
+      "hot_y"
+    ]
+  },
+  "SDL_CreateColorCursor": {
+    "signature": "SDL_Cursor *(SDL_Surface *, int, int) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "hot_x",
+      "hot_y"
+    ]
+  },
+  "SDL_CreateSystemCursor": {
+    "signature": "SDL_Cursor *(SDL_SystemCursor) __attribute__((cdecl))",
+    "arguments": [
+      "id"
+    ]
+  },
+  "SDL_SetCursor": {
+    "signature": "bool (SDL_Cursor *) __attribute__((cdecl))",
+    "arguments": [
+      "cursor"
+    ]
+  },
+  "SDL_GetCursor": {
+    "signature": "SDL_Cursor *(void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetDefaultCursor": {
+    "signature": "SDL_Cursor *(void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_DestroyCursor": {
+    "signature": "void (SDL_Cursor *) __attribute__((cdecl))",
+    "arguments": [
+      "cursor"
+    ]
+  },
+  "SDL_ShowCursor": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_HideCursor": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_CursorVisible": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_LockJoysticks": {
+    "signature": "void (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_UnlockJoysticks": {
+    "signature": "void (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_HasJoystick": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetJoysticks": {
+    "signature": "SDL_JoystickID *(int *) __attribute__((cdecl))",
+    "arguments": [
+      "count"
+    ]
+  },
+  "SDL_GetJoystickNameForID": {
+    "signature": "const char *(SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetJoystickPathForID": {
+    "signature": "const char *(SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetJoystickPlayerIndexForID": {
+    "signature": "int (SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetJoystickGUIDForID": {
+    "signature": "SDL_GUID (SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetJoystickVendorForID": {
+    "signature": "Uint16 (SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetJoystickProductForID": {
+    "signature": "Uint16 (SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetJoystickProductVersionForID": {
+    "signature": "Uint16 (SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetJoystickTypeForID": {
+    "signature": "SDL_JoystickType (SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_OpenJoystick": {
+    "signature": "SDL_Joystick *(SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetJoystickFromID": {
+    "signature": "SDL_Joystick *(SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetJoystickFromPlayerIndex": {
+    "signature": "SDL_Joystick *(int) __attribute__((cdecl))",
+    "arguments": [
+      "player_index"
+    ]
+  },
+  "SDL_AttachVirtualJoystick": {
+    "signature": "SDL_JoystickID (const SDL_VirtualJoystickDesc *) __attribute__((cdecl))",
+    "arguments": [
+      "desc"
+    ]
+  },
+  "SDL_DetachVirtualJoystick": {
+    "signature": "bool (SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_IsJoystickVirtual": {
+    "signature": "bool (SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_SetJoystickVirtualAxis": {
+    "signature": "bool (SDL_Joystick *, int, Sint16) __attribute__((cdecl))",
+    "arguments": [
+      "joystick",
+      "axis",
+      "value"
+    ]
+  },
+  "SDL_SetJoystickVirtualBall": {
+    "signature": "bool (SDL_Joystick *, int, Sint16, Sint16) __attribute__((cdecl))",
+    "arguments": [
+      "joystick",
+      "ball",
+      "xrel",
+      "yrel"
+    ]
+  },
+  "SDL_SetJoystickVirtualButton": {
+    "signature": "bool (SDL_Joystick *, int, bool) __attribute__((cdecl))",
+    "arguments": [
+      "joystick",
+      "button",
+      "down"
+    ]
+  },
+  "SDL_SetJoystickVirtualHat": {
+    "signature": "bool (SDL_Joystick *, int, Uint8) __attribute__((cdecl))",
+    "arguments": [
+      "joystick",
+      "hat",
+      "value"
+    ]
+  },
+  "SDL_SetJoystickVirtualTouchpad": {
+    "signature": "bool (SDL_Joystick *, int, int, bool, float, float, float) __attribute__((cdecl))",
+    "arguments": [
+      "joystick",
+      "touchpad",
+      "finger",
+      "down",
+      "x",
+      "y",
+      "pressure"
+    ]
+  },
+  "SDL_SendJoystickVirtualSensorData": {
+    "signature": "bool (SDL_Joystick *, SDL_SensorType, Uint64, const float *, int) __attribute__((cdecl))",
+    "arguments": [
+      "joystick",
+      "type",
+      "sensor_timestamp",
+      "data",
+      "num_values"
+    ]
+  },
+  "SDL_GetJoystickProperties": {
+    "signature": "SDL_PropertiesID (SDL_Joystick *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick"
+    ]
+  },
+  "SDL_GetJoystickName": {
+    "signature": "const char *(SDL_Joystick *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick"
+    ]
+  },
+  "SDL_GetJoystickPath": {
+    "signature": "const char *(SDL_Joystick *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick"
+    ]
+  },
+  "SDL_GetJoystickPlayerIndex": {
+    "signature": "int (SDL_Joystick *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick"
+    ]
+  },
+  "SDL_SetJoystickPlayerIndex": {
+    "signature": "bool (SDL_Joystick *, int) __attribute__((cdecl))",
+    "arguments": [
+      "joystick",
+      "player_index"
+    ]
+  },
+  "SDL_GetJoystickGUID": {
+    "signature": "SDL_GUID (SDL_Joystick *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick"
+    ]
+  },
+  "SDL_GetJoystickVendor": {
+    "signature": "Uint16 (SDL_Joystick *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick"
+    ]
+  },
+  "SDL_GetJoystickProduct": {
+    "signature": "Uint16 (SDL_Joystick *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick"
+    ]
+  },
+  "SDL_GetJoystickProductVersion": {
+    "signature": "Uint16 (SDL_Joystick *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick"
+    ]
+  },
+  "SDL_GetJoystickFirmwareVersion": {
+    "signature": "Uint16 (SDL_Joystick *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick"
+    ]
+  },
+  "SDL_GetJoystickSerial": {
+    "signature": "const char *(SDL_Joystick *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick"
+    ]
+  },
+  "SDL_GetJoystickType": {
+    "signature": "SDL_JoystickType (SDL_Joystick *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick"
+    ]
+  },
+  "SDL_GetJoystickGUIDInfo": {
+    "signature": "void (SDL_GUID, Uint16 *, Uint16 *, Uint16 *, Uint16 *) __attribute__((cdecl))",
+    "arguments": [
+      "guid",
+      "vendor",
+      "product",
+      "version",
+      "crc16"
+    ]
+  },
+  "SDL_JoystickConnected": {
+    "signature": "bool (SDL_Joystick *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick"
+    ]
+  },
+  "SDL_GetJoystickID": {
+    "signature": "SDL_JoystickID (SDL_Joystick *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick"
+    ]
+  },
+  "SDL_GetNumJoystickAxes": {
+    "signature": "int (SDL_Joystick *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick"
+    ]
+  },
+  "SDL_GetNumJoystickBalls": {
+    "signature": "int (SDL_Joystick *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick"
+    ]
+  },
+  "SDL_GetNumJoystickHats": {
+    "signature": "int (SDL_Joystick *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick"
+    ]
+  },
+  "SDL_GetNumJoystickButtons": {
+    "signature": "int (SDL_Joystick *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick"
+    ]
+  },
+  "SDL_SetJoystickEventsEnabled": {
+    "signature": "void (bool) __attribute__((cdecl))",
+    "arguments": [
+      "enabled"
+    ]
+  },
+  "SDL_JoystickEventsEnabled": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_UpdateJoysticks": {
+    "signature": "void (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetJoystickAxis": {
+    "signature": "Sint16 (SDL_Joystick *, int) __attribute__((cdecl))",
+    "arguments": [
+      "joystick",
+      "axis"
+    ]
+  },
+  "SDL_GetJoystickAxisInitialState": {
+    "signature": "bool (SDL_Joystick *, int, Sint16 *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick",
+      "axis",
+      "state"
+    ]
+  },
+  "SDL_GetJoystickBall": {
+    "signature": "bool (SDL_Joystick *, int, int *, int *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick",
+      "ball",
+      "dx",
+      "dy"
+    ]
+  },
+  "SDL_GetJoystickHat": {
+    "signature": "Uint8 (SDL_Joystick *, int) __attribute__((cdecl))",
+    "arguments": [
+      "joystick",
+      "hat"
+    ]
+  },
+  "SDL_GetJoystickButton": {
+    "signature": "bool (SDL_Joystick *, int) __attribute__((cdecl))",
+    "arguments": [
+      "joystick",
+      "button"
+    ]
+  },
+  "SDL_RumbleJoystick": {
+    "signature": "bool (SDL_Joystick *, Uint16, Uint16, Uint32) __attribute__((cdecl))",
+    "arguments": [
+      "joystick",
+      "low_frequency_rumble",
+      "high_frequency_rumble",
+      "duration_ms"
+    ]
+  },
+  "SDL_RumbleJoystickTriggers": {
+    "signature": "bool (SDL_Joystick *, Uint16, Uint16, Uint32) __attribute__((cdecl))",
+    "arguments": [
+      "joystick",
+      "left_rumble",
+      "right_rumble",
+      "duration_ms"
+    ]
+  },
+  "SDL_SetJoystickLED": {
+    "signature": "bool (SDL_Joystick *, Uint8, Uint8, Uint8) __attribute__((cdecl))",
+    "arguments": [
+      "joystick",
+      "red",
+      "green",
+      "blue"
+    ]
+  },
+  "SDL_SendJoystickEffect": {
+    "signature": "bool (SDL_Joystick *, const void *, int) __attribute__((cdecl))",
+    "arguments": [
+      "joystick",
+      "data",
+      "size"
+    ]
+  },
+  "SDL_CloseJoystick": {
+    "signature": "void (SDL_Joystick *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick"
+    ]
+  },
+  "SDL_GetJoystickConnectionState": {
+    "signature": "SDL_JoystickConnectionState (SDL_Joystick *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick"
+    ]
+  },
+  "SDL_GetJoystickPowerInfo": {
+    "signature": "SDL_PowerState (SDL_Joystick *, int *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick",
+      "percent"
+    ]
+  },
+  "SDL_AddGamepadMapping": {
+    "signature": "int (const char *) __attribute__((cdecl))",
+    "arguments": [
+      "mapping"
+    ]
+  },
+  "SDL_AddGamepadMappingsFromIO": {
+    "signature": "int (SDL_IOStream *, bool) __attribute__((cdecl))",
+    "arguments": [
+      "src",
+      "closeio"
+    ]
+  },
+  "SDL_AddGamepadMappingsFromFile": {
+    "signature": "int (const char *) __attribute__((cdecl))",
+    "arguments": [
+      "file"
+    ]
+  },
+  "SDL_ReloadGamepadMappings": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetGamepadMappings": {
+    "signature": "char **(int *) __attribute__((cdecl))",
+    "arguments": [
+      "count"
+    ]
+  },
+  "SDL_GetGamepadMappingForGUID": {
+    "signature": "char *(SDL_GUID) __attribute__((cdecl))",
+    "arguments": [
+      "guid"
+    ]
+  },
+  "SDL_GetGamepadMapping": {
+    "signature": "char *(SDL_Gamepad *) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad"
+    ]
+  },
+  "SDL_SetGamepadMapping": {
+    "signature": "bool (SDL_JoystickID, const char *) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id",
+      "mapping"
+    ]
+  },
+  "SDL_HasGamepad": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetGamepads": {
+    "signature": "SDL_JoystickID *(int *) __attribute__((cdecl))",
+    "arguments": [
+      "count"
+    ]
+  },
+  "SDL_IsGamepad": {
+    "signature": "bool (SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetGamepadNameForID": {
+    "signature": "const char *(SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetGamepadPathForID": {
+    "signature": "const char *(SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetGamepadPlayerIndexForID": {
+    "signature": "int (SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetGamepadGUIDForID": {
+    "signature": "SDL_GUID (SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetGamepadVendorForID": {
+    "signature": "Uint16 (SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetGamepadProductForID": {
+    "signature": "Uint16 (SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetGamepadProductVersionForID": {
+    "signature": "Uint16 (SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetGamepadTypeForID": {
+    "signature": "SDL_GamepadType (SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetRealGamepadTypeForID": {
+    "signature": "SDL_GamepadType (SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetGamepadMappingForID": {
+    "signature": "char *(SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_OpenGamepad": {
+    "signature": "SDL_Gamepad *(SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetGamepadFromID": {
+    "signature": "SDL_Gamepad *(SDL_JoystickID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetGamepadFromPlayerIndex": {
+    "signature": "SDL_Gamepad *(int) __attribute__((cdecl))",
+    "arguments": [
+      "player_index"
+    ]
+  },
+  "SDL_GetGamepadProperties": {
+    "signature": "SDL_PropertiesID (SDL_Gamepad *) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad"
+    ]
+  },
+  "SDL_GetGamepadID": {
+    "signature": "SDL_JoystickID (SDL_Gamepad *) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad"
+    ]
+  },
+  "SDL_GetGamepadName": {
+    "signature": "const char *(SDL_Gamepad *) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad"
+    ]
+  },
+  "SDL_GetGamepadPath": {
+    "signature": "const char *(SDL_Gamepad *) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad"
+    ]
+  },
+  "SDL_GetGamepadType": {
+    "signature": "SDL_GamepadType (SDL_Gamepad *) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad"
+    ]
+  },
+  "SDL_GetRealGamepadType": {
+    "signature": "SDL_GamepadType (SDL_Gamepad *) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad"
+    ]
+  },
+  "SDL_GetGamepadPlayerIndex": {
+    "signature": "int (SDL_Gamepad *) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad"
+    ]
+  },
+  "SDL_SetGamepadPlayerIndex": {
+    "signature": "bool (SDL_Gamepad *, int) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad",
+      "player_index"
+    ]
+  },
+  "SDL_GetGamepadVendor": {
+    "signature": "Uint16 (SDL_Gamepad *) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad"
+    ]
+  },
+  "SDL_GetGamepadProduct": {
+    "signature": "Uint16 (SDL_Gamepad *) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad"
+    ]
+  },
+  "SDL_GetGamepadProductVersion": {
+    "signature": "Uint16 (SDL_Gamepad *) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad"
+    ]
+  },
+  "SDL_GetGamepadFirmwareVersion": {
+    "signature": "Uint16 (SDL_Gamepad *) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad"
+    ]
+  },
+  "SDL_GetGamepadSerial": {
+    "signature": "const char *(SDL_Gamepad *) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad"
+    ]
+  },
+  "SDL_GetGamepadSteamHandle": {
+    "signature": "Uint64 (SDL_Gamepad *) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad"
+    ]
+  },
+  "SDL_GetGamepadConnectionState": {
+    "signature": "SDL_JoystickConnectionState (SDL_Gamepad *) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad"
+    ]
+  },
+  "SDL_GetGamepadPowerInfo": {
+    "signature": "SDL_PowerState (SDL_Gamepad *, int *) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad",
+      "percent"
+    ]
+  },
+  "SDL_GamepadConnected": {
+    "signature": "bool (SDL_Gamepad *) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad"
+    ]
+  },
+  "SDL_GetGamepadJoystick": {
+    "signature": "SDL_Joystick *(SDL_Gamepad *) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad"
+    ]
+  },
+  "SDL_SetGamepadEventsEnabled": {
+    "signature": "void (bool) __attribute__((cdecl))",
+    "arguments": [
+      "enabled"
+    ]
+  },
+  "SDL_GamepadEventsEnabled": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetGamepadBindings": {
+    "signature": "SDL_GamepadBinding **(SDL_Gamepad *, int *) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad",
+      "count"
+    ]
+  },
+  "SDL_UpdateGamepads": {
+    "signature": "void (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetGamepadTypeFromString": {
+    "signature": "SDL_GamepadType (const char *) __attribute__((cdecl))",
+    "arguments": [
+      "str"
+    ]
+  },
+  "SDL_GetGamepadStringForType": {
+    "signature": "const char *(SDL_GamepadType) __attribute__((cdecl))",
+    "arguments": [
+      "type"
+    ]
+  },
+  "SDL_GetGamepadAxisFromString": {
+    "signature": "SDL_GamepadAxis (const char *) __attribute__((cdecl))",
+    "arguments": [
+      "str"
+    ]
+  },
+  "SDL_GetGamepadStringForAxis": {
+    "signature": "const char *(SDL_GamepadAxis) __attribute__((cdecl))",
+    "arguments": [
+      "axis"
+    ]
+  },
+  "SDL_GamepadHasAxis": {
+    "signature": "bool (SDL_Gamepad *, SDL_GamepadAxis) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad",
+      "axis"
+    ]
+  },
+  "SDL_GetGamepadAxis": {
+    "signature": "Sint16 (SDL_Gamepad *, SDL_GamepadAxis) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad",
+      "axis"
+    ]
+  },
+  "SDL_GetGamepadButtonFromString": {
+    "signature": "SDL_GamepadButton (const char *) __attribute__((cdecl))",
+    "arguments": [
+      "str"
+    ]
+  },
+  "SDL_GetGamepadStringForButton": {
+    "signature": "const char *(SDL_GamepadButton) __attribute__((cdecl))",
+    "arguments": [
+      "button"
+    ]
+  },
+  "SDL_GamepadHasButton": {
+    "signature": "bool (SDL_Gamepad *, SDL_GamepadButton) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad",
+      "button"
+    ]
+  },
+  "SDL_GetGamepadButton": {
+    "signature": "bool (SDL_Gamepad *, SDL_GamepadButton) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad",
+      "button"
+    ]
+  },
+  "SDL_GetGamepadButtonLabelForType": {
+    "signature": "SDL_GamepadButtonLabel (SDL_GamepadType, SDL_GamepadButton) __attribute__((cdecl))",
+    "arguments": [
+      "type",
+      "button"
+    ]
+  },
+  "SDL_GetGamepadButtonLabel": {
+    "signature": "SDL_GamepadButtonLabel (SDL_Gamepad *, SDL_GamepadButton) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad",
+      "button"
+    ]
+  },
+  "SDL_GetNumGamepadTouchpads": {
+    "signature": "int (SDL_Gamepad *) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad"
+    ]
+  },
+  "SDL_GetNumGamepadTouchpadFingers": {
+    "signature": "int (SDL_Gamepad *, int) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad",
+      "touchpad"
+    ]
+  },
+  "SDL_GetGamepadTouchpadFinger": {
+    "signature": "bool (SDL_Gamepad *, int, int, bool *, float *, float *, float *) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad",
+      "touchpad",
+      "finger",
+      "down",
+      "x",
+      "y",
+      "pressure"
+    ]
+  },
+  "SDL_GamepadHasSensor": {
+    "signature": "bool (SDL_Gamepad *, SDL_SensorType) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad",
+      "type"
+    ]
+  },
+  "SDL_SetGamepadSensorEnabled": {
+    "signature": "bool (SDL_Gamepad *, SDL_SensorType, bool) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad",
+      "type",
+      "enabled"
+    ]
+  },
+  "SDL_GamepadSensorEnabled": {
+    "signature": "bool (SDL_Gamepad *, SDL_SensorType) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad",
+      "type"
+    ]
+  },
+  "SDL_GetGamepadSensorDataRate": {
+    "signature": "float (SDL_Gamepad *, SDL_SensorType) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad",
+      "type"
+    ]
+  },
+  "SDL_GetGamepadSensorData": {
+    "signature": "bool (SDL_Gamepad *, SDL_SensorType, float *, int) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad",
+      "type",
+      "data",
+      "num_values"
+    ]
+  },
+  "SDL_RumbleGamepad": {
+    "signature": "bool (SDL_Gamepad *, Uint16, Uint16, Uint32) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad",
+      "low_frequency_rumble",
+      "high_frequency_rumble",
+      "duration_ms"
+    ]
+  },
+  "SDL_RumbleGamepadTriggers": {
+    "signature": "bool (SDL_Gamepad *, Uint16, Uint16, Uint32) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad",
+      "left_rumble",
+      "right_rumble",
+      "duration_ms"
+    ]
+  },
+  "SDL_SetGamepadLED": {
+    "signature": "bool (SDL_Gamepad *, Uint8, Uint8, Uint8) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad",
+      "red",
+      "green",
+      "blue"
+    ]
+  },
+  "SDL_SendGamepadEffect": {
+    "signature": "bool (SDL_Gamepad *, const void *, int) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad",
+      "data",
+      "size"
+    ]
+  },
+  "SDL_CloseGamepad": {
+    "signature": "void (SDL_Gamepad *) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad"
+    ]
+  },
+  "SDL_GetGamepadAppleSFSymbolsNameForButton": {
+    "signature": "const char *(SDL_Gamepad *, SDL_GamepadButton) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad",
+      "button"
+    ]
+  },
+  "SDL_GetGamepadAppleSFSymbolsNameForAxis": {
+    "signature": "const char *(SDL_Gamepad *, SDL_GamepadAxis) __attribute__((cdecl))",
+    "arguments": [
+      "gamepad",
+      "axis"
+    ]
+  },
+  "SDL_GetTouchDevices": {
+    "signature": "SDL_TouchID *(int *) __attribute__((cdecl))",
+    "arguments": [
+      "count"
+    ]
+  },
+  "SDL_GetTouchDeviceName": {
+    "signature": "const char *(SDL_TouchID) __attribute__((cdecl))",
+    "arguments": [
+      "touchID"
+    ]
+  },
+  "SDL_GetTouchDeviceType": {
+    "signature": "SDL_TouchDeviceType (SDL_TouchID) __attribute__((cdecl))",
+    "arguments": [
+      "touchID"
+    ]
+  },
+  "SDL_GetTouchFingers": {
+    "signature": "SDL_Finger **(SDL_TouchID, int *) __attribute__((cdecl))",
+    "arguments": [
+      "touchID",
+      "count"
+    ]
+  },
+  "SDL_GetSensors": {
+    "signature": "SDL_SensorID *(int *) __attribute__((cdecl))",
+    "arguments": [
+      "count"
+    ]
+  },
+  "SDL_GetSensorNameForID": {
+    "signature": "const char *(SDL_SensorID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetSensorTypeForID": {
+    "signature": "SDL_SensorType (SDL_SensorID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetSensorNonPortableTypeForID": {
+    "signature": "int (SDL_SensorID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_OpenSensor": {
+    "signature": "SDL_Sensor *(SDL_SensorID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetSensorFromID": {
+    "signature": "SDL_Sensor *(SDL_SensorID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetSensorProperties": {
+    "signature": "SDL_PropertiesID (SDL_Sensor *) __attribute__((cdecl))",
+    "arguments": [
+      "sensor"
+    ]
+  },
+  "SDL_GetSensorName": {
+    "signature": "const char *(SDL_Sensor *) __attribute__((cdecl))",
+    "arguments": [
+      "sensor"
+    ]
+  },
+  "SDL_GetSensorType": {
+    "signature": "SDL_SensorType (SDL_Sensor *) __attribute__((cdecl))",
+    "arguments": [
+      "sensor"
+    ]
+  },
+  "SDL_GetSensorNonPortableType": {
+    "signature": "int (SDL_Sensor *) __attribute__((cdecl))",
+    "arguments": [
+      "sensor"
+    ]
+  },
+  "SDL_GetSensorID": {
+    "signature": "SDL_SensorID (SDL_Sensor *) __attribute__((cdecl))",
+    "arguments": [
+      "sensor"
+    ]
+  },
+  "SDL_GetSensorData": {
+    "signature": "bool (SDL_Sensor *, float *, int) __attribute__((cdecl))",
+    "arguments": [
+      "sensor",
+      "data",
+      "num_values"
+    ]
+  },
+  "SDL_CloseSensor": {
+    "signature": "void (SDL_Sensor *) __attribute__((cdecl))",
+    "arguments": [
+      "sensor"
+    ]
+  },
+  "SDL_UpdateSensors": {
+    "signature": "void (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetHaptics": {
+    "signature": "SDL_HapticID *(int *) __attribute__((cdecl))",
+    "arguments": [
+      "count"
+    ]
+  },
+  "SDL_GetHapticNameForID": {
+    "signature": "const char *(SDL_HapticID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_OpenHaptic": {
+    "signature": "SDL_Haptic *(SDL_HapticID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetHapticFromID": {
+    "signature": "SDL_Haptic *(SDL_HapticID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetHapticID": {
+    "signature": "SDL_HapticID (SDL_Haptic *) __attribute__((cdecl))",
+    "arguments": [
+      "haptic"
+    ]
+  },
+  "SDL_GetHapticName": {
+    "signature": "const char *(SDL_Haptic *) __attribute__((cdecl))",
+    "arguments": [
+      "haptic"
+    ]
+  },
+  "SDL_IsMouseHaptic": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_OpenHapticFromMouse": {
+    "signature": "SDL_Haptic *(void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_IsJoystickHaptic": {
+    "signature": "bool (SDL_Joystick *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick"
+    ]
+  },
+  "SDL_OpenHapticFromJoystick": {
+    "signature": "SDL_Haptic *(SDL_Joystick *) __attribute__((cdecl))",
+    "arguments": [
+      "joystick"
+    ]
+  },
+  "SDL_CloseHaptic": {
+    "signature": "void (SDL_Haptic *) __attribute__((cdecl))",
+    "arguments": [
+      "haptic"
+    ]
+  },
+  "SDL_GetMaxHapticEffects": {
+    "signature": "int (SDL_Haptic *) __attribute__((cdecl))",
+    "arguments": [
+      "haptic"
+    ]
+  },
+  "SDL_GetMaxHapticEffectsPlaying": {
+    "signature": "int (SDL_Haptic *) __attribute__((cdecl))",
+    "arguments": [
+      "haptic"
+    ]
+  },
+  "SDL_GetHapticFeatures": {
+    "signature": "Uint32 (SDL_Haptic *) __attribute__((cdecl))",
+    "arguments": [
+      "haptic"
+    ]
+  },
+  "SDL_GetNumHapticAxes": {
+    "signature": "int (SDL_Haptic *) __attribute__((cdecl))",
+    "arguments": [
+      "haptic"
+    ]
+  },
+  "SDL_HapticEffectSupported": {
+    "signature": "bool (SDL_Haptic *, const SDL_HapticEffect *) __attribute__((cdecl))",
+    "arguments": [
+      "haptic",
+      "effect"
+    ]
+  },
+  "SDL_CreateHapticEffect": {
+    "signature": "int (SDL_Haptic *, const SDL_HapticEffect *) __attribute__((cdecl))",
+    "arguments": [
+      "haptic",
+      "effect"
+    ]
+  },
+  "SDL_UpdateHapticEffect": {
+    "signature": "bool (SDL_Haptic *, int, const SDL_HapticEffect *) __attribute__((cdecl))",
+    "arguments": [
+      "haptic",
+      "effect",
+      "data"
+    ]
+  },
+  "SDL_RunHapticEffect": {
+    "signature": "bool (SDL_Haptic *, int, Uint32) __attribute__((cdecl))",
+    "arguments": [
+      "haptic",
+      "effect",
+      "iterations"
+    ]
+  },
+  "SDL_StopHapticEffect": {
+    "signature": "bool (SDL_Haptic *, int) __attribute__((cdecl))",
+    "arguments": [
+      "haptic",
+      "effect"
+    ]
+  },
+  "SDL_DestroyHapticEffect": {
+    "signature": "void (SDL_Haptic *, int) __attribute__((cdecl))",
+    "arguments": [
+      "haptic",
+      "effect"
+    ]
+  },
+  "SDL_GetHapticEffectStatus": {
+    "signature": "bool (SDL_Haptic *, int) __attribute__((cdecl))",
+    "arguments": [
+      "haptic",
+      "effect"
+    ]
+  },
+  "SDL_SetHapticGain": {
+    "signature": "bool (SDL_Haptic *, int) __attribute__((cdecl))",
+    "arguments": [
+      "haptic",
+      "gain"
+    ]
+  },
+  "SDL_SetHapticAutocenter": {
+    "signature": "bool (SDL_Haptic *, int) __attribute__((cdecl))",
+    "arguments": [
+      "haptic",
+      "autocenter"
+    ]
+  },
+  "SDL_PauseHaptic": {
+    "signature": "bool (SDL_Haptic *) __attribute__((cdecl))",
+    "arguments": [
+      "haptic"
+    ]
+  },
+  "SDL_ResumeHaptic": {
+    "signature": "bool (SDL_Haptic *) __attribute__((cdecl))",
+    "arguments": [
+      "haptic"
+    ]
+  },
+  "SDL_StopHapticEffects": {
+    "signature": "bool (SDL_Haptic *) __attribute__((cdecl))",
+    "arguments": [
+      "haptic"
+    ]
+  },
+  "SDL_HapticRumbleSupported": {
+    "signature": "bool (SDL_Haptic *) __attribute__((cdecl))",
+    "arguments": [
+      "haptic"
+    ]
+  },
+  "SDL_InitHapticRumble": {
+    "signature": "bool (SDL_Haptic *) __attribute__((cdecl))",
+    "arguments": [
+      "haptic"
+    ]
+  },
+  "SDL_PlayHapticRumble": {
+    "signature": "bool (SDL_Haptic *, float, Uint32) __attribute__((cdecl))",
+    "arguments": [
+      "haptic",
+      "strength",
+      "length"
+    ]
+  },
+  "SDL_StopHapticRumble": {
+    "signature": "bool (SDL_Haptic *) __attribute__((cdecl))",
+    "arguments": [
+      "haptic"
+    ]
+  },
+  "SDL_hid_init": {
+    "signature": "int (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_hid_exit": {
+    "signature": "int (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_hid_device_change_count": {
+    "signature": "Uint32 (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_hid_enumerate": {
+    "signature": "SDL_hid_device_info *(unsigned short, unsigned short) __attribute__((cdecl))",
+    "arguments": [
+      "vendor_id",
+      "product_id"
+    ]
+  },
+  "SDL_hid_free_enumeration": {
+    "signature": "void (SDL_hid_device_info *) __attribute__((cdecl))",
+    "arguments": [
+      "devs"
+    ]
+  },
+  "SDL_hid_open": {
+    "signature": "SDL_hid_device *(unsigned short, unsigned short, const wchar_t *) __attribute__((cdecl))",
+    "arguments": [
+      "vendor_id",
+      "product_id",
+      "serial_number"
+    ]
+  },
+  "SDL_hid_open_path": {
+    "signature": "SDL_hid_device *(const char *) __attribute__((cdecl))",
+    "arguments": [
+      "path"
+    ]
+  },
+  "SDL_hid_write": {
+    "signature": "int (SDL_hid_device *, const unsigned char *, size_t) __attribute__((cdecl))",
+    "arguments": [
+      "dev",
+      "data",
+      "length"
+    ]
+  },
+  "SDL_hid_read_timeout": {
+    "signature": "int (SDL_hid_device *, unsigned char *, size_t, int) __attribute__((cdecl))",
+    "arguments": [
+      "dev",
+      "data",
+      "length",
+      "milliseconds"
+    ]
+  },
+  "SDL_hid_read": {
+    "signature": "int (SDL_hid_device *, unsigned char *, size_t) __attribute__((cdecl))",
+    "arguments": [
+      "dev",
+      "data",
+      "length"
+    ]
+  },
+  "SDL_hid_set_nonblocking": {
+    "signature": "int (SDL_hid_device *, int) __attribute__((cdecl))",
+    "arguments": [
+      "dev",
+      "nonblock"
+    ]
+  },
+  "SDL_hid_send_feature_report": {
+    "signature": "int (SDL_hid_device *, const unsigned char *, size_t) __attribute__((cdecl))",
+    "arguments": [
+      "dev",
+      "data",
+      "length"
+    ]
+  },
+  "SDL_hid_get_feature_report": {
+    "signature": "int (SDL_hid_device *, unsigned char *, size_t) __attribute__((cdecl))",
+    "arguments": [
+      "dev",
+      "data",
+      "length"
+    ]
+  },
+  "SDL_hid_get_input_report": {
+    "signature": "int (SDL_hid_device *, unsigned char *, size_t) __attribute__((cdecl))",
+    "arguments": [
+      "dev",
+      "data",
+      "length"
+    ]
+  },
+  "SDL_hid_close": {
+    "signature": "int (SDL_hid_device *) __attribute__((cdecl))",
+    "arguments": [
+      "dev"
+    ]
+  },
+  "SDL_hid_get_manufacturer_string": {
+    "signature": "int (SDL_hid_device *, wchar_t *, size_t) __attribute__((cdecl))",
+    "arguments": [
+      "dev",
+      "string",
+      "maxlen"
+    ]
+  },
+  "SDL_hid_get_product_string": {
+    "signature": "int (SDL_hid_device *, wchar_t *, size_t) __attribute__((cdecl))",
+    "arguments": [
+      "dev",
+      "string",
+      "maxlen"
+    ]
+  },
+  "SDL_hid_get_serial_number_string": {
+    "signature": "int (SDL_hid_device *, wchar_t *, size_t) __attribute__((cdecl))",
+    "arguments": [
+      "dev",
+      "string",
+      "maxlen"
+    ]
+  },
+  "SDL_hid_get_indexed_string": {
+    "signature": "int (SDL_hid_device *, int, wchar_t *, size_t) __attribute__((cdecl))",
+    "arguments": [
+      "dev",
+      "string_index",
+      "string",
+      "maxlen"
+    ]
+  },
+  "SDL_hid_get_device_info": {
+    "signature": "SDL_hid_device_info *(SDL_hid_device *) __attribute__((cdecl))",
+    "arguments": [
+      "dev"
+    ]
+  },
+  "SDL_hid_get_report_descriptor": {
+    "signature": "int (SDL_hid_device *, unsigned char *, size_t) __attribute__((cdecl))",
+    "arguments": [
+      "dev",
+      "buf",
+      "buf_size"
+    ]
+  },
+  "SDL_hid_ble_scan": {
+    "signature": "void (bool) __attribute__((cdecl))",
+    "arguments": [
+      "active"
+    ]
   }
 }

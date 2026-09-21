@@ -22,6 +22,12 @@ MAKE_TYPE_FACTORY(SDL_GPUCopyPass, SDL_GPUCopyPass);
 MAKE_TYPE_FACTORY(SDL_Palette, SDL_Palette);
 MAKE_TYPE_FACTORY(SDL_IOStream, SDL_IOStream);
 MAKE_TYPE_FACTORY(SDL_HitTestBinding, SDL_HitTestBinding);
+MAKE_TYPE_FACTORY(SDL_Cursor, SDL_Cursor);
+MAKE_TYPE_FACTORY(SDL_Joystick, SDL_Joystick);
+MAKE_TYPE_FACTORY(SDL_Gamepad, SDL_Gamepad);
+MAKE_TYPE_FACTORY(SDL_Sensor, SDL_Sensor);
+MAKE_TYPE_FACTORY(SDL_Haptic, SDL_Haptic);
+MAKE_TYPE_FACTORY(SDL_hid_device, SDL_hid_device);
 DAS_BIND_ENUM_CAST(SDL_GPUTextureType);
 DAS_BASE_BIND_ENUM_GEN(SDL_GPUTextureType,SDL_GPUTextureType);
 DAS_BIND_ENUM_CAST(SDL_GPUTextureFormat);
@@ -108,6 +114,40 @@ DAS_BIND_ENUM_CAST(SDL_IOWhence);
 DAS_BASE_BIND_ENUM_GEN(SDL_IOWhence,SDL_IOWhence);
 DAS_BIND_ENUM_CAST(SDL_HitTestResult);
 DAS_BASE_BIND_ENUM_GEN(SDL_HitTestResult,SDL_HitTestResult);
+DAS_BIND_ENUM_CAST(SDL_EventAction);
+DAS_BASE_BIND_ENUM_GEN(SDL_EventAction,SDL_EventAction);
+DAS_BIND_ENUM_CAST(SDL_Scancode);
+DAS_BASE_BIND_ENUM_GEN(SDL_Scancode,SDL_Scancode);
+DAS_BIND_ENUM_CAST(SDL_SystemCursor);
+DAS_BASE_BIND_ENUM_GEN(SDL_SystemCursor,SDL_SystemCursor);
+DAS_BIND_ENUM_CAST(SDL_TextInputType);
+DAS_BASE_BIND_ENUM_GEN(SDL_TextInputType,SDL_TextInputType);
+DAS_BIND_ENUM_CAST(SDL_Capitalization);
+DAS_BASE_BIND_ENUM_GEN(SDL_Capitalization,SDL_Capitalization);
+DAS_BIND_ENUM_CAST(SDL_JoystickType);
+DAS_BASE_BIND_ENUM_GEN(SDL_JoystickType,SDL_JoystickType);
+DAS_BIND_ENUM_CAST(SDL_JoystickConnectionState);
+DAS_BASE_BIND_ENUM_GEN(SDL_JoystickConnectionState,SDL_JoystickConnectionState);
+DAS_BIND_ENUM_CAST(SDL_GamepadType);
+DAS_BASE_BIND_ENUM_GEN(SDL_GamepadType,SDL_GamepadType);
+DAS_BIND_ENUM_CAST(SDL_GamepadButton);
+DAS_BASE_BIND_ENUM_GEN(SDL_GamepadButton,SDL_GamepadButton);
+DAS_BIND_ENUM_CAST(SDL_GamepadButtonLabel);
+DAS_BASE_BIND_ENUM_GEN(SDL_GamepadButtonLabel,SDL_GamepadButtonLabel);
+DAS_BIND_ENUM_CAST(SDL_GamepadAxis);
+DAS_BASE_BIND_ENUM_GEN(SDL_GamepadAxis,SDL_GamepadAxis);
+DAS_BIND_ENUM_CAST(SDL_GamepadBindingType);
+DAS_BASE_BIND_ENUM_GEN(SDL_GamepadBindingType,SDL_GamepadBindingType);
+DAS_BIND_ENUM_CAST(SDL_SensorType);
+DAS_BASE_BIND_ENUM_GEN(SDL_SensorType,SDL_SensorType);
+DAS_BIND_ENUM_CAST(SDL_PowerState);
+DAS_BASE_BIND_ENUM_GEN(SDL_PowerState,SDL_PowerState);
+DAS_BIND_ENUM_CAST(SDL_TouchDeviceType);
+DAS_BASE_BIND_ENUM_GEN(SDL_TouchDeviceType,SDL_TouchDeviceType);
+DAS_BIND_ENUM_CAST(SDL_PenAxis);
+DAS_BASE_BIND_ENUM_GEN(SDL_PenAxis,SDL_PenAxis);
+DAS_BIND_ENUM_CAST(SDL_hid_bus_type);
+DAS_BASE_BIND_ENUM_GEN(SDL_hid_bus_type,SDL_hid_bus_type);
 MAKE_TYPE_FACTORY(SDL_GPUViewport, SDL_GPUViewport);
 MAKE_TYPE_FACTORY(SDL_GPUIndirectDrawCommand, SDL_GPUIndirectDrawCommand);
 MAKE_TYPE_FACTORY(SDL_GPUIndexedIndirectDrawCommand, SDL_GPUIndexedIndirectDrawCommand);
@@ -159,6 +199,41 @@ MAKE_TYPE_FACTORY(SDL_Point, SDL_Point);
 MAKE_TYPE_FACTORY(SDL_DisplayMode, SDL_DisplayMode);
 MAKE_TYPE_FACTORY(SDL_Color, SDL_Color);
 MAKE_TYPE_FACTORY(SDL_PixelFormatDetails, SDL_PixelFormatDetails);
+MAKE_TYPE_FACTORY(SDL_GUID, SDL_GUID);
+MAKE_TYPE_FACTORY(SDL_VirtualJoystickTouchpadDesc, SDL_VirtualJoystickTouchpadDesc);
+MAKE_TYPE_FACTORY(SDL_VirtualJoystickSensorDesc, SDL_VirtualJoystickSensorDesc);
+MAKE_TYPE_FACTORY(SDL_VirtualJoystickDesc, SDL_VirtualJoystickDesc);
+MAKE_TYPE_FACTORY(SDL_GamepadBinding, SDL_GamepadBinding);
+MAKE_TYPE_FACTORY(SDL_JoyAxisEvent, SDL_JoyAxisEvent);
+MAKE_TYPE_FACTORY(SDL_JoyBallEvent, SDL_JoyBallEvent);
+MAKE_TYPE_FACTORY(SDL_JoyHatEvent, SDL_JoyHatEvent);
+MAKE_TYPE_FACTORY(SDL_JoyButtonEvent, SDL_JoyButtonEvent);
+MAKE_TYPE_FACTORY(SDL_JoyDeviceEvent, SDL_JoyDeviceEvent);
+MAKE_TYPE_FACTORY(SDL_JoyBatteryEvent, SDL_JoyBatteryEvent);
+MAKE_TYPE_FACTORY(SDL_GamepadAxisEvent, SDL_GamepadAxisEvent);
+MAKE_TYPE_FACTORY(SDL_GamepadButtonEvent, SDL_GamepadButtonEvent);
+MAKE_TYPE_FACTORY(SDL_GamepadDeviceEvent, SDL_GamepadDeviceEvent);
+MAKE_TYPE_FACTORY(SDL_GamepadTouchpadEvent, SDL_GamepadTouchpadEvent);
+MAKE_TYPE_FACTORY(SDL_GamepadSensorEvent, SDL_GamepadSensorEvent);
+MAKE_TYPE_FACTORY(SDL_Finger, SDL_Finger);
+MAKE_TYPE_FACTORY(SDL_HapticDirection, SDL_HapticDirection);
+MAKE_TYPE_FACTORY(SDL_HapticConstant, SDL_HapticConstant);
+MAKE_TYPE_FACTORY(SDL_HapticPeriodic, SDL_HapticPeriodic);
+MAKE_TYPE_FACTORY(SDL_HapticCondition, SDL_HapticCondition);
+MAKE_TYPE_FACTORY(SDL_HapticRamp, SDL_HapticRamp);
+MAKE_TYPE_FACTORY(SDL_HapticLeftRight, SDL_HapticLeftRight);
+MAKE_TYPE_FACTORY(SDL_HapticCustom, SDL_HapticCustom);
+MAKE_TYPE_FACTORY(SDL_HapticEffect, SDL_HapticEffect);
+MAKE_TYPE_FACTORY(SDL_hid_device_info, SDL_hid_device_info);
+MAKE_TYPE_FACTORY(SDL_TouchFingerEvent, SDL_TouchFingerEvent);
+MAKE_TYPE_FACTORY(SDL_PenProximityEvent, SDL_PenProximityEvent);
+MAKE_TYPE_FACTORY(SDL_PenMotionEvent, SDL_PenMotionEvent);
+MAKE_TYPE_FACTORY(SDL_PenTouchEvent, SDL_PenTouchEvent);
+MAKE_TYPE_FACTORY(SDL_PenButtonEvent, SDL_PenButtonEvent);
+MAKE_TYPE_FACTORY(SDL_PenAxisEvent, SDL_PenAxisEvent);
+MAKE_TYPE_FACTORY(SDL_SensorEvent, SDL_SensorEvent);
+MAKE_TYPE_FACTORY(SDL_TextEditingCandidatesEvent, SDL_TextEditingCandidatesEvent);
+MAKE_TYPE_FACTORY(SDL_ClipboardEvent, SDL_ClipboardEvent);
 static_assert(sizeof(SDL_PropertyType) == 4 && alignof(SDL_PropertyType) == 4);
 class Enumeration_SDL_PropertyType : public das::Enumeration {
 public: Enumeration_SDL_PropertyType() : das::Enumeration("SDL_PropertyType") {
@@ -628,6 +703,933 @@ addIEx("HITTEST_RESIZE_BOTTOMLEFT","SDL_HITTEST_RESIZE_BOTTOMLEFT",int64_t(SDL_H
 static_assert(int64_t(SDL_HITTEST_RESIZE_LEFT) == 9LL);
 addIEx("HITTEST_RESIZE_LEFT","SDL_HITTEST_RESIZE_LEFT",int64_t(SDL_HITTEST_RESIZE_LEFT),das::LineInfo());
 } };
+static_assert(sizeof(SDL_GUID) == 16 && alignof(SDL_GUID) == 1);
+namespace das { struct SDL_GUIDAnnotation : ManagedStructureAnnotation<SDL_GUID, false> {
+SDL_GUIDAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_GUID", lib) {
+static_assert(offsetof(SDL_GUID, data) == 0);
+addField<DAS_BIND_MANAGED_FIELD(data)>("data", "data");
+}
+}; }
+static_assert(sizeof(SDL_PowerState) == 4 && alignof(SDL_PowerState) == 4);
+class Enumeration_SDL_PowerState : public das::Enumeration {
+public: Enumeration_SDL_PowerState() : das::Enumeration("SDL_PowerState") {
+external=true; cppName="SDL_PowerState"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_PowerState>::type>::type;
+static_assert(int64_t(SDL_POWERSTATE_ERROR) == -1LL);
+addIEx("POWERSTATE_ERROR","SDL_POWERSTATE_ERROR",int64_t(SDL_POWERSTATE_ERROR),das::LineInfo());
+static_assert(int64_t(SDL_POWERSTATE_UNKNOWN) == 0LL);
+addIEx("POWERSTATE_UNKNOWN","SDL_POWERSTATE_UNKNOWN",int64_t(SDL_POWERSTATE_UNKNOWN),das::LineInfo());
+static_assert(int64_t(SDL_POWERSTATE_ON_BATTERY) == 1LL);
+addIEx("POWERSTATE_ON_BATTERY","SDL_POWERSTATE_ON_BATTERY",int64_t(SDL_POWERSTATE_ON_BATTERY),das::LineInfo());
+static_assert(int64_t(SDL_POWERSTATE_NO_BATTERY) == 2LL);
+addIEx("POWERSTATE_NO_BATTERY","SDL_POWERSTATE_NO_BATTERY",int64_t(SDL_POWERSTATE_NO_BATTERY),das::LineInfo());
+static_assert(int64_t(SDL_POWERSTATE_CHARGING) == 3LL);
+addIEx("POWERSTATE_CHARGING","SDL_POWERSTATE_CHARGING",int64_t(SDL_POWERSTATE_CHARGING),das::LineInfo());
+static_assert(int64_t(SDL_POWERSTATE_CHARGED) == 4LL);
+addIEx("POWERSTATE_CHARGED","SDL_POWERSTATE_CHARGED",int64_t(SDL_POWERSTATE_CHARGED),das::LineInfo());
+} };
+static_assert(sizeof(SDL_SensorType) == 4 && alignof(SDL_SensorType) == 4);
+class Enumeration_SDL_SensorType : public das::Enumeration {
+public: Enumeration_SDL_SensorType() : das::Enumeration("SDL_SensorType") {
+external=true; cppName="SDL_SensorType"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_SensorType>::type>::type;
+static_assert(int64_t(SDL_SENSOR_INVALID) == -1LL);
+addIEx("SENSOR_INVALID","SDL_SENSOR_INVALID",int64_t(SDL_SENSOR_INVALID),das::LineInfo());
+static_assert(int64_t(SDL_SENSOR_UNKNOWN) == 0LL);
+addIEx("SENSOR_UNKNOWN","SDL_SENSOR_UNKNOWN",int64_t(SDL_SENSOR_UNKNOWN),das::LineInfo());
+static_assert(int64_t(SDL_SENSOR_ACCEL) == 1LL);
+addIEx("SENSOR_ACCEL","SDL_SENSOR_ACCEL",int64_t(SDL_SENSOR_ACCEL),das::LineInfo());
+static_assert(int64_t(SDL_SENSOR_GYRO) == 2LL);
+addIEx("SENSOR_GYRO","SDL_SENSOR_GYRO",int64_t(SDL_SENSOR_GYRO),das::LineInfo());
+static_assert(int64_t(SDL_SENSOR_ACCEL_L) == 3LL);
+addIEx("SENSOR_ACCEL_L","SDL_SENSOR_ACCEL_L",int64_t(SDL_SENSOR_ACCEL_L),das::LineInfo());
+static_assert(int64_t(SDL_SENSOR_GYRO_L) == 4LL);
+addIEx("SENSOR_GYRO_L","SDL_SENSOR_GYRO_L",int64_t(SDL_SENSOR_GYRO_L),das::LineInfo());
+static_assert(int64_t(SDL_SENSOR_ACCEL_R) == 5LL);
+addIEx("SENSOR_ACCEL_R","SDL_SENSOR_ACCEL_R",int64_t(SDL_SENSOR_ACCEL_R),das::LineInfo());
+static_assert(int64_t(SDL_SENSOR_GYRO_R) == 6LL);
+addIEx("SENSOR_GYRO_R","SDL_SENSOR_GYRO_R",int64_t(SDL_SENSOR_GYRO_R),das::LineInfo());
+} };
+static_assert(sizeof(SDL_JoystickType) == 4 && alignof(SDL_JoystickType) == 4);
+class Enumeration_SDL_JoystickType : public das::Enumeration {
+public: Enumeration_SDL_JoystickType() : das::Enumeration("SDL_JoystickType") {
+external=true; cppName="SDL_JoystickType"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_JoystickType>::type>::type;
+static_assert(int64_t(SDL_JOYSTICK_TYPE_UNKNOWN) == 0LL);
+addIEx("JOYSTICK_TYPE_UNKNOWN","SDL_JOYSTICK_TYPE_UNKNOWN",int64_t(SDL_JOYSTICK_TYPE_UNKNOWN),das::LineInfo());
+static_assert(int64_t(SDL_JOYSTICK_TYPE_GAMEPAD) == 1LL);
+addIEx("JOYSTICK_TYPE_GAMEPAD","SDL_JOYSTICK_TYPE_GAMEPAD",int64_t(SDL_JOYSTICK_TYPE_GAMEPAD),das::LineInfo());
+static_assert(int64_t(SDL_JOYSTICK_TYPE_WHEEL) == 2LL);
+addIEx("JOYSTICK_TYPE_WHEEL","SDL_JOYSTICK_TYPE_WHEEL",int64_t(SDL_JOYSTICK_TYPE_WHEEL),das::LineInfo());
+static_assert(int64_t(SDL_JOYSTICK_TYPE_ARCADE_STICK) == 3LL);
+addIEx("JOYSTICK_TYPE_ARCADE_STICK","SDL_JOYSTICK_TYPE_ARCADE_STICK",int64_t(SDL_JOYSTICK_TYPE_ARCADE_STICK),das::LineInfo());
+static_assert(int64_t(SDL_JOYSTICK_TYPE_FLIGHT_STICK) == 4LL);
+addIEx("JOYSTICK_TYPE_FLIGHT_STICK","SDL_JOYSTICK_TYPE_FLIGHT_STICK",int64_t(SDL_JOYSTICK_TYPE_FLIGHT_STICK),das::LineInfo());
+static_assert(int64_t(SDL_JOYSTICK_TYPE_DANCE_PAD) == 5LL);
+addIEx("JOYSTICK_TYPE_DANCE_PAD","SDL_JOYSTICK_TYPE_DANCE_PAD",int64_t(SDL_JOYSTICK_TYPE_DANCE_PAD),das::LineInfo());
+static_assert(int64_t(SDL_JOYSTICK_TYPE_GUITAR) == 6LL);
+addIEx("JOYSTICK_TYPE_GUITAR","SDL_JOYSTICK_TYPE_GUITAR",int64_t(SDL_JOYSTICK_TYPE_GUITAR),das::LineInfo());
+static_assert(int64_t(SDL_JOYSTICK_TYPE_DRUM_KIT) == 7LL);
+addIEx("JOYSTICK_TYPE_DRUM_KIT","SDL_JOYSTICK_TYPE_DRUM_KIT",int64_t(SDL_JOYSTICK_TYPE_DRUM_KIT),das::LineInfo());
+static_assert(int64_t(SDL_JOYSTICK_TYPE_ARCADE_PAD) == 8LL);
+addIEx("JOYSTICK_TYPE_ARCADE_PAD","SDL_JOYSTICK_TYPE_ARCADE_PAD",int64_t(SDL_JOYSTICK_TYPE_ARCADE_PAD),das::LineInfo());
+static_assert(int64_t(SDL_JOYSTICK_TYPE_THROTTLE) == 9LL);
+addIEx("JOYSTICK_TYPE_THROTTLE","SDL_JOYSTICK_TYPE_THROTTLE",int64_t(SDL_JOYSTICK_TYPE_THROTTLE),das::LineInfo());
+static_assert(int64_t(SDL_JOYSTICK_TYPE_COUNT) == 10LL);
+addIEx("JOYSTICK_TYPE_COUNT","SDL_JOYSTICK_TYPE_COUNT",int64_t(SDL_JOYSTICK_TYPE_COUNT),das::LineInfo());
+} };
+static_assert(sizeof(SDL_JoystickConnectionState) == 4 && alignof(SDL_JoystickConnectionState) == 4);
+class Enumeration_SDL_JoystickConnectionState : public das::Enumeration {
+public: Enumeration_SDL_JoystickConnectionState() : das::Enumeration("SDL_JoystickConnectionState") {
+external=true; cppName="SDL_JoystickConnectionState"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_JoystickConnectionState>::type>::type;
+static_assert(int64_t(SDL_JOYSTICK_CONNECTION_INVALID) == -1LL);
+addIEx("JOYSTICK_CONNECTION_INVALID","SDL_JOYSTICK_CONNECTION_INVALID",int64_t(SDL_JOYSTICK_CONNECTION_INVALID),das::LineInfo());
+static_assert(int64_t(SDL_JOYSTICK_CONNECTION_UNKNOWN) == 0LL);
+addIEx("JOYSTICK_CONNECTION_UNKNOWN","SDL_JOYSTICK_CONNECTION_UNKNOWN",int64_t(SDL_JOYSTICK_CONNECTION_UNKNOWN),das::LineInfo());
+static_assert(int64_t(SDL_JOYSTICK_CONNECTION_WIRED) == 1LL);
+addIEx("JOYSTICK_CONNECTION_WIRED","SDL_JOYSTICK_CONNECTION_WIRED",int64_t(SDL_JOYSTICK_CONNECTION_WIRED),das::LineInfo());
+static_assert(int64_t(SDL_JOYSTICK_CONNECTION_WIRELESS) == 2LL);
+addIEx("JOYSTICK_CONNECTION_WIRELESS","SDL_JOYSTICK_CONNECTION_WIRELESS",int64_t(SDL_JOYSTICK_CONNECTION_WIRELESS),das::LineInfo());
+} };
+static_assert(sizeof(SDL_VirtualJoystickTouchpadDesc) == 8 && alignof(SDL_VirtualJoystickTouchpadDesc) == 2);
+namespace das { struct SDL_VirtualJoystickTouchpadDescAnnotation : ManagedStructureAnnotation<SDL_VirtualJoystickTouchpadDesc, false> {
+SDL_VirtualJoystickTouchpadDescAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_VirtualJoystickTouchpadDesc", lib) {
+static_assert(offsetof(SDL_VirtualJoystickTouchpadDesc, nfingers) == 0);
+addField<DAS_BIND_MANAGED_FIELD(nfingers)>("nfingers", "nfingers");
+}
+}; }
+static_assert(sizeof(SDL_VirtualJoystickSensorDesc) == 8 && alignof(SDL_VirtualJoystickSensorDesc) == 4);
+namespace das { struct SDL_VirtualJoystickSensorDescAnnotation : ManagedStructureAnnotation<SDL_VirtualJoystickSensorDesc, false> {
+SDL_VirtualJoystickSensorDescAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_VirtualJoystickSensorDesc", lib) {
+static_assert(offsetof(SDL_VirtualJoystickSensorDesc, type) == 0);
+addField<DAS_BIND_MANAGED_FIELD(type)>("sensor_type", "type");
+static_assert(offsetof(SDL_VirtualJoystickSensorDesc, rate) == 4);
+addField<DAS_BIND_MANAGED_FIELD(rate)>("rate", "rate");
+}
+}; }
+static_assert(sizeof(SDL_VirtualJoystickDesc) == 136 && alignof(SDL_VirtualJoystickDesc) == 8);
+namespace das { struct SDL_VirtualJoystickDescAnnotation : ManagedStructureAnnotation<SDL_VirtualJoystickDesc, false> {
+SDL_VirtualJoystickDescAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_VirtualJoystickDesc", lib) {
+static_assert(offsetof(SDL_VirtualJoystickDesc, version) == 0);
+addField<DAS_BIND_MANAGED_FIELD(version)>("version", "version");
+static_assert(offsetof(SDL_VirtualJoystickDesc, type) == 4);
+addField<DAS_BIND_MANAGED_FIELD(type)>("joystick_type", "type");
+static_assert(offsetof(SDL_VirtualJoystickDesc, vendor_id) == 8);
+addField<DAS_BIND_MANAGED_FIELD(vendor_id)>("vendor_id", "vendor_id");
+static_assert(offsetof(SDL_VirtualJoystickDesc, product_id) == 10);
+addField<DAS_BIND_MANAGED_FIELD(product_id)>("product_id", "product_id");
+static_assert(offsetof(SDL_VirtualJoystickDesc, naxes) == 12);
+addField<DAS_BIND_MANAGED_FIELD(naxes)>("naxes", "naxes");
+static_assert(offsetof(SDL_VirtualJoystickDesc, nbuttons) == 14);
+addField<DAS_BIND_MANAGED_FIELD(nbuttons)>("nbuttons", "nbuttons");
+static_assert(offsetof(SDL_VirtualJoystickDesc, nballs) == 16);
+addField<DAS_BIND_MANAGED_FIELD(nballs)>("nballs", "nballs");
+static_assert(offsetof(SDL_VirtualJoystickDesc, nhats) == 18);
+addField<DAS_BIND_MANAGED_FIELD(nhats)>("nhats", "nhats");
+static_assert(offsetof(SDL_VirtualJoystickDesc, ntouchpads) == 20);
+addField<DAS_BIND_MANAGED_FIELD(ntouchpads)>("ntouchpads", "ntouchpads");
+static_assert(offsetof(SDL_VirtualJoystickDesc, nsensors) == 22);
+addField<DAS_BIND_MANAGED_FIELD(nsensors)>("nsensors", "nsensors");
+static_assert(offsetof(SDL_VirtualJoystickDesc, button_mask) == 28);
+addField<DAS_BIND_MANAGED_FIELD(button_mask)>("button_mask", "button_mask");
+static_assert(offsetof(SDL_VirtualJoystickDesc, axis_mask) == 32);
+addField<DAS_BIND_MANAGED_FIELD(axis_mask)>("axis_mask", "axis_mask");
+static_assert(offsetof(SDL_VirtualJoystickDesc, name) == 40);
+addField<DAS_BIND_MANAGED_FIELD(name)>("name", "name");
+static_assert(offsetof(SDL_VirtualJoystickDesc, touchpads) == 48);
+addField<DAS_BIND_MANAGED_FIELD(touchpads)>("touchpads", "touchpads");
+static_assert(offsetof(SDL_VirtualJoystickDesc, sensors) == 56);
+addField<DAS_BIND_MANAGED_FIELD(sensors)>("sensors", "sensors");
+static_assert(offsetof(SDL_VirtualJoystickDesc, userdata) == 64);
+addField<DAS_BIND_MANAGED_FIELD(userdata)>("userdata", "userdata");
+}
+}; }
+static_assert(sizeof(SDL_GamepadType) == 4 && alignof(SDL_GamepadType) == 4);
+class Enumeration_SDL_GamepadType : public das::Enumeration {
+public: Enumeration_SDL_GamepadType() : das::Enumeration("SDL_GamepadType") {
+external=true; cppName="SDL_GamepadType"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_GamepadType>::type>::type;
+static_assert(int64_t(SDL_GAMEPAD_TYPE_UNKNOWN) == 0LL);
+addIEx("GAMEPAD_TYPE_UNKNOWN","SDL_GAMEPAD_TYPE_UNKNOWN",int64_t(SDL_GAMEPAD_TYPE_UNKNOWN),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_TYPE_STANDARD) == 1LL);
+addIEx("GAMEPAD_TYPE_STANDARD","SDL_GAMEPAD_TYPE_STANDARD",int64_t(SDL_GAMEPAD_TYPE_STANDARD),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_TYPE_XBOX360) == 2LL);
+addIEx("GAMEPAD_TYPE_XBOX360","SDL_GAMEPAD_TYPE_XBOX360",int64_t(SDL_GAMEPAD_TYPE_XBOX360),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_TYPE_XBOXONE) == 3LL);
+addIEx("GAMEPAD_TYPE_XBOXONE","SDL_GAMEPAD_TYPE_XBOXONE",int64_t(SDL_GAMEPAD_TYPE_XBOXONE),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_TYPE_PS3) == 4LL);
+addIEx("GAMEPAD_TYPE_PS3","SDL_GAMEPAD_TYPE_PS3",int64_t(SDL_GAMEPAD_TYPE_PS3),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_TYPE_PS4) == 5LL);
+addIEx("GAMEPAD_TYPE_PS4","SDL_GAMEPAD_TYPE_PS4",int64_t(SDL_GAMEPAD_TYPE_PS4),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_TYPE_PS5) == 6LL);
+addIEx("GAMEPAD_TYPE_PS5","SDL_GAMEPAD_TYPE_PS5",int64_t(SDL_GAMEPAD_TYPE_PS5),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_PRO) == 7LL);
+addIEx("GAMEPAD_TYPE_NINTENDO_SWITCH_PRO","SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_PRO",int64_t(SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_PRO),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_LEFT) == 8LL);
+addIEx("GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_LEFT","SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_LEFT",int64_t(SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_LEFT),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT) == 9LL);
+addIEx("GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT","SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT",int64_t(SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR) == 10LL);
+addIEx("GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR","SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR",int64_t(SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_TYPE_COUNT) == 11LL);
+addIEx("GAMEPAD_TYPE_COUNT","SDL_GAMEPAD_TYPE_COUNT",int64_t(SDL_GAMEPAD_TYPE_COUNT),das::LineInfo());
+} };
+static_assert(sizeof(SDL_GamepadButton) == 4 && alignof(SDL_GamepadButton) == 4);
+class Enumeration_SDL_GamepadButton : public das::Enumeration {
+public: Enumeration_SDL_GamepadButton() : das::Enumeration("SDL_GamepadButton") {
+external=true; cppName="SDL_GamepadButton"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_GamepadButton>::type>::type;
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_INVALID) == -1LL);
+addIEx("GAMEPAD_BUTTON_INVALID","SDL_GAMEPAD_BUTTON_INVALID",int64_t(SDL_GAMEPAD_BUTTON_INVALID),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_SOUTH) == 0LL);
+addIEx("GAMEPAD_BUTTON_SOUTH","SDL_GAMEPAD_BUTTON_SOUTH",int64_t(SDL_GAMEPAD_BUTTON_SOUTH),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_EAST) == 1LL);
+addIEx("GAMEPAD_BUTTON_EAST","SDL_GAMEPAD_BUTTON_EAST",int64_t(SDL_GAMEPAD_BUTTON_EAST),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_WEST) == 2LL);
+addIEx("GAMEPAD_BUTTON_WEST","SDL_GAMEPAD_BUTTON_WEST",int64_t(SDL_GAMEPAD_BUTTON_WEST),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_NORTH) == 3LL);
+addIEx("GAMEPAD_BUTTON_NORTH","SDL_GAMEPAD_BUTTON_NORTH",int64_t(SDL_GAMEPAD_BUTTON_NORTH),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_BACK) == 4LL);
+addIEx("GAMEPAD_BUTTON_BACK","SDL_GAMEPAD_BUTTON_BACK",int64_t(SDL_GAMEPAD_BUTTON_BACK),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_GUIDE) == 5LL);
+addIEx("GAMEPAD_BUTTON_GUIDE","SDL_GAMEPAD_BUTTON_GUIDE",int64_t(SDL_GAMEPAD_BUTTON_GUIDE),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_START) == 6LL);
+addIEx("GAMEPAD_BUTTON_START","SDL_GAMEPAD_BUTTON_START",int64_t(SDL_GAMEPAD_BUTTON_START),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_LEFT_STICK) == 7LL);
+addIEx("GAMEPAD_BUTTON_LEFT_STICK","SDL_GAMEPAD_BUTTON_LEFT_STICK",int64_t(SDL_GAMEPAD_BUTTON_LEFT_STICK),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_RIGHT_STICK) == 8LL);
+addIEx("GAMEPAD_BUTTON_RIGHT_STICK","SDL_GAMEPAD_BUTTON_RIGHT_STICK",int64_t(SDL_GAMEPAD_BUTTON_RIGHT_STICK),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_LEFT_SHOULDER) == 9LL);
+addIEx("GAMEPAD_BUTTON_LEFT_SHOULDER","SDL_GAMEPAD_BUTTON_LEFT_SHOULDER",int64_t(SDL_GAMEPAD_BUTTON_LEFT_SHOULDER),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_RIGHT_SHOULDER) == 10LL);
+addIEx("GAMEPAD_BUTTON_RIGHT_SHOULDER","SDL_GAMEPAD_BUTTON_RIGHT_SHOULDER",int64_t(SDL_GAMEPAD_BUTTON_RIGHT_SHOULDER),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_DPAD_UP) == 11LL);
+addIEx("GAMEPAD_BUTTON_DPAD_UP","SDL_GAMEPAD_BUTTON_DPAD_UP",int64_t(SDL_GAMEPAD_BUTTON_DPAD_UP),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_DPAD_DOWN) == 12LL);
+addIEx("GAMEPAD_BUTTON_DPAD_DOWN","SDL_GAMEPAD_BUTTON_DPAD_DOWN",int64_t(SDL_GAMEPAD_BUTTON_DPAD_DOWN),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_DPAD_LEFT) == 13LL);
+addIEx("GAMEPAD_BUTTON_DPAD_LEFT","SDL_GAMEPAD_BUTTON_DPAD_LEFT",int64_t(SDL_GAMEPAD_BUTTON_DPAD_LEFT),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_DPAD_RIGHT) == 14LL);
+addIEx("GAMEPAD_BUTTON_DPAD_RIGHT","SDL_GAMEPAD_BUTTON_DPAD_RIGHT",int64_t(SDL_GAMEPAD_BUTTON_DPAD_RIGHT),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_MISC1) == 15LL);
+addIEx("GAMEPAD_BUTTON_MISC1","SDL_GAMEPAD_BUTTON_MISC1",int64_t(SDL_GAMEPAD_BUTTON_MISC1),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_RIGHT_PADDLE1) == 16LL);
+addIEx("GAMEPAD_BUTTON_RIGHT_PADDLE1","SDL_GAMEPAD_BUTTON_RIGHT_PADDLE1",int64_t(SDL_GAMEPAD_BUTTON_RIGHT_PADDLE1),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_LEFT_PADDLE1) == 17LL);
+addIEx("GAMEPAD_BUTTON_LEFT_PADDLE1","SDL_GAMEPAD_BUTTON_LEFT_PADDLE1",int64_t(SDL_GAMEPAD_BUTTON_LEFT_PADDLE1),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_RIGHT_PADDLE2) == 18LL);
+addIEx("GAMEPAD_BUTTON_RIGHT_PADDLE2","SDL_GAMEPAD_BUTTON_RIGHT_PADDLE2",int64_t(SDL_GAMEPAD_BUTTON_RIGHT_PADDLE2),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_LEFT_PADDLE2) == 19LL);
+addIEx("GAMEPAD_BUTTON_LEFT_PADDLE2","SDL_GAMEPAD_BUTTON_LEFT_PADDLE2",int64_t(SDL_GAMEPAD_BUTTON_LEFT_PADDLE2),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_TOUCHPAD) == 20LL);
+addIEx("GAMEPAD_BUTTON_TOUCHPAD","SDL_GAMEPAD_BUTTON_TOUCHPAD",int64_t(SDL_GAMEPAD_BUTTON_TOUCHPAD),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_MISC2) == 21LL);
+addIEx("GAMEPAD_BUTTON_MISC2","SDL_GAMEPAD_BUTTON_MISC2",int64_t(SDL_GAMEPAD_BUTTON_MISC2),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_MISC3) == 22LL);
+addIEx("GAMEPAD_BUTTON_MISC3","SDL_GAMEPAD_BUTTON_MISC3",int64_t(SDL_GAMEPAD_BUTTON_MISC3),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_MISC4) == 23LL);
+addIEx("GAMEPAD_BUTTON_MISC4","SDL_GAMEPAD_BUTTON_MISC4",int64_t(SDL_GAMEPAD_BUTTON_MISC4),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_MISC5) == 24LL);
+addIEx("GAMEPAD_BUTTON_MISC5","SDL_GAMEPAD_BUTTON_MISC5",int64_t(SDL_GAMEPAD_BUTTON_MISC5),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_MISC6) == 25LL);
+addIEx("GAMEPAD_BUTTON_MISC6","SDL_GAMEPAD_BUTTON_MISC6",int64_t(SDL_GAMEPAD_BUTTON_MISC6),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_COUNT) == 26LL);
+addIEx("GAMEPAD_BUTTON_COUNT","SDL_GAMEPAD_BUTTON_COUNT",int64_t(SDL_GAMEPAD_BUTTON_COUNT),das::LineInfo());
+} };
+static_assert(sizeof(SDL_GamepadButtonLabel) == 4 && alignof(SDL_GamepadButtonLabel) == 4);
+class Enumeration_SDL_GamepadButtonLabel : public das::Enumeration {
+public: Enumeration_SDL_GamepadButtonLabel() : das::Enumeration("SDL_GamepadButtonLabel") {
+external=true; cppName="SDL_GamepadButtonLabel"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_GamepadButtonLabel>::type>::type;
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_LABEL_UNKNOWN) == 0LL);
+addIEx("GAMEPAD_BUTTON_LABEL_UNKNOWN","SDL_GAMEPAD_BUTTON_LABEL_UNKNOWN",int64_t(SDL_GAMEPAD_BUTTON_LABEL_UNKNOWN),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_LABEL_A) == 1LL);
+addIEx("GAMEPAD_BUTTON_LABEL_A","SDL_GAMEPAD_BUTTON_LABEL_A",int64_t(SDL_GAMEPAD_BUTTON_LABEL_A),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_LABEL_B) == 2LL);
+addIEx("GAMEPAD_BUTTON_LABEL_B","SDL_GAMEPAD_BUTTON_LABEL_B",int64_t(SDL_GAMEPAD_BUTTON_LABEL_B),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_LABEL_X) == 3LL);
+addIEx("GAMEPAD_BUTTON_LABEL_X","SDL_GAMEPAD_BUTTON_LABEL_X",int64_t(SDL_GAMEPAD_BUTTON_LABEL_X),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_LABEL_Y) == 4LL);
+addIEx("GAMEPAD_BUTTON_LABEL_Y","SDL_GAMEPAD_BUTTON_LABEL_Y",int64_t(SDL_GAMEPAD_BUTTON_LABEL_Y),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_LABEL_CROSS) == 5LL);
+addIEx("GAMEPAD_BUTTON_LABEL_CROSS","SDL_GAMEPAD_BUTTON_LABEL_CROSS",int64_t(SDL_GAMEPAD_BUTTON_LABEL_CROSS),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_LABEL_CIRCLE) == 6LL);
+addIEx("GAMEPAD_BUTTON_LABEL_CIRCLE","SDL_GAMEPAD_BUTTON_LABEL_CIRCLE",int64_t(SDL_GAMEPAD_BUTTON_LABEL_CIRCLE),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_LABEL_SQUARE) == 7LL);
+addIEx("GAMEPAD_BUTTON_LABEL_SQUARE","SDL_GAMEPAD_BUTTON_LABEL_SQUARE",int64_t(SDL_GAMEPAD_BUTTON_LABEL_SQUARE),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE) == 8LL);
+addIEx("GAMEPAD_BUTTON_LABEL_TRIANGLE","SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE",int64_t(SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE),das::LineInfo());
+} };
+static_assert(sizeof(SDL_GamepadAxis) == 4 && alignof(SDL_GamepadAxis) == 4);
+class Enumeration_SDL_GamepadAxis : public das::Enumeration {
+public: Enumeration_SDL_GamepadAxis() : das::Enumeration("SDL_GamepadAxis") {
+external=true; cppName="SDL_GamepadAxis"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_GamepadAxis>::type>::type;
+static_assert(int64_t(SDL_GAMEPAD_AXIS_INVALID) == -1LL);
+addIEx("GAMEPAD_AXIS_INVALID","SDL_GAMEPAD_AXIS_INVALID",int64_t(SDL_GAMEPAD_AXIS_INVALID),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_AXIS_LEFTX) == 0LL);
+addIEx("GAMEPAD_AXIS_LEFTX","SDL_GAMEPAD_AXIS_LEFTX",int64_t(SDL_GAMEPAD_AXIS_LEFTX),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_AXIS_LEFTY) == 1LL);
+addIEx("GAMEPAD_AXIS_LEFTY","SDL_GAMEPAD_AXIS_LEFTY",int64_t(SDL_GAMEPAD_AXIS_LEFTY),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_AXIS_RIGHTX) == 2LL);
+addIEx("GAMEPAD_AXIS_RIGHTX","SDL_GAMEPAD_AXIS_RIGHTX",int64_t(SDL_GAMEPAD_AXIS_RIGHTX),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_AXIS_RIGHTY) == 3LL);
+addIEx("GAMEPAD_AXIS_RIGHTY","SDL_GAMEPAD_AXIS_RIGHTY",int64_t(SDL_GAMEPAD_AXIS_RIGHTY),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_AXIS_LEFT_TRIGGER) == 4LL);
+addIEx("GAMEPAD_AXIS_LEFT_TRIGGER","SDL_GAMEPAD_AXIS_LEFT_TRIGGER",int64_t(SDL_GAMEPAD_AXIS_LEFT_TRIGGER),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_AXIS_RIGHT_TRIGGER) == 5LL);
+addIEx("GAMEPAD_AXIS_RIGHT_TRIGGER","SDL_GAMEPAD_AXIS_RIGHT_TRIGGER",int64_t(SDL_GAMEPAD_AXIS_RIGHT_TRIGGER),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_AXIS_COUNT) == 6LL);
+addIEx("GAMEPAD_AXIS_COUNT","SDL_GAMEPAD_AXIS_COUNT",int64_t(SDL_GAMEPAD_AXIS_COUNT),das::LineInfo());
+} };
+static_assert(sizeof(SDL_GamepadBindingType) == 4 && alignof(SDL_GamepadBindingType) == 4);
+class Enumeration_SDL_GamepadBindingType : public das::Enumeration {
+public: Enumeration_SDL_GamepadBindingType() : das::Enumeration("SDL_GamepadBindingType") {
+external=true; cppName="SDL_GamepadBindingType"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_GamepadBindingType>::type>::type;
+static_assert(int64_t(SDL_GAMEPAD_BINDTYPE_NONE) == 0LL);
+addIEx("GAMEPAD_BINDTYPE_NONE","SDL_GAMEPAD_BINDTYPE_NONE",int64_t(SDL_GAMEPAD_BINDTYPE_NONE),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BINDTYPE_BUTTON) == 1LL);
+addIEx("GAMEPAD_BINDTYPE_BUTTON","SDL_GAMEPAD_BINDTYPE_BUTTON",int64_t(SDL_GAMEPAD_BINDTYPE_BUTTON),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BINDTYPE_AXIS) == 2LL);
+addIEx("GAMEPAD_BINDTYPE_AXIS","SDL_GAMEPAD_BINDTYPE_AXIS",int64_t(SDL_GAMEPAD_BINDTYPE_AXIS),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_BINDTYPE_HAT) == 3LL);
+addIEx("GAMEPAD_BINDTYPE_HAT","SDL_GAMEPAD_BINDTYPE_HAT",int64_t(SDL_GAMEPAD_BINDTYPE_HAT),das::LineInfo());
+} };
+static_assert(sizeof(SDL_GamepadBinding) == 32 && alignof(SDL_GamepadBinding) == 4);
+namespace das { struct SDL_GamepadBindingAnnotation : ManagedStructureAnnotation<SDL_GamepadBinding, false> {
+SDL_GamepadBindingAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_GamepadBinding", lib) {
+static_assert(offsetof(SDL_GamepadBinding, input_type) == 0);
+addField<DAS_BIND_MANAGED_FIELD(input_type)>("input_type", "input_type");
+static_assert(offsetof(SDL_GamepadBinding, output_type) == 16);
+addField<DAS_BIND_MANAGED_FIELD(output_type)>("output_type", "output_type");
+}
+}; }
+static_assert(sizeof(SDL_Scancode) == 4 && alignof(SDL_Scancode) == 4);
+class Enumeration_SDL_Scancode : public das::Enumeration {
+public: Enumeration_SDL_Scancode() : das::Enumeration("SDL_Scancode") {
+external=true; cppName="SDL_Scancode"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_Scancode>::type>::type;
+static_assert(int64_t(SDL_SCANCODE_UNKNOWN) == 0LL);
+addIEx("SCANCODE_UNKNOWN","SDL_SCANCODE_UNKNOWN",int64_t(SDL_SCANCODE_UNKNOWN),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_A) == 4LL);
+addIEx("SCANCODE_A","SDL_SCANCODE_A",int64_t(SDL_SCANCODE_A),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_B) == 5LL);
+addIEx("SCANCODE_B","SDL_SCANCODE_B",int64_t(SDL_SCANCODE_B),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_C) == 6LL);
+addIEx("SCANCODE_C","SDL_SCANCODE_C",int64_t(SDL_SCANCODE_C),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_D) == 7LL);
+addIEx("SCANCODE_D","SDL_SCANCODE_D",int64_t(SDL_SCANCODE_D),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_E) == 8LL);
+addIEx("SCANCODE_E","SDL_SCANCODE_E",int64_t(SDL_SCANCODE_E),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F) == 9LL);
+addIEx("SCANCODE_F","SDL_SCANCODE_F",int64_t(SDL_SCANCODE_F),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_G) == 10LL);
+addIEx("SCANCODE_G","SDL_SCANCODE_G",int64_t(SDL_SCANCODE_G),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_H) == 11LL);
+addIEx("SCANCODE_H","SDL_SCANCODE_H",int64_t(SDL_SCANCODE_H),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_I) == 12LL);
+addIEx("SCANCODE_I","SDL_SCANCODE_I",int64_t(SDL_SCANCODE_I),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_J) == 13LL);
+addIEx("SCANCODE_J","SDL_SCANCODE_J",int64_t(SDL_SCANCODE_J),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_K) == 14LL);
+addIEx("SCANCODE_K","SDL_SCANCODE_K",int64_t(SDL_SCANCODE_K),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_L) == 15LL);
+addIEx("SCANCODE_L","SDL_SCANCODE_L",int64_t(SDL_SCANCODE_L),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_M) == 16LL);
+addIEx("SCANCODE_M","SDL_SCANCODE_M",int64_t(SDL_SCANCODE_M),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_N) == 17LL);
+addIEx("SCANCODE_N","SDL_SCANCODE_N",int64_t(SDL_SCANCODE_N),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_O) == 18LL);
+addIEx("SCANCODE_O","SDL_SCANCODE_O",int64_t(SDL_SCANCODE_O),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_P) == 19LL);
+addIEx("SCANCODE_P","SDL_SCANCODE_P",int64_t(SDL_SCANCODE_P),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_Q) == 20LL);
+addIEx("SCANCODE_Q","SDL_SCANCODE_Q",int64_t(SDL_SCANCODE_Q),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_R) == 21LL);
+addIEx("SCANCODE_R","SDL_SCANCODE_R",int64_t(SDL_SCANCODE_R),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_S) == 22LL);
+addIEx("SCANCODE_S","SDL_SCANCODE_S",int64_t(SDL_SCANCODE_S),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_T) == 23LL);
+addIEx("SCANCODE_T","SDL_SCANCODE_T",int64_t(SDL_SCANCODE_T),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_U) == 24LL);
+addIEx("SCANCODE_U","SDL_SCANCODE_U",int64_t(SDL_SCANCODE_U),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_V) == 25LL);
+addIEx("SCANCODE_V","SDL_SCANCODE_V",int64_t(SDL_SCANCODE_V),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_W) == 26LL);
+addIEx("SCANCODE_W","SDL_SCANCODE_W",int64_t(SDL_SCANCODE_W),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_X) == 27LL);
+addIEx("SCANCODE_X","SDL_SCANCODE_X",int64_t(SDL_SCANCODE_X),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_Y) == 28LL);
+addIEx("SCANCODE_Y","SDL_SCANCODE_Y",int64_t(SDL_SCANCODE_Y),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_Z) == 29LL);
+addIEx("SCANCODE_Z","SDL_SCANCODE_Z",int64_t(SDL_SCANCODE_Z),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_1) == 30LL);
+addIEx("SCANCODE_1","SDL_SCANCODE_1",int64_t(SDL_SCANCODE_1),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_2) == 31LL);
+addIEx("SCANCODE_2","SDL_SCANCODE_2",int64_t(SDL_SCANCODE_2),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_3) == 32LL);
+addIEx("SCANCODE_3","SDL_SCANCODE_3",int64_t(SDL_SCANCODE_3),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_4) == 33LL);
+addIEx("SCANCODE_4","SDL_SCANCODE_4",int64_t(SDL_SCANCODE_4),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_5) == 34LL);
+addIEx("SCANCODE_5","SDL_SCANCODE_5",int64_t(SDL_SCANCODE_5),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_6) == 35LL);
+addIEx("SCANCODE_6","SDL_SCANCODE_6",int64_t(SDL_SCANCODE_6),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_7) == 36LL);
+addIEx("SCANCODE_7","SDL_SCANCODE_7",int64_t(SDL_SCANCODE_7),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_8) == 37LL);
+addIEx("SCANCODE_8","SDL_SCANCODE_8",int64_t(SDL_SCANCODE_8),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_9) == 38LL);
+addIEx("SCANCODE_9","SDL_SCANCODE_9",int64_t(SDL_SCANCODE_9),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_0) == 39LL);
+addIEx("SCANCODE_0","SDL_SCANCODE_0",int64_t(SDL_SCANCODE_0),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_RETURN) == 40LL);
+addIEx("SCANCODE_RETURN","SDL_SCANCODE_RETURN",int64_t(SDL_SCANCODE_RETURN),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_ESCAPE) == 41LL);
+addIEx("SCANCODE_ESCAPE","SDL_SCANCODE_ESCAPE",int64_t(SDL_SCANCODE_ESCAPE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_BACKSPACE) == 42LL);
+addIEx("SCANCODE_BACKSPACE","SDL_SCANCODE_BACKSPACE",int64_t(SDL_SCANCODE_BACKSPACE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_TAB) == 43LL);
+addIEx("SCANCODE_TAB","SDL_SCANCODE_TAB",int64_t(SDL_SCANCODE_TAB),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_SPACE) == 44LL);
+addIEx("SCANCODE_SPACE","SDL_SCANCODE_SPACE",int64_t(SDL_SCANCODE_SPACE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_MINUS) == 45LL);
+addIEx("SCANCODE_MINUS","SDL_SCANCODE_MINUS",int64_t(SDL_SCANCODE_MINUS),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_EQUALS) == 46LL);
+addIEx("SCANCODE_EQUALS","SDL_SCANCODE_EQUALS",int64_t(SDL_SCANCODE_EQUALS),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_LEFTBRACKET) == 47LL);
+addIEx("SCANCODE_LEFTBRACKET","SDL_SCANCODE_LEFTBRACKET",int64_t(SDL_SCANCODE_LEFTBRACKET),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_RIGHTBRACKET) == 48LL);
+addIEx("SCANCODE_RIGHTBRACKET","SDL_SCANCODE_RIGHTBRACKET",int64_t(SDL_SCANCODE_RIGHTBRACKET),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_BACKSLASH) == 49LL);
+addIEx("SCANCODE_BACKSLASH","SDL_SCANCODE_BACKSLASH",int64_t(SDL_SCANCODE_BACKSLASH),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_NONUSHASH) == 50LL);
+addIEx("SCANCODE_NONUSHASH","SDL_SCANCODE_NONUSHASH",int64_t(SDL_SCANCODE_NONUSHASH),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_SEMICOLON) == 51LL);
+addIEx("SCANCODE_SEMICOLON","SDL_SCANCODE_SEMICOLON",int64_t(SDL_SCANCODE_SEMICOLON),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_APOSTROPHE) == 52LL);
+addIEx("SCANCODE_APOSTROPHE","SDL_SCANCODE_APOSTROPHE",int64_t(SDL_SCANCODE_APOSTROPHE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_GRAVE) == 53LL);
+addIEx("SCANCODE_GRAVE","SDL_SCANCODE_GRAVE",int64_t(SDL_SCANCODE_GRAVE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_COMMA) == 54LL);
+addIEx("SCANCODE_COMMA","SDL_SCANCODE_COMMA",int64_t(SDL_SCANCODE_COMMA),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_PERIOD) == 55LL);
+addIEx("SCANCODE_PERIOD","SDL_SCANCODE_PERIOD",int64_t(SDL_SCANCODE_PERIOD),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_SLASH) == 56LL);
+addIEx("SCANCODE_SLASH","SDL_SCANCODE_SLASH",int64_t(SDL_SCANCODE_SLASH),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_CAPSLOCK) == 57LL);
+addIEx("SCANCODE_CAPSLOCK","SDL_SCANCODE_CAPSLOCK",int64_t(SDL_SCANCODE_CAPSLOCK),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F1) == 58LL);
+addIEx("SCANCODE_F1","SDL_SCANCODE_F1",int64_t(SDL_SCANCODE_F1),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F2) == 59LL);
+addIEx("SCANCODE_F2","SDL_SCANCODE_F2",int64_t(SDL_SCANCODE_F2),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F3) == 60LL);
+addIEx("SCANCODE_F3","SDL_SCANCODE_F3",int64_t(SDL_SCANCODE_F3),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F4) == 61LL);
+addIEx("SCANCODE_F4","SDL_SCANCODE_F4",int64_t(SDL_SCANCODE_F4),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F5) == 62LL);
+addIEx("SCANCODE_F5","SDL_SCANCODE_F5",int64_t(SDL_SCANCODE_F5),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F6) == 63LL);
+addIEx("SCANCODE_F6","SDL_SCANCODE_F6",int64_t(SDL_SCANCODE_F6),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F7) == 64LL);
+addIEx("SCANCODE_F7","SDL_SCANCODE_F7",int64_t(SDL_SCANCODE_F7),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F8) == 65LL);
+addIEx("SCANCODE_F8","SDL_SCANCODE_F8",int64_t(SDL_SCANCODE_F8),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F9) == 66LL);
+addIEx("SCANCODE_F9","SDL_SCANCODE_F9",int64_t(SDL_SCANCODE_F9),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F10) == 67LL);
+addIEx("SCANCODE_F10","SDL_SCANCODE_F10",int64_t(SDL_SCANCODE_F10),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F11) == 68LL);
+addIEx("SCANCODE_F11","SDL_SCANCODE_F11",int64_t(SDL_SCANCODE_F11),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F12) == 69LL);
+addIEx("SCANCODE_F12","SDL_SCANCODE_F12",int64_t(SDL_SCANCODE_F12),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_PRINTSCREEN) == 70LL);
+addIEx("SCANCODE_PRINTSCREEN","SDL_SCANCODE_PRINTSCREEN",int64_t(SDL_SCANCODE_PRINTSCREEN),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_SCROLLLOCK) == 71LL);
+addIEx("SCANCODE_SCROLLLOCK","SDL_SCANCODE_SCROLLLOCK",int64_t(SDL_SCANCODE_SCROLLLOCK),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_PAUSE) == 72LL);
+addIEx("SCANCODE_PAUSE","SDL_SCANCODE_PAUSE",int64_t(SDL_SCANCODE_PAUSE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_INSERT) == 73LL);
+addIEx("SCANCODE_INSERT","SDL_SCANCODE_INSERT",int64_t(SDL_SCANCODE_INSERT),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_HOME) == 74LL);
+addIEx("SCANCODE_HOME","SDL_SCANCODE_HOME",int64_t(SDL_SCANCODE_HOME),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_PAGEUP) == 75LL);
+addIEx("SCANCODE_PAGEUP","SDL_SCANCODE_PAGEUP",int64_t(SDL_SCANCODE_PAGEUP),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_DELETE) == 76LL);
+addIEx("SCANCODE_DELETE","SDL_SCANCODE_DELETE",int64_t(SDL_SCANCODE_DELETE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_END) == 77LL);
+addIEx("SCANCODE_END","SDL_SCANCODE_END",int64_t(SDL_SCANCODE_END),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_PAGEDOWN) == 78LL);
+addIEx("SCANCODE_PAGEDOWN","SDL_SCANCODE_PAGEDOWN",int64_t(SDL_SCANCODE_PAGEDOWN),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_RIGHT) == 79LL);
+addIEx("SCANCODE_RIGHT","SDL_SCANCODE_RIGHT",int64_t(SDL_SCANCODE_RIGHT),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_LEFT) == 80LL);
+addIEx("SCANCODE_LEFT","SDL_SCANCODE_LEFT",int64_t(SDL_SCANCODE_LEFT),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_DOWN) == 81LL);
+addIEx("SCANCODE_DOWN","SDL_SCANCODE_DOWN",int64_t(SDL_SCANCODE_DOWN),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_UP) == 82LL);
+addIEx("SCANCODE_UP","SDL_SCANCODE_UP",int64_t(SDL_SCANCODE_UP),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_NUMLOCKCLEAR) == 83LL);
+addIEx("SCANCODE_NUMLOCKCLEAR","SDL_SCANCODE_NUMLOCKCLEAR",int64_t(SDL_SCANCODE_NUMLOCKCLEAR),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_DIVIDE) == 84LL);
+addIEx("SCANCODE_KP_DIVIDE","SDL_SCANCODE_KP_DIVIDE",int64_t(SDL_SCANCODE_KP_DIVIDE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_MULTIPLY) == 85LL);
+addIEx("SCANCODE_KP_MULTIPLY","SDL_SCANCODE_KP_MULTIPLY",int64_t(SDL_SCANCODE_KP_MULTIPLY),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_MINUS) == 86LL);
+addIEx("SCANCODE_KP_MINUS","SDL_SCANCODE_KP_MINUS",int64_t(SDL_SCANCODE_KP_MINUS),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_PLUS) == 87LL);
+addIEx("SCANCODE_KP_PLUS","SDL_SCANCODE_KP_PLUS",int64_t(SDL_SCANCODE_KP_PLUS),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_ENTER) == 88LL);
+addIEx("SCANCODE_KP_ENTER","SDL_SCANCODE_KP_ENTER",int64_t(SDL_SCANCODE_KP_ENTER),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_1) == 89LL);
+addIEx("SCANCODE_KP_1","SDL_SCANCODE_KP_1",int64_t(SDL_SCANCODE_KP_1),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_2) == 90LL);
+addIEx("SCANCODE_KP_2","SDL_SCANCODE_KP_2",int64_t(SDL_SCANCODE_KP_2),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_3) == 91LL);
+addIEx("SCANCODE_KP_3","SDL_SCANCODE_KP_3",int64_t(SDL_SCANCODE_KP_3),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_4) == 92LL);
+addIEx("SCANCODE_KP_4","SDL_SCANCODE_KP_4",int64_t(SDL_SCANCODE_KP_4),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_5) == 93LL);
+addIEx("SCANCODE_KP_5","SDL_SCANCODE_KP_5",int64_t(SDL_SCANCODE_KP_5),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_6) == 94LL);
+addIEx("SCANCODE_KP_6","SDL_SCANCODE_KP_6",int64_t(SDL_SCANCODE_KP_6),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_7) == 95LL);
+addIEx("SCANCODE_KP_7","SDL_SCANCODE_KP_7",int64_t(SDL_SCANCODE_KP_7),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_8) == 96LL);
+addIEx("SCANCODE_KP_8","SDL_SCANCODE_KP_8",int64_t(SDL_SCANCODE_KP_8),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_9) == 97LL);
+addIEx("SCANCODE_KP_9","SDL_SCANCODE_KP_9",int64_t(SDL_SCANCODE_KP_9),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_0) == 98LL);
+addIEx("SCANCODE_KP_0","SDL_SCANCODE_KP_0",int64_t(SDL_SCANCODE_KP_0),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_PERIOD) == 99LL);
+addIEx("SCANCODE_KP_PERIOD","SDL_SCANCODE_KP_PERIOD",int64_t(SDL_SCANCODE_KP_PERIOD),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_NONUSBACKSLASH) == 100LL);
+addIEx("SCANCODE_NONUSBACKSLASH","SDL_SCANCODE_NONUSBACKSLASH",int64_t(SDL_SCANCODE_NONUSBACKSLASH),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_APPLICATION) == 101LL);
+addIEx("SCANCODE_APPLICATION","SDL_SCANCODE_APPLICATION",int64_t(SDL_SCANCODE_APPLICATION),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_POWER) == 102LL);
+addIEx("SCANCODE_POWER","SDL_SCANCODE_POWER",int64_t(SDL_SCANCODE_POWER),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_EQUALS) == 103LL);
+addIEx("SCANCODE_KP_EQUALS","SDL_SCANCODE_KP_EQUALS",int64_t(SDL_SCANCODE_KP_EQUALS),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F13) == 104LL);
+addIEx("SCANCODE_F13","SDL_SCANCODE_F13",int64_t(SDL_SCANCODE_F13),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F14) == 105LL);
+addIEx("SCANCODE_F14","SDL_SCANCODE_F14",int64_t(SDL_SCANCODE_F14),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F15) == 106LL);
+addIEx("SCANCODE_F15","SDL_SCANCODE_F15",int64_t(SDL_SCANCODE_F15),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F16) == 107LL);
+addIEx("SCANCODE_F16","SDL_SCANCODE_F16",int64_t(SDL_SCANCODE_F16),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F17) == 108LL);
+addIEx("SCANCODE_F17","SDL_SCANCODE_F17",int64_t(SDL_SCANCODE_F17),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F18) == 109LL);
+addIEx("SCANCODE_F18","SDL_SCANCODE_F18",int64_t(SDL_SCANCODE_F18),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F19) == 110LL);
+addIEx("SCANCODE_F19","SDL_SCANCODE_F19",int64_t(SDL_SCANCODE_F19),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F20) == 111LL);
+addIEx("SCANCODE_F20","SDL_SCANCODE_F20",int64_t(SDL_SCANCODE_F20),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F21) == 112LL);
+addIEx("SCANCODE_F21","SDL_SCANCODE_F21",int64_t(SDL_SCANCODE_F21),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F22) == 113LL);
+addIEx("SCANCODE_F22","SDL_SCANCODE_F22",int64_t(SDL_SCANCODE_F22),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F23) == 114LL);
+addIEx("SCANCODE_F23","SDL_SCANCODE_F23",int64_t(SDL_SCANCODE_F23),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_F24) == 115LL);
+addIEx("SCANCODE_F24","SDL_SCANCODE_F24",int64_t(SDL_SCANCODE_F24),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_EXECUTE) == 116LL);
+addIEx("SCANCODE_EXECUTE","SDL_SCANCODE_EXECUTE",int64_t(SDL_SCANCODE_EXECUTE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_HELP) == 117LL);
+addIEx("SCANCODE_HELP","SDL_SCANCODE_HELP",int64_t(SDL_SCANCODE_HELP),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_MENU) == 118LL);
+addIEx("SCANCODE_MENU","SDL_SCANCODE_MENU",int64_t(SDL_SCANCODE_MENU),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_SELECT) == 119LL);
+addIEx("SCANCODE_SELECT","SDL_SCANCODE_SELECT",int64_t(SDL_SCANCODE_SELECT),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_STOP) == 120LL);
+addIEx("SCANCODE_STOP","SDL_SCANCODE_STOP",int64_t(SDL_SCANCODE_STOP),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_AGAIN) == 121LL);
+addIEx("SCANCODE_AGAIN","SDL_SCANCODE_AGAIN",int64_t(SDL_SCANCODE_AGAIN),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_UNDO) == 122LL);
+addIEx("SCANCODE_UNDO","SDL_SCANCODE_UNDO",int64_t(SDL_SCANCODE_UNDO),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_CUT) == 123LL);
+addIEx("SCANCODE_CUT","SDL_SCANCODE_CUT",int64_t(SDL_SCANCODE_CUT),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_COPY) == 124LL);
+addIEx("SCANCODE_COPY","SDL_SCANCODE_COPY",int64_t(SDL_SCANCODE_COPY),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_PASTE) == 125LL);
+addIEx("SCANCODE_PASTE","SDL_SCANCODE_PASTE",int64_t(SDL_SCANCODE_PASTE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_FIND) == 126LL);
+addIEx("SCANCODE_FIND","SDL_SCANCODE_FIND",int64_t(SDL_SCANCODE_FIND),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_MUTE) == 127LL);
+addIEx("SCANCODE_MUTE","SDL_SCANCODE_MUTE",int64_t(SDL_SCANCODE_MUTE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_VOLUMEUP) == 128LL);
+addIEx("SCANCODE_VOLUMEUP","SDL_SCANCODE_VOLUMEUP",int64_t(SDL_SCANCODE_VOLUMEUP),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_VOLUMEDOWN) == 129LL);
+addIEx("SCANCODE_VOLUMEDOWN","SDL_SCANCODE_VOLUMEDOWN",int64_t(SDL_SCANCODE_VOLUMEDOWN),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_COMMA) == 133LL);
+addIEx("SCANCODE_KP_COMMA","SDL_SCANCODE_KP_COMMA",int64_t(SDL_SCANCODE_KP_COMMA),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_EQUALSAS400) == 134LL);
+addIEx("SCANCODE_KP_EQUALSAS400","SDL_SCANCODE_KP_EQUALSAS400",int64_t(SDL_SCANCODE_KP_EQUALSAS400),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_INTERNATIONAL1) == 135LL);
+addIEx("SCANCODE_INTERNATIONAL1","SDL_SCANCODE_INTERNATIONAL1",int64_t(SDL_SCANCODE_INTERNATIONAL1),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_INTERNATIONAL2) == 136LL);
+addIEx("SCANCODE_INTERNATIONAL2","SDL_SCANCODE_INTERNATIONAL2",int64_t(SDL_SCANCODE_INTERNATIONAL2),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_INTERNATIONAL3) == 137LL);
+addIEx("SCANCODE_INTERNATIONAL3","SDL_SCANCODE_INTERNATIONAL3",int64_t(SDL_SCANCODE_INTERNATIONAL3),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_INTERNATIONAL4) == 138LL);
+addIEx("SCANCODE_INTERNATIONAL4","SDL_SCANCODE_INTERNATIONAL4",int64_t(SDL_SCANCODE_INTERNATIONAL4),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_INTERNATIONAL5) == 139LL);
+addIEx("SCANCODE_INTERNATIONAL5","SDL_SCANCODE_INTERNATIONAL5",int64_t(SDL_SCANCODE_INTERNATIONAL5),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_INTERNATIONAL6) == 140LL);
+addIEx("SCANCODE_INTERNATIONAL6","SDL_SCANCODE_INTERNATIONAL6",int64_t(SDL_SCANCODE_INTERNATIONAL6),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_INTERNATIONAL7) == 141LL);
+addIEx("SCANCODE_INTERNATIONAL7","SDL_SCANCODE_INTERNATIONAL7",int64_t(SDL_SCANCODE_INTERNATIONAL7),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_INTERNATIONAL8) == 142LL);
+addIEx("SCANCODE_INTERNATIONAL8","SDL_SCANCODE_INTERNATIONAL8",int64_t(SDL_SCANCODE_INTERNATIONAL8),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_INTERNATIONAL9) == 143LL);
+addIEx("SCANCODE_INTERNATIONAL9","SDL_SCANCODE_INTERNATIONAL9",int64_t(SDL_SCANCODE_INTERNATIONAL9),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_LANG1) == 144LL);
+addIEx("SCANCODE_LANG1","SDL_SCANCODE_LANG1",int64_t(SDL_SCANCODE_LANG1),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_LANG2) == 145LL);
+addIEx("SCANCODE_LANG2","SDL_SCANCODE_LANG2",int64_t(SDL_SCANCODE_LANG2),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_LANG3) == 146LL);
+addIEx("SCANCODE_LANG3","SDL_SCANCODE_LANG3",int64_t(SDL_SCANCODE_LANG3),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_LANG4) == 147LL);
+addIEx("SCANCODE_LANG4","SDL_SCANCODE_LANG4",int64_t(SDL_SCANCODE_LANG4),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_LANG5) == 148LL);
+addIEx("SCANCODE_LANG5","SDL_SCANCODE_LANG5",int64_t(SDL_SCANCODE_LANG5),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_LANG6) == 149LL);
+addIEx("SCANCODE_LANG6","SDL_SCANCODE_LANG6",int64_t(SDL_SCANCODE_LANG6),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_LANG7) == 150LL);
+addIEx("SCANCODE_LANG7","SDL_SCANCODE_LANG7",int64_t(SDL_SCANCODE_LANG7),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_LANG8) == 151LL);
+addIEx("SCANCODE_LANG8","SDL_SCANCODE_LANG8",int64_t(SDL_SCANCODE_LANG8),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_LANG9) == 152LL);
+addIEx("SCANCODE_LANG9","SDL_SCANCODE_LANG9",int64_t(SDL_SCANCODE_LANG9),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_ALTERASE) == 153LL);
+addIEx("SCANCODE_ALTERASE","SDL_SCANCODE_ALTERASE",int64_t(SDL_SCANCODE_ALTERASE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_SYSREQ) == 154LL);
+addIEx("SCANCODE_SYSREQ","SDL_SCANCODE_SYSREQ",int64_t(SDL_SCANCODE_SYSREQ),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_CANCEL) == 155LL);
+addIEx("SCANCODE_CANCEL","SDL_SCANCODE_CANCEL",int64_t(SDL_SCANCODE_CANCEL),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_CLEAR) == 156LL);
+addIEx("SCANCODE_CLEAR","SDL_SCANCODE_CLEAR",int64_t(SDL_SCANCODE_CLEAR),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_PRIOR) == 157LL);
+addIEx("SCANCODE_PRIOR","SDL_SCANCODE_PRIOR",int64_t(SDL_SCANCODE_PRIOR),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_RETURN2) == 158LL);
+addIEx("SCANCODE_RETURN2","SDL_SCANCODE_RETURN2",int64_t(SDL_SCANCODE_RETURN2),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_SEPARATOR) == 159LL);
+addIEx("SCANCODE_SEPARATOR","SDL_SCANCODE_SEPARATOR",int64_t(SDL_SCANCODE_SEPARATOR),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_OUT) == 160LL);
+addIEx("SCANCODE_OUT","SDL_SCANCODE_OUT",int64_t(SDL_SCANCODE_OUT),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_OPER) == 161LL);
+addIEx("SCANCODE_OPER","SDL_SCANCODE_OPER",int64_t(SDL_SCANCODE_OPER),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_CLEARAGAIN) == 162LL);
+addIEx("SCANCODE_CLEARAGAIN","SDL_SCANCODE_CLEARAGAIN",int64_t(SDL_SCANCODE_CLEARAGAIN),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_CRSEL) == 163LL);
+addIEx("SCANCODE_CRSEL","SDL_SCANCODE_CRSEL",int64_t(SDL_SCANCODE_CRSEL),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_EXSEL) == 164LL);
+addIEx("SCANCODE_EXSEL","SDL_SCANCODE_EXSEL",int64_t(SDL_SCANCODE_EXSEL),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_00) == 176LL);
+addIEx("SCANCODE_KP_00","SDL_SCANCODE_KP_00",int64_t(SDL_SCANCODE_KP_00),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_000) == 177LL);
+addIEx("SCANCODE_KP_000","SDL_SCANCODE_KP_000",int64_t(SDL_SCANCODE_KP_000),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_THOUSANDSSEPARATOR) == 178LL);
+addIEx("SCANCODE_THOUSANDSSEPARATOR","SDL_SCANCODE_THOUSANDSSEPARATOR",int64_t(SDL_SCANCODE_THOUSANDSSEPARATOR),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_DECIMALSEPARATOR) == 179LL);
+addIEx("SCANCODE_DECIMALSEPARATOR","SDL_SCANCODE_DECIMALSEPARATOR",int64_t(SDL_SCANCODE_DECIMALSEPARATOR),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_CURRENCYUNIT) == 180LL);
+addIEx("SCANCODE_CURRENCYUNIT","SDL_SCANCODE_CURRENCYUNIT",int64_t(SDL_SCANCODE_CURRENCYUNIT),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_CURRENCYSUBUNIT) == 181LL);
+addIEx("SCANCODE_CURRENCYSUBUNIT","SDL_SCANCODE_CURRENCYSUBUNIT",int64_t(SDL_SCANCODE_CURRENCYSUBUNIT),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_LEFTPAREN) == 182LL);
+addIEx("SCANCODE_KP_LEFTPAREN","SDL_SCANCODE_KP_LEFTPAREN",int64_t(SDL_SCANCODE_KP_LEFTPAREN),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_RIGHTPAREN) == 183LL);
+addIEx("SCANCODE_KP_RIGHTPAREN","SDL_SCANCODE_KP_RIGHTPAREN",int64_t(SDL_SCANCODE_KP_RIGHTPAREN),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_LEFTBRACE) == 184LL);
+addIEx("SCANCODE_KP_LEFTBRACE","SDL_SCANCODE_KP_LEFTBRACE",int64_t(SDL_SCANCODE_KP_LEFTBRACE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_RIGHTBRACE) == 185LL);
+addIEx("SCANCODE_KP_RIGHTBRACE","SDL_SCANCODE_KP_RIGHTBRACE",int64_t(SDL_SCANCODE_KP_RIGHTBRACE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_TAB) == 186LL);
+addIEx("SCANCODE_KP_TAB","SDL_SCANCODE_KP_TAB",int64_t(SDL_SCANCODE_KP_TAB),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_BACKSPACE) == 187LL);
+addIEx("SCANCODE_KP_BACKSPACE","SDL_SCANCODE_KP_BACKSPACE",int64_t(SDL_SCANCODE_KP_BACKSPACE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_A) == 188LL);
+addIEx("SCANCODE_KP_A","SDL_SCANCODE_KP_A",int64_t(SDL_SCANCODE_KP_A),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_B) == 189LL);
+addIEx("SCANCODE_KP_B","SDL_SCANCODE_KP_B",int64_t(SDL_SCANCODE_KP_B),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_C) == 190LL);
+addIEx("SCANCODE_KP_C","SDL_SCANCODE_KP_C",int64_t(SDL_SCANCODE_KP_C),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_D) == 191LL);
+addIEx("SCANCODE_KP_D","SDL_SCANCODE_KP_D",int64_t(SDL_SCANCODE_KP_D),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_E) == 192LL);
+addIEx("SCANCODE_KP_E","SDL_SCANCODE_KP_E",int64_t(SDL_SCANCODE_KP_E),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_F) == 193LL);
+addIEx("SCANCODE_KP_F","SDL_SCANCODE_KP_F",int64_t(SDL_SCANCODE_KP_F),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_XOR) == 194LL);
+addIEx("SCANCODE_KP_XOR","SDL_SCANCODE_KP_XOR",int64_t(SDL_SCANCODE_KP_XOR),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_POWER) == 195LL);
+addIEx("SCANCODE_KP_POWER","SDL_SCANCODE_KP_POWER",int64_t(SDL_SCANCODE_KP_POWER),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_PERCENT) == 196LL);
+addIEx("SCANCODE_KP_PERCENT","SDL_SCANCODE_KP_PERCENT",int64_t(SDL_SCANCODE_KP_PERCENT),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_LESS) == 197LL);
+addIEx("SCANCODE_KP_LESS","SDL_SCANCODE_KP_LESS",int64_t(SDL_SCANCODE_KP_LESS),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_GREATER) == 198LL);
+addIEx("SCANCODE_KP_GREATER","SDL_SCANCODE_KP_GREATER",int64_t(SDL_SCANCODE_KP_GREATER),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_AMPERSAND) == 199LL);
+addIEx("SCANCODE_KP_AMPERSAND","SDL_SCANCODE_KP_AMPERSAND",int64_t(SDL_SCANCODE_KP_AMPERSAND),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_DBLAMPERSAND) == 200LL);
+addIEx("SCANCODE_KP_DBLAMPERSAND","SDL_SCANCODE_KP_DBLAMPERSAND",int64_t(SDL_SCANCODE_KP_DBLAMPERSAND),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_VERTICALBAR) == 201LL);
+addIEx("SCANCODE_KP_VERTICALBAR","SDL_SCANCODE_KP_VERTICALBAR",int64_t(SDL_SCANCODE_KP_VERTICALBAR),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_DBLVERTICALBAR) == 202LL);
+addIEx("SCANCODE_KP_DBLVERTICALBAR","SDL_SCANCODE_KP_DBLVERTICALBAR",int64_t(SDL_SCANCODE_KP_DBLVERTICALBAR),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_COLON) == 203LL);
+addIEx("SCANCODE_KP_COLON","SDL_SCANCODE_KP_COLON",int64_t(SDL_SCANCODE_KP_COLON),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_HASH) == 204LL);
+addIEx("SCANCODE_KP_HASH","SDL_SCANCODE_KP_HASH",int64_t(SDL_SCANCODE_KP_HASH),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_SPACE) == 205LL);
+addIEx("SCANCODE_KP_SPACE","SDL_SCANCODE_KP_SPACE",int64_t(SDL_SCANCODE_KP_SPACE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_AT) == 206LL);
+addIEx("SCANCODE_KP_AT","SDL_SCANCODE_KP_AT",int64_t(SDL_SCANCODE_KP_AT),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_EXCLAM) == 207LL);
+addIEx("SCANCODE_KP_EXCLAM","SDL_SCANCODE_KP_EXCLAM",int64_t(SDL_SCANCODE_KP_EXCLAM),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_MEMSTORE) == 208LL);
+addIEx("SCANCODE_KP_MEMSTORE","SDL_SCANCODE_KP_MEMSTORE",int64_t(SDL_SCANCODE_KP_MEMSTORE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_MEMRECALL) == 209LL);
+addIEx("SCANCODE_KP_MEMRECALL","SDL_SCANCODE_KP_MEMRECALL",int64_t(SDL_SCANCODE_KP_MEMRECALL),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_MEMCLEAR) == 210LL);
+addIEx("SCANCODE_KP_MEMCLEAR","SDL_SCANCODE_KP_MEMCLEAR",int64_t(SDL_SCANCODE_KP_MEMCLEAR),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_MEMADD) == 211LL);
+addIEx("SCANCODE_KP_MEMADD","SDL_SCANCODE_KP_MEMADD",int64_t(SDL_SCANCODE_KP_MEMADD),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_MEMSUBTRACT) == 212LL);
+addIEx("SCANCODE_KP_MEMSUBTRACT","SDL_SCANCODE_KP_MEMSUBTRACT",int64_t(SDL_SCANCODE_KP_MEMSUBTRACT),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_MEMMULTIPLY) == 213LL);
+addIEx("SCANCODE_KP_MEMMULTIPLY","SDL_SCANCODE_KP_MEMMULTIPLY",int64_t(SDL_SCANCODE_KP_MEMMULTIPLY),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_MEMDIVIDE) == 214LL);
+addIEx("SCANCODE_KP_MEMDIVIDE","SDL_SCANCODE_KP_MEMDIVIDE",int64_t(SDL_SCANCODE_KP_MEMDIVIDE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_PLUSMINUS) == 215LL);
+addIEx("SCANCODE_KP_PLUSMINUS","SDL_SCANCODE_KP_PLUSMINUS",int64_t(SDL_SCANCODE_KP_PLUSMINUS),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_CLEAR) == 216LL);
+addIEx("SCANCODE_KP_CLEAR","SDL_SCANCODE_KP_CLEAR",int64_t(SDL_SCANCODE_KP_CLEAR),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_CLEARENTRY) == 217LL);
+addIEx("SCANCODE_KP_CLEARENTRY","SDL_SCANCODE_KP_CLEARENTRY",int64_t(SDL_SCANCODE_KP_CLEARENTRY),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_BINARY) == 218LL);
+addIEx("SCANCODE_KP_BINARY","SDL_SCANCODE_KP_BINARY",int64_t(SDL_SCANCODE_KP_BINARY),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_OCTAL) == 219LL);
+addIEx("SCANCODE_KP_OCTAL","SDL_SCANCODE_KP_OCTAL",int64_t(SDL_SCANCODE_KP_OCTAL),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_DECIMAL) == 220LL);
+addIEx("SCANCODE_KP_DECIMAL","SDL_SCANCODE_KP_DECIMAL",int64_t(SDL_SCANCODE_KP_DECIMAL),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_KP_HEXADECIMAL) == 221LL);
+addIEx("SCANCODE_KP_HEXADECIMAL","SDL_SCANCODE_KP_HEXADECIMAL",int64_t(SDL_SCANCODE_KP_HEXADECIMAL),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_LCTRL) == 224LL);
+addIEx("SCANCODE_LCTRL","SDL_SCANCODE_LCTRL",int64_t(SDL_SCANCODE_LCTRL),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_LSHIFT) == 225LL);
+addIEx("SCANCODE_LSHIFT","SDL_SCANCODE_LSHIFT",int64_t(SDL_SCANCODE_LSHIFT),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_LALT) == 226LL);
+addIEx("SCANCODE_LALT","SDL_SCANCODE_LALT",int64_t(SDL_SCANCODE_LALT),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_LGUI) == 227LL);
+addIEx("SCANCODE_LGUI","SDL_SCANCODE_LGUI",int64_t(SDL_SCANCODE_LGUI),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_RCTRL) == 228LL);
+addIEx("SCANCODE_RCTRL","SDL_SCANCODE_RCTRL",int64_t(SDL_SCANCODE_RCTRL),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_RSHIFT) == 229LL);
+addIEx("SCANCODE_RSHIFT","SDL_SCANCODE_RSHIFT",int64_t(SDL_SCANCODE_RSHIFT),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_RALT) == 230LL);
+addIEx("SCANCODE_RALT","SDL_SCANCODE_RALT",int64_t(SDL_SCANCODE_RALT),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_RGUI) == 231LL);
+addIEx("SCANCODE_RGUI","SDL_SCANCODE_RGUI",int64_t(SDL_SCANCODE_RGUI),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_MODE) == 257LL);
+addIEx("SCANCODE_MODE","SDL_SCANCODE_MODE",int64_t(SDL_SCANCODE_MODE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_SLEEP) == 258LL);
+addIEx("SCANCODE_SLEEP","SDL_SCANCODE_SLEEP",int64_t(SDL_SCANCODE_SLEEP),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_WAKE) == 259LL);
+addIEx("SCANCODE_WAKE","SDL_SCANCODE_WAKE",int64_t(SDL_SCANCODE_WAKE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_CHANNEL_INCREMENT) == 260LL);
+addIEx("SCANCODE_CHANNEL_INCREMENT","SDL_SCANCODE_CHANNEL_INCREMENT",int64_t(SDL_SCANCODE_CHANNEL_INCREMENT),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_CHANNEL_DECREMENT) == 261LL);
+addIEx("SCANCODE_CHANNEL_DECREMENT","SDL_SCANCODE_CHANNEL_DECREMENT",int64_t(SDL_SCANCODE_CHANNEL_DECREMENT),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_MEDIA_PLAY) == 262LL);
+addIEx("SCANCODE_MEDIA_PLAY","SDL_SCANCODE_MEDIA_PLAY",int64_t(SDL_SCANCODE_MEDIA_PLAY),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_MEDIA_PAUSE) == 263LL);
+addIEx("SCANCODE_MEDIA_PAUSE","SDL_SCANCODE_MEDIA_PAUSE",int64_t(SDL_SCANCODE_MEDIA_PAUSE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_MEDIA_RECORD) == 264LL);
+addIEx("SCANCODE_MEDIA_RECORD","SDL_SCANCODE_MEDIA_RECORD",int64_t(SDL_SCANCODE_MEDIA_RECORD),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_MEDIA_FAST_FORWARD) == 265LL);
+addIEx("SCANCODE_MEDIA_FAST_FORWARD","SDL_SCANCODE_MEDIA_FAST_FORWARD",int64_t(SDL_SCANCODE_MEDIA_FAST_FORWARD),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_MEDIA_REWIND) == 266LL);
+addIEx("SCANCODE_MEDIA_REWIND","SDL_SCANCODE_MEDIA_REWIND",int64_t(SDL_SCANCODE_MEDIA_REWIND),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_MEDIA_NEXT_TRACK) == 267LL);
+addIEx("SCANCODE_MEDIA_NEXT_TRACK","SDL_SCANCODE_MEDIA_NEXT_TRACK",int64_t(SDL_SCANCODE_MEDIA_NEXT_TRACK),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_MEDIA_PREVIOUS_TRACK) == 268LL);
+addIEx("SCANCODE_MEDIA_PREVIOUS_TRACK","SDL_SCANCODE_MEDIA_PREVIOUS_TRACK",int64_t(SDL_SCANCODE_MEDIA_PREVIOUS_TRACK),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_MEDIA_STOP) == 269LL);
+addIEx("SCANCODE_MEDIA_STOP","SDL_SCANCODE_MEDIA_STOP",int64_t(SDL_SCANCODE_MEDIA_STOP),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_MEDIA_EJECT) == 270LL);
+addIEx("SCANCODE_MEDIA_EJECT","SDL_SCANCODE_MEDIA_EJECT",int64_t(SDL_SCANCODE_MEDIA_EJECT),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_MEDIA_PLAY_PAUSE) == 271LL);
+addIEx("SCANCODE_MEDIA_PLAY_PAUSE","SDL_SCANCODE_MEDIA_PLAY_PAUSE",int64_t(SDL_SCANCODE_MEDIA_PLAY_PAUSE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_MEDIA_SELECT) == 272LL);
+addIEx("SCANCODE_MEDIA_SELECT","SDL_SCANCODE_MEDIA_SELECT",int64_t(SDL_SCANCODE_MEDIA_SELECT),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_AC_NEW) == 273LL);
+addIEx("SCANCODE_AC_NEW","SDL_SCANCODE_AC_NEW",int64_t(SDL_SCANCODE_AC_NEW),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_AC_OPEN) == 274LL);
+addIEx("SCANCODE_AC_OPEN","SDL_SCANCODE_AC_OPEN",int64_t(SDL_SCANCODE_AC_OPEN),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_AC_CLOSE) == 275LL);
+addIEx("SCANCODE_AC_CLOSE","SDL_SCANCODE_AC_CLOSE",int64_t(SDL_SCANCODE_AC_CLOSE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_AC_EXIT) == 276LL);
+addIEx("SCANCODE_AC_EXIT","SDL_SCANCODE_AC_EXIT",int64_t(SDL_SCANCODE_AC_EXIT),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_AC_SAVE) == 277LL);
+addIEx("SCANCODE_AC_SAVE","SDL_SCANCODE_AC_SAVE",int64_t(SDL_SCANCODE_AC_SAVE),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_AC_PRINT) == 278LL);
+addIEx("SCANCODE_AC_PRINT","SDL_SCANCODE_AC_PRINT",int64_t(SDL_SCANCODE_AC_PRINT),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_AC_PROPERTIES) == 279LL);
+addIEx("SCANCODE_AC_PROPERTIES","SDL_SCANCODE_AC_PROPERTIES",int64_t(SDL_SCANCODE_AC_PROPERTIES),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_AC_SEARCH) == 280LL);
+addIEx("SCANCODE_AC_SEARCH","SDL_SCANCODE_AC_SEARCH",int64_t(SDL_SCANCODE_AC_SEARCH),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_AC_HOME) == 281LL);
+addIEx("SCANCODE_AC_HOME","SDL_SCANCODE_AC_HOME",int64_t(SDL_SCANCODE_AC_HOME),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_AC_BACK) == 282LL);
+addIEx("SCANCODE_AC_BACK","SDL_SCANCODE_AC_BACK",int64_t(SDL_SCANCODE_AC_BACK),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_AC_FORWARD) == 283LL);
+addIEx("SCANCODE_AC_FORWARD","SDL_SCANCODE_AC_FORWARD",int64_t(SDL_SCANCODE_AC_FORWARD),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_AC_STOP) == 284LL);
+addIEx("SCANCODE_AC_STOP","SDL_SCANCODE_AC_STOP",int64_t(SDL_SCANCODE_AC_STOP),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_AC_REFRESH) == 285LL);
+addIEx("SCANCODE_AC_REFRESH","SDL_SCANCODE_AC_REFRESH",int64_t(SDL_SCANCODE_AC_REFRESH),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_AC_BOOKMARKS) == 286LL);
+addIEx("SCANCODE_AC_BOOKMARKS","SDL_SCANCODE_AC_BOOKMARKS",int64_t(SDL_SCANCODE_AC_BOOKMARKS),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_SOFTLEFT) == 287LL);
+addIEx("SCANCODE_SOFTLEFT","SDL_SCANCODE_SOFTLEFT",int64_t(SDL_SCANCODE_SOFTLEFT),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_SOFTRIGHT) == 288LL);
+addIEx("SCANCODE_SOFTRIGHT","SDL_SCANCODE_SOFTRIGHT",int64_t(SDL_SCANCODE_SOFTRIGHT),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_CALL) == 289LL);
+addIEx("SCANCODE_CALL","SDL_SCANCODE_CALL",int64_t(SDL_SCANCODE_CALL),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_ENDCALL) == 290LL);
+addIEx("SCANCODE_ENDCALL","SDL_SCANCODE_ENDCALL",int64_t(SDL_SCANCODE_ENDCALL),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_RESERVED) == 400LL);
+addIEx("SCANCODE_RESERVED","SDL_SCANCODE_RESERVED",int64_t(SDL_SCANCODE_RESERVED),das::LineInfo());
+static_assert(int64_t(SDL_SCANCODE_COUNT) == 512LL);
+addIEx("SCANCODE_COUNT","SDL_SCANCODE_COUNT",int64_t(SDL_SCANCODE_COUNT),das::LineInfo());
+} };
+static_assert(sizeof(SDL_TextInputType) == 4 && alignof(SDL_TextInputType) == 4);
+class Enumeration_SDL_TextInputType : public das::Enumeration {
+public: Enumeration_SDL_TextInputType() : das::Enumeration("SDL_TextInputType") {
+external=true; cppName="SDL_TextInputType"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_TextInputType>::type>::type;
+static_assert(int64_t(SDL_TEXTINPUT_TYPE_TEXT) == 0LL);
+addIEx("TEXTINPUT_TYPE_TEXT","SDL_TEXTINPUT_TYPE_TEXT",int64_t(SDL_TEXTINPUT_TYPE_TEXT),das::LineInfo());
+static_assert(int64_t(SDL_TEXTINPUT_TYPE_TEXT_NAME) == 1LL);
+addIEx("TEXTINPUT_TYPE_TEXT_NAME","SDL_TEXTINPUT_TYPE_TEXT_NAME",int64_t(SDL_TEXTINPUT_TYPE_TEXT_NAME),das::LineInfo());
+static_assert(int64_t(SDL_TEXTINPUT_TYPE_TEXT_EMAIL) == 2LL);
+addIEx("TEXTINPUT_TYPE_TEXT_EMAIL","SDL_TEXTINPUT_TYPE_TEXT_EMAIL",int64_t(SDL_TEXTINPUT_TYPE_TEXT_EMAIL),das::LineInfo());
+static_assert(int64_t(SDL_TEXTINPUT_TYPE_TEXT_USERNAME) == 3LL);
+addIEx("TEXTINPUT_TYPE_TEXT_USERNAME","SDL_TEXTINPUT_TYPE_TEXT_USERNAME",int64_t(SDL_TEXTINPUT_TYPE_TEXT_USERNAME),das::LineInfo());
+static_assert(int64_t(SDL_TEXTINPUT_TYPE_TEXT_PASSWORD_HIDDEN) == 4LL);
+addIEx("TEXTINPUT_TYPE_TEXT_PASSWORD_HIDDEN","SDL_TEXTINPUT_TYPE_TEXT_PASSWORD_HIDDEN",int64_t(SDL_TEXTINPUT_TYPE_TEXT_PASSWORD_HIDDEN),das::LineInfo());
+static_assert(int64_t(SDL_TEXTINPUT_TYPE_TEXT_PASSWORD_VISIBLE) == 5LL);
+addIEx("TEXTINPUT_TYPE_TEXT_PASSWORD_VISIBLE","SDL_TEXTINPUT_TYPE_TEXT_PASSWORD_VISIBLE",int64_t(SDL_TEXTINPUT_TYPE_TEXT_PASSWORD_VISIBLE),das::LineInfo());
+static_assert(int64_t(SDL_TEXTINPUT_TYPE_NUMBER) == 6LL);
+addIEx("TEXTINPUT_TYPE_NUMBER","SDL_TEXTINPUT_TYPE_NUMBER",int64_t(SDL_TEXTINPUT_TYPE_NUMBER),das::LineInfo());
+static_assert(int64_t(SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_HIDDEN) == 7LL);
+addIEx("TEXTINPUT_TYPE_NUMBER_PASSWORD_HIDDEN","SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_HIDDEN",int64_t(SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_HIDDEN),das::LineInfo());
+static_assert(int64_t(SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE) == 8LL);
+addIEx("TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE","SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE",int64_t(SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE),das::LineInfo());
+} };
+static_assert(sizeof(SDL_Capitalization) == 4 && alignof(SDL_Capitalization) == 4);
+class Enumeration_SDL_Capitalization : public das::Enumeration {
+public: Enumeration_SDL_Capitalization() : das::Enumeration("SDL_Capitalization") {
+external=true; cppName="SDL_Capitalization"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_Capitalization>::type>::type;
+static_assert(int64_t(SDL_CAPITALIZE_NONE) == 0LL);
+addIEx("CAPITALIZE_NONE","SDL_CAPITALIZE_NONE",int64_t(SDL_CAPITALIZE_NONE),das::LineInfo());
+static_assert(int64_t(SDL_CAPITALIZE_SENTENCES) == 1LL);
+addIEx("CAPITALIZE_SENTENCES","SDL_CAPITALIZE_SENTENCES",int64_t(SDL_CAPITALIZE_SENTENCES),das::LineInfo());
+static_assert(int64_t(SDL_CAPITALIZE_WORDS) == 2LL);
+addIEx("CAPITALIZE_WORDS","SDL_CAPITALIZE_WORDS",int64_t(SDL_CAPITALIZE_WORDS),das::LineInfo());
+static_assert(int64_t(SDL_CAPITALIZE_LETTERS) == 3LL);
+addIEx("CAPITALIZE_LETTERS","SDL_CAPITALIZE_LETTERS",int64_t(SDL_CAPITALIZE_LETTERS),das::LineInfo());
+} };
+static_assert(sizeof(SDL_SystemCursor) == 4 && alignof(SDL_SystemCursor) == 4);
+class Enumeration_SDL_SystemCursor : public das::Enumeration {
+public: Enumeration_SDL_SystemCursor() : das::Enumeration("SDL_SystemCursor") {
+external=true; cppName="SDL_SystemCursor"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_SystemCursor>::type>::type;
+static_assert(int64_t(SDL_SYSTEM_CURSOR_DEFAULT) == 0LL);
+addIEx("SYSTEM_CURSOR_DEFAULT","SDL_SYSTEM_CURSOR_DEFAULT",int64_t(SDL_SYSTEM_CURSOR_DEFAULT),das::LineInfo());
+static_assert(int64_t(SDL_SYSTEM_CURSOR_TEXT) == 1LL);
+addIEx("SYSTEM_CURSOR_TEXT","SDL_SYSTEM_CURSOR_TEXT",int64_t(SDL_SYSTEM_CURSOR_TEXT),das::LineInfo());
+static_assert(int64_t(SDL_SYSTEM_CURSOR_WAIT) == 2LL);
+addIEx("SYSTEM_CURSOR_WAIT","SDL_SYSTEM_CURSOR_WAIT",int64_t(SDL_SYSTEM_CURSOR_WAIT),das::LineInfo());
+static_assert(int64_t(SDL_SYSTEM_CURSOR_CROSSHAIR) == 3LL);
+addIEx("SYSTEM_CURSOR_CROSSHAIR","SDL_SYSTEM_CURSOR_CROSSHAIR",int64_t(SDL_SYSTEM_CURSOR_CROSSHAIR),das::LineInfo());
+static_assert(int64_t(SDL_SYSTEM_CURSOR_PROGRESS) == 4LL);
+addIEx("SYSTEM_CURSOR_PROGRESS","SDL_SYSTEM_CURSOR_PROGRESS",int64_t(SDL_SYSTEM_CURSOR_PROGRESS),das::LineInfo());
+static_assert(int64_t(SDL_SYSTEM_CURSOR_NWSE_RESIZE) == 5LL);
+addIEx("SYSTEM_CURSOR_NWSE_RESIZE","SDL_SYSTEM_CURSOR_NWSE_RESIZE",int64_t(SDL_SYSTEM_CURSOR_NWSE_RESIZE),das::LineInfo());
+static_assert(int64_t(SDL_SYSTEM_CURSOR_NESW_RESIZE) == 6LL);
+addIEx("SYSTEM_CURSOR_NESW_RESIZE","SDL_SYSTEM_CURSOR_NESW_RESIZE",int64_t(SDL_SYSTEM_CURSOR_NESW_RESIZE),das::LineInfo());
+static_assert(int64_t(SDL_SYSTEM_CURSOR_EW_RESIZE) == 7LL);
+addIEx("SYSTEM_CURSOR_EW_RESIZE","SDL_SYSTEM_CURSOR_EW_RESIZE",int64_t(SDL_SYSTEM_CURSOR_EW_RESIZE),das::LineInfo());
+static_assert(int64_t(SDL_SYSTEM_CURSOR_NS_RESIZE) == 8LL);
+addIEx("SYSTEM_CURSOR_NS_RESIZE","SDL_SYSTEM_CURSOR_NS_RESIZE",int64_t(SDL_SYSTEM_CURSOR_NS_RESIZE),das::LineInfo());
+static_assert(int64_t(SDL_SYSTEM_CURSOR_MOVE) == 9LL);
+addIEx("SYSTEM_CURSOR_MOVE","SDL_SYSTEM_CURSOR_MOVE",int64_t(SDL_SYSTEM_CURSOR_MOVE),das::LineInfo());
+static_assert(int64_t(SDL_SYSTEM_CURSOR_NOT_ALLOWED) == 10LL);
+addIEx("SYSTEM_CURSOR_NOT_ALLOWED","SDL_SYSTEM_CURSOR_NOT_ALLOWED",int64_t(SDL_SYSTEM_CURSOR_NOT_ALLOWED),das::LineInfo());
+static_assert(int64_t(SDL_SYSTEM_CURSOR_POINTER) == 11LL);
+addIEx("SYSTEM_CURSOR_POINTER","SDL_SYSTEM_CURSOR_POINTER",int64_t(SDL_SYSTEM_CURSOR_POINTER),das::LineInfo());
+static_assert(int64_t(SDL_SYSTEM_CURSOR_NW_RESIZE) == 12LL);
+addIEx("SYSTEM_CURSOR_NW_RESIZE","SDL_SYSTEM_CURSOR_NW_RESIZE",int64_t(SDL_SYSTEM_CURSOR_NW_RESIZE),das::LineInfo());
+static_assert(int64_t(SDL_SYSTEM_CURSOR_N_RESIZE) == 13LL);
+addIEx("SYSTEM_CURSOR_N_RESIZE","SDL_SYSTEM_CURSOR_N_RESIZE",int64_t(SDL_SYSTEM_CURSOR_N_RESIZE),das::LineInfo());
+static_assert(int64_t(SDL_SYSTEM_CURSOR_NE_RESIZE) == 14LL);
+addIEx("SYSTEM_CURSOR_NE_RESIZE","SDL_SYSTEM_CURSOR_NE_RESIZE",int64_t(SDL_SYSTEM_CURSOR_NE_RESIZE),das::LineInfo());
+static_assert(int64_t(SDL_SYSTEM_CURSOR_E_RESIZE) == 15LL);
+addIEx("SYSTEM_CURSOR_E_RESIZE","SDL_SYSTEM_CURSOR_E_RESIZE",int64_t(SDL_SYSTEM_CURSOR_E_RESIZE),das::LineInfo());
+static_assert(int64_t(SDL_SYSTEM_CURSOR_SE_RESIZE) == 16LL);
+addIEx("SYSTEM_CURSOR_SE_RESIZE","SDL_SYSTEM_CURSOR_SE_RESIZE",int64_t(SDL_SYSTEM_CURSOR_SE_RESIZE),das::LineInfo());
+static_assert(int64_t(SDL_SYSTEM_CURSOR_S_RESIZE) == 17LL);
+addIEx("SYSTEM_CURSOR_S_RESIZE","SDL_SYSTEM_CURSOR_S_RESIZE",int64_t(SDL_SYSTEM_CURSOR_S_RESIZE),das::LineInfo());
+static_assert(int64_t(SDL_SYSTEM_CURSOR_SW_RESIZE) == 18LL);
+addIEx("SYSTEM_CURSOR_SW_RESIZE","SDL_SYSTEM_CURSOR_SW_RESIZE",int64_t(SDL_SYSTEM_CURSOR_SW_RESIZE),das::LineInfo());
+static_assert(int64_t(SDL_SYSTEM_CURSOR_W_RESIZE) == 19LL);
+addIEx("SYSTEM_CURSOR_W_RESIZE","SDL_SYSTEM_CURSOR_W_RESIZE",int64_t(SDL_SYSTEM_CURSOR_W_RESIZE),das::LineInfo());
+static_assert(int64_t(SDL_SYSTEM_CURSOR_COUNT) == 20LL);
+addIEx("SYSTEM_CURSOR_COUNT","SDL_SYSTEM_CURSOR_COUNT",int64_t(SDL_SYSTEM_CURSOR_COUNT),das::LineInfo());
+} };
+static_assert(sizeof(SDL_TouchDeviceType) == 4 && alignof(SDL_TouchDeviceType) == 4);
+class Enumeration_SDL_TouchDeviceType : public das::Enumeration {
+public: Enumeration_SDL_TouchDeviceType() : das::Enumeration("SDL_TouchDeviceType") {
+external=true; cppName="SDL_TouchDeviceType"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_TouchDeviceType>::type>::type;
+static_assert(int64_t(SDL_TOUCH_DEVICE_INVALID) == -1LL);
+addIEx("TOUCH_DEVICE_INVALID","SDL_TOUCH_DEVICE_INVALID",int64_t(SDL_TOUCH_DEVICE_INVALID),das::LineInfo());
+static_assert(int64_t(SDL_TOUCH_DEVICE_DIRECT) == 0LL);
+addIEx("TOUCH_DEVICE_DIRECT","SDL_TOUCH_DEVICE_DIRECT",int64_t(SDL_TOUCH_DEVICE_DIRECT),das::LineInfo());
+static_assert(int64_t(SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE) == 1LL);
+addIEx("TOUCH_DEVICE_INDIRECT_ABSOLUTE","SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE",int64_t(SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE),das::LineInfo());
+static_assert(int64_t(SDL_TOUCH_DEVICE_INDIRECT_RELATIVE) == 2LL);
+addIEx("TOUCH_DEVICE_INDIRECT_RELATIVE","SDL_TOUCH_DEVICE_INDIRECT_RELATIVE",int64_t(SDL_TOUCH_DEVICE_INDIRECT_RELATIVE),das::LineInfo());
+} };
+static_assert(sizeof(SDL_Finger) == 24 && alignof(SDL_Finger) == 8);
+namespace das { struct SDL_FingerAnnotation : ManagedStructureAnnotation<SDL_Finger, false> {
+SDL_FingerAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_Finger", lib) {
+static_assert(offsetof(SDL_Finger, id) == 0);
+addField<DAS_BIND_MANAGED_FIELD(id)>("id", "id");
+static_assert(offsetof(SDL_Finger, x) == 8);
+addField<DAS_BIND_MANAGED_FIELD(x)>("x", "x");
+static_assert(offsetof(SDL_Finger, y) == 12);
+addField<DAS_BIND_MANAGED_FIELD(y)>("y", "y");
+static_assert(offsetof(SDL_Finger, pressure) == 16);
+addField<DAS_BIND_MANAGED_FIELD(pressure)>("pressure", "pressure");
+}
+}; }
+static_assert(sizeof(SDL_PenAxis) == 4 && alignof(SDL_PenAxis) == 4);
+class Enumeration_SDL_PenAxis : public das::Enumeration {
+public: Enumeration_SDL_PenAxis() : das::Enumeration("SDL_PenAxis") {
+external=true; cppName="SDL_PenAxis"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_PenAxis>::type>::type;
+static_assert(int64_t(SDL_PEN_AXIS_PRESSURE) == 0LL);
+addIEx("PEN_AXIS_PRESSURE","SDL_PEN_AXIS_PRESSURE",int64_t(SDL_PEN_AXIS_PRESSURE),das::LineInfo());
+static_assert(int64_t(SDL_PEN_AXIS_XTILT) == 1LL);
+addIEx("PEN_AXIS_XTILT","SDL_PEN_AXIS_XTILT",int64_t(SDL_PEN_AXIS_XTILT),das::LineInfo());
+static_assert(int64_t(SDL_PEN_AXIS_YTILT) == 2LL);
+addIEx("PEN_AXIS_YTILT","SDL_PEN_AXIS_YTILT",int64_t(SDL_PEN_AXIS_YTILT),das::LineInfo());
+static_assert(int64_t(SDL_PEN_AXIS_DISTANCE) == 3LL);
+addIEx("PEN_AXIS_DISTANCE","SDL_PEN_AXIS_DISTANCE",int64_t(SDL_PEN_AXIS_DISTANCE),das::LineInfo());
+static_assert(int64_t(SDL_PEN_AXIS_ROTATION) == 4LL);
+addIEx("PEN_AXIS_ROTATION","SDL_PEN_AXIS_ROTATION",int64_t(SDL_PEN_AXIS_ROTATION),das::LineInfo());
+static_assert(int64_t(SDL_PEN_AXIS_SLIDER) == 5LL);
+addIEx("PEN_AXIS_SLIDER","SDL_PEN_AXIS_SLIDER",int64_t(SDL_PEN_AXIS_SLIDER),das::LineInfo());
+static_assert(int64_t(SDL_PEN_AXIS_TANGENTIAL_PRESSURE) == 6LL);
+addIEx("PEN_AXIS_TANGENTIAL_PRESSURE","SDL_PEN_AXIS_TANGENTIAL_PRESSURE",int64_t(SDL_PEN_AXIS_TANGENTIAL_PRESSURE),das::LineInfo());
+static_assert(int64_t(SDL_PEN_AXIS_COUNT) == 7LL);
+addIEx("PEN_AXIS_COUNT","SDL_PEN_AXIS_COUNT",int64_t(SDL_PEN_AXIS_COUNT),das::LineInfo());
+} };
 static_assert(sizeof(SDL_KeyboardEvent) == 40 && alignof(SDL_KeyboardEvent) == 8);
 namespace das { struct SDL_KeyboardEventAnnotation : ManagedStructureAnnotation<SDL_KeyboardEvent, false> {
 SDL_KeyboardEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_KeyboardEvent", lib) {
@@ -647,6 +1649,21 @@ static_assert(offsetof(SDL_KeyboardEvent, down) == 36);
 addField<DAS_BIND_MANAGED_FIELD(down)>("down", "down");
 static_assert(offsetof(SDL_KeyboardEvent, repeat) == 37);
 addField<DAS_BIND_MANAGED_FIELD(repeat)>("repeat", "repeat");
+}
+}; }
+static_assert(sizeof(SDL_TextEditingCandidatesEvent) == 48 && alignof(SDL_TextEditingCandidatesEvent) == 8);
+namespace das { struct SDL_TextEditingCandidatesEventAnnotation : ManagedStructureAnnotation<SDL_TextEditingCandidatesEvent, false> {
+SDL_TextEditingCandidatesEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_TextEditingCandidatesEvent", lib) {
+static_assert(offsetof(SDL_TextEditingCandidatesEvent, timestamp) == 8);
+addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+static_assert(offsetof(SDL_TextEditingCandidatesEvent, windowID) == 16);
+addField<DAS_BIND_MANAGED_FIELD(windowID)>("windowID", "windowID");
+static_assert(offsetof(SDL_TextEditingCandidatesEvent, num_candidates) == 32);
+addField<DAS_BIND_MANAGED_FIELD(num_candidates)>("num_candidates", "num_candidates");
+static_assert(offsetof(SDL_TextEditingCandidatesEvent, selected_candidate) == 36);
+addField<DAS_BIND_MANAGED_FIELD(selected_candidate)>("selected_candidate", "selected_candidate");
+static_assert(offsetof(SDL_TextEditingCandidatesEvent, horizontal) == 40);
+addField<DAS_BIND_MANAGED_FIELD(horizontal)>("horizontal", "horizontal");
 }
 }; }
 static_assert(sizeof(SDL_MouseMotionEvent) == 48 && alignof(SDL_MouseMotionEvent) == 8);
@@ -714,6 +1731,289 @@ static_assert(offsetof(SDL_MouseWheelEvent, integer_y) == 48);
 addField<DAS_BIND_MANAGED_FIELD(integer_y)>("integer_y", "integer_y");
 }
 }; }
+static_assert(sizeof(SDL_JoyAxisEvent) == 32 && alignof(SDL_JoyAxisEvent) == 8);
+namespace das { struct SDL_JoyAxisEventAnnotation : ManagedStructureAnnotation<SDL_JoyAxisEvent, false> {
+SDL_JoyAxisEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_JoyAxisEvent", lib) {
+static_assert(offsetof(SDL_JoyAxisEvent, timestamp) == 8);
+addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+static_assert(offsetof(SDL_JoyAxisEvent, which) == 16);
+addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
+static_assert(offsetof(SDL_JoyAxisEvent, axis) == 20);
+addField<DAS_BIND_MANAGED_FIELD(axis)>("axis", "axis");
+static_assert(offsetof(SDL_JoyAxisEvent, value) == 24);
+addField<DAS_BIND_MANAGED_FIELD(value)>("value", "value");
+}
+}; }
+static_assert(sizeof(SDL_JoyBallEvent) == 32 && alignof(SDL_JoyBallEvent) == 8);
+namespace das { struct SDL_JoyBallEventAnnotation : ManagedStructureAnnotation<SDL_JoyBallEvent, false> {
+SDL_JoyBallEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_JoyBallEvent", lib) {
+static_assert(offsetof(SDL_JoyBallEvent, timestamp) == 8);
+addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+static_assert(offsetof(SDL_JoyBallEvent, which) == 16);
+addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
+static_assert(offsetof(SDL_JoyBallEvent, ball) == 20);
+addField<DAS_BIND_MANAGED_FIELD(ball)>("ball", "ball");
+static_assert(offsetof(SDL_JoyBallEvent, xrel) == 24);
+addField<DAS_BIND_MANAGED_FIELD(xrel)>("xrel", "xrel");
+static_assert(offsetof(SDL_JoyBallEvent, yrel) == 26);
+addField<DAS_BIND_MANAGED_FIELD(yrel)>("yrel", "yrel");
+}
+}; }
+static_assert(sizeof(SDL_JoyHatEvent) == 24 && alignof(SDL_JoyHatEvent) == 8);
+namespace das { struct SDL_JoyHatEventAnnotation : ManagedStructureAnnotation<SDL_JoyHatEvent, false> {
+SDL_JoyHatEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_JoyHatEvent", lib) {
+static_assert(offsetof(SDL_JoyHatEvent, timestamp) == 8);
+addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+static_assert(offsetof(SDL_JoyHatEvent, which) == 16);
+addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
+static_assert(offsetof(SDL_JoyHatEvent, hat) == 20);
+addField<DAS_BIND_MANAGED_FIELD(hat)>("hat", "hat");
+static_assert(offsetof(SDL_JoyHatEvent, value) == 21);
+addField<DAS_BIND_MANAGED_FIELD(value)>("value", "value");
+}
+}; }
+static_assert(sizeof(SDL_JoyButtonEvent) == 24 && alignof(SDL_JoyButtonEvent) == 8);
+namespace das { struct SDL_JoyButtonEventAnnotation : ManagedStructureAnnotation<SDL_JoyButtonEvent, false> {
+SDL_JoyButtonEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_JoyButtonEvent", lib) {
+static_assert(offsetof(SDL_JoyButtonEvent, timestamp) == 8);
+addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+static_assert(offsetof(SDL_JoyButtonEvent, which) == 16);
+addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
+static_assert(offsetof(SDL_JoyButtonEvent, button) == 20);
+addField<DAS_BIND_MANAGED_FIELD(button)>("button", "button");
+static_assert(offsetof(SDL_JoyButtonEvent, down) == 21);
+addField<DAS_BIND_MANAGED_FIELD(down)>("down", "down");
+}
+}; }
+static_assert(sizeof(SDL_JoyDeviceEvent) == 24 && alignof(SDL_JoyDeviceEvent) == 8);
+namespace das { struct SDL_JoyDeviceEventAnnotation : ManagedStructureAnnotation<SDL_JoyDeviceEvent, false> {
+SDL_JoyDeviceEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_JoyDeviceEvent", lib) {
+static_assert(offsetof(SDL_JoyDeviceEvent, timestamp) == 8);
+addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+static_assert(offsetof(SDL_JoyDeviceEvent, which) == 16);
+addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
+}
+}; }
+static_assert(sizeof(SDL_JoyBatteryEvent) == 32 && alignof(SDL_JoyBatteryEvent) == 8);
+namespace das { struct SDL_JoyBatteryEventAnnotation : ManagedStructureAnnotation<SDL_JoyBatteryEvent, false> {
+SDL_JoyBatteryEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_JoyBatteryEvent", lib) {
+static_assert(offsetof(SDL_JoyBatteryEvent, timestamp) == 8);
+addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+static_assert(offsetof(SDL_JoyBatteryEvent, which) == 16);
+addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
+static_assert(offsetof(SDL_JoyBatteryEvent, state) == 20);
+addField<DAS_BIND_MANAGED_FIELD(state)>("state", "state");
+static_assert(offsetof(SDL_JoyBatteryEvent, percent) == 24);
+addField<DAS_BIND_MANAGED_FIELD(percent)>("percent", "percent");
+}
+}; }
+static_assert(sizeof(SDL_GamepadAxisEvent) == 32 && alignof(SDL_GamepadAxisEvent) == 8);
+namespace das { struct SDL_GamepadAxisEventAnnotation : ManagedStructureAnnotation<SDL_GamepadAxisEvent, false> {
+SDL_GamepadAxisEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_GamepadAxisEvent", lib) {
+static_assert(offsetof(SDL_GamepadAxisEvent, timestamp) == 8);
+addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+static_assert(offsetof(SDL_GamepadAxisEvent, which) == 16);
+addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
+static_assert(offsetof(SDL_GamepadAxisEvent, axis) == 20);
+addField<DAS_BIND_MANAGED_FIELD(axis)>("axis", "axis");
+static_assert(offsetof(SDL_GamepadAxisEvent, value) == 24);
+addField<DAS_BIND_MANAGED_FIELD(value)>("value", "value");
+}
+}; }
+static_assert(sizeof(SDL_GamepadButtonEvent) == 24 && alignof(SDL_GamepadButtonEvent) == 8);
+namespace das { struct SDL_GamepadButtonEventAnnotation : ManagedStructureAnnotation<SDL_GamepadButtonEvent, false> {
+SDL_GamepadButtonEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_GamepadButtonEvent", lib) {
+static_assert(offsetof(SDL_GamepadButtonEvent, timestamp) == 8);
+addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+static_assert(offsetof(SDL_GamepadButtonEvent, which) == 16);
+addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
+static_assert(offsetof(SDL_GamepadButtonEvent, button) == 20);
+addField<DAS_BIND_MANAGED_FIELD(button)>("button", "button");
+static_assert(offsetof(SDL_GamepadButtonEvent, down) == 21);
+addField<DAS_BIND_MANAGED_FIELD(down)>("down", "down");
+}
+}; }
+static_assert(sizeof(SDL_GamepadDeviceEvent) == 24 && alignof(SDL_GamepadDeviceEvent) == 8);
+namespace das { struct SDL_GamepadDeviceEventAnnotation : ManagedStructureAnnotation<SDL_GamepadDeviceEvent, false> {
+SDL_GamepadDeviceEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_GamepadDeviceEvent", lib) {
+static_assert(offsetof(SDL_GamepadDeviceEvent, timestamp) == 8);
+addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+static_assert(offsetof(SDL_GamepadDeviceEvent, which) == 16);
+addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
+}
+}; }
+static_assert(sizeof(SDL_GamepadTouchpadEvent) == 40 && alignof(SDL_GamepadTouchpadEvent) == 8);
+namespace das { struct SDL_GamepadTouchpadEventAnnotation : ManagedStructureAnnotation<SDL_GamepadTouchpadEvent, false> {
+SDL_GamepadTouchpadEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_GamepadTouchpadEvent", lib) {
+static_assert(offsetof(SDL_GamepadTouchpadEvent, timestamp) == 8);
+addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+static_assert(offsetof(SDL_GamepadTouchpadEvent, which) == 16);
+addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
+static_assert(offsetof(SDL_GamepadTouchpadEvent, touchpad) == 20);
+addField<DAS_BIND_MANAGED_FIELD(touchpad)>("touchpad", "touchpad");
+static_assert(offsetof(SDL_GamepadTouchpadEvent, finger) == 24);
+addField<DAS_BIND_MANAGED_FIELD(finger)>("finger", "finger");
+static_assert(offsetof(SDL_GamepadTouchpadEvent, x) == 28);
+addField<DAS_BIND_MANAGED_FIELD(x)>("x", "x");
+static_assert(offsetof(SDL_GamepadTouchpadEvent, y) == 32);
+addField<DAS_BIND_MANAGED_FIELD(y)>("y", "y");
+static_assert(offsetof(SDL_GamepadTouchpadEvent, pressure) == 36);
+addField<DAS_BIND_MANAGED_FIELD(pressure)>("pressure", "pressure");
+}
+}; }
+static_assert(sizeof(SDL_GamepadSensorEvent) == 48 && alignof(SDL_GamepadSensorEvent) == 8);
+namespace das { struct SDL_GamepadSensorEventAnnotation : ManagedStructureAnnotation<SDL_GamepadSensorEvent, false> {
+SDL_GamepadSensorEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_GamepadSensorEvent", lib) {
+static_assert(offsetof(SDL_GamepadSensorEvent, timestamp) == 8);
+addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+static_assert(offsetof(SDL_GamepadSensorEvent, which) == 16);
+addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
+static_assert(offsetof(SDL_GamepadSensorEvent, sensor) == 20);
+addField<DAS_BIND_MANAGED_FIELD(sensor)>("sensor", "sensor");
+static_assert(offsetof(SDL_GamepadSensorEvent, data) == 24);
+addField<DAS_BIND_MANAGED_FIELD(data)>("data", "data");
+static_assert(offsetof(SDL_GamepadSensorEvent, sensor_timestamp) == 40);
+addField<DAS_BIND_MANAGED_FIELD(sensor_timestamp)>("sensor_timestamp", "sensor_timestamp");
+}
+}; }
+static_assert(sizeof(SDL_TouchFingerEvent) == 56 && alignof(SDL_TouchFingerEvent) == 8);
+namespace das { struct SDL_TouchFingerEventAnnotation : ManagedStructureAnnotation<SDL_TouchFingerEvent, false> {
+SDL_TouchFingerEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_TouchFingerEvent", lib) {
+static_assert(offsetof(SDL_TouchFingerEvent, timestamp) == 8);
+addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+static_assert(offsetof(SDL_TouchFingerEvent, touchID) == 16);
+addField<DAS_BIND_MANAGED_FIELD(touchID)>("touchID", "touchID");
+static_assert(offsetof(SDL_TouchFingerEvent, fingerID) == 24);
+addField<DAS_BIND_MANAGED_FIELD(fingerID)>("fingerID", "fingerID");
+static_assert(offsetof(SDL_TouchFingerEvent, x) == 32);
+addField<DAS_BIND_MANAGED_FIELD(x)>("x", "x");
+static_assert(offsetof(SDL_TouchFingerEvent, y) == 36);
+addField<DAS_BIND_MANAGED_FIELD(y)>("y", "y");
+static_assert(offsetof(SDL_TouchFingerEvent, dx) == 40);
+addField<DAS_BIND_MANAGED_FIELD(dx)>("dx", "dx");
+static_assert(offsetof(SDL_TouchFingerEvent, dy) == 44);
+addField<DAS_BIND_MANAGED_FIELD(dy)>("dy", "dy");
+static_assert(offsetof(SDL_TouchFingerEvent, pressure) == 48);
+addField<DAS_BIND_MANAGED_FIELD(pressure)>("pressure", "pressure");
+static_assert(offsetof(SDL_TouchFingerEvent, windowID) == 52);
+addField<DAS_BIND_MANAGED_FIELD(windowID)>("windowID", "windowID");
+}
+}; }
+static_assert(sizeof(SDL_PenProximityEvent) == 24 && alignof(SDL_PenProximityEvent) == 8);
+namespace das { struct SDL_PenProximityEventAnnotation : ManagedStructureAnnotation<SDL_PenProximityEvent, false> {
+SDL_PenProximityEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_PenProximityEvent", lib) {
+static_assert(offsetof(SDL_PenProximityEvent, timestamp) == 8);
+addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+static_assert(offsetof(SDL_PenProximityEvent, windowID) == 16);
+addField<DAS_BIND_MANAGED_FIELD(windowID)>("windowID", "windowID");
+static_assert(offsetof(SDL_PenProximityEvent, which) == 20);
+addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
+}
+}; }
+static_assert(sizeof(SDL_PenMotionEvent) == 40 && alignof(SDL_PenMotionEvent) == 8);
+namespace das { struct SDL_PenMotionEventAnnotation : ManagedStructureAnnotation<SDL_PenMotionEvent, false> {
+SDL_PenMotionEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_PenMotionEvent", lib) {
+static_assert(offsetof(SDL_PenMotionEvent, timestamp) == 8);
+addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+static_assert(offsetof(SDL_PenMotionEvent, windowID) == 16);
+addField<DAS_BIND_MANAGED_FIELD(windowID)>("windowID", "windowID");
+static_assert(offsetof(SDL_PenMotionEvent, which) == 20);
+addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
+static_assert(offsetof(SDL_PenMotionEvent, pen_state) == 24);
+addField<DAS_BIND_MANAGED_FIELD(pen_state)>("pen_state", "pen_state");
+static_assert(offsetof(SDL_PenMotionEvent, x) == 28);
+addField<DAS_BIND_MANAGED_FIELD(x)>("x", "x");
+static_assert(offsetof(SDL_PenMotionEvent, y) == 32);
+addField<DAS_BIND_MANAGED_FIELD(y)>("y", "y");
+}
+}; }
+static_assert(sizeof(SDL_PenTouchEvent) == 40 && alignof(SDL_PenTouchEvent) == 8);
+namespace das { struct SDL_PenTouchEventAnnotation : ManagedStructureAnnotation<SDL_PenTouchEvent, false> {
+SDL_PenTouchEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_PenTouchEvent", lib) {
+static_assert(offsetof(SDL_PenTouchEvent, timestamp) == 8);
+addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+static_assert(offsetof(SDL_PenTouchEvent, windowID) == 16);
+addField<DAS_BIND_MANAGED_FIELD(windowID)>("windowID", "windowID");
+static_assert(offsetof(SDL_PenTouchEvent, which) == 20);
+addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
+static_assert(offsetof(SDL_PenTouchEvent, pen_state) == 24);
+addField<DAS_BIND_MANAGED_FIELD(pen_state)>("pen_state", "pen_state");
+static_assert(offsetof(SDL_PenTouchEvent, x) == 28);
+addField<DAS_BIND_MANAGED_FIELD(x)>("x", "x");
+static_assert(offsetof(SDL_PenTouchEvent, y) == 32);
+addField<DAS_BIND_MANAGED_FIELD(y)>("y", "y");
+static_assert(offsetof(SDL_PenTouchEvent, eraser) == 36);
+addField<DAS_BIND_MANAGED_FIELD(eraser)>("eraser", "eraser");
+static_assert(offsetof(SDL_PenTouchEvent, down) == 37);
+addField<DAS_BIND_MANAGED_FIELD(down)>("down", "down");
+}
+}; }
+static_assert(sizeof(SDL_PenButtonEvent) == 40 && alignof(SDL_PenButtonEvent) == 8);
+namespace das { struct SDL_PenButtonEventAnnotation : ManagedStructureAnnotation<SDL_PenButtonEvent, false> {
+SDL_PenButtonEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_PenButtonEvent", lib) {
+static_assert(offsetof(SDL_PenButtonEvent, timestamp) == 8);
+addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+static_assert(offsetof(SDL_PenButtonEvent, windowID) == 16);
+addField<DAS_BIND_MANAGED_FIELD(windowID)>("windowID", "windowID");
+static_assert(offsetof(SDL_PenButtonEvent, which) == 20);
+addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
+static_assert(offsetof(SDL_PenButtonEvent, pen_state) == 24);
+addField<DAS_BIND_MANAGED_FIELD(pen_state)>("pen_state", "pen_state");
+static_assert(offsetof(SDL_PenButtonEvent, x) == 28);
+addField<DAS_BIND_MANAGED_FIELD(x)>("x", "x");
+static_assert(offsetof(SDL_PenButtonEvent, y) == 32);
+addField<DAS_BIND_MANAGED_FIELD(y)>("y", "y");
+static_assert(offsetof(SDL_PenButtonEvent, button) == 36);
+addField<DAS_BIND_MANAGED_FIELD(button)>("button", "button");
+static_assert(offsetof(SDL_PenButtonEvent, down) == 37);
+addField<DAS_BIND_MANAGED_FIELD(down)>("down", "down");
+}
+}; }
+static_assert(sizeof(SDL_PenAxisEvent) == 48 && alignof(SDL_PenAxisEvent) == 8);
+namespace das { struct SDL_PenAxisEventAnnotation : ManagedStructureAnnotation<SDL_PenAxisEvent, false> {
+SDL_PenAxisEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_PenAxisEvent", lib) {
+static_assert(offsetof(SDL_PenAxisEvent, timestamp) == 8);
+addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+static_assert(offsetof(SDL_PenAxisEvent, windowID) == 16);
+addField<DAS_BIND_MANAGED_FIELD(windowID)>("windowID", "windowID");
+static_assert(offsetof(SDL_PenAxisEvent, which) == 20);
+addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
+static_assert(offsetof(SDL_PenAxisEvent, pen_state) == 24);
+addField<DAS_BIND_MANAGED_FIELD(pen_state)>("pen_state", "pen_state");
+static_assert(offsetof(SDL_PenAxisEvent, x) == 28);
+addField<DAS_BIND_MANAGED_FIELD(x)>("x", "x");
+static_assert(offsetof(SDL_PenAxisEvent, y) == 32);
+addField<DAS_BIND_MANAGED_FIELD(y)>("y", "y");
+static_assert(offsetof(SDL_PenAxisEvent, axis) == 36);
+addField<DAS_BIND_MANAGED_FIELD(axis)>("axis", "axis");
+static_assert(offsetof(SDL_PenAxisEvent, value) == 40);
+addField<DAS_BIND_MANAGED_FIELD(value)>("value", "value");
+}
+}; }
+static_assert(sizeof(SDL_ClipboardEvent) == 32 && alignof(SDL_ClipboardEvent) == 8);
+namespace das { struct SDL_ClipboardEventAnnotation : ManagedStructureAnnotation<SDL_ClipboardEvent, false> {
+SDL_ClipboardEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_ClipboardEvent", lib) {
+static_assert(offsetof(SDL_ClipboardEvent, timestamp) == 8);
+addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+static_assert(offsetof(SDL_ClipboardEvent, owner) == 16);
+addField<DAS_BIND_MANAGED_FIELD(owner)>("owner", "owner");
+static_assert(offsetof(SDL_ClipboardEvent, num_mime_types) == 20);
+addField<DAS_BIND_MANAGED_FIELD(num_mime_types)>("num_mime_types", "num_mime_types");
+}
+}; }
+static_assert(sizeof(SDL_SensorEvent) == 56 && alignof(SDL_SensorEvent) == 8);
+namespace das { struct SDL_SensorEventAnnotation : ManagedStructureAnnotation<SDL_SensorEvent, false> {
+SDL_SensorEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_SensorEvent", lib) {
+static_assert(offsetof(SDL_SensorEvent, timestamp) == 8);
+addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+static_assert(offsetof(SDL_SensorEvent, which) == 16);
+addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
+static_assert(offsetof(SDL_SensorEvent, data) == 20);
+addField<DAS_BIND_MANAGED_FIELD(data)>("data", "data");
+static_assert(offsetof(SDL_SensorEvent, sensor_timestamp) == 48);
+addField<DAS_BIND_MANAGED_FIELD(sensor_timestamp)>("sensor_timestamp", "sensor_timestamp");
+}
+}; }
 static_assert(sizeof(SDL_Event) == 128 && alignof(SDL_Event) == 8);
 namespace das { struct SDL_EventAnnotation : ManagedStructureAnnotation<SDL_Event, false> {
 SDL_EventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_Event", lib) {
@@ -721,6 +2021,17 @@ static_assert(offsetof(SDL_Event, type) == 0);
 addField<DAS_BIND_MANAGED_FIELD(type)>("event_type", "type");
 }
 }; }
+static_assert(sizeof(SDL_EventAction) == 4 && alignof(SDL_EventAction) == 4);
+class Enumeration_SDL_EventAction : public das::Enumeration {
+public: Enumeration_SDL_EventAction() : das::Enumeration("SDL_EventAction") {
+external=true; cppName="SDL_EventAction"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_EventAction>::type>::type;
+static_assert(int64_t(SDL_ADDEVENT) == 0LL);
+addIEx("ADDEVENT","SDL_ADDEVENT",int64_t(SDL_ADDEVENT),das::LineInfo());
+static_assert(int64_t(SDL_PEEKEVENT) == 1LL);
+addIEx("PEEKEVENT","SDL_PEEKEVENT",int64_t(SDL_PEEKEVENT),das::LineInfo());
+static_assert(int64_t(SDL_GETEVENT) == 2LL);
+addIEx("GETEVENT","SDL_GETEVENT",int64_t(SDL_GETEVENT),das::LineInfo());
+} };
 static_assert(sizeof(SDL_GPUPrimitiveType) == 4 && alignof(SDL_GPUPrimitiveType) == 4);
 class Enumeration_SDL_GPUPrimitiveType : public das::Enumeration {
 public: Enumeration_SDL_GPUPrimitiveType() : das::Enumeration("SDL_GPUPrimitiveType") {
@@ -1872,6 +3183,240 @@ static_assert(offsetof(SDL_GPUStorageTextureReadWriteBinding, layer) == 12);
 addField<DAS_BIND_MANAGED_FIELD(layer)>("layer", "layer");
 static_assert(offsetof(SDL_GPUStorageTextureReadWriteBinding, cycle) == 16);
 addField<DAS_BIND_MANAGED_FIELD(cycle)>("cycle", "cycle");
+}
+}; }
+static_assert(sizeof(SDL_HapticDirection) == 16 && alignof(SDL_HapticDirection) == 4);
+namespace das { struct SDL_HapticDirectionAnnotation : ManagedStructureAnnotation<SDL_HapticDirection, false> {
+SDL_HapticDirectionAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_HapticDirection", lib) {
+static_assert(offsetof(SDL_HapticDirection, type) == 0);
+addField<DAS_BIND_MANAGED_FIELD(type)>("effect_type", "type");
+static_assert(offsetof(SDL_HapticDirection, dir) == 4);
+addField<DAS_BIND_MANAGED_FIELD(dir)>("dir", "dir");
+}
+}; }
+static_assert(sizeof(SDL_HapticConstant) == 40 && alignof(SDL_HapticConstant) == 4);
+namespace das { struct SDL_HapticConstantAnnotation : ManagedStructureAnnotation<SDL_HapticConstant, false> {
+SDL_HapticConstantAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_HapticConstant", lib) {
+static_assert(offsetof(SDL_HapticConstant, type) == 0);
+addField<DAS_BIND_MANAGED_FIELD(type)>("effect_type", "type");
+static_assert(offsetof(SDL_HapticConstant, direction) == 4);
+addField<DAS_BIND_MANAGED_FIELD(direction)>("direction", "direction");
+static_assert(offsetof(SDL_HapticConstant, length) == 20);
+addField<DAS_BIND_MANAGED_FIELD(length)>("length", "length");
+static_assert(offsetof(SDL_HapticConstant, delay) == 24);
+addField<DAS_BIND_MANAGED_FIELD(delay)>("delay", "delay");
+static_assert(offsetof(SDL_HapticConstant, button) == 26);
+addField<DAS_BIND_MANAGED_FIELD(button)>("button", "button");
+static_assert(offsetof(SDL_HapticConstant, interval) == 28);
+addField<DAS_BIND_MANAGED_FIELD(interval)>("interval", "interval");
+static_assert(offsetof(SDL_HapticConstant, level) == 30);
+addField<DAS_BIND_MANAGED_FIELD(level)>("level", "level");
+static_assert(offsetof(SDL_HapticConstant, attack_length) == 32);
+addField<DAS_BIND_MANAGED_FIELD(attack_length)>("attack_length", "attack_length");
+static_assert(offsetof(SDL_HapticConstant, attack_level) == 34);
+addField<DAS_BIND_MANAGED_FIELD(attack_level)>("attack_level", "attack_level");
+static_assert(offsetof(SDL_HapticConstant, fade_length) == 36);
+addField<DAS_BIND_MANAGED_FIELD(fade_length)>("fade_length", "fade_length");
+static_assert(offsetof(SDL_HapticConstant, fade_level) == 38);
+addField<DAS_BIND_MANAGED_FIELD(fade_level)>("fade_level", "fade_level");
+}
+}; }
+static_assert(sizeof(SDL_HapticPeriodic) == 48 && alignof(SDL_HapticPeriodic) == 4);
+namespace das { struct SDL_HapticPeriodicAnnotation : ManagedStructureAnnotation<SDL_HapticPeriodic, false> {
+SDL_HapticPeriodicAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_HapticPeriodic", lib) {
+static_assert(offsetof(SDL_HapticPeriodic, type) == 0);
+addField<DAS_BIND_MANAGED_FIELD(type)>("effect_type", "type");
+static_assert(offsetof(SDL_HapticPeriodic, direction) == 4);
+addField<DAS_BIND_MANAGED_FIELD(direction)>("direction", "direction");
+static_assert(offsetof(SDL_HapticPeriodic, length) == 20);
+addField<DAS_BIND_MANAGED_FIELD(length)>("length", "length");
+static_assert(offsetof(SDL_HapticPeriodic, delay) == 24);
+addField<DAS_BIND_MANAGED_FIELD(delay)>("delay", "delay");
+static_assert(offsetof(SDL_HapticPeriodic, button) == 26);
+addField<DAS_BIND_MANAGED_FIELD(button)>("button", "button");
+static_assert(offsetof(SDL_HapticPeriodic, interval) == 28);
+addField<DAS_BIND_MANAGED_FIELD(interval)>("interval", "interval");
+static_assert(offsetof(SDL_HapticPeriodic, period) == 30);
+addField<DAS_BIND_MANAGED_FIELD(period)>("period", "period");
+static_assert(offsetof(SDL_HapticPeriodic, magnitude) == 32);
+addField<DAS_BIND_MANAGED_FIELD(magnitude)>("magnitude", "magnitude");
+static_assert(offsetof(SDL_HapticPeriodic, offset) == 34);
+addField<DAS_BIND_MANAGED_FIELD(offset)>("offset", "offset");
+static_assert(offsetof(SDL_HapticPeriodic, phase) == 36);
+addField<DAS_BIND_MANAGED_FIELD(phase)>("phase", "phase");
+static_assert(offsetof(SDL_HapticPeriodic, attack_length) == 38);
+addField<DAS_BIND_MANAGED_FIELD(attack_length)>("attack_length", "attack_length");
+static_assert(offsetof(SDL_HapticPeriodic, attack_level) == 40);
+addField<DAS_BIND_MANAGED_FIELD(attack_level)>("attack_level", "attack_level");
+static_assert(offsetof(SDL_HapticPeriodic, fade_length) == 42);
+addField<DAS_BIND_MANAGED_FIELD(fade_length)>("fade_length", "fade_length");
+static_assert(offsetof(SDL_HapticPeriodic, fade_level) == 44);
+addField<DAS_BIND_MANAGED_FIELD(fade_level)>("fade_level", "fade_level");
+}
+}; }
+static_assert(sizeof(SDL_HapticCondition) == 68 && alignof(SDL_HapticCondition) == 4);
+namespace das { struct SDL_HapticConditionAnnotation : ManagedStructureAnnotation<SDL_HapticCondition, false> {
+SDL_HapticConditionAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_HapticCondition", lib) {
+static_assert(offsetof(SDL_HapticCondition, type) == 0);
+addField<DAS_BIND_MANAGED_FIELD(type)>("effect_type", "type");
+static_assert(offsetof(SDL_HapticCondition, direction) == 4);
+addField<DAS_BIND_MANAGED_FIELD(direction)>("direction", "direction");
+static_assert(offsetof(SDL_HapticCondition, length) == 20);
+addField<DAS_BIND_MANAGED_FIELD(length)>("length", "length");
+static_assert(offsetof(SDL_HapticCondition, delay) == 24);
+addField<DAS_BIND_MANAGED_FIELD(delay)>("delay", "delay");
+static_assert(offsetof(SDL_HapticCondition, button) == 26);
+addField<DAS_BIND_MANAGED_FIELD(button)>("button", "button");
+static_assert(offsetof(SDL_HapticCondition, interval) == 28);
+addField<DAS_BIND_MANAGED_FIELD(interval)>("interval", "interval");
+static_assert(offsetof(SDL_HapticCondition, right_sat) == 30);
+addField<DAS_BIND_MANAGED_FIELD(right_sat)>("right_sat", "right_sat");
+static_assert(offsetof(SDL_HapticCondition, left_sat) == 36);
+addField<DAS_BIND_MANAGED_FIELD(left_sat)>("left_sat", "left_sat");
+static_assert(offsetof(SDL_HapticCondition, right_coeff) == 42);
+addField<DAS_BIND_MANAGED_FIELD(right_coeff)>("right_coeff", "right_coeff");
+static_assert(offsetof(SDL_HapticCondition, left_coeff) == 48);
+addField<DAS_BIND_MANAGED_FIELD(left_coeff)>("left_coeff", "left_coeff");
+static_assert(offsetof(SDL_HapticCondition, deadband) == 54);
+addField<DAS_BIND_MANAGED_FIELD(deadband)>("deadband", "deadband");
+static_assert(offsetof(SDL_HapticCondition, center) == 60);
+addField<DAS_BIND_MANAGED_FIELD(center)>("center", "center");
+}
+}; }
+static_assert(sizeof(SDL_HapticRamp) == 44 && alignof(SDL_HapticRamp) == 4);
+namespace das { struct SDL_HapticRampAnnotation : ManagedStructureAnnotation<SDL_HapticRamp, false> {
+SDL_HapticRampAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_HapticRamp", lib) {
+static_assert(offsetof(SDL_HapticRamp, type) == 0);
+addField<DAS_BIND_MANAGED_FIELD(type)>("effect_type", "type");
+static_assert(offsetof(SDL_HapticRamp, direction) == 4);
+addField<DAS_BIND_MANAGED_FIELD(direction)>("direction", "direction");
+static_assert(offsetof(SDL_HapticRamp, length) == 20);
+addField<DAS_BIND_MANAGED_FIELD(length)>("length", "length");
+static_assert(offsetof(SDL_HapticRamp, delay) == 24);
+addField<DAS_BIND_MANAGED_FIELD(delay)>("delay", "delay");
+static_assert(offsetof(SDL_HapticRamp, button) == 26);
+addField<DAS_BIND_MANAGED_FIELD(button)>("button", "button");
+static_assert(offsetof(SDL_HapticRamp, interval) == 28);
+addField<DAS_BIND_MANAGED_FIELD(interval)>("interval", "interval");
+static_assert(offsetof(SDL_HapticRamp, start) == 30);
+addField<DAS_BIND_MANAGED_FIELD(start)>("start", "start");
+static_assert(offsetof(SDL_HapticRamp, end) == 32);
+addField<DAS_BIND_MANAGED_FIELD(end)>("end", "end");
+static_assert(offsetof(SDL_HapticRamp, attack_length) == 34);
+addField<DAS_BIND_MANAGED_FIELD(attack_length)>("attack_length", "attack_length");
+static_assert(offsetof(SDL_HapticRamp, attack_level) == 36);
+addField<DAS_BIND_MANAGED_FIELD(attack_level)>("attack_level", "attack_level");
+static_assert(offsetof(SDL_HapticRamp, fade_length) == 38);
+addField<DAS_BIND_MANAGED_FIELD(fade_length)>("fade_length", "fade_length");
+static_assert(offsetof(SDL_HapticRamp, fade_level) == 40);
+addField<DAS_BIND_MANAGED_FIELD(fade_level)>("fade_level", "fade_level");
+}
+}; }
+static_assert(sizeof(SDL_HapticLeftRight) == 12 && alignof(SDL_HapticLeftRight) == 4);
+namespace das { struct SDL_HapticLeftRightAnnotation : ManagedStructureAnnotation<SDL_HapticLeftRight, false> {
+SDL_HapticLeftRightAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_HapticLeftRight", lib) {
+static_assert(offsetof(SDL_HapticLeftRight, type) == 0);
+addField<DAS_BIND_MANAGED_FIELD(type)>("effect_type", "type");
+static_assert(offsetof(SDL_HapticLeftRight, length) == 4);
+addField<DAS_BIND_MANAGED_FIELD(length)>("length", "length");
+static_assert(offsetof(SDL_HapticLeftRight, large_magnitude) == 8);
+addField<DAS_BIND_MANAGED_FIELD(large_magnitude)>("large_magnitude", "large_magnitude");
+static_assert(offsetof(SDL_HapticLeftRight, small_magnitude) == 10);
+addField<DAS_BIND_MANAGED_FIELD(small_magnitude)>("small_magnitude", "small_magnitude");
+}
+}; }
+static_assert(sizeof(SDL_HapticCustom) == 56 && alignof(SDL_HapticCustom) == 8);
+namespace das { struct SDL_HapticCustomAnnotation : ManagedStructureAnnotation<SDL_HapticCustom, false> {
+SDL_HapticCustomAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_HapticCustom", lib) {
+static_assert(offsetof(SDL_HapticCustom, type) == 0);
+addField<DAS_BIND_MANAGED_FIELD(type)>("effect_type", "type");
+static_assert(offsetof(SDL_HapticCustom, direction) == 4);
+addField<DAS_BIND_MANAGED_FIELD(direction)>("direction", "direction");
+static_assert(offsetof(SDL_HapticCustom, length) == 20);
+addField<DAS_BIND_MANAGED_FIELD(length)>("length", "length");
+static_assert(offsetof(SDL_HapticCustom, delay) == 24);
+addField<DAS_BIND_MANAGED_FIELD(delay)>("delay", "delay");
+static_assert(offsetof(SDL_HapticCustom, button) == 26);
+addField<DAS_BIND_MANAGED_FIELD(button)>("button", "button");
+static_assert(offsetof(SDL_HapticCustom, interval) == 28);
+addField<DAS_BIND_MANAGED_FIELD(interval)>("interval", "interval");
+static_assert(offsetof(SDL_HapticCustom, channels) == 30);
+addField<DAS_BIND_MANAGED_FIELD(channels)>("channels", "channels");
+static_assert(offsetof(SDL_HapticCustom, period) == 32);
+addField<DAS_BIND_MANAGED_FIELD(period)>("period", "period");
+static_assert(offsetof(SDL_HapticCustom, samples) == 34);
+addField<DAS_BIND_MANAGED_FIELD(samples)>("samples", "samples");
+static_assert(offsetof(SDL_HapticCustom, data) == 40);
+addField<DAS_BIND_MANAGED_FIELD(data)>("data", "data");
+static_assert(offsetof(SDL_HapticCustom, attack_length) == 48);
+addField<DAS_BIND_MANAGED_FIELD(attack_length)>("attack_length", "attack_length");
+static_assert(offsetof(SDL_HapticCustom, attack_level) == 50);
+addField<DAS_BIND_MANAGED_FIELD(attack_level)>("attack_level", "attack_level");
+static_assert(offsetof(SDL_HapticCustom, fade_length) == 52);
+addField<DAS_BIND_MANAGED_FIELD(fade_length)>("fade_length", "fade_length");
+static_assert(offsetof(SDL_HapticCustom, fade_level) == 54);
+addField<DAS_BIND_MANAGED_FIELD(fade_level)>("fade_level", "fade_level");
+}
+}; }
+static_assert(sizeof(SDL_HapticEffect) == 72 && alignof(SDL_HapticEffect) == 8);
+namespace das { struct SDL_HapticEffectAnnotation : ManagedStructureAnnotation<SDL_HapticEffect, false> {
+SDL_HapticEffectAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_HapticEffect", lib) {
+static_assert(offsetof(SDL_HapticEffect, type) == 0);
+addField<DAS_BIND_MANAGED_FIELD(type)>("effect_type", "type");
+static_assert(offsetof(SDL_HapticEffect, constant) == 0);
+addField<DAS_BIND_MANAGED_FIELD(constant)>("constant", "constant");
+static_assert(offsetof(SDL_HapticEffect, periodic) == 0);
+addField<DAS_BIND_MANAGED_FIELD(periodic)>("periodic", "periodic");
+static_assert(offsetof(SDL_HapticEffect, condition) == 0);
+addField<DAS_BIND_MANAGED_FIELD(condition)>("condition", "condition");
+static_assert(offsetof(SDL_HapticEffect, ramp) == 0);
+addField<DAS_BIND_MANAGED_FIELD(ramp)>("ramp", "ramp");
+static_assert(offsetof(SDL_HapticEffect, leftright) == 0);
+addField<DAS_BIND_MANAGED_FIELD(leftright)>("leftright", "leftright");
+static_assert(offsetof(SDL_HapticEffect, custom) == 0);
+addField<DAS_BIND_MANAGED_FIELD(custom)>("custom", "custom");
+}
+}; }
+static_assert(sizeof(SDL_hid_bus_type) == 4 && alignof(SDL_hid_bus_type) == 4);
+class Enumeration_SDL_hid_bus_type : public das::Enumeration {
+public: Enumeration_SDL_hid_bus_type() : das::Enumeration("SDL_hid_bus_type") {
+external=true; cppName="SDL_hid_bus_type"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_hid_bus_type>::type>::type;
+static_assert(int64_t(SDL_HID_API_BUS_UNKNOWN) == 0LL);
+addIEx("HID_API_BUS_UNKNOWN","SDL_HID_API_BUS_UNKNOWN",int64_t(SDL_HID_API_BUS_UNKNOWN),das::LineInfo());
+static_assert(int64_t(SDL_HID_API_BUS_USB) == 1LL);
+addIEx("HID_API_BUS_USB","SDL_HID_API_BUS_USB",int64_t(SDL_HID_API_BUS_USB),das::LineInfo());
+static_assert(int64_t(SDL_HID_API_BUS_BLUETOOTH) == 2LL);
+addIEx("HID_API_BUS_BLUETOOTH","SDL_HID_API_BUS_BLUETOOTH",int64_t(SDL_HID_API_BUS_BLUETOOTH),das::LineInfo());
+static_assert(int64_t(SDL_HID_API_BUS_I2C) == 3LL);
+addIEx("HID_API_BUS_I2C","SDL_HID_API_BUS_I2C",int64_t(SDL_HID_API_BUS_I2C),das::LineInfo());
+static_assert(int64_t(SDL_HID_API_BUS_SPI) == 4LL);
+addIEx("HID_API_BUS_SPI","SDL_HID_API_BUS_SPI",int64_t(SDL_HID_API_BUS_SPI),das::LineInfo());
+} };
+static_assert(sizeof(SDL_hid_device_info) == 80 && alignof(SDL_hid_device_info) == 8);
+namespace das { struct SDL_hid_device_infoAnnotation : ManagedStructureAnnotation<SDL_hid_device_info, false> {
+SDL_hid_device_infoAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_hid_device_info", lib) {
+static_assert(offsetof(SDL_hid_device_info, path) == 0);
+addField<DAS_BIND_MANAGED_FIELD(path)>("path", "path");
+static_assert(offsetof(SDL_hid_device_info, vendor_id) == 8);
+addField<DAS_BIND_MANAGED_FIELD(vendor_id)>("vendor_id", "vendor_id");
+static_assert(offsetof(SDL_hid_device_info, product_id) == 10);
+addField<DAS_BIND_MANAGED_FIELD(product_id)>("product_id", "product_id");
+static_assert(offsetof(SDL_hid_device_info, release_number) == 24);
+addField<DAS_BIND_MANAGED_FIELD(release_number)>("release_number", "release_number");
+static_assert(offsetof(SDL_hid_device_info, usage_page) == 48);
+addField<DAS_BIND_MANAGED_FIELD(usage_page)>("usage_page", "usage_page");
+static_assert(offsetof(SDL_hid_device_info, usage) == 50);
+addField<DAS_BIND_MANAGED_FIELD(usage)>("usage", "usage");
+static_assert(offsetof(SDL_hid_device_info, interface_number) == 52);
+addField<DAS_BIND_MANAGED_FIELD(interface_number)>("interface_number", "interface_number");
+static_assert(offsetof(SDL_hid_device_info, interface_class) == 56);
+addField<DAS_BIND_MANAGED_FIELD(interface_class)>("interface_class", "interface_class");
+static_assert(offsetof(SDL_hid_device_info, interface_subclass) == 60);
+addField<DAS_BIND_MANAGED_FIELD(interface_subclass)>("interface_subclass", "interface_subclass");
+static_assert(offsetof(SDL_hid_device_info, interface_protocol) == 64);
+addField<DAS_BIND_MANAGED_FIELD(interface_protocol)>("interface_protocol", "interface_protocol");
+static_assert(offsetof(SDL_hid_device_info, bus_type) == 68);
+addField<DAS_BIND_MANAGED_FIELD(bus_type)>("bus_type", "bus_type");
 }
 }; }
 static_assert(sizeof(SDL_HintPriority) == 4 && alignof(SDL_HintPriority) == 4);

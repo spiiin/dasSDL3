@@ -1,7 +1,7 @@
 # Покрытие SDL3
 
-Baseline: SDL 3.2.18, Windows x64/MSVC. Generated: 458; adapted: 13;
-pending: 755 of 1226 functions. GPU: 92 generated / 0 adapted / 0 pending.
+Baseline: SDL 3.2.18, Windows x64/MSVC. Generated: 716; adapted: 13;
+pending: 497 of 1226 functions. GPU: 92 generated / 0 adapted / 0 pending.
 `adapted` means a documented partial adapter, not full raw API coverage.
 See [API boundary](gpu-api-boundary.md) and the generated header census.
 
@@ -26,7 +26,10 @@ See [API boundary](gpu-api-boundary.md) and the generated header census.
 | Properties | 19 из 21 generated; enumeration adapted; retained cleanup pending | with_properties, with_properties_lock, copied strings/names | Типы/defaults/UTF-8, early return, lock и native cleanup counters; [контракт](properties.md) |
 | Базовая сессия SDL | GetVersion, Init, Quit, WasInit | sdl_init, with_sdl; boost возвращает Result, raw сохраняет SDL-контракт | bindings, boost; расширения Init и времени описаны выше |
 | Окно и renderer | Create/DestroyWindow, Create/DestroyRenderer, GetWindowID, GetWindowFromID, GetRenderer, SetWindowTitle | create/destroy, with_window, with_renderer, set_title | square, boost; управление окнами пока частичное |
-| События | PollEvent, PushEvent, PumpEvents; SDL_Event.event_type | poll_event, push_event, should_close(event[, window]), input_window_id | input: фильтрация union и адресация окон; остальные варианты union впереди |
+| Touch/Pen/Sensor/Haptic/HIDAPI | 4 + 0 + 14 + 31 + 22 generated | Owned device lists, HID UTF-8 metadata, arrays, effect refs and scopes; 13 event tags | [Contracts and hardware limits](peripherals.md) |
+| Joystick/Gamepad | 58/58 + 73/73 generated | Copied lists/mappings, native GUID/binding readers, Result ownership scopes | [Contracts and pinned virtual-driver defects](joystick-gamepad.md); all 21 event tags projected; native callback fields remain |
+| Keyboard/Mouse | 24/24 + 22/22 generated | Copied snapshots/names, Result cursor scopes, text input refs | [Contracts](keyboard-mouse.md); retained scancode names, layout/backend limits |
+| События | 19/19 generated: очередь, ожидание, диапазоны, регистрация типов, окно события | Result/Option waits; owned peek/take; 53 SdlEvent вариантов, copied drop strings и user metadata | [Очередь](event-queue.md); [Callback contracts](event-callbacks.md); остальные payloads pending |
 | Простая отрисовка | SetRenderDrawColor, RenderClear, RenderFillRect, RenderPresent | set_color, clear, fill_rect, present | square, boost; остальные Render-функции перечислены выше |
 | BMP / поверхности | LoadBMP, DestroySurface | load_bmp, destroy_surface, with_bmp | textures: нормальный/ранний выход, ошибка создания текстуры; пиксельные буферы поверхности не раскрыты |
 | Статические текстуры | CreateTextureFromSurface, DestroyTexture, GetTextureSize, RenderTexture | create_texture, load_texture, destroy_texture, texture_size, with_texture, draw_texture (3 перегрузки) | textures: размеры, чтение пикселей, освобождение до renderer, отсутствующий файл |
@@ -48,4 +51,4 @@ See [API boundary](gpu-api-boundary.md) and the generated header census.
 платформы не подтверждены. Генерация не доказывает все сочетания параметров.
 
 Удалённые engine helpers и внутренние вызовы SDL не считаются покрытием.
-Следующий основной раздел: [P3 Events/input](full-binding-roadmap.md).
+Текущий раздел: [P3 Events/input](full-binding-roadmap.md); следующий пакет — оставшиеся Keyboard/Mouse.

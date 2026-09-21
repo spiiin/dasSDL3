@@ -106,6 +106,13 @@ class SdlParityGen : CppGenBind {
     def emit_constant(var c : CXCursor; name : string) {
         let eval = clang_Cursor_Evaluate(c)
         if (eval == null) { panic("Cannot evaluate {name}") }
+        if (constants[name]=="float" && clang_EvalResult_getKind(eval)==CXEvalResultKind.Float) {
+            let value="{clang_EvalResult_getAsDouble(eval)}"
+            clang_EvalResult_dispose(eval)
+            fwrite(registrations,"static_assert(static_cast<float>({name}) == static_cast<float>({value}));\naddConstant(*this, \"{name}\", static_cast<float>({value}));\n")
+            fwrite(contract,"K\t{name}\tfloat\t{value}\n")
+            return
+        }
         if (clang_EvalResult_getKind(eval) != CXEvalResultKind.Int) {
             clang_EvalResult_dispose(eval)
             panic("Noninteger constant {name}")
@@ -139,7 +146,7 @@ class SdlParityGen : CppGenBind {
         let name=string(clang_getCursorSpelling(c))
         if(!key_exists(selected,name)) {return true}
         // Explicit native-address callback contracts; no script-function reinterpretation.
-        if(name=="SDL_SetClipboardData" || name=="SDL_SetWindowHitTest") {return false}
+        if(name=="SDL_SetClipboardData" || name=="SDL_SetWindowHitTest" || name=="SDL_SetEventFilter" || name=="SDL_GetEventFilter" || name=="SDL_AddEventWatch" || name=="SDL_RemoveEventWatch" || name=="SDL_FilterEvents") {return false}
         return AnyGenBind`skip_function(self, c)
     }
     def override skip_alias(var c : CXCursor) : bool { return true }
@@ -163,8 +170,19 @@ class SdlParityGen : CppGenBind {
             fwrite(signatures, "\t{string(clang_getCursorSpelling(arg))}")
         }
         fwrite(signatures, "\n")
-        if(name=="SDL_SetClipboardData" || name=="SDL_SetWindowHitTest") {
+        if(name=="SDL_SetClipboardData" || name=="SDL_SetWindowHitTest" || name=="SDL_SetEventFilter" || name=="SDL_GetEventFilter" || name=="SDL_AddEventWatch" || name=="SDL_RemoveEventWatch" || name=="SDL_FilterEvents") {
             fwrite(func_file,"makeExtern<decltype(&{name}), {name}, SimNode_ExtFuncCall>(lib,\"{name}\",\"{name}Address\")->args(\{")
+            for(i in urange(clang_Cursor_getNumArguments(c))) {
+                if(i!=0u) {fwrite(func_file,",")}
+                var arg=clang_Cursor_getArgument(c,i)
+                fwrite(func_file,"\"{string(clang_getCursorSpelling(arg))}\"")
+            }
+            fwrite(func_file,"\})->addToModule(*this, SideEffects::worstDefault);\n")
+            return
+        }
+        // The C AST canonicalizes wchar_t to unsigned short; MSVC C++ keeps it distinct.
+        if (name=="SDL_hid_open" || name=="SDL_hid_get_manufacturer_string" || name=="SDL_hid_get_product_string" || name=="SDL_hid_get_serial_number_string" || name=="SDL_hid_get_indexed_string") {
+            fwrite(func_file,"makeExtern<decltype(&{name}), {name}, SimNode_ExtFuncCall>(lib,\"{name}\",\"{name}Wide\")->args(\{")
             for(i in urange(clang_Cursor_getNumArguments(c))) {
                 if(i!=0u) {fwrite(func_file,",")}
                 var arg=clang_Cursor_getArgument(c,i)

@@ -2,6 +2,13 @@
 #include "daScript/ast/ast_handle.h"
 #include "sdl3_adapters.h"
 #include "sdl3_input.h"
+#include "sdl3_controller_events.h"
+#include "sdl3_peripherals.h"
+#include "sdl3_keyboard_mouse.h"
+#include "sdl3_joystick_gamepad.h"
+#include "sdl3_event_queue.h"
+#include "sdl3_event_lists.h"
+#include "sdl3_event_callbacks.h"
 #include "sdl3_audio.h"
 #include "sdl3_pixels.h"
 #include "sdl3_geometry.h"
@@ -50,6 +57,13 @@
 #include "../tests/properties_probe.h"
 #include "../tests/diagnostics_probe.h"
 #include "../tests/input_probe.h"
+#include "../tests/controller_events_probe.h"
+#include "../tests/peripheral_events_probe.h"
+#include "../tests/peripherals_probe.h"
+#include "../tests/event_lists_probe.h"
+#include "../tests/event_queue_probe.h"
+#include "../tests/event_callbacks_probe.h"
+#include "../tests/joystick_gamepad_probe.h"
 #include "../tests/audio_probe.h"
 #include "../tests/geometry_probe.h"
 #include "../tests/gpu_probe.h"
@@ -421,6 +435,56 @@ public:
         addExtern<DAS_BIND_FUN(SDL_GetAudioBytes)>(*this, lib, "SDL_GetAudioBytes", SideEffects::worstDefault, "SDL_GetAudioBytes");
         addExtern<DAS_BIND_FUN(SDL_ReadKeyEvent)>(*this, lib, "SDL_ReadKeyEvent", SideEffects::worstDefault, "SDL_ReadKeyEvent")->args({"event", "out"});
         addExtern<DAS_BIND_FUN(SDL_KeyScancode)>(*this, lib, "SDL_KeyScancode", SideEffects::none, "SDL_KeyScancode")->args({"key"});
+        addExtern<DAS_BIND_FUN(SDL_ReadJoyAxisEvent)>(*this, lib, "SDL_ReadJoyAxisEvent", SideEffects::worstDefault, "SDL_ReadJoyAxisEvent")->args({"event", "out"});
+        addExtern<DAS_BIND_FUN(SDL_ReadJoyBallEvent)>(*this, lib, "SDL_ReadJoyBallEvent", SideEffects::worstDefault, "SDL_ReadJoyBallEvent")->args({"event", "out"});
+        addExtern<DAS_BIND_FUN(SDL_ReadJoyHatEvent)>(*this, lib, "SDL_ReadJoyHatEvent", SideEffects::worstDefault, "SDL_ReadJoyHatEvent")->args({"event", "out"});
+        addExtern<DAS_BIND_FUN(SDL_ReadJoyButtonEvent)>(*this, lib, "SDL_ReadJoyButtonEvent", SideEffects::worstDefault, "SDL_ReadJoyButtonEvent")->args({"event", "out"});
+        addExtern<DAS_BIND_FUN(SDL_ReadJoyDeviceEvent)>(*this, lib, "SDL_ReadJoyDeviceEvent", SideEffects::worstDefault, "SDL_ReadJoyDeviceEvent")->args({"event", "out"});
+        addExtern<DAS_BIND_FUN(SDL_ReadJoyBatteryEvent)>(*this, lib, "SDL_ReadJoyBatteryEvent", SideEffects::worstDefault, "SDL_ReadJoyBatteryEvent")->args({"event", "out"});
+        addExtern<DAS_BIND_FUN(SDL_ReadGamepadAxisEvent)>(*this, lib, "SDL_ReadGamepadAxisEvent", SideEffects::worstDefault, "SDL_ReadGamepadAxisEvent")->args({"event", "out"});
+        addExtern<DAS_BIND_FUN(SDL_ReadGamepadButtonEvent)>(*this, lib, "SDL_ReadGamepadButtonEvent", SideEffects::worstDefault, "SDL_ReadGamepadButtonEvent")->args({"event", "out"});
+        addExtern<DAS_BIND_FUN(SDL_ReadGamepadDeviceEvent)>(*this, lib, "SDL_ReadGamepadDeviceEvent", SideEffects::worstDefault, "SDL_ReadGamepadDeviceEvent")->args({"event", "out"});
+        addExtern<DAS_BIND_FUN(SDL_ReadGamepadTouchpadEvent)>(*this, lib, "SDL_ReadGamepadTouchpadEvent", SideEffects::worstDefault, "SDL_ReadGamepadTouchpadEvent")->args({"event", "out"});
+        addExtern<DAS_BIND_FUN(SDL_ReadGamepadSensorEvent)>(*this, lib, "SDL_ReadGamepadSensorEvent", SideEffects::worstDefault, "SDL_ReadGamepadSensorEvent")->args({"event", "out"});
+        addExtern<DAS_BIND_FUN(SDL_GetTouchDevicesCopy)>(*this, lib, "SDL_GetTouchDevicesCopy", SideEffects::worstDefault, "SDL_GetTouchDevicesCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetSensorsCopy)>(*this, lib, "SDL_GetSensorsCopy", SideEffects::worstDefault, "SDL_GetSensorsCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetHapticsCopy)>(*this, lib, "SDL_GetHapticsCopy", SideEffects::worstDefault, "SDL_GetHapticsCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetTouchFingersCopy)>(*this, lib, "SDL_GetTouchFingersCopy", SideEffects::worstDefault, "SDL_GetTouchFingersCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetSensorDataArray)>(*this, lib, "SDL_GetSensorDataArray", SideEffects::worstDefault, "SDL_GetSensorDataArray");
+        addExtern<DAS_BIND_FUN(SDL_HapticEffectSupportedRef)>(*this, lib, "SDL_HapticEffectSupportedRef", SideEffects::worstDefault, "SDL_HapticEffectSupportedRef");
+        addExtern<DAS_BIND_FUN(SDL_CreateHapticEffectRef)>(*this, lib, "SDL_CreateHapticEffectRef", SideEffects::worstDefault, "SDL_CreateHapticEffectRef");
+        addExtern<DAS_BIND_FUN(SDL_UpdateHapticEffectRef)>(*this, lib, "SDL_UpdateHapticEffectRef", SideEffects::worstDefault, "SDL_UpdateHapticEffectRef");
+        addExtern<DAS_BIND_FUN(SDL_HidNext)>(*this, lib, "SDL_HidNext", SideEffects::worstDefault, "SDL_HidNext");
+        addExtern<DAS_BIND_FUN(SDL_HidWideString)>(*this, lib, "SDL_HidWideString", SideEffects::worstDefault, "SDL_HidWideString");
+        addExtern<DAS_BIND_FUN(SDL_HidInfoString)>(*this, lib, "SDL_HidInfoString", SideEffects::worstDefault, "SDL_HidInfoString");
+        addExtern<DAS_BIND_FUN(SDL_MakeHapticConstantEffect), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDL_MakeHapticConstantEffect", SideEffects::worstDefault, "SDL_MakeHapticConstantEffect");
+        addExtern<DAS_BIND_FUN(SDL_MakeHapticPeriodicEffect), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDL_MakeHapticPeriodicEffect", SideEffects::worstDefault, "SDL_MakeHapticPeriodicEffect");
+        addExtern<DAS_BIND_FUN(SDL_MakeHapticConditionEffect), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDL_MakeHapticConditionEffect", SideEffects::worstDefault, "SDL_MakeHapticConditionEffect");
+        addExtern<DAS_BIND_FUN(SDL_MakeHapticRampEffect), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDL_MakeHapticRampEffect", SideEffects::worstDefault, "SDL_MakeHapticRampEffect");
+        addExtern<DAS_BIND_FUN(SDL_MakeHapticLeftRightEffect), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDL_MakeHapticLeftRightEffect", SideEffects::worstDefault, "SDL_MakeHapticLeftRightEffect");
+        addExtern<DAS_BIND_FUN(SDL_MakeHapticCustomEffect), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDL_MakeHapticCustomEffect", SideEffects::worstDefault, "SDL_MakeHapticCustomEffect");
+        addExtern<DAS_BIND_FUN(SDL_hid_writeArray)>(*this, lib, "SDL_hid_writeArray", SideEffects::worstDefault, "SDL_hid_writeArray");
+        addExtern<DAS_BIND_FUN(SDL_hid_readArray)>(*this, lib, "SDL_hid_readArray", SideEffects::worstDefault, "SDL_hid_readArray");
+        addExtern<DAS_BIND_FUN(SDL_hid_send_feature_reportArray)>(*this, lib, "SDL_hid_send_feature_reportArray", SideEffects::worstDefault, "SDL_hid_send_feature_reportArray");
+        addExtern<DAS_BIND_FUN(SDL_hid_get_feature_reportArray)>(*this, lib, "SDL_hid_get_feature_reportArray", SideEffects::worstDefault, "SDL_hid_get_feature_reportArray");
+        addExtern<DAS_BIND_FUN(SDL_hid_get_input_reportArray)>(*this, lib, "SDL_hid_get_input_reportArray", SideEffects::worstDefault, "SDL_hid_get_input_reportArray");
+        addExtern<DAS_BIND_FUN(SDL_hid_get_report_descriptorArray)>(*this, lib, "SDL_hid_get_report_descriptorArray", SideEffects::worstDefault, "SDL_hid_get_report_descriptorArray");
+        addExtern<DAS_BIND_FUN(SDL_hid_read_timeoutArray)>(*this, lib, "SDL_hid_read_timeoutArray", SideEffects::worstDefault, "SDL_hid_read_timeoutArray");
+        addExtern<DAS_BIND_FUN(SDL_ReadTouchFingerEvent)>(*this,lib,"SDL_ReadTouchFingerEvent",SideEffects::worstDefault,"SDL_ReadTouchFingerEvent");
+        addExtern<DAS_BIND_FUN(SDL_ReadPenProximityEvent)>(*this,lib,"SDL_ReadPenProximityEvent",SideEffects::worstDefault,"SDL_ReadPenProximityEvent");
+        addExtern<DAS_BIND_FUN(SDL_ReadPenMotionEvent)>(*this,lib,"SDL_ReadPenMotionEvent",SideEffects::worstDefault,"SDL_ReadPenMotionEvent");
+        addExtern<DAS_BIND_FUN(SDL_ReadPenTouchEvent)>(*this,lib,"SDL_ReadPenTouchEvent",SideEffects::worstDefault,"SDL_ReadPenTouchEvent");
+        addExtern<DAS_BIND_FUN(SDL_ReadPenButtonEvent)>(*this,lib,"SDL_ReadPenButtonEvent",SideEffects::worstDefault,"SDL_ReadPenButtonEvent");
+        addExtern<DAS_BIND_FUN(SDL_ReadPenAxisEvent)>(*this,lib,"SDL_ReadPenAxisEvent",SideEffects::worstDefault,"SDL_ReadPenAxisEvent");
+        addExtern<DAS_BIND_FUN(SDL_ReadSensorEvent)>(*this,lib,"SDL_ReadSensorEvent",SideEffects::worstDefault,"SDL_ReadSensorEvent");
+        addExtern<DAS_BIND_FUN(SDL_HidInfoCopy)>(*this,lib,"SDL_HidInfoCopy",SideEffects::worstDefault,"SDL_HidInfoCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetTouchDeviceNameCopy)>(*this,lib,"SDL_GetTouchDeviceNameCopy",SideEffects::worstDefault,"SDL_GetTouchDeviceNameCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetSensorNameCopy)>(*this,lib,"SDL_GetSensorNameCopy",SideEffects::worstDefault,"SDL_GetSensorNameCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetHapticNameCopy)>(*this,lib,"SDL_GetHapticNameCopy",SideEffects::worstDefault,"SDL_GetHapticNameCopy");
+        addExtern<DAS_BIND_FUN(SDL_ReadTextEditingCandidatesEvent)>(*this,lib,"SDL_ReadTextEditingCandidatesEvent",SideEffects::worstDefault,"SDL_ReadTextEditingCandidatesEvent");
+        addExtern<DAS_BIND_FUN(SDL_ReadClipboardEvent)>(*this,lib,"SDL_ReadClipboardEvent",SideEffects::worstDefault,"SDL_ReadClipboardEvent");
+        addExtern<DAS_BIND_FUN(SDL_ReadUserEventData)>(*this,lib,"SDL_ReadUserEventData",SideEffects::worstDefault,"SDL_ReadUserEventData");
+        addExtern<DAS_BIND_FUN(SDL_WriteUserEventData)>(*this,lib,"SDL_WriteUserEventData",SideEffects::worstDefault,"SDL_WriteUserEventData");
         addExtern<DAS_BIND_FUN(SDL_ReadMouseMotionEvent)>(*this, lib, "SDL_ReadMouseMotionEvent", SideEffects::worstDefault, "SDL_ReadMouseMotionEvent")->args({"event", "out"});
         addExtern<DAS_BIND_FUN(SDL_ReadMouseButtonEvent)>(*this, lib, "SDL_ReadMouseButtonEvent", SideEffects::worstDefault, "SDL_ReadMouseButtonEvent")->args({"event", "out"});
         addExtern<DAS_BIND_FUN(SDL_ReadMouseWheelEvent)>(*this, lib, "SDL_ReadMouseWheelEvent", SideEffects::worstDefault, "SDL_ReadMouseWheelEvent")->args({"event", "out"});
@@ -532,7 +596,26 @@ public:
         addExtern<DAS_BIND_FUN(sdl3_test::matches_wav)>(*this, lib, "SDLTestMatchesWav", SideEffects::worstDefault, "sdl3_test::matches_wav");
         addExtern<DAS_BIND_FUN(sdl3_test::stereo_float_signal)>(*this, lib, "SDLTestStereoFloatSignal", SideEffects::none, "sdl3_test::stereo_float_signal");
         addExtern<DAS_BIND_FUN(sdl3_test::device_closed)>(*this, lib, "SDLTestDeviceClosed", SideEffects::worstDefault, "sdl3_test::device_closed");
+        addExtern<DAS_BIND_FUN(sdl3_test::peripheral_event),SimNode_ExtFuncCallAndCopyOrMove>(*this,lib,"SDLTestPeripheralEvent",SideEffects::worstDefault,"sdl3_test::peripheral_event");
+        addExtern<DAS_BIND_FUN(sdl3_test::peripheral_hid_info)>(*this,lib,"SDLTestHidInfo",SideEffects::worstDefault,"sdl3_test::peripheral_hid_info");
+        addExtern<DAS_BIND_FUN(sdl3_test::mutate_hid_info)>(*this,lib,"SDLTestMutateHidInfo",SideEffects::worstDefault,"sdl3_test::mutate_hid_info");
+        addExtern<DAS_BIND_FUN(sdl3_test::haptic_payload)>(*this,lib,"SDLTestHapticPayload",SideEffects::worstDefault,"sdl3_test::haptic_payload");
+        addExtern<DAS_BIND_FUN(sdl3_test::list_event),SimNode_ExtFuncCallAndCopyOrMove>(*this,lib,"SDLTestListEvent",SideEffects::worstDefault,"sdl3_test::list_event");
+        addExtern<DAS_BIND_FUN(sdl3_test::reset_event_lists)>(*this,lib,"SDLTestResetEventLists",SideEffects::worstDefault,"sdl3_test::reset_event_lists");
+        addExtern<DAS_BIND_FUN(sdl3_test::mutate_event_lists)>(*this,lib,"SDLTestMutateEventLists",SideEffects::worstDefault,"sdl3_test::mutate_event_lists");
+        addExtern<DAS_BIND_FUN(sdl3_test::user_pointer)>(*this,lib,"SDLTestUserPointer",SideEffects::worstDefault,"sdl3_test::user_pointer");
+        addExtern<DAS_BIND_FUN(sdl3_test::user_pointers_alive)>(*this,lib,"SDLTestUserPointersAlive",SideEffects::worstDefault,"sdl3_test::user_pointers_alive");
+        addExtern<DAS_BIND_FUN(sdl3_test::controller_event), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDLTestControllerEvent", SideEffects::worstDefault, "sdl3_test::controller_event")->args({"type"});
         addExtern<DAS_BIND_FUN(sdl3_test::input_event), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDLTestInputEvent", SideEffects::worstDefault, "sdl3_test::input_event")->args({"type", "window_id"});
+        addExtern<DAS_BIND_FUN(sdl3_test::virtual_desc), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDLTestVirtualJoystickDesc", SideEffects::worstDefault, "sdl3_test::virtual_desc");
+        addExtern<DAS_BIND_FUN(sdl3_test::virtual_counts)>(*this, lib, "SDLTestVirtualCounts", SideEffects::worstDefault, "sdl3_test::virtual_counts");
+        addExtern<DAS_BIND_FUN(sdl3_test::event_filter_address)>(*this, lib, "SDLTestEventFilterAddress", SideEffects::worstDefault, "sdl3_test::event_filter_address");
+        addExtern<DAS_BIND_FUN(sdl3_test::event_watch_address)>(*this, lib, "SDLTestEventWatchAddress", SideEffects::worstDefault, "sdl3_test::event_watch_address");
+        addExtern<DAS_BIND_FUN(sdl3_test::event_cookie)>(*this, lib, "SDLTestEventCookie", SideEffects::worstDefault, "sdl3_test::event_cookie");
+        addExtern<DAS_BIND_FUN(sdl3_test::event_watch_count)>(*this, lib, "SDLTestEventWatchCount", SideEffects::worstDefault, "sdl3_test::event_watch_count");
+        addExtern<DAS_BIND_FUN(sdl3_test::event_push_worker)>(*this, lib, "SDLTestEventPushWorker", SideEffects::worstDefault, "sdl3_test::event_push_worker");
+        addExtern<DAS_BIND_FUN(sdl3_test::drop_event), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDLTestDropEvent", SideEffects::worstDefault, "sdl3_test::drop_event");
+        addExtern<DAS_BIND_FUN(sdl3_test::mutate_drop_text)>(*this, lib, "SDLTestMutateDropText", SideEffects::worstDefault, "sdl3_test::mutate_drop_text");
         addExtern<DAS_BIND_FUN(sdl3_test::poison_event), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDLTestPoisonEvent", SideEffects::none, "sdl3_test::poison_event");
         addExtern<DAS_BIND_FUN(sdl3_test::mutate_input_text)>(*this, lib, "SDLTestMutateInputText", SideEffects::worstDefault, "sdl3_test::mutate_input_text");
         addExtern<DAS_BIND_FUN(sdl3_test::result_states)>(*this,lib,"SDLTestResultStates",SideEffects::worstDefault,"sdl3_test::result_states");
@@ -570,6 +653,55 @@ public:
             SideEffects::none, "SDL_EventIsQuit")->args({"event"});
         addExtern<DAS_BIND_FUN(SDL_EventTimestamp)>(*this, lib, "SDL_EventTimestamp", SideEffects::none, "SDL_EventTimestamp");
         addExtern<DAS_BIND_FUN(SDL_ReadWindowEventData)>(*this, lib, "SDL_ReadWindowEventData", SideEffects::modifyArgument, "SDL_ReadWindowEventData");
+        addExtern<DAS_BIND_FUN(SDL_WaitEventRef)>(*this, lib, "SDL_WaitEventRef", SideEffects::worstDefault, "SDL_WaitEventRef");
+        addExtern<DAS_BIND_FUN(SDL_WaitEventTimeoutStatusRef)>(*this, lib, "SDL_WaitEventTimeoutStatusRef", SideEffects::worstDefault, "SDL_WaitEventTimeoutStatusRef");
+        addExtern<DAS_BIND_FUN(SDL_PeepEventsArray)>(*this, lib, "SDL_PeepEventsArray", SideEffects::worstDefault, "SDL_PeepEventsArray");
+        addExtern<DAS_BIND_FUN(SDL_CountEvents)>(*this, lib, "SDL_CountEvents", SideEffects::worstDefault, "SDL_CountEvents");
+        addExtern<DAS_BIND_FUN(SDL_GetWindowFromEventRef)>(*this, lib, "SDL_GetWindowFromEventRef", SideEffects::worstDefault, "SDL_GetWindowFromEventRef");
+        addExtern<DAS_BIND_FUN(SDL_MakeUserEvent), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDL_MakeUserEvent", SideEffects::none, "SDL_MakeUserEvent");
+        addExtern<DAS_BIND_FUN(SDL_ReadUserEvent)>(*this, lib, "SDL_ReadUserEvent", SideEffects::modifyArgument, "SDL_ReadUserEvent");
+        addExtern<DAS_BIND_FUN(SDL_MakeVirtualJoystickDesc), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDL_MakeVirtualJoystickDesc", SideEffects::worstDefault, "SDL_MakeVirtualJoystickDesc");
+        addExtern<DAS_BIND_FUN(SDL_AttachVirtualJoystickArrays)>(*this, lib, "SDL_AttachVirtualJoystickArrays", SideEffects::worstDefault, "SDL_AttachVirtualJoystickArrays");
+        addExtern<DAS_BIND_FUN(SDL_GetJoysticksCopy)>(*this, lib, "SDL_GetJoysticksCopy", SideEffects::worstDefault, "SDL_GetJoysticksCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetGamepadsCopy)>(*this, lib, "SDL_GetGamepadsCopy", SideEffects::worstDefault, "SDL_GetGamepadsCopy");
+        addExtern<DAS_BIND_FUN(SDL_GUIDString)>(*this, lib, "SDL_GUIDString", SideEffects::worstDefault, "SDL_GUIDString");
+        addExtern<DAS_BIND_FUN(SDL_GetJoystickGUIDInfoRef)>(*this, lib, "SDL_GetJoystickGUIDInfoRef", SideEffects::worstDefault, "SDL_GetJoystickGUIDInfoRef");
+        addExtern<DAS_BIND_FUN(SDL_GetJoystickAxisInitialStateRef)>(*this, lib, "SDL_GetJoystickAxisInitialStateRef", SideEffects::worstDefault, "SDL_GetJoystickAxisInitialStateRef");
+        addExtern<DAS_BIND_FUN(SDL_GetJoystickBallRef)>(*this, lib, "SDL_GetJoystickBallRef", SideEffects::worstDefault, "SDL_GetJoystickBallRef");
+        addExtern<DAS_BIND_FUN(SDL_GetJoystickPowerInfoRef)>(*this, lib, "SDL_GetJoystickPowerInfoRef", SideEffects::worstDefault, "SDL_GetJoystickPowerInfoRef");
+        addExtern<DAS_BIND_FUN(SDL_GetGamepadPowerInfoRef)>(*this, lib, "SDL_GetGamepadPowerInfoRef", SideEffects::worstDefault, "SDL_GetGamepadPowerInfoRef");
+        addExtern<DAS_BIND_FUN(SDL_GetGamepadTouchpadFingerRef)>(*this, lib, "SDL_GetGamepadTouchpadFingerRef", SideEffects::worstDefault, "SDL_GetGamepadTouchpadFingerRef");
+        addExtern<DAS_BIND_FUN(SDL_GetGamepadSensorDataArray)>(*this, lib, "SDL_GetGamepadSensorDataArray", SideEffects::worstDefault, "SDL_GetGamepadSensorDataArray");
+        addExtern<DAS_BIND_FUN(SDL_SendJoystickVirtualSensorDataArray)>(*this, lib, "SDL_SendJoystickVirtualSensorDataArray", SideEffects::worstDefault, "SDL_SendJoystickVirtualSensorDataArray");
+        addExtern<DAS_BIND_FUN(SDL_SendJoystickEffectArray)>(*this, lib, "SDL_SendJoystickEffectArray", SideEffects::worstDefault, "SDL_SendJoystickEffectArray");
+        addExtern<DAS_BIND_FUN(SDL_SendGamepadEffectArray)>(*this, lib, "SDL_SendGamepadEffectArray", SideEffects::worstDefault, "SDL_SendGamepadEffectArray");
+        addExtern<DAS_BIND_FUN(SDL_GetGamepadBindingsCopy)>(*this, lib, "SDL_GetGamepadBindingsCopy", SideEffects::worstDefault, "SDL_GetGamepadBindingsCopy");
+        addExtern<DAS_BIND_FUN(SDL_GamepadBindingInput)>(*this, lib, "SDL_GamepadBindingInput", SideEffects::worstDefault, "SDL_GamepadBindingInput");
+        addExtern<DAS_BIND_FUN(SDL_GamepadBindingOutput)>(*this, lib, "SDL_GamepadBindingOutput", SideEffects::worstDefault, "SDL_GamepadBindingOutput");
+        addExtern<DAS_BIND_FUN(SDL_GetGamepadMappingsCopy)>(*this, lib, "SDL_GetGamepadMappingsCopy", SideEffects::worstDefault, "SDL_GetGamepadMappingsCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetGamepadMappingValue)>(*this, lib, "SDL_GetGamepadMappingValue", SideEffects::worstDefault, "SDL_GetGamepadMappingValue");
+        addExtern<DAS_BIND_FUN(SDL_GetJoystickNameValue)>(*this, lib, "SDL_GetJoystickNameValue", SideEffects::worstDefault, "SDL_GetJoystickNameValue");
+        addExtern<DAS_BIND_FUN(SDL_GetJoystickPathValue)>(*this, lib, "SDL_GetJoystickPathValue", SideEffects::worstDefault, "SDL_GetJoystickPathValue");
+        addExtern<DAS_BIND_FUN(SDL_GetJoystickSerialValue)>(*this, lib, "SDL_GetJoystickSerialValue", SideEffects::worstDefault, "SDL_GetJoystickSerialValue");
+        addExtern<DAS_BIND_FUN(SDL_GetGamepadNameValue)>(*this, lib, "SDL_GetGamepadNameValue", SideEffects::worstDefault, "SDL_GetGamepadNameValue");
+        addExtern<DAS_BIND_FUN(SDL_GetGamepadPathValue)>(*this, lib, "SDL_GetGamepadPathValue", SideEffects::worstDefault, "SDL_GetGamepadPathValue");
+        addExtern<DAS_BIND_FUN(SDL_GetGamepadSerialValue)>(*this, lib, "SDL_GetGamepadSerialValue", SideEffects::worstDefault, "SDL_GetGamepadSerialValue");
+        addExtern<DAS_BIND_FUN(SDL_GetKeyboardsCopy)>(*this, lib, "SDL_GetKeyboardsCopy", SideEffects::worstDefault, "SDL_GetKeyboardsCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetMiceCopy)>(*this, lib, "SDL_GetMiceCopy", SideEffects::worstDefault, "SDL_GetMiceCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetKeyboardStateCopy)>(*this, lib, "SDL_GetKeyboardStateCopy", SideEffects::worstDefault, "SDL_GetKeyboardStateCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetKeyboardNameValue)>(*this, lib, "SDL_GetKeyboardNameValue", SideEffects::worstDefault, "SDL_GetKeyboardNameValue");
+        addExtern<DAS_BIND_FUN(SDL_GetMouseNameValue)>(*this, lib, "SDL_GetMouseNameValue", SideEffects::worstDefault, "SDL_GetMouseNameValue");
+        addExtern<DAS_BIND_FUN(SDL_GetKeyNameCopy)>(*this, lib, "SDL_GetKeyNameCopy", SideEffects::worstDefault, "SDL_GetKeyNameCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetScancodeNameCopy)>(*this, lib, "SDL_GetScancodeNameCopy", SideEffects::worstDefault, "SDL_GetScancodeNameCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetScancodeFromKeyRef)>(*this, lib, "SDL_GetScancodeFromKeyRef", SideEffects::worstDefault, "SDL_GetScancodeFromKeyRef");
+        addExtern<DAS_BIND_FUN(SDL_GetGlobalMouseStateRef)>(*this, lib, "SDL_GetGlobalMouseStateRef", SideEffects::worstDefault, "SDL_GetGlobalMouseStateRef");
+        addExtern<DAS_BIND_FUN(SDL_GetRelativeMouseStateRef)>(*this, lib, "SDL_GetRelativeMouseStateRef", SideEffects::worstDefault, "SDL_GetRelativeMouseStateRef");
+        addExtern<DAS_BIND_FUN(SDL_SetTextInputAreaRef)>(*this, lib, "SDL_SetTextInputAreaRef", SideEffects::worstDefault, "SDL_SetTextInputAreaRef");
+        addExtern<DAS_BIND_FUN(SDL_GetTextInputAreaRef)>(*this, lib, "SDL_GetTextInputAreaRef", SideEffects::worstDefault, "SDL_GetTextInputAreaRef");
+        addExtern<DAS_BIND_FUN(SDL_CreateCursorArray)>(*this, lib, "SDL_CreateCursorArray", SideEffects::worstDefault, "SDL_CreateCursorArray");
+        addExtern<DAS_BIND_FUN(SDL_GetEventFilterRef)>(*this, lib, "SDL_GetEventFilterRef", SideEffects::worstDefault, "SDL_GetEventFilterRef");
+        addExtern<DAS_BIND_FUN(SDL_FilterEventsBlock)>(*this, lib, "SDL_FilterEventsBlock", SideEffects::worstDefault, "SDL_FilterEventsBlock");
+        addExtern<DAS_BIND_FUN(SDL_ReadDropEvent)>(*this, lib, "SDL_ReadDropEvent", SideEffects::worstDefault, "SDL_ReadDropEvent");
         addExtern<DAS_BIND_FUN(SDL_EventIsEscape)>(*this, lib, "SDL_EventIsEscape",
             SideEffects::none, "SDL_EventIsEscape")->args({"event"});
         addExtern<DAS_BIND_FUN(SDL_MakeKeyEvent), SimNode_ExtFuncCallAndCopyOrMove>(

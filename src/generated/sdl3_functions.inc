@@ -42,6 +42,23 @@ addEnumeration(new Enumeration_SDL_BlendFactor());
 addEnumeration(new Enumeration_SDL_Colorspace());
 addEnumeration(new Enumeration_SDL_IOWhence());
 addEnumeration(new Enumeration_SDL_HitTestResult());
+addEnumeration(new Enumeration_SDL_EventAction());
+addEnumeration(new Enumeration_SDL_Scancode());
+addEnumeration(new Enumeration_SDL_SystemCursor());
+addEnumeration(new Enumeration_SDL_TextInputType());
+addEnumeration(new Enumeration_SDL_Capitalization());
+addEnumeration(new Enumeration_SDL_JoystickType());
+addEnumeration(new Enumeration_SDL_JoystickConnectionState());
+addEnumeration(new Enumeration_SDL_GamepadType());
+addEnumeration(new Enumeration_SDL_GamepadButton());
+addEnumeration(new Enumeration_SDL_GamepadButtonLabel());
+addEnumeration(new Enumeration_SDL_GamepadAxis());
+addEnumeration(new Enumeration_SDL_GamepadBindingType());
+addEnumeration(new Enumeration_SDL_SensorType());
+addEnumeration(new Enumeration_SDL_PowerState());
+addEnumeration(new Enumeration_SDL_TouchDeviceType());
+addEnumeration(new Enumeration_SDL_PenAxis());
+addEnumeration(new Enumeration_SDL_hid_bus_type());
 addAnnotation(new DummyTypeAnnotation("SDL_Window", "SDL_Window", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Renderer", "SDL_Renderer", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Surface", "SDL_Surface", 1, 1));
@@ -64,6 +81,12 @@ addAnnotation(new DummyTypeAnnotation("SDL_GPUCopyPass", "SDL_GPUCopyPass", 1, 1
 addAnnotation(new DummyTypeAnnotation("SDL_Palette", "SDL_Palette", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_IOStream", "SDL_IOStream", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_HitTestBinding", "SDL_HitTestBinding", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_Cursor", "SDL_Cursor", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_Joystick", "SDL_Joystick", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_Gamepad", "SDL_Gamepad", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_Sensor", "SDL_Sensor", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_Haptic", "SDL_Haptic", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_hid_device", "SDL_hid_device", 1, 1));
 addAnnotation(new SDL_GPUViewportAnnotation(lib));
 addAnnotation(new SDL_GPUIndirectDrawCommandAnnotation(lib));
 addAnnotation(new SDL_GPUIndexedIndirectDrawCommandAnnotation(lib));
@@ -115,6 +138,41 @@ addAnnotation(new SDL_PointAnnotation(lib));
 addAnnotation(new SDL_DisplayModeAnnotation(lib));
 addAnnotation(new SDL_ColorAnnotation(lib));
 addAnnotation(new SDL_PixelFormatDetailsAnnotation(lib));
+addAnnotation(new SDL_GUIDAnnotation(lib));
+addAnnotation(new SDL_VirtualJoystickTouchpadDescAnnotation(lib));
+addAnnotation(new SDL_VirtualJoystickSensorDescAnnotation(lib));
+addAnnotation(new SDL_VirtualJoystickDescAnnotation(lib));
+addAnnotation(new SDL_GamepadBindingAnnotation(lib));
+addAnnotation(new SDL_JoyAxisEventAnnotation(lib));
+addAnnotation(new SDL_JoyBallEventAnnotation(lib));
+addAnnotation(new SDL_JoyHatEventAnnotation(lib));
+addAnnotation(new SDL_JoyButtonEventAnnotation(lib));
+addAnnotation(new SDL_JoyDeviceEventAnnotation(lib));
+addAnnotation(new SDL_JoyBatteryEventAnnotation(lib));
+addAnnotation(new SDL_GamepadAxisEventAnnotation(lib));
+addAnnotation(new SDL_GamepadButtonEventAnnotation(lib));
+addAnnotation(new SDL_GamepadDeviceEventAnnotation(lib));
+addAnnotation(new SDL_GamepadTouchpadEventAnnotation(lib));
+addAnnotation(new SDL_GamepadSensorEventAnnotation(lib));
+addAnnotation(new SDL_FingerAnnotation(lib));
+addAnnotation(new SDL_HapticDirectionAnnotation(lib));
+addAnnotation(new SDL_HapticConstantAnnotation(lib));
+addAnnotation(new SDL_HapticPeriodicAnnotation(lib));
+addAnnotation(new SDL_HapticConditionAnnotation(lib));
+addAnnotation(new SDL_HapticRampAnnotation(lib));
+addAnnotation(new SDL_HapticLeftRightAnnotation(lib));
+addAnnotation(new SDL_HapticCustomAnnotation(lib));
+addAnnotation(new SDL_HapticEffectAnnotation(lib));
+addAnnotation(new SDL_hid_device_infoAnnotation(lib));
+addAnnotation(new SDL_TouchFingerEventAnnotation(lib));
+addAnnotation(new SDL_PenProximityEventAnnotation(lib));
+addAnnotation(new SDL_PenMotionEventAnnotation(lib));
+addAnnotation(new SDL_PenTouchEventAnnotation(lib));
+addAnnotation(new SDL_PenButtonEventAnnotation(lib));
+addAnnotation(new SDL_PenAxisEventAnnotation(lib));
+addAnnotation(new SDL_SensorEventAnnotation(lib));
+addAnnotation(new SDL_TextEditingCandidatesEventAnnotation(lib));
+addAnnotation(new SDL_ClipboardEventAnnotation(lib));
 addConstant(*this, "SDL_GPU_FILTER_NEAREST", static_cast<uint32_t>(SDL_GPU_FILTER_NEAREST));
 addConstant(*this, "SDL_GPU_FILTER_LINEAR", static_cast<uint32_t>(SDL_GPU_FILTER_LINEAR));
 addConstant(*this, "SDL_GPU_PRESENTMODE_VSYNC", static_cast<uint32_t>(SDL_GPU_PRESENTMODE_VSYNC));
@@ -345,6 +403,430 @@ addConstant(*this, "SDL_BLENDMODE_MUL", static_cast<uint32_t>(SDL_BLENDMODE_MUL)
 addConstant(*this, "SDL_BLENDMODE_INVALID", static_cast<uint32_t>(SDL_BLENDMODE_INVALID));
 addConstant(*this, "SDL_RENDERER_VSYNC_DISABLED", static_cast<int32_t>(SDL_RENDERER_VSYNC_DISABLED));
 addConstant(*this, "SDL_RENDERER_VSYNC_ADAPTIVE", static_cast<int32_t>(SDL_RENDERER_VSYNC_ADAPTIVE));
+addConstant(*this, "SDL_EVENT_FIRST", static_cast<uint32_t>(SDL_EVENT_FIRST));
+addConstant(*this, "SDL_EVENT_TERMINATING", static_cast<uint32_t>(SDL_EVENT_TERMINATING));
+addConstant(*this, "SDL_EVENT_LOW_MEMORY", static_cast<uint32_t>(SDL_EVENT_LOW_MEMORY));
+addConstant(*this, "SDL_EVENT_WILL_ENTER_BACKGROUND", static_cast<uint32_t>(SDL_EVENT_WILL_ENTER_BACKGROUND));
+addConstant(*this, "SDL_EVENT_DID_ENTER_BACKGROUND", static_cast<uint32_t>(SDL_EVENT_DID_ENTER_BACKGROUND));
+addConstant(*this, "SDL_EVENT_WILL_ENTER_FOREGROUND", static_cast<uint32_t>(SDL_EVENT_WILL_ENTER_FOREGROUND));
+addConstant(*this, "SDL_EVENT_DID_ENTER_FOREGROUND", static_cast<uint32_t>(SDL_EVENT_DID_ENTER_FOREGROUND));
+addConstant(*this, "SDL_EVENT_LOCALE_CHANGED", static_cast<uint32_t>(SDL_EVENT_LOCALE_CHANGED));
+addConstant(*this, "SDL_EVENT_SYSTEM_THEME_CHANGED", static_cast<uint32_t>(SDL_EVENT_SYSTEM_THEME_CHANGED));
+addConstant(*this, "SDL_EVENT_DISPLAY_ORIENTATION", static_cast<uint32_t>(SDL_EVENT_DISPLAY_ORIENTATION));
+addConstant(*this, "SDL_EVENT_DISPLAY_ADDED", static_cast<uint32_t>(SDL_EVENT_DISPLAY_ADDED));
+addConstant(*this, "SDL_EVENT_DISPLAY_REMOVED", static_cast<uint32_t>(SDL_EVENT_DISPLAY_REMOVED));
+addConstant(*this, "SDL_EVENT_DISPLAY_MOVED", static_cast<uint32_t>(SDL_EVENT_DISPLAY_MOVED));
+addConstant(*this, "SDL_EVENT_DISPLAY_DESKTOP_MODE_CHANGED", static_cast<uint32_t>(SDL_EVENT_DISPLAY_DESKTOP_MODE_CHANGED));
+addConstant(*this, "SDL_EVENT_DISPLAY_CURRENT_MODE_CHANGED", static_cast<uint32_t>(SDL_EVENT_DISPLAY_CURRENT_MODE_CHANGED));
+addConstant(*this, "SDL_EVENT_DISPLAY_CONTENT_SCALE_CHANGED", static_cast<uint32_t>(SDL_EVENT_DISPLAY_CONTENT_SCALE_CHANGED));
+addConstant(*this, "SDL_EVENT_DISPLAY_FIRST", static_cast<uint32_t>(SDL_EVENT_DISPLAY_FIRST));
+addConstant(*this, "SDL_EVENT_DISPLAY_LAST", static_cast<uint32_t>(SDL_EVENT_DISPLAY_LAST));
+addConstant(*this, "SDL_EVENT_WINDOW_SHOWN", static_cast<uint32_t>(SDL_EVENT_WINDOW_SHOWN));
+addConstant(*this, "SDL_EVENT_WINDOW_HIDDEN", static_cast<uint32_t>(SDL_EVENT_WINDOW_HIDDEN));
+addConstant(*this, "SDL_EVENT_WINDOW_EXPOSED", static_cast<uint32_t>(SDL_EVENT_WINDOW_EXPOSED));
+addConstant(*this, "SDL_EVENT_WINDOW_MOVED", static_cast<uint32_t>(SDL_EVENT_WINDOW_MOVED));
+addConstant(*this, "SDL_EVENT_WINDOW_RESIZED", static_cast<uint32_t>(SDL_EVENT_WINDOW_RESIZED));
+addConstant(*this, "SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED", static_cast<uint32_t>(SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED));
+addConstant(*this, "SDL_EVENT_WINDOW_METAL_VIEW_RESIZED", static_cast<uint32_t>(SDL_EVENT_WINDOW_METAL_VIEW_RESIZED));
+addConstant(*this, "SDL_EVENT_WINDOW_MINIMIZED", static_cast<uint32_t>(SDL_EVENT_WINDOW_MINIMIZED));
+addConstant(*this, "SDL_EVENT_WINDOW_MAXIMIZED", static_cast<uint32_t>(SDL_EVENT_WINDOW_MAXIMIZED));
+addConstant(*this, "SDL_EVENT_WINDOW_RESTORED", static_cast<uint32_t>(SDL_EVENT_WINDOW_RESTORED));
+addConstant(*this, "SDL_EVENT_WINDOW_MOUSE_ENTER", static_cast<uint32_t>(SDL_EVENT_WINDOW_MOUSE_ENTER));
+addConstant(*this, "SDL_EVENT_WINDOW_MOUSE_LEAVE", static_cast<uint32_t>(SDL_EVENT_WINDOW_MOUSE_LEAVE));
+addConstant(*this, "SDL_EVENT_WINDOW_FOCUS_GAINED", static_cast<uint32_t>(SDL_EVENT_WINDOW_FOCUS_GAINED));
+addConstant(*this, "SDL_EVENT_WINDOW_FOCUS_LOST", static_cast<uint32_t>(SDL_EVENT_WINDOW_FOCUS_LOST));
+addConstant(*this, "SDL_EVENT_WINDOW_HIT_TEST", static_cast<uint32_t>(SDL_EVENT_WINDOW_HIT_TEST));
+addConstant(*this, "SDL_EVENT_WINDOW_ICCPROF_CHANGED", static_cast<uint32_t>(SDL_EVENT_WINDOW_ICCPROF_CHANGED));
+addConstant(*this, "SDL_EVENT_WINDOW_DISPLAY_CHANGED", static_cast<uint32_t>(SDL_EVENT_WINDOW_DISPLAY_CHANGED));
+addConstant(*this, "SDL_EVENT_WINDOW_DISPLAY_SCALE_CHANGED", static_cast<uint32_t>(SDL_EVENT_WINDOW_DISPLAY_SCALE_CHANGED));
+addConstant(*this, "SDL_EVENT_WINDOW_SAFE_AREA_CHANGED", static_cast<uint32_t>(SDL_EVENT_WINDOW_SAFE_AREA_CHANGED));
+addConstant(*this, "SDL_EVENT_WINDOW_OCCLUDED", static_cast<uint32_t>(SDL_EVENT_WINDOW_OCCLUDED));
+addConstant(*this, "SDL_EVENT_WINDOW_ENTER_FULLSCREEN", static_cast<uint32_t>(SDL_EVENT_WINDOW_ENTER_FULLSCREEN));
+addConstant(*this, "SDL_EVENT_WINDOW_LEAVE_FULLSCREEN", static_cast<uint32_t>(SDL_EVENT_WINDOW_LEAVE_FULLSCREEN));
+addConstant(*this, "SDL_EVENT_WINDOW_DESTROYED", static_cast<uint32_t>(SDL_EVENT_WINDOW_DESTROYED));
+addConstant(*this, "SDL_EVENT_WINDOW_HDR_STATE_CHANGED", static_cast<uint32_t>(SDL_EVENT_WINDOW_HDR_STATE_CHANGED));
+addConstant(*this, "SDL_EVENT_WINDOW_FIRST", static_cast<uint32_t>(SDL_EVENT_WINDOW_FIRST));
+addConstant(*this, "SDL_EVENT_WINDOW_LAST", static_cast<uint32_t>(SDL_EVENT_WINDOW_LAST));
+addConstant(*this, "SDL_EVENT_KEYMAP_CHANGED", static_cast<uint32_t>(SDL_EVENT_KEYMAP_CHANGED));
+addConstant(*this, "SDL_EVENT_KEYBOARD_ADDED", static_cast<uint32_t>(SDL_EVENT_KEYBOARD_ADDED));
+addConstant(*this, "SDL_EVENT_KEYBOARD_REMOVED", static_cast<uint32_t>(SDL_EVENT_KEYBOARD_REMOVED));
+addConstant(*this, "SDL_EVENT_TEXT_EDITING_CANDIDATES", static_cast<uint32_t>(SDL_EVENT_TEXT_EDITING_CANDIDATES));
+addConstant(*this, "SDL_EVENT_MOUSE_ADDED", static_cast<uint32_t>(SDL_EVENT_MOUSE_ADDED));
+addConstant(*this, "SDL_EVENT_MOUSE_REMOVED", static_cast<uint32_t>(SDL_EVENT_MOUSE_REMOVED));
+addConstant(*this, "SDL_EVENT_JOYSTICK_AXIS_MOTION", static_cast<uint32_t>(SDL_EVENT_JOYSTICK_AXIS_MOTION));
+addConstant(*this, "SDL_EVENT_JOYSTICK_BALL_MOTION", static_cast<uint32_t>(SDL_EVENT_JOYSTICK_BALL_MOTION));
+addConstant(*this, "SDL_EVENT_JOYSTICK_HAT_MOTION", static_cast<uint32_t>(SDL_EVENT_JOYSTICK_HAT_MOTION));
+addConstant(*this, "SDL_EVENT_JOYSTICK_BUTTON_DOWN", static_cast<uint32_t>(SDL_EVENT_JOYSTICK_BUTTON_DOWN));
+addConstant(*this, "SDL_EVENT_JOYSTICK_BUTTON_UP", static_cast<uint32_t>(SDL_EVENT_JOYSTICK_BUTTON_UP));
+addConstant(*this, "SDL_EVENT_JOYSTICK_ADDED", static_cast<uint32_t>(SDL_EVENT_JOYSTICK_ADDED));
+addConstant(*this, "SDL_EVENT_JOYSTICK_REMOVED", static_cast<uint32_t>(SDL_EVENT_JOYSTICK_REMOVED));
+addConstant(*this, "SDL_EVENT_JOYSTICK_BATTERY_UPDATED", static_cast<uint32_t>(SDL_EVENT_JOYSTICK_BATTERY_UPDATED));
+addConstant(*this, "SDL_EVENT_JOYSTICK_UPDATE_COMPLETE", static_cast<uint32_t>(SDL_EVENT_JOYSTICK_UPDATE_COMPLETE));
+addConstant(*this, "SDL_EVENT_GAMEPAD_AXIS_MOTION", static_cast<uint32_t>(SDL_EVENT_GAMEPAD_AXIS_MOTION));
+addConstant(*this, "SDL_EVENT_GAMEPAD_BUTTON_DOWN", static_cast<uint32_t>(SDL_EVENT_GAMEPAD_BUTTON_DOWN));
+addConstant(*this, "SDL_EVENT_GAMEPAD_BUTTON_UP", static_cast<uint32_t>(SDL_EVENT_GAMEPAD_BUTTON_UP));
+addConstant(*this, "SDL_EVENT_GAMEPAD_ADDED", static_cast<uint32_t>(SDL_EVENT_GAMEPAD_ADDED));
+addConstant(*this, "SDL_EVENT_GAMEPAD_REMOVED", static_cast<uint32_t>(SDL_EVENT_GAMEPAD_REMOVED));
+addConstant(*this, "SDL_EVENT_GAMEPAD_REMAPPED", static_cast<uint32_t>(SDL_EVENT_GAMEPAD_REMAPPED));
+addConstant(*this, "SDL_EVENT_GAMEPAD_TOUCHPAD_DOWN", static_cast<uint32_t>(SDL_EVENT_GAMEPAD_TOUCHPAD_DOWN));
+addConstant(*this, "SDL_EVENT_GAMEPAD_TOUCHPAD_MOTION", static_cast<uint32_t>(SDL_EVENT_GAMEPAD_TOUCHPAD_MOTION));
+addConstant(*this, "SDL_EVENT_GAMEPAD_TOUCHPAD_UP", static_cast<uint32_t>(SDL_EVENT_GAMEPAD_TOUCHPAD_UP));
+addConstant(*this, "SDL_EVENT_GAMEPAD_SENSOR_UPDATE", static_cast<uint32_t>(SDL_EVENT_GAMEPAD_SENSOR_UPDATE));
+addConstant(*this, "SDL_EVENT_GAMEPAD_UPDATE_COMPLETE", static_cast<uint32_t>(SDL_EVENT_GAMEPAD_UPDATE_COMPLETE));
+addConstant(*this, "SDL_EVENT_GAMEPAD_STEAM_HANDLE_UPDATED", static_cast<uint32_t>(SDL_EVENT_GAMEPAD_STEAM_HANDLE_UPDATED));
+addConstant(*this, "SDL_EVENT_FINGER_DOWN", static_cast<uint32_t>(SDL_EVENT_FINGER_DOWN));
+addConstant(*this, "SDL_EVENT_FINGER_UP", static_cast<uint32_t>(SDL_EVENT_FINGER_UP));
+addConstant(*this, "SDL_EVENT_FINGER_MOTION", static_cast<uint32_t>(SDL_EVENT_FINGER_MOTION));
+addConstant(*this, "SDL_EVENT_FINGER_CANCELED", static_cast<uint32_t>(SDL_EVENT_FINGER_CANCELED));
+addConstant(*this, "SDL_EVENT_CLIPBOARD_UPDATE", static_cast<uint32_t>(SDL_EVENT_CLIPBOARD_UPDATE));
+addConstant(*this, "SDL_EVENT_DROP_FILE", static_cast<uint32_t>(SDL_EVENT_DROP_FILE));
+addConstant(*this, "SDL_EVENT_DROP_TEXT", static_cast<uint32_t>(SDL_EVENT_DROP_TEXT));
+addConstant(*this, "SDL_EVENT_DROP_BEGIN", static_cast<uint32_t>(SDL_EVENT_DROP_BEGIN));
+addConstant(*this, "SDL_EVENT_DROP_COMPLETE", static_cast<uint32_t>(SDL_EVENT_DROP_COMPLETE));
+addConstant(*this, "SDL_EVENT_DROP_POSITION", static_cast<uint32_t>(SDL_EVENT_DROP_POSITION));
+addConstant(*this, "SDL_EVENT_AUDIO_DEVICE_ADDED", static_cast<uint32_t>(SDL_EVENT_AUDIO_DEVICE_ADDED));
+addConstant(*this, "SDL_EVENT_AUDIO_DEVICE_REMOVED", static_cast<uint32_t>(SDL_EVENT_AUDIO_DEVICE_REMOVED));
+addConstant(*this, "SDL_EVENT_AUDIO_DEVICE_FORMAT_CHANGED", static_cast<uint32_t>(SDL_EVENT_AUDIO_DEVICE_FORMAT_CHANGED));
+addConstant(*this, "SDL_EVENT_SENSOR_UPDATE", static_cast<uint32_t>(SDL_EVENT_SENSOR_UPDATE));
+addConstant(*this, "SDL_EVENT_PEN_PROXIMITY_IN", static_cast<uint32_t>(SDL_EVENT_PEN_PROXIMITY_IN));
+addConstant(*this, "SDL_EVENT_PEN_PROXIMITY_OUT", static_cast<uint32_t>(SDL_EVENT_PEN_PROXIMITY_OUT));
+addConstant(*this, "SDL_EVENT_PEN_DOWN", static_cast<uint32_t>(SDL_EVENT_PEN_DOWN));
+addConstant(*this, "SDL_EVENT_PEN_UP", static_cast<uint32_t>(SDL_EVENT_PEN_UP));
+addConstant(*this, "SDL_EVENT_PEN_BUTTON_DOWN", static_cast<uint32_t>(SDL_EVENT_PEN_BUTTON_DOWN));
+addConstant(*this, "SDL_EVENT_PEN_BUTTON_UP", static_cast<uint32_t>(SDL_EVENT_PEN_BUTTON_UP));
+addConstant(*this, "SDL_EVENT_PEN_MOTION", static_cast<uint32_t>(SDL_EVENT_PEN_MOTION));
+addConstant(*this, "SDL_EVENT_PEN_AXIS", static_cast<uint32_t>(SDL_EVENT_PEN_AXIS));
+addConstant(*this, "SDL_EVENT_CAMERA_DEVICE_ADDED", static_cast<uint32_t>(SDL_EVENT_CAMERA_DEVICE_ADDED));
+addConstant(*this, "SDL_EVENT_CAMERA_DEVICE_REMOVED", static_cast<uint32_t>(SDL_EVENT_CAMERA_DEVICE_REMOVED));
+addConstant(*this, "SDL_EVENT_CAMERA_DEVICE_APPROVED", static_cast<uint32_t>(SDL_EVENT_CAMERA_DEVICE_APPROVED));
+addConstant(*this, "SDL_EVENT_CAMERA_DEVICE_DENIED", static_cast<uint32_t>(SDL_EVENT_CAMERA_DEVICE_DENIED));
+addConstant(*this, "SDL_EVENT_RENDER_TARGETS_RESET", static_cast<uint32_t>(SDL_EVENT_RENDER_TARGETS_RESET));
+addConstant(*this, "SDL_EVENT_RENDER_DEVICE_RESET", static_cast<uint32_t>(SDL_EVENT_RENDER_DEVICE_RESET));
+addConstant(*this, "SDL_EVENT_RENDER_DEVICE_LOST", static_cast<uint32_t>(SDL_EVENT_RENDER_DEVICE_LOST));
+addConstant(*this, "SDL_EVENT_PRIVATE0", static_cast<uint32_t>(SDL_EVENT_PRIVATE0));
+addConstant(*this, "SDL_EVENT_PRIVATE1", static_cast<uint32_t>(SDL_EVENT_PRIVATE1));
+addConstant(*this, "SDL_EVENT_PRIVATE2", static_cast<uint32_t>(SDL_EVENT_PRIVATE2));
+addConstant(*this, "SDL_EVENT_PRIVATE3", static_cast<uint32_t>(SDL_EVENT_PRIVATE3));
+addConstant(*this, "SDL_EVENT_POLL_SENTINEL", static_cast<uint32_t>(SDL_EVENT_POLL_SENTINEL));
+addConstant(*this, "SDL_EVENT_USER", static_cast<uint32_t>(SDL_EVENT_USER));
+addConstant(*this, "SDL_EVENT_LAST", static_cast<uint32_t>(SDL_EVENT_LAST));
+addConstant(*this, "SDL_EVENT_ENUM_PADDING", static_cast<uint32_t>(SDL_EVENT_ENUM_PADDING));
+addConstant(*this, "SDLK_EXTENDED_MASK", static_cast<uint32_t>(SDLK_EXTENDED_MASK));
+addConstant(*this, "SDLK_SCANCODE_MASK", static_cast<uint32_t>(SDLK_SCANCODE_MASK));
+addConstant(*this, "SDLK_UNKNOWN", static_cast<uint32_t>(SDLK_UNKNOWN));
+addConstant(*this, "SDLK_TAB", static_cast<uint32_t>(SDLK_TAB));
+addConstant(*this, "SDLK_SPACE", static_cast<uint32_t>(SDLK_SPACE));
+addConstant(*this, "SDLK_EXCLAIM", static_cast<uint32_t>(SDLK_EXCLAIM));
+addConstant(*this, "SDLK_DBLAPOSTROPHE", static_cast<uint32_t>(SDLK_DBLAPOSTROPHE));
+addConstant(*this, "SDLK_HASH", static_cast<uint32_t>(SDLK_HASH));
+addConstant(*this, "SDLK_DOLLAR", static_cast<uint32_t>(SDLK_DOLLAR));
+addConstant(*this, "SDLK_PERCENT", static_cast<uint32_t>(SDLK_PERCENT));
+addConstant(*this, "SDLK_AMPERSAND", static_cast<uint32_t>(SDLK_AMPERSAND));
+addConstant(*this, "SDLK_APOSTROPHE", static_cast<uint32_t>(SDLK_APOSTROPHE));
+addConstant(*this, "SDLK_LEFTPAREN", static_cast<uint32_t>(SDLK_LEFTPAREN));
+addConstant(*this, "SDLK_RIGHTPAREN", static_cast<uint32_t>(SDLK_RIGHTPAREN));
+addConstant(*this, "SDLK_ASTERISK", static_cast<uint32_t>(SDLK_ASTERISK));
+addConstant(*this, "SDLK_PLUS", static_cast<uint32_t>(SDLK_PLUS));
+addConstant(*this, "SDLK_COMMA", static_cast<uint32_t>(SDLK_COMMA));
+addConstant(*this, "SDLK_MINUS", static_cast<uint32_t>(SDLK_MINUS));
+addConstant(*this, "SDLK_PERIOD", static_cast<uint32_t>(SDLK_PERIOD));
+addConstant(*this, "SDLK_SLASH", static_cast<uint32_t>(SDLK_SLASH));
+addConstant(*this, "SDLK_0", static_cast<uint32_t>(SDLK_0));
+addConstant(*this, "SDLK_1", static_cast<uint32_t>(SDLK_1));
+addConstant(*this, "SDLK_2", static_cast<uint32_t>(SDLK_2));
+addConstant(*this, "SDLK_3", static_cast<uint32_t>(SDLK_3));
+addConstant(*this, "SDLK_4", static_cast<uint32_t>(SDLK_4));
+addConstant(*this, "SDLK_5", static_cast<uint32_t>(SDLK_5));
+addConstant(*this, "SDLK_6", static_cast<uint32_t>(SDLK_6));
+addConstant(*this, "SDLK_7", static_cast<uint32_t>(SDLK_7));
+addConstant(*this, "SDLK_8", static_cast<uint32_t>(SDLK_8));
+addConstant(*this, "SDLK_9", static_cast<uint32_t>(SDLK_9));
+addConstant(*this, "SDLK_COLON", static_cast<uint32_t>(SDLK_COLON));
+addConstant(*this, "SDLK_SEMICOLON", static_cast<uint32_t>(SDLK_SEMICOLON));
+addConstant(*this, "SDLK_LESS", static_cast<uint32_t>(SDLK_LESS));
+addConstant(*this, "SDLK_EQUALS", static_cast<uint32_t>(SDLK_EQUALS));
+addConstant(*this, "SDLK_GREATER", static_cast<uint32_t>(SDLK_GREATER));
+addConstant(*this, "SDLK_QUESTION", static_cast<uint32_t>(SDLK_QUESTION));
+addConstant(*this, "SDLK_AT", static_cast<uint32_t>(SDLK_AT));
+addConstant(*this, "SDLK_LEFTBRACKET", static_cast<uint32_t>(SDLK_LEFTBRACKET));
+addConstant(*this, "SDLK_BACKSLASH", static_cast<uint32_t>(SDLK_BACKSLASH));
+addConstant(*this, "SDLK_RIGHTBRACKET", static_cast<uint32_t>(SDLK_RIGHTBRACKET));
+addConstant(*this, "SDLK_CARET", static_cast<uint32_t>(SDLK_CARET));
+addConstant(*this, "SDLK_UNDERSCORE", static_cast<uint32_t>(SDLK_UNDERSCORE));
+addConstant(*this, "SDLK_GRAVE", static_cast<uint32_t>(SDLK_GRAVE));
+addConstant(*this, "SDLK_A", static_cast<uint32_t>(SDLK_A));
+addConstant(*this, "SDLK_B", static_cast<uint32_t>(SDLK_B));
+addConstant(*this, "SDLK_C", static_cast<uint32_t>(SDLK_C));
+addConstant(*this, "SDLK_D", static_cast<uint32_t>(SDLK_D));
+addConstant(*this, "SDLK_E", static_cast<uint32_t>(SDLK_E));
+addConstant(*this, "SDLK_F", static_cast<uint32_t>(SDLK_F));
+addConstant(*this, "SDLK_G", static_cast<uint32_t>(SDLK_G));
+addConstant(*this, "SDLK_H", static_cast<uint32_t>(SDLK_H));
+addConstant(*this, "SDLK_I", static_cast<uint32_t>(SDLK_I));
+addConstant(*this, "SDLK_J", static_cast<uint32_t>(SDLK_J));
+addConstant(*this, "SDLK_K", static_cast<uint32_t>(SDLK_K));
+addConstant(*this, "SDLK_L", static_cast<uint32_t>(SDLK_L));
+addConstant(*this, "SDLK_M", static_cast<uint32_t>(SDLK_M));
+addConstant(*this, "SDLK_N", static_cast<uint32_t>(SDLK_N));
+addConstant(*this, "SDLK_O", static_cast<uint32_t>(SDLK_O));
+addConstant(*this, "SDLK_P", static_cast<uint32_t>(SDLK_P));
+addConstant(*this, "SDLK_Q", static_cast<uint32_t>(SDLK_Q));
+addConstant(*this, "SDLK_R", static_cast<uint32_t>(SDLK_R));
+addConstant(*this, "SDLK_S", static_cast<uint32_t>(SDLK_S));
+addConstant(*this, "SDLK_T", static_cast<uint32_t>(SDLK_T));
+addConstant(*this, "SDLK_U", static_cast<uint32_t>(SDLK_U));
+addConstant(*this, "SDLK_V", static_cast<uint32_t>(SDLK_V));
+addConstant(*this, "SDLK_W", static_cast<uint32_t>(SDLK_W));
+addConstant(*this, "SDLK_X", static_cast<uint32_t>(SDLK_X));
+addConstant(*this, "SDLK_Y", static_cast<uint32_t>(SDLK_Y));
+addConstant(*this, "SDLK_Z", static_cast<uint32_t>(SDLK_Z));
+addConstant(*this, "SDLK_LEFTBRACE", static_cast<uint32_t>(SDLK_LEFTBRACE));
+addConstant(*this, "SDLK_PIPE", static_cast<uint32_t>(SDLK_PIPE));
+addConstant(*this, "SDLK_RIGHTBRACE", static_cast<uint32_t>(SDLK_RIGHTBRACE));
+addConstant(*this, "SDLK_TILDE", static_cast<uint32_t>(SDLK_TILDE));
+addConstant(*this, "SDLK_DELETE", static_cast<uint32_t>(SDLK_DELETE));
+addConstant(*this, "SDLK_PLUSMINUS", static_cast<uint32_t>(SDLK_PLUSMINUS));
+addConstant(*this, "SDLK_CAPSLOCK", static_cast<uint32_t>(SDLK_CAPSLOCK));
+addConstant(*this, "SDLK_F1", static_cast<uint32_t>(SDLK_F1));
+addConstant(*this, "SDLK_F2", static_cast<uint32_t>(SDLK_F2));
+addConstant(*this, "SDLK_F3", static_cast<uint32_t>(SDLK_F3));
+addConstant(*this, "SDLK_F4", static_cast<uint32_t>(SDLK_F4));
+addConstant(*this, "SDLK_F5", static_cast<uint32_t>(SDLK_F5));
+addConstant(*this, "SDLK_F6", static_cast<uint32_t>(SDLK_F6));
+addConstant(*this, "SDLK_F7", static_cast<uint32_t>(SDLK_F7));
+addConstant(*this, "SDLK_F8", static_cast<uint32_t>(SDLK_F8));
+addConstant(*this, "SDLK_F9", static_cast<uint32_t>(SDLK_F9));
+addConstant(*this, "SDLK_F10", static_cast<uint32_t>(SDLK_F10));
+addConstant(*this, "SDLK_F11", static_cast<uint32_t>(SDLK_F11));
+addConstant(*this, "SDLK_F12", static_cast<uint32_t>(SDLK_F12));
+addConstant(*this, "SDLK_PRINTSCREEN", static_cast<uint32_t>(SDLK_PRINTSCREEN));
+addConstant(*this, "SDLK_SCROLLLOCK", static_cast<uint32_t>(SDLK_SCROLLLOCK));
+addConstant(*this, "SDLK_PAUSE", static_cast<uint32_t>(SDLK_PAUSE));
+addConstant(*this, "SDLK_INSERT", static_cast<uint32_t>(SDLK_INSERT));
+addConstant(*this, "SDLK_HOME", static_cast<uint32_t>(SDLK_HOME));
+addConstant(*this, "SDLK_PAGEUP", static_cast<uint32_t>(SDLK_PAGEUP));
+addConstant(*this, "SDLK_END", static_cast<uint32_t>(SDLK_END));
+addConstant(*this, "SDLK_PAGEDOWN", static_cast<uint32_t>(SDLK_PAGEDOWN));
+addConstant(*this, "SDLK_NUMLOCKCLEAR", static_cast<uint32_t>(SDLK_NUMLOCKCLEAR));
+addConstant(*this, "SDLK_KP_DIVIDE", static_cast<uint32_t>(SDLK_KP_DIVIDE));
+addConstant(*this, "SDLK_KP_MULTIPLY", static_cast<uint32_t>(SDLK_KP_MULTIPLY));
+addConstant(*this, "SDLK_KP_MINUS", static_cast<uint32_t>(SDLK_KP_MINUS));
+addConstant(*this, "SDLK_KP_PLUS", static_cast<uint32_t>(SDLK_KP_PLUS));
+addConstant(*this, "SDLK_KP_ENTER", static_cast<uint32_t>(SDLK_KP_ENTER));
+addConstant(*this, "SDLK_KP_1", static_cast<uint32_t>(SDLK_KP_1));
+addConstant(*this, "SDLK_KP_2", static_cast<uint32_t>(SDLK_KP_2));
+addConstant(*this, "SDLK_KP_3", static_cast<uint32_t>(SDLK_KP_3));
+addConstant(*this, "SDLK_KP_4", static_cast<uint32_t>(SDLK_KP_4));
+addConstant(*this, "SDLK_KP_5", static_cast<uint32_t>(SDLK_KP_5));
+addConstant(*this, "SDLK_KP_6", static_cast<uint32_t>(SDLK_KP_6));
+addConstant(*this, "SDLK_KP_7", static_cast<uint32_t>(SDLK_KP_7));
+addConstant(*this, "SDLK_KP_8", static_cast<uint32_t>(SDLK_KP_8));
+addConstant(*this, "SDLK_KP_9", static_cast<uint32_t>(SDLK_KP_9));
+addConstant(*this, "SDLK_KP_0", static_cast<uint32_t>(SDLK_KP_0));
+addConstant(*this, "SDLK_KP_PERIOD", static_cast<uint32_t>(SDLK_KP_PERIOD));
+addConstant(*this, "SDLK_APPLICATION", static_cast<uint32_t>(SDLK_APPLICATION));
+addConstant(*this, "SDLK_POWER", static_cast<uint32_t>(SDLK_POWER));
+addConstant(*this, "SDLK_KP_EQUALS", static_cast<uint32_t>(SDLK_KP_EQUALS));
+addConstant(*this, "SDLK_F13", static_cast<uint32_t>(SDLK_F13));
+addConstant(*this, "SDLK_F14", static_cast<uint32_t>(SDLK_F14));
+addConstant(*this, "SDLK_F15", static_cast<uint32_t>(SDLK_F15));
+addConstant(*this, "SDLK_F16", static_cast<uint32_t>(SDLK_F16));
+addConstant(*this, "SDLK_F17", static_cast<uint32_t>(SDLK_F17));
+addConstant(*this, "SDLK_F18", static_cast<uint32_t>(SDLK_F18));
+addConstant(*this, "SDLK_F19", static_cast<uint32_t>(SDLK_F19));
+addConstant(*this, "SDLK_F20", static_cast<uint32_t>(SDLK_F20));
+addConstant(*this, "SDLK_F21", static_cast<uint32_t>(SDLK_F21));
+addConstant(*this, "SDLK_F22", static_cast<uint32_t>(SDLK_F22));
+addConstant(*this, "SDLK_F23", static_cast<uint32_t>(SDLK_F23));
+addConstant(*this, "SDLK_F24", static_cast<uint32_t>(SDLK_F24));
+addConstant(*this, "SDLK_EXECUTE", static_cast<uint32_t>(SDLK_EXECUTE));
+addConstant(*this, "SDLK_HELP", static_cast<uint32_t>(SDLK_HELP));
+addConstant(*this, "SDLK_MENU", static_cast<uint32_t>(SDLK_MENU));
+addConstant(*this, "SDLK_SELECT", static_cast<uint32_t>(SDLK_SELECT));
+addConstant(*this, "SDLK_STOP", static_cast<uint32_t>(SDLK_STOP));
+addConstant(*this, "SDLK_AGAIN", static_cast<uint32_t>(SDLK_AGAIN));
+addConstant(*this, "SDLK_UNDO", static_cast<uint32_t>(SDLK_UNDO));
+addConstant(*this, "SDLK_CUT", static_cast<uint32_t>(SDLK_CUT));
+addConstant(*this, "SDLK_COPY", static_cast<uint32_t>(SDLK_COPY));
+addConstant(*this, "SDLK_PASTE", static_cast<uint32_t>(SDLK_PASTE));
+addConstant(*this, "SDLK_FIND", static_cast<uint32_t>(SDLK_FIND));
+addConstant(*this, "SDLK_MUTE", static_cast<uint32_t>(SDLK_MUTE));
+addConstant(*this, "SDLK_VOLUMEUP", static_cast<uint32_t>(SDLK_VOLUMEUP));
+addConstant(*this, "SDLK_VOLUMEDOWN", static_cast<uint32_t>(SDLK_VOLUMEDOWN));
+addConstant(*this, "SDLK_KP_COMMA", static_cast<uint32_t>(SDLK_KP_COMMA));
+addConstant(*this, "SDLK_KP_EQUALSAS400", static_cast<uint32_t>(SDLK_KP_EQUALSAS400));
+addConstant(*this, "SDLK_ALTERASE", static_cast<uint32_t>(SDLK_ALTERASE));
+addConstant(*this, "SDLK_SYSREQ", static_cast<uint32_t>(SDLK_SYSREQ));
+addConstant(*this, "SDLK_CANCEL", static_cast<uint32_t>(SDLK_CANCEL));
+addConstant(*this, "SDLK_CLEAR", static_cast<uint32_t>(SDLK_CLEAR));
+addConstant(*this, "SDLK_PRIOR", static_cast<uint32_t>(SDLK_PRIOR));
+addConstant(*this, "SDLK_RETURN2", static_cast<uint32_t>(SDLK_RETURN2));
+addConstant(*this, "SDLK_SEPARATOR", static_cast<uint32_t>(SDLK_SEPARATOR));
+addConstant(*this, "SDLK_OUT", static_cast<uint32_t>(SDLK_OUT));
+addConstant(*this, "SDLK_OPER", static_cast<uint32_t>(SDLK_OPER));
+addConstant(*this, "SDLK_CLEARAGAIN", static_cast<uint32_t>(SDLK_CLEARAGAIN));
+addConstant(*this, "SDLK_CRSEL", static_cast<uint32_t>(SDLK_CRSEL));
+addConstant(*this, "SDLK_EXSEL", static_cast<uint32_t>(SDLK_EXSEL));
+addConstant(*this, "SDLK_KP_00", static_cast<uint32_t>(SDLK_KP_00));
+addConstant(*this, "SDLK_KP_000", static_cast<uint32_t>(SDLK_KP_000));
+addConstant(*this, "SDLK_THOUSANDSSEPARATOR", static_cast<uint32_t>(SDLK_THOUSANDSSEPARATOR));
+addConstant(*this, "SDLK_DECIMALSEPARATOR", static_cast<uint32_t>(SDLK_DECIMALSEPARATOR));
+addConstant(*this, "SDLK_CURRENCYUNIT", static_cast<uint32_t>(SDLK_CURRENCYUNIT));
+addConstant(*this, "SDLK_CURRENCYSUBUNIT", static_cast<uint32_t>(SDLK_CURRENCYSUBUNIT));
+addConstant(*this, "SDLK_KP_LEFTPAREN", static_cast<uint32_t>(SDLK_KP_LEFTPAREN));
+addConstant(*this, "SDLK_KP_RIGHTPAREN", static_cast<uint32_t>(SDLK_KP_RIGHTPAREN));
+addConstant(*this, "SDLK_KP_LEFTBRACE", static_cast<uint32_t>(SDLK_KP_LEFTBRACE));
+addConstant(*this, "SDLK_KP_RIGHTBRACE", static_cast<uint32_t>(SDLK_KP_RIGHTBRACE));
+addConstant(*this, "SDLK_KP_TAB", static_cast<uint32_t>(SDLK_KP_TAB));
+addConstant(*this, "SDLK_KP_BACKSPACE", static_cast<uint32_t>(SDLK_KP_BACKSPACE));
+addConstant(*this, "SDLK_KP_A", static_cast<uint32_t>(SDLK_KP_A));
+addConstant(*this, "SDLK_KP_B", static_cast<uint32_t>(SDLK_KP_B));
+addConstant(*this, "SDLK_KP_C", static_cast<uint32_t>(SDLK_KP_C));
+addConstant(*this, "SDLK_KP_D", static_cast<uint32_t>(SDLK_KP_D));
+addConstant(*this, "SDLK_KP_E", static_cast<uint32_t>(SDLK_KP_E));
+addConstant(*this, "SDLK_KP_F", static_cast<uint32_t>(SDLK_KP_F));
+addConstant(*this, "SDLK_KP_XOR", static_cast<uint32_t>(SDLK_KP_XOR));
+addConstant(*this, "SDLK_KP_POWER", static_cast<uint32_t>(SDLK_KP_POWER));
+addConstant(*this, "SDLK_KP_PERCENT", static_cast<uint32_t>(SDLK_KP_PERCENT));
+addConstant(*this, "SDLK_KP_LESS", static_cast<uint32_t>(SDLK_KP_LESS));
+addConstant(*this, "SDLK_KP_GREATER", static_cast<uint32_t>(SDLK_KP_GREATER));
+addConstant(*this, "SDLK_KP_AMPERSAND", static_cast<uint32_t>(SDLK_KP_AMPERSAND));
+addConstant(*this, "SDLK_KP_DBLAMPERSAND", static_cast<uint32_t>(SDLK_KP_DBLAMPERSAND));
+addConstant(*this, "SDLK_KP_VERTICALBAR", static_cast<uint32_t>(SDLK_KP_VERTICALBAR));
+addConstant(*this, "SDLK_KP_DBLVERTICALBAR", static_cast<uint32_t>(SDLK_KP_DBLVERTICALBAR));
+addConstant(*this, "SDLK_KP_COLON", static_cast<uint32_t>(SDLK_KP_COLON));
+addConstant(*this, "SDLK_KP_HASH", static_cast<uint32_t>(SDLK_KP_HASH));
+addConstant(*this, "SDLK_KP_SPACE", static_cast<uint32_t>(SDLK_KP_SPACE));
+addConstant(*this, "SDLK_KP_AT", static_cast<uint32_t>(SDLK_KP_AT));
+addConstant(*this, "SDLK_KP_EXCLAM", static_cast<uint32_t>(SDLK_KP_EXCLAM));
+addConstant(*this, "SDLK_KP_MEMSTORE", static_cast<uint32_t>(SDLK_KP_MEMSTORE));
+addConstant(*this, "SDLK_KP_MEMRECALL", static_cast<uint32_t>(SDLK_KP_MEMRECALL));
+addConstant(*this, "SDLK_KP_MEMCLEAR", static_cast<uint32_t>(SDLK_KP_MEMCLEAR));
+addConstant(*this, "SDLK_KP_MEMADD", static_cast<uint32_t>(SDLK_KP_MEMADD));
+addConstant(*this, "SDLK_KP_MEMSUBTRACT", static_cast<uint32_t>(SDLK_KP_MEMSUBTRACT));
+addConstant(*this, "SDLK_KP_MEMMULTIPLY", static_cast<uint32_t>(SDLK_KP_MEMMULTIPLY));
+addConstant(*this, "SDLK_KP_MEMDIVIDE", static_cast<uint32_t>(SDLK_KP_MEMDIVIDE));
+addConstant(*this, "SDLK_KP_PLUSMINUS", static_cast<uint32_t>(SDLK_KP_PLUSMINUS));
+addConstant(*this, "SDLK_KP_CLEAR", static_cast<uint32_t>(SDLK_KP_CLEAR));
+addConstant(*this, "SDLK_KP_CLEARENTRY", static_cast<uint32_t>(SDLK_KP_CLEARENTRY));
+addConstant(*this, "SDLK_KP_BINARY", static_cast<uint32_t>(SDLK_KP_BINARY));
+addConstant(*this, "SDLK_KP_OCTAL", static_cast<uint32_t>(SDLK_KP_OCTAL));
+addConstant(*this, "SDLK_KP_DECIMAL", static_cast<uint32_t>(SDLK_KP_DECIMAL));
+addConstant(*this, "SDLK_KP_HEXADECIMAL", static_cast<uint32_t>(SDLK_KP_HEXADECIMAL));
+addConstant(*this, "SDLK_LCTRL", static_cast<uint32_t>(SDLK_LCTRL));
+addConstant(*this, "SDLK_LSHIFT", static_cast<uint32_t>(SDLK_LSHIFT));
+addConstant(*this, "SDLK_LALT", static_cast<uint32_t>(SDLK_LALT));
+addConstant(*this, "SDLK_LGUI", static_cast<uint32_t>(SDLK_LGUI));
+addConstant(*this, "SDLK_RCTRL", static_cast<uint32_t>(SDLK_RCTRL));
+addConstant(*this, "SDLK_RSHIFT", static_cast<uint32_t>(SDLK_RSHIFT));
+addConstant(*this, "SDLK_RALT", static_cast<uint32_t>(SDLK_RALT));
+addConstant(*this, "SDLK_RGUI", static_cast<uint32_t>(SDLK_RGUI));
+addConstant(*this, "SDLK_MODE", static_cast<uint32_t>(SDLK_MODE));
+addConstant(*this, "SDLK_SLEEP", static_cast<uint32_t>(SDLK_SLEEP));
+addConstant(*this, "SDLK_WAKE", static_cast<uint32_t>(SDLK_WAKE));
+addConstant(*this, "SDLK_CHANNEL_INCREMENT", static_cast<uint32_t>(SDLK_CHANNEL_INCREMENT));
+addConstant(*this, "SDLK_CHANNEL_DECREMENT", static_cast<uint32_t>(SDLK_CHANNEL_DECREMENT));
+addConstant(*this, "SDLK_MEDIA_PLAY", static_cast<uint32_t>(SDLK_MEDIA_PLAY));
+addConstant(*this, "SDLK_MEDIA_PAUSE", static_cast<uint32_t>(SDLK_MEDIA_PAUSE));
+addConstant(*this, "SDLK_MEDIA_RECORD", static_cast<uint32_t>(SDLK_MEDIA_RECORD));
+addConstant(*this, "SDLK_MEDIA_FAST_FORWARD", static_cast<uint32_t>(SDLK_MEDIA_FAST_FORWARD));
+addConstant(*this, "SDLK_MEDIA_REWIND", static_cast<uint32_t>(SDLK_MEDIA_REWIND));
+addConstant(*this, "SDLK_MEDIA_NEXT_TRACK", static_cast<uint32_t>(SDLK_MEDIA_NEXT_TRACK));
+addConstant(*this, "SDLK_MEDIA_PREVIOUS_TRACK", static_cast<uint32_t>(SDLK_MEDIA_PREVIOUS_TRACK));
+addConstant(*this, "SDLK_MEDIA_STOP", static_cast<uint32_t>(SDLK_MEDIA_STOP));
+addConstant(*this, "SDLK_MEDIA_EJECT", static_cast<uint32_t>(SDLK_MEDIA_EJECT));
+addConstant(*this, "SDLK_MEDIA_PLAY_PAUSE", static_cast<uint32_t>(SDLK_MEDIA_PLAY_PAUSE));
+addConstant(*this, "SDLK_MEDIA_SELECT", static_cast<uint32_t>(SDLK_MEDIA_SELECT));
+addConstant(*this, "SDLK_AC_NEW", static_cast<uint32_t>(SDLK_AC_NEW));
+addConstant(*this, "SDLK_AC_OPEN", static_cast<uint32_t>(SDLK_AC_OPEN));
+addConstant(*this, "SDLK_AC_CLOSE", static_cast<uint32_t>(SDLK_AC_CLOSE));
+addConstant(*this, "SDLK_AC_EXIT", static_cast<uint32_t>(SDLK_AC_EXIT));
+addConstant(*this, "SDLK_AC_SAVE", static_cast<uint32_t>(SDLK_AC_SAVE));
+addConstant(*this, "SDLK_AC_PRINT", static_cast<uint32_t>(SDLK_AC_PRINT));
+addConstant(*this, "SDLK_AC_PROPERTIES", static_cast<uint32_t>(SDLK_AC_PROPERTIES));
+addConstant(*this, "SDLK_AC_SEARCH", static_cast<uint32_t>(SDLK_AC_SEARCH));
+addConstant(*this, "SDLK_AC_HOME", static_cast<uint32_t>(SDLK_AC_HOME));
+addConstant(*this, "SDLK_AC_BACK", static_cast<uint32_t>(SDLK_AC_BACK));
+addConstant(*this, "SDLK_AC_FORWARD", static_cast<uint32_t>(SDLK_AC_FORWARD));
+addConstant(*this, "SDLK_AC_STOP", static_cast<uint32_t>(SDLK_AC_STOP));
+addConstant(*this, "SDLK_AC_REFRESH", static_cast<uint32_t>(SDLK_AC_REFRESH));
+addConstant(*this, "SDLK_AC_BOOKMARKS", static_cast<uint32_t>(SDLK_AC_BOOKMARKS));
+addConstant(*this, "SDLK_SOFTLEFT", static_cast<uint32_t>(SDLK_SOFTLEFT));
+addConstant(*this, "SDLK_SOFTRIGHT", static_cast<uint32_t>(SDLK_SOFTRIGHT));
+addConstant(*this, "SDLK_CALL", static_cast<uint32_t>(SDLK_CALL));
+addConstant(*this, "SDLK_ENDCALL", static_cast<uint32_t>(SDLK_ENDCALL));
+addConstant(*this, "SDLK_LEFT_TAB", static_cast<uint32_t>(SDLK_LEFT_TAB));
+addConstant(*this, "SDLK_LEVEL5_SHIFT", static_cast<uint32_t>(SDLK_LEVEL5_SHIFT));
+addConstant(*this, "SDLK_MULTI_KEY_COMPOSE", static_cast<uint32_t>(SDLK_MULTI_KEY_COMPOSE));
+addConstant(*this, "SDLK_LMETA", static_cast<uint32_t>(SDLK_LMETA));
+addConstant(*this, "SDLK_RMETA", static_cast<uint32_t>(SDLK_RMETA));
+addConstant(*this, "SDLK_LHYPER", static_cast<uint32_t>(SDLK_LHYPER));
+addConstant(*this, "SDLK_RHYPER", static_cast<uint32_t>(SDLK_RHYPER));
+addConstant(*this, "SDL_KMOD_NONE", static_cast<uint32_t>(SDL_KMOD_NONE));
+addConstant(*this, "SDL_KMOD_LSHIFT", static_cast<uint32_t>(SDL_KMOD_LSHIFT));
+addConstant(*this, "SDL_KMOD_RSHIFT", static_cast<uint32_t>(SDL_KMOD_RSHIFT));
+addConstant(*this, "SDL_KMOD_LEVEL5", static_cast<uint32_t>(SDL_KMOD_LEVEL5));
+addConstant(*this, "SDL_KMOD_LCTRL", static_cast<uint32_t>(SDL_KMOD_LCTRL));
+addConstant(*this, "SDL_KMOD_RCTRL", static_cast<uint32_t>(SDL_KMOD_RCTRL));
+addConstant(*this, "SDL_KMOD_LALT", static_cast<uint32_t>(SDL_KMOD_LALT));
+addConstant(*this, "SDL_KMOD_RALT", static_cast<uint32_t>(SDL_KMOD_RALT));
+addConstant(*this, "SDL_KMOD_LGUI", static_cast<uint32_t>(SDL_KMOD_LGUI));
+addConstant(*this, "SDL_KMOD_RGUI", static_cast<uint32_t>(SDL_KMOD_RGUI));
+addConstant(*this, "SDL_KMOD_NUM", static_cast<uint32_t>(SDL_KMOD_NUM));
+addConstant(*this, "SDL_KMOD_CAPS", static_cast<uint32_t>(SDL_KMOD_CAPS));
+addConstant(*this, "SDL_KMOD_MODE", static_cast<uint32_t>(SDL_KMOD_MODE));
+addConstant(*this, "SDL_KMOD_SCROLL", static_cast<uint32_t>(SDL_KMOD_SCROLL));
+addConstant(*this, "SDL_KMOD_GUI", static_cast<uint32_t>(SDL_KMOD_GUI));
+addConstant(*this, "SDL_BUTTON_X1", static_cast<uint32_t>(SDL_BUTTON_X1));
+addConstant(*this, "SDL_BUTTON_X2", static_cast<uint32_t>(SDL_BUTTON_X2));
+addConstant(*this, "SDL_BUTTON_X1MASK", static_cast<uint32_t>(SDL_BUTTON_X1MASK));
+addConstant(*this, "SDL_BUTTON_X2MASK", static_cast<uint32_t>(SDL_BUTTON_X2MASK));
+addConstant(*this, "SDL_HAT_CENTERED", static_cast<uint32_t>(SDL_HAT_CENTERED));
+addConstant(*this, "SDL_HAT_UP", static_cast<uint32_t>(SDL_HAT_UP));
+addConstant(*this, "SDL_HAT_RIGHT", static_cast<uint32_t>(SDL_HAT_RIGHT));
+addConstant(*this, "SDL_HAT_DOWN", static_cast<uint32_t>(SDL_HAT_DOWN));
+addConstant(*this, "SDL_HAT_LEFT", static_cast<uint32_t>(SDL_HAT_LEFT));
+addConstant(*this, "SDL_HAT_RIGHTUP", static_cast<uint32_t>(SDL_HAT_RIGHTUP));
+addConstant(*this, "SDL_HAT_RIGHTDOWN", static_cast<uint32_t>(SDL_HAT_RIGHTDOWN));
+addConstant(*this, "SDL_HAT_LEFTUP", static_cast<uint32_t>(SDL_HAT_LEFTUP));
+addConstant(*this, "SDL_HAT_LEFTDOWN", static_cast<uint32_t>(SDL_HAT_LEFTDOWN));
+addConstant(*this, "SDL_PEN_INPUT_DOWN", static_cast<uint32_t>(SDL_PEN_INPUT_DOWN));
+addConstant(*this, "SDL_PEN_INPUT_BUTTON_1", static_cast<uint32_t>(SDL_PEN_INPUT_BUTTON_1));
+addConstant(*this, "SDL_PEN_INPUT_BUTTON_2", static_cast<uint32_t>(SDL_PEN_INPUT_BUTTON_2));
+addConstant(*this, "SDL_PEN_INPUT_BUTTON_3", static_cast<uint32_t>(SDL_PEN_INPUT_BUTTON_3));
+addConstant(*this, "SDL_PEN_INPUT_BUTTON_4", static_cast<uint32_t>(SDL_PEN_INPUT_BUTTON_4));
+addConstant(*this, "SDL_PEN_INPUT_BUTTON_5", static_cast<uint32_t>(SDL_PEN_INPUT_BUTTON_5));
+addConstant(*this, "SDL_PEN_INPUT_ERASER_TIP", static_cast<uint32_t>(SDL_PEN_INPUT_ERASER_TIP));
+addConstant(*this, "SDL_HAPTIC_CONSTANT", static_cast<uint32_t>(SDL_HAPTIC_CONSTANT));
+addConstant(*this, "SDL_HAPTIC_SINE", static_cast<uint32_t>(SDL_HAPTIC_SINE));
+addConstant(*this, "SDL_HAPTIC_SQUARE", static_cast<uint32_t>(SDL_HAPTIC_SQUARE));
+addConstant(*this, "SDL_HAPTIC_TRIANGLE", static_cast<uint32_t>(SDL_HAPTIC_TRIANGLE));
+addConstant(*this, "SDL_HAPTIC_SAWTOOTHUP", static_cast<uint32_t>(SDL_HAPTIC_SAWTOOTHUP));
+addConstant(*this, "SDL_HAPTIC_SAWTOOTHDOWN", static_cast<uint32_t>(SDL_HAPTIC_SAWTOOTHDOWN));
+addConstant(*this, "SDL_HAPTIC_RAMP", static_cast<uint32_t>(SDL_HAPTIC_RAMP));
+addConstant(*this, "SDL_HAPTIC_SPRING", static_cast<uint32_t>(SDL_HAPTIC_SPRING));
+addConstant(*this, "SDL_HAPTIC_DAMPER", static_cast<uint32_t>(SDL_HAPTIC_DAMPER));
+addConstant(*this, "SDL_HAPTIC_INERTIA", static_cast<uint32_t>(SDL_HAPTIC_INERTIA));
+addConstant(*this, "SDL_HAPTIC_FRICTION", static_cast<uint32_t>(SDL_HAPTIC_FRICTION));
+addConstant(*this, "SDL_HAPTIC_LEFTRIGHT", static_cast<uint32_t>(SDL_HAPTIC_LEFTRIGHT));
+addConstant(*this, "SDL_HAPTIC_RESERVED1", static_cast<uint32_t>(SDL_HAPTIC_RESERVED1));
+addConstant(*this, "SDL_HAPTIC_RESERVED2", static_cast<uint32_t>(SDL_HAPTIC_RESERVED2));
+addConstant(*this, "SDL_HAPTIC_RESERVED3", static_cast<uint32_t>(SDL_HAPTIC_RESERVED3));
+addConstant(*this, "SDL_HAPTIC_CUSTOM", static_cast<uint32_t>(SDL_HAPTIC_CUSTOM));
+addConstant(*this, "SDL_HAPTIC_GAIN", static_cast<uint32_t>(SDL_HAPTIC_GAIN));
+addConstant(*this, "SDL_HAPTIC_AUTOCENTER", static_cast<uint32_t>(SDL_HAPTIC_AUTOCENTER));
+addConstant(*this, "SDL_HAPTIC_STATUS", static_cast<uint32_t>(SDL_HAPTIC_STATUS));
+addConstant(*this, "SDL_HAPTIC_PAUSE", static_cast<uint32_t>(SDL_HAPTIC_PAUSE));
+addConstant(*this, "SDL_HAPTIC_POLAR", static_cast<uint32_t>(SDL_HAPTIC_POLAR));
+addConstant(*this, "SDL_HAPTIC_CARTESIAN", static_cast<uint32_t>(SDL_HAPTIC_CARTESIAN));
+addConstant(*this, "SDL_HAPTIC_SPHERICAL", static_cast<uint32_t>(SDL_HAPTIC_SPHERICAL));
+addConstant(*this, "SDL_HAPTIC_STEERING_AXIS", static_cast<uint32_t>(SDL_HAPTIC_STEERING_AXIS));
+addConstant(*this, "SDL_HAPTIC_INFINITY", static_cast<uint32_t>(SDL_HAPTIC_INFINITY));
+addConstant(*this, "SDL_TOUCH_MOUSEID", static_cast<uint32_t>(SDL_TOUCH_MOUSEID));
+addConstant(*this, "SDL_PEN_MOUSEID", static_cast<uint32_t>(SDL_PEN_MOUSEID));
+addConstant(*this, "SDL_MOUSE_TOUCHID", static_cast<uint64_t>(SDL_MOUSE_TOUCHID));
+addConstant(*this, "SDL_PEN_TOUCHID", static_cast<uint64_t>(SDL_PEN_TOUCHID));
+addConstant(*this, "SDL_STANDARD_GRAVITY", static_cast<float>(SDL_STANDARD_GRAVITY));
 // Uint32 (SDL_GPUTextureFormat) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_GPUTextureFormatTexelBlockSize)>(*this, lib, "SDL_GPUTextureFormatTexelBlockSize", SideEffects::worstDefault, "SDL_GPUTextureFormatTexelBlockSize")->args({"format"});
 // Uint32 (SDL_GPUTextureFormat, Uint32, Uint32, Uint32) __attribute__((cdecl))
@@ -1261,3 +1743,519 @@ addExtern<DAS_BIND_FUN(SDL_SetClipboardText)>(*this, lib, "SDL_SetClipboardText"
 addExtern<DAS_BIND_FUN(SDL_SetPrimarySelectionText)>(*this, lib, "SDL_SetPrimarySelectionText", SideEffects::worstDefault, "SDL_SetPrimarySelectionText")->args({"text"});
 // bool (SDL_Window *, SDL_HitTest, void *) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_SetWindowHitTest)>(*this, lib, "SDL_SetWindowHitTest", SideEffects::worstDefault, "SDL_SetWindowHitTestAddress")->args({"window", "callback", "callback_data"});
+// int (SDL_Event *, int, SDL_EventAction, Uint32, Uint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_PeepEvents)>(*this, lib, "SDL_PeepEvents", SideEffects::worstDefault, "SDL_PeepEvents")->args({"events", "numevents", "action", "minType", "maxType"});
+// bool (Uint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasEvent)>(*this, lib, "SDL_HasEvent", SideEffects::worstDefault, "SDL_HasEvent")->args({"type"});
+// bool (Uint32, Uint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasEvents)>(*this, lib, "SDL_HasEvents", SideEffects::worstDefault, "SDL_HasEvents")->args({"minType", "maxType"});
+// void (Uint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_FlushEvent)>(*this, lib, "SDL_FlushEvent", SideEffects::worstDefault, "SDL_FlushEvent")->args({"type"});
+// void (Uint32, Uint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_FlushEvents)>(*this, lib, "SDL_FlushEvents", SideEffects::worstDefault, "SDL_FlushEvents")->args({"minType", "maxType"});
+// bool (SDL_Event *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WaitEvent)>(*this, lib, "SDL_WaitEvent", SideEffects::worstDefault, "SDL_WaitEvent")->args({"event"});
+// bool (SDL_Event *, Sint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WaitEventTimeout)>(*this, lib, "SDL_WaitEventTimeout", SideEffects::worstDefault, "SDL_WaitEventTimeout")->args({"event", "timeoutMS"});
+// void (Uint32, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetEventEnabled)>(*this, lib, "SDL_SetEventEnabled", SideEffects::worstDefault, "SDL_SetEventEnabled")->args({"type", "enabled"});
+// bool (Uint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_EventEnabled)>(*this, lib, "SDL_EventEnabled", SideEffects::worstDefault, "SDL_EventEnabled")->args({"type"});
+// Uint32 (int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RegisterEvents)>(*this, lib, "SDL_RegisterEvents", SideEffects::worstDefault, "SDL_RegisterEvents")->args({"numevents"});
+// SDL_Window *(const SDL_Event *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowFromEvent)>(*this, lib, "SDL_GetWindowFromEvent", SideEffects::worstDefault, "SDL_GetWindowFromEvent")->args({"event"});
+// void (SDL_EventFilter, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetEventFilter)>(*this, lib, "SDL_SetEventFilter", SideEffects::worstDefault, "SDL_SetEventFilterAddress")->args({"filter", "userdata"});
+// bool (SDL_EventFilter *, void **) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetEventFilter)>(*this, lib, "SDL_GetEventFilter", SideEffects::worstDefault, "SDL_GetEventFilterAddress")->args({"filter", "userdata"});
+// bool (SDL_EventFilter, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_AddEventWatch)>(*this, lib, "SDL_AddEventWatch", SideEffects::worstDefault, "SDL_AddEventWatchAddress")->args({"filter", "userdata"});
+// void (SDL_EventFilter, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RemoveEventWatch)>(*this, lib, "SDL_RemoveEventWatch", SideEffects::worstDefault, "SDL_RemoveEventWatchAddress")->args({"filter", "userdata"});
+// void (SDL_EventFilter, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_FilterEvents)>(*this, lib, "SDL_FilterEvents", SideEffects::worstDefault, "SDL_FilterEventsAddress")->args({"filter", "userdata"});
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasKeyboard)>(*this, lib, "SDL_HasKeyboard", SideEffects::worstDefault, "SDL_HasKeyboard");
+// SDL_KeyboardID *(int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetKeyboards)>(*this, lib, "SDL_GetKeyboards", SideEffects::worstDefault, "SDL_GetKeyboards")->args({"count"});
+// const char *(SDL_KeyboardID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetKeyboardNameForID)>(*this, lib, "SDL_GetKeyboardNameForID", SideEffects::worstDefault, "SDL_GetKeyboardNameForID")->args({"instance_id"});
+// SDL_Window *(void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetKeyboardFocus)>(*this, lib, "SDL_GetKeyboardFocus", SideEffects::worstDefault, "SDL_GetKeyboardFocus");
+// void (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ResetKeyboard)>(*this, lib, "SDL_ResetKeyboard", SideEffects::worstDefault, "SDL_ResetKeyboard");
+// SDL_Keymod (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetModState)>(*this, lib, "SDL_GetModState", SideEffects::worstDefault, "SDL_GetModState");
+// void (SDL_Keymod) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetModState)>(*this, lib, "SDL_SetModState", SideEffects::worstDefault, "SDL_SetModState")->args({"modstate"});
+// SDL_Keycode (SDL_Scancode, SDL_Keymod, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetKeyFromScancode)>(*this, lib, "SDL_GetKeyFromScancode", SideEffects::worstDefault, "SDL_GetKeyFromScancode")->args({"scancode", "modstate", "key_event"});
+// SDL_Scancode (SDL_Keycode, SDL_Keymod *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetScancodeFromKey)>(*this, lib, "SDL_GetScancodeFromKey", SideEffects::worstDefault, "SDL_GetScancodeFromKey")->args({"key", "modstate"});
+// bool (SDL_Scancode, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetScancodeName)>(*this, lib, "SDL_SetScancodeName", SideEffects::worstDefault, "SDL_SetScancodeName")->args({"scancode", "name"});
+// const char *(SDL_Scancode) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetScancodeName)>(*this, lib, "SDL_GetScancodeName", SideEffects::worstDefault, "SDL_GetScancodeName")->args({"scancode"});
+// SDL_Scancode (const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetScancodeFromName)>(*this, lib, "SDL_GetScancodeFromName", SideEffects::worstDefault, "SDL_GetScancodeFromName")->args({"name"});
+// const char *(SDL_Keycode) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetKeyName)>(*this, lib, "SDL_GetKeyName", SideEffects::worstDefault, "SDL_GetKeyName")->args({"key"});
+// SDL_Keycode (const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetKeyFromName)>(*this, lib, "SDL_GetKeyFromName", SideEffects::worstDefault, "SDL_GetKeyFromName")->args({"name"});
+// bool (SDL_Window *, SDL_PropertiesID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_StartTextInputWithProperties)>(*this, lib, "SDL_StartTextInputWithProperties", SideEffects::worstDefault, "SDL_StartTextInputWithProperties")->args({"window", "props"});
+// bool (SDL_Window *, const SDL_Rect *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetTextInputArea)>(*this, lib, "SDL_SetTextInputArea", SideEffects::worstDefault, "SDL_SetTextInputArea")->args({"window", "rect", "cursor"});
+// bool (SDL_Window *, SDL_Rect *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetTextInputArea)>(*this, lib, "SDL_GetTextInputArea", SideEffects::worstDefault, "SDL_GetTextInputArea")->args({"window", "rect", "cursor"});
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasScreenKeyboardSupport)>(*this, lib, "SDL_HasScreenKeyboardSupport", SideEffects::worstDefault, "SDL_HasScreenKeyboardSupport");
+// bool (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ScreenKeyboardShown)>(*this, lib, "SDL_ScreenKeyboardShown", SideEffects::worstDefault, "SDL_ScreenKeyboardShown")->args({"window"});
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasMouse)>(*this, lib, "SDL_HasMouse", SideEffects::worstDefault, "SDL_HasMouse");
+// SDL_MouseID *(int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetMice)>(*this, lib, "SDL_GetMice", SideEffects::worstDefault, "SDL_GetMice")->args({"count"});
+// const char *(SDL_MouseID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetMouseNameForID)>(*this, lib, "SDL_GetMouseNameForID", SideEffects::worstDefault, "SDL_GetMouseNameForID")->args({"instance_id"});
+// SDL_Window *(void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetMouseFocus)>(*this, lib, "SDL_GetMouseFocus", SideEffects::worstDefault, "SDL_GetMouseFocus");
+// SDL_MouseButtonFlags (float *, float *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGlobalMouseState)>(*this, lib, "SDL_GetGlobalMouseState", SideEffects::worstDefault, "SDL_GetGlobalMouseState")->args({"x", "y"});
+// SDL_MouseButtonFlags (float *, float *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRelativeMouseState)>(*this, lib, "SDL_GetRelativeMouseState", SideEffects::worstDefault, "SDL_GetRelativeMouseState")->args({"x", "y"});
+// void (SDL_Window *, float, float) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WarpMouseInWindow)>(*this, lib, "SDL_WarpMouseInWindow", SideEffects::worstDefault, "SDL_WarpMouseInWindow")->args({"window", "x", "y"});
+// bool (float, float) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WarpMouseGlobal)>(*this, lib, "SDL_WarpMouseGlobal", SideEffects::worstDefault, "SDL_WarpMouseGlobal")->args({"x", "y"});
+// bool (SDL_Window *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetWindowRelativeMouseMode)>(*this, lib, "SDL_SetWindowRelativeMouseMode", SideEffects::worstDefault, "SDL_SetWindowRelativeMouseMode")->args({"window", "enabled"});
+// bool (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetWindowRelativeMouseMode)>(*this, lib, "SDL_GetWindowRelativeMouseMode", SideEffects::worstDefault, "SDL_GetWindowRelativeMouseMode")->args({"window"});
+// bool (bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CaptureMouse)>(*this, lib, "SDL_CaptureMouse", SideEffects::worstDefault, "SDL_CaptureMouse")->args({"enabled"});
+// SDL_Cursor *(const Uint8 *, const Uint8 *, int, int, int, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateCursor)>(*this, lib, "SDL_CreateCursor", SideEffects::worstDefault, "SDL_CreateCursor")->args({"data", "mask", "w", "h", "hot_x", "hot_y"});
+// SDL_Cursor *(SDL_Surface *, int, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateColorCursor)>(*this, lib, "SDL_CreateColorCursor", SideEffects::worstDefault, "SDL_CreateColorCursor")->args({"surface", "hot_x", "hot_y"});
+// SDL_Cursor *(SDL_SystemCursor) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateSystemCursor)>(*this, lib, "SDL_CreateSystemCursor", SideEffects::worstDefault, "SDL_CreateSystemCursor")->args({"id"});
+// bool (SDL_Cursor *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetCursor)>(*this, lib, "SDL_SetCursor", SideEffects::worstDefault, "SDL_SetCursor")->args({"cursor"});
+// SDL_Cursor *(void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetCursor)>(*this, lib, "SDL_GetCursor", SideEffects::worstDefault, "SDL_GetCursor");
+// SDL_Cursor *(void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetDefaultCursor)>(*this, lib, "SDL_GetDefaultCursor", SideEffects::worstDefault, "SDL_GetDefaultCursor");
+// void (SDL_Cursor *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_DestroyCursor)>(*this, lib, "SDL_DestroyCursor", SideEffects::worstDefault, "SDL_DestroyCursor")->args({"cursor"});
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ShowCursor)>(*this, lib, "SDL_ShowCursor", SideEffects::worstDefault, "SDL_ShowCursor");
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HideCursor)>(*this, lib, "SDL_HideCursor", SideEffects::worstDefault, "SDL_HideCursor");
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CursorVisible)>(*this, lib, "SDL_CursorVisible", SideEffects::worstDefault, "SDL_CursorVisible");
+// void (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_LockJoysticks)>(*this, lib, "SDL_LockJoysticks", SideEffects::worstDefault, "SDL_LockJoysticks");
+// void (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_UnlockJoysticks)>(*this, lib, "SDL_UnlockJoysticks", SideEffects::worstDefault, "SDL_UnlockJoysticks");
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasJoystick)>(*this, lib, "SDL_HasJoystick", SideEffects::worstDefault, "SDL_HasJoystick");
+// SDL_JoystickID *(int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoysticks)>(*this, lib, "SDL_GetJoysticks", SideEffects::worstDefault, "SDL_GetJoysticks")->args({"count"});
+// const char *(SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickNameForID)>(*this, lib, "SDL_GetJoystickNameForID", SideEffects::worstDefault, "SDL_GetJoystickNameForID")->args({"instance_id"});
+// const char *(SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickPathForID)>(*this, lib, "SDL_GetJoystickPathForID", SideEffects::worstDefault, "SDL_GetJoystickPathForID")->args({"instance_id"});
+// int (SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickPlayerIndexForID)>(*this, lib, "SDL_GetJoystickPlayerIndexForID", SideEffects::worstDefault, "SDL_GetJoystickPlayerIndexForID")->args({"instance_id"});
+// SDL_GUID (SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickGUIDForID), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDL_GetJoystickGUIDForID", SideEffects::worstDefault, "SDL_GetJoystickGUIDForID")->args({"instance_id"});
+// Uint16 (SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickVendorForID)>(*this, lib, "SDL_GetJoystickVendorForID", SideEffects::worstDefault, "SDL_GetJoystickVendorForID")->args({"instance_id"});
+// Uint16 (SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickProductForID)>(*this, lib, "SDL_GetJoystickProductForID", SideEffects::worstDefault, "SDL_GetJoystickProductForID")->args({"instance_id"});
+// Uint16 (SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickProductVersionForID)>(*this, lib, "SDL_GetJoystickProductVersionForID", SideEffects::worstDefault, "SDL_GetJoystickProductVersionForID")->args({"instance_id"});
+// SDL_JoystickType (SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickTypeForID)>(*this, lib, "SDL_GetJoystickTypeForID", SideEffects::worstDefault, "SDL_GetJoystickTypeForID")->args({"instance_id"});
+// SDL_Joystick *(SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_OpenJoystick)>(*this, lib, "SDL_OpenJoystick", SideEffects::worstDefault, "SDL_OpenJoystick")->args({"instance_id"});
+// SDL_Joystick *(SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickFromID)>(*this, lib, "SDL_GetJoystickFromID", SideEffects::worstDefault, "SDL_GetJoystickFromID")->args({"instance_id"});
+// SDL_Joystick *(int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickFromPlayerIndex)>(*this, lib, "SDL_GetJoystickFromPlayerIndex", SideEffects::worstDefault, "SDL_GetJoystickFromPlayerIndex")->args({"player_index"});
+// SDL_JoystickID (const SDL_VirtualJoystickDesc *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_AttachVirtualJoystick)>(*this, lib, "SDL_AttachVirtualJoystick", SideEffects::worstDefault, "SDL_AttachVirtualJoystick")->args({"desc"});
+// bool (SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_DetachVirtualJoystick)>(*this, lib, "SDL_DetachVirtualJoystick", SideEffects::worstDefault, "SDL_DetachVirtualJoystick")->args({"instance_id"});
+// bool (SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_IsJoystickVirtual)>(*this, lib, "SDL_IsJoystickVirtual", SideEffects::worstDefault, "SDL_IsJoystickVirtual")->args({"instance_id"});
+// bool (SDL_Joystick *, int, Sint16) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetJoystickVirtualAxis)>(*this, lib, "SDL_SetJoystickVirtualAxis", SideEffects::worstDefault, "SDL_SetJoystickVirtualAxis")->args({"joystick", "axis", "value"});
+// bool (SDL_Joystick *, int, Sint16, Sint16) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetJoystickVirtualBall)>(*this, lib, "SDL_SetJoystickVirtualBall", SideEffects::worstDefault, "SDL_SetJoystickVirtualBall")->args({"joystick", "ball", "xrel", "yrel"});
+// bool (SDL_Joystick *, int, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetJoystickVirtualButton)>(*this, lib, "SDL_SetJoystickVirtualButton", SideEffects::worstDefault, "SDL_SetJoystickVirtualButton")->args({"joystick", "button", "down"});
+// bool (SDL_Joystick *, int, Uint8) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetJoystickVirtualHat)>(*this, lib, "SDL_SetJoystickVirtualHat", SideEffects::worstDefault, "SDL_SetJoystickVirtualHat")->args({"joystick", "hat", "value"});
+// bool (SDL_Joystick *, int, int, bool, float, float, float) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetJoystickVirtualTouchpad)>(*this, lib, "SDL_SetJoystickVirtualTouchpad", SideEffects::worstDefault, "SDL_SetJoystickVirtualTouchpad")->args({"joystick", "touchpad", "finger", "down", "x", "y", "pressure"});
+// bool (SDL_Joystick *, SDL_SensorType, Uint64, const float *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SendJoystickVirtualSensorData)>(*this, lib, "SDL_SendJoystickVirtualSensorData", SideEffects::worstDefault, "SDL_SendJoystickVirtualSensorData")->args({"joystick", "type", "sensor_timestamp", "data", "num_values"});
+// SDL_PropertiesID (SDL_Joystick *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickProperties)>(*this, lib, "SDL_GetJoystickProperties", SideEffects::worstDefault, "SDL_GetJoystickProperties")->args({"joystick"});
+// const char *(SDL_Joystick *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickName)>(*this, lib, "SDL_GetJoystickName", SideEffects::worstDefault, "SDL_GetJoystickName")->args({"joystick"});
+// const char *(SDL_Joystick *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickPath)>(*this, lib, "SDL_GetJoystickPath", SideEffects::worstDefault, "SDL_GetJoystickPath")->args({"joystick"});
+// int (SDL_Joystick *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickPlayerIndex)>(*this, lib, "SDL_GetJoystickPlayerIndex", SideEffects::worstDefault, "SDL_GetJoystickPlayerIndex")->args({"joystick"});
+// bool (SDL_Joystick *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetJoystickPlayerIndex)>(*this, lib, "SDL_SetJoystickPlayerIndex", SideEffects::worstDefault, "SDL_SetJoystickPlayerIndex")->args({"joystick", "player_index"});
+// SDL_GUID (SDL_Joystick *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickGUID), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDL_GetJoystickGUID", SideEffects::worstDefault, "SDL_GetJoystickGUID")->args({"joystick"});
+// Uint16 (SDL_Joystick *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickVendor)>(*this, lib, "SDL_GetJoystickVendor", SideEffects::worstDefault, "SDL_GetJoystickVendor")->args({"joystick"});
+// Uint16 (SDL_Joystick *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickProduct)>(*this, lib, "SDL_GetJoystickProduct", SideEffects::worstDefault, "SDL_GetJoystickProduct")->args({"joystick"});
+// Uint16 (SDL_Joystick *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickProductVersion)>(*this, lib, "SDL_GetJoystickProductVersion", SideEffects::worstDefault, "SDL_GetJoystickProductVersion")->args({"joystick"});
+// Uint16 (SDL_Joystick *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickFirmwareVersion)>(*this, lib, "SDL_GetJoystickFirmwareVersion", SideEffects::worstDefault, "SDL_GetJoystickFirmwareVersion")->args({"joystick"});
+// const char *(SDL_Joystick *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickSerial)>(*this, lib, "SDL_GetJoystickSerial", SideEffects::worstDefault, "SDL_GetJoystickSerial")->args({"joystick"});
+// SDL_JoystickType (SDL_Joystick *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickType)>(*this, lib, "SDL_GetJoystickType", SideEffects::worstDefault, "SDL_GetJoystickType")->args({"joystick"});
+// void (SDL_GUID, Uint16 *, Uint16 *, Uint16 *, Uint16 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickGUIDInfo)>(*this, lib, "SDL_GetJoystickGUIDInfo", SideEffects::worstDefault, "SDL_GetJoystickGUIDInfo")->args({"guid", "vendor", "product", "version", "crc16"});
+// bool (SDL_Joystick *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_JoystickConnected)>(*this, lib, "SDL_JoystickConnected", SideEffects::worstDefault, "SDL_JoystickConnected")->args({"joystick"});
+// SDL_JoystickID (SDL_Joystick *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickID)>(*this, lib, "SDL_GetJoystickID", SideEffects::worstDefault, "SDL_GetJoystickID")->args({"joystick"});
+// int (SDL_Joystick *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetNumJoystickAxes)>(*this, lib, "SDL_GetNumJoystickAxes", SideEffects::worstDefault, "SDL_GetNumJoystickAxes")->args({"joystick"});
+// int (SDL_Joystick *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetNumJoystickBalls)>(*this, lib, "SDL_GetNumJoystickBalls", SideEffects::worstDefault, "SDL_GetNumJoystickBalls")->args({"joystick"});
+// int (SDL_Joystick *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetNumJoystickHats)>(*this, lib, "SDL_GetNumJoystickHats", SideEffects::worstDefault, "SDL_GetNumJoystickHats")->args({"joystick"});
+// int (SDL_Joystick *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetNumJoystickButtons)>(*this, lib, "SDL_GetNumJoystickButtons", SideEffects::worstDefault, "SDL_GetNumJoystickButtons")->args({"joystick"});
+// void (bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetJoystickEventsEnabled)>(*this, lib, "SDL_SetJoystickEventsEnabled", SideEffects::worstDefault, "SDL_SetJoystickEventsEnabled")->args({"enabled"});
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_JoystickEventsEnabled)>(*this, lib, "SDL_JoystickEventsEnabled", SideEffects::worstDefault, "SDL_JoystickEventsEnabled");
+// void (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_UpdateJoysticks)>(*this, lib, "SDL_UpdateJoysticks", SideEffects::worstDefault, "SDL_UpdateJoysticks");
+// Sint16 (SDL_Joystick *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickAxis)>(*this, lib, "SDL_GetJoystickAxis", SideEffects::worstDefault, "SDL_GetJoystickAxis")->args({"joystick", "axis"});
+// bool (SDL_Joystick *, int, Sint16 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickAxisInitialState)>(*this, lib, "SDL_GetJoystickAxisInitialState", SideEffects::worstDefault, "SDL_GetJoystickAxisInitialState")->args({"joystick", "axis", "state"});
+// bool (SDL_Joystick *, int, int *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickBall)>(*this, lib, "SDL_GetJoystickBall", SideEffects::worstDefault, "SDL_GetJoystickBall")->args({"joystick", "ball", "dx", "dy"});
+// Uint8 (SDL_Joystick *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickHat)>(*this, lib, "SDL_GetJoystickHat", SideEffects::worstDefault, "SDL_GetJoystickHat")->args({"joystick", "hat"});
+// bool (SDL_Joystick *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickButton)>(*this, lib, "SDL_GetJoystickButton", SideEffects::worstDefault, "SDL_GetJoystickButton")->args({"joystick", "button"});
+// bool (SDL_Joystick *, Uint16, Uint16, Uint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RumbleJoystick)>(*this, lib, "SDL_RumbleJoystick", SideEffects::worstDefault, "SDL_RumbleJoystick")->args({"joystick", "low_frequency_rumble", "high_frequency_rumble", "duration_ms"});
+// bool (SDL_Joystick *, Uint16, Uint16, Uint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RumbleJoystickTriggers)>(*this, lib, "SDL_RumbleJoystickTriggers", SideEffects::worstDefault, "SDL_RumbleJoystickTriggers")->args({"joystick", "left_rumble", "right_rumble", "duration_ms"});
+// bool (SDL_Joystick *, Uint8, Uint8, Uint8) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetJoystickLED)>(*this, lib, "SDL_SetJoystickLED", SideEffects::worstDefault, "SDL_SetJoystickLED")->args({"joystick", "red", "green", "blue"});
+// bool (SDL_Joystick *, const void *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SendJoystickEffect)>(*this, lib, "SDL_SendJoystickEffect", SideEffects::worstDefault, "SDL_SendJoystickEffect")->args({"joystick", "data", "size"});
+// void (SDL_Joystick *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CloseJoystick)>(*this, lib, "SDL_CloseJoystick", SideEffects::worstDefault, "SDL_CloseJoystick")->args({"joystick"});
+// SDL_JoystickConnectionState (SDL_Joystick *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickConnectionState)>(*this, lib, "SDL_GetJoystickConnectionState", SideEffects::worstDefault, "SDL_GetJoystickConnectionState")->args({"joystick"});
+// SDL_PowerState (SDL_Joystick *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetJoystickPowerInfo)>(*this, lib, "SDL_GetJoystickPowerInfo", SideEffects::worstDefault, "SDL_GetJoystickPowerInfo")->args({"joystick", "percent"});
+// int (const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_AddGamepadMapping)>(*this, lib, "SDL_AddGamepadMapping", SideEffects::worstDefault, "SDL_AddGamepadMapping")->args({"mapping"});
+// int (SDL_IOStream *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_AddGamepadMappingsFromIO)>(*this, lib, "SDL_AddGamepadMappingsFromIO", SideEffects::worstDefault, "SDL_AddGamepadMappingsFromIO")->args({"src", "closeio"});
+// int (const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_AddGamepadMappingsFromFile)>(*this, lib, "SDL_AddGamepadMappingsFromFile", SideEffects::worstDefault, "SDL_AddGamepadMappingsFromFile")->args({"file"});
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ReloadGamepadMappings)>(*this, lib, "SDL_ReloadGamepadMappings", SideEffects::worstDefault, "SDL_ReloadGamepadMappings");
+// char **(int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadMappings)>(*this, lib, "SDL_GetGamepadMappings", SideEffects::worstDefault, "SDL_GetGamepadMappings")->args({"count"});
+// char *(SDL_GUID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadMappingForGUID)>(*this, lib, "SDL_GetGamepadMappingForGUID", SideEffects::worstDefault, "SDL_GetGamepadMappingForGUID")->args({"guid"});
+// char *(SDL_Gamepad *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadMapping)>(*this, lib, "SDL_GetGamepadMapping", SideEffects::worstDefault, "SDL_GetGamepadMapping")->args({"gamepad"});
+// bool (SDL_JoystickID, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetGamepadMapping)>(*this, lib, "SDL_SetGamepadMapping", SideEffects::worstDefault, "SDL_SetGamepadMapping")->args({"instance_id", "mapping"});
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasGamepad)>(*this, lib, "SDL_HasGamepad", SideEffects::worstDefault, "SDL_HasGamepad");
+// SDL_JoystickID *(int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepads)>(*this, lib, "SDL_GetGamepads", SideEffects::worstDefault, "SDL_GetGamepads")->args({"count"});
+// bool (SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_IsGamepad)>(*this, lib, "SDL_IsGamepad", SideEffects::worstDefault, "SDL_IsGamepad")->args({"instance_id"});
+// const char *(SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadNameForID)>(*this, lib, "SDL_GetGamepadNameForID", SideEffects::worstDefault, "SDL_GetGamepadNameForID")->args({"instance_id"});
+// const char *(SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadPathForID)>(*this, lib, "SDL_GetGamepadPathForID", SideEffects::worstDefault, "SDL_GetGamepadPathForID")->args({"instance_id"});
+// int (SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadPlayerIndexForID)>(*this, lib, "SDL_GetGamepadPlayerIndexForID", SideEffects::worstDefault, "SDL_GetGamepadPlayerIndexForID")->args({"instance_id"});
+// SDL_GUID (SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadGUIDForID), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDL_GetGamepadGUIDForID", SideEffects::worstDefault, "SDL_GetGamepadGUIDForID")->args({"instance_id"});
+// Uint16 (SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadVendorForID)>(*this, lib, "SDL_GetGamepadVendorForID", SideEffects::worstDefault, "SDL_GetGamepadVendorForID")->args({"instance_id"});
+// Uint16 (SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadProductForID)>(*this, lib, "SDL_GetGamepadProductForID", SideEffects::worstDefault, "SDL_GetGamepadProductForID")->args({"instance_id"});
+// Uint16 (SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadProductVersionForID)>(*this, lib, "SDL_GetGamepadProductVersionForID", SideEffects::worstDefault, "SDL_GetGamepadProductVersionForID")->args({"instance_id"});
+// SDL_GamepadType (SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadTypeForID)>(*this, lib, "SDL_GetGamepadTypeForID", SideEffects::worstDefault, "SDL_GetGamepadTypeForID")->args({"instance_id"});
+// SDL_GamepadType (SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRealGamepadTypeForID)>(*this, lib, "SDL_GetRealGamepadTypeForID", SideEffects::worstDefault, "SDL_GetRealGamepadTypeForID")->args({"instance_id"});
+// char *(SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadMappingForID)>(*this, lib, "SDL_GetGamepadMappingForID", SideEffects::worstDefault, "SDL_GetGamepadMappingForID")->args({"instance_id"});
+// SDL_Gamepad *(SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_OpenGamepad)>(*this, lib, "SDL_OpenGamepad", SideEffects::worstDefault, "SDL_OpenGamepad")->args({"instance_id"});
+// SDL_Gamepad *(SDL_JoystickID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadFromID)>(*this, lib, "SDL_GetGamepadFromID", SideEffects::worstDefault, "SDL_GetGamepadFromID")->args({"instance_id"});
+// SDL_Gamepad *(int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadFromPlayerIndex)>(*this, lib, "SDL_GetGamepadFromPlayerIndex", SideEffects::worstDefault, "SDL_GetGamepadFromPlayerIndex")->args({"player_index"});
+// SDL_PropertiesID (SDL_Gamepad *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadProperties)>(*this, lib, "SDL_GetGamepadProperties", SideEffects::worstDefault, "SDL_GetGamepadProperties")->args({"gamepad"});
+// SDL_JoystickID (SDL_Gamepad *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadID)>(*this, lib, "SDL_GetGamepadID", SideEffects::worstDefault, "SDL_GetGamepadID")->args({"gamepad"});
+// const char *(SDL_Gamepad *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadName)>(*this, lib, "SDL_GetGamepadName", SideEffects::worstDefault, "SDL_GetGamepadName")->args({"gamepad"});
+// const char *(SDL_Gamepad *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadPath)>(*this, lib, "SDL_GetGamepadPath", SideEffects::worstDefault, "SDL_GetGamepadPath")->args({"gamepad"});
+// SDL_GamepadType (SDL_Gamepad *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadType)>(*this, lib, "SDL_GetGamepadType", SideEffects::worstDefault, "SDL_GetGamepadType")->args({"gamepad"});
+// SDL_GamepadType (SDL_Gamepad *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRealGamepadType)>(*this, lib, "SDL_GetRealGamepadType", SideEffects::worstDefault, "SDL_GetRealGamepadType")->args({"gamepad"});
+// int (SDL_Gamepad *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadPlayerIndex)>(*this, lib, "SDL_GetGamepadPlayerIndex", SideEffects::worstDefault, "SDL_GetGamepadPlayerIndex")->args({"gamepad"});
+// bool (SDL_Gamepad *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetGamepadPlayerIndex)>(*this, lib, "SDL_SetGamepadPlayerIndex", SideEffects::worstDefault, "SDL_SetGamepadPlayerIndex")->args({"gamepad", "player_index"});
+// Uint16 (SDL_Gamepad *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadVendor)>(*this, lib, "SDL_GetGamepadVendor", SideEffects::worstDefault, "SDL_GetGamepadVendor")->args({"gamepad"});
+// Uint16 (SDL_Gamepad *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadProduct)>(*this, lib, "SDL_GetGamepadProduct", SideEffects::worstDefault, "SDL_GetGamepadProduct")->args({"gamepad"});
+// Uint16 (SDL_Gamepad *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadProductVersion)>(*this, lib, "SDL_GetGamepadProductVersion", SideEffects::worstDefault, "SDL_GetGamepadProductVersion")->args({"gamepad"});
+// Uint16 (SDL_Gamepad *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadFirmwareVersion)>(*this, lib, "SDL_GetGamepadFirmwareVersion", SideEffects::worstDefault, "SDL_GetGamepadFirmwareVersion")->args({"gamepad"});
+// const char *(SDL_Gamepad *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadSerial)>(*this, lib, "SDL_GetGamepadSerial", SideEffects::worstDefault, "SDL_GetGamepadSerial")->args({"gamepad"});
+// Uint64 (SDL_Gamepad *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadSteamHandle)>(*this, lib, "SDL_GetGamepadSteamHandle", SideEffects::worstDefault, "SDL_GetGamepadSteamHandle")->args({"gamepad"});
+// SDL_JoystickConnectionState (SDL_Gamepad *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadConnectionState)>(*this, lib, "SDL_GetGamepadConnectionState", SideEffects::worstDefault, "SDL_GetGamepadConnectionState")->args({"gamepad"});
+// SDL_PowerState (SDL_Gamepad *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadPowerInfo)>(*this, lib, "SDL_GetGamepadPowerInfo", SideEffects::worstDefault, "SDL_GetGamepadPowerInfo")->args({"gamepad", "percent"});
+// bool (SDL_Gamepad *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GamepadConnected)>(*this, lib, "SDL_GamepadConnected", SideEffects::worstDefault, "SDL_GamepadConnected")->args({"gamepad"});
+// SDL_Joystick *(SDL_Gamepad *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadJoystick)>(*this, lib, "SDL_GetGamepadJoystick", SideEffects::worstDefault, "SDL_GetGamepadJoystick")->args({"gamepad"});
+// void (bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetGamepadEventsEnabled)>(*this, lib, "SDL_SetGamepadEventsEnabled", SideEffects::worstDefault, "SDL_SetGamepadEventsEnabled")->args({"enabled"});
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GamepadEventsEnabled)>(*this, lib, "SDL_GamepadEventsEnabled", SideEffects::worstDefault, "SDL_GamepadEventsEnabled");
+// SDL_GamepadBinding **(SDL_Gamepad *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadBindings)>(*this, lib, "SDL_GetGamepadBindings", SideEffects::worstDefault, "SDL_GetGamepadBindings")->args({"gamepad", "count"});
+// void (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_UpdateGamepads)>(*this, lib, "SDL_UpdateGamepads", SideEffects::worstDefault, "SDL_UpdateGamepads");
+// SDL_GamepadType (const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadTypeFromString)>(*this, lib, "SDL_GetGamepadTypeFromString", SideEffects::worstDefault, "SDL_GetGamepadTypeFromString")->args({"str"});
+// const char *(SDL_GamepadType) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadStringForType)>(*this, lib, "SDL_GetGamepadStringForType", SideEffects::worstDefault, "SDL_GetGamepadStringForType")->args({"type"});
+// SDL_GamepadAxis (const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadAxisFromString)>(*this, lib, "SDL_GetGamepadAxisFromString", SideEffects::worstDefault, "SDL_GetGamepadAxisFromString")->args({"str"});
+// const char *(SDL_GamepadAxis) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadStringForAxis)>(*this, lib, "SDL_GetGamepadStringForAxis", SideEffects::worstDefault, "SDL_GetGamepadStringForAxis")->args({"axis"});
+// bool (SDL_Gamepad *, SDL_GamepadAxis) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GamepadHasAxis)>(*this, lib, "SDL_GamepadHasAxis", SideEffects::worstDefault, "SDL_GamepadHasAxis")->args({"gamepad", "axis"});
+// Sint16 (SDL_Gamepad *, SDL_GamepadAxis) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadAxis)>(*this, lib, "SDL_GetGamepadAxis", SideEffects::worstDefault, "SDL_GetGamepadAxis")->args({"gamepad", "axis"});
+// SDL_GamepadButton (const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadButtonFromString)>(*this, lib, "SDL_GetGamepadButtonFromString", SideEffects::worstDefault, "SDL_GetGamepadButtonFromString")->args({"str"});
+// const char *(SDL_GamepadButton) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadStringForButton)>(*this, lib, "SDL_GetGamepadStringForButton", SideEffects::worstDefault, "SDL_GetGamepadStringForButton")->args({"button"});
+// bool (SDL_Gamepad *, SDL_GamepadButton) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GamepadHasButton)>(*this, lib, "SDL_GamepadHasButton", SideEffects::worstDefault, "SDL_GamepadHasButton")->args({"gamepad", "button"});
+// bool (SDL_Gamepad *, SDL_GamepadButton) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadButton)>(*this, lib, "SDL_GetGamepadButton", SideEffects::worstDefault, "SDL_GetGamepadButton")->args({"gamepad", "button"});
+// SDL_GamepadButtonLabel (SDL_GamepadType, SDL_GamepadButton) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadButtonLabelForType)>(*this, lib, "SDL_GetGamepadButtonLabelForType", SideEffects::worstDefault, "SDL_GetGamepadButtonLabelForType")->args({"type", "button"});
+// SDL_GamepadButtonLabel (SDL_Gamepad *, SDL_GamepadButton) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadButtonLabel)>(*this, lib, "SDL_GetGamepadButtonLabel", SideEffects::worstDefault, "SDL_GetGamepadButtonLabel")->args({"gamepad", "button"});
+// int (SDL_Gamepad *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetNumGamepadTouchpads)>(*this, lib, "SDL_GetNumGamepadTouchpads", SideEffects::worstDefault, "SDL_GetNumGamepadTouchpads")->args({"gamepad"});
+// int (SDL_Gamepad *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetNumGamepadTouchpadFingers)>(*this, lib, "SDL_GetNumGamepadTouchpadFingers", SideEffects::worstDefault, "SDL_GetNumGamepadTouchpadFingers")->args({"gamepad", "touchpad"});
+// bool (SDL_Gamepad *, int, int, bool *, float *, float *, float *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadTouchpadFinger)>(*this, lib, "SDL_GetGamepadTouchpadFinger", SideEffects::worstDefault, "SDL_GetGamepadTouchpadFinger")->args({"gamepad", "touchpad", "finger", "down", "x", "y", "pressure"});
+// bool (SDL_Gamepad *, SDL_SensorType) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GamepadHasSensor)>(*this, lib, "SDL_GamepadHasSensor", SideEffects::worstDefault, "SDL_GamepadHasSensor")->args({"gamepad", "type"});
+// bool (SDL_Gamepad *, SDL_SensorType, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetGamepadSensorEnabled)>(*this, lib, "SDL_SetGamepadSensorEnabled", SideEffects::worstDefault, "SDL_SetGamepadSensorEnabled")->args({"gamepad", "type", "enabled"});
+// bool (SDL_Gamepad *, SDL_SensorType) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GamepadSensorEnabled)>(*this, lib, "SDL_GamepadSensorEnabled", SideEffects::worstDefault, "SDL_GamepadSensorEnabled")->args({"gamepad", "type"});
+// float (SDL_Gamepad *, SDL_SensorType) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadSensorDataRate)>(*this, lib, "SDL_GetGamepadSensorDataRate", SideEffects::worstDefault, "SDL_GetGamepadSensorDataRate")->args({"gamepad", "type"});
+// bool (SDL_Gamepad *, SDL_SensorType, float *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadSensorData)>(*this, lib, "SDL_GetGamepadSensorData", SideEffects::worstDefault, "SDL_GetGamepadSensorData")->args({"gamepad", "type", "data", "num_values"});
+// bool (SDL_Gamepad *, Uint16, Uint16, Uint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RumbleGamepad)>(*this, lib, "SDL_RumbleGamepad", SideEffects::worstDefault, "SDL_RumbleGamepad")->args({"gamepad", "low_frequency_rumble", "high_frequency_rumble", "duration_ms"});
+// bool (SDL_Gamepad *, Uint16, Uint16, Uint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RumbleGamepadTriggers)>(*this, lib, "SDL_RumbleGamepadTriggers", SideEffects::worstDefault, "SDL_RumbleGamepadTriggers")->args({"gamepad", "left_rumble", "right_rumble", "duration_ms"});
+// bool (SDL_Gamepad *, Uint8, Uint8, Uint8) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetGamepadLED)>(*this, lib, "SDL_SetGamepadLED", SideEffects::worstDefault, "SDL_SetGamepadLED")->args({"gamepad", "red", "green", "blue"});
+// bool (SDL_Gamepad *, const void *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SendGamepadEffect)>(*this, lib, "SDL_SendGamepadEffect", SideEffects::worstDefault, "SDL_SendGamepadEffect")->args({"gamepad", "data", "size"});
+// void (SDL_Gamepad *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CloseGamepad)>(*this, lib, "SDL_CloseGamepad", SideEffects::worstDefault, "SDL_CloseGamepad")->args({"gamepad"});
+// const char *(SDL_Gamepad *, SDL_GamepadButton) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadAppleSFSymbolsNameForButton)>(*this, lib, "SDL_GetGamepadAppleSFSymbolsNameForButton", SideEffects::worstDefault, "SDL_GetGamepadAppleSFSymbolsNameForButton")->args({"gamepad", "button"});
+// const char *(SDL_Gamepad *, SDL_GamepadAxis) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGamepadAppleSFSymbolsNameForAxis)>(*this, lib, "SDL_GetGamepadAppleSFSymbolsNameForAxis", SideEffects::worstDefault, "SDL_GetGamepadAppleSFSymbolsNameForAxis")->args({"gamepad", "axis"});
+// SDL_TouchID *(int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetTouchDevices)>(*this, lib, "SDL_GetTouchDevices", SideEffects::worstDefault, "SDL_GetTouchDevices")->args({"count"});
+// const char *(SDL_TouchID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetTouchDeviceName)>(*this, lib, "SDL_GetTouchDeviceName", SideEffects::worstDefault, "SDL_GetTouchDeviceName")->args({"touchID"});
+// SDL_TouchDeviceType (SDL_TouchID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetTouchDeviceType)>(*this, lib, "SDL_GetTouchDeviceType", SideEffects::worstDefault, "SDL_GetTouchDeviceType")->args({"touchID"});
+// SDL_Finger **(SDL_TouchID, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetTouchFingers)>(*this, lib, "SDL_GetTouchFingers", SideEffects::worstDefault, "SDL_GetTouchFingers")->args({"touchID", "count"});
+// SDL_SensorID *(int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSensors)>(*this, lib, "SDL_GetSensors", SideEffects::worstDefault, "SDL_GetSensors")->args({"count"});
+// const char *(SDL_SensorID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSensorNameForID)>(*this, lib, "SDL_GetSensorNameForID", SideEffects::worstDefault, "SDL_GetSensorNameForID")->args({"instance_id"});
+// SDL_SensorType (SDL_SensorID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSensorTypeForID)>(*this, lib, "SDL_GetSensorTypeForID", SideEffects::worstDefault, "SDL_GetSensorTypeForID")->args({"instance_id"});
+// int (SDL_SensorID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSensorNonPortableTypeForID)>(*this, lib, "SDL_GetSensorNonPortableTypeForID", SideEffects::worstDefault, "SDL_GetSensorNonPortableTypeForID")->args({"instance_id"});
+// SDL_Sensor *(SDL_SensorID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_OpenSensor)>(*this, lib, "SDL_OpenSensor", SideEffects::worstDefault, "SDL_OpenSensor")->args({"instance_id"});
+// SDL_Sensor *(SDL_SensorID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSensorFromID)>(*this, lib, "SDL_GetSensorFromID", SideEffects::worstDefault, "SDL_GetSensorFromID")->args({"instance_id"});
+// SDL_PropertiesID (SDL_Sensor *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSensorProperties)>(*this, lib, "SDL_GetSensorProperties", SideEffects::worstDefault, "SDL_GetSensorProperties")->args({"sensor"});
+// const char *(SDL_Sensor *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSensorName)>(*this, lib, "SDL_GetSensorName", SideEffects::worstDefault, "SDL_GetSensorName")->args({"sensor"});
+// SDL_SensorType (SDL_Sensor *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSensorType)>(*this, lib, "SDL_GetSensorType", SideEffects::worstDefault, "SDL_GetSensorType")->args({"sensor"});
+// int (SDL_Sensor *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSensorNonPortableType)>(*this, lib, "SDL_GetSensorNonPortableType", SideEffects::worstDefault, "SDL_GetSensorNonPortableType")->args({"sensor"});
+// SDL_SensorID (SDL_Sensor *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSensorID)>(*this, lib, "SDL_GetSensorID", SideEffects::worstDefault, "SDL_GetSensorID")->args({"sensor"});
+// bool (SDL_Sensor *, float *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSensorData)>(*this, lib, "SDL_GetSensorData", SideEffects::worstDefault, "SDL_GetSensorData")->args({"sensor", "data", "num_values"});
+// void (SDL_Sensor *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CloseSensor)>(*this, lib, "SDL_CloseSensor", SideEffects::worstDefault, "SDL_CloseSensor")->args({"sensor"});
+// void (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_UpdateSensors)>(*this, lib, "SDL_UpdateSensors", SideEffects::worstDefault, "SDL_UpdateSensors");
+// SDL_HapticID *(int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetHaptics)>(*this, lib, "SDL_GetHaptics", SideEffects::worstDefault, "SDL_GetHaptics")->args({"count"});
+// const char *(SDL_HapticID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetHapticNameForID)>(*this, lib, "SDL_GetHapticNameForID", SideEffects::worstDefault, "SDL_GetHapticNameForID")->args({"instance_id"});
+// SDL_Haptic *(SDL_HapticID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_OpenHaptic)>(*this, lib, "SDL_OpenHaptic", SideEffects::worstDefault, "SDL_OpenHaptic")->args({"instance_id"});
+// SDL_Haptic *(SDL_HapticID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetHapticFromID)>(*this, lib, "SDL_GetHapticFromID", SideEffects::worstDefault, "SDL_GetHapticFromID")->args({"instance_id"});
+// SDL_HapticID (SDL_Haptic *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetHapticID)>(*this, lib, "SDL_GetHapticID", SideEffects::worstDefault, "SDL_GetHapticID")->args({"haptic"});
+// const char *(SDL_Haptic *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetHapticName)>(*this, lib, "SDL_GetHapticName", SideEffects::worstDefault, "SDL_GetHapticName")->args({"haptic"});
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_IsMouseHaptic)>(*this, lib, "SDL_IsMouseHaptic", SideEffects::worstDefault, "SDL_IsMouseHaptic");
+// SDL_Haptic *(void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_OpenHapticFromMouse)>(*this, lib, "SDL_OpenHapticFromMouse", SideEffects::worstDefault, "SDL_OpenHapticFromMouse");
+// bool (SDL_Joystick *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_IsJoystickHaptic)>(*this, lib, "SDL_IsJoystickHaptic", SideEffects::worstDefault, "SDL_IsJoystickHaptic")->args({"joystick"});
+// SDL_Haptic *(SDL_Joystick *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_OpenHapticFromJoystick)>(*this, lib, "SDL_OpenHapticFromJoystick", SideEffects::worstDefault, "SDL_OpenHapticFromJoystick")->args({"joystick"});
+// void (SDL_Haptic *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CloseHaptic)>(*this, lib, "SDL_CloseHaptic", SideEffects::worstDefault, "SDL_CloseHaptic")->args({"haptic"});
+// int (SDL_Haptic *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetMaxHapticEffects)>(*this, lib, "SDL_GetMaxHapticEffects", SideEffects::worstDefault, "SDL_GetMaxHapticEffects")->args({"haptic"});
+// int (SDL_Haptic *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetMaxHapticEffectsPlaying)>(*this, lib, "SDL_GetMaxHapticEffectsPlaying", SideEffects::worstDefault, "SDL_GetMaxHapticEffectsPlaying")->args({"haptic"});
+// Uint32 (SDL_Haptic *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetHapticFeatures)>(*this, lib, "SDL_GetHapticFeatures", SideEffects::worstDefault, "SDL_GetHapticFeatures")->args({"haptic"});
+// int (SDL_Haptic *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetNumHapticAxes)>(*this, lib, "SDL_GetNumHapticAxes", SideEffects::worstDefault, "SDL_GetNumHapticAxes")->args({"haptic"});
+// bool (SDL_Haptic *, const SDL_HapticEffect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HapticEffectSupported)>(*this, lib, "SDL_HapticEffectSupported", SideEffects::worstDefault, "SDL_HapticEffectSupported")->args({"haptic", "effect"});
+// int (SDL_Haptic *, const SDL_HapticEffect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateHapticEffect)>(*this, lib, "SDL_CreateHapticEffect", SideEffects::worstDefault, "SDL_CreateHapticEffect")->args({"haptic", "effect"});
+// bool (SDL_Haptic *, int, const SDL_HapticEffect *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_UpdateHapticEffect)>(*this, lib, "SDL_UpdateHapticEffect", SideEffects::worstDefault, "SDL_UpdateHapticEffect")->args({"haptic", "effect", "data"});
+// bool (SDL_Haptic *, int, Uint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RunHapticEffect)>(*this, lib, "SDL_RunHapticEffect", SideEffects::worstDefault, "SDL_RunHapticEffect")->args({"haptic", "effect", "iterations"});
+// bool (SDL_Haptic *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_StopHapticEffect)>(*this, lib, "SDL_StopHapticEffect", SideEffects::worstDefault, "SDL_StopHapticEffect")->args({"haptic", "effect"});
+// void (SDL_Haptic *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_DestroyHapticEffect)>(*this, lib, "SDL_DestroyHapticEffect", SideEffects::worstDefault, "SDL_DestroyHapticEffect")->args({"haptic", "effect"});
+// bool (SDL_Haptic *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetHapticEffectStatus)>(*this, lib, "SDL_GetHapticEffectStatus", SideEffects::worstDefault, "SDL_GetHapticEffectStatus")->args({"haptic", "effect"});
+// bool (SDL_Haptic *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetHapticGain)>(*this, lib, "SDL_SetHapticGain", SideEffects::worstDefault, "SDL_SetHapticGain")->args({"haptic", "gain"});
+// bool (SDL_Haptic *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetHapticAutocenter)>(*this, lib, "SDL_SetHapticAutocenter", SideEffects::worstDefault, "SDL_SetHapticAutocenter")->args({"haptic", "autocenter"});
+// bool (SDL_Haptic *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_PauseHaptic)>(*this, lib, "SDL_PauseHaptic", SideEffects::worstDefault, "SDL_PauseHaptic")->args({"haptic"});
+// bool (SDL_Haptic *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ResumeHaptic)>(*this, lib, "SDL_ResumeHaptic", SideEffects::worstDefault, "SDL_ResumeHaptic")->args({"haptic"});
+// bool (SDL_Haptic *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_StopHapticEffects)>(*this, lib, "SDL_StopHapticEffects", SideEffects::worstDefault, "SDL_StopHapticEffects")->args({"haptic"});
+// bool (SDL_Haptic *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HapticRumbleSupported)>(*this, lib, "SDL_HapticRumbleSupported", SideEffects::worstDefault, "SDL_HapticRumbleSupported")->args({"haptic"});
+// bool (SDL_Haptic *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_InitHapticRumble)>(*this, lib, "SDL_InitHapticRumble", SideEffects::worstDefault, "SDL_InitHapticRumble")->args({"haptic"});
+// bool (SDL_Haptic *, float, Uint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_PlayHapticRumble)>(*this, lib, "SDL_PlayHapticRumble", SideEffects::worstDefault, "SDL_PlayHapticRumble")->args({"haptic", "strength", "length"});
+// bool (SDL_Haptic *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_StopHapticRumble)>(*this, lib, "SDL_StopHapticRumble", SideEffects::worstDefault, "SDL_StopHapticRumble")->args({"haptic"});
+// int (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_hid_init)>(*this, lib, "SDL_hid_init", SideEffects::worstDefault, "SDL_hid_init");
+// int (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_hid_exit)>(*this, lib, "SDL_hid_exit", SideEffects::worstDefault, "SDL_hid_exit");
+// Uint32 (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_hid_device_change_count)>(*this, lib, "SDL_hid_device_change_count", SideEffects::worstDefault, "SDL_hid_device_change_count");
+// SDL_hid_device_info *(unsigned short, unsigned short) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_hid_enumerate)>(*this, lib, "SDL_hid_enumerate", SideEffects::worstDefault, "SDL_hid_enumerate")->args({"vendor_id", "product_id"});
+// void (SDL_hid_device_info *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_hid_free_enumeration)>(*this, lib, "SDL_hid_free_enumeration", SideEffects::worstDefault, "SDL_hid_free_enumeration")->args({"devs"});
+// SDL_hid_device *(unsigned short, unsigned short, const wchar_t *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_hid_open)>(*this, lib, "SDL_hid_open", SideEffects::worstDefault, "SDL_hid_openWide")->args({"vendor_id", "product_id", "serial_number"});
+// SDL_hid_device *(const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_hid_open_path)>(*this, lib, "SDL_hid_open_path", SideEffects::worstDefault, "SDL_hid_open_path")->args({"path"});
+// int (SDL_hid_device *, const unsigned char *, size_t) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_hid_write)>(*this, lib, "SDL_hid_write", SideEffects::worstDefault, "SDL_hid_write")->args({"dev", "data", "length"});
+// int (SDL_hid_device *, unsigned char *, size_t, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_hid_read_timeout)>(*this, lib, "SDL_hid_read_timeout", SideEffects::worstDefault, "SDL_hid_read_timeout")->args({"dev", "data", "length", "milliseconds"});
+// int (SDL_hid_device *, unsigned char *, size_t) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_hid_read)>(*this, lib, "SDL_hid_read", SideEffects::worstDefault, "SDL_hid_read")->args({"dev", "data", "length"});
+// int (SDL_hid_device *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_hid_set_nonblocking)>(*this, lib, "SDL_hid_set_nonblocking", SideEffects::worstDefault, "SDL_hid_set_nonblocking")->args({"dev", "nonblock"});
+// int (SDL_hid_device *, const unsigned char *, size_t) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_hid_send_feature_report)>(*this, lib, "SDL_hid_send_feature_report", SideEffects::worstDefault, "SDL_hid_send_feature_report")->args({"dev", "data", "length"});
+// int (SDL_hid_device *, unsigned char *, size_t) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_hid_get_feature_report)>(*this, lib, "SDL_hid_get_feature_report", SideEffects::worstDefault, "SDL_hid_get_feature_report")->args({"dev", "data", "length"});
+// int (SDL_hid_device *, unsigned char *, size_t) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_hid_get_input_report)>(*this, lib, "SDL_hid_get_input_report", SideEffects::worstDefault, "SDL_hid_get_input_report")->args({"dev", "data", "length"});
+// int (SDL_hid_device *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_hid_close)>(*this, lib, "SDL_hid_close", SideEffects::worstDefault, "SDL_hid_close")->args({"dev"});
+// int (SDL_hid_device *, wchar_t *, size_t) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_hid_get_manufacturer_string)>(*this, lib, "SDL_hid_get_manufacturer_string", SideEffects::worstDefault, "SDL_hid_get_manufacturer_stringWide")->args({"dev", "string", "maxlen"});
+// int (SDL_hid_device *, wchar_t *, size_t) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_hid_get_product_string)>(*this, lib, "SDL_hid_get_product_string", SideEffects::worstDefault, "SDL_hid_get_product_stringWide")->args({"dev", "string", "maxlen"});
+// int (SDL_hid_device *, wchar_t *, size_t) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_hid_get_serial_number_string)>(*this, lib, "SDL_hid_get_serial_number_string", SideEffects::worstDefault, "SDL_hid_get_serial_number_stringWide")->args({"dev", "string", "maxlen"});
+// int (SDL_hid_device *, int, wchar_t *, size_t) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_hid_get_indexed_string)>(*this, lib, "SDL_hid_get_indexed_string", SideEffects::worstDefault, "SDL_hid_get_indexed_stringWide")->args({"dev", "string_index", "string", "maxlen"});
+// SDL_hid_device_info *(SDL_hid_device *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_hid_get_device_info)>(*this, lib, "SDL_hid_get_device_info", SideEffects::worstDefault, "SDL_hid_get_device_info")->args({"dev"});
+// int (SDL_hid_device *, unsigned char *, size_t) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_hid_get_report_descriptor)>(*this, lib, "SDL_hid_get_report_descriptor", SideEffects::worstDefault, "SDL_hid_get_report_descriptor")->args({"dev", "buf", "buf_size"});
+// void (bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_hid_ble_scan)>(*this, lib, "SDL_hid_ble_scan", SideEffects::worstDefault, "SDL_hid_ble_scan")->args({"active"});

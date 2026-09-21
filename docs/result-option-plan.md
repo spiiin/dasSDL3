@@ -96,7 +96,12 @@ Windows x64/MSVC, pinned SDL 3.2.18 and daScript; Vulkan and D3D12.
 - Documentation links and whitespace checks pass. Production generator configuration
   is restored after the consumer build.
 
-The inventory lists 329 public boost overloads, including pure helpers,
+The inventory lists 431 public boost overloads, including pure helpers,
 [event variants](event-variants.md) and [GPU Result factories](gpu-factories.md). This is
 an API migration, not additional raw SDL declaration coverage. No cross-platform,
 JIT or arbitrary-panic cleanup guarantee is implied.
+
+Event list payloads make SdlEvent (and its standard Option/Result) move-only.
+Use `<-` and guarded move_unwrap in event loops; copying is explicit via standard
+clone helpers. See [event list ownership](event-list-payloads.md). Raw event and
+user-pointer ownership is unchanged.

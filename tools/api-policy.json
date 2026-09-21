@@ -3278,6 +3278,2118 @@
         "tests/callback_lifetimes.das",
         "tests/window_hittest.das"
       ]
+    },
+    "function:SDL_PeepEvents": {
+      "boost_status": "partial",
+      "reason": "Native signature plus event-queue adapters; borrowed payload and thread constraints remain explicit.",
+      "contract": "docs/event-queue.md",
+      "tests": [
+        "tests/event_queue.das"
+      ]
+    },
+    "function:SDL_HasEvent": {
+      "boost_status": "partial",
+      "reason": "Native signature plus event-queue adapters; borrowed payload and thread constraints remain explicit.",
+      "contract": "docs/event-queue.md",
+      "tests": [
+        "tests/event_queue.das"
+      ]
+    },
+    "function:SDL_HasEvents": {
+      "boost_status": "partial",
+      "reason": "Native signature plus event-queue adapters; borrowed payload and thread constraints remain explicit.",
+      "contract": "docs/event-queue.md",
+      "tests": [
+        "tests/event_queue.das"
+      ]
+    },
+    "function:SDL_FlushEvent": {
+      "boost_status": "partial",
+      "reason": "Native signature plus event-queue adapters; borrowed payload and thread constraints remain explicit.",
+      "contract": "docs/event-queue.md",
+      "tests": [
+        "tests/event_queue.das"
+      ]
+    },
+    "function:SDL_FlushEvents": {
+      "boost_status": "partial",
+      "reason": "Native signature plus event-queue adapters; borrowed payload and thread constraints remain explicit.",
+      "contract": "docs/event-queue.md",
+      "tests": [
+        "tests/event_queue.das"
+      ]
+    },
+    "function:SDL_WaitEvent": {
+      "boost_status": "partial",
+      "reason": "Native signature plus event-queue adapters; borrowed payload and thread constraints remain explicit.",
+      "contract": "docs/event-queue.md",
+      "tests": [
+        "tests/event_queue.das"
+      ]
+    },
+    "function:SDL_WaitEventTimeout": {
+      "boost_status": "partial",
+      "reason": "Native signature plus event-queue adapters; borrowed payload and thread constraints remain explicit.",
+      "contract": "docs/event-queue.md",
+      "tests": [
+        "tests/event_queue.das"
+      ]
+    },
+    "function:SDL_SetEventEnabled": {
+      "boost_status": "partial",
+      "reason": "Native signature plus event-queue adapters; borrowed payload and thread constraints remain explicit.",
+      "contract": "docs/event-queue.md",
+      "tests": [
+        "tests/event_queue.das"
+      ]
+    },
+    "function:SDL_EventEnabled": {
+      "boost_status": "partial",
+      "reason": "Native signature plus event-queue adapters; borrowed payload and thread constraints remain explicit.",
+      "contract": "docs/event-queue.md",
+      "tests": [
+        "tests/event_queue.das"
+      ]
+    },
+    "function:SDL_RegisterEvents": {
+      "boost_status": "partial",
+      "reason": "Native signature plus event-queue adapters; borrowed payload and thread constraints remain explicit.",
+      "contract": "docs/event-queue.md",
+      "tests": [
+        "tests/event_queue.das"
+      ]
+    },
+    "function:SDL_GetWindowFromEvent": {
+      "boost_status": "partial",
+      "reason": "Native signature plus event-queue adapters; borrowed payload and thread constraints remain explicit.",
+      "contract": "docs/event-queue.md",
+      "tests": [
+        "tests/event_queue.das"
+      ]
+    },
+    "function:SDL_SetEventFilter": {
+      "boost_status": "partial",
+      "reason": "Native C callback addresses; synchronous FilterEvents also accepts a borrowed script block. No retained script callbacks.",
+      "contract": "docs/event-callbacks.md",
+      "tests": [
+        "tests/event_callbacks.das"
+      ]
+    },
+    "function:SDL_GetEventFilter": {
+      "boost_status": "partial",
+      "reason": "Native C callback addresses; synchronous FilterEvents also accepts a borrowed script block. No retained script callbacks.",
+      "contract": "docs/event-callbacks.md",
+      "tests": [
+        "tests/event_callbacks.das"
+      ]
+    },
+    "function:SDL_AddEventWatch": {
+      "boost_status": "partial",
+      "reason": "Native C callback addresses; synchronous FilterEvents also accepts a borrowed script block. No retained script callbacks.",
+      "contract": "docs/event-callbacks.md",
+      "tests": [
+        "tests/event_callbacks.das"
+      ]
+    },
+    "function:SDL_RemoveEventWatch": {
+      "boost_status": "partial",
+      "reason": "Native C callback addresses; synchronous FilterEvents also accepts a borrowed script block. No retained script callbacks.",
+      "contract": "docs/event-callbacks.md",
+      "tests": [
+        "tests/event_callbacks.das"
+      ]
+    },
+    "function:SDL_FilterEvents": {
+      "boost_status": "partial",
+      "reason": "Native C callback addresses; synchronous FilterEvents also accepts a borrowed script block. No retained script callbacks.",
+      "contract": "docs/event-callbacks.md",
+      "tests": [
+        "tests/event_callbacks.das"
+      ]
+    },
+    "function:SDL_HasKeyboard": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_GetKeyboards": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_GetKeyboardNameForID": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_GetKeyboardFocus": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_GetKeyboardState": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_ResetKeyboard": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_GetModState": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_SetModState": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_GetKeyFromScancode": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_GetScancodeFromKey": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_SetScancodeName": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_GetScancodeName": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_GetScancodeFromName": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_GetKeyName": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_GetKeyFromName": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_StartTextInput": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_StartTextInputWithProperties": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_TextInputActive": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_StopTextInput": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_ClearComposition": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_SetTextInputArea": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_GetTextInputArea": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_HasScreenKeyboardSupport": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_ScreenKeyboardShown": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_HasMouse": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_GetMice": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_GetMouseNameForID": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_GetMouseFocus": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_GetMouseState": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_GetGlobalMouseState": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_GetRelativeMouseState": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_WarpMouseInWindow": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_WarpMouseGlobal": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_SetWindowRelativeMouseMode": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_GetWindowRelativeMouseMode": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_CaptureMouse": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_CreateCursor": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_CreateColorCursor": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_CreateSystemCursor": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_SetCursor": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_GetCursor": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_GetDefaultCursor": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_DestroyCursor": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_ShowCursor": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_HideCursor": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_CursorVisible": {
+      "boost_status": "partial",
+      "reason": "Native signature with copied snapshots, strings, refs and cursor ownership adapters. Main-thread/backend and retained scancode-name preconditions remain.",
+      "contract": "docs/keyboard-mouse.md",
+      "tests": [
+        "tests/keyboard_mouse.das"
+      ]
+    },
+    "function:SDL_LockJoysticks": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_UnlockJoysticks": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_HasJoystick": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoysticks": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickNameForID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickPathForID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickPlayerIndexForID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickGUIDForID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickVendorForID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickProductForID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickProductVersionForID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickTypeForID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_OpenJoystick": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickFromID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickFromPlayerIndex": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_AttachVirtualJoystick": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_DetachVirtualJoystick": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_IsJoystickVirtual": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_SetJoystickVirtualAxis": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_SetJoystickVirtualBall": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_SetJoystickVirtualButton": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_SetJoystickVirtualHat": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_SetJoystickVirtualTouchpad": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_SendJoystickVirtualSensorData": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickProperties": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickName": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickPath": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickPlayerIndex": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_SetJoystickPlayerIndex": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickGUID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickVendor": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickProduct": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickProductVersion": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickFirmwareVersion": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickSerial": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickType": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickGUIDInfo": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_JoystickConnected": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetNumJoystickAxes": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetNumJoystickBalls": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetNumJoystickHats": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetNumJoystickButtons": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_SetJoystickEventsEnabled": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_JoystickEventsEnabled": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_UpdateJoysticks": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickAxis": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickAxisInitialState": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickBall": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickHat": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickButton": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_RumbleJoystick": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_RumbleJoystickTriggers": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_SetJoystickLED": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_SendJoystickEffect": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_CloseJoystick": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickConnectionState": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetJoystickPowerInfo": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_AddGamepadMapping": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_AddGamepadMappingsFromIO": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_AddGamepadMappingsFromFile": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_ReloadGamepadMappings": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadMappings": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadMappingForGUID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadMapping": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_SetGamepadMapping": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_HasGamepad": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepads": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_IsGamepad": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadNameForID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadPathForID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadPlayerIndexForID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadGUIDForID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadVendorForID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadProductForID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadProductVersionForID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadTypeForID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetRealGamepadTypeForID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadMappingForID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_OpenGamepad": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadFromID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadFromPlayerIndex": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadProperties": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadID": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadName": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadPath": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadType": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetRealGamepadType": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadPlayerIndex": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_SetGamepadPlayerIndex": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadVendor": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadProduct": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadProductVersion": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadFirmwareVersion": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadSerial": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadSteamHandle": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadConnectionState": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadPowerInfo": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GamepadConnected": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadJoystick": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_SetGamepadEventsEnabled": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GamepadEventsEnabled": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadBindings": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_UpdateGamepads": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadTypeFromString": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadStringForType": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadAxisFromString": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadStringForAxis": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GamepadHasAxis": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadAxis": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadButtonFromString": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadStringForButton": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GamepadHasButton": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadButton": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadButtonLabelForType": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadButtonLabel": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetNumGamepadTouchpads": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetNumGamepadTouchpadFingers": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadTouchpadFinger": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GamepadHasSensor": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_SetGamepadSensorEnabled": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GamepadSensorEnabled": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadSensorDataRate": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadSensorData": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_RumbleGamepad": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_RumbleGamepadTriggers": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_SetGamepadLED": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_SendGamepadEffect": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_CloseGamepad": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadAppleSFSymbolsNameForButton": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetGamepadAppleSFSymbolsNameForAxis": {
+      "boost_status": "partial",
+      "reason": "Native signature plus copied strings/lists, refs, bounded arrays and ownership scopes. Virtual callbacks require native code/lifetime; gamepad binding unions use tagged readers.",
+      "contract": "docs/joystick-gamepad.md",
+      "tests": [
+        "tests/joystick_gamepad.das"
+      ]
+    },
+    "function:SDL_GetTouchDevices": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetTouchDeviceName": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetTouchDeviceType": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetTouchFingers": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetSensors": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetSensorNameForID": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetSensorTypeForID": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetSensorNonPortableTypeForID": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_OpenSensor": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetSensorFromID": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetSensorProperties": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetSensorName": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetSensorType": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetSensorNonPortableType": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetSensorID": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetSensorData": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_CloseSensor": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_UpdateSensors": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetHaptics": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetHapticNameForID": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_OpenHaptic": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetHapticFromID": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetHapticID": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetHapticName": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_IsMouseHaptic": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_OpenHapticFromMouse": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_IsJoystickHaptic": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_OpenHapticFromJoystick": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_CloseHaptic": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetMaxHapticEffects": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetMaxHapticEffectsPlaying": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetHapticFeatures": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetNumHapticAxes": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_HapticEffectSupported": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_CreateHapticEffect": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_UpdateHapticEffect": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_RunHapticEffect": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_StopHapticEffect": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_DestroyHapticEffect": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_GetHapticEffectStatus": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_SetHapticGain": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_SetHapticAutocenter": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_PauseHaptic": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_ResumeHaptic": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_StopHapticEffects": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_HapticRumbleSupported": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_InitHapticRumble": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_PlayHapticRumble": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_StopHapticRumble": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_hid_init": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_hid_exit": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_hid_device_change_count": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_hid_enumerate": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_hid_free_enumeration": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_hid_open": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_hid_open_path": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_hid_write": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_hid_read_timeout": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_hid_read": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_hid_set_nonblocking": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_hid_send_feature_report": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_hid_get_feature_report": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_hid_get_input_report": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_hid_close": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_hid_get_manufacturer_string": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_hid_get_product_string": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_hid_get_serial_number_string": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_hid_get_indexed_string": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_hid_get_device_info": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_hid_get_report_descriptor": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
+    },
+    "function:SDL_hid_ble_scan": {
+      "boost_status": "partial",
+      "reason": "Native signature; copied lists, bounded arrays and defer ownership adapters. Hardware success paths require suitable devices.",
+      "contract": "docs/peripherals.md",
+      "tests": [
+        "tests/peripherals.das"
+      ]
     }
   }
 }
