@@ -1,5 +1,5 @@
 options gen2
-require dassdl3/sdl3_try
+require dassdl3/sdl3_scope
 require dassdl3/sdl3_pixels_boost
 
 // Scenario adapted from SDL release-3.2.18 examples/renderer/07-streaming-textures
@@ -40,15 +40,12 @@ def render_streaming(window : SDL_Window?; renderer : SDL_Renderer?; texture : S
 [export]
 def main(smoke : bool) : int {
     var frames = 0
-    let result = with_sdl() {
-        return with_window("Streaming RGBA - Escape to exit", 640, 480,
-                    smoke ? SDL_WINDOW_HIDDEN : 0ul) $(window : SDL_Window?) {
-            return window |> with_renderer() $(renderer : SDL_Renderer?) {
-                return renderer |> with_streaming_texture(150, 150) $(texture : SDL_Texture?) {
-                    return render_streaming(window, renderer, texture, smoke, frames)
-                }
-            }
-        }
+    let result = sdl_scope() {
+        with_sdl() |> sdl_use
+        let window : SDL_Window? = with_window("Streaming RGBA - Escape to exit",640,480,smoke ? SDL_WINDOW_HIDDEN : 0ul) |> sdl_use
+        let renderer : SDL_Renderer? = window |> with_renderer() |> sdl_use
+        let texture : SDL_Texture? = renderer |> with_streaming_texture(150, 150) |> sdl_use
+        return render_streaming(window, renderer, texture, smoke, frames)
     }
     if (is_err(result)) {
         let error = unwrap_err(result)

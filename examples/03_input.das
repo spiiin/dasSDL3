@@ -1,5 +1,5 @@
 options gen2
-require dassdl3/sdl3_try
+require dassdl3/sdl3_scope
 require dassdl3/sdl3_boost
 require math
 
@@ -66,7 +66,8 @@ def input_loop(window : SDL_Window?; renderer : SDL_Renderer?; smoke : bool; var
 }
 
 def run_input(window : SDL_Window?; renderer : SDL_Renderer?; smoke : bool; var frames : int&) : $Result<SdlUnit; SdlError> {
-    return with_text_input(window) {
+    return sdl_scope() {
+        with_text_input(window) |> sdl_use
         return input_loop(window, renderer, smoke, frames)
     }
 }
@@ -76,13 +77,12 @@ def main(smoke : bool) : int {
     var frames = 0
     print("Mouse: move square; left click: color; wheel: size; arrows: move.\n")
     print("Type UTF-8 text: window title; Backspace: clear; Escape: quit.\n")
-    let result = with_sdl() {
+    let result = sdl_scope() {
+        with_sdl() |> sdl_use
         let flags = smoke ? SDL_WINDOW_HIDDEN : 0ul
-        return with_window("dasSDL3 input", 800, 600, flags) $(window : SDL_Window?) {
-            return window |> with_renderer() $(renderer : SDL_Renderer?) {
-                return run_input(window, renderer, smoke, frames)
-            }
-        }
+        let window : SDL_Window? = with_window("dasSDL3 input", 800, 600, flags) |> sdl_use
+        let renderer : SDL_Renderer? = window |> with_renderer() |> sdl_use
+        return run_input(window, renderer, smoke, frames)
     }
     if (is_err(result)) {
         let error = unwrap_err(result)

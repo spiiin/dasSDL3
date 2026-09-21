@@ -1,5 +1,5 @@
 options gen2
-require dassdl3/sdl3_try
+require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_utilities_boost
 
 def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; SdlError> {
@@ -15,10 +15,10 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
 
 [export]
 def main(smoke : bool) : int {
-    let result = with_sdl() {
-        return with_gpu_device(GPU_SHADER_FORMATS,true,"") $(device : SDL_GPUDevice?) {
-            return run_gpu_example(device, smoke)
-        }
+    let result = sdl_scope() {
+        with_sdl() |> sdl_use
+        let device : SDL_GPUDevice? = with_gpu_device(GPU_SHADER_FORMATS,true,"") |> sdl_use
+        return run_gpu_example(device, smoke)
     }
     if (is_err(result)) {
         let error = unwrap_err(result)

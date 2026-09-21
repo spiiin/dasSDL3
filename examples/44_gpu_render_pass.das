@@ -1,5 +1,5 @@
 options gen2
-require dassdl3/sdl3_try
+require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_recording_boost
 require daslib/defer
 
@@ -56,10 +56,10 @@ def render_triangle(device : SDL_GPUDevice?) : $Result<SdlUnit; SdlError> {
 
 [export]
 def main(smoke : bool) : int {
-    let result = with_sdl() {
-        return with_gpu_device(GPU_SHADER_FORMATS,true,"") $(device : SDL_GPUDevice?) {
-            return render_triangle(device)
-        }
+    let result = sdl_scope() {
+        with_sdl() |> sdl_use
+        let device : SDL_GPUDevice? = with_gpu_device(GPU_SHADER_FORMATS,true,"") |> sdl_use
+        return render_triangle(device)
     }
     if (is_err(result)) {
         let error=unwrap_err(result)

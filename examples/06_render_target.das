@@ -1,11 +1,12 @@
 options gen2
-require dassdl3/sdl3_try
+require dassdl3/sdl3_scope
 require dassdl3/sdl3_pixels_boost
 
 // Project example: offscreen render -> owned readback -> display the target.
 
 def render_target_example(window : SDL_Window?; renderer : SDL_Renderer?; target : SDL_Texture?; smoke : bool; var frames : int&) : $Result<SdlUnit; SdlError> {
-    renderer |> with_render_target(target) {
+    sdl_scope() {
+        renderer |> with_render_target(target) |> sdl_use
         return paint_target(renderer)
     } |> sdl_try
     var event = SDL_MakeEvent()
@@ -43,7 +44,8 @@ def paint_target(renderer : SDL_Renderer?) : $Result<SdlUnit; SdlError> {
     renderer |> set_color(uint4(255u, 160u, 20u, 255u)) |> sdl_try
     renderer |> fill_rect(SDL_MakeFRect(32.0, 32.0, 64.0, 64.0)) |> sdl_try
     // Readback is expensive: do it once, not on every frame.
-    return renderer |> with_read_pixels() $(surface : SDL_Surface?) {
+    return sdl_scope() {
+        let surface : SDL_Surface? = renderer |> with_read_pixels() |> sdl_use
         return verify_readback(surface)
     }
 }
@@ -51,15 +53,12 @@ def paint_target(renderer : SDL_Renderer?) : $Result<SdlUnit; SdlError> {
 [export]
 def main(smoke : bool) : int {
     var frames = 0
-    let result = with_sdl() {
-        return with_window("Render target + readback - Escape to exit", 640, 480,
-                    smoke ? SDL_WINDOW_HIDDEN : 0ul) $(window : SDL_Window?) {
-            return window |> with_renderer() $(renderer : SDL_Renderer?) {
-                return renderer |> with_target_texture(128, 128) $(target : SDL_Texture?) {
-                    return render_target_example(window, renderer, target, smoke, frames)
-                }
-            }
-        }
+    let result = sdl_scope() {
+        with_sdl() |> sdl_use
+        let window : SDL_Window? = with_window("Render target + readback - Escape to exit",640,480,smoke ? SDL_WINDOW_HIDDEN : 0ul) |> sdl_use
+        let renderer : SDL_Renderer? = window |> with_renderer() |> sdl_use
+        let target : SDL_Texture? = renderer |> with_target_texture(128, 128) |> sdl_use
+        return render_target_example(window, renderer, target, smoke, frames)
     }
     if (is_err(result)) {
         let error = unwrap_err(result)

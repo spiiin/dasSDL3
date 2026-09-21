@@ -1,5 +1,5 @@
 options gen2
-require dassdl3/sdl3_try
+require dassdl3/sdl3_scope
 require dassdl3/sdl3_boost
 require math
 
@@ -36,15 +36,13 @@ def render_textures(renderer : SDL_Renderer?; texture : SDL_Texture?; smoke : bo
 [export]
 def main(smoke : bool) : int {
     var frames = 0
-    let result = with_sdl() {
+    let result = sdl_scope() {
+        with_sdl() |> sdl_use
         let flags = smoke ? SDL_WINDOW_HIDDEN : 0ul
-        return with_window("dasSDL3 textures - Escape to exit", 640, 480, flags) $(window : SDL_Window?) {
-            return window |> with_renderer() $(renderer : SDL_Renderer?) {
-                return renderer |> with_texture("{SDL_GetBasePath()}assets/checker.bmp") $(texture : SDL_Texture?) {
-                    return render_textures(renderer, texture, smoke, frames)
-                }
-            }
-        }
+        let window : SDL_Window? = with_window("dasSDL3 textures - Escape to exit", 640, 480, flags) |> sdl_use
+        let renderer : SDL_Renderer? = window |> with_renderer() |> sdl_use
+        let texture : SDL_Texture? = renderer |> with_texture("{SDL_GetBasePath()}assets/checker.bmp") |> sdl_use
+        return render_textures(renderer, texture, smoke, frames)
     }
     if (is_err(result)) {
         let error=unwrap_err(result)

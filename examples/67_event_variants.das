@@ -1,4 +1,5 @@
 options gen2
+require dassdl3/sdl3_scope
 require dassdl3/sdl3_events
 require daslib/match
 
@@ -35,10 +36,11 @@ def event_loop(window : SDL_Window?; smoke : bool) {
 [export]
 def main(smoke : bool) : int {
     print("Move the mouse, press keys or enter text. Escape closes the window.\n")
-    let result = with_sdl() {
-        return with_window("dasSDL3 event variants",640,480,smoke ? SDL_WINDOW_HIDDEN : 0ul) $(window : SDL_Window?) {
-            return with_text_input(window) { return event_loop(window,smoke) }
-        }
+    let result = sdl_scope() {
+        with_sdl() |> sdl_use
+        let window : SDL_Window? = with_window("dasSDL3 event variants",640,480,smoke ? SDL_WINDOW_HIDDEN : 0ul) |> sdl_use
+        with_text_input(window) |> sdl_use
+        return event_loop(window,smoke)
     }
     if (is_err(result)) {
         let error = unwrap_err(result)

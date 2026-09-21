@@ -11,6 +11,7 @@
 - [Установка dasClangBind](clangbind-setup.md), [production snapshots](clangbind-production.md).
 - [Parity](clangbind-parity.md), [типы и AOT](clangbind-types-aot.md).
 - [dasBGFX idioms](bgfx-idioms.md), [design review](binding-design-review.md), [boost](sdl3-boost.md).
+- [sdl_scope / sdl_use](sdl-scope.md): линейная запись scoped-вызовов; [sdl_try](sdl-try.md): ранний возврат ошибки.
 
 ## API
 

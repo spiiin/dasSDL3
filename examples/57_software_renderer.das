@@ -1,4 +1,5 @@
 options gen2
+require dassdl3/sdl3_scope
 require dassdl3/sdl3_renderer_primitives_boost
 def render_example(window : SDL_Window?; renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; SdlError> {
     var rendered=false
@@ -15,15 +16,14 @@ def render_example(window : SDL_Window?; renderer : SDL_Renderer?; smoke : bool)
 
 [export]
 def main(smoke : bool) : int {
-    let initialized=with_sdl() {
-        return with_window("Software renderer",320,240,smoke ? SDL_WINDOW_HIDDEN : 0ul) $(window : SDL_Window?) {
-            // Window owns this surface; renderer must be destroyed before the window.
-            let surface=SDL_GetWindowSurface(window)
-            if(surface==null) {return err(sdl_error("57_software_renderer"),type<SdlUnit>)}
-            return with_software_renderer(surface) $(renderer : SDL_Renderer?) {
-                return render_example(window, renderer, smoke)
-            }
-        }
+    let initialized=sdl_scope() {
+        with_sdl() |> sdl_use
+        let window : SDL_Window? = with_window("Software renderer",320,240,smoke ? SDL_WINDOW_HIDDEN : 0ul) |> sdl_use
+        // Window owns this surface; renderer must be destroyed before the window.
+        let surface=SDL_GetWindowSurface(window)
+        if(surface==null) {return err(sdl_error("57_software_renderer"),type<SdlUnit>)}
+        let renderer : SDL_Renderer? = with_software_renderer(surface) |> sdl_use
+        return render_example(window, renderer, smoke)
     }
     if(is_err(initialized)) {print("Software rendering failed: {unwrap_err(initialized).message}\n");return 1}
     return 0

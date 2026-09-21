@@ -1,5 +1,5 @@
 options gen2
-require dassdl3/sdl3_try
+require dassdl3/sdl3_scope
 require dassdl3/sdl3_audio_boost
 
 // Based on SDL 3.2.18 examples/audio/03-load-wav (public-domain code).
@@ -25,15 +25,14 @@ def play_audio(wav : SDL_Wav?; stream : SDL_AudioStream?) : $Result<SdlUnit; Sdl
 
 [export]
 def main(smoke : bool) : int {
-    let result = with_sdl(SDL_INIT_AUDIO) {
-        return with_wav("{SDL_GetBasePath()}assets/tone.wav") $(wav : SDL_Wav?) {
-            let spec = wav_spec(wav) |> sdl_try
-            let bytes = wav_size(wav) |> sdl_try
-            print("WAV: {spec.freq} Hz, {spec.channels} channel(s), {bytes} bytes\n")
-            return with_playback(spec) $(stream : SDL_AudioStream?) {
-                return play_audio(wav, stream)
-            }
-        }
+    let result = sdl_scope() {
+        with_sdl(SDL_INIT_AUDIO) |> sdl_use
+        let wav : SDL_Wav? = with_wav("{SDL_GetBasePath()}assets/tone.wav") |> sdl_use
+        let spec = wav_spec(wav) |> sdl_try
+        let bytes = wav_size(wav) |> sdl_try
+        print("WAV: {spec.freq} Hz, {spec.channels} channel(s), {bytes} bytes\n")
+        let stream : SDL_AudioStream? = with_playback(spec) |> sdl_use
+        return play_audio(wav, stream)
     }
     if (is_err(result)) {
         let error = unwrap_err(result)

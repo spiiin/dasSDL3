@@ -1,5 +1,5 @@
 options gen2
-require dassdl3/sdl3_try
+require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_native_boost
 require daslib/defer
 
@@ -30,7 +30,8 @@ def render_loop(device : SDL_GPUDevice?; window : SDL_Window?; pipeline : SDL_GP
             targets[0].texture=texture; targets[0].load_op=SDL_GPULoadOp.LOADOP_CLEAR
             targets[0].store_op=SDL_GPUStoreOp.STOREOP_STORE
             targets[0].clear_color.r=0.05; targets[0].clear_color.b=0.15; targets[0].clear_color.a=1.0
-            return with_native_gpu_render_pass(command,targets) $(render_pass : SDL_GPURenderPass?) {
+            return sdl_scope() {
+                let render_pass : SDL_GPURenderPass? = with_native_gpu_render_pass(command,targets) |> sdl_use
                 SDL_BindGPUGraphicsPipeline(render_pass,pipeline)
                 SDL_DrawGPUPrimitives(render_pass,3u,1u,0u,0u)
 
@@ -60,15 +61,14 @@ def render_pipeline(device : SDL_GPUDevice?; window : SDL_Window?; var vertex, f
 
 [export]
 def main(smoke : bool) : int {
-    let initialized=with_sdl() {
-        return with_window("Native SDL GPU triangle",640,480,0ul) $(window : SDL_Window?) {
-            return with_native_gpu_device(GPU_SHADER_FORMATS,true,"") $(device : SDL_GPUDevice?) {
-                if (!SDL_ClaimWindowForGPUDevice(device,window)) {return err(sdl_error("48_gpu_native_graphics"),type<SdlUnit>)}
-                { defer() { SDL_ReleaseWindowFromGPUDevice(device,window) }; return draw_frames(device,window,smoke) }
+    let initialized=sdl_scope() {
+        with_sdl() |> sdl_use
+        let window : SDL_Window? = with_window("Native SDL GPU triangle",640,480,0ul) |> sdl_use
+        let device : SDL_GPUDevice? = with_native_gpu_device(GPU_SHADER_FORMATS,true,"") |> sdl_use
+        if (!SDL_ClaimWindowForGPUDevice(device,window)) {return err(sdl_error("48_gpu_native_graphics"),type<SdlUnit>)}
+        { defer() { SDL_ReleaseWindowFromGPUDevice(device,window) }; return draw_frames(device,window,smoke) }
 
-                return sdl_ok()
-            }
-        }
+        return sdl_ok()
     }
     if (is_err(initialized)) { print("Native graphics: {unwrap_err(initialized).message}\n"); return 1 }
     print("Native graphics PASS\n"); return 0

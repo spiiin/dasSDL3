@@ -1,5 +1,5 @@
 options gen2
-require dassdl3/sdl3_try
+require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_native_boost
 require daslib/defer
 
@@ -24,18 +24,21 @@ def compute_values(device : SDL_GPUDevice?) : $Result<SdlUnit; SdlError> {
 
 def dispatch_and_check(device : SDL_GPUDevice?; pipeline : SDL_GPUComputePipeline?; var output : SDL_GPUBuffer?; var download : SDL_GPUTransferBuffer?) : $Result<SdlUnit; SdlError> {
     var finished=false
-    with_native_gpu_commands(device) $(var command : SDL_GPUCommandBuffer?&) {
+    sdl_scope() {
+        var command : SDL_GPUCommandBuffer?& = with_native_gpu_commands(device) |> sdl_use
         var textures : array<SDL_GPUStorageTextureReadWriteBinding>
         var buffers : array<SDL_GPUStorageBufferReadWriteBinding>; resize(buffers,1); buffers[0].buffer=output
         var uniforms : array<uint8>; resize(uniforms,16); uniforms[0]=uint8(10)
         if (!SDL_PushGPUComputeUniformDataArray(command,0u,uniforms)) {return err(sdl_error("49_gpu_native_compute"),type<SdlUnit>)}
-        with_native_gpu_compute_pass(command,textures,buffers) $(compute_pass : SDL_GPUComputePass?) {
+        sdl_scope() {
+            let compute_pass : SDL_GPUComputePass? = with_native_gpu_compute_pass(command,textures,buffers) |> sdl_use
             SDL_BindGPUComputePipeline(compute_pass,pipeline)
             SDL_DispatchGPUCompute(compute_pass,2u,1u,1u)
 
             return sdl_ok()
         } |> sdl_try
-        with_native_gpu_copy_pass(command) $(copy_pass : SDL_GPUCopyPass?) {
+        sdl_scope() {
+            let copy_pass : SDL_GPUCopyPass? = with_native_gpu_copy_pass(command) |> sdl_use
             var source : SDL_GPUBufferRegion; source.buffer=output; source.size=32u
             var destination : SDL_GPUTransferBufferLocation; destination.transfer_buffer=download
             SDL_DownloadFromGPUBufferRef(copy_pass,source,destination)
@@ -73,9 +76,10 @@ def read_compute_output(device : SDL_GPUDevice?; pipeline : SDL_GPUComputePipeli
 
 [export]
 def main(smoke : bool) : int {
-    let initialized=with_sdl() {
-        return with_native_gpu_device(GPU_SHADER_FORMATS,true,"") $(device : SDL_GPUDevice?) { return compute_values(device)
-        }
+    let initialized=sdl_scope() {
+        with_sdl() |> sdl_use
+        let device : SDL_GPUDevice? = with_native_gpu_device(GPU_SHADER_FORMATS,true,"") |> sdl_use
+        return compute_values(device)
     }
     if (is_err(initialized)) { print("Native compute: {unwrap_err(initialized).message}\n"); return 1 }
     print("Native compute PASS\n"); return 0

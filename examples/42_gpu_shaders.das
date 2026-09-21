@@ -1,5 +1,5 @@
 options gen2
-require dassdl3/sdl3_try
+require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_shader_boost
 
 // Trusted compiled assets. General script pipeline creation is the next stage.
@@ -11,24 +11,24 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
     let base = "{SDL_GetBasePath()}assets/shaders/triangle"
     let vertex_info = gpu_shader_info(format,SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
     let fragment_info = gpu_shader_info(format,SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT)
-    return device |> with_gpu_shader_file("{base}.vert.{extension}",vertex_info) $(vertex : GpuShaderHandle) {
-        return device |> with_gpu_shader_file("{base}.frag.{extension}",fragment_info) $(fragment : GpuShaderHandle) {
-            verify(vertex != fragment)
-            let description = gpu_shader_descriptor(device,fragment) |> sdl_try
-            let entrypoint = gpu_shader_entrypoint(device,fragment) |> sdl_try
-            print("Owned {extension} shaders: vertex={vertex}, fragment={fragment}, entry={entrypoint}, samplers={description.num_samplers}\n")
+    return sdl_scope() {
+        let vertex : GpuShaderHandle = device |> with_gpu_shader_file("{base}.vert.{extension}",vertex_info) |> sdl_use
+        let fragment : GpuShaderHandle = device |> with_gpu_shader_file("{base}.frag.{extension}",fragment_info) |> sdl_use
+        verify(vertex != fragment)
+        let description = gpu_shader_descriptor(device,fragment) |> sdl_try
+        let entrypoint = gpu_shader_entrypoint(device,fragment) |> sdl_try
+        print("Owned {extension} shaders: vertex={vertex}, fragment={fragment}, entry={entrypoint}, samplers={description.num_samplers}\n")
 
-            return sdl_ok()
-        }
+        return sdl_ok()
     }
 }
 
 [export]
 def main(smoke : bool) : int {
-    let result = with_sdl() {
-        return with_gpu_device(GPU_SHADER_FORMATS,true,"") $(device : SDL_GPUDevice?) {
-            return run_gpu_example(device, smoke)
-        }
+    let result = sdl_scope() {
+        with_sdl() |> sdl_use
+        let device : SDL_GPUDevice? = with_gpu_device(GPU_SHADER_FORMATS,true,"") |> sdl_use
+        return run_gpu_example(device, smoke)
     }
     if (is_err(result)) {
         let error = unwrap_err(result)

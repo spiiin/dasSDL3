@@ -1,5 +1,5 @@
 options gen2
-require dassdl3/sdl3_try
+require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_recording_boost
 
 def render_quad(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle; target : GpuTextureHandle; vb : GpuBufferHandle; ib : GpuIndexBufferHandle; vertex_texture : GpuTextureHandle; texture : GpuTextureHandle; sampler : GpuSamplerHandle) : $Result<SdlUnit; SdlError> {
@@ -12,7 +12,8 @@ def render_quad(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle; target : 
     var samplers <- array<GpuSamplerHandle>(sampler)
     var transform <- array<float4>(float4(0.75,0.0,0.0,0.125),float4(0.0,0.75,0.0,-0.125))
     var tint <- array<float4>(float4(1.0,0.5,1.0,1.0))
-    device |> with_gpu_command_buffer() $(command : GpuCommandBufferHandle) {
+    sdl_scope() {
+        let command : GpuCommandBufferHandle = device |> with_gpu_command_buffer() |> sdl_use
         device |> gpu_push_uniform(command,SDL_GPUShaderStage.SHADERSTAGE_VERTEX,0u,transform) |> sdl_try
         device |> gpu_push_uniform(command,SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT,0u,tint) |> sdl_try
         let render_pass = device |> gpu_begin_render_pass(command,target,uint2(0u),SDL_GPULoadOp.LOADOP_CLEAR,black) |> sdl_try
@@ -31,7 +32,8 @@ def render_quad(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle; target : 
     } |> sdl_try
     var bytes : array<uint8>
     resize(bytes,64*64*4)
-    device |> with_gpu_texture_readback(target,uint2(0u),uint4(0u,0u,64u,64u)) $(ticket : GpuReadbackHandle) {
+    sdl_scope() {
+        let ticket : GpuReadbackHandle = device |> with_gpu_texture_readback(target,uint2(0u),uint4(0u,0u,64u,64u)) |> sdl_use
         device |> gpu_wait_readback(ticket) |> sdl_try
         device |> gpu_readback_bytes(ticket,bytes) |> sdl_try
 
@@ -52,38 +54,36 @@ def run(device : SDL_GPUDevice?; linear : bool) : $Result<SdlUnit; SdlError> {
     var fi = gpu_shader_info(format,SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT)
     vi.num_samplers = 1u; vi.num_uniform_buffers = 1u
     fi.num_samplers = 1u; fi.num_uniform_buffers = 1u
-    return device |> with_gpu_shader_file("{base}.vert.{extension}",vi) $(vertex : GpuShaderHandle) {
-        return device |> with_gpu_shader_file("{base}.frag.{extension}",fi) $(fragment : GpuShaderHandle) {
-            return create_pipeline(device, vertex, fragment, linear)
-        }
+    return sdl_scope() {
+        let vertex : GpuShaderHandle = device |> with_gpu_shader_file("{base}.vert.{extension}",vi) |> sdl_use
+        let fragment : GpuShaderHandle = device |> with_gpu_shader_file("{base}.frag.{extension}",fi) |> sdl_use
+        return create_pipeline(device, vertex, fragment, linear)
     }
 }
 
 def upload_textures(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle; vb : GpuBufferHandle; ib : GpuIndexBufferHandle; vertex_texture : GpuTextureHandle; linear : bool) : $Result<SdlUnit; SdlError> {
     var vertex_color <- array<uint8>(uint8(128),uint8(255),uint8(128),uint8(255))
     device |> gpu_upload_texture(vertex_texture,uint2(0u),uint4(0u,0u,1u,1u),vertex_color,4u) |> sdl_try
-    return device |> with_gpu_rgba_texture(2u,2u) $(texture : GpuTextureHandle) {
+    return sdl_scope() {
+        let texture : GpuTextureHandle = device |> with_gpu_rgba_texture(2u,2u) |> sdl_use
         var image <- array<uint8>(uint8(255),uint8(0),uint8(0),uint8(255), uint8(0),uint8(255),uint8(0),uint8(255),
             uint8(0),uint8(0),uint8(255),uint8(255), uint8(255),uint8(255),uint8(255),uint8(255))
         device |> gpu_upload_texture(texture,uint2(0u),uint4(0u,0u,2u,2u),image,8u) |> sdl_try
         let filter_mode = linear ? SDL_GPUFilter.FILTER_LINEAR : SDL_GPUFilter.FILTER_NEAREST
-        return device |> with_gpu_sampler(gpu_sampler_info(filter_mode)) $(sampler : GpuSamplerHandle) {
-            return device |> with_gpu_color_target_texture(64u,64u,1u,1u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM) $(target : GpuTextureHandle) {
-                return render_quad(device,pipeline,target,vb,ib,vertex_texture,texture,sampler)
-            }
-        }
+        let sampler : GpuSamplerHandle = device |> with_gpu_sampler(gpu_sampler_info(filter_mode)) |> sdl_use
+        let target : GpuTextureHandle = device |> with_gpu_color_target_texture(64u,64u,1u,1u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM) |> sdl_use
+        return render_quad(device,pipeline,target,vb,ib,vertex_texture,texture,sampler)
     }
 }
 
 def render_buffers(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle; linear : bool) : $Result<SdlUnit; SdlError> {
     var vertices <- array<float>(-0.75,0.75,0.0,0.0, 0.75,0.75,1.0,0.0, 0.75,-0.75,1.0,1.0, -0.75,-0.75,0.0,1.0)
     var indices <- array<uint>(0u,1u,2u,0u,2u,3u)
-    return device |> with_gpu_vertex_buffer(vertices) $(vb : GpuBufferHandle) {
-        return device |> with_gpu_index_buffer(indices,SDL_GPUIndexElementSize.INDEXELEMENTSIZE_16BIT) $(ib : GpuIndexBufferHandle) {
-            return device |> with_gpu_rgba_texture(1u,1u) $(vertex_texture : GpuTextureHandle) {
-                return upload_textures(device, pipeline, vb, ib, vertex_texture, linear)
-            }
-        }
+    return sdl_scope() {
+        let vb : GpuBufferHandle = device |> with_gpu_vertex_buffer(vertices) |> sdl_use
+        let ib : GpuIndexBufferHandle = device |> with_gpu_index_buffer(indices,SDL_GPUIndexElementSize.INDEXELEMENTSIZE_16BIT) |> sdl_use
+        let vertex_texture : GpuTextureHandle = device |> with_gpu_rgba_texture(1u,1u) |> sdl_use
+        return upload_textures(device, pipeline, vb, ib, vertex_texture, linear)
     }
 }
 
@@ -97,20 +97,21 @@ def create_pipeline(device : SDL_GPUDevice?; vertex : GpuShaderHandle; fragment 
     attributes[1].location = 1u; attributes[1].offset = 8u
     var colors : array<SDL_GPUColorTargetDescription>
     push(colors,gpu_color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM))
-    return device |> with_gpu_graphics_pipeline(vertex,fragment,gpu_graphics_pipeline_info(),layouts,attributes,colors) $(pipeline : GpuPipelineHandle) {
+    return sdl_scope() {
+        let pipeline : GpuPipelineHandle = device |> with_gpu_graphics_pipeline(vertex,fragment,gpu_graphics_pipeline_info(),layouts,attributes,colors) |> sdl_use
         return render_buffers(device, pipeline, linear)
     }
 }
 
 [export]
 def main(smoke : bool) : int {
-    let result = with_sdl() {
-        return with_gpu_device(GPU_SHADER_FORMATS,true,"") $(device : SDL_GPUDevice?) {
-            run(device,false) |> sdl_try
-            print("Texture/sampler and uniform bindings: {SDL_GetGPUDeviceDriver(device)}\n")
+    let result = sdl_scope() {
+        with_sdl() |> sdl_use
+        let device : SDL_GPUDevice? = with_gpu_device(GPU_SHADER_FORMATS,true,"") |> sdl_use
+        run(device,false) |> sdl_try
+        print("Texture/sampler and uniform bindings: {SDL_GetGPUDeviceDriver(device)}\n")
 
-            return sdl_ok()
-        }
+        return sdl_ok()
     }
     if (is_err(result)) {
         let error=unwrap_err(result)

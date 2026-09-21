@@ -1,5 +1,5 @@
 options gen2
-require dassdl3/sdl3_try
+require dassdl3/sdl3_scope
 require dassdl3/sdl3_renderer_presentation_boost
 def render_example(window : SDL_Window?; renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; SdlError> {
     var rendered=false
@@ -21,12 +21,11 @@ def render_example(window : SDL_Window?; renderer : SDL_Renderer?; smoke : bool)
 
 [export]
 def main(smoke : bool) : int {
-    let initialized=with_sdl() {
-        return with_window("Logical presentation",320,240,smoke ? SDL_WINDOW_HIDDEN : 0ul) $(window : SDL_Window?) {
-            return with_renderer(window) $(renderer : SDL_Renderer?) {
-                return render_example(window, renderer, smoke)
-            }
-        }
+    let initialized=sdl_scope() {
+        with_sdl() |> sdl_use
+        let window : SDL_Window? = with_window("Logical presentation",320,240,smoke ? SDL_WINDOW_HIDDEN : 0ul) |> sdl_use
+        let renderer : SDL_Renderer? = with_renderer(window) |> sdl_use
+        return render_example(window, renderer, smoke)
     }
     if(is_err(initialized)) {print("Presentation failed: {unwrap_err(initialized).message}\n");return 1}
     return 0

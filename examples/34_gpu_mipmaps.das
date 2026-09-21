@@ -1,5 +1,5 @@
 options gen2
-require dassdl3/sdl3_try
+require dassdl3/sdl3_scope
 require math
 require dassdl3/sdl3_gpu_image_boost
 
@@ -11,10 +11,12 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
         base[i] = uint8(x*40); base[i+1] = uint8(y*40)
         base[i+2] = uint8(24); base[i+3] = uint8(255)
     } }
-    return device |> with_gpu_color_target_texture(4u,4u,1u,3u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM) $(texture : GpuTextureHandle) {
+    return sdl_scope() {
+        let texture : GpuTextureHandle = device |> with_gpu_color_target_texture(4u,4u,1u,3u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM) |> sdl_use
         device |> gpu_upload_texture(texture,uint2(0u),uint4(0u,0u,4u,4u),base,16u) |> sdl_try
         device |> gpu_generate_mipmaps(texture) |> sdl_try
-        device |> with_gpu_texture_readback(texture,uint2(2u,0u),uint4(0u,0u,1u,1u)) $(ticket : GpuReadbackHandle) {
+        sdl_scope() {
+            let ticket : GpuReadbackHandle = device |> with_gpu_texture_readback(texture,uint2(2u,0u),uint4(0u,0u,1u,1u)) |> sdl_use
             device |> gpu_wait_readback(ticket) |> sdl_try
             device |> gpu_readback_bytes(ticket,tiny) |> sdl_try
             verify(abs(int(tiny[0])-60) <= 1 && abs(int(tiny[1])-60) <= 1)
@@ -30,10 +32,10 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
 
 [export]
 def main(smoke : bool) : int {
-    let result = with_sdl() {
-        return with_gpu_device(GPU_SHADER_FORMATS,true,"") $(device : SDL_GPUDevice?) {
-            return run_gpu_example(device, smoke)
-        }
+    let result = sdl_scope() {
+        with_sdl() |> sdl_use
+        let device : SDL_GPUDevice? = with_gpu_device(GPU_SHADER_FORMATS,true,"") |> sdl_use
+        return run_gpu_example(device, smoke)
     }
     if (is_err(result)) {
         let error = unwrap_err(result)

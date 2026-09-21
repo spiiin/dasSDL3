@@ -1,10 +1,13 @@
 options gen2
+require dassdl3/sdl3_scope
 require dassdl3/sdl3_window_io_boost
 [export]
 def main(smoke : bool) : int {
     var painted=false
-    let initialized=with_sdl() {
-        let owned=with_window("Window surface",320,240,SDL_WINDOW_HIDDEN) $(window : SDL_Window?) {
+    let initialized=sdl_scope() {
+        with_sdl() |> sdl_use
+        let owned=sdl_scope() {
+            let window : SDL_Window? = with_window("Window surface",320,240,SDL_WINDOW_HIDDEN) |> sdl_use
             let surface=SDL_GetWindowSurface(window)
             if(surface==null){return err(sdl_error("56_window_surface"),type<SdlUnit>)}
             let color=SDL_MapSurfaceRGBA(surface,uint(30),uint(100),uint(180),uint(255))

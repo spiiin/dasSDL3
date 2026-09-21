@@ -119,6 +119,12 @@ Result/and_then comparison to examples/results/02_sdl_try.das. Report errors in 
 retain Option defaults and normal false/pending/unsupported states.
 Prefer receiver-first pipes. Scalar out parameters require explicit references;
 managed structs differ. `pass`, `block` and `variant` are reserved identifiers.
+For linear scoped acquisition, import dassdl3/sdl3_scope and use explicit typed
+bindings such as `let vb : GpuBufferHandle = device |> with_gpu_vertex_buffer(vertices) |> sdl_use`
+inside `sdl_scope() { ... }`. Zero-parameter scopes use `with_sdl() |> sdl_use`.
+The macros nest existing wrappers; they introduce no ownership/cleanup mechanism.
+Keep lifetime boundaries and multi-parameter callbacks explicit. See docs/sdl-scope.md
+for supported placements, references and compile-time rejection rules.
 Keep public examples free of unsafe/address expressions; never relax language pointer
 checking to make them compile. A hidden unsafe operation is not an ownership proof.
 

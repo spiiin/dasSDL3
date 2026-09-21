@@ -1,11 +1,12 @@
 options gen2
-require dassdl3/sdl3_try
+require dassdl3/sdl3_scope
 require daslib/defer
 require dassdl3/sdl3_surface_state_boost
 require dassdl3/sdl3_renderer_operations_boost
 def render_example(renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; SdlError> {
     var rendered=false
-    return with_surface(8,8,SDL_PixelFormat.PIXELFORMAT_RGBA32) $(surface : SDL_Surface?) {
+    return sdl_scope() {
+        let surface : SDL_Surface? = with_surface(8,8,SDL_PixelFormat.PIXELFORMAT_RGBA32) |> sdl_use
         let key=SDL_MapSurfaceRGBA(surface,255u,0u,255u,255u)
         if(!SDL_FillSurfaceAll(surface,key)) {return err(sdl_error("65_surface_state"),type<SdlUnit>)}
         var rect : SDL_Rect;rect.x=2;rect.y=2;rect.w=4;rect.h=4
@@ -33,7 +34,8 @@ def render_example(renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; Sd
 
 [export]
 def main(smoke : bool) : int {
-    let initialized=with_sdl() {
+    let initialized=sdl_scope() {
+        with_sdl() |> sdl_use
         return with_window_renderer("Surface color key and modulation",320,240,smoke ? SDL_WINDOW_HIDDEN : 0ul) $(window : SDL_Window?; renderer : SDL_Renderer?) {
             return render_example(renderer, smoke)
         }

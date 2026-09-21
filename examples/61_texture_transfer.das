@@ -1,12 +1,14 @@
 options gen2
-require dassdl3/sdl3_try
+require dassdl3/sdl3_scope
 require dassdl3/sdl3_texture_transfer_boost
 def render_example(renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; SdlError> {
     var rendered=false
-    return with_texture(renderer,SDL_PixelFormat.PIXELFORMAT_RGBA32,SDL_TextureAccess.TEXTUREACCESS_STREAMING,32,32) $(texture : SDL_Texture?) {
+    return sdl_scope() {
+        let texture : SDL_Texture? = with_texture(renderer,SDL_PixelFormat.PIXELFORMAT_RGBA32,SDL_TextureAccess.TEXTUREACCESS_STREAMING,32,32) |> sdl_use
         var full : SDL_Rect;full.w=32;full.h=32
         var filled=false
-        with_texture_surface(texture,full) $(surface : SDL_Surface?) {
+        sdl_scope() {
+            let surface : SDL_Surface? = with_texture_surface(texture,full) |> sdl_use
             if(!SDL_FillSurfaceAll(surface,SDL_MapSurfaceRGBA(surface,240u,240u,240u,255u))) {return err(sdl_error("61_texture_transfer"),type<SdlUnit>)}
             var inset : SDL_Rect;inset.x=8;inset.y=8;inset.w=16;inset.h=16
             filled=SDL_FillSurfaceRectRef(surface,inset,SDL_MapSurfaceRGBA(surface,40u,100u,220u,255u))
@@ -29,12 +31,11 @@ def render_example(renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; Sd
 
 [export]
 def main(smoke : bool) : int {
-    let initialized=with_sdl() {
-        return with_window("Texture surface lock",320,240,smoke ? SDL_WINDOW_HIDDEN : 0ul) $(window : SDL_Window?) {
-            return with_renderer(window) $(renderer : SDL_Renderer?) {
-                return render_example(renderer, smoke)
-            }
-        }
+    let initialized=sdl_scope() {
+        with_sdl() |> sdl_use
+        let window : SDL_Window? = with_window("Texture surface lock",320,240,smoke ? SDL_WINDOW_HIDDEN : 0ul) |> sdl_use
+        let renderer : SDL_Renderer? = with_renderer(window) |> sdl_use
+        return render_example(renderer, smoke)
     }
     if(is_err(initialized)) {print("Texture transfer failed: {unwrap_err(initialized).message}\n");return 1}
     return 0

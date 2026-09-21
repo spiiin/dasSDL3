@@ -1,5 +1,5 @@
 options gen2
-require dassdl3/sdl3_try
+require dassdl3/sdl3_scope
 require dassdl3/sdl3_boost
 require math
 
@@ -29,13 +29,12 @@ def render_loop(renderer : SDL_Renderer?; smoke : bool; var frames : int&) : $Re
 [export]
 def main(smoke : bool) : int {
     var frames = 0
-    let result = with_sdl() {
+    let result = sdl_scope() {
+        with_sdl() |> sdl_use
         let flags = smoke ? SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIDDEN : SDL_WINDOW_RESIZABLE
-        return with_window("dasSDL3 boost - Escape to exit", 800, 600, flags) $(window : SDL_Window?) {
-            return window |> with_renderer() $(renderer : SDL_Renderer?) {
-                return render_loop(renderer, smoke, frames)
-            }
-        }
+        let window : SDL_Window? = with_window("dasSDL3 boost - Escape to exit", 800, 600, flags) |> sdl_use
+        let renderer : SDL_Renderer? = window |> with_renderer() |> sdl_use
+        return render_loop(renderer, smoke, frames)
     }
     if (is_err(result)) {
         let error = unwrap_err(result)

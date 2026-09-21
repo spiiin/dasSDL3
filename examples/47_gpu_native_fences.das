@@ -1,6 +1,6 @@
 options gen2
 require dassdl3/sdl3_gpu_native_boost
-require dassdl3/sdl3_try
+require dassdl3/sdl3_scope
 require daslib/defer
 
 // Native SDL pointers and results. There is no command plan or readback-ticket object.
@@ -24,7 +24,8 @@ def submit_and_wait(device : SDL_GPUDevice?) : $Result<SdlUnit; SdlError> {
 
 [export]
 def main(smoke : bool) : int {
-    let result = with_sdl() {
+    let result = sdl_scope() {
+        with_sdl() |> sdl_use
         let device = create_native_gpu_device(GPU_SHADER_FORMATS,true) |> sdl_try
         {
             defer(){SDL_DestroyGPUDevice(device)}

@@ -1,9 +1,10 @@
 options gen2
-require dassdl3/sdl3_try
+require dassdl3/sdl3_scope
 require dassdl3/sdl3_renderer_yuv_blend_boost
 def render_example(renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; SdlError> {
     var rendered=false
-    return with_texture(renderer,SDL_PixelFormat.PIXELFORMAT_IYUV,SDL_TextureAccess.TEXTUREACCESS_STATIC,32,32) $(texture : SDL_Texture?) {
+    return sdl_scope() {
+        let texture : SDL_Texture? = with_texture(renderer,SDL_PixelFormat.PIXELFORMAT_IYUV,SDL_TextureAccess.TEXTUREACCESS_STATIC,32,32) |> sdl_use
         var y,u,v : array<uint8>;resize(y,1024);resize(u,256);resize(v,256)
         for(i in 0 .. 1024) {y[i]=uint8(((i%32)/8+i/256)%2==0 ? 81 : 180)}
         for(i in 0 .. 256) {u[i]=uint8(90);v[i]=uint8(240)}
@@ -21,12 +22,11 @@ def render_example(renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; Sd
 
 [export]
 def main(smoke : bool) : int {
-    let initialized=with_sdl() {
-        return with_window("Planar YUV texture",320,240,smoke ? SDL_WINDOW_HIDDEN : 0ul) $(window : SDL_Window?) {
-            return with_renderer(window) $(renderer : SDL_Renderer?) {
-                return render_example(renderer, smoke)
-            }
-        }
+    let initialized=sdl_scope() {
+        with_sdl() |> sdl_use
+        let window : SDL_Window? = with_window("Planar YUV texture",320,240,smoke ? SDL_WINDOW_HIDDEN : 0ul) |> sdl_use
+        let renderer : SDL_Renderer? = with_renderer(window) |> sdl_use
+        return render_example(renderer, smoke)
     }
     if(is_err(initialized)) {print("YUV example failed: {unwrap_err(initialized).message}\n");return 1}
     return 0

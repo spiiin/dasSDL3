@@ -1,5 +1,5 @@
 options gen2
-require dassdl3/sdl3_try
+require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_native_boost
 require daslib/defer
 
@@ -23,8 +23,10 @@ def copy_and_check(device : SDL_GPUDevice?; var source, destination : SDL_GPUBuf
         for (i in 0..100) { bytes[i]=uint8((i*7+3)%256) }
         if (!SDL_WriteGPUTransferBufferBytes(device,upload,256u,32u,bytes,true)) { return err(sdl_error("transfer_roundtrip"),type<SdlUnit>) }
         var completed=false
-        with_native_gpu_commands(device) $(var command : SDL_GPUCommandBuffer?&) {
-            with_native_gpu_copy_pass(command) $(copy_pass : SDL_GPUCopyPass?) {
+        sdl_scope() {
+            var command : SDL_GPUCommandBuffer?& = with_native_gpu_commands(device) |> sdl_use
+            sdl_scope() {
+                let copy_pass : SDL_GPUCopyPass? = with_native_gpu_copy_pass(command) |> sdl_use
                 var location : SDL_GPUTransferBufferLocation; location.transfer_buffer=upload; location.offset=32u
                 var region : SDL_GPUBufferRegion; region.buffer=source; region.offset=16u; region.size=100u
                 SDL_UploadToGPUBufferRef(copy_pass,location,region,true)
@@ -72,9 +74,10 @@ def copy_buffers(device : SDL_GPUDevice?; var upload, download : SDL_GPUTransfer
 
 [export]
 def main(smoke : bool) : int {
-    let initialized=with_sdl() {
-        return with_native_gpu_device(GPU_SHADER_FORMATS,true,"") $(device : SDL_GPUDevice?) { return transfer_roundtrip(device)
-        }
+    let initialized=sdl_scope() {
+        with_sdl() |> sdl_use
+        let device : SDL_GPUDevice? = with_native_gpu_device(GPU_SHADER_FORMATS,true,"") |> sdl_use
+        return transfer_roundtrip(device)
     }
     if (is_err(initialized)) { print("Native transfer: {unwrap_err(initialized).message}\n"); return 1 }
     print("Native transfer: 100 bytes, nonzero offsets, cycling PASS\n"); return 0

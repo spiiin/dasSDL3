@@ -1,5 +1,5 @@
 options gen2
-require dassdl3/sdl3_try
+require dassdl3/sdl3_scope
 require dassdl3/sdl3_renderer_final_boost
 def render_example(renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; SdlError> {
     var rendered=false
@@ -20,7 +20,8 @@ def render_example(renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; Sd
 
 [export]
 def main(smoke : bool) : int {
-    let initialized=with_sdl() {
+    let initialized=sdl_scope() {
+        with_sdl() |> sdl_use
         return with_window_renderer("Raw geometry",320,240,smoke ? SDL_WINDOW_HIDDEN : 0ul) $(window : SDL_Window?; renderer : SDL_Renderer?) {
             return render_example(renderer, smoke)
         }

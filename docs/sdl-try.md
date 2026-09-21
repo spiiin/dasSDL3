@@ -20,6 +20,8 @@ See [the complete runnable example](../examples/results/02_sdl_try.das), based o
 [01_results](../examples/results/01_results.das).
 The numbered examples also use the macro for linear Result operations. The first
 Result example deliberately remains the explicit-check/`and_then` comparison.
+Scoped acquisition in the second example now uses [sdl_scope/sdl_use](sdl-scope.md)
+as well; importing `sdl3_scope` also makes `sdl_try` available.
 
 ## Contract
 
