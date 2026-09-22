@@ -13,6 +13,14 @@ foreach(feature FLEX_BISON CLANG_BIND LLVM SMT HV GLFW IMGUI VULKAN AUDIO
     set(DAS_${feature}_DISABLED ON CACHE BOOL "Minimal dasSDL3 build")
 endforeach()
 set(DAS_TOOLS_DISABLED OFF CACHE BOOL "Build the standalone language executable")
+option(DASSDL3_WITH_IMGUI "Build the optional daScript ImGui + SDL Renderer example host" OFF)
+if(DASSDL3_WITH_IMGUI)
+    # Upstream's ImGui CMake requires these modules even when its GLFW host
+    # is unused. Keep the dependencies scoped to this opt-in configuration.
+    set(DAS_IMGUI_DISABLED OFF)
+    set(DAS_GLFW_DISABLED OFF)
+    set(DAS_CLIPBOARD_DISABLED OFF)
+endif()
 add_subdirectory(third_party/daScript EXCLUDE_FROM_ALL)
 if(MSVC)
     # MSVC 19.38 diagnoses intentional assignments in upstream's type inference.

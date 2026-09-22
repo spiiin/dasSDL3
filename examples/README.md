@@ -1,5 +1,8 @@
 # Examples
 
+- [Optional library integrations](libraries/README.md): daScript ImGui with SDL3;
+  uses the separate `dasSDL3_libraries_runner` host.
+
 Scoped acquisition uses [sdl_scope/sdl_use](../docs/sdl-scope.md) with receiver-first
 pipes; Result operations use `sdl_try`. `results/01_results.das` keeps explicit
 Result checks for comparison. Scopes with multiple callback parameters retain

@@ -2,7 +2,13 @@
 
 19 сентября 2026. Это отдельные опциональные модули, не часть полноты core SDL.
 Список взят из [SDL Libraries](https://wiki.libsdl.org/SDL3/Libraries).
-Предлагаемые имена модулей и CMake options ниже ещё не реализованы.
+Имена модулей и CMake options ниже — план, кроме отмеченных реализованных частей.
+
+23 сентября: начата интеграция существующего daScript ImGui. Опция
+`DASSDL3_WITH_IMGUI`, модуль `imgui_sdl3`, scoped-helper `with_imgui` и
+[пример в examples/libraries](../examples/libraries/README.md) подключают
+официальные SDL3 + SDLRenderer3 backends. Остальные backend'ы и дополнительные
+библиотеки остаются в плане; core SDL coverage от этого не меняется.
 
 ## Версии сначала
 

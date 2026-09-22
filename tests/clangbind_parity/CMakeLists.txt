@@ -45,6 +45,46 @@ target_compile_definitions(cppgenbind_module PRIVATE DASSDL3_AOT_HEADER="sdl3_pa
 target_include_directories(cppgenbind_module PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}" "${ROOT}/tests")
 add_executable(parity_aot_tool aot_tool.cpp)
 target_link_libraries(parity_aot_tool PRIVATE cppgenbind_module)
+option(DASSDL3_TEST_IMGUI "Test the optional ImGui library built in MAIN_BUILD" OFF)
+if(DASSDL3_TEST_IMGUI)
+    set(_imgui "${DAS}/modules/dasImgui")
+    add_library(imgui_test_dependencies INTERFACE)
+    target_compile_definitions(imgui_test_dependencies INTERFACE DASSDL3_WITH_IMGUI=1
+        IMGUI_DISABLE_OBSOLETE_FUNCTIONS=1 IMGUI_ENABLE_FREETYPE=1 IMGUI_USE_WCHAR32=1)
+    target_include_directories(imgui_test_dependencies INTERFACE "${_imgui}/imgui" "${_imgui}/src")
+    target_link_libraries(imgui_test_dependencies INTERFACE
+        "${MAIN_BUILD}/src/libraries/dasSDL3_imgui.lib"
+        "${DAS}/lib/libDasModuleImgui.lib" "${DAS}/lib/libDasModuleClipboard.lib"
+        "${DAS}/lib/freetype.lib")
+    target_link_libraries(parity_aot_tool PRIVATE imgui_test_dependencies)
+    foreach(backend baseline cppgenbind)
+        target_link_libraries(${backend}_runner PRIVATE imgui_test_dependencies)
+        foreach(script examples/libraries/01_imgui tests/imgui_lifetimes)
+            string(REPLACE "/" "_" test_name "${script}")
+            add_test(NAME ${backend}_${test_name} COMMAND ${backend}_runner "${ROOT}/${script}.das" --smoke-test)
+            set_tests_properties(${backend}_${test_name} PROPERTIES ENVIRONMENT "SDL_RENDER_DRIVER=software" TIMEOUT 60)
+        endforeach()
+    endforeach()
+    file(GLOB _imgui_boost_dependencies "${ROOT}/dassdl3/*.das")
+    set(_imgui_aot_sources)
+    foreach(script examples/libraries/01_imgui tests/imgui_lifetimes
+            dassdl3/sdl3_imgui dassdl3/sdl3_result dassdl3/sdl3_boost
+            dassdl3/sdl3_init_boost dassdl3/sdl3_pixels_boost)
+        string(REPLACE "/" "_" name "${script}")
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/imgui_${name}.aot.cpp")
+        add_custom_command(OUTPUT "${output}"
+            COMMAND parity_aot_tool "${ROOT}/${script}.das" "${output}"
+            DEPENDS parity_aot_tool "${ROOT}/${script}.das" ${_imgui_boost_dependencies} VERBATIM)
+        list(APPEND _imgui_aot_sources "${output}")
+    endforeach()
+    add_executable(imgui_aot_runner aot_runner.cpp ${_imgui_aot_sources})
+    target_link_libraries(imgui_aot_runner PRIVATE cppgenbind_module imgui_test_dependencies)
+    foreach(script examples/libraries/01_imgui tests/imgui_lifetimes)
+        string(REPLACE "/" "_" test_name "${script}")
+        add_test(NAME aot_${test_name} COMMAND imgui_aot_runner "${ROOT}/${script}.das")
+        set_tests_properties(aot_${test_name} PROPERTIES ENVIRONMENT "SDL_RENDER_DRIVER=software" TIMEOUT 60)
+    endforeach()
+endif()
 set(AOT_SCRIPTS tests/boost_result_contracts tests/gpu_result_contracts tests/sdl3_result examples/results/01_results tests/rect_clipboard tests/callback_lifetimes tests/window_hittest tests/surface_pixels examples/66_surface_pixels tests/surface_state examples/65_surface_state tests/renderer_final_api examples/64_renderer_raw_geometry tests/renderer_operations examples/63_renderer_operations tests/renderer_yuv_blend examples/62_renderer_yuv_blend tests/texture_transfer examples/61_texture_transfer tests/texture_state examples/60_texture_state tests/renderer_presentation examples/59_renderer_presentation tests/renderer_state examples/58_renderer_state tests/renderer_primitives examples/57_software_renderer tests/window_io examples/56_window_surface tests/window_state examples/55_window_properties tests/video_discovery examples/54_video_discovery tests/diagnostics examples/53_diagnostics_time tests/init_hints examples/52_init_hints tests/properties examples/51_properties tests/bindings tests/boost tests/textures tests/input tests/audio examples/02_square examples/04_textures examples/03_input examples/08_audio tests/clangbind_parity/recover)
 list(APPEND AOT_SCRIPTS tests/sdl3_try examples/results/02_sdl_try examples/results/03_poll_events)
 list(APPEND AOT_SCRIPTS tests/sdl3_scope)

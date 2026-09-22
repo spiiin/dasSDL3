@@ -96,7 +96,8 @@ Windows x64/MSVC, pinned SDL 3.2.18 and daScript; Vulkan and D3D12.
 - Documentation links and whitespace checks pass. Production generator configuration
   is restored after the consumer build.
 
-The inventory lists 650 public boost overloads, including pure helpers,
+The inventory lists 651 public boost overloads (650 core and the optional
+`with_imgui` scope, requiring `DASSDL3_WITH_IMGUI`), including pure helpers,
 [event variants](event-variants.md) and [GPU Result factories](gpu-factories.md). This is
 an API migration, not additional raw SDL declaration coverage. No cross-platform,
 JIT or arbitrary-panic cleanup guarantee is implied.

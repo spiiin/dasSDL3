@@ -2,6 +2,11 @@
 #include <fstream>
 #include <iostream>
 DECLARE_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_IMGUI
+DECLARE_MODULE(Module_Clipboard);
+DECLARE_MODULE(Module_dasIMGUI);
+DECLARE_MODULE(Module_imgui_sdl3);
+#endif
 using namespace das;
 
 static int generate(const char *input, const char *output) {
@@ -50,6 +55,11 @@ int main(int argc, char **argv) {
     setDasRoot(DASSDL3_DAS_ROOT);
     NEED_ALL_DEFAULT_MODULES;
     NEED_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_IMGUI
+    NEED_MODULE(Module_Clipboard);
+    NEED_MODULE(Module_dasIMGUI);
+    NEED_MODULE(Module_imgui_sdl3);
+#endif
     Module::Initialize();
     int result = generate(argv[1], argv[2]);
     Module::Shutdown();

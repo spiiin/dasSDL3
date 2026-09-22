@@ -8,6 +8,11 @@
 #include <string>
 
 DECLARE_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_IMGUI
+DECLARE_MODULE(Module_dasIMGUI);
+DECLARE_MODULE(Module_Clipboard);
+DECLARE_MODULE(Module_imgui_sdl3);
+#endif
 
 static int run_script(const char * path, bool smoke) {
     using namespace das;
@@ -65,6 +70,11 @@ int main(int argc, char ** argv) {
     das::setDasRoot(DASSDL3_DAS_ROOT);
     NEED_ALL_DEFAULT_MODULES;
     NEED_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_IMGUI
+    NEED_MODULE(Module_Clipboard);
+    NEED_MODULE(Module_dasIMGUI);
+    NEED_MODULE(Module_imgui_sdl3);
+#endif
     das::Module::Initialize();
     int status = run_script(argv[1], smoke);
     SDL_Quit(); // Also clean up SDL after a script error.

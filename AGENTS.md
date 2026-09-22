@@ -242,6 +242,13 @@ production generator configuration after consumer checks before clangbind gates.
 
 ## GPU application port
 
+Optional library examples live in `examples/libraries` with separate numbering.
+`DASSDL3_WITH_IMGUI` builds `dasSDL3_libraries_runner`, reusing upstream dasImgui
+with official SDL3/SDLRenderer3 backends. See examples/libraries/README.md for
+dependencies, raw-event forwarding, current-context ownership and tests.
+Never load GLFW imgui_app into this SDL host. Web/SDLGPU3 integration is pending.
+The optional parity switch is DASSDL3_TEST_IMGUI; imgui_aot_runner disables fallback.
+
 `examples/gpu/01_metaballs.das` ports bgfx's CPU marching cubes to SDL GPU.
 Keep its algorithm, table and controls local to the example. See
 `examples/gpu/README.md` for provenance, shader rebuilds, smoke pixel readback and

@@ -3,6 +3,11 @@
 #define SDL_MAIN_HANDLED
 #include <SDL3/SDL_main.h>
 DECLARE_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_IMGUI
+DECLARE_MODULE(Module_Clipboard);
+DECLARE_MODULE(Module_dasIMGUI);
+DECLARE_MODULE(Module_imgui_sdl3);
+#endif
 using namespace das;
 static int run(const char *path) {
     TextPrinter out; ModuleGroup modules;
@@ -26,6 +31,12 @@ static int run(const char *path) {
 int main(int argc,char **argv) {
     if (argc != 2) return 5;
     SDL_SetMainReady(); setDasRoot(DASSDL3_DAS_ROOT);
-    NEED_ALL_DEFAULT_MODULES; NEED_MODULE(Module_dasSDL3); Module::Initialize();
+    NEED_ALL_DEFAULT_MODULES; NEED_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_IMGUI
+    NEED_MODULE(Module_Clipboard);
+    NEED_MODULE(Module_dasIMGUI);
+    NEED_MODULE(Module_imgui_sdl3);
+#endif
+    Module::Initialize();
     int result = run(argv[1]); SDL_Quit(); Module::Shutdown(); return result;
 }

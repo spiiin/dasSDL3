@@ -1,5 +1,7 @@
 # Документация dasSDL3
 
+- [ImGui + SDL3 и примеры дополнительных библиотек](../examples/libraries/README.md).
+
 ## Начать
 
 - [Сборка и запуск](../README.md), [примеры](../examples/README.md).

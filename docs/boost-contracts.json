@@ -3898,5 +3898,12 @@
     "name": "push_native_gpu_vertex_uniforms",
     "contract": "Result",
     "signature": "def public push_native_gpu_vertex_uniforms(command : SDL_GPUCommandBuffer?; slot : uint; values : array<float>)"
+  },
+  {
+    "module": "sdl3_imgui",
+    "name": "with_imgui",
+    "contract": "Result",
+    "signature": "def public with_imgui(window : SDL_Window?; renderer : SDL_Renderer?; blk : block<() : $Result<auto(TT); SdlError>>)",
+    "requires": "DASSDL3_WITH_IMGUI"
   }
 ]
