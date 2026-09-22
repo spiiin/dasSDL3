@@ -7,14 +7,15 @@ require math
 // Own checker BMP, PollEvent loop and resource scopes; all arrays belong to script.
 
 def render_geometry(window : SDL_Window?; renderer : SDL_Renderer?; texture : SDL_Texture?; smoke : bool; var frames : int&) : $Result<SdlUnit; SdlError> {
-    var triangle, quad : array<SDL_Vertex>
+    var triangle : array<SDL_Vertex>
     triangle |> resize(3)
-    quad |> resize(4)
     let white = float4(1.0)
-    quad[0] = vertex(float2(420.0, 170.0), white, float2(0.0, 0.0))
-    quad[1] = vertex(float2(600.0, 170.0), white, float2(1.0, 0.0))
-    quad[2] = vertex(float2(420.0, 350.0), white, float2(0.0, 1.0))
-    quad[3] = vertex(float2(600.0, 350.0), white, float2(1.0, 1.0))
+    var quad <- array(
+        vertex(float2(420.0, 170.0), white, float2(0.0, 0.0)),
+        vertex(float2(600.0, 170.0), white, float2(1.0, 0.0)),
+        vertex(float2(420.0, 350.0), white, float2(0.0, 1.0)),
+        vertex(float2(600.0, 350.0), white, float2(1.0, 1.0))
+    )
     let indices <- array<int>(0, 1, 2, 2, 1, 3)
     var event = SDL_MakeEvent()
     var running = true

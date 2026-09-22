@@ -31,7 +31,7 @@ def dispatch_and_check(device : SDL_GPUDevice?; pipeline : SDL_GPUComputePipelin
     sdl_scope() {
         var command : SDL_GPUCommandBuffer?& = with_native_gpu_commands(device) |> sdl_use
         var textures : array<SDL_GPUStorageTextureReadWriteBinding>
-        var buffers : array<SDL_GPUStorageBufferReadWriteBinding>; resize(buffers,1); buffers[0].buffer=output
+        var buffers <- array(SDL_GPUStorageBufferReadWriteBinding(buffer=output))
         var uniforms : array<uint8>; resize(uniforms,16); uniforms[0]=uint8(10)
         if (!SDL_PushGPUComputeUniformDataArray(command,0u,uniforms)) {return err(sdl_error("49_gpu_native_compute"),type<SdlUnit>)}
         sdl_scope() {
@@ -50,7 +50,7 @@ def dispatch_and_check(device : SDL_GPUDevice?; pipeline : SDL_GPUComputePipelin
             return sdl_ok()
         } |> sdl_try
         var fence = native_gpu_submit_fence(command) |> sdl_try
-        var fences : array<SDL_GPUFence?>; resize(fences,1); fences[0]=fence
+        var fences <- array(fence)
         if (!SDL_WaitForGPUFencesArray(device,true,fences)) {return err(sdl_error("49_gpu_native_compute"),type<SdlUnit>)}
         SDL_ReleaseGPUFence(device,fence)
         var bytes : array<uint8>; resize(bytes,32)

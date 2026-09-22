@@ -87,14 +87,12 @@ def render_buffers(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle; linear
 }
 
 def create_pipeline(device : SDL_GPUDevice?; vertex : GpuShaderHandle; fragment : GpuShaderHandle; linear : bool) : $Result<SdlUnit; SdlError> {
-    var layouts : array<SDL_GPUVertexBufferDescription>
-    resize(layouts,1); layouts[0].pitch = 16u
-    var attributes : array<SDL_GPUVertexAttribute>
-    resize(attributes,2)
-    attributes[0] = SDL_GPUVertexAttribute(format=SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2)
-    attributes[1] = SDL_GPUVertexAttribute(format=SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2,location=1u,offset=8u)
-    var colors : array<SDL_GPUColorTargetDescription>
-    push(colors,gpu_color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM))
+    var layouts <- array(SDL_GPUVertexBufferDescription(pitch=16u))
+    var attributes <- array(
+        SDL_GPUVertexAttribute(format=SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2),
+        SDL_GPUVertexAttribute(format=SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2,location=1u,offset=8u)
+    )
+    var colors <- array(gpu_color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM))
     return sdl_scope() {
         let pipeline : GpuPipelineHandle = device |> with_gpu_graphics_pipeline(vertex,fragment,gpu_graphics_pipeline_info(),layouts,attributes,colors) |> sdl_use
         return render_buffers(device, pipeline, linear)

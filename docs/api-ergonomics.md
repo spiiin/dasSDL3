@@ -95,6 +95,28 @@ arguments (`with_window([title=...])`) refer to function parameters and do not
 construct its `settings` parameter. Keep explicit option types without adding
 a conversion macro solely to omit their names.
 
+Initialization forms checked against the pinned compiler:
+
+| Form | Use |
+| --- | --- |
+| `WindowOptions(title="Example")` | Preferred gen2 single value; preserves default size. |
+| `struct<WindowOptions>(title="Example")` | Works, but longer for a single value. |
+| `[[WindowOptions() title="Example"]]` | Legacy syntax, requires `options gen2=false`. |
+| `[[WindowOptions title="Example"]]` | Rejected as unsafe: the structure has field initializers. |
+| `array struct<WindowOptions>((title="One"), (title="Two"))` | Works in gen2; name the type once for multiple script structures. |
+
+The historical [initialization examples](https://spiiin.github.io/blog/1023396573/)
+use the legacy syntax. Do not copy their bare declarations/default-skipping forms
+into modern examples. `SDL_Rect(x=8,y=8,w=16,h=16)` is appropriate for a single
+native value. Native handled types differ from script structures:
+`array struct<SDL_Rect>(...)` is rejected by this compiler; use explicit element
+constructors for those arrays. Prefer `var targets <- array(SDL_GPUColorTargetInfo(
+texture=texture, clear_color=SDL_FColor(r=0.05,b=0.15,a=1.0)))` to resize followed
+by element assignments. For formula-based values use an array comprehension,
+for example `[for (i in 0 .. 3); SDL_FRect(x=float(i*45),w=35.0,h=65.0)]`.
+Keep resize for output buffers, padded binary data and arrays reused across frames;
+do not rebuild such buffers on every iteration just to shorten their declaration.
+
 Examples 42, 43 and 61 show these forms. Shader format/stage and target format
 remain explicit instead of guessing a backend. Existing small positional helpers
 remain useful. No mesh/material/scene/plan abstraction is introduced.

@@ -39,7 +39,7 @@ def copy_and_check(device : SDL_GPUDevice?; var source, destination : SDL_GPUBuf
                 return sdl_ok()
             } |> sdl_try
             var fence = native_gpu_submit_fence(command) |> sdl_try
-            var fences : array<SDL_GPUFence?>; resize(fences,1); fences[0]=fence
+            var fences <- array(fence)
             if (!SDL_WaitForGPUFencesArray(device,true,fences)) {return err(sdl_error("50_gpu_native_transfer"),type<SdlUnit>)}
             SDL_ReleaseGPUFence(device,fence)
             var result : array<uint8>; resize(result,100)

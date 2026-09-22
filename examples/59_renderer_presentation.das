@@ -6,8 +6,7 @@ def render_example(window : SDL_Window?; renderer : SDL_Renderer?; smoke : bool)
     print("Renderer: {renderer_name(renderer)}\n")
     if(!SDL_SetRenderLogicalPresentation(renderer,100,100,SDL_RendererLogicalPresentation.LOGICAL_PRESENTATION_LETTERBOX)) {return err(sdl_error("59_renderer_presentation"),type<SdlUnit>)}
     if(!SDL_SetRenderDrawColor(renderer,20u,25u,35u,255u) || !SDL_RenderClear(renderer)) {return err(sdl_error("59_renderer_presentation"),type<SdlUnit>)}
-    var rects : array<SDL_FRect>;resize(rects,3)
-    for(i in 0 .. 3) {rects[i]=SDL_FRect(x=float(10+i*30),y=float(15+i*15),w=20.0,h=40.0)}
+    var rects <- [for (i in 0 .. 3); SDL_FRect(x=float(10+i*30),y=float(15+i*15),w=20.0,h=40.0)]
     if(!SDL_SetRenderDrawColor(renderer,60u,180u,230u,255u) || !SDL_RenderFillRectsArray(renderer,rects)) {return err(sdl_error("59_renderer_presentation"),type<SdlUnit>)}
     var wx,wy : float
     render_to_window(renderer,50.0,50.0,wx,wy) |> sdl_try

@@ -27,9 +27,7 @@ def render_triangle(device : SDL_GPUDevice?) : $Result<SdlUnit; SdlError> {
     fragment = device |> load_gpu_shader("{base}.frag.{extension}",gpu_shader_info(format,SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT),"main") |> sdl_try
     var buffers : array<SDL_GPUVertexBufferDescription>
     var attributes : array<SDL_GPUVertexAttribute>
-    var colors : array<SDL_GPUColorTargetDescription>
-    resize(colors,1)
-    colors[0] = gpu_color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM)
+    var colors <- array(gpu_color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM))
     pipeline = device |> create_gpu_graphics_pipeline(vertex,fragment,gpu_graphics_pipeline_info(),buffers,attributes,colors) |> sdl_try
     target = device |> create_gpu_color_target_texture(64u,64u,1u,1u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM) |> sdl_try
     command = device |> acquire_gpu_command_buffer() |> sdl_try

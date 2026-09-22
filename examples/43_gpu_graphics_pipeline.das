@@ -14,8 +14,10 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
     return sdl_scope() {
         let vertex : GpuShaderHandle = device |> with_gpu_shader_file("{base}.vert.{extension}",vi) |> sdl_use
         let fragment : GpuShaderHandle = device |> with_gpu_shader_file("{base}.frag.{extension}",fi) |> sdl_use
-        var description = GpuGraphicsPipelineOptions(vertex=vertex,fragment=fragment)
-        description.colors |> push(gpu_color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM))
+        var description <- GpuGraphicsPipelineOptions(
+            vertex=vertex, fragment=fragment,
+            colors <- array(gpu_color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM))
+        )
         let pipeline : GpuPipelineHandle = device |> with_gpu_graphics_pipeline(description) |> sdl_use
         let info = gpu_graphics_pipeline_descriptor(device,pipeline) |> sdl_try
         verify(info.primitive_type == SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST)

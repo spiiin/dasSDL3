@@ -27,10 +27,12 @@ def render_loop(device : SDL_GPUDevice?; window : SDL_Window?; pipeline : SDL_GP
     var frame=0
     while (frame<(smoke ? 3 : 180)) {
         with_native_gpu_swapchain(device,window) $(command : SDL_GPUCommandBuffer?; var texture : SDL_GPUTexture?; width,height : uint) {
-            var targets : array<SDL_GPUColorTargetInfo>; resize(targets,1)
-            targets[0].texture=texture; targets[0].load_op=SDL_GPULoadOp.LOADOP_CLEAR
-            targets[0].store_op=SDL_GPUStoreOp.STOREOP_STORE
-            targets[0].clear_color.r=0.05; targets[0].clear_color.b=0.15; targets[0].clear_color.a=1.0
+            var targets <- array(SDL_GPUColorTargetInfo(
+                texture = texture,
+                load_op = SDL_GPULoadOp.LOADOP_CLEAR,
+                store_op = SDL_GPUStoreOp.STOREOP_STORE,
+                clear_color = SDL_FColor(r=0.05, b=0.15, a=1.0)
+            ))
             return sdl_scope() {
                 var render_pass : SDL_GPURenderPass?& = with_native_gpu_render_pass(command,targets) |> sdl_use
                 SDL_BindGPUGraphicsPipeline(render_pass,pipeline)
@@ -53,8 +55,9 @@ def render_pipeline(device : SDL_GPUDevice?; window : SDL_Window?; var vertex, f
     info.rasterizer_state.enable_depth_clip=true
     var buffers : array<SDL_GPUVertexBufferDescription>
     var attributes : array<SDL_GPUVertexAttribute>
-    var colors : array<SDL_GPUColorTargetDescription>; resize(colors,1)
-    colors[0].format=SDL_GetGPUSwapchainTextureFormat(device,window)
+    var colors <- array(SDL_GPUColorTargetDescription(
+        format = SDL_GetGPUSwapchainTextureFormat(device,window)
+    ))
     let pipeline = device |> create_native_gpu_graphics_pipeline(info,buffers,attributes,colors) |> sdl_try
     {
         defer() { SDL_ReleaseGPUGraphicsPipeline(device,pipeline) }

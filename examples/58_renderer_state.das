@@ -11,8 +11,7 @@ def render_example(window : SDL_Window?; renderer : SDL_Renderer?; smoke : bool)
     var clip = SDL_Rect(x = 10, y = 10, w = viewport.w-20, h = viewport.h-20)
     if(!SDL_SetRenderViewportRef(renderer,viewport) || !SDL_SetRenderClipRectRef(renderer,clip)) {return err(sdl_error("58_renderer_state"),type<SdlUnit>)}
     if(!SDL_SetRenderDrawColor(renderer,60u,180u,230u,255u)) {return err(sdl_error("58_renderer_state"),type<SdlUnit>)}
-    var rects : array<SDL_FRect>;resize(rects,3)
-    for(i in 0 .. 3) {rects[i]=SDL_FRect(x=float(i*45),y=float(i*15),w=35.0,h=65.0)}
+    var rects <- [for (i in 0 .. 3); SDL_FRect(x=float(i*45),y=float(i*15),w=35.0,h=65.0)]
     if(!SDL_RenderFillRectsArray(renderer,rects)) {return err(sdl_error("58_renderer_state"),type<SdlUnit>)}
     rendered=SDL_FlushRenderer(renderer) && SDL_UpdateWindowSurface(window)
     if(!rendered) {return err(sdl_error("58_renderer_state"),type<SdlUnit>)}
