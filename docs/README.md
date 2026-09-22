@@ -15,6 +15,14 @@
 
 ## API
 
+- [Platform services (P7)](platform-services.md): System/Power/Locale, Tray ownership and native Dialog callbacks.
+
+- [Process and LoadSO](process-loadso.md): child output/status, ownership and native export lifetime.
+
+- [Thread/TLS and Atomic](thread-atomic.md): native callbacks, join/detach, TLS lifetime and atomic references.
+
+- [Synchronization (P7)](synchronization.md): Mutex/RWLock/Semaphore/Condition, InitState и границы потоков.
+
 - [Properties](properties.md): values, copied strings/names and defer ownership.
 
 - [Ввод](input.md), [аудио](audio.md), [пиксели](pixels.md), [geometry](geometry.md).
@@ -96,4 +104,4 @@ Early-return syntax: [`sdl_try` macro and example](sdl-try.md).
 
 - [Camera](camera.md): 15 raw APIs, borrowed frames and dummy-only validation.
 
-- [Web / Emscripten и HTML-примеры](web-roadmap.md): текущий приоритет; первый bootstrap и четыре HTML-примера проверены в Edge/Firefox.
+- [Web / Emscripten и HTML-примеры](web-roadmap.md): десять HTML-примеров на SDL Renderer и штатном dasOpenGL проверены в Edge/Firefox; текущий приоритет — P7.

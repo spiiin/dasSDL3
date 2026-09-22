@@ -88,6 +88,102 @@
       "userdata"
     ]
   },
+  "SDL_TryLockSpinlock": {
+    "signature": "bool (SDL_SpinLock *)",
+    "arguments": [
+      "lock"
+    ]
+  },
+  "SDL_LockSpinlock": {
+    "signature": "void (SDL_SpinLock *)",
+    "arguments": [
+      "lock"
+    ]
+  },
+  "SDL_UnlockSpinlock": {
+    "signature": "void (SDL_SpinLock *)",
+    "arguments": [
+      "lock"
+    ]
+  },
+  "SDL_MemoryBarrierReleaseFunction": {
+    "signature": "void (void)",
+    "arguments": []
+  },
+  "SDL_MemoryBarrierAcquireFunction": {
+    "signature": "void (void)",
+    "arguments": []
+  },
+  "SDL_CompareAndSwapAtomicInt": {
+    "signature": "bool (SDL_AtomicInt *, int, int)",
+    "arguments": [
+      "a",
+      "oldval",
+      "newval"
+    ]
+  },
+  "SDL_SetAtomicInt": {
+    "signature": "int (SDL_AtomicInt *, int)",
+    "arguments": [
+      "a",
+      "v"
+    ]
+  },
+  "SDL_GetAtomicInt": {
+    "signature": "int (SDL_AtomicInt *)",
+    "arguments": [
+      "a"
+    ]
+  },
+  "SDL_AddAtomicInt": {
+    "signature": "int (SDL_AtomicInt *, int)",
+    "arguments": [
+      "a",
+      "v"
+    ]
+  },
+  "SDL_CompareAndSwapAtomicU32": {
+    "signature": "bool (SDL_AtomicU32 *, Uint32, Uint32)",
+    "arguments": [
+      "a",
+      "oldval",
+      "newval"
+    ]
+  },
+  "SDL_SetAtomicU32": {
+    "signature": "Uint32 (SDL_AtomicU32 *, Uint32)",
+    "arguments": [
+      "a",
+      "v"
+    ]
+  },
+  "SDL_GetAtomicU32": {
+    "signature": "Uint32 (SDL_AtomicU32 *)",
+    "arguments": [
+      "a"
+    ]
+  },
+  "SDL_CompareAndSwapAtomicPointer": {
+    "signature": "bool (void **, void *, void *)",
+    "arguments": [
+      "a",
+      "oldval",
+      "newval"
+    ]
+  },
+  "SDL_SetAtomicPointer": {
+    "signature": "void *(void **, void *)",
+    "arguments": [
+      "a",
+      "v"
+    ]
+  },
+  "SDL_GetAtomicPointer": {
+    "signature": "void *(void **)",
+    "arguments": [
+      "a"
+    ]
+  },
   "SDL_OutOfMemory": {
     "signature": "bool (void)",
     "arguments": []
@@ -232,6 +328,250 @@
     "signature": "void (SDL_PropertiesID)",
     "arguments": [
       "props"
+    ]
+  },
+  "SDL_CreateThreadRuntime": {
+    "signature": "SDL_Thread *(SDL_ThreadFunction, const char *, void *, SDL_FunctionPointer, SDL_FunctionPointer)",
+    "arguments": [
+      "fn",
+      "name",
+      "data",
+      "pfnBeginThread",
+      "pfnEndThread"
+    ]
+  },
+  "SDL_CreateThreadWithPropertiesRuntime": {
+    "signature": "SDL_Thread *(SDL_PropertiesID, SDL_FunctionPointer, SDL_FunctionPointer)",
+    "arguments": [
+      "props",
+      "pfnBeginThread",
+      "pfnEndThread"
+    ]
+  },
+  "SDL_GetThreadName": {
+    "signature": "const char *(SDL_Thread *)",
+    "arguments": [
+      "thread"
+    ]
+  },
+  "SDL_GetCurrentThreadID": {
+    "signature": "SDL_ThreadID (void)",
+    "arguments": []
+  },
+  "SDL_GetThreadID": {
+    "signature": "SDL_ThreadID (SDL_Thread *)",
+    "arguments": [
+      "thread"
+    ]
+  },
+  "SDL_SetCurrentThreadPriority": {
+    "signature": "bool (SDL_ThreadPriority)",
+    "arguments": [
+      "priority"
+    ]
+  },
+  "SDL_WaitThread": {
+    "signature": "void (SDL_Thread *, int *)",
+    "arguments": [
+      "thread",
+      "status"
+    ]
+  },
+  "SDL_GetThreadState": {
+    "signature": "SDL_ThreadState (SDL_Thread *)",
+    "arguments": [
+      "thread"
+    ]
+  },
+  "SDL_DetachThread": {
+    "signature": "void (SDL_Thread *)",
+    "arguments": [
+      "thread"
+    ]
+  },
+  "SDL_GetTLS": {
+    "signature": "void *(SDL_TLSID *)",
+    "arguments": [
+      "id"
+    ]
+  },
+  "SDL_SetTLS": {
+    "signature": "bool (SDL_TLSID *, const void *, SDL_TLSDestructorCallback)",
+    "arguments": [
+      "id",
+      "value",
+      "destructor"
+    ]
+  },
+  "SDL_CleanupTLS": {
+    "signature": "void (void)",
+    "arguments": []
+  },
+  "SDL_CreateMutex": {
+    "signature": "SDL_Mutex *(void)",
+    "arguments": []
+  },
+  "SDL_LockMutex": {
+    "signature": "void (SDL_Mutex *)",
+    "arguments": [
+      "mutex"
+    ]
+  },
+  "SDL_TryLockMutex": {
+    "signature": "bool (SDL_Mutex *)",
+    "arguments": [
+      "mutex"
+    ]
+  },
+  "SDL_UnlockMutex": {
+    "signature": "void (SDL_Mutex *)",
+    "arguments": [
+      "mutex"
+    ]
+  },
+  "SDL_DestroyMutex": {
+    "signature": "void (SDL_Mutex *)",
+    "arguments": [
+      "mutex"
+    ]
+  },
+  "SDL_CreateRWLock": {
+    "signature": "SDL_RWLock *(void)",
+    "arguments": []
+  },
+  "SDL_LockRWLockForReading": {
+    "signature": "void (SDL_RWLock *)",
+    "arguments": [
+      "rwlock"
+    ]
+  },
+  "SDL_LockRWLockForWriting": {
+    "signature": "void (SDL_RWLock *)",
+    "arguments": [
+      "rwlock"
+    ]
+  },
+  "SDL_TryLockRWLockForReading": {
+    "signature": "bool (SDL_RWLock *)",
+    "arguments": [
+      "rwlock"
+    ]
+  },
+  "SDL_TryLockRWLockForWriting": {
+    "signature": "bool (SDL_RWLock *)",
+    "arguments": [
+      "rwlock"
+    ]
+  },
+  "SDL_UnlockRWLock": {
+    "signature": "void (SDL_RWLock *)",
+    "arguments": [
+      "rwlock"
+    ]
+  },
+  "SDL_DestroyRWLock": {
+    "signature": "void (SDL_RWLock *)",
+    "arguments": [
+      "rwlock"
+    ]
+  },
+  "SDL_CreateSemaphore": {
+    "signature": "SDL_Semaphore *(Uint32)",
+    "arguments": [
+      "initial_value"
+    ]
+  },
+  "SDL_DestroySemaphore": {
+    "signature": "void (SDL_Semaphore *)",
+    "arguments": [
+      "sem"
+    ]
+  },
+  "SDL_WaitSemaphore": {
+    "signature": "void (SDL_Semaphore *)",
+    "arguments": [
+      "sem"
+    ]
+  },
+  "SDL_TryWaitSemaphore": {
+    "signature": "bool (SDL_Semaphore *)",
+    "arguments": [
+      "sem"
+    ]
+  },
+  "SDL_WaitSemaphoreTimeout": {
+    "signature": "bool (SDL_Semaphore *, Sint32)",
+    "arguments": [
+      "sem",
+      "timeoutMS"
+    ]
+  },
+  "SDL_SignalSemaphore": {
+    "signature": "void (SDL_Semaphore *)",
+    "arguments": [
+      "sem"
+    ]
+  },
+  "SDL_GetSemaphoreValue": {
+    "signature": "Uint32 (SDL_Semaphore *)",
+    "arguments": [
+      "sem"
+    ]
+  },
+  "SDL_CreateCondition": {
+    "signature": "SDL_Condition *(void)",
+    "arguments": []
+  },
+  "SDL_DestroyCondition": {
+    "signature": "void (SDL_Condition *)",
+    "arguments": [
+      "cond"
+    ]
+  },
+  "SDL_SignalCondition": {
+    "signature": "void (SDL_Condition *)",
+    "arguments": [
+      "cond"
+    ]
+  },
+  "SDL_BroadcastCondition": {
+    "signature": "void (SDL_Condition *)",
+    "arguments": [
+      "cond"
+    ]
+  },
+  "SDL_WaitCondition": {
+    "signature": "void (SDL_Condition *, SDL_Mutex *)",
+    "arguments": [
+      "cond",
+      "mutex"
+    ]
+  },
+  "SDL_WaitConditionTimeout": {
+    "signature": "bool (SDL_Condition *, SDL_Mutex *, Sint32)",
+    "arguments": [
+      "cond",
+      "mutex",
+      "timeoutMS"
+    ]
+  },
+  "SDL_ShouldInit": {
+    "signature": "bool (SDL_InitState *)",
+    "arguments": [
+      "state"
+    ]
+  },
+  "SDL_ShouldQuit": {
+    "signature": "bool (SDL_InitState *)",
+    "arguments": [
+      "state"
+    ]
+  },
+  "SDL_SetInitialized": {
+    "signature": "void (SDL_InitState *, bool)",
+    "arguments": [
+      "state",
+      "initialized"
     ]
   },
   "SDL_IOFromFile": {
@@ -2411,6 +2751,55 @@
   "SDL_DisableScreenSaver": {
     "signature": "bool (void)",
     "arguments": []
+  },
+  "SDL_ShowOpenFileDialog": {
+    "signature": "void (SDL_DialogFileCallback, void *, SDL_Window *, const SDL_DialogFileFilter *, int, const char *, bool)",
+    "arguments": [
+      "callback",
+      "userdata",
+      "window",
+      "filters",
+      "nfilters",
+      "default_location",
+      "allow_many"
+    ]
+  },
+  "SDL_ShowSaveFileDialog": {
+    "signature": "void (SDL_DialogFileCallback, void *, SDL_Window *, const SDL_DialogFileFilter *, int, const char *)",
+    "arguments": [
+      "callback",
+      "userdata",
+      "window",
+      "filters",
+      "nfilters",
+      "default_location"
+    ]
+  },
+  "SDL_ShowOpenFolderDialog": {
+    "signature": "void (SDL_DialogFileCallback, void *, SDL_Window *, const char *, bool)",
+    "arguments": [
+      "callback",
+      "userdata",
+      "window",
+      "default_location",
+      "allow_many"
+    ]
+  },
+  "SDL_ShowFileDialogWithProperties": {
+    "signature": "void (SDL_FileDialogType, SDL_DialogFileCallback, void *, SDL_PropertiesID)",
+    "arguments": [
+      "type",
+      "callback",
+      "userdata",
+      "props"
+    ]
+  },
+  "SDL_GetPowerInfo": {
+    "signature": "SDL_PowerState (int *, int *)",
+    "arguments": [
+      "seconds",
+      "percent"
+    ]
   },
   "SDL_GetSensors": {
     "signature": "SDL_SensorID *(int *)",
@@ -4988,6 +5377,31 @@
       "name"
     ]
   },
+  "SDL_LoadObject": {
+    "signature": "SDL_SharedObject *(const char *)",
+    "arguments": [
+      "sofile"
+    ]
+  },
+  "SDL_LoadFunction": {
+    "signature": "SDL_FunctionPointer (SDL_SharedObject *, const char *)",
+    "arguments": [
+      "handle",
+      "name"
+    ]
+  },
+  "SDL_UnloadObject": {
+    "signature": "void (SDL_SharedObject *)",
+    "arguments": [
+      "handle"
+    ]
+  },
+  "SDL_GetPreferredLocales": {
+    "signature": "SDL_Locale **(int *)",
+    "arguments": [
+      "count"
+    ]
+  },
   "SDL_SetLogPriorities": {
     "signature": "void (SDL_LogPriority)",
     "arguments": [
@@ -5016,6 +5430,66 @@
     "arguments": [
       "priority",
       "prefix"
+    ]
+  },
+  "SDL_CreateProcess": {
+    "signature": "SDL_Process *(const char *const *, bool)",
+    "arguments": [
+      "args",
+      "pipe_stdio"
+    ]
+  },
+  "SDL_CreateProcessWithProperties": {
+    "signature": "SDL_Process *(SDL_PropertiesID)",
+    "arguments": [
+      "props"
+    ]
+  },
+  "SDL_GetProcessProperties": {
+    "signature": "SDL_PropertiesID (SDL_Process *)",
+    "arguments": [
+      "process"
+    ]
+  },
+  "SDL_ReadProcess": {
+    "signature": "void *(SDL_Process *, size_t *, int *)",
+    "arguments": [
+      "process",
+      "datasize",
+      "exitcode"
+    ]
+  },
+  "SDL_GetProcessInput": {
+    "signature": "SDL_IOStream *(SDL_Process *)",
+    "arguments": [
+      "process"
+    ]
+  },
+  "SDL_GetProcessOutput": {
+    "signature": "SDL_IOStream *(SDL_Process *)",
+    "arguments": [
+      "process"
+    ]
+  },
+  "SDL_KillProcess": {
+    "signature": "bool (SDL_Process *, bool)",
+    "arguments": [
+      "process",
+      "force"
+    ]
+  },
+  "SDL_WaitProcess": {
+    "signature": "bool (SDL_Process *, bool, int *)",
+    "arguments": [
+      "process",
+      "block",
+      "exitcode"
+    ]
+  },
+  "SDL_DestroyProcess": {
+    "signature": "void (SDL_Process *)",
+    "arguments": [
+      "process"
     ]
   },
   "SDL_GetNumRenderDrivers": {
@@ -5844,6 +6318,70 @@
       "count"
     ]
   },
+  "SDL_SetWindowsMessageHook": {
+    "signature": "void (SDL_WindowsMessageHook, void *)",
+    "arguments": [
+      "callback",
+      "userdata"
+    ]
+  },
+  "SDL_GetDirect3D9AdapterIndex": {
+    "signature": "int (SDL_DisplayID)",
+    "arguments": [
+      "displayID"
+    ]
+  },
+  "SDL_GetDXGIOutputInfo": {
+    "signature": "bool (SDL_DisplayID, int *, int *)",
+    "arguments": [
+      "displayID",
+      "adapterIndex",
+      "outputIndex"
+    ]
+  },
+  "SDL_SetX11EventHook": {
+    "signature": "void (SDL_X11EventHook, void *)",
+    "arguments": [
+      "callback",
+      "userdata"
+    ]
+  },
+  "SDL_IsTablet": {
+    "signature": "bool (void)",
+    "arguments": []
+  },
+  "SDL_IsTV": {
+    "signature": "bool (void)",
+    "arguments": []
+  },
+  "SDL_GetSandbox": {
+    "signature": "SDL_Sandbox (void)",
+    "arguments": []
+  },
+  "SDL_OnApplicationWillTerminate": {
+    "signature": "void (void)",
+    "arguments": []
+  },
+  "SDL_OnApplicationDidReceiveMemoryWarning": {
+    "signature": "void (void)",
+    "arguments": []
+  },
+  "SDL_OnApplicationWillEnterBackground": {
+    "signature": "void (void)",
+    "arguments": []
+  },
+  "SDL_OnApplicationDidEnterBackground": {
+    "signature": "void (void)",
+    "arguments": []
+  },
+  "SDL_OnApplicationWillEnterForeground": {
+    "signature": "void (void)",
+    "arguments": []
+  },
+  "SDL_OnApplicationDidEnterForeground": {
+    "signature": "void (void)",
+    "arguments": []
+  },
   "SDL_GetDateTimeLocalePreferences": {
     "signature": "bool (SDL_DateFormat *, SDL_TimeFormat *)",
     "arguments": [
@@ -5949,6 +6487,154 @@
     "arguments": [
       "id"
     ]
+  },
+  "SDL_CreateTray": {
+    "signature": "SDL_Tray *(SDL_Surface *, const char *)",
+    "arguments": [
+      "icon",
+      "tooltip"
+    ]
+  },
+  "SDL_SetTrayIcon": {
+    "signature": "void (SDL_Tray *, SDL_Surface *)",
+    "arguments": [
+      "tray",
+      "icon"
+    ]
+  },
+  "SDL_SetTrayTooltip": {
+    "signature": "void (SDL_Tray *, const char *)",
+    "arguments": [
+      "tray",
+      "tooltip"
+    ]
+  },
+  "SDL_CreateTrayMenu": {
+    "signature": "SDL_TrayMenu *(SDL_Tray *)",
+    "arguments": [
+      "tray"
+    ]
+  },
+  "SDL_CreateTraySubmenu": {
+    "signature": "SDL_TrayMenu *(SDL_TrayEntry *)",
+    "arguments": [
+      "entry"
+    ]
+  },
+  "SDL_GetTrayMenu": {
+    "signature": "SDL_TrayMenu *(SDL_Tray *)",
+    "arguments": [
+      "tray"
+    ]
+  },
+  "SDL_GetTraySubmenu": {
+    "signature": "SDL_TrayMenu *(SDL_TrayEntry *)",
+    "arguments": [
+      "entry"
+    ]
+  },
+  "SDL_GetTrayEntries": {
+    "signature": "const SDL_TrayEntry **(SDL_TrayMenu *, int *)",
+    "arguments": [
+      "menu",
+      "count"
+    ]
+  },
+  "SDL_RemoveTrayEntry": {
+    "signature": "void (SDL_TrayEntry *)",
+    "arguments": [
+      "entry"
+    ]
+  },
+  "SDL_InsertTrayEntryAt": {
+    "signature": "SDL_TrayEntry *(SDL_TrayMenu *, int, const char *, SDL_TrayEntryFlags)",
+    "arguments": [
+      "menu",
+      "pos",
+      "label",
+      "flags"
+    ]
+  },
+  "SDL_SetTrayEntryLabel": {
+    "signature": "void (SDL_TrayEntry *, const char *)",
+    "arguments": [
+      "entry",
+      "label"
+    ]
+  },
+  "SDL_GetTrayEntryLabel": {
+    "signature": "const char *(SDL_TrayEntry *)",
+    "arguments": [
+      "entry"
+    ]
+  },
+  "SDL_SetTrayEntryChecked": {
+    "signature": "void (SDL_TrayEntry *, bool)",
+    "arguments": [
+      "entry",
+      "checked"
+    ]
+  },
+  "SDL_GetTrayEntryChecked": {
+    "signature": "bool (SDL_TrayEntry *)",
+    "arguments": [
+      "entry"
+    ]
+  },
+  "SDL_SetTrayEntryEnabled": {
+    "signature": "void (SDL_TrayEntry *, bool)",
+    "arguments": [
+      "entry",
+      "enabled"
+    ]
+  },
+  "SDL_GetTrayEntryEnabled": {
+    "signature": "bool (SDL_TrayEntry *)",
+    "arguments": [
+      "entry"
+    ]
+  },
+  "SDL_SetTrayEntryCallback": {
+    "signature": "void (SDL_TrayEntry *, SDL_TrayCallback, void *)",
+    "arguments": [
+      "entry",
+      "callback",
+      "userdata"
+    ]
+  },
+  "SDL_ClickTrayEntry": {
+    "signature": "void (SDL_TrayEntry *)",
+    "arguments": [
+      "entry"
+    ]
+  },
+  "SDL_DestroyTray": {
+    "signature": "void (SDL_Tray *)",
+    "arguments": [
+      "tray"
+    ]
+  },
+  "SDL_GetTrayEntryParent": {
+    "signature": "SDL_TrayMenu *(SDL_TrayEntry *)",
+    "arguments": [
+      "entry"
+    ]
+  },
+  "SDL_GetTrayMenuParentEntry": {
+    "signature": "SDL_TrayEntry *(SDL_TrayMenu *)",
+    "arguments": [
+      "menu"
+    ]
+  },
+  "SDL_GetTrayMenuParentTray": {
+    "signature": "SDL_Tray *(SDL_TrayMenu *)",
+    "arguments": [
+      "menu"
+    ]
+  },
+  "SDL_UpdateTrays": {
+    "signature": "void (void)",
+    "arguments": []
   },
   "SDL_GetVersion": {
     "signature": "int (void)",

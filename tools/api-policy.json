@@ -6635,6 +6635,878 @@
         "tests/camera.das",
         "examples/80_camera.das"
       ]
+    },
+    "function:SDL_CreateMutex": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_LockMutex": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_TryLockMutex": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_UnlockMutex": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_DestroyMutex": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_CreateRWLock": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_LockRWLockForReading": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_LockRWLockForWriting": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_TryLockRWLockForReading": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_TryLockRWLockForWriting": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_UnlockRWLock": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_DestroyRWLock": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_CreateSemaphore": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_DestroySemaphore": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_WaitSemaphore": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_TryWaitSemaphore": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_WaitSemaphoreTimeout": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_SignalSemaphore": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_GetSemaphoreValue": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_CreateCondition": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_DestroyCondition": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_SignalCondition": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_BroadcastCondition": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_WaitCondition": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_WaitConditionTimeout": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_ShouldInit": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_ShouldQuit": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_SetInitialized": {
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
+    },
+    "function:SDL_CreateThreadRuntime": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_CreateThreadWithPropertiesRuntime": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_GetThreadName": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_GetCurrentThreadID": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_GetThreadID": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_SetCurrentThreadPriority": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_WaitThread": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_GetThreadState": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_DetachThread": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_GetTLS": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_SetTLS": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_CleanupTLS": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_TryLockSpinlock": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_LockSpinlock": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_UnlockSpinlock": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_MemoryBarrierReleaseFunction": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_MemoryBarrierAcquireFunction": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_CompareAndSwapAtomicInt": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_SetAtomicInt": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_GetAtomicInt": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_AddAtomicInt": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_CompareAndSwapAtomicU32": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_SetAtomicU32": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_GetAtomicU32": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_CompareAndSwapAtomicPointer": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_SetAtomicPointer": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_GetAtomicPointer": {
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
+    },
+    "function:SDL_CreateProcess": {
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
+    },
+    "function:SDL_CreateProcessWithProperties": {
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
+    },
+    "function:SDL_GetProcessProperties": {
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
+    },
+    "function:SDL_ReadProcess": {
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
+    },
+    "function:SDL_GetProcessInput": {
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
+    },
+    "function:SDL_GetProcessOutput": {
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
+    },
+    "function:SDL_KillProcess": {
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
+    },
+    "function:SDL_WaitProcess": {
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
+    },
+    "function:SDL_DestroyProcess": {
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
+    },
+    "function:SDL_LoadObject": {
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
+    },
+    "function:SDL_LoadFunction": {
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
+    },
+    "function:SDL_UnloadObject": {
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
+    },
+    "function:SDL_ClickTrayEntry": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_CreateTray": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_CreateTrayMenu": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_CreateTraySubmenu": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_DestroyTray": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_GetDXGIOutputInfo": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_GetDirect3D9AdapterIndex": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_GetPowerInfo": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_GetPreferredLocales": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_GetSandbox": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_GetTrayEntries": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_GetTrayEntryChecked": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_GetTrayEntryEnabled": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_GetTrayEntryLabel": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_GetTrayEntryParent": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_GetTrayMenu": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_GetTrayMenuParentEntry": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_GetTrayMenuParentTray": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_GetTraySubmenu": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_InsertTrayEntryAt": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_IsTV": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_IsTablet": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_OnApplicationDidEnterBackground": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_OnApplicationDidEnterForeground": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_OnApplicationDidReceiveMemoryWarning": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_OnApplicationWillEnterBackground": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_OnApplicationWillEnterForeground": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_OnApplicationWillTerminate": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_RemoveTrayEntry": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_SetTrayEntryCallback": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_SetTrayEntryChecked": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_SetTrayEntryEnabled": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_SetTrayEntryLabel": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_SetTrayIcon": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_SetTrayTooltip": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_SetWindowsMessageHook": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_SetX11EventHook": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_ShowFileDialogWithProperties": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_ShowOpenFileDialog": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_ShowOpenFolderDialog": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_ShowSaveFileDialog": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_UpdateTrays": {
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     }
   }
 }

@@ -3346,5 +3346,383 @@
     "name": "with_camera_frame",
     "contract": "Result",
     "signature": "def public with_camera_frame(camera : SDL_Camera?; body : block<(frame : CameraFrame) : $Result<auto(CameraValue); SdlError>>)"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "create_mutex",
+    "contract": "Result",
+    "signature": "def public create_mutex()"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "destroy_mutex",
+    "contract": "value",
+    "signature": "def public destroy_mutex(var value : SDL_Mutex?&)"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "with_mutex",
+    "contract": "Result",
+    "signature": "def public with_mutex(blk : block<(value : SDL_Mutex?) : $Result<auto(T); SdlError>>)"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "create_rwlock",
+    "contract": "Result",
+    "signature": "def public create_rwlock()"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "destroy_rwlock",
+    "contract": "value",
+    "signature": "def public destroy_rwlock(var value : SDL_RWLock?&)"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "with_rwlock",
+    "contract": "Result",
+    "signature": "def public with_rwlock(blk : block<(value : SDL_RWLock?) : $Result<auto(T); SdlError>>)"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "create_semaphore",
+    "contract": "Result",
+    "signature": "def public create_semaphore(initial_value : uint = 0u)"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "destroy_semaphore",
+    "contract": "value",
+    "signature": "def public destroy_semaphore(var value : SDL_Semaphore?&)"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "with_semaphore",
+    "contract": "Result",
+    "signature": "def public with_semaphore(initial_value : uint = 0u; blk : block<(value : SDL_Semaphore?) : $Result<auto(T); SdlError>>)"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "create_condition",
+    "contract": "Result",
+    "signature": "def public create_condition()"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "destroy_condition",
+    "contract": "value",
+    "signature": "def public destroy_condition(var value : SDL_Condition?&)"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "with_condition",
+    "contract": "Result",
+    "signature": "def public with_condition(blk : block<(value : SDL_Condition?) : $Result<auto(T); SdlError>>)"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "with_mutex_lock",
+    "contract": "Result",
+    "signature": "def public with_mutex_lock(value : SDL_Mutex?; blk : block<() : $Result<auto(T); SdlError>>)"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "with_rwlock_read",
+    "contract": "Result",
+    "signature": "def public with_rwlock_read(value : SDL_RWLock?; blk : block<() : $Result<auto(T); SdlError>>)"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "with_rwlock_write",
+    "contract": "Result",
+    "signature": "def public with_rwlock_write(value : SDL_RWLock?; blk : block<() : $Result<auto(T); SdlError>>)"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "try_lock_mutex",
+    "contract": "value",
+    "signature": "def public try_lock_mutex(value : SDL_Mutex?) : bool"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "try_lock_rwlock_read",
+    "contract": "value",
+    "signature": "def public try_lock_rwlock_read(value : SDL_RWLock?) : bool"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "try_lock_rwlock_write",
+    "contract": "value",
+    "signature": "def public try_lock_rwlock_write(value : SDL_RWLock?) : bool"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "try_wait_semaphore",
+    "contract": "value",
+    "signature": "def public try_wait_semaphore(value : SDL_Semaphore?) : bool"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "wait_semaphore",
+    "contract": "value",
+    "signature": "def public wait_semaphore(value : SDL_Semaphore?; timeout_ms : int) : bool"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "wait_condition",
+    "contract": "value",
+    "signature": "def public wait_condition(value : SDL_Condition?; mutex : SDL_Mutex?; timeout_ms : int) : bool"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "should_init",
+    "contract": "value",
+    "signature": "def public should_init(var state : SDL_InitState&) : bool"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "should_quit",
+    "contract": "value",
+    "signature": "def public should_quit(var state : SDL_InitState&) : bool"
+  },
+  {
+    "module": "sdl3_synchronization",
+    "name": "set_initialized",
+    "contract": "value",
+    "signature": "def public set_initialized(var state : SDL_InitState&; initialized : bool)"
+  },
+  {
+    "module": "sdl3_thread_atomic",
+    "name": "create_thread",
+    "contract": "Result",
+    "signature": "def public create_thread(fn : void?; name : string; data : void? = null)"
+  },
+  {
+    "module": "sdl3_thread_atomic",
+    "name": "create_thread",
+    "contract": "Result",
+    "signature": "def public create_thread(props : uint)"
+  },
+  {
+    "module": "sdl3_thread_atomic",
+    "name": "join_thread",
+    "contract": "value",
+    "signature": "def public join_thread(var thread : SDL_Thread?&) : int"
+  },
+  {
+    "module": "sdl3_thread_atomic",
+    "name": "detach_thread",
+    "contract": "value",
+    "signature": "def public detach_thread(var thread : SDL_Thread?&)"
+  },
+  {
+    "module": "sdl3_thread_atomic",
+    "name": "with_thread",
+    "contract": "Result",
+    "signature": "def public with_thread(fn : void?; name : string; data : void?; blk : block<(thread : SDL_Thread?) : $Result<auto(T); SdlError>>)"
+  },
+  {
+    "module": "sdl3_thread_atomic",
+    "name": "get_tls",
+    "contract": "Option",
+    "signature": "def public get_tls(var id : SDL_AtomicInt&)"
+  },
+  {
+    "module": "sdl3_thread_atomic",
+    "name": "set_tls",
+    "contract": "Result",
+    "signature": "def public set_tls(var id : SDL_AtomicInt&; value : void?; destructor : void? = null)"
+  },
+  {
+    "module": "sdl3_thread_atomic",
+    "name": "atomic_get",
+    "contract": "value",
+    "signature": "def public atomic_get(var value : SDL_AtomicInt&)"
+  },
+  {
+    "module": "sdl3_thread_atomic",
+    "name": "atomic_get",
+    "contract": "value",
+    "signature": "def public atomic_get(var value : SDL_AtomicU32&)"
+  },
+  {
+    "module": "sdl3_thread_atomic",
+    "name": "atomic_get",
+    "contract": "value",
+    "signature": "def public atomic_get(var value : void?&)"
+  },
+  {
+    "module": "sdl3_thread_atomic",
+    "name": "atomic_set",
+    "contract": "value",
+    "signature": "def public atomic_set(var value : SDL_AtomicInt&; next : int)"
+  },
+  {
+    "module": "sdl3_thread_atomic",
+    "name": "atomic_set",
+    "contract": "value",
+    "signature": "def public atomic_set(var value : SDL_AtomicU32&; next : uint)"
+  },
+  {
+    "module": "sdl3_thread_atomic",
+    "name": "atomic_set",
+    "contract": "value",
+    "signature": "def public atomic_set(var value : void?&; next : void?)"
+  },
+  {
+    "module": "sdl3_thread_atomic",
+    "name": "atomic_add",
+    "contract": "value",
+    "signature": "def public atomic_add(var value : SDL_AtomicInt&; next : int)"
+  },
+  {
+    "module": "sdl3_thread_atomic",
+    "name": "atomic_compare_exchange",
+    "contract": "value",
+    "signature": "def public atomic_compare_exchange(var value : SDL_AtomicInt&; expected : int; next : int) : bool"
+  },
+  {
+    "module": "sdl3_thread_atomic",
+    "name": "atomic_compare_exchange",
+    "contract": "value",
+    "signature": "def public atomic_compare_exchange(var value : SDL_AtomicU32&; expected : uint; next : uint) : bool"
+  },
+  {
+    "module": "sdl3_thread_atomic",
+    "name": "atomic_compare_exchange",
+    "contract": "value",
+    "signature": "def public atomic_compare_exchange(var value : void?&; expected : void?; next : void?) : bool"
+  },
+  {
+    "module": "sdl3_process_loadso",
+    "name": "create_process",
+    "contract": "Result",
+    "signature": "def public create_process(args : array<string>; pipe_stdio : bool = true)"
+  },
+  {
+    "module": "sdl3_process_loadso",
+    "name": "create_process",
+    "contract": "Result",
+    "signature": "def public create_process(props : uint)"
+  },
+  {
+    "module": "sdl3_process_loadso",
+    "name": "destroy_process",
+    "contract": "value",
+    "signature": "def public destroy_process(var process : SDL_Process?&)"
+  },
+  {
+    "module": "sdl3_process_loadso",
+    "name": "with_process",
+    "contract": "Result",
+    "signature": "def public with_process(args : array<string>; pipe_stdio : bool; blk : block<(process : SDL_Process?) : $Result<auto(T); SdlError>>)"
+  },
+  {
+    "module": "sdl3_process_loadso",
+    "name": "read_process",
+    "contract": "Result",
+    "signature": "def public read_process(process : SDL_Process?)"
+  },
+  {
+    "module": "sdl3_process_loadso",
+    "name": "wait_process",
+    "contract": "Result",
+    "signature": "def public wait_process(process : SDL_Process?; blocking : bool = false)"
+  },
+  {
+    "module": "sdl3_process_loadso",
+    "name": "kill_process",
+    "contract": "Result",
+    "signature": "def public kill_process(process : SDL_Process?; force : bool = false)"
+  },
+  {
+    "module": "sdl3_process_loadso",
+    "name": "load_object",
+    "contract": "Result",
+    "signature": "def public load_object(path : string)"
+  },
+  {
+    "module": "sdl3_process_loadso",
+    "name": "load_function",
+    "contract": "Result",
+    "signature": "def public load_function(object : SDL_SharedObject?; name : string)"
+  },
+  {
+    "module": "sdl3_process_loadso",
+    "name": "unload_object",
+    "contract": "value",
+    "signature": "def public unload_object(var object : SDL_SharedObject?&)"
+  },
+  {
+    "module": "sdl3_process_loadso",
+    "name": "with_object",
+    "contract": "Result",
+    "signature": "def public with_object(path : string; blk : block<(object : SDL_SharedObject?) : $Result<auto(T); SdlError>>)"
+  },
+  {
+    "module": "sdl3_platform_services",
+    "name": "power_info",
+    "contract": "Result",
+    "signature": "def public power_info()"
+  },
+  {
+    "module": "sdl3_platform_services",
+    "name": "preferred_locales",
+    "contract": "Result",
+    "signature": "def public preferred_locales()"
+  },
+  {
+    "module": "sdl3_platform_services",
+    "name": "dxgi_output",
+    "contract": "Result",
+    "signature": "def public dxgi_output(display : uint)"
+  },
+  {
+    "module": "sdl3_platform_services",
+    "name": "create_tray",
+    "contract": "Result",
+    "signature": "def public create_tray(icon : SDL_Surface?; tooltip : string)"
+  },
+  {
+    "module": "sdl3_platform_services",
+    "name": "destroy_tray",
+    "contract": "value",
+    "signature": "def public destroy_tray(var tray : SDL_Tray?&)"
+  },
+  {
+    "module": "sdl3_platform_services",
+    "name": "with_tray",
+    "contract": "Result",
+    "signature": "def public with_tray(icon : SDL_Surface?; tooltip : string; blk : block<(tray : SDL_Tray?) : $Result<auto(T); SdlError>>)"
+  },
+  {
+    "module": "sdl3_platform_services",
+    "name": "create_tray_menu",
+    "contract": "Result",
+    "signature": "def public create_tray_menu(tray : SDL_Tray?)"
+  },
+  {
+    "module": "sdl3_platform_services",
+    "name": "create_tray_submenu",
+    "contract": "Result",
+    "signature": "def public create_tray_submenu(entry : SDL_TrayEntry?)"
+  },
+  {
+    "module": "sdl3_platform_services",
+    "name": "insert_tray_entry",
+    "contract": "Result",
+    "signature": "def public insert_tray_entry(menu : SDL_TrayMenu?; pos : int; text_label : string; flags : uint)"
+  },
+  {
+    "module": "sdl3_platform_services",
+    "name": "tray_entries",
+    "contract": "Result",
+    "signature": "def public tray_entries(menu : SDL_TrayMenu?)"
+  },
+  {
+    "module": "sdl3_platform_services",
+    "name": "tray_entry_label",
+    "contract": "Result",
+    "signature": "def public tray_entry_label(entry : SDL_TrayEntry?)"
   }
 ]

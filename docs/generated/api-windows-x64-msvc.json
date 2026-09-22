@@ -935,7 +935,7 @@
       "line": 270,
       "id": "enum:SDL_FileDialogType",
       "category": "Dialog",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1315,7 +1315,7 @@
       "line": 931,
       "id": "enum:SDL_InitStatus",
       "category": "Mutex",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1465,7 +1465,7 @@
       "line": 150,
       "id": "enum:SDL_ProcessIO",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1495,7 +1495,7 @@
       "line": 628,
       "id": "enum:SDL_Sandbox",
       "category": "System",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1575,7 +1575,7 @@
       "line": 110,
       "id": "enum:SDL_ThreadPriority",
       "category": "Thread",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1585,7 +1585,7 @@
       "line": 126,
       "id": "enum:SDL_ThreadState",
       "category": "Thread",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -4056,7 +4056,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_FILEDIALOG_OPENFILE",
       "category": "Dialog",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -4067,7 +4067,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_FILEDIALOG_OPENFOLDER",
       "category": "Dialog",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -4078,7 +4078,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_FILEDIALOG_SAVEFILE",
       "category": "Dialog",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8005,7 +8005,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_INIT_STATUS_INITIALIZED",
       "category": "Mutex",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8016,7 +8016,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_INIT_STATUS_INITIALIZING",
       "category": "Mutex",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8027,7 +8027,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_INIT_STATUS_UNINITIALIZED",
       "category": "Mutex",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -8038,7 +8038,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_INIT_STATUS_UNINITIALIZING",
       "category": "Mutex",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10348,7 +10348,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PROCESS_STDIO_APP",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10359,7 +10359,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PROCESS_STDIO_INHERITED",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10370,7 +10370,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PROCESS_STDIO_NULL",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10381,7 +10381,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PROCESS_STDIO_REDIRECT",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10458,7 +10458,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_SANDBOX_FLATPAK",
       "category": "System",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10469,7 +10469,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_SANDBOX_MACOS",
       "category": "System",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10480,7 +10480,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_SANDBOX_NONE",
       "category": "System",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10491,7 +10491,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_SANDBOX_SNAP",
       "category": "System",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10502,7 +10502,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_SANDBOX_UNKNOWN_CONTAINER",
       "category": "System",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -13769,7 +13769,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_THREAD_ALIVE",
       "category": "Thread",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -13780,7 +13780,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_THREAD_COMPLETE",
       "category": "Thread",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -13791,7 +13791,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_THREAD_DETACHED",
       "category": "Thread",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -13802,7 +13802,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_THREAD_PRIORITY_HIGH",
       "category": "Thread",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -13813,7 +13813,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_THREAD_PRIORITY_LOW",
       "category": "Thread",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -13824,7 +13824,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_THREAD_PRIORITY_NORMAL",
       "category": "Thread",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -13835,7 +13835,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_THREAD_PRIORITY_TIME_CRITICAL",
       "category": "Thread",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -13846,7 +13846,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_THREAD_UNKNOWN",
       "category": "Thread",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -14231,8 +14231,13 @@
       ],
       "id": "function:SDL_AddAtomicInt",
       "category": "Atomic",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_AddEventWatch",
@@ -15468,8 +15473,13 @@
       ],
       "id": "function:SDL_BroadcastCondition",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_CalculateGPUTextureFormatSize",
@@ -15593,8 +15603,13 @@
       "arguments": [],
       "id": "function:SDL_CleanupTLS",
       "category": "Thread",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_ClearAudioStream",
@@ -15751,8 +15766,13 @@
       ],
       "id": "function:SDL_ClickTrayEntry",
       "category": "Tray",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_CloseAsyncIO",
@@ -15998,8 +16018,13 @@
       ],
       "id": "function:SDL_CompareAndSwapAtomicInt",
       "category": "Atomic",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_CompareAndSwapAtomicPointer",
@@ -16024,8 +16049,13 @@
       ],
       "id": "function:SDL_CompareAndSwapAtomicPointer",
       "category": "Atomic",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_CompareAndSwapAtomicU32",
@@ -16050,8 +16080,13 @@
       ],
       "id": "function:SDL_CompareAndSwapAtomicU32",
       "category": "Atomic",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_ComposeCustomBlendMode",
@@ -16604,8 +16639,13 @@
       "arguments": [],
       "id": "function:SDL_CreateCondition",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_CreateCursor",
@@ -16980,8 +17020,13 @@
       "arguments": [],
       "id": "function:SDL_CreateMutex",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_CreatePalette",
@@ -17068,8 +17113,13 @@
       ],
       "id": "function:SDL_CreateProcess",
       "category": "Process",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
     },
     {
       "name": "SDL_CreateProcessWithProperties",
@@ -17086,8 +17136,13 @@
       ],
       "id": "function:SDL_CreateProcessWithProperties",
       "category": "Process",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
     },
     {
       "name": "SDL_CreateProperties",
@@ -17112,8 +17167,13 @@
       "arguments": [],
       "id": "function:SDL_CreateRWLock",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_CreateRenderer",
@@ -17175,8 +17235,13 @@
       ],
       "id": "function:SDL_CreateSemaphore",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_CreateSoftwareRenderer",
@@ -17463,8 +17528,13 @@
       ],
       "id": "function:SDL_CreateThreadRuntime",
       "category": "Thread",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_CreateThreadWithPropertiesRuntime",
@@ -17489,8 +17559,13 @@
       ],
       "id": "function:SDL_CreateThreadWithPropertiesRuntime",
       "category": "Thread",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_CreateTray",
@@ -17511,8 +17586,13 @@
       ],
       "id": "function:SDL_CreateTray",
       "category": "Tray",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_CreateTrayMenu",
@@ -17529,8 +17609,13 @@
       ],
       "id": "function:SDL_CreateTrayMenu",
       "category": "Tray",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_CreateTraySubmenu",
@@ -17547,8 +17632,13 @@
       ],
       "id": "function:SDL_CreateTraySubmenu",
       "category": "Tray",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_CreateWindow",
@@ -17811,8 +17901,13 @@
       ],
       "id": "function:SDL_DestroyCondition",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_DestroyCursor",
@@ -17921,8 +18016,13 @@
       ],
       "id": "function:SDL_DestroyMutex",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_DestroyPalette",
@@ -17962,8 +18062,13 @@
       ],
       "id": "function:SDL_DestroyProcess",
       "category": "Process",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
     },
     {
       "name": "SDL_DestroyProperties",
@@ -17998,8 +18103,13 @@
       ],
       "id": "function:SDL_DestroyRWLock",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_DestroyRenderer",
@@ -18034,8 +18144,13 @@
       ],
       "id": "function:SDL_DestroySemaphore",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_DestroySurface",
@@ -18088,8 +18203,13 @@
       ],
       "id": "function:SDL_DestroyTray",
       "category": "Tray",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_DestroyWindow",
@@ -18147,8 +18267,13 @@
       ],
       "id": "function:SDL_DetachThread",
       "category": "Thread",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_DetachVirtualJoystick",
@@ -19830,8 +19955,13 @@
       ],
       "id": "function:SDL_GetAtomicInt",
       "category": "Atomic",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_GetAtomicPointer",
@@ -19848,8 +19978,13 @@
       ],
       "id": "function:SDL_GetAtomicPointer",
       "category": "Atomic",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_GetAtomicU32",
@@ -19866,8 +20001,13 @@
       ],
       "id": "function:SDL_GetAtomicU32",
       "category": "Atomic",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_GetAudioDeviceChannelMap",
@@ -20834,8 +20974,13 @@
       "arguments": [],
       "id": "function:SDL_GetCurrentThreadID",
       "category": "Thread",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_GetCurrentTime",
@@ -20919,8 +21064,13 @@
       ],
       "id": "function:SDL_GetDXGIOutputInfo",
       "category": "System",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_GetDateTimeLocalePreferences",
@@ -21122,8 +21272,13 @@
       ],
       "id": "function:SDL_GetDirect3D9AdapterIndex",
       "category": "System",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_GetDisplayBounds",
@@ -24825,8 +24980,13 @@
       ],
       "id": "function:SDL_GetPowerInfo",
       "category": "Power",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_GetPrefPath",
@@ -24870,8 +25030,13 @@
       ],
       "id": "function:SDL_GetPreferredLocales",
       "category": "Locale",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_GetPrimaryDisplay",
@@ -24926,8 +25091,13 @@
       ],
       "id": "function:SDL_GetProcessInput",
       "category": "Process",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
     },
     {
       "name": "SDL_GetProcessOutput",
@@ -24944,8 +25114,13 @@
       ],
       "id": "function:SDL_GetProcessOutput",
       "category": "Process",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
     },
     {
       "name": "SDL_GetProcessProperties",
@@ -24962,8 +25137,13 @@
       ],
       "id": "function:SDL_GetProcessProperties",
       "category": "Process",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
     },
     {
       "name": "SDL_GetPropertyType",
@@ -26039,8 +26219,13 @@
       "arguments": [],
       "id": "function:SDL_GetSandbox",
       "category": "System",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_GetScancodeFromKey",
@@ -26130,8 +26315,13 @@
       ],
       "id": "function:SDL_GetSemaphoreValue",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_GetSensorData",
@@ -26813,8 +27003,13 @@
       ],
       "id": "function:SDL_GetTLS",
       "category": "Thread",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_GetTextInputArea",
@@ -27089,8 +27284,13 @@
       ],
       "id": "function:SDL_GetThreadID",
       "category": "Thread",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_GetThreadName",
@@ -27107,8 +27307,13 @@
       ],
       "id": "function:SDL_GetThreadName",
       "category": "Thread",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_GetThreadState",
@@ -27125,8 +27330,13 @@
       ],
       "id": "function:SDL_GetThreadState",
       "category": "Thread",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_GetTicks",
@@ -27274,8 +27484,13 @@
       ],
       "id": "function:SDL_GetTrayEntries",
       "category": "Tray",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_GetTrayEntryChecked",
@@ -27292,8 +27507,13 @@
       ],
       "id": "function:SDL_GetTrayEntryChecked",
       "category": "Tray",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_GetTrayEntryEnabled",
@@ -27310,8 +27530,13 @@
       ],
       "id": "function:SDL_GetTrayEntryEnabled",
       "category": "Tray",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_GetTrayEntryLabel",
@@ -27328,8 +27553,13 @@
       ],
       "id": "function:SDL_GetTrayEntryLabel",
       "category": "Tray",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_GetTrayEntryParent",
@@ -27346,8 +27576,13 @@
       ],
       "id": "function:SDL_GetTrayEntryParent",
       "category": "Tray",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_GetTrayMenu",
@@ -27364,8 +27599,13 @@
       ],
       "id": "function:SDL_GetTrayMenu",
       "category": "Tray",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_GetTrayMenuParentEntry",
@@ -27382,8 +27622,13 @@
       ],
       "id": "function:SDL_GetTrayMenuParentEntry",
       "category": "Tray",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_GetTrayMenuParentTray",
@@ -27400,8 +27645,13 @@
       ],
       "id": "function:SDL_GetTrayMenuParentTray",
       "category": "Tray",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_GetTraySubmenu",
@@ -27418,8 +27668,13 @@
       ],
       "id": "function:SDL_GetTraySubmenu",
       "category": "Tray",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_GetUserFolder",
@@ -29116,8 +29371,13 @@
       ],
       "id": "function:SDL_InsertTrayEntryAt",
       "category": "Tray",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_IsAudioDevicePhysical",
@@ -29280,8 +29540,13 @@
       "arguments": [],
       "id": "function:SDL_IsTV",
       "category": "System",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_IsTablet",
@@ -29293,8 +29558,13 @@
       "arguments": [],
       "id": "function:SDL_IsTablet",
       "category": "System",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_JoystickConnected",
@@ -29356,8 +29626,13 @@
       ],
       "id": "function:SDL_KillProcess",
       "category": "Process",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
     },
     {
       "name": "SDL_LoadBMP",
@@ -29514,8 +29789,13 @@
       ],
       "id": "function:SDL_LoadFunction",
       "category": "SharedObject",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
     },
     {
       "name": "SDL_LoadObject",
@@ -29532,8 +29812,13 @@
       ],
       "id": "function:SDL_LoadObject",
       "category": "SharedObject",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
     },
     {
       "name": "SDL_LoadWAV",
@@ -29660,8 +29945,13 @@
       ],
       "id": "function:SDL_LockMutex",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_LockProperties",
@@ -29696,8 +29986,13 @@
       ],
       "id": "function:SDL_LockRWLockForReading",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_LockRWLockForWriting",
@@ -29714,8 +30009,13 @@
       ],
       "id": "function:SDL_LockRWLockForWriting",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_LockSpinlock",
@@ -29732,8 +30032,13 @@
       ],
       "id": "function:SDL_LockSpinlock",
       "category": "Atomic",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_LockSurface",
@@ -30329,8 +30634,13 @@
       "arguments": [],
       "id": "function:SDL_MemoryBarrierAcquireFunction",
       "category": "Atomic",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_MemoryBarrierReleaseFunction",
@@ -30342,8 +30652,13 @@
       "arguments": [],
       "id": "function:SDL_MemoryBarrierReleaseFunction",
       "category": "Atomic",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_Metal_CreateView",
@@ -30489,8 +30804,13 @@
       "arguments": [],
       "id": "function:SDL_OnApplicationDidEnterBackground",
       "category": "System",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_OnApplicationDidEnterForeground",
@@ -30502,8 +30822,13 @@
       "arguments": [],
       "id": "function:SDL_OnApplicationDidEnterForeground",
       "category": "System",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_OnApplicationDidReceiveMemoryWarning",
@@ -30515,8 +30840,13 @@
       "arguments": [],
       "id": "function:SDL_OnApplicationDidReceiveMemoryWarning",
       "category": "System",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_OnApplicationWillEnterBackground",
@@ -30528,8 +30858,13 @@
       "arguments": [],
       "id": "function:SDL_OnApplicationWillEnterBackground",
       "category": "System",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_OnApplicationWillEnterForeground",
@@ -30541,8 +30876,13 @@
       "arguments": [],
       "id": "function:SDL_OnApplicationWillEnterForeground",
       "category": "System",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_OnApplicationWillTerminate",
@@ -30554,8 +30894,13 @@
       "arguments": [],
       "id": "function:SDL_OnApplicationWillTerminate",
       "category": "System",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_OpenAudioDevice",
@@ -31634,8 +31979,13 @@
       ],
       "id": "function:SDL_ReadProcess",
       "category": "Process",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
     },
     {
       "name": "SDL_ReadS16BE",
@@ -32842,8 +33192,13 @@
       ],
       "id": "function:SDL_RemoveTrayEntry",
       "category": "Tray",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_RenamePath",
@@ -34598,8 +34953,13 @@
       ],
       "id": "function:SDL_SetAtomicInt",
       "category": "Atomic",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_SetAtomicPointer",
@@ -34620,8 +34980,13 @@
       ],
       "id": "function:SDL_SetAtomicPointer",
       "category": "Atomic",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_SetAtomicU32",
@@ -34642,8 +35007,13 @@
       ],
       "id": "function:SDL_SetAtomicU32",
       "category": "Atomic",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_SetAudioDeviceGain",
@@ -35019,8 +35389,13 @@
       ],
       "id": "function:SDL_SetCurrentThreadPriority",
       "category": "Thread",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_SetCursor",
@@ -35713,8 +36088,13 @@
       ],
       "id": "function:SDL_SetInitialized",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_SetJoystickEventsEnabled",
@@ -36895,8 +37275,13 @@
       ],
       "id": "function:SDL_SetTLS",
       "category": "Thread",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_SetTextInputArea",
@@ -37130,8 +37515,13 @@
       ],
       "id": "function:SDL_SetTrayEntryCallback",
       "category": "Tray",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_SetTrayEntryChecked",
@@ -37152,8 +37542,13 @@
       ],
       "id": "function:SDL_SetTrayEntryChecked",
       "category": "Tray",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_SetTrayEntryEnabled",
@@ -37174,8 +37569,13 @@
       ],
       "id": "function:SDL_SetTrayEntryEnabled",
       "category": "Tray",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_SetTrayEntryLabel",
@@ -37196,8 +37596,13 @@
       ],
       "id": "function:SDL_SetTrayEntryLabel",
       "category": "Tray",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_SetTrayIcon",
@@ -37218,8 +37623,13 @@
       ],
       "id": "function:SDL_SetTrayIcon",
       "category": "Tray",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_SetTrayTooltip",
@@ -37240,8 +37650,13 @@
       ],
       "id": "function:SDL_SetTrayTooltip",
       "category": "Tray",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_SetWindowAlwaysOnTop",
@@ -37904,8 +38319,13 @@
       ],
       "id": "function:SDL_SetWindowsMessageHook",
       "category": "System",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_SetX11EventHook",
@@ -37926,8 +38346,13 @@
       ],
       "id": "function:SDL_SetX11EventHook",
       "category": "System",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_ShouldInit",
@@ -37944,8 +38369,13 @@
       ],
       "id": "function:SDL_ShouldInit",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_ShouldQuit",
@@ -37962,8 +38392,13 @@
       ],
       "id": "function:SDL_ShouldQuit",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_ShowCursor",
@@ -38010,8 +38445,13 @@
       ],
       "id": "function:SDL_ShowFileDialogWithProperties",
       "category": "Dialog",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_ShowMessageBox",
@@ -38074,8 +38514,13 @@
       ],
       "id": "function:SDL_ShowOpenFileDialog",
       "category": "Dialog",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_ShowOpenFolderDialog",
@@ -38108,8 +38553,13 @@
       ],
       "id": "function:SDL_ShowOpenFolderDialog",
       "category": "Dialog",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_ShowSaveFileDialog",
@@ -38146,8 +38596,13 @@
       ],
       "id": "function:SDL_ShowSaveFileDialog",
       "category": "Dialog",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_ShowSimpleMessageBox",
@@ -38271,8 +38726,13 @@
       ],
       "id": "function:SDL_SignalCondition",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_SignalSemaphore",
@@ -38289,8 +38749,13 @@
       ],
       "id": "function:SDL_SignalSemaphore",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_StartTextInput",
@@ -38871,8 +39336,13 @@
       ],
       "id": "function:SDL_TryLockMutex",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_TryLockRWLockForReading",
@@ -38889,8 +39359,13 @@
       ],
       "id": "function:SDL_TryLockRWLockForReading",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_TryLockRWLockForWriting",
@@ -38907,8 +39382,13 @@
       ],
       "id": "function:SDL_TryLockRWLockForWriting",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_TryLockSpinlock",
@@ -38925,8 +39405,13 @@
       ],
       "id": "function:SDL_TryLockSpinlock",
       "category": "Atomic",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_TryWaitSemaphore",
@@ -38943,8 +39428,13 @@
       ],
       "id": "function:SDL_TryWaitSemaphore",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_UCS4ToUTF8",
@@ -39033,8 +39523,13 @@
       ],
       "id": "function:SDL_UnloadObject",
       "category": "SharedObject",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
     },
     {
       "name": "SDL_UnlockAudioStream",
@@ -39092,8 +39587,13 @@
       ],
       "id": "function:SDL_UnlockMutex",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_UnlockProperties",
@@ -39128,8 +39628,13 @@
       ],
       "id": "function:SDL_UnlockRWLock",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_UnlockSpinlock",
@@ -39146,8 +39651,13 @@
       ],
       "id": "function:SDL_UnlockSpinlock",
       "category": "Atomic",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_UnlockSurface",
@@ -39431,8 +39941,13 @@
       "arguments": [],
       "id": "function:SDL_UpdateTrays",
       "category": "Tray",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Pinned Windows system/desktop service declaration. Retained callbacks are native C only; interactive dialog selection and other OS backends are separate validation.",
+      "contract": "docs/platform-services.md",
+      "tests": [
+        "tests/platform_services.das"
+      ]
     },
     {
       "name": "SDL_UpdateWindowSurface",
@@ -39846,8 +40361,13 @@
       ],
       "id": "function:SDL_WaitCondition",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_WaitConditionTimeout",
@@ -39872,8 +40392,13 @@
       ],
       "id": "function:SDL_WaitConditionTimeout",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_WaitEvent",
@@ -40036,8 +40561,13 @@
       ],
       "id": "function:SDL_WaitProcess",
       "category": "Process",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct Process/LoadSO signature; argv/output adapters and explicit native ownership. DestroyProcess does not stop its child.",
+      "contract": "docs/process-loadso.md",
+      "tests": [
+        "tests/process_loadso.das"
+      ]
     },
     {
       "name": "SDL_WaitSemaphore",
@@ -40054,8 +40584,13 @@
       ],
       "id": "function:SDL_WaitSemaphore",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_WaitSemaphoreTimeout",
@@ -40076,8 +40611,13 @@
       ],
       "id": "function:SDL_WaitSemaphoreTimeout",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Direct SDL_mutex.h signature. Live primitive and same-thread lock ownership remain caller preconditions; false from try/timed waits is a normal outcome, not an SDL error.",
+      "contract": "docs/synchronization.md",
+      "tests": [
+        "tests/synchronization.das"
+      ]
     },
     {
       "name": "SDL_WaitThread",
@@ -40098,8 +40638,13 @@
       ],
       "id": "function:SDL_WaitThread",
       "category": "Thread",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Thread/TLS or Atomic signature; callback addresses are native C only. Stable storage and native worker lifetime remain caller preconditions.",
+      "contract": "docs/thread-atomic.md",
+      "tests": [
+        "tests/thread_atomic.das"
+      ]
     },
     {
       "name": "SDL_WarpMouseGlobal",
@@ -64501,7 +65046,7 @@
       "function_like": false,
       "id": "macro:SDL_TRAYENTRY_BUTTON",
       "category": "Tray",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64513,7 +65058,7 @@
       "function_like": false,
       "id": "macro:SDL_TRAYENTRY_CHECKBOX",
       "category": "Tray",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64525,7 +65070,7 @@
       "function_like": false,
       "id": "macro:SDL_TRAYENTRY_CHECKED",
       "category": "Tray",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64537,7 +65082,7 @@
       "function_like": false,
       "id": "macro:SDL_TRAYENTRY_DISABLED",
       "category": "Tray",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64549,7 +65094,7 @@
       "function_like": false,
       "id": "macro:SDL_TRAYENTRY_SUBMENU",
       "category": "Tray",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -66263,8 +66808,11 @@
       ],
       "id": "record:SDL_AtomicInt",
       "category": "Atomic",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "value"
+      ]
     },
     {
       "name": "SDL_AtomicU32",
@@ -66281,8 +66829,11 @@
       ],
       "id": "record:SDL_AtomicU32",
       "category": "Atomic",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "value"
+      ]
     },
     {
       "name": "SDL_AudioDeviceEvent",
@@ -66578,7 +67129,7 @@
       "fields": [],
       "id": "record:SDL_Condition",
       "category": "Mutex",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -66674,8 +67225,12 @@
       ],
       "id": "record:SDL_DialogFileFilter",
       "category": "Dialog",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "name",
+        "pattern"
+      ]
     },
     {
       "name": "SDL_DisplayEvent",
@@ -69927,8 +70482,13 @@
       ],
       "id": "record:SDL_InitState",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "status",
+        "thread",
+        "reserved"
+      ]
     },
     {
       "name": "SDL_JoyAxisEvent",
@@ -70363,8 +70923,12 @@
       ],
       "id": "record:SDL_Locale",
       "category": "Locale",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "language",
+        "country"
+      ]
     },
     {
       "name": "SDL_MessageBoxButtonData",
@@ -70723,7 +71287,7 @@
       "fields": [],
       "id": "record:SDL_Mutex",
       "category": "Mutex",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -71213,7 +71777,7 @@
       "fields": [],
       "id": "record:SDL_Process",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -71252,7 +71816,7 @@
       "fields": [],
       "id": "record:SDL_RWLock",
       "category": "Mutex",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -71344,7 +71908,7 @@
       "fields": [],
       "id": "record:SDL_Semaphore",
       "category": "Mutex",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -71414,7 +71978,7 @@
       "fields": [],
       "id": "record:SDL_SharedObject",
       "category": "SharedObject",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -71722,7 +72286,7 @@
       "fields": [],
       "id": "record:SDL_Thread",
       "category": "Thread",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -71804,7 +72368,7 @@
       "fields": [],
       "id": "record:SDL_Tray",
       "category": "Tray",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -71817,7 +72381,7 @@
       "fields": [],
       "id": "record:SDL_TrayEntry",
       "category": "Tray",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -71830,7 +72394,7 @@
       "fields": [],
       "id": "record:SDL_TrayMenu",
       "category": "Tray",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -72466,8 +73030,11 @@
       "callback": false,
       "id": "typedef:SDL_AtomicInt",
       "category": "Atomic",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "value"
+      ]
     },
     {
       "name": "SDL_AtomicU32",
@@ -72478,8 +73045,11 @@
       "callback": false,
       "id": "typedef:SDL_AtomicU32",
       "category": "Atomic",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "value"
+      ]
     },
     {
       "name": "SDL_AudioDeviceEvent",
@@ -72874,7 +73444,7 @@
       "callback": false,
       "id": "typedef:SDL_Condition",
       "category": "Mutex",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -72957,8 +73527,12 @@
       "callback": false,
       "id": "typedef:SDL_DialogFileFilter",
       "category": "Dialog",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "name",
+        "pattern"
+      ]
     },
     {
       "name": "SDL_DisplayEvent",
@@ -73286,7 +73860,7 @@
       "callback": false,
       "id": "typedef:SDL_FileDialogType",
       "category": "Dialog",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -75159,8 +75733,13 @@
       "callback": false,
       "id": "typedef:SDL_InitState",
       "category": "Mutex",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "status",
+        "thread",
+        "reserved"
+      ]
     },
     {
       "name": "SDL_InitStatus",
@@ -75171,7 +75750,7 @@
       "callback": false,
       "id": "typedef:SDL_InitStatus",
       "category": "Mutex",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -75408,8 +75987,12 @@
       "callback": false,
       "id": "typedef:SDL_Locale",
       "category": "Locale",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "language",
+        "country"
+      ]
     },
     {
       "name": "SDL_LogCategory",
@@ -75691,7 +76274,7 @@
       "callback": false,
       "id": "typedef:SDL_Mutex",
       "category": "Mutex",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -76002,7 +76585,7 @@
       "callback": false,
       "id": "typedef:SDL_Process",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -76014,7 +76597,7 @@
       "callback": false,
       "id": "typedef:SDL_ProcessIO",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -76062,7 +76645,7 @@
       "callback": false,
       "id": "typedef:SDL_RWLock",
       "category": "Mutex",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -76128,7 +76711,7 @@
       "callback": false,
       "id": "typedef:SDL_Sandbox",
       "category": "System",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -76164,7 +76747,7 @@
       "callback": false,
       "id": "typedef:SDL_Semaphore",
       "category": "Mutex",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -76230,7 +76813,7 @@
       "callback": false,
       "id": "typedef:SDL_SharedObject",
       "category": "SharedObject",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -76432,7 +77015,7 @@
       "callback": false,
       "id": "typedef:SDL_Thread",
       "category": "Thread",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -76468,7 +77051,7 @@
       "callback": false,
       "id": "typedef:SDL_ThreadPriority",
       "category": "Thread",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -76480,7 +77063,7 @@
       "callback": false,
       "id": "typedef:SDL_ThreadState",
       "category": "Thread",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -76599,7 +77182,7 @@
       "callback": false,
       "id": "typedef:SDL_Tray",
       "category": "Tray",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -76623,7 +77206,7 @@
       "callback": false,
       "id": "typedef:SDL_TrayEntry",
       "category": "Tray",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -76647,7 +77230,7 @@
       "callback": false,
       "id": "typedef:SDL_TrayMenu",
       "category": "Tray",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {

@@ -18,6 +18,10 @@
 #include "sdl3_audio_stream_controls.h"
 #include "sdl3_audio_final.h"
 #include "sdl3_camera.h"
+#include "sdl3_synchronization.h"
+#include "sdl3_thread_atomic.h"
+#include "sdl3_process_loadso.h"
+#include "sdl3_platform_services.h"
 #include "sdl3_pixels.h"
 #include "sdl3_geometry.h"
 #include "sdl3_gpu.h"
@@ -74,6 +78,10 @@
 #include "../tests/storage_probe.h"
 #include "../tests/audio_stream_controls_probe.h"
 #include "../tests/audio_final_probe.h"
+#include "../tests/synchronization_probe.h"
+#include "../tests/thread_atomic_probe.h"
+#include "../tests/process_loadso_probe.h"
+#include "../tests/platform_services_probe.h"
 #include "../tests/event_queue_probe.h"
 #include "../tests/event_callbacks_probe.h"
 #include "../tests/joystick_gamepad_probe.h"
@@ -252,6 +260,37 @@ public:
         addExtern<DAS_BIND_FUN(SDL_GetWindowSizeRef)>(*this, lib, "SDL_GetWindowSizeRef", SideEffects::worstDefault, "SDL_GetWindowSizeRef");
         addExtern<DAS_BIND_FUN(SDL_GetWindowSizeInPixelsRef)>(*this, lib, "SDL_GetWindowSizeInPixelsRef", SideEffects::worstDefault, "SDL_GetWindowSizeInPixelsRef");
         addExtern<DAS_BIND_FUN(SDL_SetErrorText)>(*this, lib, "SDL_SetErrorText", SideEffects::worstDefault, "SDL_SetErrorText");
+        addExtern<DAS_BIND_FUN(SDL_CreateTrayText)>(*this,lib,"SDL_CreateTrayText",SideEffects::worstDefault,"SDL_CreateTrayText");
+        addExtern<DAS_BIND_FUN(SDL_MakeDialogFileFilter),SimNode_ExtFuncCallAndCopyOrMove>(*this,lib,"SDL_MakeDialogFileFilter",SideEffects::none,"SDL_MakeDialogFileFilter");
+        addExtern<DAS_BIND_FUN(SDL_GetPowerInfoRef)>(*this,lib,"SDL_GetPowerInfoRef",SideEffects::worstDefault,"SDL_GetPowerInfoRef");
+        addExtern<DAS_BIND_FUN(SDL_GetDXGIOutputInfoRef)>(*this,lib,"SDL_GetDXGIOutputInfoRef",SideEffects::worstDefault,"SDL_GetDXGIOutputInfoRef");
+        addExtern<DAS_BIND_FUN(SDL_GetPreferredLocalesCopy)>(*this,lib,"SDL_GetPreferredLocalesCopy",SideEffects::worstDefault,"SDL_GetPreferredLocalesCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetTrayEntriesCopy)>(*this,lib,"SDL_GetTrayEntriesCopy",SideEffects::worstDefault,"SDL_GetTrayEntriesCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetTrayEntryLabelCopy)>(*this,lib,"SDL_GetTrayEntryLabelCopy",SideEffects::worstDefault,"SDL_GetTrayEntryLabelCopy");
+        addExtern<DAS_BIND_FUN(SDL_CreateProcessArray)>(*this,lib,"SDL_CreateProcessArray",SideEffects::worstDefault,"SDL_CreateProcessArray");
+        addExtern<DAS_BIND_FUN(SDL_ReadProcessCopy)>(*this,lib,"SDL_ReadProcessCopy",SideEffects::worstDefault,"SDL_ReadProcessCopy");
+        addExtern<DAS_BIND_FUN(SDL_WaitProcessStateRef)>(*this,lib,"SDL_WaitProcessStateRef",SideEffects::worstDefault,"SDL_WaitProcessStateRef");
+        addExtern<DAS_BIND_FUN(SDL_CreateThreadNative)>(*this,lib,"SDL_CreateThreadNative",SideEffects::worstDefault,"SDL_CreateThreadNative");
+        addExtern<DAS_BIND_FUN(SDL_CreateThreadWithPropertiesNative)>(*this,lib,"SDL_CreateThreadWithPropertiesNative",SideEffects::worstDefault,"SDL_CreateThreadWithPropertiesNative");
+        addExtern<DAS_BIND_FUN(SDL_WaitThreadRef)>(*this,lib,"SDL_WaitThreadRef",SideEffects::worstDefault,"SDL_WaitThreadRef");
+        addExtern<DAS_BIND_FUN(SDL_GetTLSRef)>(*this,lib,"SDL_GetTLSRef",SideEffects::worstDefault,"SDL_GetTLSRef");
+        addExtern<DAS_BIND_FUN(SDL_SetTLSRef)>(*this,lib,"SDL_SetTLSRef",SideEffects::worstDefault,"SDL_SetTLSRef");
+        addExtern<DAS_BIND_FUN(SDL_TryLockSpinlockRef)>(*this,lib,"SDL_TryLockSpinlockRef",SideEffects::worstDefault,"SDL_TryLockSpinlockRef");
+        addExtern<DAS_BIND_FUN(SDL_LockSpinlockRef)>(*this,lib,"SDL_LockSpinlockRef",SideEffects::worstDefault,"SDL_LockSpinlockRef");
+        addExtern<DAS_BIND_FUN(SDL_UnlockSpinlockRef)>(*this,lib,"SDL_UnlockSpinlockRef",SideEffects::worstDefault,"SDL_UnlockSpinlockRef");
+        addExtern<DAS_BIND_FUN(SDL_CompareAndSwapAtomicIntRef)>(*this,lib,"SDL_CompareAndSwapAtomicIntRef",SideEffects::worstDefault,"SDL_CompareAndSwapAtomicIntRef");
+        addExtern<DAS_BIND_FUN(SDL_SetAtomicIntRef)>(*this,lib,"SDL_SetAtomicIntRef",SideEffects::worstDefault,"SDL_SetAtomicIntRef");
+        addExtern<DAS_BIND_FUN(SDL_GetAtomicIntRef)>(*this,lib,"SDL_GetAtomicIntRef",SideEffects::worstDefault,"SDL_GetAtomicIntRef");
+        addExtern<DAS_BIND_FUN(SDL_AddAtomicIntRef)>(*this,lib,"SDL_AddAtomicIntRef",SideEffects::worstDefault,"SDL_AddAtomicIntRef");
+        addExtern<DAS_BIND_FUN(SDL_CompareAndSwapAtomicU32Ref)>(*this,lib,"SDL_CompareAndSwapAtomicU32Ref",SideEffects::worstDefault,"SDL_CompareAndSwapAtomicU32Ref");
+        addExtern<DAS_BIND_FUN(SDL_SetAtomicU32Ref)>(*this,lib,"SDL_SetAtomicU32Ref",SideEffects::worstDefault,"SDL_SetAtomicU32Ref");
+        addExtern<DAS_BIND_FUN(SDL_GetAtomicU32Ref)>(*this,lib,"SDL_GetAtomicU32Ref",SideEffects::worstDefault,"SDL_GetAtomicU32Ref");
+        addExtern<DAS_BIND_FUN(SDL_CompareAndSwapAtomicPointerRef)>(*this,lib,"SDL_CompareAndSwapAtomicPointerRef",SideEffects::worstDefault,"SDL_CompareAndSwapAtomicPointerRef");
+        addExtern<DAS_BIND_FUN(SDL_SetAtomicPointerRef)>(*this,lib,"SDL_SetAtomicPointerRef",SideEffects::worstDefault,"SDL_SetAtomicPointerRef");
+        addExtern<DAS_BIND_FUN(SDL_GetAtomicPointerRef)>(*this,lib,"SDL_GetAtomicPointerRef",SideEffects::worstDefault,"SDL_GetAtomicPointerRef");
+        addExtern<DAS_BIND_FUN(SDL_ShouldInitRef)>(*this,lib,"SDL_ShouldInitRef",SideEffects::worstDefault,"SDL_ShouldInitRef");
+        addExtern<DAS_BIND_FUN(SDL_ShouldQuitRef)>(*this,lib,"SDL_ShouldQuitRef",SideEffects::worstDefault,"SDL_ShouldQuitRef");
+        addExtern<DAS_BIND_FUN(SDL_SetInitializedRef)>(*this,lib,"SDL_SetInitializedRef",SideEffects::worstDefault,"SDL_SetInitializedRef");
         addExtern<DAS_BIND_FUN(SDL_GetErrorCopy)>(*this, lib, "SDL_GetErrorCopy", SideEffects::worstDefault, "SDL_GetErrorCopy");
         addExtern<DAS_BIND_FUN(SDL_GetCurrentTimeRef)>(*this, lib, "SDL_GetCurrentTimeRef", SideEffects::worstDefault, "SDL_GetCurrentTimeRef");
         addExtern<DAS_BIND_FUN(SDL_GetDateTimeLocalePreferencesRef)>(*this, lib, "SDL_GetDateTimeLocalePreferencesRef", SideEffects::worstDefault, "SDL_GetDateTimeLocalePreferencesRef");
@@ -709,6 +748,27 @@ public:
         addExtern<DAS_BIND_FUN(sdl3_test::mutate_hid_info)>(*this,lib,"SDLTestMutateHidInfo",SideEffects::worstDefault,"sdl3_test::mutate_hid_info");
         addExtern<DAS_BIND_FUN(sdl3_test::haptic_payload)>(*this,lib,"SDLTestHapticPayload",SideEffects::worstDefault,"sdl3_test::haptic_payload");
         addExtern<DAS_BIND_FUN(sdl3_test::list_event),SimNode_ExtFuncCallAndCopyOrMove>(*this,lib,"SDLTestListEvent",SideEffects::worstDefault,"sdl3_test::list_event");
+        addExtern<DAS_BIND_FUN(sdl3_test::hold_start)>(*this,lib,"SDLTestHoldStart",SideEffects::worstDefault,"sdl3_test::hold_start");
+        addExtern<DAS_BIND_FUN(sdl3_test::hold_stop)>(*this,lib,"SDLTestHoldStop",SideEffects::worstDefault,"sdl3_test::hold_stop");
+        addExtern<DAS_BIND_FUN(sdl3_test::platform_reset)>(*this,lib,"SDLTestPlatformReset",SideEffects::worstDefault,"sdl3_test::platform_reset");
+        addExtern<DAS_BIND_FUN(sdl3_test::platform_callback)>(*this,lib,"SDLTestPlatformCallback",SideEffects::worstDefault,"sdl3_test::platform_callback");
+        addExtern<DAS_BIND_FUN(sdl3_test::platform_count)>(*this,lib,"SDLTestPlatformCount",SideEffects::worstDefault,"sdl3_test::platform_count");
+        addExtern<DAS_BIND_FUN(sdl3_test::platform_post)>(*this,lib,"SDLTestPlatformPost",SideEffects::worstDefault,"sdl3_test::platform_post");
+        addExtern<DAS_BIND_FUN(sdl3_test::process_child_path)>(*this,lib,"SDLTestProcessChildPath",SideEffects::worstDefault,"sdl3_test::process_child_path");
+        addExtern<DAS_BIND_FUN(sdl3_test::process_library_path)>(*this,lib,"SDLTestProcessLibraryPath",SideEffects::worstDefault,"sdl3_test::process_library_path");
+        addExtern<DAS_BIND_FUN(sdl3_test::process_library_call)>(*this,lib,"SDLTestProcessLibraryCall",SideEffects::worstDefault,"sdl3_test::process_library_call");
+        addExtern<DAS_BIND_FUN(sdl3_test::thread_ready)>(*this,lib,"SDLTestThreadReady",SideEffects::worstDefault,"sdl3_test::thread_ready");
+        addExtern<DAS_BIND_FUN(sdl3_test::thread_reset)>(*this,lib,"SDLTestThreadReset",SideEffects::worstDefault,"sdl3_test::thread_reset");
+        addExtern<DAS_BIND_FUN(sdl3_test::thread_release)>(*this,lib,"SDLTestThreadRelease",SideEffects::worstDefault,"sdl3_test::thread_release");
+        addExtern<DAS_BIND_FUN(sdl3_test::thread_finish)>(*this,lib,"SDLTestThreadFinish",SideEffects::worstDefault,"sdl3_test::thread_finish");
+        addExtern<DAS_BIND_FUN(sdl3_test::thread_cleanup_count)>(*this,lib,"SDLTestThreadCleanupCount",SideEffects::worstDefault,"sdl3_test::thread_cleanup_count");
+        addExtern<DAS_BIND_FUN(sdl3_test::thread_address)>(*this,lib,"SDLTestThreadAddress",SideEffects::worstDefault,"sdl3_test::thread_address");
+        addExtern<DAS_BIND_FUN(sdl3_test::mutex_available)>(*this,lib,"SDLTestMutexAvailable",SideEffects::worstDefault,"sdl3_test::mutex_available");
+        addExtern<DAS_BIND_FUN(sdl3_test::rwlock_available)>(*this,lib,"SDLTestRwlockAvailable",SideEffects::worstDefault,"sdl3_test::rwlock_available");
+        addExtern<DAS_BIND_FUN(sdl3_test::condition_start)>(*this,lib,"SDLTestConditionStart",SideEffects::worstDefault,"sdl3_test::condition_start");
+        addExtern<DAS_BIND_FUN(sdl3_test::condition_done)>(*this,lib,"SDLTestConditionDone",SideEffects::worstDefault,"sdl3_test::condition_done");
+        addExtern<DAS_BIND_FUN(sdl3_test::sync_join)>(*this,lib,"SDLTestSyncJoin",SideEffects::worstDefault,"sdl3_test::sync_join");
+        addExtern<DAS_BIND_FUN(sdl3_test::semaphore_start)>(*this,lib,"SDLTestSemaphoreStart",SideEffects::worstDefault,"sdl3_test::semaphore_start");
         addExtern<DAS_BIND_FUN(sdl3_test::audio_final_reset)>(*this,lib,"SDLTestAudioFinalReset",SideEffects::worstDefault,"sdl3_test::audio_final_reset");
         addExtern<DAS_BIND_FUN(sdl3_test::audio_final_data)>(*this,lib,"SDLTestAudioFinalData",SideEffects::worstDefault,"sdl3_test::audio_final_data");
         addExtern<DAS_BIND_FUN(sdl3_test::audio_final_callback)>(*this,lib,"SDLTestAudioFinalCallback",SideEffects::worstDefault,"sdl3_test::audio_final_callback");

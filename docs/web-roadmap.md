@@ -6,8 +6,7 @@ render target, geometry, audio и два OpenGL-примера).
 OpenGL использует штатный libDasModuleOpenGL из pinned daScript, SDL создаёт
 ES 3.0 контекст. Отдельной GL-привязки в dasSDL3 нет. См. [OpenGL-примеры](../examples/web/opengl/README.md). Все восемь страниц проверены в Edge и Firefox: по 15 сценариев
 с pixel/input/resize/cleanup, ошибками и ненулевым PCM на выходе Web Audio.
-Физический звук и Safari не проверены; подробности — в web/README.md. См. [запуск и ограничения](../web/README.md). Это текущий приоритет по запросу пользователя; P7 временно
-отложен. SDL остаётся 3.2.18, daScript — 35bf260c0d8a79b94c64005bd3d2435adcf7e261.
+Физический звук и Safari не проверены; подробности — в web/README.md. См. [запуск и ограничения](../web/README.md). Работа по Web временно отложена по запросу пользователя: текущий приоритет — P7. SDL остаётся 3.2.18, daScript — 35bf260c0d8a79b94c64005bd3d2435adcf7e261.
 Рабочий entry point — web/build.cmd, результат — build/web/site. Ниже полный
 план; выполненный bootstrap не означает завершение всех W0–W8.
 

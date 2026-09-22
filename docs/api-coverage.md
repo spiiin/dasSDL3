@@ -1,12 +1,15 @@
 # Покрытие SDL3
 
-Baseline: SDL 3.2.18, Windows x64/MSVC. Generated: 852; adapted: 14;
-pending: 360 of 1226 functions. GPU: 92 generated / 0 adapted / 0 pending.
+Baseline: SDL 3.2.18, Windows x64/MSVC. Generated: 961; adapted: 14;
+pending: 251 of 1226 functions. GPU: 92 generated / 0 adapted / 0 pending.
 `adapted` means a documented partial adapter, not full raw API coverage.
 See [API boundary](gpu-api-boundary.md) and the generated header census.
 
 | Подсистема / сценарий | Raw API | Идиоматичный слой | Проверка / оставшаяся работа |
 | --- | --- | --- | --- |
+| Thread / Atomic / Process / LoadSO | 12/12 + 15/15 + 9/9 + 3/3 generated | Native callbacks, refs, owners, copied process output | [Threads](thread-atomic.md), [Processes](process-loadso.md) |
+| System / Power / Locale / Dialog / Tray | 13/13 + 1/1 + 1/1 + 4/4 + 23/23 generated | Native callbacks; copied locales; tray scopes | [Platform contracts and validation limits](platform-services.md) |
+| Synchronization (P7) | 28/28 generated | Result owners, deferred locks, bool try/timeouts, InitState refs | [Contracts and thread limits](synchronization.md) |
 | Audio final API | 9 additional generated; Audio raw 56/56 | Native callback addresses, WAV IO and PCM arrays | [Contracts](audio-final-api.md); known map getter/postmix exceptions |
 | Audio stream controls | 12 additional generated | Format refs, map setters, gain/ratio and deferred lock | [Contracts](audio-stream-controls.md); PCM and cross-thread unlock tests |
 | Camera | 15/15 generated | Copied discovery, Result/Option frames and defer scopes | [Contracts and hardware limits](camera.md) |

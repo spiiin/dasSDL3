@@ -168,4 +168,13 @@ runtime contracts. The macro and public binding signatures needed no changes.
 
 - [80_camera.das](80_camera.das): discover cameras; normal run opens the first camera for one metadata-only frame, smoke only enumerates.
 
+- [81_synchronization.das](81_synchronization.das): synchronous deferred mutex lock, semaphore token/timeout and scoped ownership.
+
 Web: [сборка и запуск HTML-галереи](../web/README.md), исходники восьми SDL-страниц в web/ и двух [OpenGL-страниц](web/opengl/README.md) в web/opengl/. Desktop-нумерация сохранена.
+
+82. [Atomic](82_atomic.das): atomic counter, compare-and-swap and unsigned flags.
+
+83. [Process / LoadSO](83_process_loadso.das): Windows command output and scoped native library lookup.
+
+84. [Platform services](84_platform_services.das): copied locales and optional battery information.
+85. [Tray](85_tray.das): scoped tray, checkbox and submenu; five seconds, or immediate smoke test.

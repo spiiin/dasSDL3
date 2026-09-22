@@ -32,6 +32,16 @@ MAKE_TYPE_FACTORY(SDL_Storage, SDL_Storage);
 MAKE_TYPE_FACTORY(SDL_AsyncIO, SDL_AsyncIO);
 MAKE_TYPE_FACTORY(SDL_AsyncIOQueue, SDL_AsyncIOQueue);
 MAKE_TYPE_FACTORY(SDL_Camera, SDL_Camera);
+MAKE_TYPE_FACTORY(SDL_Mutex, SDL_Mutex);
+MAKE_TYPE_FACTORY(SDL_RWLock, SDL_RWLock);
+MAKE_TYPE_FACTORY(SDL_Semaphore, SDL_Semaphore);
+MAKE_TYPE_FACTORY(SDL_Condition, SDL_Condition);
+MAKE_TYPE_FACTORY(SDL_Thread, SDL_Thread);
+MAKE_TYPE_FACTORY(SDL_Process, SDL_Process);
+MAKE_TYPE_FACTORY(SDL_SharedObject, SDL_SharedObject);
+MAKE_TYPE_FACTORY(SDL_Tray, SDL_Tray);
+MAKE_TYPE_FACTORY(SDL_TrayMenu, SDL_TrayMenu);
+MAKE_TYPE_FACTORY(SDL_TrayEntry, SDL_TrayEntry);
 DAS_BIND_ENUM_CAST(SDL_GPUTextureType);
 DAS_BASE_BIND_ENUM_GEN(SDL_GPUTextureType,SDL_GPUTextureType);
 DAS_BIND_ENUM_CAST(SDL_GPUTextureFormat);
@@ -168,6 +178,18 @@ DAS_BIND_ENUM_CAST(SDL_AudioFormat);
 DAS_BASE_BIND_ENUM_GEN(SDL_AudioFormat,SDL_AudioFormat);
 DAS_BIND_ENUM_CAST(SDL_CameraPosition);
 DAS_BASE_BIND_ENUM_GEN(SDL_CameraPosition,SDL_CameraPosition);
+DAS_BIND_ENUM_CAST(SDL_InitStatus);
+DAS_BASE_BIND_ENUM_GEN(SDL_InitStatus,SDL_InitStatus);
+DAS_BIND_ENUM_CAST(SDL_ThreadPriority);
+DAS_BASE_BIND_ENUM_GEN(SDL_ThreadPriority,SDL_ThreadPriority);
+DAS_BIND_ENUM_CAST(SDL_ThreadState);
+DAS_BASE_BIND_ENUM_GEN(SDL_ThreadState,SDL_ThreadState);
+DAS_BIND_ENUM_CAST(SDL_ProcessIO);
+DAS_BASE_BIND_ENUM_GEN(SDL_ProcessIO,SDL_ProcessIO);
+DAS_BIND_ENUM_CAST(SDL_Sandbox);
+DAS_BASE_BIND_ENUM_GEN(SDL_Sandbox,SDL_Sandbox);
+DAS_BIND_ENUM_CAST(SDL_FileDialogType);
+DAS_BASE_BIND_ENUM_GEN(SDL_FileDialogType,SDL_FileDialogType);
 MAKE_TYPE_FACTORY(SDL_GPUViewport, SDL_GPUViewport);
 MAKE_TYPE_FACTORY(SDL_GPUIndirectDrawCommand, SDL_GPUIndirectDrawCommand);
 MAKE_TYPE_FACTORY(SDL_GPUIndexedIndirectDrawCommand, SDL_GPUIndexedIndirectDrawCommand);
@@ -259,6 +281,11 @@ MAKE_TYPE_FACTORY(SDL_IOStreamInterface, SDL_IOStreamInterface);
 MAKE_TYPE_FACTORY(SDL_StorageInterface, SDL_StorageInterface);
 MAKE_TYPE_FACTORY(SDL_AsyncIOOutcome, SDL_AsyncIOOutcome);
 MAKE_TYPE_FACTORY(SDL_CameraSpec, SDL_CameraSpec);
+MAKE_TYPE_FACTORY(SDL_AtomicInt, SDL_AtomicInt);
+MAKE_TYPE_FACTORY(SDL_InitState, SDL_InitState);
+MAKE_TYPE_FACTORY(SDL_AtomicU32, SDL_AtomicU32);
+MAKE_TYPE_FACTORY(SDL_Locale, SDL_Locale);
+MAKE_TYPE_FACTORY(SDL_DialogFileFilter, SDL_DialogFileFilter);
 static_assert(sizeof(SDL_AsyncIOTaskType) == 4 && alignof(SDL_AsyncIOTaskType) == 4);
 class Enumeration_SDL_AsyncIOTaskType : public das::Enumeration {
 public: Enumeration_SDL_AsyncIOTaskType() : das::Enumeration("SDL_AsyncIOTaskType") {
@@ -302,6 +329,20 @@ static_assert(offsetof(SDL_AsyncIOOutcome, userdata) == 48);
 addField<DAS_BIND_MANAGED_FIELD(userdata)>("userdata", "userdata");
 }
 }; }
+static_assert(sizeof(SDL_AtomicInt) == 4 && alignof(SDL_AtomicInt) == 4);
+namespace das { struct SDL_AtomicIntAnnotation : ManagedStructureAnnotation<SDL_AtomicInt, false> {
+SDL_AtomicIntAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_AtomicInt", lib) {
+static_assert(offsetof(SDL_AtomicInt, value) == 0);
+addField<DAS_BIND_MANAGED_FIELD(value)>("value", "value");
+}
+}; }
+static_assert(sizeof(SDL_AtomicU32) == 4 && alignof(SDL_AtomicU32) == 4);
+namespace das { struct SDL_AtomicU32Annotation : ManagedStructureAnnotation<SDL_AtomicU32, false> {
+SDL_AtomicU32Annotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_AtomicU32", lib) {
+static_assert(offsetof(SDL_AtomicU32, value) == 0);
+addField<DAS_BIND_MANAGED_FIELD(value)>("value", "value");
+}
+}; }
 static_assert(sizeof(SDL_PropertyType) == 4 && alignof(SDL_PropertyType) == 4);
 class Enumeration_SDL_PropertyType : public das::Enumeration {
 public: Enumeration_SDL_PropertyType() : das::Enumeration("SDL_PropertyType") {
@@ -319,6 +360,56 @@ addIEx("PROPERTY_TYPE_FLOAT","SDL_PROPERTY_TYPE_FLOAT",int64_t(SDL_PROPERTY_TYPE
 static_assert(int64_t(SDL_PROPERTY_TYPE_BOOLEAN) == 5LL);
 addIEx("PROPERTY_TYPE_BOOLEAN","SDL_PROPERTY_TYPE_BOOLEAN",int64_t(SDL_PROPERTY_TYPE_BOOLEAN),das::LineInfo());
 } };
+static_assert(sizeof(SDL_ThreadPriority) == 4 && alignof(SDL_ThreadPriority) == 4);
+class Enumeration_SDL_ThreadPriority : public das::Enumeration {
+public: Enumeration_SDL_ThreadPriority() : das::Enumeration("SDL_ThreadPriority") {
+external=true; cppName="SDL_ThreadPriority"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_ThreadPriority>::type>::type;
+static_assert(int64_t(SDL_THREAD_PRIORITY_LOW) == 0LL);
+addIEx("THREAD_PRIORITY_LOW","SDL_THREAD_PRIORITY_LOW",int64_t(SDL_THREAD_PRIORITY_LOW),das::LineInfo());
+static_assert(int64_t(SDL_THREAD_PRIORITY_NORMAL) == 1LL);
+addIEx("THREAD_PRIORITY_NORMAL","SDL_THREAD_PRIORITY_NORMAL",int64_t(SDL_THREAD_PRIORITY_NORMAL),das::LineInfo());
+static_assert(int64_t(SDL_THREAD_PRIORITY_HIGH) == 2LL);
+addIEx("THREAD_PRIORITY_HIGH","SDL_THREAD_PRIORITY_HIGH",int64_t(SDL_THREAD_PRIORITY_HIGH),das::LineInfo());
+static_assert(int64_t(SDL_THREAD_PRIORITY_TIME_CRITICAL) == 3LL);
+addIEx("THREAD_PRIORITY_TIME_CRITICAL","SDL_THREAD_PRIORITY_TIME_CRITICAL",int64_t(SDL_THREAD_PRIORITY_TIME_CRITICAL),das::LineInfo());
+} };
+static_assert(sizeof(SDL_ThreadState) == 4 && alignof(SDL_ThreadState) == 4);
+class Enumeration_SDL_ThreadState : public das::Enumeration {
+public: Enumeration_SDL_ThreadState() : das::Enumeration("SDL_ThreadState") {
+external=true; cppName="SDL_ThreadState"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_ThreadState>::type>::type;
+static_assert(int64_t(SDL_THREAD_UNKNOWN) == 0LL);
+addIEx("THREAD_UNKNOWN","SDL_THREAD_UNKNOWN",int64_t(SDL_THREAD_UNKNOWN),das::LineInfo());
+static_assert(int64_t(SDL_THREAD_ALIVE) == 1LL);
+addIEx("THREAD_ALIVE","SDL_THREAD_ALIVE",int64_t(SDL_THREAD_ALIVE),das::LineInfo());
+static_assert(int64_t(SDL_THREAD_DETACHED) == 2LL);
+addIEx("THREAD_DETACHED","SDL_THREAD_DETACHED",int64_t(SDL_THREAD_DETACHED),das::LineInfo());
+static_assert(int64_t(SDL_THREAD_COMPLETE) == 3LL);
+addIEx("THREAD_COMPLETE","SDL_THREAD_COMPLETE",int64_t(SDL_THREAD_COMPLETE),das::LineInfo());
+} };
+static_assert(sizeof(SDL_InitStatus) == 4 && alignof(SDL_InitStatus) == 4);
+class Enumeration_SDL_InitStatus : public das::Enumeration {
+public: Enumeration_SDL_InitStatus() : das::Enumeration("SDL_InitStatus") {
+external=true; cppName="SDL_InitStatus"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_InitStatus>::type>::type;
+static_assert(int64_t(SDL_INIT_STATUS_UNINITIALIZED) == 0LL);
+addIEx("INIT_STATUS_UNINITIALIZED","SDL_INIT_STATUS_UNINITIALIZED",int64_t(SDL_INIT_STATUS_UNINITIALIZED),das::LineInfo());
+static_assert(int64_t(SDL_INIT_STATUS_INITIALIZING) == 1LL);
+addIEx("INIT_STATUS_INITIALIZING","SDL_INIT_STATUS_INITIALIZING",int64_t(SDL_INIT_STATUS_INITIALIZING),das::LineInfo());
+static_assert(int64_t(SDL_INIT_STATUS_INITIALIZED) == 2LL);
+addIEx("INIT_STATUS_INITIALIZED","SDL_INIT_STATUS_INITIALIZED",int64_t(SDL_INIT_STATUS_INITIALIZED),das::LineInfo());
+static_assert(int64_t(SDL_INIT_STATUS_UNINITIALIZING) == 3LL);
+addIEx("INIT_STATUS_UNINITIALIZING","SDL_INIT_STATUS_UNINITIALIZING",int64_t(SDL_INIT_STATUS_UNINITIALIZING),das::LineInfo());
+} };
+static_assert(sizeof(SDL_InitState) == 24 && alignof(SDL_InitState) == 8);
+namespace das { struct SDL_InitStateAnnotation : ManagedStructureAnnotation<SDL_InitState, false> {
+SDL_InitStateAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_InitState", lib) {
+static_assert(offsetof(SDL_InitState, status) == 0);
+addField<DAS_BIND_MANAGED_FIELD(status)>("status", "status");
+static_assert(offsetof(SDL_InitState, thread) == 8);
+addField<DAS_BIND_MANAGED_FIELD(thread)>("thread", "thread");
+static_assert(offsetof(SDL_InitState, reserved) == 16);
+addField<DAS_BIND_MANAGED_FIELD(reserved)>("reserved", "reserved");
+}
+}; }
 static_assert(sizeof(SDL_IOStatus) == 4 && alignof(SDL_IOStatus) == 4);
 class Enumeration_SDL_IOStatus : public das::Enumeration {
 public: Enumeration_SDL_IOStatus() : das::Enumeration("SDL_IOStatus") {
@@ -853,6 +944,26 @@ static_assert(int64_t(SDL_HITTEST_RESIZE_BOTTOMLEFT) == 8LL);
 addIEx("HITTEST_RESIZE_BOTTOMLEFT","SDL_HITTEST_RESIZE_BOTTOMLEFT",int64_t(SDL_HITTEST_RESIZE_BOTTOMLEFT),das::LineInfo());
 static_assert(int64_t(SDL_HITTEST_RESIZE_LEFT) == 9LL);
 addIEx("HITTEST_RESIZE_LEFT","SDL_HITTEST_RESIZE_LEFT",int64_t(SDL_HITTEST_RESIZE_LEFT),das::LineInfo());
+} };
+static_assert(sizeof(SDL_DialogFileFilter) == 16 && alignof(SDL_DialogFileFilter) == 8);
+namespace das { struct SDL_DialogFileFilterAnnotation : ManagedStructureAnnotation<SDL_DialogFileFilter, false> {
+SDL_DialogFileFilterAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_DialogFileFilter", lib) {
+static_assert(offsetof(SDL_DialogFileFilter, name) == 0);
+addField<DAS_BIND_MANAGED_FIELD(name)>("name", "name");
+static_assert(offsetof(SDL_DialogFileFilter, pattern) == 8);
+addField<DAS_BIND_MANAGED_FIELD(pattern)>("pattern", "pattern");
+}
+}; }
+static_assert(sizeof(SDL_FileDialogType) == 4 && alignof(SDL_FileDialogType) == 4);
+class Enumeration_SDL_FileDialogType : public das::Enumeration {
+public: Enumeration_SDL_FileDialogType() : das::Enumeration("SDL_FileDialogType") {
+external=true; cppName="SDL_FileDialogType"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_FileDialogType>::type>::type;
+static_assert(int64_t(SDL_FILEDIALOG_OPENFILE) == 0LL);
+addIEx("FILEDIALOG_OPENFILE","SDL_FILEDIALOG_OPENFILE",int64_t(SDL_FILEDIALOG_OPENFILE),das::LineInfo());
+static_assert(int64_t(SDL_FILEDIALOG_SAVEFILE) == 1LL);
+addIEx("FILEDIALOG_SAVEFILE","SDL_FILEDIALOG_SAVEFILE",int64_t(SDL_FILEDIALOG_SAVEFILE),das::LineInfo());
+static_assert(int64_t(SDL_FILEDIALOG_OPENFOLDER) == 2LL);
+addIEx("FILEDIALOG_OPENFOLDER","SDL_FILEDIALOG_OPENFOLDER",int64_t(SDL_FILEDIALOG_OPENFOLDER),das::LineInfo());
 } };
 static_assert(sizeof(SDL_GUID) == 16 && alignof(SDL_GUID) == 1);
 namespace das { struct SDL_GUIDAnnotation : ManagedStructureAnnotation<SDL_GUID, false> {
@@ -3649,6 +3760,15 @@ addIEx("HINT_NORMAL","SDL_HINT_NORMAL",int64_t(SDL_HINT_NORMAL),das::LineInfo())
 static_assert(int64_t(SDL_HINT_OVERRIDE) == 2LL);
 addIEx("HINT_OVERRIDE","SDL_HINT_OVERRIDE",int64_t(SDL_HINT_OVERRIDE),das::LineInfo());
 } };
+static_assert(sizeof(SDL_Locale) == 16 && alignof(SDL_Locale) == 8);
+namespace das { struct SDL_LocaleAnnotation : ManagedStructureAnnotation<SDL_Locale, false> {
+SDL_LocaleAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_Locale", lib) {
+static_assert(offsetof(SDL_Locale, language) == 0);
+addField<DAS_BIND_MANAGED_FIELD(language)>("language", "language");
+static_assert(offsetof(SDL_Locale, country) == 8);
+addField<DAS_BIND_MANAGED_FIELD(country)>("country", "country");
+}
+}; }
 static_assert(sizeof(SDL_LogCategory) == 4 && alignof(SDL_LogCategory) == 4);
 class Enumeration_SDL_LogCategory : public das::Enumeration {
 public: Enumeration_SDL_LogCategory() : das::Enumeration("SDL_LogCategory") {
@@ -3717,6 +3837,19 @@ addIEx("LOG_PRIORITY_CRITICAL","SDL_LOG_PRIORITY_CRITICAL",int64_t(SDL_LOG_PRIOR
 static_assert(int64_t(SDL_LOG_PRIORITY_COUNT) == 8LL);
 addIEx("LOG_PRIORITY_COUNT","SDL_LOG_PRIORITY_COUNT",int64_t(SDL_LOG_PRIORITY_COUNT),das::LineInfo());
 } };
+static_assert(sizeof(SDL_ProcessIO) == 4 && alignof(SDL_ProcessIO) == 4);
+class Enumeration_SDL_ProcessIO : public das::Enumeration {
+public: Enumeration_SDL_ProcessIO() : das::Enumeration("SDL_ProcessIO") {
+external=true; cppName="SDL_ProcessIO"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_ProcessIO>::type>::type;
+static_assert(int64_t(SDL_PROCESS_STDIO_INHERITED) == 0LL);
+addIEx("PROCESS_STDIO_INHERITED","SDL_PROCESS_STDIO_INHERITED",int64_t(SDL_PROCESS_STDIO_INHERITED),das::LineInfo());
+static_assert(int64_t(SDL_PROCESS_STDIO_NULL) == 1LL);
+addIEx("PROCESS_STDIO_NULL","SDL_PROCESS_STDIO_NULL",int64_t(SDL_PROCESS_STDIO_NULL),das::LineInfo());
+static_assert(int64_t(SDL_PROCESS_STDIO_APP) == 2LL);
+addIEx("PROCESS_STDIO_APP","SDL_PROCESS_STDIO_APP",int64_t(SDL_PROCESS_STDIO_APP),das::LineInfo());
+static_assert(int64_t(SDL_PROCESS_STDIO_REDIRECT) == 3LL);
+addIEx("PROCESS_STDIO_REDIRECT","SDL_PROCESS_STDIO_REDIRECT",int64_t(SDL_PROCESS_STDIO_REDIRECT),das::LineInfo());
+} };
 static_assert(sizeof(SDL_Vertex) == 32 && alignof(SDL_Vertex) == 4);
 namespace das { struct SDL_VertexAnnotation : ManagedStructureAnnotation<SDL_Vertex, false> {
 SDL_VertexAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_Vertex", lib) {
@@ -3761,6 +3894,21 @@ static_assert(offsetof(SDL_StorageInterface, version) == 0);
 addField<DAS_BIND_MANAGED_FIELD(version)>("version", "version");
 }
 }; }
+static_assert(sizeof(SDL_Sandbox) == 4 && alignof(SDL_Sandbox) == 4);
+class Enumeration_SDL_Sandbox : public das::Enumeration {
+public: Enumeration_SDL_Sandbox() : das::Enumeration("SDL_Sandbox") {
+external=true; cppName="SDL_Sandbox"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_Sandbox>::type>::type;
+static_assert(int64_t(SDL_SANDBOX_NONE) == 0LL);
+addIEx("SANDBOX_NONE","SDL_SANDBOX_NONE",int64_t(SDL_SANDBOX_NONE),das::LineInfo());
+static_assert(int64_t(SDL_SANDBOX_UNKNOWN_CONTAINER) == 1LL);
+addIEx("SANDBOX_UNKNOWN_CONTAINER","SDL_SANDBOX_UNKNOWN_CONTAINER",int64_t(SDL_SANDBOX_UNKNOWN_CONTAINER),das::LineInfo());
+static_assert(int64_t(SDL_SANDBOX_FLATPAK) == 2LL);
+addIEx("SANDBOX_FLATPAK","SDL_SANDBOX_FLATPAK",int64_t(SDL_SANDBOX_FLATPAK),das::LineInfo());
+static_assert(int64_t(SDL_SANDBOX_SNAP) == 3LL);
+addIEx("SANDBOX_SNAP","SDL_SANDBOX_SNAP",int64_t(SDL_SANDBOX_SNAP),das::LineInfo());
+static_assert(int64_t(SDL_SANDBOX_MACOS) == 4LL);
+addIEx("SANDBOX_MACOS","SDL_SANDBOX_MACOS",int64_t(SDL_SANDBOX_MACOS),das::LineInfo());
+} };
 static_assert(sizeof(SDL_DateTime) == 36 && alignof(SDL_DateTime) == 4);
 namespace das { struct SDL_DateTimeAnnotation : ManagedStructureAnnotation<SDL_DateTime, false> {
 SDL_DateTimeAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_DateTime", lib) {

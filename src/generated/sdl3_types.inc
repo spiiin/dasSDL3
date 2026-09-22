@@ -2177,6 +2177,96 @@ addIEx("CAMERA_POSITION_FRONT_FACING","SDL_CAMERA_POSITION_FRONT_FACING",int64_t
 static_assert(int64_t(SDL_CAMERA_POSITION_BACK_FACING) == 2LL);
 addIEx("CAMERA_POSITION_BACK_FACING","SDL_CAMERA_POSITION_BACK_FACING",int64_t(SDL_CAMERA_POSITION_BACK_FACING),das::LineInfo());
 } };
+DAS_BIND_ENUM_CAST(SDL_InitStatus);
+DAS_BASE_BIND_ENUM_GEN(SDL_InitStatus,SDL_InitStatus);
+static_assert(sizeof(SDL_InitStatus) == 4);
+class Enumeration_SDL_InitStatus : public das::Enumeration {
+public: Enumeration_SDL_InitStatus() : das::Enumeration("SDL_InitStatus") {
+external=true; cppName="SDL_InitStatus"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_InitStatus>::type>::type;
+static_assert(int64_t(SDL_INIT_STATUS_UNINITIALIZED) == 0LL);
+addIEx("INIT_STATUS_UNINITIALIZED","SDL_INIT_STATUS_UNINITIALIZED",int64_t(SDL_INIT_STATUS_UNINITIALIZED),das::LineInfo());
+static_assert(int64_t(SDL_INIT_STATUS_INITIALIZING) == 1LL);
+addIEx("INIT_STATUS_INITIALIZING","SDL_INIT_STATUS_INITIALIZING",int64_t(SDL_INIT_STATUS_INITIALIZING),das::LineInfo());
+static_assert(int64_t(SDL_INIT_STATUS_INITIALIZED) == 2LL);
+addIEx("INIT_STATUS_INITIALIZED","SDL_INIT_STATUS_INITIALIZED",int64_t(SDL_INIT_STATUS_INITIALIZED),das::LineInfo());
+static_assert(int64_t(SDL_INIT_STATUS_UNINITIALIZING) == 3LL);
+addIEx("INIT_STATUS_UNINITIALIZING","SDL_INIT_STATUS_UNINITIALIZING",int64_t(SDL_INIT_STATUS_UNINITIALIZING),das::LineInfo());
+} };
+DAS_BIND_ENUM_CAST(SDL_ThreadPriority);
+DAS_BASE_BIND_ENUM_GEN(SDL_ThreadPriority,SDL_ThreadPriority);
+static_assert(sizeof(SDL_ThreadPriority) == 4);
+class Enumeration_SDL_ThreadPriority : public das::Enumeration {
+public: Enumeration_SDL_ThreadPriority() : das::Enumeration("SDL_ThreadPriority") {
+external=true; cppName="SDL_ThreadPriority"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_ThreadPriority>::type>::type;
+static_assert(int64_t(SDL_THREAD_PRIORITY_LOW) == 0LL);
+addIEx("THREAD_PRIORITY_LOW","SDL_THREAD_PRIORITY_LOW",int64_t(SDL_THREAD_PRIORITY_LOW),das::LineInfo());
+static_assert(int64_t(SDL_THREAD_PRIORITY_NORMAL) == 1LL);
+addIEx("THREAD_PRIORITY_NORMAL","SDL_THREAD_PRIORITY_NORMAL",int64_t(SDL_THREAD_PRIORITY_NORMAL),das::LineInfo());
+static_assert(int64_t(SDL_THREAD_PRIORITY_HIGH) == 2LL);
+addIEx("THREAD_PRIORITY_HIGH","SDL_THREAD_PRIORITY_HIGH",int64_t(SDL_THREAD_PRIORITY_HIGH),das::LineInfo());
+static_assert(int64_t(SDL_THREAD_PRIORITY_TIME_CRITICAL) == 3LL);
+addIEx("THREAD_PRIORITY_TIME_CRITICAL","SDL_THREAD_PRIORITY_TIME_CRITICAL",int64_t(SDL_THREAD_PRIORITY_TIME_CRITICAL),das::LineInfo());
+} };
+DAS_BIND_ENUM_CAST(SDL_ThreadState);
+DAS_BASE_BIND_ENUM_GEN(SDL_ThreadState,SDL_ThreadState);
+static_assert(sizeof(SDL_ThreadState) == 4);
+class Enumeration_SDL_ThreadState : public das::Enumeration {
+public: Enumeration_SDL_ThreadState() : das::Enumeration("SDL_ThreadState") {
+external=true; cppName="SDL_ThreadState"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_ThreadState>::type>::type;
+static_assert(int64_t(SDL_THREAD_UNKNOWN) == 0LL);
+addIEx("THREAD_UNKNOWN","SDL_THREAD_UNKNOWN",int64_t(SDL_THREAD_UNKNOWN),das::LineInfo());
+static_assert(int64_t(SDL_THREAD_ALIVE) == 1LL);
+addIEx("THREAD_ALIVE","SDL_THREAD_ALIVE",int64_t(SDL_THREAD_ALIVE),das::LineInfo());
+static_assert(int64_t(SDL_THREAD_DETACHED) == 2LL);
+addIEx("THREAD_DETACHED","SDL_THREAD_DETACHED",int64_t(SDL_THREAD_DETACHED),das::LineInfo());
+static_assert(int64_t(SDL_THREAD_COMPLETE) == 3LL);
+addIEx("THREAD_COMPLETE","SDL_THREAD_COMPLETE",int64_t(SDL_THREAD_COMPLETE),das::LineInfo());
+} };
+DAS_BIND_ENUM_CAST(SDL_ProcessIO);
+DAS_BASE_BIND_ENUM_GEN(SDL_ProcessIO,SDL_ProcessIO);
+static_assert(sizeof(SDL_ProcessIO) == 4);
+class Enumeration_SDL_ProcessIO : public das::Enumeration {
+public: Enumeration_SDL_ProcessIO() : das::Enumeration("SDL_ProcessIO") {
+external=true; cppName="SDL_ProcessIO"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_ProcessIO>::type>::type;
+static_assert(int64_t(SDL_PROCESS_STDIO_INHERITED) == 0LL);
+addIEx("PROCESS_STDIO_INHERITED","SDL_PROCESS_STDIO_INHERITED",int64_t(SDL_PROCESS_STDIO_INHERITED),das::LineInfo());
+static_assert(int64_t(SDL_PROCESS_STDIO_NULL) == 1LL);
+addIEx("PROCESS_STDIO_NULL","SDL_PROCESS_STDIO_NULL",int64_t(SDL_PROCESS_STDIO_NULL),das::LineInfo());
+static_assert(int64_t(SDL_PROCESS_STDIO_APP) == 2LL);
+addIEx("PROCESS_STDIO_APP","SDL_PROCESS_STDIO_APP",int64_t(SDL_PROCESS_STDIO_APP),das::LineInfo());
+static_assert(int64_t(SDL_PROCESS_STDIO_REDIRECT) == 3LL);
+addIEx("PROCESS_STDIO_REDIRECT","SDL_PROCESS_STDIO_REDIRECT",int64_t(SDL_PROCESS_STDIO_REDIRECT),das::LineInfo());
+} };
+DAS_BIND_ENUM_CAST(SDL_Sandbox);
+DAS_BASE_BIND_ENUM_GEN(SDL_Sandbox,SDL_Sandbox);
+static_assert(sizeof(SDL_Sandbox) == 4);
+class Enumeration_SDL_Sandbox : public das::Enumeration {
+public: Enumeration_SDL_Sandbox() : das::Enumeration("SDL_Sandbox") {
+external=true; cppName="SDL_Sandbox"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_Sandbox>::type>::type;
+static_assert(int64_t(SDL_SANDBOX_NONE) == 0LL);
+addIEx("SANDBOX_NONE","SDL_SANDBOX_NONE",int64_t(SDL_SANDBOX_NONE),das::LineInfo());
+static_assert(int64_t(SDL_SANDBOX_UNKNOWN_CONTAINER) == 1LL);
+addIEx("SANDBOX_UNKNOWN_CONTAINER","SDL_SANDBOX_UNKNOWN_CONTAINER",int64_t(SDL_SANDBOX_UNKNOWN_CONTAINER),das::LineInfo());
+static_assert(int64_t(SDL_SANDBOX_FLATPAK) == 2LL);
+addIEx("SANDBOX_FLATPAK","SDL_SANDBOX_FLATPAK",int64_t(SDL_SANDBOX_FLATPAK),das::LineInfo());
+static_assert(int64_t(SDL_SANDBOX_SNAP) == 3LL);
+addIEx("SANDBOX_SNAP","SDL_SANDBOX_SNAP",int64_t(SDL_SANDBOX_SNAP),das::LineInfo());
+static_assert(int64_t(SDL_SANDBOX_MACOS) == 4LL);
+addIEx("SANDBOX_MACOS","SDL_SANDBOX_MACOS",int64_t(SDL_SANDBOX_MACOS),das::LineInfo());
+} };
+DAS_BIND_ENUM_CAST(SDL_FileDialogType);
+DAS_BASE_BIND_ENUM_GEN(SDL_FileDialogType,SDL_FileDialogType);
+static_assert(sizeof(SDL_FileDialogType) == 4);
+class Enumeration_SDL_FileDialogType : public das::Enumeration {
+public: Enumeration_SDL_FileDialogType() : das::Enumeration("SDL_FileDialogType") {
+external=true; cppName="SDL_FileDialogType"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_FileDialogType>::type>::type;
+static_assert(int64_t(SDL_FILEDIALOG_OPENFILE) == 0LL);
+addIEx("FILEDIALOG_OPENFILE","SDL_FILEDIALOG_OPENFILE",int64_t(SDL_FILEDIALOG_OPENFILE),das::LineInfo());
+static_assert(int64_t(SDL_FILEDIALOG_SAVEFILE) == 1LL);
+addIEx("FILEDIALOG_SAVEFILE","SDL_FILEDIALOG_SAVEFILE",int64_t(SDL_FILEDIALOG_SAVEFILE),das::LineInfo());
+static_assert(int64_t(SDL_FILEDIALOG_OPENFOLDER) == 2LL);
+addIEx("FILEDIALOG_OPENFOLDER","SDL_FILEDIALOG_OPENFOLDER",int64_t(SDL_FILEDIALOG_OPENFOLDER),das::LineInfo());
+} };
 MAKE_TYPE_FACTORY(SDL_Window, SDL_Window);
 MAKE_TYPE_FACTORY(SDL_Renderer, SDL_Renderer);
 MAKE_TYPE_FACTORY(SDL_Surface, SDL_Surface);
@@ -2209,6 +2299,16 @@ MAKE_TYPE_FACTORY(SDL_Storage, SDL_Storage);
 MAKE_TYPE_FACTORY(SDL_AsyncIO, SDL_AsyncIO);
 MAKE_TYPE_FACTORY(SDL_AsyncIOQueue, SDL_AsyncIOQueue);
 MAKE_TYPE_FACTORY(SDL_Camera, SDL_Camera);
+MAKE_TYPE_FACTORY(SDL_Mutex, SDL_Mutex);
+MAKE_TYPE_FACTORY(SDL_RWLock, SDL_RWLock);
+MAKE_TYPE_FACTORY(SDL_Semaphore, SDL_Semaphore);
+MAKE_TYPE_FACTORY(SDL_Condition, SDL_Condition);
+MAKE_TYPE_FACTORY(SDL_Thread, SDL_Thread);
+MAKE_TYPE_FACTORY(SDL_Process, SDL_Process);
+MAKE_TYPE_FACTORY(SDL_SharedObject, SDL_SharedObject);
+MAKE_TYPE_FACTORY(SDL_Tray, SDL_Tray);
+MAKE_TYPE_FACTORY(SDL_TrayMenu, SDL_TrayMenu);
+MAKE_TYPE_FACTORY(SDL_TrayEntry, SDL_TrayEntry);
 MAKE_TYPE_FACTORY(SDL_GPUViewport, SDL_GPUViewport);
 MAKE_TYPE_FACTORY(SDL_GPUIndirectDrawCommand, SDL_GPUIndirectDrawCommand);
 MAKE_TYPE_FACTORY(SDL_GPUIndexedIndirectDrawCommand, SDL_GPUIndexedIndirectDrawCommand);
@@ -2300,6 +2400,11 @@ MAKE_TYPE_FACTORY(SDL_IOStreamInterface, SDL_IOStreamInterface);
 MAKE_TYPE_FACTORY(SDL_StorageInterface, SDL_StorageInterface);
 MAKE_TYPE_FACTORY(SDL_AsyncIOOutcome, SDL_AsyncIOOutcome);
 MAKE_TYPE_FACTORY(SDL_CameraSpec, SDL_CameraSpec);
+MAKE_TYPE_FACTORY(SDL_AtomicInt, SDL_AtomicInt);
+MAKE_TYPE_FACTORY(SDL_InitState, SDL_InitState);
+MAKE_TYPE_FACTORY(SDL_AtomicU32, SDL_AtomicU32);
+MAKE_TYPE_FACTORY(SDL_Locale, SDL_Locale);
+MAKE_TYPE_FACTORY(SDL_DialogFileFilter, SDL_DialogFileFilter);
 namespace das {
 struct SDL_GPUViewportAnnotation : ManagedStructureAnnotation<SDL_GPUViewport, false> {
     SDL_GPUViewportAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_GPUViewport", lib) {
@@ -3187,6 +3292,35 @@ struct SDL_CameraSpecAnnotation : ManagedStructureAnnotation<SDL_CameraSpec, fal
         addField<DAS_BIND_MANAGED_FIELD(height)>("height", "height");
         addField<DAS_BIND_MANAGED_FIELD(framerate_numerator)>("framerate_numerator", "framerate_numerator");
         addField<DAS_BIND_MANAGED_FIELD(framerate_denominator)>("framerate_denominator", "framerate_denominator");
+    }
+};
+struct SDL_AtomicIntAnnotation : ManagedStructureAnnotation<SDL_AtomicInt, false> {
+    SDL_AtomicIntAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_AtomicInt", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(value)>("value", "value");
+    }
+};
+struct SDL_InitStateAnnotation : ManagedStructureAnnotation<SDL_InitState, false> {
+    SDL_InitStateAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_InitState", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(status)>("status", "status");
+        addField<DAS_BIND_MANAGED_FIELD(thread)>("thread", "thread");
+        addField<DAS_BIND_MANAGED_FIELD(reserved)>("reserved", "reserved");
+    }
+};
+struct SDL_AtomicU32Annotation : ManagedStructureAnnotation<SDL_AtomicU32, false> {
+    SDL_AtomicU32Annotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_AtomicU32", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(value)>("value", "value");
+    }
+};
+struct SDL_LocaleAnnotation : ManagedStructureAnnotation<SDL_Locale, false> {
+    SDL_LocaleAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_Locale", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(language)>("language", "language");
+        addField<DAS_BIND_MANAGED_FIELD(country)>("country", "country");
+    }
+};
+struct SDL_DialogFileFilterAnnotation : ManagedStructureAnnotation<SDL_DialogFileFilter, false> {
+    SDL_DialogFileFilterAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_DialogFileFilter", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(name)>("name", "name");
+        addField<DAS_BIND_MANAGED_FIELD(pattern)>("pattern", "pattern");
     }
 };
 } // namespace das

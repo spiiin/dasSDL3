@@ -30,10 +30,26 @@ addAnnotation(new DummyTypeAnnotation("SDL_Storage", "SDL_Storage", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_AsyncIO", "SDL_AsyncIO", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_AsyncIOQueue", "SDL_AsyncIOQueue", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Camera", "SDL_Camera", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_Mutex", "SDL_Mutex", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_RWLock", "SDL_RWLock", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_Semaphore", "SDL_Semaphore", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_Condition", "SDL_Condition", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_Thread", "SDL_Thread", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_Process", "SDL_Process", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_SharedObject", "SDL_SharedObject", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_Tray", "SDL_Tray", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_TrayMenu", "SDL_TrayMenu", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_TrayEntry", "SDL_TrayEntry", 1, 1));
 addEnumeration(new Enumeration_SDL_AsyncIOTaskType());
 addEnumeration(new Enumeration_SDL_AsyncIOResult());
 addAnnotation(new SDL_AsyncIOOutcomeAnnotation(lib));
+addAnnotation(new SDL_AtomicIntAnnotation(lib));
+addAnnotation(new SDL_AtomicU32Annotation(lib));
 addEnumeration(new Enumeration_SDL_PropertyType());
+addEnumeration(new Enumeration_SDL_ThreadPriority());
+addEnumeration(new Enumeration_SDL_ThreadState());
+addEnumeration(new Enumeration_SDL_InitStatus());
+addAnnotation(new SDL_InitStateAnnotation(lib));
 addEnumeration(new Enumeration_SDL_IOStatus());
 addEnumeration(new Enumeration_SDL_IOWhence());
 addAnnotation(new SDL_IOStreamInterfaceAnnotation(lib));
@@ -59,6 +75,8 @@ addAnnotation(new SDL_DisplayModeAnnotation(lib));
 addEnumeration(new Enumeration_SDL_DisplayOrientation());
 addEnumeration(new Enumeration_SDL_FlashOperation());
 addEnumeration(new Enumeration_SDL_HitTestResult());
+addAnnotation(new SDL_DialogFileFilterAnnotation(lib));
+addEnumeration(new Enumeration_SDL_FileDialogType());
 addAnnotation(new SDL_GUIDAnnotation(lib));
 addEnumeration(new Enumeration_SDL_PowerState());
 addEnumeration(new Enumeration_SDL_SensorType());
@@ -180,12 +198,15 @@ addAnnotation(new SDL_HapticEffectAnnotation(lib));
 addEnumeration(new Enumeration_SDL_hid_bus_type());
 addAnnotation(new SDL_hid_device_infoAnnotation(lib));
 addEnumeration(new Enumeration_SDL_HintPriority());
+addAnnotation(new SDL_LocaleAnnotation(lib));
 addEnumeration(new Enumeration_SDL_LogCategory());
 addEnumeration(new Enumeration_SDL_LogPriority());
+addEnumeration(new Enumeration_SDL_ProcessIO());
 addAnnotation(new SDL_VertexAnnotation(lib));
 addEnumeration(new Enumeration_SDL_TextureAccess());
 addEnumeration(new Enumeration_SDL_RendererLogicalPresentation());
 addAnnotation(new SDL_StorageInterfaceAnnotation(lib));
+addEnumeration(new Enumeration_SDL_Sandbox());
 addAnnotation(new SDL_DateTimeAnnotation(lib));
 addEnumeration(new Enumeration_SDL_DateFormat());
 addEnumeration(new Enumeration_SDL_TimeFormat());
@@ -1501,6 +1522,16 @@ static_assert(static_cast<uint32_t>(SDL_GLOB_CASEINSENSITIVE) == static_cast<uin
 addConstant(*this, "SDL_GLOB_CASEINSENSITIVE", static_cast<uint32_t>(0x1ULL));
 static_assert(static_cast<uint32_t>(SDL_AUDIO_DEVICE_DEFAULT_RECORDING) == static_cast<uint32_t>(0xfffffffeULL));
 addConstant(*this, "SDL_AUDIO_DEVICE_DEFAULT_RECORDING", static_cast<uint32_t>(0xfffffffeULL));
+static_assert(static_cast<uint32_t>(SDL_TRAYENTRY_BUTTON) == static_cast<uint32_t>(0x1ULL));
+addConstant(*this, "SDL_TRAYENTRY_BUTTON", static_cast<uint32_t>(0x1ULL));
+static_assert(static_cast<uint32_t>(SDL_TRAYENTRY_CHECKBOX) == static_cast<uint32_t>(0x2ULL));
+addConstant(*this, "SDL_TRAYENTRY_CHECKBOX", static_cast<uint32_t>(0x2ULL));
+static_assert(static_cast<uint32_t>(SDL_TRAYENTRY_SUBMENU) == static_cast<uint32_t>(0x4ULL));
+addConstant(*this, "SDL_TRAYENTRY_SUBMENU", static_cast<uint32_t>(0x4ULL));
+static_assert(static_cast<uint32_t>(SDL_TRAYENTRY_DISABLED) == static_cast<uint32_t>(0x80000000ULL));
+addConstant(*this, "SDL_TRAYENTRY_DISABLED", static_cast<uint32_t>(0x80000000ULL));
+static_assert(static_cast<uint32_t>(SDL_TRAYENTRY_CHECKED) == static_cast<uint32_t>(0x40000000ULL));
+addConstant(*this, "SDL_TRAYENTRY_CHECKED", static_cast<uint32_t>(0x40000000ULL));
 // from SDL3/SDL_stdinc.h:1405:34
 	makeExtern< void (*)(void *) , SDL_free , SimNode_ExtFuncCall >(lib,"SDL_free","SDL_free")
 		->args({"mem"})
@@ -1547,6 +1578,64 @@ addConstant(*this, "SDL_AUDIO_DEVICE_DEFAULT_RECORDING", static_cast<uint32_t>(0
 // from SDL3/SDL_asyncio.h:538:34
 	makeExtern< bool (*)(const char *,struct SDL_AsyncIOQueue *,void *) , SDL_LoadFileAsync , SimNode_ExtFuncCall >(lib,"SDL_LoadFileAsync","SDL_LoadFileAsync")
 		->args({"file","queue","userdata"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_atomic.h:100:34
+	makeExtern< bool (*)(int *) , SDL_TryLockSpinlock , SimNode_ExtFuncCall >(lib,"SDL_TryLockSpinlock","SDL_TryLockSpinlock")
+		->args({"lock"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_atomic.h:117:34
+	makeExtern< void (*)(int *) , SDL_LockSpinlock , SimNode_ExtFuncCall >(lib,"SDL_LockSpinlock","SDL_LockSpinlock")
+		->args({"lock"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_atomic.h:136:34
+	makeExtern< void (*)(int *) , SDL_UnlockSpinlock , SimNode_ExtFuncCall >(lib,"SDL_UnlockSpinlock","SDL_UnlockSpinlock")
+		->args({"lock"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_atomic.h:192:34
+	makeExtern< void (*)() , SDL_MemoryBarrierReleaseFunction , SimNode_ExtFuncCall >(lib,"SDL_MemoryBarrierReleaseFunction","SDL_MemoryBarrierReleaseFunction")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_atomic.h:212:34
+	makeExtern< void (*)() , SDL_MemoryBarrierAcquireFunction , SimNode_ExtFuncCall >(lib,"SDL_MemoryBarrierAcquireFunction","SDL_MemoryBarrierAcquireFunction")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_atomic.h:415:34
+	makeExtern< bool (*)(struct SDL_AtomicInt *,int,int) , SDL_CompareAndSwapAtomicInt , SimNode_ExtFuncCall >(lib,"SDL_CompareAndSwapAtomicInt","SDL_CompareAndSwapAtomicInt")
+		->args({"a","oldval","newval"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_atomic.h:435:33
+	makeExtern< int (*)(struct SDL_AtomicInt *,int) , SDL_SetAtomicInt , SimNode_ExtFuncCall >(lib,"SDL_SetAtomicInt","SDL_SetAtomicInt")
+		->args({"a","v"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_atomic.h:452:33
+	makeExtern< int (*)(struct SDL_AtomicInt *) , SDL_GetAtomicInt , SimNode_ExtFuncCall >(lib,"SDL_GetAtomicInt","SDL_GetAtomicInt")
+		->args({"a"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_atomic.h:473:33
+	makeExtern< int (*)(struct SDL_AtomicInt *,int) , SDL_AddAtomicInt , SimNode_ExtFuncCall >(lib,"SDL_AddAtomicInt","SDL_AddAtomicInt")
+		->args({"a","v"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_atomic.h:560:34
+	makeExtern< bool (*)(struct SDL_AtomicU32 *,unsigned int,unsigned int) , SDL_CompareAndSwapAtomicU32 , SimNode_ExtFuncCall >(lib,"SDL_CompareAndSwapAtomicU32","SDL_CompareAndSwapAtomicU32")
+		->args({"a","oldval","newval"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_atomic.h:580:36
+	makeExtern< unsigned int (*)(struct SDL_AtomicU32 *,unsigned int) , SDL_SetAtomicU32 , SimNode_ExtFuncCall >(lib,"SDL_SetAtomicU32","SDL_SetAtomicU32")
+		->args({"a","v"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_atomic.h:597:36
+	makeExtern< unsigned int (*)(struct SDL_AtomicU32 *) , SDL_GetAtomicU32 , SimNode_ExtFuncCall >(lib,"SDL_GetAtomicU32","SDL_GetAtomicU32")
+		->args({"a"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_atomic.h:618:34
+	makeExtern< bool (*)(void **,void *,void *) , SDL_CompareAndSwapAtomicPointer , SimNode_ExtFuncCall >(lib,"SDL_CompareAndSwapAtomicPointer","SDL_CompareAndSwapAtomicPointer")
+		->args({"a","oldval","newval"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_atomic.h:637:36
+	makeExtern< void * (*)(void **,void *) , SDL_SetAtomicPointer , SimNode_ExtFuncCall >(lib,"SDL_SetAtomicPointer","SDL_SetAtomicPointer")
+		->args({"a","v"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_atomic.h:655:36
+	makeExtern< void * (*)(void **) , SDL_GetAtomicPointer , SimNode_ExtFuncCall >(lib,"SDL_GetAtomicPointer","SDL_GetAtomicPointer")
+		->args({"a"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_error.h:121:34
 	makeExtern< bool (*)() , SDL_OutOfMemory , SimNode_ExtFuncCall >(lib,"SDL_OutOfMemory","SDL_OutOfMemory")
@@ -1630,6 +1719,152 @@ addConstant(*this, "SDL_AUDIO_DEVICE_DEFAULT_RECORDING", static_cast<uint32_t>(0
 // from SDL3/SDL_properties.h:535:34
 	makeExtern< void (*)(unsigned int) , SDL_DestroyProperties , SimNode_ExtFuncCall >(lib,"SDL_DestroyProperties","SDL_DestroyProperties")
 		->args({"props"})
+		->addToModule(*this, SideEffects::worstDefault);
+makeExtern<decltype(&SDL_CreateThreadRuntime), SDL_CreateThreadRuntime, SimNode_ExtFuncCall>(lib,"SDL_CreateThreadRuntime","SDL_CreateThreadRuntimeAddress")->args({"fn","name","data","pfnBeginThread","pfnEndThread"})->addToModule(*this, SideEffects::worstDefault);
+makeExtern<decltype(&SDL_CreateThreadWithPropertiesRuntime), SDL_CreateThreadWithPropertiesRuntime, SimNode_ExtFuncCall>(lib,"SDL_CreateThreadWithPropertiesRuntime","SDL_CreateThreadWithPropertiesRuntimeAddress")->args({"props","pfnBeginThread","pfnEndThread"})->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_thread.h:367:42
+	makeExtern< const char * (*)(struct SDL_Thread *) , SDL_GetThreadName , SimNode_ExtFuncCall >(lib,"SDL_GetThreadName","SDL_GetThreadName")
+		->args({"thread"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_thread.h:385:42
+	makeExtern< SDL_ThreadID (*)() , SDL_GetCurrentThreadID , SimNode_ExtFuncCall >(lib,"SDL_GetCurrentThreadID","SDL_GetCurrentThreadID")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_thread.h:402:42
+	makeExtern< SDL_ThreadID (*)(struct SDL_Thread *) , SDL_GetThreadID , SimNode_ExtFuncCall >(lib,"SDL_GetThreadID","SDL_GetThreadID")
+		->args({"thread"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_thread.h:417:34
+	makeExtern< bool (*)(enum SDL_ThreadPriority) , SDL_SetCurrentThreadPriority , SimNode_ExtFuncCall >(lib,"SDL_SetCurrentThreadPriority","SDL_SetCurrentThreadPriority")
+		->args({"priority"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_thread.h:452:34
+	makeExtern< void (*)(struct SDL_Thread *,int *) , SDL_WaitThread , SimNode_ExtFuncCall >(lib,"SDL_WaitThread","SDL_WaitThread")
+		->args({"thread","status"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_thread.h:465:45
+	makeExtern< enum SDL_ThreadState (*)(struct SDL_Thread *) , SDL_GetThreadState , SimNode_ExtFuncCall >(lib,"SDL_GetThreadState","SDL_GetThreadState")
+		->args({"thread"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_thread.h:501:34
+	makeExtern< void (*)(struct SDL_Thread *) , SDL_DetachThread , SimNode_ExtFuncCall >(lib,"SDL_DetachThread","SDL_DetachThread")
+		->args({"thread"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_thread.h:516:36
+	makeExtern< void * (*)(struct SDL_AtomicInt *) , SDL_GetTLS , SimNode_ExtFuncCall >(lib,"SDL_GetTLS","SDL_GetTLS")
+		->args({"id"})
+		->addToModule(*this, SideEffects::worstDefault);
+makeExtern<decltype(&SDL_SetTLS), SDL_SetTLS, SimNode_ExtFuncCall>(lib,"SDL_SetTLS","SDL_SetTLSAddress")->args({"id","value","destructor"})->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_thread.h:570:34
+	makeExtern< void (*)() , SDL_CleanupTLS , SimNode_ExtFuncCall >(lib,"SDL_CleanupTLS","SDL_CleanupTLS")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:318:41
+	makeExtern< struct SDL_Mutex * (*)() , SDL_CreateMutex , SimNode_ExtFuncCall >(lib,"SDL_CreateMutex","SDL_CreateMutex")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:342:34
+	makeExtern< void (*)(struct SDL_Mutex *) , SDL_LockMutex , SimNode_ExtFuncCall >(lib,"SDL_LockMutex","SDL_LockMutex")
+		->args({"mutex"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:363:34
+	makeExtern< bool (*)(struct SDL_Mutex *) , SDL_TryLockMutex , SimNode_ExtFuncCall >(lib,"SDL_TryLockMutex","SDL_TryLockMutex")
+		->args({"mutex"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:382:34
+	makeExtern< void (*)(struct SDL_Mutex *) , SDL_UnlockMutex , SimNode_ExtFuncCall >(lib,"SDL_UnlockMutex","SDL_UnlockMutex")
+		->args({"mutex"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:399:34
+	makeExtern< void (*)(struct SDL_Mutex *) , SDL_DestroyMutex , SimNode_ExtFuncCall >(lib,"SDL_DestroyMutex","SDL_DestroyMutex")
+		->args({"mutex"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:469:42
+	makeExtern< struct SDL_RWLock * (*)() , SDL_CreateRWLock , SimNode_ExtFuncCall >(lib,"SDL_CreateRWLock","SDL_CreateRWLock")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:506:34
+	makeExtern< void (*)(struct SDL_RWLock *) , SDL_LockRWLockForReading , SimNode_ExtFuncCall >(lib,"SDL_LockRWLockForReading","SDL_LockRWLockForReading")
+		->args({"rwlock"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:537:34
+	makeExtern< void (*)(struct SDL_RWLock *) , SDL_LockRWLockForWriting , SimNode_ExtFuncCall >(lib,"SDL_LockRWLockForWriting","SDL_LockRWLockForWriting")
+		->args({"rwlock"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:562:34
+	makeExtern< bool (*)(struct SDL_RWLock *) , SDL_TryLockRWLockForReading , SimNode_ExtFuncCall >(lib,"SDL_TryLockRWLockForReading","SDL_TryLockRWLockForReading")
+		->args({"rwlock"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:592:34
+	makeExtern< bool (*)(struct SDL_RWLock *) , SDL_TryLockRWLockForWriting , SimNode_ExtFuncCall >(lib,"SDL_TryLockRWLockForWriting","SDL_TryLockRWLockForWriting")
+		->args({"rwlock"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:617:34
+	makeExtern< void (*)(struct SDL_RWLock *) , SDL_UnlockRWLock , SimNode_ExtFuncCall >(lib,"SDL_UnlockRWLock","SDL_UnlockRWLock")
+		->args({"rwlock"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:634:34
+	makeExtern< void (*)(struct SDL_RWLock *) , SDL_DestroyRWLock , SimNode_ExtFuncCall >(lib,"SDL_DestroyRWLock","SDL_DestroyRWLock")
+		->args({"rwlock"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:682:45
+	makeExtern< struct SDL_Semaphore * (*)(unsigned int) , SDL_CreateSemaphore , SimNode_ExtFuncCall >(lib,"SDL_CreateSemaphore","SDL_CreateSemaphore")
+		->args({"initial_value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:696:34
+	makeExtern< void (*)(struct SDL_Semaphore *) , SDL_DestroySemaphore , SimNode_ExtFuncCall >(lib,"SDL_DestroySemaphore","SDL_DestroySemaphore")
+		->args({"sem"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:716:34
+	makeExtern< void (*)(struct SDL_Semaphore *) , SDL_WaitSemaphore , SimNode_ExtFuncCall >(lib,"SDL_WaitSemaphore","SDL_WaitSemaphore")
+		->args({"sem"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:735:34
+	makeExtern< bool (*)(struct SDL_Semaphore *) , SDL_TryWaitSemaphore , SimNode_ExtFuncCall >(lib,"SDL_TryWaitSemaphore","SDL_TryWaitSemaphore")
+		->args({"sem"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:755:34
+	makeExtern< bool (*)(struct SDL_Semaphore *,int) , SDL_WaitSemaphoreTimeout , SimNode_ExtFuncCall >(lib,"SDL_WaitSemaphoreTimeout","SDL_WaitSemaphoreTimeout")
+		->args({"sem","timeoutMS"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:768:34
+	makeExtern< void (*)(struct SDL_Semaphore *) , SDL_SignalSemaphore , SimNode_ExtFuncCall >(lib,"SDL_SignalSemaphore","SDL_SignalSemaphore")
+		->args({"sem"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:778:36
+	makeExtern< unsigned int (*)(struct SDL_Semaphore *) , SDL_GetSemaphoreValue , SimNode_ExtFuncCall >(lib,"SDL_GetSemaphoreValue","SDL_GetSemaphoreValue")
+		->args({"sem"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:817:45
+	makeExtern< struct SDL_Condition * (*)() , SDL_CreateCondition , SimNode_ExtFuncCall >(lib,"SDL_CreateCondition","SDL_CreateCondition")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:828:34
+	makeExtern< void (*)(struct SDL_Condition *) , SDL_DestroyCondition , SimNode_ExtFuncCall >(lib,"SDL_DestroyCondition","SDL_DestroyCondition")
+		->args({"cond"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:843:34
+	makeExtern< void (*)(struct SDL_Condition *) , SDL_SignalCondition , SimNode_ExtFuncCall >(lib,"SDL_SignalCondition","SDL_SignalCondition")
+		->args({"cond"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:858:34
+	makeExtern< void (*)(struct SDL_Condition *) , SDL_BroadcastCondition , SimNode_ExtFuncCall >(lib,"SDL_BroadcastCondition","SDL_BroadcastCondition")
+		->args({"cond"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:886:34
+	makeExtern< void (*)(struct SDL_Condition *,struct SDL_Mutex *) , SDL_WaitCondition , SimNode_ExtFuncCall >(lib,"SDL_WaitCondition","SDL_WaitCondition")
+		->args({"cond","mutex"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:916:34
+	makeExtern< bool (*)(struct SDL_Condition *,struct SDL_Mutex *,int) , SDL_WaitConditionTimeout , SimNode_ExtFuncCall >(lib,"SDL_WaitConditionTimeout","SDL_WaitConditionTimeout")
+		->args({"cond","mutex","timeoutMS"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:1023:34
+	makeExtern< bool (*)(struct SDL_InitState *) , SDL_ShouldInit , SimNode_ExtFuncCall >(lib,"SDL_ShouldInit","SDL_ShouldInit")
+		->args({"state"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:1044:34
+	makeExtern< bool (*)(struct SDL_InitState *) , SDL_ShouldQuit , SimNode_ExtFuncCall >(lib,"SDL_ShouldQuit","SDL_ShouldQuit")
+		->args({"state"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mutex.h:1063:34
+	makeExtern< void (*)(struct SDL_InitState *,bool) , SDL_SetInitialized , SimNode_ExtFuncCall >(lib,"SDL_SetInitialized","SDL_SetInitialized")
+		->args({"state","initialized"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_iostream.h:274:44
 	makeExtern< struct SDL_IOStream * (*)(const char *,const char *) , SDL_IOFromFile , SimNode_ExtFuncCall >(lib,"SDL_IOFromFile","SDL_IOFromFile")
@@ -2814,6 +3049,14 @@ makeExtern<decltype(&SDL_SetWindowHitTest), SDL_SetWindowHitTest, SimNode_ExtFun
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_video.h:2893:34
 	makeExtern< bool (*)() , SDL_DisableScreenSaver , SimNode_ExtFuncCall >(lib,"SDL_DisableScreenSaver","SDL_DisableScreenSaver")
+		->addToModule(*this, SideEffects::worstDefault);
+makeExtern<decltype(&SDL_ShowOpenFileDialog), SDL_ShowOpenFileDialog, SimNode_ExtFuncCall>(lib,"SDL_ShowOpenFileDialog","SDL_ShowOpenFileDialogAddress")->args({"callback","userdata","window","filters","nfilters","default_location","allow_many"})->addToModule(*this, SideEffects::worstDefault);
+makeExtern<decltype(&SDL_ShowSaveFileDialog), SDL_ShowSaveFileDialog, SimNode_ExtFuncCall>(lib,"SDL_ShowSaveFileDialog","SDL_ShowSaveFileDialogAddress")->args({"callback","userdata","window","filters","nfilters","default_location"})->addToModule(*this, SideEffects::worstDefault);
+makeExtern<decltype(&SDL_ShowOpenFolderDialog), SDL_ShowOpenFolderDialog, SimNode_ExtFuncCall>(lib,"SDL_ShowOpenFolderDialog","SDL_ShowOpenFolderDialogAddress")->args({"callback","userdata","window","default_location","allow_many"})->addToModule(*this, SideEffects::worstDefault);
+makeExtern<decltype(&SDL_ShowFileDialogWithProperties), SDL_ShowFileDialogWithProperties, SimNode_ExtFuncCall>(lib,"SDL_ShowFileDialogWithProperties","SDL_ShowFileDialogWithPropertiesAddress")->args({"type","callback","userdata","props"})->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_power.h:98:44
+	makeExtern< enum SDL_PowerState (*)(int *,int *) , SDL_GetPowerInfo , SimNode_ExtFuncCall >(lib,"SDL_GetPowerInfo","SDL_GetPowerInfo")
+		->args({"seconds","percent"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_sensor.h:158:44
 	makeExtern< unsigned int * (*)(int *) , SDL_GetSensors , SimNode_ExtFuncCall >(lib,"SDL_GetSensors","SDL_GetSensors")
@@ -4288,6 +4531,19 @@ makeExtern<decltype(&SDL_hid_get_indexed_string), SDL_hid_get_indexed_string, Si
 	makeExtern< const char * (*)(const char *) , SDL_GetAppMetadataProperty , SimNode_ExtFuncCall >(lib,"SDL_GetAppMetadataProperty","SDL_GetAppMetadataProperty")
 		->args({"name"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_loadso.h:93:48
+	makeExtern< struct SDL_SharedObject * (*)(const char *) , SDL_LoadObject , SimNode_ExtFuncCall >(lib,"SDL_LoadObject","SDL_LoadObject")
+		->args({"sofile"})
+		->addToModule(*this, SideEffects::worstDefault);
+makeExtern<decltype(&SDL_LoadFunction), SDL_LoadFunction, SimNode_ExtFuncCall>(lib,"SDL_LoadFunction","SDL_LoadFunctionAddress")->args({"handle","name"})->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_loadso.h:137:34
+	makeExtern< void (*)(struct SDL_SharedObject *) , SDL_UnloadObject , SimNode_ExtFuncCall >(lib,"SDL_UnloadObject","SDL_UnloadObject")
+		->args({"handle"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_locale.h:107:43
+	makeExtern< struct SDL_Locale ** (*)(int *) , SDL_GetPreferredLocales , SimNode_ExtFuncCall >(lib,"SDL_GetPreferredLocales","SDL_GetPreferredLocales")
+		->args({"count"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_log.h:156:34
 	makeExtern< void (*)(enum SDL_LogPriority) , SDL_SetLogPriorities , SimNode_ExtFuncCall >(lib,"SDL_SetLogPriorities","SDL_SetLogPriorities")
 		->args({"priority"})
@@ -4306,6 +4562,42 @@ makeExtern<decltype(&SDL_hid_get_indexed_string), SDL_hid_get_indexed_string, Si
 // from SDL3/SDL_log.h:222:34
 	makeExtern< bool (*)(enum SDL_LogPriority,const char *) , SDL_SetLogPriorityPrefix , SimNode_ExtFuncCall >(lib,"SDL_SetLogPriorityPrefix","SDL_SetLogPriorityPrefix")
 		->args({"priority","prefix"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_process.h:106:43
+	makeExtern< struct SDL_Process * (*)(const char *const *,bool) , SDL_CreateProcess , SimNode_ExtFuncCall >(lib,"SDL_CreateProcess","SDL_CreateProcess")
+		->args({"args","pipe_stdio"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_process.h:218:43
+	makeExtern< struct SDL_Process * (*)(unsigned int) , SDL_CreateProcessWithProperties , SimNode_ExtFuncCall >(lib,"SDL_CreateProcessWithProperties","SDL_CreateProcessWithProperties")
+		->args({"props"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_process.h:260:46
+	makeExtern< unsigned int (*)(struct SDL_Process *) , SDL_GetProcessProperties , SimNode_ExtFuncCall >(lib,"SDL_GetProcessProperties","SDL_GetProcessProperties")
+		->args({"process"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_process.h:297:36
+	makeExtern< void * (*)(struct SDL_Process *,size_t *,int *) , SDL_ReadProcess , SimNode_ExtFuncCall >(lib,"SDL_ReadProcess","SDL_ReadProcess")
+		->args({"process","datasize","exitcode"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_process.h:323:44
+	makeExtern< struct SDL_IOStream * (*)(struct SDL_Process *) , SDL_GetProcessInput , SimNode_ExtFuncCall >(lib,"SDL_GetProcessInput","SDL_GetProcessInput")
+		->args({"process"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_process.h:347:44
+	makeExtern< struct SDL_IOStream * (*)(struct SDL_Process *) , SDL_GetProcessOutput , SimNode_ExtFuncCall >(lib,"SDL_GetProcessOutput","SDL_GetProcessOutput")
+		->args({"process"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_process.h:370:34
+	makeExtern< bool (*)(struct SDL_Process *,bool) , SDL_KillProcess , SimNode_ExtFuncCall >(lib,"SDL_KillProcess","SDL_KillProcess")
+		->args({"process","force"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_process.h:403:34
+	makeExtern< bool (*)(struct SDL_Process *,bool,int *) , SDL_WaitProcess , SimNode_ExtFuncCall >(lib,"SDL_WaitProcess","SDL_WaitProcess")
+		->args({"process","block","exitcode"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_process.h:422:34
+	makeExtern< void (*)(struct SDL_Process *) , SDL_DestroyProcess , SimNode_ExtFuncCall >(lib,"SDL_DestroyProcess","SDL_DestroyProcess")
+		->args({"process"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_render.h:165:33
 	makeExtern< int (*)() , SDL_GetNumRenderDrivers , SimNode_ExtFuncCall >(lib,"SDL_GetNumRenderDrivers","SDL_GetNumRenderDrivers")
@@ -4723,6 +5015,43 @@ makeExtern<decltype(&SDL_EnumerateStorageDirectory), SDL_EnumerateStorageDirecto
 	makeExtern< char ** (*)(struct SDL_Storage *,const char *,const char *,unsigned int,int *) , SDL_GlobStorageDirectory , SimNode_ExtFuncCall >(lib,"SDL_GlobStorageDirectory","SDL_GlobStorageDirectory")
 		->args({"storage","path","pattern","flags","count"})
 		->addToModule(*this, SideEffects::worstDefault);
+makeExtern<decltype(&SDL_SetWindowsMessageHook), SDL_SetWindowsMessageHook, SimNode_ExtFuncCall>(lib,"SDL_SetWindowsMessageHook","SDL_SetWindowsMessageHookAddress")->args({"callback","userdata"})->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_system.h:112:33
+	makeExtern< int (*)(unsigned int) , SDL_GetDirect3D9AdapterIndex , SimNode_ExtFuncCall >(lib,"SDL_GetDirect3D9AdapterIndex","SDL_GetDirect3D9AdapterIndex")
+		->args({"displayID"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_system.h:129:34
+	makeExtern< bool (*)(unsigned int,int *,int *) , SDL_GetDXGIOutputInfo , SimNode_ExtFuncCall >(lib,"SDL_GetDXGIOutputInfo","SDL_GetDXGIOutputInfo")
+		->args({"displayID","adapterIndex","outputIndex"})
+		->addToModule(*this, SideEffects::worstDefault);
+makeExtern<decltype(&SDL_SetX11EventHook), SDL_SetX11EventHook, SimNode_ExtFuncCall>(lib,"SDL_SetX11EventHook","SDL_SetX11EventHookAddress")->args({"callback","userdata"})->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_system.h:610:34
+	makeExtern< bool (*)() , SDL_IsTablet , SimNode_ExtFuncCall >(lib,"SDL_IsTablet","SDL_IsTablet")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_system.h:621:34
+	makeExtern< bool (*)() , SDL_IsTV , SimNode_ExtFuncCall >(lib,"SDL_IsTV","SDL_IsTV")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_system.h:645:41
+	makeExtern< enum SDL_Sandbox (*)() , SDL_GetSandbox , SimNode_ExtFuncCall >(lib,"SDL_GetSandbox","SDL_GetSandbox")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_system.h:665:34
+	makeExtern< void (*)() , SDL_OnApplicationWillTerminate , SimNode_ExtFuncCall >(lib,"SDL_OnApplicationWillTerminate","SDL_OnApplicationWillTerminate")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_system.h:682:34
+	makeExtern< void (*)() , SDL_OnApplicationDidReceiveMemoryWarning , SimNode_ExtFuncCall >(lib,"SDL_OnApplicationDidReceiveMemoryWarning","SDL_OnApplicationDidReceiveMemoryWarning")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_system.h:699:34
+	makeExtern< void (*)() , SDL_OnApplicationWillEnterBackground , SimNode_ExtFuncCall >(lib,"SDL_OnApplicationWillEnterBackground","SDL_OnApplicationWillEnterBackground")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_system.h:716:34
+	makeExtern< void (*)() , SDL_OnApplicationDidEnterBackground , SimNode_ExtFuncCall >(lib,"SDL_OnApplicationDidEnterBackground","SDL_OnApplicationDidEnterBackground")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_system.h:733:34
+	makeExtern< void (*)() , SDL_OnApplicationWillEnterForeground , SimNode_ExtFuncCall >(lib,"SDL_OnApplicationWillEnterForeground","SDL_OnApplicationWillEnterForeground")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_system.h:750:34
+	makeExtern< void (*)() , SDL_OnApplicationDidEnterForeground , SimNode_ExtFuncCall >(lib,"SDL_OnApplicationDidEnterForeground","SDL_OnApplicationDidEnterForeground")
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_time.h:111:34
 	makeExtern< bool (*)(enum SDL_DateFormat *,enum SDL_TimeFormat *) , SDL_GetDateTimeLocalePreferences , SimNode_ExtFuncCall >(lib,"SDL_GetDateTimeLocalePreferences","SDL_GetDateTimeLocalePreferences")
 		->args({"dateFormat","timeFormat"})
@@ -4786,6 +5115,94 @@ makeExtern<decltype(&SDL_EnumerateStorageDirectory), SDL_EnumerateStorageDirecto
 // from SDL3/SDL_timer.h:441:34
 	makeExtern< bool (*)(unsigned int) , SDL_RemoveTimer , SimNode_ExtFuncCall >(lib,"SDL_RemoveTimer","SDL_RemoveTimer")
 		->args({"id"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_tray.h:121:40
+	makeExtern< struct SDL_Tray * (*)(struct SDL_Surface *,const char *) , SDL_CreateTray , SimNode_ExtFuncCall >(lib,"SDL_CreateTray","SDL_CreateTray")
+		->args({"icon","tooltip"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_tray.h:136:34
+	makeExtern< void (*)(struct SDL_Tray *,struct SDL_Surface *) , SDL_SetTrayIcon , SimNode_ExtFuncCall >(lib,"SDL_SetTrayIcon","SDL_SetTrayIcon")
+		->args({"tray","icon"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_tray.h:151:34
+	makeExtern< void (*)(struct SDL_Tray *,const char *) , SDL_SetTrayTooltip , SimNode_ExtFuncCall >(lib,"SDL_SetTrayTooltip","SDL_SetTrayTooltip")
+		->args({"tray","tooltip"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_tray.h:175:44
+	makeExtern< struct SDL_TrayMenu * (*)(struct SDL_Tray *) , SDL_CreateTrayMenu , SimNode_ExtFuncCall >(lib,"SDL_CreateTrayMenu","SDL_CreateTrayMenu")
+		->args({"tray"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_tray.h:199:44
+	makeExtern< struct SDL_TrayMenu * (*)(struct SDL_TrayEntry *) , SDL_CreateTraySubmenu , SimNode_ExtFuncCall >(lib,"SDL_CreateTraySubmenu","SDL_CreateTraySubmenu")
+		->args({"entry"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_tray.h:223:44
+	makeExtern< struct SDL_TrayMenu * (*)(struct SDL_Tray *) , SDL_GetTrayMenu , SimNode_ExtFuncCall >(lib,"SDL_GetTrayMenu","SDL_GetTrayMenu")
+		->args({"tray"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_tray.h:247:44
+	makeExtern< struct SDL_TrayMenu * (*)(struct SDL_TrayEntry *) , SDL_GetTraySubmenu , SimNode_ExtFuncCall >(lib,"SDL_GetTraySubmenu","SDL_GetTraySubmenu")
+		->args({"entry"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_tray.h:267:52
+	makeExtern< const struct SDL_TrayEntry ** (*)(struct SDL_TrayMenu *,int *) , SDL_GetTrayEntries , SimNode_ExtFuncCall >(lib,"SDL_GetTrayEntries","SDL_GetTrayEntries")
+		->args({"menu","count"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_tray.h:282:34
+	makeExtern< void (*)(struct SDL_TrayEntry *) , SDL_RemoveTrayEntry , SimNode_ExtFuncCall >(lib,"SDL_RemoveTrayEntry","SDL_RemoveTrayEntry")
+		->args({"entry"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_tray.h:310:45
+	makeExtern< struct SDL_TrayEntry * (*)(struct SDL_TrayMenu *,int,const char *,unsigned int) , SDL_InsertTrayEntryAt , SimNode_ExtFuncCall >(lib,"SDL_InsertTrayEntryAt","SDL_InsertTrayEntryAt")
+		->args({"menu","pos","label","flags"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_tray.h:332:34
+	makeExtern< void (*)(struct SDL_TrayEntry *,const char *) , SDL_SetTrayEntryLabel , SimNode_ExtFuncCall >(lib,"SDL_SetTrayEntryLabel","SDL_SetTrayEntryLabel")
+		->args({"entry","label"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_tray.h:351:42
+	makeExtern< const char * (*)(struct SDL_TrayEntry *) , SDL_GetTrayEntryLabel , SimNode_ExtFuncCall >(lib,"SDL_GetTrayEntryLabel","SDL_GetTrayEntryLabel")
+		->args({"entry"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_tray.h:370:34
+	makeExtern< void (*)(struct SDL_TrayEntry *,bool) , SDL_SetTrayEntryChecked , SimNode_ExtFuncCall >(lib,"SDL_SetTrayEntryChecked","SDL_SetTrayEntryChecked")
+		->args({"entry","checked"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_tray.h:389:34
+	makeExtern< bool (*)(struct SDL_TrayEntry *) , SDL_GetTrayEntryChecked , SimNode_ExtFuncCall >(lib,"SDL_GetTrayEntryChecked","SDL_GetTrayEntryChecked")
+		->args({"entry"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_tray.h:406:34
+	makeExtern< void (*)(struct SDL_TrayEntry *,bool) , SDL_SetTrayEntryEnabled , SimNode_ExtFuncCall >(lib,"SDL_SetTrayEntryEnabled","SDL_SetTrayEntryEnabled")
+		->args({"entry","enabled"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_tray.h:423:34
+	makeExtern< bool (*)(struct SDL_TrayEntry *) , SDL_GetTrayEntryEnabled , SimNode_ExtFuncCall >(lib,"SDL_GetTrayEntryEnabled","SDL_GetTrayEntryEnabled")
+		->args({"entry"})
+		->addToModule(*this, SideEffects::worstDefault);
+makeExtern<decltype(&SDL_SetTrayEntryCallback), SDL_SetTrayEntryCallback, SimNode_ExtFuncCall>(lib,"SDL_SetTrayEntryCallback","SDL_SetTrayEntryCallbackAddress")->args({"entry","callback","userdata"})->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_tray.h:453:34
+	makeExtern< void (*)(struct SDL_TrayEntry *) , SDL_ClickTrayEntry , SimNode_ExtFuncCall >(lib,"SDL_ClickTrayEntry","SDL_ClickTrayEntry")
+		->args({"entry"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_tray.h:469:34
+	makeExtern< void (*)(struct SDL_Tray *) , SDL_DestroyTray , SimNode_ExtFuncCall >(lib,"SDL_DestroyTray","SDL_DestroyTray")
+		->args({"tray"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_tray.h:484:44
+	makeExtern< struct SDL_TrayMenu * (*)(struct SDL_TrayEntry *) , SDL_GetTrayEntryParent , SimNode_ExtFuncCall >(lib,"SDL_GetTrayEntryParent","SDL_GetTrayEntryParent")
+		->args({"entry"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_tray.h:504:45
+	makeExtern< struct SDL_TrayEntry * (*)(struct SDL_TrayMenu *) , SDL_GetTrayMenuParentEntry , SimNode_ExtFuncCall >(lib,"SDL_GetTrayMenuParentEntry","SDL_GetTrayMenuParentEntry")
+		->args({"menu"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_tray.h:524:40
+	makeExtern< struct SDL_Tray * (*)(struct SDL_TrayMenu *) , SDL_GetTrayMenuParentTray , SimNode_ExtFuncCall >(lib,"SDL_GetTrayMenuParentTray","SDL_GetTrayMenuParentTray")
+		->args({"menu"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_tray.h:536:34
+	makeExtern< void (*)() , SDL_UpdateTrays , SimNode_ExtFuncCall >(lib,"SDL_UpdateTrays","SDL_UpdateTrays")
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_version.h:148:33
 	makeExtern< int (*)() , SDL_GetVersion , SimNode_ExtFuncCall >(lib,"SDL_GetVersion","SDL_GetVersion")

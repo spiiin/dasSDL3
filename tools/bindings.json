@@ -851,7 +851,116 @@
     "SDL_GetCameraFormat",
     "SDL_AcquireCameraFrame",
     "SDL_ReleaseCameraFrame",
-    "SDL_CloseCamera"
+    "SDL_CloseCamera",
+    "SDL_CreateMutex",
+    "SDL_LockMutex",
+    "SDL_TryLockMutex",
+    "SDL_UnlockMutex",
+    "SDL_DestroyMutex",
+    "SDL_CreateRWLock",
+    "SDL_LockRWLockForReading",
+    "SDL_LockRWLockForWriting",
+    "SDL_TryLockRWLockForReading",
+    "SDL_TryLockRWLockForWriting",
+    "SDL_UnlockRWLock",
+    "SDL_DestroyRWLock",
+    "SDL_CreateSemaphore",
+    "SDL_DestroySemaphore",
+    "SDL_WaitSemaphore",
+    "SDL_TryWaitSemaphore",
+    "SDL_WaitSemaphoreTimeout",
+    "SDL_SignalSemaphore",
+    "SDL_GetSemaphoreValue",
+    "SDL_CreateCondition",
+    "SDL_DestroyCondition",
+    "SDL_SignalCondition",
+    "SDL_BroadcastCondition",
+    "SDL_WaitCondition",
+    "SDL_WaitConditionTimeout",
+    "SDL_ShouldInit",
+    "SDL_ShouldQuit",
+    "SDL_SetInitialized",
+    "SDL_CreateThreadRuntime",
+    "SDL_CreateThreadWithPropertiesRuntime",
+    "SDL_GetThreadName",
+    "SDL_GetCurrentThreadID",
+    "SDL_GetThreadID",
+    "SDL_SetCurrentThreadPriority",
+    "SDL_WaitThread",
+    "SDL_GetThreadState",
+    "SDL_DetachThread",
+    "SDL_GetTLS",
+    "SDL_SetTLS",
+    "SDL_CleanupTLS",
+    "SDL_TryLockSpinlock",
+    "SDL_LockSpinlock",
+    "SDL_UnlockSpinlock",
+    "SDL_MemoryBarrierReleaseFunction",
+    "SDL_MemoryBarrierAcquireFunction",
+    "SDL_CompareAndSwapAtomicInt",
+    "SDL_SetAtomicInt",
+    "SDL_GetAtomicInt",
+    "SDL_AddAtomicInt",
+    "SDL_CompareAndSwapAtomicU32",
+    "SDL_SetAtomicU32",
+    "SDL_GetAtomicU32",
+    "SDL_CompareAndSwapAtomicPointer",
+    "SDL_SetAtomicPointer",
+    "SDL_GetAtomicPointer",
+    "SDL_CreateProcess",
+    "SDL_CreateProcessWithProperties",
+    "SDL_GetProcessProperties",
+    "SDL_ReadProcess",
+    "SDL_GetProcessInput",
+    "SDL_GetProcessOutput",
+    "SDL_KillProcess",
+    "SDL_WaitProcess",
+    "SDL_DestroyProcess",
+    "SDL_LoadObject",
+    "SDL_LoadFunction",
+    "SDL_UnloadObject",
+    "SDL_ClickTrayEntry",
+    "SDL_CreateTray",
+    "SDL_CreateTrayMenu",
+    "SDL_CreateTraySubmenu",
+    "SDL_DestroyTray",
+    "SDL_GetDXGIOutputInfo",
+    "SDL_GetDirect3D9AdapterIndex",
+    "SDL_GetPowerInfo",
+    "SDL_GetPreferredLocales",
+    "SDL_GetSandbox",
+    "SDL_GetTrayEntries",
+    "SDL_GetTrayEntryChecked",
+    "SDL_GetTrayEntryEnabled",
+    "SDL_GetTrayEntryLabel",
+    "SDL_GetTrayEntryParent",
+    "SDL_GetTrayMenu",
+    "SDL_GetTrayMenuParentEntry",
+    "SDL_GetTrayMenuParentTray",
+    "SDL_GetTraySubmenu",
+    "SDL_InsertTrayEntryAt",
+    "SDL_IsTV",
+    "SDL_IsTablet",
+    "SDL_OnApplicationDidEnterBackground",
+    "SDL_OnApplicationDidEnterForeground",
+    "SDL_OnApplicationDidReceiveMemoryWarning",
+    "SDL_OnApplicationWillEnterBackground",
+    "SDL_OnApplicationWillEnterForeground",
+    "SDL_OnApplicationWillTerminate",
+    "SDL_RemoveTrayEntry",
+    "SDL_SetTrayEntryCallback",
+    "SDL_SetTrayEntryChecked",
+    "SDL_SetTrayEntryEnabled",
+    "SDL_SetTrayEntryLabel",
+    "SDL_SetTrayIcon",
+    "SDL_SetTrayTooltip",
+    "SDL_SetWindowsMessageHook",
+    "SDL_SetX11EventHook",
+    "SDL_ShowFileDialogWithProperties",
+    "SDL_ShowOpenFileDialog",
+    "SDL_ShowOpenFolderDialog",
+    "SDL_ShowSaveFileDialog",
+    "SDL_UpdateTrays"
   ],
   "opaque_types": [
     "SDL_Window",
@@ -885,7 +994,17 @@
     "SDL_Storage",
     "SDL_AsyncIO",
     "SDL_AsyncIOQueue",
-    "SDL_Camera"
+    "SDL_Camera",
+    "SDL_Mutex",
+    "SDL_RWLock",
+    "SDL_Semaphore",
+    "SDL_Condition",
+    "SDL_Thread",
+    "SDL_Process",
+    "SDL_SharedObject",
+    "SDL_Tray",
+    "SDL_TrayMenu",
+    "SDL_TrayEntry"
   ],
   "enums": {
     "SDL_GPUTextureType": {
@@ -1874,6 +1993,42 @@
       "SDL_CAMERA_POSITION_UNKNOWN": "CAMERA_POSITION_UNKNOWN",
       "SDL_CAMERA_POSITION_FRONT_FACING": "CAMERA_POSITION_FRONT_FACING",
       "SDL_CAMERA_POSITION_BACK_FACING": "CAMERA_POSITION_BACK_FACING"
+    },
+    "SDL_InitStatus": {
+      "SDL_INIT_STATUS_UNINITIALIZED": "INIT_STATUS_UNINITIALIZED",
+      "SDL_INIT_STATUS_INITIALIZING": "INIT_STATUS_INITIALIZING",
+      "SDL_INIT_STATUS_INITIALIZED": "INIT_STATUS_INITIALIZED",
+      "SDL_INIT_STATUS_UNINITIALIZING": "INIT_STATUS_UNINITIALIZING"
+    },
+    "SDL_ThreadPriority": {
+      "SDL_THREAD_PRIORITY_LOW": "THREAD_PRIORITY_LOW",
+      "SDL_THREAD_PRIORITY_NORMAL": "THREAD_PRIORITY_NORMAL",
+      "SDL_THREAD_PRIORITY_HIGH": "THREAD_PRIORITY_HIGH",
+      "SDL_THREAD_PRIORITY_TIME_CRITICAL": "THREAD_PRIORITY_TIME_CRITICAL"
+    },
+    "SDL_ThreadState": {
+      "SDL_THREAD_UNKNOWN": "THREAD_UNKNOWN",
+      "SDL_THREAD_ALIVE": "THREAD_ALIVE",
+      "SDL_THREAD_DETACHED": "THREAD_DETACHED",
+      "SDL_THREAD_COMPLETE": "THREAD_COMPLETE"
+    },
+    "SDL_ProcessIO": {
+      "SDL_PROCESS_STDIO_INHERITED": "PROCESS_STDIO_INHERITED",
+      "SDL_PROCESS_STDIO_NULL": "PROCESS_STDIO_NULL",
+      "SDL_PROCESS_STDIO_APP": "PROCESS_STDIO_APP",
+      "SDL_PROCESS_STDIO_REDIRECT": "PROCESS_STDIO_REDIRECT"
+    },
+    "SDL_Sandbox": {
+      "SDL_SANDBOX_NONE": "SANDBOX_NONE",
+      "SDL_SANDBOX_UNKNOWN_CONTAINER": "SANDBOX_UNKNOWN_CONTAINER",
+      "SDL_SANDBOX_FLATPAK": "SANDBOX_FLATPAK",
+      "SDL_SANDBOX_SNAP": "SANDBOX_SNAP",
+      "SDL_SANDBOX_MACOS": "SANDBOX_MACOS"
+    },
+    "SDL_FileDialogType": {
+      "SDL_FILEDIALOG_OPENFILE": "FILEDIALOG_OPENFILE",
+      "SDL_FILEDIALOG_SAVEFILE": "FILEDIALOG_SAVEFILE",
+      "SDL_FILEDIALOG_OPENFOLDER": "FILEDIALOG_OPENFOLDER"
     }
   },
   "structs": {
@@ -2582,6 +2737,25 @@
       "height",
       "framerate_numerator",
       "framerate_denominator"
+    ],
+    "SDL_AtomicInt": [
+      "value"
+    ],
+    "SDL_InitState": [
+      "status",
+      "thread",
+      "reserved"
+    ],
+    "SDL_AtomicU32": [
+      "value"
+    ],
+    "SDL_Locale": [
+      "language",
+      "country"
+    ],
+    "SDL_DialogFileFilter": [
+      "name",
+      "pattern"
     ]
   },
   "field_names": {
@@ -3256,6 +3430,11 @@
     "SDL_PEN_TOUCHID": "uint64_t",
     "SDL_STANDARD_GRAVITY": "float",
     "SDL_GLOB_CASEINSENSITIVE": "uint32_t",
-    "SDL_AUDIO_DEVICE_DEFAULT_RECORDING": "uint32_t"
+    "SDL_AUDIO_DEVICE_DEFAULT_RECORDING": "uint32_t",
+    "SDL_TRAYENTRY_BUTTON": "uint32_t",
+    "SDL_TRAYENTRY_CHECKBOX": "uint32_t",
+    "SDL_TRAYENTRY_SUBMENU": "uint32_t",
+    "SDL_TRAYENTRY_DISABLED": "uint32_t",
+    "SDL_TRAYENTRY_CHECKED": "uint32_t"
   }
 }

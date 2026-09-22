@@ -1,6 +1,6 @@
 # План полной привязки SDL3
 
-Актуализирован 21 сентября 2026. База: SDL 3.2.18, daScript
+Актуализирован 22 сентября 2026. База: SDL 3.2.18, daScript
 `35bf260c0d8a79b94c64005bd3d2435adcf7e261`, Windows x64/MSVC.
 Текущее покрытие — [api-coverage.md](api-coverage.md); точные декларации и
 платформенные guards — [реестр заголовков](generated/api-windows-x64-msvc.md).
@@ -35,8 +35,19 @@ interpreter/AOT/consumer проверки. [Результаты и исключ
 
 ## Очередь
 
-Текущий приоритет по запросу пользователя — [Web / Emscripten и HTML-примеры](web-roadmap.md).
-P7 временно отложен. Первый Web bootstrap собран: 65 SDL raw-функций, десять
+Текущий проход по P7 завершён для активных Windows-деклараций.
+Первый раздел: [Synchronization](synchronization.md), 28/28 функций SDL_mutex.h;
+Thread/TLS (12/12) и Atomic (15/15): [контракты](thread-atomic.md);
+Process/LoadSO (9/9 + 3/3): [контракты](process-loadso.md).
+System/Power/Locale/Dialog/Tray: [ещё 42 raw функции](platform-services.md).
+P7: все 109 активных Windows-деклараций подключены; проверка интерактивных Dialog
+и остальных платформ остаётся отдельной. Следующий раздел деклараций — P8.
+Локальная проверка 22 сентября: P7 interpreter/census 10/10; основные gates 7/7;
+baseline/CppGenBind/AOT и metadata 29/29. После исправления Process-примера и
+добавления argv с пробелами/кавычками его шесть backend/AOT проверок повторены успешно.
+Consumer собран с выключенными LLVM/Clang/Python; примеры 81–85 прошли, включая
+исправленный пример 83. Production-конфигурация восстановлена, freshness прошёл.
+[Web / Emscripten и HTML-примеры](web-roadmap.md) остаются отдельным продолжением. Первый Web bootstrap собран: 65 SDL raw-функций, десять
 HTML-страниц на SDL Renderer/WebGL и штатном dasOpenGL, проверки Edge/Firefox. Полный профиль,
 остальные примеры и AOT остаются в web-roadmap; SDL_GPU не поддерживается этим backend.
 
@@ -69,7 +80,7 @@ Camera: [15/15 raw](camera.md), dummy discovery/error contracts; далее P7. 
 | P4, основной API подключён | Filesystem 11/11; IOStream 46 raw + text adapter (IOvprintf pending); Storage 17/17; AsyncIO 11/11 | EOF/short read/error, retained buffers, completion/cancellation, shutdown |
 | P5, raw подключён | Audio 56/56; Camera 15/15 | Copy/borrow, release frames, callbacks, реальные устройства отдельно от dummy |
 | P6, сопровождение | GPU другие платформы и backend ограничения | Платформенные сборки, ABI и output tests; отдельный план ниже |
-| P7 | Threads/synchronization, Process/LoadSO, Power/Dialog/Tray/Locale/System | Context thread affinity, retained callbacks, отмена, shutdown |
+| P7, raw подключён | 109/109 активных Windows функций: Threads/synchronization, Process/LoadSO, Power/Dialog/Tray/Locale/System | Native callbacks, defer, Result/Option; интерактивные Dialog и другие OS отдельно |
 | P8 | Platform/CPUInfo/Stdinc/GUID, macros/inlines, GL/Vulkan/Metal integration (включая 20 GL/EGL функций Video, явно перенесённых из P2) | Явные exclusions, calling convention и startup host bridges |
 
 P0 продолжается поперёк очереди: Linux/macOS census и реальные сборки,
@@ -87,7 +98,7 @@ cleanup-callback остаётся pending; ограничения и найде�
 Video discovery: 31 raw запроса и copy/ref adapters реализованы,
 [контракты](video-discovery.md). Создание и состояние окон также реализованы: [контракты](window-state.md).
 Fullscreen/surfaces и прочие оконные операции реализованы с ограничениями
-[window-io.md](window-io.md). Video: 89/109; оставшиеся 20 GL/EGL функций явно перенесены в P8. Hit-test, Rect и Clipboard подключены; [контракт](rect-clipboard-hittest.md). После Web следующий основной раздел — P7 (Threads/synchronization, Process/LoadSO и системные API); исключение IOvprintf и остаток P3 перечислены выше. Миграция [Result/Option boost API](result-option-plan.md) завершена и локально проверена. P2 не переоткрывается; GL/EGL остаётся в P8.
+[window-io.md](window-io.md). Video: 89/109; оставшиеся 20 GL/EGL функций явно перенесены в P8. Hit-test, Rect и Clipboard подключены; [контракт](rect-clipboard-hittest.md). P7 подключён в Windows census; следующий основной раздел — P8; исключение IOvprintf и остаток P3 перечислены выше. Миграция [Result/Option boost API](result-option-plan.md) завершена и локально проверена. P2 не переоткрывается; GL/EGL остаётся в P8.
 Software renderer/primitives: ещё 10 raw функций; [контракт](renderer-primitives.md).
 Состояние Renderer (viewport/clip/scale/output): 10 raw функций и ref adapters; [контракт](renderer-state.md).
 Renderer queries/logical presentation: 10 raw функций, все режимы и преобразование координат; [контракт](renderer-presentation.md).

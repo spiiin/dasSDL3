@@ -67,6 +67,12 @@ addEnumeration(new Enumeration_SDL_AsyncIOTaskType());
 addEnumeration(new Enumeration_SDL_AsyncIOResult());
 addEnumeration(new Enumeration_SDL_AudioFormat());
 addEnumeration(new Enumeration_SDL_CameraPosition());
+addEnumeration(new Enumeration_SDL_InitStatus());
+addEnumeration(new Enumeration_SDL_ThreadPriority());
+addEnumeration(new Enumeration_SDL_ThreadState());
+addEnumeration(new Enumeration_SDL_ProcessIO());
+addEnumeration(new Enumeration_SDL_Sandbox());
+addEnumeration(new Enumeration_SDL_FileDialogType());
 addAnnotation(new DummyTypeAnnotation("SDL_Window", "SDL_Window", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Renderer", "SDL_Renderer", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Surface", "SDL_Surface", 1, 1));
@@ -99,6 +105,16 @@ addAnnotation(new DummyTypeAnnotation("SDL_Storage", "SDL_Storage", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_AsyncIO", "SDL_AsyncIO", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_AsyncIOQueue", "SDL_AsyncIOQueue", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Camera", "SDL_Camera", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_Mutex", "SDL_Mutex", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_RWLock", "SDL_RWLock", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_Semaphore", "SDL_Semaphore", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_Condition", "SDL_Condition", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_Thread", "SDL_Thread", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_Process", "SDL_Process", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_SharedObject", "SDL_SharedObject", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_Tray", "SDL_Tray", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_TrayMenu", "SDL_TrayMenu", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_TrayEntry", "SDL_TrayEntry", 1, 1));
 addAnnotation(new SDL_GPUViewportAnnotation(lib));
 addAnnotation(new SDL_GPUIndirectDrawCommandAnnotation(lib));
 addAnnotation(new SDL_GPUIndexedIndirectDrawCommandAnnotation(lib));
@@ -190,6 +206,11 @@ addAnnotation(new SDL_IOStreamInterfaceAnnotation(lib));
 addAnnotation(new SDL_StorageInterfaceAnnotation(lib));
 addAnnotation(new SDL_AsyncIOOutcomeAnnotation(lib));
 addAnnotation(new SDL_CameraSpecAnnotation(lib));
+addAnnotation(new SDL_AtomicIntAnnotation(lib));
+addAnnotation(new SDL_InitStateAnnotation(lib));
+addAnnotation(new SDL_AtomicU32Annotation(lib));
+addAnnotation(new SDL_LocaleAnnotation(lib));
+addAnnotation(new SDL_DialogFileFilterAnnotation(lib));
 addConstant(*this, "SDL_GPU_FILTER_NEAREST", static_cast<uint32_t>(SDL_GPU_FILTER_NEAREST));
 addConstant(*this, "SDL_GPU_FILTER_LINEAR", static_cast<uint32_t>(SDL_GPU_FILTER_LINEAR));
 addConstant(*this, "SDL_GPU_PRESENTMODE_VSYNC", static_cast<uint32_t>(SDL_GPU_PRESENTMODE_VSYNC));
@@ -846,6 +867,11 @@ addConstant(*this, "SDL_PEN_TOUCHID", static_cast<uint64_t>(SDL_PEN_TOUCHID));
 addConstant(*this, "SDL_STANDARD_GRAVITY", static_cast<float>(SDL_STANDARD_GRAVITY));
 addConstant(*this, "SDL_GLOB_CASEINSENSITIVE", static_cast<uint32_t>(SDL_GLOB_CASEINSENSITIVE));
 addConstant(*this, "SDL_AUDIO_DEVICE_DEFAULT_RECORDING", static_cast<uint32_t>(SDL_AUDIO_DEVICE_DEFAULT_RECORDING));
+addConstant(*this, "SDL_TRAYENTRY_BUTTON", static_cast<uint32_t>(SDL_TRAYENTRY_BUTTON));
+addConstant(*this, "SDL_TRAYENTRY_CHECKBOX", static_cast<uint32_t>(SDL_TRAYENTRY_CHECKBOX));
+addConstant(*this, "SDL_TRAYENTRY_SUBMENU", static_cast<uint32_t>(SDL_TRAYENTRY_SUBMENU));
+addConstant(*this, "SDL_TRAYENTRY_DISABLED", static_cast<uint32_t>(SDL_TRAYENTRY_DISABLED));
+addConstant(*this, "SDL_TRAYENTRY_CHECKED", static_cast<uint32_t>(SDL_TRAYENTRY_CHECKED));
 // Uint32 (SDL_GPUTextureFormat) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_GPUTextureFormatTexelBlockSize)>(*this, lib, "SDL_GPUTextureFormatTexelBlockSize", SideEffects::worstDefault, "SDL_GPUTextureFormatTexelBlockSize")->args({"format"});
 // Uint32 (SDL_GPUTextureFormat, Uint32, Uint32, Uint32) __attribute__((cdecl))
@@ -2550,3 +2576,221 @@ addExtern<DAS_BIND_FUN(SDL_AcquireCameraFrame)>(*this, lib, "SDL_AcquireCameraFr
 addExtern<DAS_BIND_FUN(SDL_ReleaseCameraFrame)>(*this, lib, "SDL_ReleaseCameraFrame", SideEffects::worstDefault, "SDL_ReleaseCameraFrame")->args({"camera", "frame"});
 // void (SDL_Camera *) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_CloseCamera)>(*this, lib, "SDL_CloseCamera", SideEffects::worstDefault, "SDL_CloseCamera")->args({"camera"});
+// SDL_Mutex *(void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateMutex)>(*this, lib, "SDL_CreateMutex", SideEffects::worstDefault, "SDL_CreateMutex");
+// void (SDL_Mutex *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_LockMutex)>(*this, lib, "SDL_LockMutex", SideEffects::worstDefault, "SDL_LockMutex")->args({"mutex"});
+// bool (SDL_Mutex *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_TryLockMutex)>(*this, lib, "SDL_TryLockMutex", SideEffects::worstDefault, "SDL_TryLockMutex")->args({"mutex"});
+// void (SDL_Mutex *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_UnlockMutex)>(*this, lib, "SDL_UnlockMutex", SideEffects::worstDefault, "SDL_UnlockMutex")->args({"mutex"});
+// void (SDL_Mutex *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_DestroyMutex)>(*this, lib, "SDL_DestroyMutex", SideEffects::worstDefault, "SDL_DestroyMutex")->args({"mutex"});
+// SDL_RWLock *(void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateRWLock)>(*this, lib, "SDL_CreateRWLock", SideEffects::worstDefault, "SDL_CreateRWLock");
+// void (SDL_RWLock *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_LockRWLockForReading)>(*this, lib, "SDL_LockRWLockForReading", SideEffects::worstDefault, "SDL_LockRWLockForReading")->args({"rwlock"});
+// void (SDL_RWLock *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_LockRWLockForWriting)>(*this, lib, "SDL_LockRWLockForWriting", SideEffects::worstDefault, "SDL_LockRWLockForWriting")->args({"rwlock"});
+// bool (SDL_RWLock *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_TryLockRWLockForReading)>(*this, lib, "SDL_TryLockRWLockForReading", SideEffects::worstDefault, "SDL_TryLockRWLockForReading")->args({"rwlock"});
+// bool (SDL_RWLock *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_TryLockRWLockForWriting)>(*this, lib, "SDL_TryLockRWLockForWriting", SideEffects::worstDefault, "SDL_TryLockRWLockForWriting")->args({"rwlock"});
+// void (SDL_RWLock *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_UnlockRWLock)>(*this, lib, "SDL_UnlockRWLock", SideEffects::worstDefault, "SDL_UnlockRWLock")->args({"rwlock"});
+// void (SDL_RWLock *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_DestroyRWLock)>(*this, lib, "SDL_DestroyRWLock", SideEffects::worstDefault, "SDL_DestroyRWLock")->args({"rwlock"});
+// SDL_Semaphore *(Uint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateSemaphore)>(*this, lib, "SDL_CreateSemaphore", SideEffects::worstDefault, "SDL_CreateSemaphore")->args({"initial_value"});
+// void (SDL_Semaphore *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_DestroySemaphore)>(*this, lib, "SDL_DestroySemaphore", SideEffects::worstDefault, "SDL_DestroySemaphore")->args({"sem"});
+// void (SDL_Semaphore *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WaitSemaphore)>(*this, lib, "SDL_WaitSemaphore", SideEffects::worstDefault, "SDL_WaitSemaphore")->args({"sem"});
+// bool (SDL_Semaphore *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_TryWaitSemaphore)>(*this, lib, "SDL_TryWaitSemaphore", SideEffects::worstDefault, "SDL_TryWaitSemaphore")->args({"sem"});
+// bool (SDL_Semaphore *, Sint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WaitSemaphoreTimeout)>(*this, lib, "SDL_WaitSemaphoreTimeout", SideEffects::worstDefault, "SDL_WaitSemaphoreTimeout")->args({"sem", "timeoutMS"});
+// void (SDL_Semaphore *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SignalSemaphore)>(*this, lib, "SDL_SignalSemaphore", SideEffects::worstDefault, "SDL_SignalSemaphore")->args({"sem"});
+// Uint32 (SDL_Semaphore *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSemaphoreValue)>(*this, lib, "SDL_GetSemaphoreValue", SideEffects::worstDefault, "SDL_GetSemaphoreValue")->args({"sem"});
+// SDL_Condition *(void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateCondition)>(*this, lib, "SDL_CreateCondition", SideEffects::worstDefault, "SDL_CreateCondition");
+// void (SDL_Condition *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_DestroyCondition)>(*this, lib, "SDL_DestroyCondition", SideEffects::worstDefault, "SDL_DestroyCondition")->args({"cond"});
+// void (SDL_Condition *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SignalCondition)>(*this, lib, "SDL_SignalCondition", SideEffects::worstDefault, "SDL_SignalCondition")->args({"cond"});
+// void (SDL_Condition *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_BroadcastCondition)>(*this, lib, "SDL_BroadcastCondition", SideEffects::worstDefault, "SDL_BroadcastCondition")->args({"cond"});
+// void (SDL_Condition *, SDL_Mutex *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WaitCondition)>(*this, lib, "SDL_WaitCondition", SideEffects::worstDefault, "SDL_WaitCondition")->args({"cond", "mutex"});
+// bool (SDL_Condition *, SDL_Mutex *, Sint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WaitConditionTimeout)>(*this, lib, "SDL_WaitConditionTimeout", SideEffects::worstDefault, "SDL_WaitConditionTimeout")->args({"cond", "mutex", "timeoutMS"});
+// bool (SDL_InitState *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ShouldInit)>(*this, lib, "SDL_ShouldInit", SideEffects::worstDefault, "SDL_ShouldInit")->args({"state"});
+// bool (SDL_InitState *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ShouldQuit)>(*this, lib, "SDL_ShouldQuit", SideEffects::worstDefault, "SDL_ShouldQuit")->args({"state"});
+// void (SDL_InitState *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetInitialized)>(*this, lib, "SDL_SetInitialized", SideEffects::worstDefault, "SDL_SetInitialized")->args({"state", "initialized"});
+// SDL_Thread *(SDL_ThreadFunction, const char *, void *, SDL_FunctionPointer, SDL_FunctionPointer) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateThreadRuntime)>(*this, lib, "SDL_CreateThreadRuntime", SideEffects::worstDefault, "SDL_CreateThreadRuntimeAddress")->args({"fn", "name", "data", "pfnBeginThread", "pfnEndThread"});
+// SDL_Thread *(SDL_PropertiesID, SDL_FunctionPointer, SDL_FunctionPointer) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateThreadWithPropertiesRuntime)>(*this, lib, "SDL_CreateThreadWithPropertiesRuntime", SideEffects::worstDefault, "SDL_CreateThreadWithPropertiesRuntimeAddress")->args({"props", "pfnBeginThread", "pfnEndThread"});
+// const char *(SDL_Thread *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetThreadName)>(*this, lib, "SDL_GetThreadName", SideEffects::worstDefault, "SDL_GetThreadName")->args({"thread"});
+// SDL_ThreadID (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetCurrentThreadID)>(*this, lib, "SDL_GetCurrentThreadID", SideEffects::worstDefault, "SDL_GetCurrentThreadID");
+// SDL_ThreadID (SDL_Thread *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetThreadID)>(*this, lib, "SDL_GetThreadID", SideEffects::worstDefault, "SDL_GetThreadID")->args({"thread"});
+// bool (SDL_ThreadPriority) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetCurrentThreadPriority)>(*this, lib, "SDL_SetCurrentThreadPriority", SideEffects::worstDefault, "SDL_SetCurrentThreadPriority")->args({"priority"});
+// void (SDL_Thread *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WaitThread)>(*this, lib, "SDL_WaitThread", SideEffects::worstDefault, "SDL_WaitThread")->args({"thread", "status"});
+// SDL_ThreadState (SDL_Thread *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetThreadState)>(*this, lib, "SDL_GetThreadState", SideEffects::worstDefault, "SDL_GetThreadState")->args({"thread"});
+// void (SDL_Thread *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_DetachThread)>(*this, lib, "SDL_DetachThread", SideEffects::worstDefault, "SDL_DetachThread")->args({"thread"});
+// void *(SDL_TLSID *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetTLS)>(*this, lib, "SDL_GetTLS", SideEffects::worstDefault, "SDL_GetTLS")->args({"id"});
+// bool (SDL_TLSID *, const void *, SDL_TLSDestructorCallback) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetTLS)>(*this, lib, "SDL_SetTLS", SideEffects::worstDefault, "SDL_SetTLSAddress")->args({"id", "value", "destructor"});
+// void (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CleanupTLS)>(*this, lib, "SDL_CleanupTLS", SideEffects::worstDefault, "SDL_CleanupTLS");
+// bool (SDL_SpinLock *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_TryLockSpinlock)>(*this, lib, "SDL_TryLockSpinlock", SideEffects::worstDefault, "SDL_TryLockSpinlock")->args({"lock"});
+// void (SDL_SpinLock *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_LockSpinlock)>(*this, lib, "SDL_LockSpinlock", SideEffects::worstDefault, "SDL_LockSpinlock")->args({"lock"});
+// void (SDL_SpinLock *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_UnlockSpinlock)>(*this, lib, "SDL_UnlockSpinlock", SideEffects::worstDefault, "SDL_UnlockSpinlock")->args({"lock"});
+// void (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_MemoryBarrierReleaseFunction)>(*this, lib, "SDL_MemoryBarrierReleaseFunction", SideEffects::worstDefault, "SDL_MemoryBarrierReleaseFunction");
+// void (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_MemoryBarrierAcquireFunction)>(*this, lib, "SDL_MemoryBarrierAcquireFunction", SideEffects::worstDefault, "SDL_MemoryBarrierAcquireFunction");
+// bool (SDL_AtomicInt *, int, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CompareAndSwapAtomicInt)>(*this, lib, "SDL_CompareAndSwapAtomicInt", SideEffects::worstDefault, "SDL_CompareAndSwapAtomicInt")->args({"a", "oldval", "newval"});
+// int (SDL_AtomicInt *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetAtomicInt)>(*this, lib, "SDL_SetAtomicInt", SideEffects::worstDefault, "SDL_SetAtomicInt")->args({"a", "v"});
+// int (SDL_AtomicInt *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetAtomicInt)>(*this, lib, "SDL_GetAtomicInt", SideEffects::worstDefault, "SDL_GetAtomicInt")->args({"a"});
+// int (SDL_AtomicInt *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_AddAtomicInt)>(*this, lib, "SDL_AddAtomicInt", SideEffects::worstDefault, "SDL_AddAtomicInt")->args({"a", "v"});
+// bool (SDL_AtomicU32 *, Uint32, Uint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CompareAndSwapAtomicU32)>(*this, lib, "SDL_CompareAndSwapAtomicU32", SideEffects::worstDefault, "SDL_CompareAndSwapAtomicU32")->args({"a", "oldval", "newval"});
+// Uint32 (SDL_AtomicU32 *, Uint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetAtomicU32)>(*this, lib, "SDL_SetAtomicU32", SideEffects::worstDefault, "SDL_SetAtomicU32")->args({"a", "v"});
+// Uint32 (SDL_AtomicU32 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetAtomicU32)>(*this, lib, "SDL_GetAtomicU32", SideEffects::worstDefault, "SDL_GetAtomicU32")->args({"a"});
+// bool (void **, void *, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CompareAndSwapAtomicPointer)>(*this, lib, "SDL_CompareAndSwapAtomicPointer", SideEffects::worstDefault, "SDL_CompareAndSwapAtomicPointer")->args({"a", "oldval", "newval"});
+// void *(void **, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetAtomicPointer)>(*this, lib, "SDL_SetAtomicPointer", SideEffects::worstDefault, "SDL_SetAtomicPointer")->args({"a", "v"});
+// void *(void **) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetAtomicPointer)>(*this, lib, "SDL_GetAtomicPointer", SideEffects::worstDefault, "SDL_GetAtomicPointer")->args({"a"});
+// SDL_Process *(const char *const *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateProcess)>(*this, lib, "SDL_CreateProcess", SideEffects::worstDefault, "SDL_CreateProcess")->args({"args", "pipe_stdio"});
+// SDL_Process *(SDL_PropertiesID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateProcessWithProperties)>(*this, lib, "SDL_CreateProcessWithProperties", SideEffects::worstDefault, "SDL_CreateProcessWithProperties")->args({"props"});
+// SDL_PropertiesID (SDL_Process *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetProcessProperties)>(*this, lib, "SDL_GetProcessProperties", SideEffects::worstDefault, "SDL_GetProcessProperties")->args({"process"});
+// void *(SDL_Process *, size_t *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ReadProcess)>(*this, lib, "SDL_ReadProcess", SideEffects::worstDefault, "SDL_ReadProcess")->args({"process", "datasize", "exitcode"});
+// SDL_IOStream *(SDL_Process *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetProcessInput)>(*this, lib, "SDL_GetProcessInput", SideEffects::worstDefault, "SDL_GetProcessInput")->args({"process"});
+// SDL_IOStream *(SDL_Process *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetProcessOutput)>(*this, lib, "SDL_GetProcessOutput", SideEffects::worstDefault, "SDL_GetProcessOutput")->args({"process"});
+// bool (SDL_Process *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_KillProcess)>(*this, lib, "SDL_KillProcess", SideEffects::worstDefault, "SDL_KillProcess")->args({"process", "force"});
+// bool (SDL_Process *, bool, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_WaitProcess)>(*this, lib, "SDL_WaitProcess", SideEffects::worstDefault, "SDL_WaitProcess")->args({"process", "block", "exitcode"});
+// void (SDL_Process *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_DestroyProcess)>(*this, lib, "SDL_DestroyProcess", SideEffects::worstDefault, "SDL_DestroyProcess")->args({"process"});
+// SDL_SharedObject *(const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_LoadObject)>(*this, lib, "SDL_LoadObject", SideEffects::worstDefault, "SDL_LoadObject")->args({"sofile"});
+// SDL_FunctionPointer (SDL_SharedObject *, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_LoadFunction)>(*this, lib, "SDL_LoadFunction", SideEffects::worstDefault, "SDL_LoadFunctionAddress")->args({"handle", "name"});
+// void (SDL_SharedObject *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_UnloadObject)>(*this, lib, "SDL_UnloadObject", SideEffects::worstDefault, "SDL_UnloadObject")->args({"handle"});
+// void (SDL_TrayEntry *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ClickTrayEntry)>(*this, lib, "SDL_ClickTrayEntry", SideEffects::worstDefault, "SDL_ClickTrayEntry")->args({"entry"});
+// SDL_Tray *(SDL_Surface *, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateTray)>(*this, lib, "SDL_CreateTray", SideEffects::worstDefault, "SDL_CreateTray")->args({"icon", "tooltip"});
+// SDL_TrayMenu *(SDL_Tray *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateTrayMenu)>(*this, lib, "SDL_CreateTrayMenu", SideEffects::worstDefault, "SDL_CreateTrayMenu")->args({"tray"});
+// SDL_TrayMenu *(SDL_TrayEntry *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_CreateTraySubmenu)>(*this, lib, "SDL_CreateTraySubmenu", SideEffects::worstDefault, "SDL_CreateTraySubmenu")->args({"entry"});
+// void (SDL_Tray *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_DestroyTray)>(*this, lib, "SDL_DestroyTray", SideEffects::worstDefault, "SDL_DestroyTray")->args({"tray"});
+// bool (SDL_DisplayID, int *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetDXGIOutputInfo)>(*this, lib, "SDL_GetDXGIOutputInfo", SideEffects::worstDefault, "SDL_GetDXGIOutputInfo")->args({"displayID", "adapterIndex", "outputIndex"});
+// int (SDL_DisplayID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetDirect3D9AdapterIndex)>(*this, lib, "SDL_GetDirect3D9AdapterIndex", SideEffects::worstDefault, "SDL_GetDirect3D9AdapterIndex")->args({"displayID"});
+// SDL_PowerState (int *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetPowerInfo)>(*this, lib, "SDL_GetPowerInfo", SideEffects::worstDefault, "SDL_GetPowerInfo")->args({"seconds", "percent"});
+// SDL_Locale **(int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetPreferredLocales)>(*this, lib, "SDL_GetPreferredLocales", SideEffects::worstDefault, "SDL_GetPreferredLocales")->args({"count"});
+// SDL_Sandbox (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSandbox)>(*this, lib, "SDL_GetSandbox", SideEffects::worstDefault, "SDL_GetSandbox");
+// const SDL_TrayEntry **(SDL_TrayMenu *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetTrayEntries)>(*this, lib, "SDL_GetTrayEntries", SideEffects::worstDefault, "SDL_GetTrayEntries")->args({"menu", "count"});
+// bool (SDL_TrayEntry *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetTrayEntryChecked)>(*this, lib, "SDL_GetTrayEntryChecked", SideEffects::worstDefault, "SDL_GetTrayEntryChecked")->args({"entry"});
+// bool (SDL_TrayEntry *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetTrayEntryEnabled)>(*this, lib, "SDL_GetTrayEntryEnabled", SideEffects::worstDefault, "SDL_GetTrayEntryEnabled")->args({"entry"});
+// const char *(SDL_TrayEntry *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetTrayEntryLabel)>(*this, lib, "SDL_GetTrayEntryLabel", SideEffects::worstDefault, "SDL_GetTrayEntryLabel")->args({"entry"});
+// SDL_TrayMenu *(SDL_TrayEntry *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetTrayEntryParent)>(*this, lib, "SDL_GetTrayEntryParent", SideEffects::worstDefault, "SDL_GetTrayEntryParent")->args({"entry"});
+// SDL_TrayMenu *(SDL_Tray *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetTrayMenu)>(*this, lib, "SDL_GetTrayMenu", SideEffects::worstDefault, "SDL_GetTrayMenu")->args({"tray"});
+// SDL_TrayEntry *(SDL_TrayMenu *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetTrayMenuParentEntry)>(*this, lib, "SDL_GetTrayMenuParentEntry", SideEffects::worstDefault, "SDL_GetTrayMenuParentEntry")->args({"menu"});
+// SDL_Tray *(SDL_TrayMenu *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetTrayMenuParentTray)>(*this, lib, "SDL_GetTrayMenuParentTray", SideEffects::worstDefault, "SDL_GetTrayMenuParentTray")->args({"menu"});
+// SDL_TrayMenu *(SDL_TrayEntry *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetTraySubmenu)>(*this, lib, "SDL_GetTraySubmenu", SideEffects::worstDefault, "SDL_GetTraySubmenu")->args({"entry"});
+// SDL_TrayEntry *(SDL_TrayMenu *, int, const char *, SDL_TrayEntryFlags) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_InsertTrayEntryAt)>(*this, lib, "SDL_InsertTrayEntryAt", SideEffects::worstDefault, "SDL_InsertTrayEntryAt")->args({"menu", "pos", "label", "flags"});
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_IsTV)>(*this, lib, "SDL_IsTV", SideEffects::worstDefault, "SDL_IsTV");
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_IsTablet)>(*this, lib, "SDL_IsTablet", SideEffects::worstDefault, "SDL_IsTablet");
+// void (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_OnApplicationDidEnterBackground)>(*this, lib, "SDL_OnApplicationDidEnterBackground", SideEffects::worstDefault, "SDL_OnApplicationDidEnterBackground");
+// void (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_OnApplicationDidEnterForeground)>(*this, lib, "SDL_OnApplicationDidEnterForeground", SideEffects::worstDefault, "SDL_OnApplicationDidEnterForeground");
+// void (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_OnApplicationDidReceiveMemoryWarning)>(*this, lib, "SDL_OnApplicationDidReceiveMemoryWarning", SideEffects::worstDefault, "SDL_OnApplicationDidReceiveMemoryWarning");
+// void (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_OnApplicationWillEnterBackground)>(*this, lib, "SDL_OnApplicationWillEnterBackground", SideEffects::worstDefault, "SDL_OnApplicationWillEnterBackground");
+// void (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_OnApplicationWillEnterForeground)>(*this, lib, "SDL_OnApplicationWillEnterForeground", SideEffects::worstDefault, "SDL_OnApplicationWillEnterForeground");
+// void (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_OnApplicationWillTerminate)>(*this, lib, "SDL_OnApplicationWillTerminate", SideEffects::worstDefault, "SDL_OnApplicationWillTerminate");
+// void (SDL_TrayEntry *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RemoveTrayEntry)>(*this, lib, "SDL_RemoveTrayEntry", SideEffects::worstDefault, "SDL_RemoveTrayEntry")->args({"entry"});
+// void (SDL_TrayEntry *, SDL_TrayCallback, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetTrayEntryCallback)>(*this, lib, "SDL_SetTrayEntryCallback", SideEffects::worstDefault, "SDL_SetTrayEntryCallbackAddress")->args({"entry", "callback", "userdata"});
+// void (SDL_TrayEntry *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetTrayEntryChecked)>(*this, lib, "SDL_SetTrayEntryChecked", SideEffects::worstDefault, "SDL_SetTrayEntryChecked")->args({"entry", "checked"});
+// void (SDL_TrayEntry *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetTrayEntryEnabled)>(*this, lib, "SDL_SetTrayEntryEnabled", SideEffects::worstDefault, "SDL_SetTrayEntryEnabled")->args({"entry", "enabled"});
+// void (SDL_TrayEntry *, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetTrayEntryLabel)>(*this, lib, "SDL_SetTrayEntryLabel", SideEffects::worstDefault, "SDL_SetTrayEntryLabel")->args({"entry", "label"});
+// void (SDL_Tray *, SDL_Surface *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetTrayIcon)>(*this, lib, "SDL_SetTrayIcon", SideEffects::worstDefault, "SDL_SetTrayIcon")->args({"tray", "icon"});
+// void (SDL_Tray *, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetTrayTooltip)>(*this, lib, "SDL_SetTrayTooltip", SideEffects::worstDefault, "SDL_SetTrayTooltip")->args({"tray", "tooltip"});
+// void (SDL_WindowsMessageHook, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetWindowsMessageHook)>(*this, lib, "SDL_SetWindowsMessageHook", SideEffects::worstDefault, "SDL_SetWindowsMessageHookAddress")->args({"callback", "userdata"});
+// void (SDL_X11EventHook, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetX11EventHook)>(*this, lib, "SDL_SetX11EventHook", SideEffects::worstDefault, "SDL_SetX11EventHookAddress")->args({"callback", "userdata"});
+// void (SDL_FileDialogType, SDL_DialogFileCallback, void *, SDL_PropertiesID) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ShowFileDialogWithProperties)>(*this, lib, "SDL_ShowFileDialogWithProperties", SideEffects::worstDefault, "SDL_ShowFileDialogWithPropertiesAddress")->args({"type", "callback", "userdata", "props"});
+// void (SDL_DialogFileCallback, void *, SDL_Window *, const SDL_DialogFileFilter *, int, const char *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ShowOpenFileDialog)>(*this, lib, "SDL_ShowOpenFileDialog", SideEffects::worstDefault, "SDL_ShowOpenFileDialogAddress")->args({"callback", "userdata", "window", "filters", "nfilters", "default_location", "allow_many"});
+// void (SDL_DialogFileCallback, void *, SDL_Window *, const char *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ShowOpenFolderDialog)>(*this, lib, "SDL_ShowOpenFolderDialog", SideEffects::worstDefault, "SDL_ShowOpenFolderDialogAddress")->args({"callback", "userdata", "window", "default_location", "allow_many"});
+// void (SDL_DialogFileCallback, void *, SDL_Window *, const SDL_DialogFileFilter *, int, const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ShowSaveFileDialog)>(*this, lib, "SDL_ShowSaveFileDialog", SideEffects::worstDefault, "SDL_ShowSaveFileDialogAddress")->args({"callback", "userdata", "window", "filters", "nfilters", "default_location"});
+// void (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_UpdateTrays)>(*this, lib, "SDL_UpdateTrays", SideEffects::worstDefault, "SDL_UpdateTrays");
