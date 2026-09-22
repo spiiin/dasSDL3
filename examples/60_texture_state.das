@@ -14,7 +14,7 @@ def render_example(renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; Sd
         if(!SDL_SetTextureScaleMode(texture,SDL_ScaleMode.SCALEMODE_NEAREST)) {return err(sdl_error("60_texture_state"),type<SdlUnit>)}
         if(!SDL_SetTextureColorModFloat(texture,0.3,0.8,1.0) || !SDL_SetTextureAlphaModFloat(texture,0.8)) {return err(sdl_error("60_texture_state"),type<SdlUnit>)}
         if(!SDL_SetRenderDrawColor(renderer,20u,25u,35u,255u) || !SDL_RenderClear(renderer)) {return err(sdl_error("60_texture_state"),type<SdlUnit>)}
-        var rect : SDL_FRect;rect.x=60.0;rect.y=20.0;rect.w=200.0;rect.h=200.0
+        var rect = SDL_FRect(x = 60.0, y = 20.0, w = 200.0, h = 200.0)
         draw_texture(renderer,texture,rect) |> sdl_try
         rendered=SDL_RenderPresent(renderer)
         if(!rendered) {return err(sdl_error("60_texture_state"),type<SdlUnit>)}

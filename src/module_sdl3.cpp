@@ -46,6 +46,7 @@
 #include "sdl3_renderer_presentation.h"
 #include "sdl3_texture_state.h"
 #include "sdl3_texture_transfer.h"
+#include "sdl3_pixel_views.h"
 #include "sdl3_renderer_yuv_blend.h"
 #include "sdl3_renderer_operations.h"
 #include "sdl3_renderer_final_api.h"
@@ -121,6 +122,13 @@ public:
         #else
         #include "generated/sdl3_functions.inc"
         #endif
+        addAnnotation(new SdlPixelViewAnnotation(lib));
+        addExtern<DAS_BIND_FUN(SDL_WithSurfacePixelsRGBA8)>(*this,lib,"SDL_WithSurfacePixelsRGBA8",SideEffects::worstDefault,"SDL_WithSurfacePixelsRGBA8");
+        addExtern<DAS_BIND_FUN(SDL_SetPixelRGBA8)>(*this,lib,"SDL_SetPixelRGBA8",SideEffects::worstDefault,"SDL_SetPixelRGBA8");
+        addExtern<DAS_BIND_FUN(SDL_PackRGBA8)>(*this,lib,"SDL_PackRGBA8",SideEffects::worstDefault,"SDL_PackRGBA8");
+        addExtern<DAS_BIND_FUN(SDL_WithPixelRowRGBA8)>(*this,lib,"SDL_WithPixelRowRGBA8",SideEffects::worstDefault,"SDL_WithPixelRowRGBA8");
+        addExtern<DAS_BIND_FUN(SDL_WithPixelBytesRGBA8)>(*this,lib,"SDL_WithPixelBytesRGBA8",SideEffects::worstDefault,"SDL_WithPixelBytesRGBA8");
+
         addExtern<DAS_BIND_FUN(SDL_SetWindowFullscreenModeRef)>(*this, lib, "SDL_SetWindowFullscreenModeRef", SideEffects::worstDefault, "SDL_SetWindowFullscreenModeRef");
         addExtern<DAS_BIND_FUN(SDL_SetWindowDesktopFullscreenMode)>(*this, lib, "SDL_SetWindowDesktopFullscreenMode", SideEffects::worstDefault, "SDL_SetWindowDesktopFullscreenMode");
         addExtern<DAS_BIND_FUN(SDL_GetWindowFullscreenModeCopy)>(*this, lib, "SDL_GetWindowFullscreenModeCopy", SideEffects::worstDefault, "SDL_GetWindowFullscreenModeCopy");

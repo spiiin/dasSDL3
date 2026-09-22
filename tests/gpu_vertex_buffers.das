@@ -18,8 +18,7 @@ def pixels(device : SDL_GPUDevice?; target : GpuTextureHandle; solid : bool) {
 // Test-local fixture, not a public rendering helper.
 def record(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle; target : GpuTextureHandle; var buffers : array<GpuBufferHandle>;
         var offsets : array<uint>; instances : uint; index : GpuIndexBufferHandle; count, first : uint; base : int) {
-    var black : SDL_FColor
-    black.a = 1.0
+    var black = SDL_FColor(a = 1.0)
     let scope_ok_1 = device |> with_gpu_command_buffer() $(command : GpuCommandBufferHandle) {
         let render_pass = unwrap_or(device |> gpu_begin_render_pass(command,target,uint2(0u),SDL_GPULoadOp.LOADOP_CLEAR,black), GpuRenderPassHandle(0ul))
         is_ok(device |> gpu_bind_pipeline(render_pass,pipeline))

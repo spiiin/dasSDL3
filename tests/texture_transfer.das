@@ -13,7 +13,7 @@ def main(smoke : bool) : int {
         let allocated=with_surface(4,4,SDL_PixelFormat.PIXELFORMAT_RGBA32) $(surface : SDL_Surface?) {
             let created=with_software_renderer(surface) $(renderer : SDL_Renderer?) {
                 let scoped=with_texture(renderer,SDL_PixelFormat.PIXELFORMAT_RGBA32,SDL_TextureAccess.TEXTUREACCESS_STATIC,4,4) $(texture : SDL_Texture?) {
-                    var full : SDL_Rect;full.w=4;full.h=4
+                    var full = SDL_Rect(w = 4, h = 4)
                     var source : array<uint8>;resize(source,64)
                     for(i in 0 .. 64) {source[i]=uint8(255)}
                     unsafe {verify(SDL_UpdateTexture(texture,null,addr(source[0]),16))}
@@ -37,7 +37,7 @@ def main(smoke : bool) : int {
                     verify(!SDL_SetTextureBlendMode(texture,SDL_BLENDMODE_INVALID))
                     verify(SDL_SetTextureColorMod(texture,255u,255u,255u) && SDL_SetTextureAlphaMod(texture,255u))
                     verify(is_ok(update_texture_rgba8(texture,full,source,16)))
-                    var rect : SDL_Rect;rect.x=1;rect.y=1;rect.w=2;rect.h=2
+                    var rect = SDL_Rect(x = 1, y = 1, w = 2, h = 2)
                     // Padded first row, no required trailing padding in the final row.
                     var patch : array<uint8>;resize(patch,20)
                     for(y in 0 .. 2) {for(x in 0 .. 2) {let i=y*12+x*4;patch[i]=uint8(20);patch[i+1]=uint8(40);patch[i+2]=uint8(60);patch[i+3]=uint8(255)}}
@@ -47,7 +47,7 @@ def main(smoke : bool) : int {
                         let inside=x>=1 && x<3 && y>=1 && y<3;let i=(y*4+x)*4
                         verify(image[i]==uint8(inside ? 20 : 255) && image[i+1]==uint8(inside ? 40 : 255) && image[i+2]==uint8(inside ? 60 : 255))
                     }}
-                    verify(!is_ok(update_texture_rgba8(texture,rect,patch,7)))
+                    verify(is_err(update_texture_rgba8(texture,rect,patch,7)))
                     verify(!is_ok(update_texture_rgba8(texture,rect,patch,2147483647)))
                     resize(patch,19);verify(!is_ok(update_texture_rgba8(texture,rect,patch,12)))
                     rect.x=2147483647;verify(!is_ok(update_texture_rgba8(texture,rect,source,16)))
@@ -60,7 +60,7 @@ def main(smoke : bool) : int {
                 } |> is_ok
                 verify(scoped)
                 let streamed=with_texture(renderer,SDL_PixelFormat.PIXELFORMAT_RGBA32,SDL_TextureAccess.TEXTUREACCESS_STREAMING,4,4) $(texture : SDL_Texture?) {
-                    var full : SDL_Rect;full.w=4;full.h=4
+                    var full = SDL_Rect(w = 4, h = 4)
                     unsafe {
                         var pixels : void?;var pitch : int
                         verify(SDL_LockTexture(texture,null,addr(pixels),addr(pitch)) && pixels!=null && pitch>=16)
@@ -89,7 +89,7 @@ def main(smoke : bool) : int {
                     verify(!with_texture_surface(texture,invalid) $(mapped : SDL_Surface?) {called=true
                         return sdl_ok()
                     } |> is_ok);verify(!called)
-                    var region : SDL_Rect;region.x=1;region.y=1;region.w=2;region.h=2
+                    var region = SDL_Rect(x = 1, y = 1, w = 2, h = 2)
                     let partial=with_texture_surface(texture,region) $(mapped : SDL_Surface?) {
                         var size : int2;verify(is_ok(surface_size(mapped,size)) && size==int2(2,2))
                         verify(SDL_FillSurfaceAll(mapped,SDL_MapSurfaceRGBA(mapped,90u,80u,70u,255u)))

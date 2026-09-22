@@ -15,6 +15,9 @@
 
 ## API
 
+- [Boost API ergonomics](api-ergonomics.md): named initialization, temporary pixel views, event iteration, descriptions and compound returns.
+
+
 - [Platform services (P7)](platform-services.md): System/Power/Locale, Tray ownership and native Dialog callbacks.
 
 - [Process and LoadSO](process-loadso.md): child output/status, ownership and native export lifetime.

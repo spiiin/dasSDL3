@@ -60,3 +60,23 @@ def public window_aspect_ratio(window : SDL_Window?) {
     var value = float2(low,high)
     return <- move_ok(value,type<SdlError>)
 }
+
+// Description only. Properties and a parent, when used, remain caller-owned.
+struct WindowOptions {
+    title : string = "SDL3"
+    size : int2 = int2(640,480)
+    flags : uint64 = SDL_WINDOW_RESIZABLE
+    position : int2 = int2(SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED)
+}
+def public with_window(settings : WindowOptions;
+        blk : block<(window : SDL_Window?) : $Result<auto(TT);SdlError>>) {
+    if(settings.size.x<=0 || settings.size.y<=0) {
+        return err(SdlError(operation="with_window",message="Window size must be positive"),type<TT>)
+    }
+    return <- with_window(settings.title,settings.size.x,settings.size.y,settings.flags) $(window : SDL_Window?) {
+        if(!SDL_SetWindowPosition(window,settings.position.x,settings.position.y)) {
+            return err(sdl_error("SDL_SetWindowPosition"),type<TT>)
+        }
+        return <- blk(window)
+    }
+}

@@ -32,11 +32,14 @@ def main(smoke : bool) : int {
         verify(is_err(camera_name(0u)))
         verify(SDL_GetCameraPosition(0u)==SDL_CameraPosition.CAMERA_POSITION_UNKNOWN)
         verify(camera_position(0u)==SDL_CameraPosition.CAMERA_POSITION_UNKNOWN)
-        var spec : SDL_CameraSpec
-        spec.format=SDL_PixelFormat.PIXELFORMAT_RGBA32
-        spec.colorspace=SDL_Colorspace.COLORSPACE_SRGB
-        spec.width=320;spec.height=240
-        spec.framerate_numerator=30;spec.framerate_denominator=1
+        var spec = SDL_CameraSpec(
+            format = SDL_PixelFormat.PIXELFORMAT_RGBA32,
+            colorspace = SDL_Colorspace.COLORSPACE_SRGB,
+            width = 320,
+            height = 240,
+            framerate_numerator = 30,
+            framerate_denominator = 1
+        )
         verify(spec.width==320 && spec.height==240 && spec.framerate_numerator==30 && spec.framerate_denominator==1)
         verify(SDL_OpenCamera(0u,null)==null)
         verify(is_err(open_camera(0u)) && is_err(open_camera(0u,spec)))

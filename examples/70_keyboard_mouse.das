@@ -26,9 +26,8 @@ def main(smoke : bool) : int {
             }
             let keys <- keyboard_state()
             if (keys[int(SDL_Scancode.SCANCODE_ESCAPE)]) { running=false }
-            var position : float2
-            let buttons=mouse_state(position)
-            if (frames==0) { print("Mouse: {position}; buttons: {buttons}\n") }
+            let mouse=mouse_state()
+            if (frames==0) { print("Mouse: {mouse.position}; buttons: {mouse.buttons}\n") }
             frames++
             if (smoke && frames>=3) { break }
             SDL_Delay(16u)

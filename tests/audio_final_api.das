@@ -30,6 +30,11 @@ def main(smoke : bool) : int {
         for(i in 0..4) {verify(raw[i]==pcm[i])}
         SDL_free(raw)
         let borrowed=SDL_IOFromConstMem(addr(wav[0]),uint64(length(wav)))
+        var complete <- load_wav_io(borrowed)
+        verify(is_ok(complete))
+        var sample <- move_unwrap(complete)
+        verify(sample.spec.freq==8000 && sample.spec.channels==1 && length(sample.bytes)==4)
+        verify(SDL_SeekIO(borrowed,0l,SDL_IOWhence.IO_SEEK_SET)==0l)
         var loaded <- load_wav_io(borrowed,spec)
         verify(is_ok(loaded) && SDL_GetIOSize(borrowed)==48l)
         var owned <- move_unwrap(loaded)

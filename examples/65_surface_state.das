@@ -9,7 +9,7 @@ def render_example(renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; Sd
         let surface : SDL_Surface? = with_surface(8,8,SDL_PixelFormat.PIXELFORMAT_RGBA32) |> sdl_use
         let key=SDL_MapSurfaceRGBA(surface,255u,0u,255u,255u)
         if(!SDL_FillSurfaceAll(surface,key)) {return err(sdl_error("65_surface_state"),type<SdlUnit>)}
-        var rect : SDL_Rect;rect.x=2;rect.y=2;rect.w=4;rect.h=4
+        var rect = SDL_Rect(x = 2, y = 2, w = 4, h = 4)
         let clipped = set_surface_clip(surface,rect) |> sdl_try
         if(!clipped) {return err(SdlError(operation="surface clip",message="Expected a nonempty clip"),type<SdlUnit>)}
         if(!SDL_FillSurfaceAll(surface,SDL_MapSurfaceRGBA(surface,255u,255u,255u,255u))) {return err(sdl_error("65_surface_state"),type<SdlUnit>)}

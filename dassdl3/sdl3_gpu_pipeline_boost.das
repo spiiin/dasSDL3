@@ -66,3 +66,18 @@ def public gpu_graphics_pipeline_descriptor(device : SDL_GPUDevice?; pipeline : 
     var value = info
     return <- move_ok(value,type<SdlError>)
 }
+
+// Owns descriptor arrays only; shader handles are borrowed until creation.
+struct GpuGraphicsPipelineOptions {
+    vertex : GpuShaderHandle
+    fragment : GpuShaderHandle
+    info : SDL_GPUGraphicsPipelineCreateInfo = gpu_graphics_pipeline_info()
+    buffers : array<SDL_GPUVertexBufferDescription>
+    attributes : array<SDL_GPUVertexAttribute>
+    colors : array<SDL_GPUColorTargetDescription>
+}
+def public with_gpu_graphics_pipeline(device : SDL_GPUDevice?; settings : GpuGraphicsPipelineOptions;
+        blk : block<(pipeline : GpuPipelineHandle) : $Result<auto(TT);SdlError>>) {
+    return <- with_gpu_graphics_pipeline(device,settings.vertex,settings.fragment,settings.info,
+        settings.buffers,settings.attributes,settings.colors,blk)
+}

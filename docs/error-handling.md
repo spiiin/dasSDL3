@@ -1,5 +1,7 @@
 # SDL results and deferred ownership
 
+`SdlError` contains the operation name and a copied message.
+
 Raw `SDL_*` keeps SDL signatures, sentinels and ownership. Boost operations use
 standard `daslib/result` and `daslib/option`, publicly re-exported by `sdl3_boost`.
 There are no legacy bool scopes, void-block scopes or `_result`/`_status_result`

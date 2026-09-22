@@ -87,6 +87,8 @@ def test_input(window : SDL_Window?) {
     verify(found.x==2 && found.y==3 && found.w==40 && found.h==20 && caret==7)
     set_text_input_area(window,rect,5) |> sdl_try
     text_input_area(window,found,caret) |> sdl_try
+    let area=text_input_area(window) |> sdl_try
+    verify(area.rect.w==found.w && area.cursor==caret)
     verify(caret==5)
     verify(is_err(text_input_area(null,found,caret)) && caret==0 && found.w==0)
     let props=SDL_CreateProperties();verify(props!=0u)

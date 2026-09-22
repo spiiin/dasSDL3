@@ -12,8 +12,7 @@ def main(smoke : bool) : int {
             if(surface==null){return err(sdl_error("56_window_surface"),type<SdlUnit>)}
             let color=SDL_MapSurfaceRGBA(surface,uint(30),uint(100),uint(180),uint(255))
             if(!SDL_FillSurfaceAll(surface,color)){return err(sdl_error("56_window_surface"),type<SdlUnit>)}
-            var rect : SDL_Rect
-            rect.x=40;rect.y=40;rect.w=100;rect.h=80
+            var rect = SDL_Rect(x = 40, y = 40, w = 100, h = 80)
             let accent=SDL_MapSurfaceRGBA(surface,uint(240),uint(180),uint(20),uint(255))
             if(!SDL_FillSurfaceRectRef(surface,rect,accent)){return err(sdl_error("56_window_surface"),type<SdlUnit>)}
             painted=SDL_UpdateWindowSurface(window)

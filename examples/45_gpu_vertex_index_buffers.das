@@ -17,8 +17,7 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
 }
 
 def draw_and_check(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle; vb : GpuBufferHandle; ib : GpuIndexBufferHandle; target : GpuTextureHandle) : $Result<SdlUnit; SdlError> {
-    var black : SDL_FColor
-    black.a = 1.0
+    var black = SDL_FColor(a = 1.0)
     var buffers <- array<GpuBufferHandle>(vb)
     var offsets <- array<uint>(0u)
     sdl_scope() {
@@ -66,9 +65,8 @@ def create_pipeline(device : SDL_GPUDevice?; vertex : GpuShaderHandle; fragment 
     resize(layouts,1); layouts[0].pitch = 20u
     var attributes : array<SDL_GPUVertexAttribute>
     resize(attributes,2)
-    attributes[0].format = SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2
-    attributes[1].format = SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT3
-    attributes[1].location = 1u; attributes[1].offset = 8u
+    attributes[0] = SDL_GPUVertexAttribute(format=SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2)
+    attributes[1] = SDL_GPUVertexAttribute(format=SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT3,location=1u,offset=8u)
     var colors : array<SDL_GPUColorTargetDescription>
     push(colors,gpu_color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM))
     return sdl_scope() {

@@ -41,6 +41,8 @@ def main(smoke : bool) : int {
         let preferred=audio_device_format(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK,frames) |> sdl_try
         verify(preferred.channels>0)
         verify(is_err(audio_device_format(0u,frames)))
+        let format=audio_device_format(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK) |> sdl_try
+        verify(format.spec.freq==preferred.freq && format.sample_frames>0)
         verify(is_err(open_audio_device(0u)))
         let first=SDL_OpenAudioDevice(output[0],null)
         verify(first!=0u && !SDL_IsAudioDevicePhysical(first) && SDL_IsAudioDevicePlayback(first))

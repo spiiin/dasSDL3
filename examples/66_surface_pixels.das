@@ -9,7 +9,8 @@ def render_example(renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; Sd
         let source : SDL_Surface? = with_surface(4,4,SDL_PixelFormat.PIXELFORMAT_RGBA32) |> sdl_use
         for(y in 0 .. 4) {for(x in 0 .. 4) {if(!SDL_WriteSurfacePixel(source,x,y,uint(x*80),uint(y*80),180u,255u)) {return err(sdl_error("66_surface_pixels"),type<SdlUnit>)}}}
         let dest : SDL_Surface? = with_surface(32,24,SDL_PixelFormat.PIXELFORMAT_RGBA32) |> sdl_use
-        var sr,dr : SDL_Rect;sr.w=4;sr.h=4;dr.w=32;dr.h=24
+        let sr = SDL_Rect(w=4,h=4)
+        let dr = SDL_Rect(w=32,h=24)
         if(!SDL_ClearSurface(dest,0.0,0.0,0.0,1.0) || !SDL_BlitSurfaceTiledWithScaleRefs(source,sr,2.0,SDL_ScaleMode.SCALEMODE_NEAREST,dest,dr)) {return err(sdl_error("66_surface_pixels"),type<SdlUnit>)}
         let texture=SDL_CreateTextureFromSurface(renderer,dest)
         if(texture==null) {return err(sdl_error("66_surface_pixels"),type<SdlUnit>)}

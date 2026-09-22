@@ -452,3 +452,36 @@ def public poll_event() : $Option<SdlEvent> {
     var decoded <- decode_event(event)
     return <- move_some(decoded)
 }
+
+// Lazy: consumes one owned event per iteration. Breaking leaves later events queued.
+def public poll_events() : iterator<SdlEvent> {
+    return <- generator<SdlEvent> {
+        while (true) {
+            var next_event <- poll_event()
+            if (is_none(next_event)) { return false }
+            var event <- move_unwrap(next_event)
+            yield <- event
+        }
+        return false
+    }
+}
+
+// Matches the raw overload: quit or Escape key-down.
+def public should_close(event : SdlEvent) : bool {
+    if(event is quit) { return true }
+    if(event is key_down) { return (event as key_down).keycode==SDLK_ESCAPE }
+    return false
+}
+def public should_close(event : SdlEvent; window : SDL_Window?) : bool {
+    if(event is quit) { return true }
+    let id=SDL_GetWindowID(window)
+    if(event is key_down) {
+        let key=event as key_down
+        return key.window_id==id && key.keycode==SDLK_ESCAPE
+    }
+    if(event is window) {
+        let value=event as window
+        return value.window_id==id && value.event_type==SDL_EVENT_WINDOW_CLOSE_REQUESTED
+    }
+    return false
+}

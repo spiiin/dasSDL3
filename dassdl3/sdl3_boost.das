@@ -311,3 +311,10 @@ def public text_editing_event(event : SDL_Event) {
     var value = (text=text,start=start,length=length)
     return <- move_some(value)
 }
+
+struct MouseState { position : float2; buttons : uint }
+def public mouse_state() : MouseState {
+    var position : float2
+    let buttons=mouse_state(position)
+    return MouseState(position=position,buttons=buttons)
+}

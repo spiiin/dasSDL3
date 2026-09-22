@@ -6,16 +6,18 @@ def roundtrip() : $Result<SdlUnit; SdlError> {
     return sdl_scope() {
         let stream : SDL_IOStream? = with_io_dynamic() |> sdl_use
         var bytes <- array<uint8>(83,68,76,0,51)
-        var transferred=0ul
-        let written=stream |> write_io(bytes,uint64(length(bytes)),transferred) |> sdl_try
-        print("Write: {transferred} bytes, status {written}\n")
+        let write=stream |> write_io(bytes,uint64(length(bytes)))
+        let written=write.status |> sdl_try
+        print("Write: {write.transferred} bytes, status {written}\n")
         stream |> seek_io(0l) |> sdl_try
         var output : array<uint8>
         resize(output,16)
-        let status=stream |> read_io(output,16ul,transferred) |> sdl_try
-        print("Read: {transferred} bytes, status {status}; embedded zero: {output[3]}\n")
-        let end=stream |> read_io(output,16ul,transferred) |> sdl_try
-        print("Next read: {transferred} bytes, status {end}\n")
+        let read=stream |> read_io(output,16ul)
+        let status=read.status |> sdl_try
+        print("Read: {read.transferred} bytes, status {status}; embedded zero: {output[3]}\n")
+        let last=stream |> read_io(output,16ul)
+        let end=last.status |> sdl_try
+        print("Next read: {last.transferred} bytes, status {end}\n")
         return sdl_ok()
     }
 }

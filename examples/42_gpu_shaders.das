@@ -2,7 +2,7 @@ options gen2
 require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_shader_boost
 
-// Trusted compiled assets. General script pipeline creation is the next stage.
+// Trusted compiled assets, described with named shader options.
 
 def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; SdlError> {
     let spirv = (SDL_GetGPUShaderFormats(device) & SDL_GPU_SHADERFORMAT_SPIRV) != 0u
@@ -12,8 +12,8 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; Sd
     let vertex_info = gpu_shader_info(format,SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
     let fragment_info = gpu_shader_info(format,SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT)
     return sdl_scope() {
-        let vertex : GpuShaderHandle = device |> with_gpu_shader_file("{base}.vert.{extension}",vertex_info) |> sdl_use
-        let fragment : GpuShaderHandle = device |> with_gpu_shader_file("{base}.frag.{extension}",fragment_info) |> sdl_use
+        let vertex : GpuShaderHandle = device |> with_gpu_shader_file(GpuShaderOptions(path="{base}.vert.{extension}",info=vertex_info)) |> sdl_use
+        let fragment : GpuShaderHandle = device |> with_gpu_shader_file(GpuShaderOptions(path="{base}.frag.{extension}",info=fragment_info)) |> sdl_use
         verify(vertex != fragment)
         let description = gpu_shader_descriptor(device,fragment) |> sdl_try
         let entrypoint = gpu_shader_entrypoint(device,fragment) |> sdl_try

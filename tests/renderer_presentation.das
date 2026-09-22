@@ -71,7 +71,7 @@ def main(smoke : bool) : int {
                 unsafe {verify(SDL_RenderCoordinatesToWindow(renderer,10.0,10.0,addr(x),addr(y)))}
                 verify(abs(x-float(ww)/2.0)<0.001 && abs(y-float(wh)/2.0)<0.001)
                 verify(SDL_SetRenderScale(renderer,2.0,2.0))
-                var viewport : SDL_Rect;viewport.x=1;viewport.y=2;viewport.w=8;viewport.h=8
+                var viewport = SDL_Rect(x = 1, y = 2, w = 8, h = 8)
                 verify(SDL_SetRenderViewportRef(renderer,viewport))
                 var wx,wy : float
                 verify(is_ok(render_to_window(renderer,2.0,3.0,wx,wy)))

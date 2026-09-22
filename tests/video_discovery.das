@@ -27,8 +27,7 @@ def main(smoke : bool) : int {
         var usable : SDL_Rect
         verify(SDL_GetDisplayBoundsRef(primary,bounds) && bounds.w>0 && bounds.h>0)
         verify(SDL_GetDisplayUsableBoundsRef(primary,usable) && usable.w>0 && usable.h>0)
-        var point : SDL_Point
-        point.x=bounds.x+bounds.w/2;point.y=bounds.y+bounds.h/2
+        var point = SDL_Point(x = bounds.x+bounds.w/2, y = bounds.y+bounds.h/2)
         verify(SDL_GetDisplayForPointRef(point)==primary && SDL_GetDisplayForRectRef(bounds)==primary)
         var modes : array<SDL_DisplayMode>
         verify(is_ok(display_modes(primary,modes)) && length(modes)>0)

@@ -44,3 +44,11 @@ def public with_audio_stream_lock(stream : SDL_AudioStream?; body : block<() : $
     }
     return <- result
 }
+
+struct AudioStreamFormats { source : SDL_AudioSpec; destination : SDL_AudioSpec }
+def public audio_stream_formats(stream : SDL_AudioStream?) {
+    var value : AudioStreamFormats
+    let status=audio_stream_formats(stream,value.source,value.destination)
+    if(is_err(status)) { return err(unwrap_err(status),type<AudioStreamFormats>) }
+    return ok(value,type<SdlError>)
+}

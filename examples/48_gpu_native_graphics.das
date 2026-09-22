@@ -7,9 +7,10 @@ def draw_frames(device : SDL_GPUDevice?; window : SDL_Window?; smoke : bool) : $
     let spirv=(SDL_GetGPUShaderFormats(device)&SDL_GPU_SHADERFORMAT_SPIRV)!=0u
     let ext=spirv ? "spv" : "dxil"
     let base="{SDL_GetBasePath()}assets/shaders/triangle"
-    var shader : SDL_GPUShaderCreateInfo
-    shader.format=spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL
-    shader.stage=SDL_GPUShaderStage.SHADERSTAGE_VERTEX
+    var shader = SDL_GPUShaderCreateInfo(
+        format = spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL,
+        stage = SDL_GPUShaderStage.SHADERSTAGE_VERTEX
+    )
     var vertex = device |> load_native_gpu_shader(shader,"{base}.vert.{ext}","main") |> sdl_try
     {
         defer() { SDL_ReleaseGPUShader(device,vertex) }
@@ -31,7 +32,7 @@ def render_loop(device : SDL_GPUDevice?; window : SDL_Window?; pipeline : SDL_GP
             targets[0].store_op=SDL_GPUStoreOp.STOREOP_STORE
             targets[0].clear_color.r=0.05; targets[0].clear_color.b=0.15; targets[0].clear_color.a=1.0
             return sdl_scope() {
-                let render_pass : SDL_GPURenderPass? = with_native_gpu_render_pass(command,targets) |> sdl_use
+                var render_pass : SDL_GPURenderPass?& = with_native_gpu_render_pass(command,targets) |> sdl_use
                 SDL_BindGPUGraphicsPipeline(render_pass,pipeline)
                 SDL_DrawGPUPrimitives(render_pass,3u,1u,0u,0u)
 
@@ -44,9 +45,11 @@ def render_loop(device : SDL_GPUDevice?; window : SDL_Window?; pipeline : SDL_GP
 }
 
 def render_pipeline(device : SDL_GPUDevice?; window : SDL_Window?; var vertex, fragment : SDL_GPUShader?; smoke : bool) : $Result<SdlUnit; SdlError> {
-    var info : SDL_GPUGraphicsPipelineCreateInfo
-    info.vertex_shader=vertex; info.fragment_shader=fragment
-    info.primitive_type=SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST
+    var info = SDL_GPUGraphicsPipelineCreateInfo(
+        vertex_shader = vertex,
+        fragment_shader = fragment,
+        primitive_type = SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST
+    )
     info.rasterizer_state.enable_depth_clip=true
     var buffers : array<SDL_GPUVertexBufferDescription>
     var attributes : array<SDL_GPUVertexAttribute>

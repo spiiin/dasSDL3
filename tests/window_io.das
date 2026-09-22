@@ -45,8 +45,7 @@ def main(smoke : bool) : int {
             verify(is_ok(surface_size(surface,size)) && size.x==32 && size.y==24)
             let red=SDL_MapSurfaceRGBA(surface,uint(210),uint(30),uint(40),uint(255))
             verify(SDL_FillSurfaceAll(surface,red))
-            var rect : SDL_Rect
-            rect.x=2;rect.y=3;rect.w=4;rect.h=5
+            var rect = SDL_Rect(x = 2, y = 3, w = 4, h = 5)
             let blue=SDL_MapSurfaceRGBA(surface,uint(10),uint(20),uint(230),uint(255))
             unsafe {verify(SDL_FillSurfaceRect(surface,addr(rect),blue))}
             var pixels : array<uint8>;resize(pixels,32*24*4)

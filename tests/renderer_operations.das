@@ -6,9 +6,9 @@ def pixel(bytes : array<uint8>; x,y : int) : uint3 {
 }
 def draw_case(renderer : SDL_Renderer?; texture : SDL_Texture?; op : int; raw : bool) {
     verify(SDL_SetRenderDrawColor(renderer,0u,0u,0u,255u) && SDL_RenderClear(renderer))
-    var src : SDL_FRect;src.w=4.0;src.h=4.0
-    var dst : SDL_FRect;dst.x=4.0;dst.y=4.0;dst.w=8.0;dst.h=8.0
-    var center : SDL_FPoint;center.x=4.0;center.y=4.0
+    var src = SDL_FRect(w = 4.0, h = 4.0)
+    var dst = SDL_FRect(x = 4.0, y = 4.0, w = 8.0, h = 8.0)
+    var center = SDL_FPoint(x = 4.0, y = 4.0)
     var origin,right,down : SDL_FPoint
     origin.x=4.0;origin.y=4.0;right.x=12.0;right.y=4.0;down.x=6.0;down.y=12.0
     if(op==2) {dst.x=0.0;dst.y=0.0;dst.w=12.0;dst.h=8.0}
@@ -56,7 +56,7 @@ def drawing(renderer : SDL_Renderer?; surface : SDL_Surface?) {
     } |> is_ok
     verify(scoped)
     verify(SDL_SetRenderDrawColor(renderer,30u,60u,90u,255u) && SDL_RenderClear(renderer))
-    var rect : SDL_Rect;rect.x=4;rect.y=4;rect.w=8;rect.h=8
+    var rect = SDL_Rect(x = 4, y = 4, w = 8, h = 8)
     unsafe {
         let owned=SDL_RenderReadPixels(renderer,addr(rect));verify(owned!=null)
         var size : int2;verify(is_ok(surface_size(owned,size)) && size==int2(8,8))
@@ -120,7 +120,7 @@ def main(smoke : bool) : int {
         verify(!with_renderer_properties(0u) $(renderer : SDL_Renderer?) {called=true
             return sdl_ok()
         } |> is_ok);verify(!called)
-        var rect : SDL_Rect;rect.w=1;rect.h=1
+        var rect = SDL_Rect(w = 1, h = 1)
         verify(!with_read_pixels(null,rect) $(surface : SDL_Surface?) {called=true
             return sdl_ok()
         } |> is_ok);verify(!called)

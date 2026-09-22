@@ -48,8 +48,7 @@ def main(smoke : bool) : int {
                 verify(SDL_SetSurfaceColorKey(surface,true,0u))
                 let zero=surface_color_key(surface)
                 verify(is_ok(zero) && is_some(unwrap(zero)) && unwrap(unwrap(zero))==0u)
-                var rect : SDL_Rect
-                rect.x=8;rect.y=8;rect.w=1;rect.h=1
+                var rect = SDL_Rect(x = 8, y = 8, w = 1, h = 1)
                 let clipped=set_surface_clip(surface,rect)
                 verify(is_ok(clipped) && !unwrap(clipped))
                 verify(is_err(set_surface_clip(null,rect)))

@@ -87,3 +87,12 @@ def public with_audio_device(device : uint; spec : SDL_AudioSpec; body : block<(
         else {return <- body(id)}
     }
 }
+
+struct AudioDeviceFormat { spec : SDL_AudioSpec; sample_frames : int }
+def public audio_device_format(device : uint) {
+    var value : AudioDeviceFormat
+    let status=audio_device_format(device,value.sample_frames)
+    if(is_err(status)) { return err(unwrap_err(status),type<AudioDeviceFormat>) }
+    value.spec=unwrap(status)
+    return ok(value,type<SdlError>)
+}

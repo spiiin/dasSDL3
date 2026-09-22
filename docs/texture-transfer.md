@@ -1,5 +1,7 @@
 # Texture byte state, updates and locks
 
+Example 61 now uses a scoped RGBA32 pixel view and packed rows; see [pixel views](api-ergonomics.md#temporary-rgba32-pixels).
+
 Ten generated functions: SDL_SetTextureColorMod, SDL_GetTextureColorMod,
 SDL_SetTextureAlphaMod, SDL_GetTextureAlphaMod, SDL_SetTextureBlendMode,
 SDL_GetTextureBlendMode, SDL_UpdateTexture, SDL_LockTexture, SDL_UnlockTexture,

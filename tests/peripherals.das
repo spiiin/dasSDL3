@@ -70,17 +70,17 @@ def raw_queries() {
 }
 
 def payloads() {
-    var constant : SDL_HapticConstant;constant.level=int16(-1234)
+    var constant = SDL_HapticConstant(level = int16(-1234))
     let a=SDL_MakeHapticConstantEffect(constant);verify(SDLTestHapticPayload(a)== -1234)
-    var periodic : SDL_HapticPeriodic;periodic.effect_type=uint16(SDL_HAPTIC_SINE);periodic.offset=int16(-2345)
+    var periodic = SDL_HapticPeriodic(effect_type = uint16(SDL_HAPTIC_SINE), offset = int16(-2345))
     let b=SDL_MakeHapticPeriodicEffect(periodic);verify(SDLTestHapticPayload(b)== -2345)
-    var condition : SDL_HapticCondition;condition.effect_type=uint16(SDL_HAPTIC_SPRING);condition.center[2]=int16(-3456)
+    var condition = SDL_HapticCondition(effect_type = uint16(SDL_HAPTIC_SPRING));condition.center[2]=int16(-3456)
     let c=SDL_MakeHapticConditionEffect(condition);verify(SDLTestHapticPayload(c)== -3456)
-    var ramp : SDL_HapticRamp;ramp.start=int16(-4567)
+    var ramp = SDL_HapticRamp(start = int16(-4567))
     let d=SDL_MakeHapticRampEffect(ramp);verify(SDLTestHapticPayload(d)== -4567)
-    var motors : SDL_HapticLeftRight;motors.large_magnitude=uint16(60000)
+    var motors = SDL_HapticLeftRight(large_magnitude = uint16(60000))
     let e=SDL_MakeHapticLeftRightEffect(motors);verify(SDLTestHapticPayload(e)==60000)
-    var custom : SDL_HapticCustom;custom.samples=uint16(17)
+    var custom = SDL_HapticCustom(samples = uint16(17))
     let f=SDL_MakeHapticCustomEffect(custom);verify(SDLTestHapticPayload(f)==17)
     verify(!haptic_effect_supported(null,a) && is_err(create_haptic_effect(null,a)))
     verify(is_err(update_haptic_effect(null,0,a)) && is_err(run_haptic_effect(null,0,1u)) && is_err(stop_haptic_effect(null,0)))

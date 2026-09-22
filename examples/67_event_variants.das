@@ -7,10 +7,8 @@ def event_loop(window : SDL_Window?; smoke : bool) {
     var running = true
     var frames = 0
     while (running) {
-        while (true) {
-            var next <- poll_event()
-            if (is_none(next)) { break }
-            let event <- move_unwrap(next)
+        for (event in poll_events()) {
+            if(should_close(event,window)) { running=false; break }
             match (event) {
                 if (SdlEvent(quit=_)) { running = false }
                 if (SdlEvent(key_down=$v(key))) {

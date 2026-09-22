@@ -25,9 +25,11 @@ def exercise(device : SDL_GPUDevice?) : bool {
             for (b in buffers) { if (b!=null) { SDL_ReleaseGPUBuffer(device,b) } }
             for (t in transfers) { if (t!=null) { SDL_ReleaseGPUTransferBuffer(device,t) } }
         }
-        var shader : SDL_GPUShaderCreateInfo
-        shader.format=spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL
-        shader.stage=SDL_GPUShaderStage.SHADERSTAGE_VERTEX; shader.num_uniform_buffers=1u
+        var shader = SDL_GPUShaderCreateInfo(
+            format = spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL,
+            stage = SDL_GPUShaderStage.SHADERSTAGE_VERTEX,
+            num_uniform_buffers = 1u
+        )
         var empty : array<uint8>
         verify(SDL_CreateGPUShaderBytes(device,shader,empty,"main")==null)
         var called=false
@@ -48,9 +50,14 @@ def exercise(device : SDL_GPUDevice?) : bool {
         shader.stage=SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT; shader.num_uniform_buffers=0u
         shaders[1]=SDL_LoadGPUShaderFile(device,shader,"{base}.frag.{ext}","main")
         verify(shaders[0]!=null && shaders[1]!=null)
-        var compute_info : SDL_GPUComputePipelineCreateInfo
-        compute_info.format=shader.format; compute_info.num_readwrite_storage_buffers=1u; compute_info.num_uniform_buffers=1u
-        compute_info.threadcount_x=4u; compute_info.threadcount_y=1u; compute_info.threadcount_z=1u
+        var compute_info = SDL_GPUComputePipelineCreateInfo(
+            format = shader.format,
+            num_readwrite_storage_buffers = 1u,
+            num_uniform_buffers = 1u,
+            threadcount_x = 4u,
+            threadcount_y = 1u,
+            threadcount_z = 1u
+        )
         verify(SDL_CreateGPUComputePipelineBytes(device,compute_info,empty,"main")==null)
         let compute_path="{SDL_GetBasePath()}assets/shaders/native.comp.{ext}"
         let compute_file=fopen(compute_path,"rb"); verify(compute_file!=null)
@@ -66,9 +73,15 @@ def exercise(device : SDL_GPUDevice?) : bool {
         } |> is_ok
         verify(compute_scoped)
         // The temporary byte array is gone before any GPU draw consumes the shader.
-        var tex : SDL_GPUTextureCreateInfo
-        tex.texture_type=SDL_GPUTextureType.TEXTURETYPE_2D; tex.width=8u; tex.height=8u; tex.layer_count_or_depth=1u; tex.num_levels=1u
-        tex.format=SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM; tex.usage=SDL_GPU_TEXTUREUSAGE_COLOR_TARGET
+        var tex = SDL_GPUTextureCreateInfo(
+            texture_type = SDL_GPUTextureType.TEXTURETYPE_2D,
+            width = 8u,
+            height = 8u,
+            layer_count_or_depth = 1u,
+            num_levels = 1u,
+            format = SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM,
+            usage = SDL_GPU_TEXTUREUSAGE_COLOR_TARGET
+        )
         verify(SDL_GPUTextureSupportsSampleCount(device,tex.format,SDL_GPUSampleCount.SAMPLECOUNT_4))
         tex.sample_count=SDL_GPUSampleCount.SAMPLECOUNT_4
         textures[0]=SDL_CreateGPUTextureRef(device,tex); textures[1]=SDL_CreateGPUTextureRef(device,tex)
@@ -89,14 +102,14 @@ def exercise(device : SDL_GPUDevice?) : bool {
         let sampler_scoped=with_native_gpu_sampler(device,sampler_info) $(var s : SDL_GPUSampler?) { verify(s!=null); return sdl_ok()
         } |> is_ok
         verify(sampler_scoped)
-        var bi : SDL_GPUBufferCreateInfo; bi.size=128u; bi.usage=SDL_GPU_BUFFERUSAGE_VERTEX
+        var bi = SDL_GPUBufferCreateInfo(size = 128u, usage = SDL_GPU_BUFFERUSAGE_VERTEX)
         buffers[0]=SDL_CreateGPUBufferRef(device,bi); buffers[1]=SDL_CreateGPUBufferRef(device,bi)
         bi.usage=SDL_GPU_BUFFERUSAGE_INDEX; buffers[2]=SDL_CreateGPUBufferRef(device,bi)
         for (b in buffers) { verify(b!=null) }
         let buffer_scoped=with_native_gpu_buffer(device,bi) $(var b : SDL_GPUBuffer?) { verify(b!=null); return sdl_ok()
         } |> is_ok
         verify(buffer_scoped)
-        var ti : SDL_GPUTransferBufferCreateInfo; ti.size=1024u; ti.usage=SDL_GPUTransferBufferUsage.TRANSFERBUFFERUSAGE_UPLOAD
+        var ti = SDL_GPUTransferBufferCreateInfo(size = 1024u, usage = SDL_GPUTransferBufferUsage.TRANSFERBUFFERUSAGE_UPLOAD)
         transfers[0]=SDL_CreateGPUTransferBufferRef(device,ti)
         ti.usage=SDL_GPUTransferBufferUsage.TRANSFERBUFFERUSAGE_DOWNLOAD; transfers[1]=SDL_CreateGPUTransferBufferRef(device,ti)
         verify(transfers[0]!=null && transfers[1]!=null)
@@ -126,8 +139,7 @@ def exercise(device : SDL_GPUDevice?) : bool {
         attrs[1].location=1u; attrs[1].buffer_slot=2u; attrs[1].format=SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT4
         var formats : array<SDL_GPUColorTargetDescription>; resize(formats,2)
         formats[0].format=SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM; formats[1].format=formats[0].format
-        var pi : SDL_GPUGraphicsPipelineCreateInfo; pi.vertex_shader=shaders[0]; pi.fragment_shader=shaders[1]
-        pi.primitive_type=SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST; pi.rasterizer_state.enable_depth_clip=true
+        var pi = SDL_GPUGraphicsPipelineCreateInfo(vertex_shader = shaders[0], fragment_shader = shaders[1], primitive_type = SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST); pi.rasterizer_state.enable_depth_clip=true
         pi.multisample_state.sample_count=SDL_GPUSampleCount.SAMPLECOUNT_4
         pi.target_info.has_depth_stencil_target=true; pi.target_info.depth_stencil_format=depth_format
         pi.depth_stencil_state.enable_depth_test=true; pi.depth_stencil_state.enable_depth_write=true; pi.depth_stencil_state.compare_op=SDL_GPUCompareOp.COMPAREOP_LESS
@@ -153,20 +165,26 @@ def exercise(device : SDL_GPUDevice?) : bool {
             targets[i].load_op=SDL_GPULoadOp.LOADOP_CLEAR; targets[i].store_op=SDL_GPUStoreOp.STOREOP_RESOLVE_AND_STORE
             targets[i].cycle=true; targets[i].cycle_resolve_texture=true
         }
-        var depth : SDL_GPUDepthStencilTargetInfo; depth.texture=textures[4]; depth.clear_depth=1.0
-        depth.load_op=SDL_GPULoadOp.LOADOP_CLEAR; depth.store_op=SDL_GPUStoreOp.STOREOP_STORE
-        depth.stencil_load_op=SDL_GPULoadOp.LOADOP_CLEAR; depth.stencil_store_op=SDL_GPUStoreOp.STOREOP_STORE; depth.cycle=true
+        var depth = SDL_GPUDepthStencilTargetInfo(
+            texture = textures[4],
+            clear_depth = 1.0,
+            load_op = SDL_GPULoadOp.LOADOP_CLEAR,
+            store_op = SDL_GPUStoreOp.STOREOP_STORE,
+            stencil_load_op = SDL_GPULoadOp.LOADOP_CLEAR,
+            stencil_store_op = SDL_GPUStoreOp.STOREOP_STORE,
+            cycle = true
+        )
         var bindings : array<SDL_GPUBufferBinding>; resize(bindings,2)
         bindings[0].buffer=buffers[0]; bindings[0].offset=16u; bindings[1].buffer=buffers[1]; bindings[1].offset=16u
         verify(!SDL_BindGPUVertexBuffersArray(null,0xffffffffu,bindings))
         var dummy : array<SDL_GPUBufferBinding>; resize(dummy,1); dummy[0].buffer=buffers[0]
-        var index : SDL_GPUBufferBinding; index.buffer=buffers[2]; index.offset=4u
+        var index = SDL_GPUBufferBinding(buffer = buffers[2], offset = 4u)
         var uniform : array<uint8>; resize(uniform,16); put32(uniform,0,0x3f000000u)
         var completed=false
         let scope_ok_1=with_native_gpu_commands(device) $(var command : SDL_GPUCommandBuffer?&) {
-            let scope_ok_2=with_native_gpu_copy_pass(command) $(copy_pass : SDL_GPUCopyPass?) {
-                var source : SDL_GPUTransferBufferLocation; source.transfer_buffer=transfers[0]
-                var destination : SDL_GPUBufferRegion; destination.size=64u
+            let scope_ok_2=with_native_gpu_copy_pass(command) $(var copy_pass : SDL_GPUCopyPass?&) {
+                var source = SDL_GPUTransferBufferLocation(transfer_buffer = transfers[0])
+                var destination = SDL_GPUBufferRegion(size = 64u)
                 for (i in 0..3) {
                     source.offset=uint(i*128); destination.buffer=buffers[i]
                     SDL_UploadToGPUBufferRef(copy_pass,source,destination,true)
@@ -175,7 +193,7 @@ def exercise(device : SDL_GPUDevice?) : bool {
                 return sdl_ok()
             } |> is_ok; verify(scope_ok_2)
             verify(SDL_PushGPUVertexUniformDataArray(command,0u,uniform))
-            let scope_ok_3=with_native_gpu_render_pass(command,targets,depth) $(render_pass : SDL_GPURenderPass?) {
+            let scope_ok_3=with_native_gpu_render_pass(command,targets,depth) $(var render_pass : SDL_GPURenderPass?&) {
                 SDL_BindGPUGraphicsPipeline(render_pass,pipelines[0])
                 verify(SDL_BindGPUVertexBuffersArray(render_pass,0u,dummy)); verify(SDL_BindGPUVertexBuffersArray(render_pass,1u,bindings))
                 SDL_SetGPUStencilReference(render_pass,7u)
@@ -183,30 +201,33 @@ def exercise(device : SDL_GPUDevice?) : bool {
                 put32(uniform,0,0x3f400000u); verify(SDL_PushGPUVertexUniformDataArray(command,0u,uniform))
                 SDL_DrawGPUPrimitives(render_pass,3u,1u,3u,2u) // Far blue fails LESS.
 
+                verify(is_ok(native_gpu_end_render_pass(render_pass)) && render_pass==null)
+                verify(is_err(native_gpu_end_render_pass(render_pass)))
                 return sdl_ok()
             } |> is_ok; verify(scope_ok_3)
             for (i in 0..2) { targets[i].load_op=SDL_GPULoadOp.LOADOP_LOAD; targets[i].cycle=false; targets[i].cycle_resolve_texture=false }
             depth.load_op=SDL_GPULoadOp.LOADOP_LOAD; depth.stencil_load_op=SDL_GPULoadOp.LOADOP_LOAD; depth.cycle=false
-            let scope_ok_4=with_native_gpu_render_pass(command,targets,depth) $(render_pass : SDL_GPURenderPass?) {
+            let scope_ok_4=with_native_gpu_render_pass(command,targets,depth) $(var render_pass : SDL_GPURenderPass?&) {
                 SDL_BindGPUGraphicsPipeline(render_pass,pipelines[1]); verify(SDL_BindGPUVertexBuffersArray(render_pass,0u,dummy)); verify(SDL_BindGPUVertexBuffersArray(render_pass,1u,bindings))
                 SDL_BindGPUIndexBufferRef(render_pass,index,SDL_GPUIndexElementSize.INDEXELEMENTSIZE_32BIT)
                 SDL_SetGPUStencilReference(render_pass,8u)
                 SDL_DrawGPUIndexedPrimitives(render_pass,3u,1u,1u,3,2u) // Wrong stencil fails.
-                var scissor : SDL_Rect; scissor.x=4; scissor.w=4; scissor.h=8
+                var scissor = SDL_Rect(x = 4, w = 4, h = 8)
                 SDL_SetGPUScissorRef(render_pass,scissor); SDL_SetGPUStencilReference(render_pass,7u)
                 SDL_DrawGPUIndexedPrimitives(render_pass,3u,1u,1u,3,2u)
 
                 return sdl_ok()
             } |> is_ok; verify(scope_ok_4)
-            let scope_ok_5=with_native_gpu_copy_pass(command) $(copy_pass : SDL_GPUCopyPass?) {
-                var source : SDL_GPUTextureRegion; source.w=8u; source.h=8u; source.d=1u
-                var destination : SDL_GPUTextureTransferInfo; destination.transfer_buffer=transfers[1]; destination.pixels_per_row=8u; destination.rows_per_layer=8u
+            let scope_ok_5=with_native_gpu_copy_pass(command) $(var copy_pass : SDL_GPUCopyPass?&) {
+                var source = SDL_GPUTextureRegion(w = 8u, h = 8u, d = 1u)
+                var destination = SDL_GPUTextureTransferInfo(transfer_buffer = transfers[1], pixels_per_row = 8u, rows_per_layer = 8u)
                 source.texture=textures[2]; destination.offset=64u; SDL_DownloadFromGPUTextureRef(copy_pass,source,destination)
                 source.texture=textures[3]; destination.offset=512u; SDL_DownloadFromGPUTextureRef(copy_pass,source,destination)
 
                 return sdl_ok()
             } |> is_ok; verify(scope_ok_5)
             var fence=move_unwrap(native_gpu_submit_fence(command)); verify(command==null && fence!=null)
+            verify(is_err(native_gpu_submit(command)) && is_err(native_gpu_cancel(command)) && is_err(native_gpu_submit_fence(command)))
             var fences : array<SDL_GPUFence?>; resize(fences,1); fences[0]=fence
             verify(SDL_WaitForGPUFencesArray(device,true,fences)); SDL_ReleaseGPUFence(device,fence)
             var pixels : array<uint8>; resize(pixels,256)
@@ -228,10 +249,21 @@ def exercise(device : SDL_GPUDevice?) : bool {
         verify(completed)
         // Normal early return closes the copy pass, then cancels the command.
         let scope_ok_6=with_native_gpu_commands(device) $(var command : SDL_GPUCommandBuffer?&) {
-            let scope_ok_7=with_native_gpu_copy_pass(command) $(copy_pass : SDL_GPUCopyPass?) { return sdl_ok()
+            let scope_ok_7=with_native_gpu_copy_pass(command) $(var copy_pass : SDL_GPUCopyPass?&) {
+                verify(is_ok(native_gpu_end_copy_pass(copy_pass)) && copy_pass==null)
+                verify(is_err(native_gpu_end_copy_pass(copy_pass)))
+                return sdl_ok()
             } |> is_ok; verify(scope_ok_7)
-            let scope_ok_8=with_native_gpu_copy_pass(command) $(copy_pass : SDL_GPUCopyPass?) { return sdl_ok()
+            let scope_ok_8=with_native_gpu_copy_pass(command) $(var copy_pass : SDL_GPUCopyPass?&) { return sdl_ok()
             } |> is_ok; verify(scope_ok_8)
+            var writable_textures : array<SDL_GPUStorageTextureReadWriteBinding>
+            var writable_buffers : array<SDL_GPUStorageBufferReadWriteBinding>
+            let ended=with_native_gpu_compute_pass(command,writable_textures,writable_buffers) $(var compute : SDL_GPUComputePass?&) {
+                verify(is_ok(native_gpu_end_compute_pass(compute)) && compute==null)
+                verify(is_err(native_gpu_end_compute_pass(compute)))
+                return sdl_ok()
+            }
+            verify(is_ok(ended))
             return sdl_ok()
         } |> is_ok; verify(scope_ok_6)
         return true

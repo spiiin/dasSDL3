@@ -33,8 +33,7 @@ def render_triangle(device : SDL_GPUDevice?) : $Result<SdlUnit; SdlError> {
     pipeline = device |> create_gpu_graphics_pipeline(vertex,fragment,gpu_graphics_pipeline_info(),buffers,attributes,colors) |> sdl_try
     target = device |> create_gpu_color_target_texture(64u,64u,1u,1u,SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM) |> sdl_try
     command = device |> acquire_gpu_command_buffer() |> sdl_try
-    var black : SDL_FColor
-    black.a = 1.0
+    var black = SDL_FColor(a = 1.0)
     let render_pass = gpu_begin_render_pass(device,command,target,uint2(0u),SDL_GPULoadOp.LOADOP_CLEAR,black) |> sdl_try
     gpu_bind_pipeline(device,render_pass,pipeline) |> sdl_try
     gpu_draw_primitives(device,render_pass,3u) |> sdl_try

@@ -3,6 +3,7 @@ module sdl3_result shared public
 require sdl3 public
 require daslib/result public
 
+
 struct SdlError {
     operation : string
     message : string

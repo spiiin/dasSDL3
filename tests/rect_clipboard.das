@@ -3,7 +3,7 @@ require dassdl3/sdl3_rect_clipboard_boost
 
 def rectangles {
     var a,b,out : SDL_Rect;a.x=0;a.y=0;a.w=10;a.h=10;b.x=5;b.y=5;b.w=10;b.h=10
-    var p : SDL_Point;p.x=9;p.y=9
+    var p = SDL_Point(x = 9, y = 9)
     var fa,fb,fo : SDL_FRect;var fp : SDL_FPoint
     unsafe {
         SDL_RectToFRect(addr(a),addr(fa));verify(fa.w==10.0)

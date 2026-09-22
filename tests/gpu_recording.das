@@ -5,8 +5,7 @@ require daslib/rtti
 def render_quad(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle; target : GpuTextureHandle; vb : GpuBufferHandle; ib : GpuIndexBufferHandle; vertex_texture : GpuTextureHandle; texture : GpuTextureHandle; sampler : GpuSamplerHandle; linear : bool) {
     // Explicit cross-kind constructors below deliberately test native rejection.
     // Ordinary accidental mixing is covered by test_gpu_handle_errors.py.
-    var black : SDL_FColor
-    black.a = 1.0
+    var black = SDL_FColor(a = 1.0)
     var buffers <- array<GpuBufferHandle>(vb)
     var offsets <- array<uint>(0u)
     var vertex_images <- array<GpuTextureHandle>(vertex_texture)

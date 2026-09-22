@@ -55,15 +55,15 @@ def main(smoke : bool) : int {
         let window_ok=with_window_renderer("event conversion",64,48,SDL_WINDOW_HIDDEN) $(window : SDL_Window?; renderer : SDL_Renderer?) {
             verify(SDL_SetRenderScale(renderer,2.0,2.0))
             var event : SDL_Event
-            var motion : SDL_MouseMotionEvent;motion.windowID=SDL_GetWindowID(window);motion.x=20.0;motion.y=12.0;motion.xrel=4.0;motion.yrel=6.0
+            var motion = SDL_MouseMotionEvent(windowID = SDL_GetWindowID(window), x = 20.0, y = 12.0, xrel = 4.0, yrel = 6.0)
             SDL_WriteMouseMotionEvent(motion,event)
             unsafe {verify(SDL_ConvertEventToRenderCoordinates(renderer,addr(event)))}
             verify(SDL_ReadMouseMotionEvent(event,motion))
             verify(motion.x==10.0 && motion.y==6.0 && motion.xrel==2.0 && motion.yrel==3.0)
-            var button : SDL_MouseButtonEvent;button.windowID=SDL_GetWindowID(window);button.x=20.0;button.y=12.0;button.down=true
+            var button = SDL_MouseButtonEvent(windowID = SDL_GetWindowID(window), x = 20.0, y = 12.0, down = true)
             SDL_WriteMouseButtonEvent(button,event);verify(is_ok(convert_event_to_render(renderer,event)) && SDL_ReadMouseButtonEvent(event,button))
             verify(button.x==10.0 && button.y==6.0 && button.down)
-            var wheel : SDL_MouseWheelEvent;wheel.windowID=SDL_GetWindowID(window);wheel.mouse_x=20.0;wheel.mouse_y=12.0;wheel.x=3.0;wheel.y=4.0
+            var wheel = SDL_MouseWheelEvent(windowID = SDL_GetWindowID(window), mouse_x = 20.0, mouse_y = 12.0, x = 3.0, y = 4.0)
             SDL_WriteMouseWheelEvent(wheel,event);verify(is_ok(convert_event_to_render(renderer,event)) && SDL_ReadMouseWheelEvent(event,wheel))
             verify(wheel.mouse_x==10.0 && wheel.mouse_y==6.0 && wheel.x==3.0 && wheel.y==4.0)
             verify(!is_ok(convert_event_to_render(null,event)))

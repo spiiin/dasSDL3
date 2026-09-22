@@ -9,9 +9,26 @@ def check_user(event : SdlEvent; event_type : uint; code : int) {
 }
 
 def test_queue(window : SDL_Window?) {
+    verify(should_close(SdlEvent(quit=QuitEvent())))
+    verify(should_close(SdlEvent(key_down=KeyEvent(keycode=SDLK_ESCAPE))))
+    verify(!should_close(SdlEvent(key_up=KeyEvent(keycode=SDLK_ESCAPE))))
+    verify(should_close(SdlEvent(window=WindowEvent(window_id=SDL_GetWindowID(window),event_type=SDL_EVENT_WINDOW_CLOSE_REQUESTED)),window))
     SDL_PumpEvents()
     SDL_FlushEvents(SDL_EVENT_FIRST,SDL_EVENT_LAST)
     let first = register_events(3) |> sdl_try
+    var iter_raw = SDL_MakeUserEvent(first,0u,17)
+    verify(SDL_PushEventRef(iter_raw)); verify(SDL_PushEventRef(iter_raw))
+    var iter_count=0
+    for (event in poll_events()) {
+        check_user(event,first,17)
+        iter_count++
+        break
+    }
+    verify(iter_count==1 && SDL_HasEvent(first))
+    for (event in poll_events()) { check_user(event,first,17); iter_count++ }
+    verify(iter_count==2 && !SDL_HasEvent(first))
+    SDL_SetErrorText("stale iterator error")
+    for (event in poll_events()) { verify(false) }
     let raw_first = SDL_RegisterEvents(2)
     verify(raw_first >= first+3u)
     SDL_SetErrorText("stale register error")

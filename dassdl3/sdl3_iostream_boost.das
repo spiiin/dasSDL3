@@ -90,3 +90,16 @@ def public with_io_dynamic(body : block<(stream : SDL_IOStream?) : $Result<auto(
     if(io==null) {return err(sdl_error("SDL_IOFromDynamicMem"),type<TT>)}
     return <- with_io(io,body)
 }
+
+// Partial byte counts are observable even if status is Err.
+struct IoTransfer { transferred : uint64; status : $Result<SDL_IOStatus;SdlError> }
+def public read_io(io : SDL_IOStream?; var bytes : array<uint8>; count : uint64) : IoTransfer {
+    var value : IoTransfer
+    value.status=read_io(io,bytes,count,value.transferred,0ul)
+    return value
+}
+def public write_io(io : SDL_IOStream?; bytes : array<uint8>; count : uint64) : IoTransfer {
+    var value : IoTransfer
+    value.status=write_io(io,bytes,count,value.transferred,0ul)
+    return value
+}

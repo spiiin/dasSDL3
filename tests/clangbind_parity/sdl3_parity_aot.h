@@ -42,6 +42,7 @@
 #include "sdl3_renderer_presentation.h"
 #include "sdl3_texture_state.h"
 #include "sdl3_texture_transfer.h"
+#include "sdl3_pixel_views.h"
 #include "sdl3_renderer_yuv_blend.h"
 #include "sdl3_renderer_operations.h"
 #include "sdl3_renderer_final_api.h"

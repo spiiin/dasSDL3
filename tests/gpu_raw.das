@@ -35,8 +35,7 @@ def main(smoke : bool) : int {
         verify(SDL_GPUTextureSupportsSampleCount(device,SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM,SDL_GPUSampleCount.SAMPLECOUNT_1))
         print("RAW_CALL SDL_GPUTextureSupportsSampleCount\n")
 
-        var ti : SDL_GPUTransferBufferCreateInfo
-        ti.usage=SDL_GPUTransferBufferUsage.TRANSFERBUFFERUSAGE_UPLOAD; ti.size=1024u
+        var ti = SDL_GPUTransferBufferCreateInfo(usage = SDL_GPUTransferBufferUsage.TRANSFERBUFFERUSAGE_UPLOAD, size = 1024u)
         var upload=SDL_CreateGPUTransferBuffer(device,addr(ti)); verify(upload!=null)
         print("RAW_CALL SDL_CreateGPUTransferBuffer\n")
         ti.usage=SDL_GPUTransferBufferUsage.TRANSFERBUFFERUSAGE_DOWNLOAD; ti.size=2048u
@@ -46,8 +45,7 @@ def main(smoke : bool) : int {
         print("RAW_CALL SDL_MapGPUTransferBuffer\n")
         SDL_UnmapGPUTransferBuffer(device,upload)
         print("RAW_CALL SDL_UnmapGPUTransferBuffer\n")
-        var bi : SDL_GPUBufferCreateInfo
-        bi.size=1024u; bi.usage=SDL_GPU_BUFFERUSAGE_VERTEX
+        var bi = SDL_GPUBufferCreateInfo(size = 1024u, usage = SDL_GPU_BUFFERUSAGE_VERTEX)
         var geometry=SDL_CreateGPUBuffer(device,addr(bi)); verify(geometry!=null)
         print("RAW_CALL SDL_CreateGPUBuffer\n")
         bi.usage=SDL_GPU_BUFFERUSAGE_INDEX
@@ -64,10 +62,15 @@ def main(smoke : bool) : int {
         print("RAW_CALL SDL_CreateGPUBuffer\n")
         SDL_SetGPUBufferName(device,geometry,"raw geometry and indirect commands")
         print("RAW_CALL SDL_SetGPUBufferName\n")
-        var texture_info : SDL_GPUTextureCreateInfo
-        texture_info.texture_type=SDL_GPUTextureType.TEXTURETYPE_2D; texture_info.format=SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM
-        texture_info.width=4u; texture_info.height=4u; texture_info.layer_count_or_depth=1u; texture_info.num_levels=1u
-        texture_info.usage=SDL_GPU_TEXTUREUSAGE_SAMPLER
+        var texture_info = SDL_GPUTextureCreateInfo(
+            texture_type = SDL_GPUTextureType.TEXTURETYPE_2D,
+            format = SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM,
+            width = 4u,
+            height = 4u,
+            layer_count_or_depth = 1u,
+            num_levels = 1u,
+            usage = SDL_GPU_TEXTUREUSAGE_SAMPLER
+        )
         var image=SDL_CreateGPUTexture(device,addr(texture_info)); verify(image!=null)
         print("RAW_CALL SDL_CreateGPUTexture\n")
         texture_info.usage=SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ|SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_READ
@@ -102,8 +105,8 @@ def main(smoke : bool) : int {
         }
         var copy_pass=SDL_BeginGPUCopyPass(command); verify(copy_pass!=null)
         print("RAW_CALL SDL_BeginGPUCopyPass\n")
-        var transfer : SDL_GPUTransferBufferLocation; transfer.transfer_buffer=upload
-        var region : SDL_GPUBufferRegion; region.buffer=geometry; region.size=192u
+        var transfer = SDL_GPUTransferBufferLocation(transfer_buffer = upload)
+        var region = SDL_GPUBufferRegion(buffer = geometry, size = 192u)
         SDL_UploadToGPUBuffer(copy_pass,addr(transfer),addr(region),false)
         print("RAW_CALL SDL_UploadToGPUBuffer\n")
         region.buffer=indices
@@ -113,16 +116,21 @@ def main(smoke : bool) : int {
         transfer.offset=64u; region.buffer=readonly; region.size=16u
         SDL_UploadToGPUBuffer(copy_pass,addr(transfer),addr(region),false)
         print("RAW_CALL SDL_UploadToGPUBuffer\n")
-        var source : SDL_GPUBufferLocation; source.buffer=readonly
-        var dest : SDL_GPUBufferLocation; dest.buffer=copied
+        var source = SDL_GPUBufferLocation(buffer = readonly)
+        var dest = SDL_GPUBufferLocation(buffer = copied)
         SDL_CopyGPUBufferToBuffer(copy_pass,addr(source),addr(dest),16u,false)
         print("RAW_CALL SDL_CopyGPUBufferToBuffer\n")
-        var tex_transfer : SDL_GPUTextureTransferInfo; tex_transfer.transfer_buffer=upload; tex_transfer.offset=256u; tex_transfer.pixels_per_row=4u; tex_transfer.rows_per_layer=4u
-        var tex_region : SDL_GPUTextureRegion; tex_region.texture=image; tex_region.w=4u; tex_region.h=4u; tex_region.d=1u
+        var tex_transfer = SDL_GPUTextureTransferInfo(
+            transfer_buffer = upload,
+            offset = 256u,
+            pixels_per_row = 4u,
+            rows_per_layer = 4u
+        )
+        var tex_region = SDL_GPUTextureRegion(texture = image, w = 4u, h = 4u, d = 1u)
         SDL_UploadToGPUTexture(copy_pass,addr(tex_transfer),addr(tex_region),false)
         print("RAW_CALL SDL_UploadToGPUTexture\n")
-        var tex_source : SDL_GPUTextureLocation; tex_source.texture=image
-        var tex_dest : SDL_GPUTextureLocation; tex_dest.texture=image_copy
+        var tex_source = SDL_GPUTextureLocation(texture = image)
+        var tex_dest = SDL_GPUTextureLocation(texture = image_copy)
         SDL_CopyGPUTextureToTexture(copy_pass,addr(tex_source),addr(tex_dest),4u,4u,1u,false)
         print("RAW_CALL SDL_CopyGPUTextureToTexture\n")
         SDL_EndGPUCopyPass(copy_pass)
@@ -143,23 +151,27 @@ def main(smoke : bool) : int {
         verify(SDLTest_raw_compute_info(dxil,compute_info))
         var compute=SDL_CreateGPUComputePipeline(device,addr(compute_info)); verify(compute!=null)
         print("RAW_CALL SDL_CreateGPUComputePipeline\n")
-        var color : SDL_GPUColorTargetInfo; color.texture=target; color.load_op=SDL_GPULoadOp.LOADOP_CLEAR; color.store_op=SDL_GPUStoreOp.STOREOP_STORE
+        var color = SDL_GPUColorTargetInfo(
+            texture = target,
+            load_op = SDL_GPULoadOp.LOADOP_CLEAR,
+            store_op = SDL_GPUStoreOp.STOREOP_STORE
+        )
         var render_pass=SDL_BeginGPURenderPass(command,addr(color),1u,null); verify(render_pass!=null)
         print("RAW_CALL SDL_BeginGPURenderPass\n")
         SDL_BindGPUGraphicsPipeline(render_pass,pipeline)
         print("RAW_CALL SDL_BindGPUGraphicsPipeline\n")
-        var blend : SDL_FColor; blend.r=0.25; blend.g=0.5; blend.b=0.75; blend.a=1.0
+        var blend = SDL_FColor(r = 0.25, g = 0.5, b = 0.75, a = 1.0)
         SDL_SetGPUBlendConstants(render_pass,blend)
         print("RAW_CALL SDL_SetGPUBlendConstants\n")
         SDL_SetGPUStencilReference(render_pass,7u)
         print("RAW_CALL SDL_SetGPUStencilReference\n")
-        var binding : SDL_GPUBufferBinding; binding.buffer=geometry
+        var binding = SDL_GPUBufferBinding(buffer = geometry)
         SDL_BindGPUVertexBuffers(render_pass,0u,addr(binding),1u)
         print("RAW_CALL SDL_BindGPUVertexBuffers\n")
         binding.buffer=indices; binding.offset=32u
         SDL_BindGPUIndexBuffer(render_pass,addr(binding),SDL_GPUIndexElementSize.INDEXELEMENTSIZE_32BIT)
         print("RAW_CALL SDL_BindGPUIndexBuffer\n")
-        var sampled : SDL_GPUTextureSamplerBinding; sampled.texture=image; sampled.sampler=sampler
+        var sampled = SDL_GPUTextureSamplerBinding(texture = image, sampler = sampler)
         SDL_BindGPUVertexSamplers(render_pass,0u,addr(sampled),1u)
         print("RAW_CALL SDL_BindGPUVertexSamplers\n")
         SDL_BindGPUFragmentSamplers(render_pass,0u,addr(sampled),1u)
@@ -176,10 +188,10 @@ def main(smoke : bool) : int {
         print("RAW_CALL SDL_PushGPUVertexUniformData\n")
         SDL_PushGPUFragmentUniformData(command,0u,SDLTest_raw_uniform(false,0u),16u)
         print("RAW_CALL SDL_PushGPUFragmentUniformData\n")
-        var viewport : SDL_GPUViewport; viewport.w=8.0; viewport.h=8.0; viewport.max_depth=1.0
+        var viewport = SDL_GPUViewport(w = 8.0, h = 8.0, max_depth = 1.0)
         SDL_SetGPUViewport(render_pass,addr(viewport))
         print("RAW_CALL SDL_SetGPUViewport\n")
-        var scissor : SDL_Rect; scissor.w=4; scissor.h=4
+        var scissor = SDL_Rect(w = 4, h = 4)
         SDL_SetGPUScissor(render_pass,addr(scissor))
         print("RAW_CALL SDL_SetGPUScissor\n")
         SDL_DrawGPUPrimitives(render_pass,3u,1u,0u,0u)
@@ -207,8 +219,8 @@ def main(smoke : bool) : int {
         SDL_BlitGPUTexture(command,addr(blit))
         print("RAW_CALL SDL_BlitGPUTexture\n")
 
-        var rwtex : SDL_GPUStorageTextureReadWriteBinding; rwtex.texture=compute_image
-        var rwbuf : SDL_GPUStorageBufferReadWriteBinding; rwbuf.buffer=output
+        var rwtex = SDL_GPUStorageTextureReadWriteBinding(texture = compute_image)
+        var rwbuf = SDL_GPUStorageBufferReadWriteBinding(buffer = output)
         var compute_pass=SDL_BeginGPUComputePass(command,addr(rwtex),1u,addr(rwbuf),1u); verify(compute_pass!=null)
         print("RAW_CALL SDL_BeginGPUComputePass\n")
         SDL_BindGPUComputePipeline(compute_pass,compute)

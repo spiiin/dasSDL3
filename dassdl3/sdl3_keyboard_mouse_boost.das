@@ -131,3 +131,27 @@ def public with_text_input_properties(window : SDL_Window?; props : uint;
     }
     return <- scope_result
 }
+
+def public global_mouse_state() : MouseState {
+    var position : float2
+    let buttons=global_mouse_state(position)
+    return MouseState(position=position,buttons=buttons)
+}
+def public relative_mouse_state() : MouseState {
+    var delta : float2
+    let buttons=relative_mouse_state(delta)
+    return MouseState(position=delta,buttons=buttons)
+}
+struct ScancodeMapping { scancode : SDL_Scancode; modifiers : uint }
+def public scancode_from_key(key : uint) : ScancodeMapping {
+    var modifiers : uint
+    let scancode=scancode_from_key(key,modifiers)
+    return ScancodeMapping(scancode=scancode,modifiers=modifiers)
+}
+struct TextInputArea { rect : SDL_Rect; cursor : int }
+def public text_input_area(window : SDL_Window?) {
+    var value : TextInputArea
+    let status=text_input_area(window,value.rect,value.cursor)
+    if(is_err(status)) { return err(unwrap_err(status),type<TextInputArea>) }
+    return ok(value,type<SdlError>)
+}

@@ -104,6 +104,10 @@ values; `--smoke-test` renders three frames. Contracts and language caveats:
 Result operations; `01_results` intentionally retains explicit checks and
 `and_then` for comparison. Raw SDL checks and deliberate Option defaults remain.
 
+[results/03_poll_events.das](results/03_poll_events.das) uses lazy
+`for (event in poll_events())` and `should_close(event, window)` with owned events.
+Escape or the close button exits; `--smoke-test` renders three frames.
+
 ## Structure of Result-based examples
 
 Keep acquisition callbacks short and return nested scope Results directly.

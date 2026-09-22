@@ -106,7 +106,11 @@ def check(event : SdlEvent) : uint {
         }
         if (SdlEvent(gamepad_sensor_update=$v(v))) {
             verify(v.which == 0xf1234567u && v.timestamp == 0xfedcba9876543210ul)
-            verify(v.sensor == SDL_SensorType.SENSOR_GYRO && v.data == float3(-1.25,2.5,3.75) && v.sensor_timestamp == 0x123456789abcdef0ul)
+            verify(v.sensor == SDL_SensorType.SENSOR_GYRO && v.data == float3(
+                -1.25,
+                2.5,
+                3.75) && v.sensor_timestamp == 0x123456789abcdef0ul
+            )
             return SDL_EVENT_GAMEPAD_SENSOR_UPDATE
         }
         if (_) { verify(false); return 0u }

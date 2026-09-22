@@ -26,10 +26,8 @@ def main(smoke : bool) : int {
                 verify(is_ok(current_render_output_size(renderer,w,h)) && w==32 && h==32)
                 verify(is_ok(render_scale(renderer,sx,sy)) && sx==1.0 && sy==1.0)
                 verify(!SDL_RenderViewportSet(renderer) && !SDL_RenderClipEnabled(renderer))
-                var viewport : SDL_Rect
-                viewport.x=4;viewport.y=6;viewport.w=16;viewport.h=16
-                var clip : SDL_Rect
-                clip.x=2;clip.y=3;clip.w=4;clip.h=3
+                var viewport = SDL_Rect(x = 4, y = 6, w = 16, h = 16)
+                var clip = SDL_Rect(x = 2, y = 3, w = 4, h = 3)
                 var got : SDL_Rect
                 unsafe {
                     verify(SDL_GetRenderOutputSize(renderer,addr(w),addr(h)) && w==32 && h==32)

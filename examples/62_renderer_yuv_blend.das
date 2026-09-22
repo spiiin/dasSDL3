@@ -10,7 +10,7 @@ def render_example(renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; Sd
         for(i in 0 .. 256) {u[i]=uint8(90);v[i]=uint8(240)}
         update_yuv_texture(texture,y,32,u,16,v,16) |> sdl_try
         if(!SDL_SetRenderDrawColorFloat(renderer,0.08,0.1,0.14,1.0) || !SDL_RenderClear(renderer)) {return err(sdl_error("62_renderer_yuv_blend"),type<SdlUnit>)}
-        var dst : SDL_FRect;dst.x=60.0;dst.y=20.0;dst.w=200.0;dst.h=200.0
+        var dst = SDL_FRect(x = 60.0, y = 20.0, w = 200.0, h = 200.0)
         draw_texture(renderer,texture,dst) |> sdl_try
         rendered=SDL_RenderPresent(renderer)
         if(!rendered) {return err(sdl_error("62_renderer_yuv_blend"),type<SdlUnit>)}

@@ -156,3 +156,11 @@ def public gamepad_sensor_data(device : SDL_Gamepad?; sensor : SDL_SensorType; c
 def public send_virtual_sensor_data(device : SDL_Joystick?; sensor : SDL_SensorType; timestamp : uint64; data : array<float>) {
     return sdl_status(SDL_SendJoystickVirtualSensorDataArray(device,sensor,timestamp,data),"SDL_SendJoystickVirtualSensorData")
 }
+
+struct GamepadTouchpadFinger { down : bool; position : float2; pressure : float }
+def public gamepad_touchpad_finger(device : SDL_Gamepad?; pad,finger : int) {
+    var value : GamepadTouchpadFinger
+    let status=gamepad_touchpad_finger(device,pad,finger,value.down,value.position,value.pressure)
+    if(is_err(status)) { return err(unwrap_err(status),type<GamepadTouchpadFinger>) }
+    return ok(value,type<SdlError>)
+}

@@ -125,6 +125,8 @@ def exercise_input(joystick : SDL_Joystick?; gamepad : SDL_Gamepad?) {
     verify(down && x==0.25 && y==0.75 && pressure==0.5)
     var position : float2
     gamepad_touchpad_finger(gamepad,0,0,down,position,pressure) |> sdl_try
+    let touch=gamepad_touchpad_finger(gamepad,0,0) |> sdl_try
+    verify(touch.down==down && touch.position==position && touch.pressure==pressure)
     verify(down && position==float2(0.25,0.75))
     verify(SDL_GamepadHasSensor(gamepad,SDL_SensorType.SENSOR_ACCEL))
     verify(SDL_SetGamepadSensorEnabled(gamepad,SDL_SensorType.SENSOR_ACCEL,true))

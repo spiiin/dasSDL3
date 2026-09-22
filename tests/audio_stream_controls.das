@@ -15,6 +15,8 @@ def main(smoke : bool) : int {
         var src,dst : SDL_AudioSpec
         audio_stream_formats(stream,src,dst) |> sdl_try
         verify(src.channels==2 && dst.channels==2)
+        let formats=audio_stream_formats(stream) |> sdl_try
+        verify(formats.source.channels==2 && formats.destination.channels==2)
         unsafe {verify(SDL_SetAudioStreamFormat(stream,addr(stereo),addr(stereo)))}
         verify(SDL_GetAudioStreamGain(stream)==1.0 && SDL_GetAudioStreamFrequencyRatio(stream)==1.0)
         verify(!SDL_SetAudioStreamFrequencyRatio(stream,0.0) && !SDL_SetAudioStreamFrequencyRatio(stream,101.0))

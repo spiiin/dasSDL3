@@ -1,5 +1,7 @@
 # Owned event variants
 
+For lazy owned iteration use `poll_events()` and `should_close(event,window)`; see [event iteration](api-ergonomics.md#lazy-events).
+
 `require dassdl3/sdl3_events` provides `SdlEvent`, `decode_event(raw)` and
 `poll_event() : Option<SdlEvent>`. Import `daslib/match` to use pattern matching.
 The design follows the tagged-event/owned-text idiom in the

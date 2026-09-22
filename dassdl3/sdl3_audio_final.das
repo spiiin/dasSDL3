@@ -36,3 +36,12 @@ def public convert_audio_samples(src_spec : SDL_AudioSpec; bytes : array<uint8>;
     if(!SDL_ConvertAudioSamplesArray(src_spec,bytes,dst_spec,converted)) {return err(sdl_error("SDL_ConvertAudioSamples"),type<array<uint8>>)}
     return <- move_ok(converted,type<SdlError>)
 }
+
+struct WavData { spec : SDL_AudioSpec; bytes : array<uint8> }
+def public load_wav_io(io : SDL_IOStream?) {
+    var value : WavData
+    var status <- load_wav_io(io,value.spec)
+    if(is_err(status)) { return err(unwrap_err(status),type<WavData>) }
+    value.bytes <- move_unwrap(status)
+    return <- move_ok(value,type<SdlError>)
+}

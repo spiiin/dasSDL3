@@ -147,16 +147,19 @@ def public with_native_gpu_graphics_pipeline(device : SDL_GPUDevice?; info : SDL
 }
 
 def public native_gpu_submit(var command : SDL_GPUCommandBuffer?&) {
+    if(command==null) { return err(SdlError(operation="native_gpu_submit",message="Command already consumed"),type<SdlUnit>) }
     let result=SDL_SubmitGPUCommandBuffer(command)
     command=null
     return sdl_status(result, "native_gpu_submit")
 }
 def public native_gpu_cancel(var command : SDL_GPUCommandBuffer?&) {
+    if(command==null) { return err(SdlError(operation="native_gpu_cancel",message="Command already consumed"),type<SdlUnit>) }
     let result=SDL_CancelGPUCommandBuffer(command)
     command=null
     return sdl_status(result, "native_gpu_cancel")
 }
 def public native_gpu_submit_fence(var command : SDL_GPUCommandBuffer?&) {
+    if(command==null) { return err(SdlError(operation="native_gpu_submit_fence",message="Command already consumed"),type<SDL_GPUFence?>) }
     var fence=SDL_SubmitGPUCommandBufferAndAcquireFence(command)
     command=null
     var value = fence
@@ -176,43 +179,43 @@ def public with_native_gpu_commands(device : SDL_GPUDevice?;
     return <- scope_result
 }
 def public with_native_gpu_copy_pass(command : SDL_GPUCommandBuffer?;
-        blk : block<(copy_pass : SDL_GPUCopyPass?) : $Result<auto(TT); SdlError> >) {
+        blk : block<(var copy_pass : SDL_GPUCopyPass?&) : $Result<auto(TT); SdlError> >) {
     var scope_result : $Result<TT; SdlError>
 
-    let copy_pass=SDL_BeginGPUCopyPass(command)
+    var copy_pass=SDL_BeginGPUCopyPass(command)
     if (copy_pass==null) { return err(sdl_error("with_native_gpu_copy_pass"), type<TT>) }
-    { defer() { SDL_EndGPUCopyPass(copy_pass) }; static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(copy_pass) } else { scope_result <- blk(copy_pass) } }
+    { defer() { if(copy_pass!=null) { SDL_EndGPUCopyPass(copy_pass) } }; static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(copy_pass) } else { scope_result <- blk(copy_pass) } }
 
     return <- scope_result
 }
 def public with_native_gpu_render_pass(command : SDL_GPUCommandBuffer?; colors : array<SDL_GPUColorTargetInfo>;
-        blk : block<(render_pass : SDL_GPURenderPass?) : $Result<auto(TT); SdlError> >) {
+        blk : block<(var render_pass : SDL_GPURenderPass?&) : $Result<auto(TT); SdlError> >) {
     var scope_result : $Result<TT; SdlError>
 
-    let render_pass=SDL_BeginGPURenderPassArray(command,colors,null)
+    var render_pass=SDL_BeginGPURenderPassArray(command,colors,null)
     if (render_pass==null) { return err(sdl_error("with_native_gpu_render_pass"), type<TT>) }
-    { defer() { SDL_EndGPURenderPass(render_pass) }; static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(render_pass) } else { scope_result <- blk(render_pass) } }
+    { defer() { if(render_pass!=null) { SDL_EndGPURenderPass(render_pass) } }; static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(render_pass) } else { scope_result <- blk(render_pass) } }
 
     return <- scope_result
 }
 def public with_native_gpu_render_pass(command : SDL_GPUCommandBuffer?; colors : array<SDL_GPUColorTargetInfo>;
-        depth : SDL_GPUDepthStencilTargetInfo; blk : block<(render_pass : SDL_GPURenderPass?) : $Result<auto(TT); SdlError> >) {
+        depth : SDL_GPUDepthStencilTargetInfo; blk : block<(var render_pass : SDL_GPURenderPass?&) : $Result<auto(TT); SdlError> >) {
     var scope_result : $Result<TT; SdlError>
 
-    let render_pass=SDL_BeginGPURenderPassDepthArray(command,colors,depth)
+    var render_pass=SDL_BeginGPURenderPassDepthArray(command,colors,depth)
     if (render_pass==null) { return err(sdl_error("with_native_gpu_render_pass"), type<TT>) }
-    { defer() { SDL_EndGPURenderPass(render_pass) }; static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(render_pass) } else { scope_result <- blk(render_pass) } }
+    { defer() { if(render_pass!=null) { SDL_EndGPURenderPass(render_pass) } }; static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(render_pass) } else { scope_result <- blk(render_pass) } }
 
     return <- scope_result
 }
 def public with_native_gpu_compute_pass(command : SDL_GPUCommandBuffer?;
         textures : array<SDL_GPUStorageTextureReadWriteBinding>; buffers : array<SDL_GPUStorageBufferReadWriteBinding>;
-        blk : block<(compute_pass : SDL_GPUComputePass?) : $Result<auto(TT); SdlError> >) {
+        blk : block<(var compute_pass : SDL_GPUComputePass?&) : $Result<auto(TT); SdlError> >) {
     var scope_result : $Result<TT; SdlError>
 
-    let compute_pass=SDL_BeginGPUComputePassArray(command,textures,buffers)
+    var compute_pass=SDL_BeginGPUComputePassArray(command,textures,buffers)
     if (compute_pass==null) { return err(sdl_error("with_native_gpu_compute_pass"), type<TT>) }
-    { defer() { SDL_EndGPUComputePass(compute_pass) }; static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(compute_pass) } else { scope_result <- blk(compute_pass) } }
+    { defer() { if(compute_pass!=null) { SDL_EndGPUComputePass(compute_pass) } }; static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk(compute_pass) } else { scope_result <- blk(compute_pass) } }
 
     return <- scope_result
 }
@@ -278,4 +281,28 @@ def public with_native_gpu_swapchain(device : SDL_GPUDevice?; window : SDL_Windo
         }
     }
     return <- outcome
+}
+
+// Consumes this variable; aliases still obey SDL's manual lifetime preconditions.
+def public native_gpu_end_copy_pass(var value : SDL_GPUCopyPass?&) {
+    if(value==null) { return err(SdlError(operation="native_gpu_end_copy_pass",message="Pass already ended"),type<SdlUnit>) }
+    SDL_EndGPUCopyPass(value)
+    value=null
+    return sdl_ok()
+}
+
+// Consumes this variable; aliases still obey SDL's manual lifetime preconditions.
+def public native_gpu_end_render_pass(var value : SDL_GPURenderPass?&) {
+    if(value==null) { return err(SdlError(operation="native_gpu_end_render_pass",message="Pass already ended"),type<SdlUnit>) }
+    SDL_EndGPURenderPass(value)
+    value=null
+    return sdl_ok()
+}
+
+// Consumes this variable; aliases still obey SDL's manual lifetime preconditions.
+def public native_gpu_end_compute_pass(var value : SDL_GPUComputePass?&) {
+    if(value==null) { return err(SdlError(operation="native_gpu_end_compute_pass",message="Pass already ended"),type<SdlUnit>) }
+    SDL_EndGPUComputePass(value)
+    value=null
+    return sdl_ok()
 }

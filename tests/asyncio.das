@@ -117,8 +117,7 @@ def main(smoke : bool) : int {
         return err(SdlError(operation="body",message="primary"),type<SdlUnit>)
     }
     verify(is_err(propagated) && unwrap_err(propagated).operation=="body")
-    var no_outcome : SDL_AsyncIOOutcome
-    no_outcome.bytes_transferred=99ul
+    var no_outcome = SDL_AsyncIOOutcome(bytes_transferred = 99ul)
     verify(!SDL_GetAsyncIOResultRef(null,no_outcome) && no_outcome.bytes_transferred==0ul)
     no_outcome.bytes_transferred=99ul
     verify(!SDL_WaitAsyncIOResultRef(null,no_outcome,0) && no_outcome.bytes_transferred==0ul)

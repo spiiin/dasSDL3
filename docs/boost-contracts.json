@@ -675,25 +675,25 @@
     "module": "sdl3_gpu_native_boost",
     "name": "with_native_gpu_copy_pass",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_native_gpu_copy_pass(command : SDL_GPUCommandBuffer?; blk : block<(copy_pass : SDL_GPUCopyPass?) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_native_gpu_copy_pass(command : SDL_GPUCommandBuffer?; blk : block<(var copy_pass : SDL_GPUCopyPass?&) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_native_boost",
     "name": "with_native_gpu_render_pass",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_native_gpu_render_pass(command : SDL_GPUCommandBuffer?; colors : array<SDL_GPUColorTargetInfo>; blk : block<(render_pass : SDL_GPURenderPass?) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_native_gpu_render_pass(command : SDL_GPUCommandBuffer?; colors : array<SDL_GPUColorTargetInfo>; blk : block<(var render_pass : SDL_GPURenderPass?&) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_native_boost",
     "name": "with_native_gpu_render_pass",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_native_gpu_render_pass(command : SDL_GPUCommandBuffer?; colors : array<SDL_GPUColorTargetInfo>; depth : SDL_GPUDepthStencilTargetInfo; blk : block<(render_pass : SDL_GPURenderPass?) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_native_gpu_render_pass(command : SDL_GPUCommandBuffer?; colors : array<SDL_GPUColorTargetInfo>; depth : SDL_GPUDepthStencilTargetInfo; blk : block<(var render_pass : SDL_GPURenderPass?&) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_native_boost",
     "name": "with_native_gpu_compute_pass",
     "contract": "Result<T,SdlError>",
-    "signature": "def public with_native_gpu_compute_pass(command : SDL_GPUCommandBuffer?; textures : array<SDL_GPUStorageTextureReadWriteBinding>; buffers : array<SDL_GPUStorageBufferReadWriteBinding>; blk : block<(compute_pass : SDL_GPUComputePass?) : $Result<auto(TT); SdlError> >)"
+    "signature": "def public with_native_gpu_compute_pass(command : SDL_GPUCommandBuffer?; textures : array<SDL_GPUStorageTextureReadWriteBinding>; buffers : array<SDL_GPUStorageBufferReadWriteBinding>; blk : block<(var compute_pass : SDL_GPUComputePass?&) : $Result<auto(TT); SdlError> >)"
   },
   {
     "module": "sdl3_gpu_native_boost",
@@ -3724,5 +3724,167 @@
     "name": "tray_entry_label",
     "contract": "Result",
     "signature": "def public tray_entry_label(entry : SDL_TrayEntry?)"
+  },
+  {
+    "module": "sdl3_audio_devices_boost",
+    "name": "audio_device_format",
+    "contract": "Result",
+    "signature": "def public audio_device_format(device : uint)"
+  },
+  {
+    "module": "sdl3_audio_final",
+    "name": "load_wav_io",
+    "contract": "Result",
+    "signature": "def public load_wav_io(io : SDL_IOStream?)"
+  },
+  {
+    "module": "sdl3_audio_stream_controls",
+    "name": "audio_stream_formats",
+    "contract": "Result",
+    "signature": "def public audio_stream_formats(stream : SDL_AudioStream?)"
+  },
+  {
+    "module": "sdl3_boost",
+    "name": "mouse_state",
+    "contract": "value",
+    "signature": "def public mouse_state() : MouseState"
+  },
+  {
+    "module": "sdl3_events",
+    "name": "poll_events",
+    "contract": "value",
+    "signature": "def public poll_events() : iterator<SdlEvent>"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "native_gpu_end_copy_pass",
+    "contract": "Result",
+    "signature": "def public native_gpu_end_copy_pass(var value : SDL_GPUCopyPass?&)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "native_gpu_end_render_pass",
+    "contract": "Result",
+    "signature": "def public native_gpu_end_render_pass(var value : SDL_GPURenderPass?&)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "native_gpu_end_compute_pass",
+    "contract": "Result",
+    "signature": "def public native_gpu_end_compute_pass(var value : SDL_GPUComputePass?&)"
+  },
+  {
+    "module": "sdl3_gpu_pipeline_boost",
+    "name": "with_gpu_graphics_pipeline",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_graphics_pipeline(device : SDL_GPUDevice?; settings : GpuGraphicsPipelineOptions; blk : block<(pipeline : GpuPipelineHandle) : $Result<auto(TT);SdlError>>)"
+  },
+  {
+    "module": "sdl3_gpu_shader_boost",
+    "name": "with_gpu_shader_file",
+    "contract": "Result<T,SdlError>",
+    "signature": "def public with_gpu_shader_file(device : SDL_GPUDevice?; settings : GpuShaderOptions; blk : block<(shader : GpuShaderHandle) : $Result<auto(TT);SdlError>>)"
+  },
+  {
+    "module": "sdl3_iostream_boost",
+    "name": "read_io",
+    "contract": "value",
+    "signature": "def public read_io(io : SDL_IOStream?; var bytes : array<uint8>; count : uint64) : IoTransfer"
+  },
+  {
+    "module": "sdl3_iostream_boost",
+    "name": "write_io",
+    "contract": "value",
+    "signature": "def public write_io(io : SDL_IOStream?; bytes : array<uint8>; count : uint64) : IoTransfer"
+  },
+  {
+    "module": "sdl3_joystick_gamepad_boost",
+    "name": "gamepad_touchpad_finger",
+    "contract": "Result",
+    "signature": "def public gamepad_touchpad_finger(device : SDL_Gamepad?; pad,finger : int)"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "global_mouse_state",
+    "contract": "value",
+    "signature": "def public global_mouse_state() : MouseState"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "relative_mouse_state",
+    "contract": "value",
+    "signature": "def public relative_mouse_state() : MouseState"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "scancode_from_key",
+    "contract": "value",
+    "signature": "def public scancode_from_key(key : uint) : ScancodeMapping"
+  },
+  {
+    "module": "sdl3_keyboard_mouse_boost",
+    "name": "text_input_area",
+    "contract": "Result",
+    "signature": "def public text_input_area(window : SDL_Window?)"
+  },
+  {
+    "module": "sdl3_pixel_views",
+    "name": "rgba8",
+    "contract": "value",
+    "signature": "def public rgba8(r,g,b,a : uint) : uint"
+  },
+  {
+    "module": "sdl3_pixel_views",
+    "name": "set_pixel",
+    "contract": "Result",
+    "signature": "def public set_pixel(pixels : SdlPixelView#; x,y : int; color : uint4)"
+  },
+  {
+    "module": "sdl3_pixel_views",
+    "name": "with_row",
+    "contract": "Result",
+    "signature": "def public with_row(pixels : SdlPixelView#; y : int; blk : block<(var data : array<uint>#) : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_pixel_views",
+    "name": "with_pixels",
+    "contract": "Result",
+    "signature": "def public with_pixels(pixels : SdlPixelView#; blk : block<(var data : array<uint8>#) : $Result<auto(TT); SdlError>>)"
+  },
+  {
+    "module": "sdl3_pixel_views",
+    "name": "with_locked_surface_pixels_rgba8",
+    "contract": "Result",
+    "signature": "def public with_locked_surface_pixels_rgba8(surface : SDL_Surface?; blk : block<(pixels : SdlPixelView#) : $Result<auto(TT);SdlError>>)"
+  },
+  {
+    "module": "sdl3_pixel_views",
+    "name": "with_texture_pixels_rgba8",
+    "contract": "Result",
+    "signature": "def public with_texture_pixels_rgba8(texture : SDL_Texture?; rect : SDL_Rect; blk : block<(pixels : SdlPixelView#) : $Result<auto(TT);SdlError>>)"
+  },
+  {
+    "module": "sdl3_pixel_views",
+    "name": "with_surface_pixels_rgba8",
+    "contract": "Result",
+    "signature": "def public with_surface_pixels_rgba8(surface : SDL_Surface?; blk : block<(pixels : SdlPixelView#) : $Result<auto(TT);SdlError>>)"
+  },
+  {
+    "module": "sdl3_window_boost",
+    "name": "with_window",
+    "contract": "Result",
+    "signature": "def public with_window(settings : WindowOptions; blk : block<(window : SDL_Window?) : $Result<auto(TT);SdlError>>)"
+  },
+  {
+    "module": "sdl3_events",
+    "name": "should_close",
+    "contract": "value",
+    "signature": "def public should_close(event : SdlEvent) : bool"
+  },
+  {
+    "module": "sdl3_events",
+    "name": "should_close",
+    "contract": "value",
+    "signature": "def public should_close(event : SdlEvent; window : SDL_Window?) : bool"
   }
 ]

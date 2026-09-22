@@ -71,3 +71,13 @@ def public gpu_shader_descriptor(device : SDL_GPUDevice?; shader : GpuShaderHand
     var value = info
     return <- move_ok(value,type<SdlError>)
 }
+
+struct GpuShaderOptions {
+    path : string
+    entrypoint : string = "main"
+    info : SDL_GPUShaderCreateInfo
+}
+def public with_gpu_shader_file(device : SDL_GPUDevice?; settings : GpuShaderOptions;
+        blk : block<(shader : GpuShaderHandle) : $Result<auto(TT);SdlError>>) {
+    return <- with_gpu_shader_file(device,settings.path,settings.info,settings.entrypoint,blk)
+}

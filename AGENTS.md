@@ -106,6 +106,18 @@ Nested type annotations must register in field dependency order, not policy orde
 
 ## Runtime and language contracts
 
+Read docs/api-ergonomics.md for the current boost conventions. Prefer named POD
+initializers and returned query values. Pixel views must forbid copy/move/clone;
+temporary # alone does not prevent managed cloning. Borrowed arrays may be
+explicitly cloned into independent storage. Keep pitch and write-only lock rules.
+SdlError contains operation and message only; do not infer categories from SDL error strings.
+AOT tests must depend on all boost modules they import; stale generated code must
+be regenerated, never accepted through an interpreter fallback.
+Native pass scopes lend mutable references; use consuming end helpers so deferred
+cleanup sees null. Do not claim raw pointer aliases are linear ownership.
+
+
+
 SDL errors are return values, never panic/verify in boost wrappers. No script
 try/recover or native protected invocation/cleanup bridge. Read docs/error-handling.md.
 Use daslib/defer and direct block calls. Enter a nested cleanup scope AFTER a

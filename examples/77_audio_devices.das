@@ -13,9 +13,9 @@ def example() : $Result<SdlUnit; SdlError> {
         let recording <- audio_recording_devices() |> sdl_try
         print("Recording devices available: {length(recording)} (not opened).\n")
         let device : uint = with_audio_device(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK) |> sdl_use
-        var frames=0
-        let spec=device |> audio_device_format(frames) |> sdl_try
-        print("Logical device: {spec.freq} Hz, {spec.channels} channels, {frames} frames per buffer.\n")
+        let format=device |> audio_device_format() |> sdl_try
+        let spec=format.spec
+        print("Logical device: {spec.freq} Hz, {spec.channels} channels, {format.sample_frames} frames per buffer.\n")
         let stream : SDL_AudioStream? = with_audio_stream(spec,spec) |> sdl_use
         device |> pause_audio_device() |> sdl_try
         device |> bind_audio_stream(stream) |> sdl_try

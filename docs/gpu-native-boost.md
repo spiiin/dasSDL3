@@ -1,5 +1,7 @@
 # Native GPU adapters and scopes
 
+Pass scopes now lend mutable references and recognize explicit consumption through `native_gpu_end_*_pass`; see [consuming contracts](api-ergonomics.md#consuming-commands-and-passes).
+
 `require dassdl3/sdl3_gpu_native_boost` exposes native SDL pointers and small
 `defer` scopes. This module is separate from the [checked distinct-handle adapters](gpu-handles.md).
 Never interchange their resource handles. No plan, mesh, material or scene is

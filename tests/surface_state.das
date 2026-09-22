@@ -28,7 +28,7 @@ def main(smoke : bool) : int {
             verify(SDL_SetNumberProperty(props,"test.surface",73l) && SDL_GetNumberProperty(SDL_GetSurfaceProperties(surface),"test.surface",0l)==73l)
             verify(SDL_GetSurfaceColorspace(surface)==SDL_Colorspace.COLORSPACE_SRGB)
             verify(SDL_FillSurfaceAll(surface,SDL_MapSurfaceRGBA(surface,255u,255u,255u,255u)))
-            var rect : SDL_Rect;rect.w=1;rect.h=1
+            var rect = SDL_Rect(w = 1, h = 1)
             let key=SDL_MapSurfaceRGBA(surface,255u,0u,255u,255u)
             unsafe {verify(SDL_FillSurfaceRect(surface,addr(rect),key))}
             var before,after : array<uint8>;resize(before,8);resize(after,8)

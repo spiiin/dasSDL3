@@ -17,8 +17,7 @@ def check_samples(device : SDL_GPUDevice?; count : SDL_GPUSampleCount) {
 // Successful handles are released before assertions or any other script calls.
 def check_samplers(device : SDL_GPUDevice?) {
     for (configuration in 0 .. 4) {
-        var info : SDL_GPUSamplerCreateInfo
-        info.min_filter = configuration == 0 ? SDL_GPUFilter.FILTER_NEAREST : SDL_GPUFilter.FILTER_LINEAR
+        var info = SDL_GPUSamplerCreateInfo(min_filter = configuration == 0 ? SDL_GPUFilter.FILTER_NEAREST : SDL_GPUFilter.FILTER_LINEAR)
         info.mag_filter = info.min_filter
         info.mipmap_mode = configuration == 0 ? SDL_GPUSamplerMipmapMode.SAMPLERMIPMAPMODE_NEAREST : SDL_GPUSamplerMipmapMode.SAMPLERMIPMAPMODE_LINEAR
         info.address_mode_u = SDL_GPUSamplerAddressMode.SAMPLERADDRESSMODE_CLAMP_TO_EDGE
