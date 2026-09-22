@@ -126,3 +126,23 @@ inline void SDL_CopyGPUBufferToBufferRef(SDL_GPUCopyPass * pass,const SDL_GPUBuf
 inline void SDL_CopyGPUTextureToTextureRef(SDL_GPUCopyPass * pass,const SDL_GPUTextureLocation & source,const SDL_GPUTextureLocation & destination,uint32_t w,uint32_t h,uint32_t d,bool cycle) { SDL_CopyGPUTextureToTexture(pass,&source,&destination,w,h,d,cycle); }
 
 inline SDL_GPURenderPass * SDL_BeginGPURenderPassDepthArray(SDL_GPUCommandBuffer * command,const das::TArray<SDL_GPUColorTargetInfo> & colors,const SDL_GPUDepthStencilTargetInfo & depth) { return SDL_BeginGPURenderPassArray(command,colors,&depth); }
+
+// Float payloads use their native 32-bit representation; no script serialization.
+inline bool SDL_WriteGPUTransferBufferFloats(SDL_GPUDevice * device, SDL_GPUTransferBuffer * buffer,
+    uint32_t capacity, uint32_t offset, const das::TArray<float> & values, bool cycle) {
+    if (!sdl3_native_gpu::array_valid(values) || values.size > UINT32_MAX / sizeof(float))
+        return SDL_SetError("GPU float upload: invalid array or byte count overflow");
+    das::TArray<uint8_t> bytes;
+    bytes.data = values.data;
+    bytes.size = values.size * sizeof(float);
+    return SDL_WriteGPUTransferBufferBytes(device, buffer, capacity, offset, bytes, cycle);
+}
+inline bool SDL_PushGPUVertexUniformFloats(SDL_GPUCommandBuffer * command, uint32_t slot,
+    const das::TArray<float> & values) {
+    if (!command || !sdl3_native_gpu::array_valid(values) || values.size > UINT32_MAX / sizeof(float))
+        return SDL_SetError("GPU float uniforms: invalid array or byte count overflow");
+    das::TArray<uint8_t> bytes;
+    bytes.data = values.data;
+    bytes.size = values.size * sizeof(float);
+    return SDL_PushGPUVertexUniformDataArray(command, slot, bytes);
+}

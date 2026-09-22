@@ -1,0 +1,5 @@
+{
+    "dascript.compiler": "${workspaceFolder}/build/ninja/bin/dasSDL3_language_server.exe",
+    "dascript.server.args": ["${file}"],
+    "editor.semanticHighlighting.enabled": true
+}

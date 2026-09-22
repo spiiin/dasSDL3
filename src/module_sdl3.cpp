@@ -346,6 +346,8 @@ public:
         addExtern<DAS_BIND_FUN(SDL_LoadGPUShaderFile)>(*this, lib, "SDL_LoadGPUShaderFile", SideEffects::worstDefault, "SDL_LoadGPUShaderFile");
         addExtern<DAS_BIND_FUN(SDL_LoadGPUComputePipelineFile)>(*this, lib, "SDL_LoadGPUComputePipelineFile", SideEffects::worstDefault, "SDL_LoadGPUComputePipelineFile");
         addExtern<DAS_BIND_FUN(SDL_CreateGPUGraphicsPipelineArrays)>(*this, lib, "SDL_CreateGPUGraphicsPipelineArrays", SideEffects::worstDefault, "SDL_CreateGPUGraphicsPipelineArrays");
+        addExtern<DAS_BIND_FUN(SDL_WriteGPUTransferBufferFloats)>(*this, lib, "SDL_WriteGPUTransferBufferFloats", SideEffects::worstDefault, "SDL_WriteGPUTransferBufferFloats");
+        addExtern<DAS_BIND_FUN(SDL_PushGPUVertexUniformFloats)>(*this, lib, "SDL_PushGPUVertexUniformFloats", SideEffects::worstDefault, "SDL_PushGPUVertexUniformFloats");
         addExtern<DAS_BIND_FUN(SDL_WriteGPUTransferBufferBytes)>(*this, lib, "SDL_WriteGPUTransferBufferBytes", SideEffects::worstDefault, "SDL_WriteGPUTransferBufferBytes");
         addExtern<DAS_BIND_FUN(SDL_ReadGPUTransferBufferBytes)>(*this, lib, "SDL_ReadGPUTransferBufferBytes", SideEffects::worstDefault, "SDL_ReadGPUTransferBufferBytes");
         addExtern<DAS_BIND_FUN(SDL_CreateGPUBufferRef)>(*this, lib, "SDL_CreateGPUBufferRef", SideEffects::worstDefault, "SDL_CreateGPUBufferRef");

@@ -182,3 +182,8 @@ Web: [сборка и запуск HTML-галереи](../web/README.md), ис�
 
 84. [Platform services](84_platform_services.das): copied locales and optional battery information.
 85. [Tray](85_tray.das): scoped tray, checkbox and submenu; five seconds, or immediate smoke test.
+
+## GPU application ports
+
+[gpu/01_metaballs.das](gpu/01_metaballs.das) ports bgfx metaballs with CPU marching
+cubes, dynamic vertex upload, depth and lighting. See [usage and API findings](gpu/README.md).

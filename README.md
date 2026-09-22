@@ -73,6 +73,30 @@ Runner использует `daslib` из исходников daScript; кат�
 в другую папку пересоберите runner; упаковка отдельного дистрибутива пока
 не реализована.
 
+## VS Code: language server
+
+В проекте используется расширение `profelis.dascript-plugin` (daScript language
+support) с зависимостью `eguskov.dascript`. Настройки `.vscode/settings.json`
+выбирают отдельный host с настоящими нативными SDL3 bindings:
+
+```powershell
+cmake --build build/ninja --target dasSDL3_language_server --parallel 6
+```
+
+После первой сборки выполните **Developer: Reload Window** в VS Code.
+Host запускает `validate_file.das` установленного расширения, поддерживает
+`--version` и аргументы валидатора после `--`. Он регистрирует `sdl3` и корень
+`dassdl3` также для вложенной компиляции файлов редактора. Обычный `daslang`
+эти bindings не содержит, а `dasSDL3_runner` ожидает другой `main`.
+
+Доступны диагностика, автодополнение, подсказки типов и навигация. Установленная
+версия расширения 1.3.7 не предоставляет semantic tokens: раскраска остаётся
+синтаксической. После изменений C++ bindings пересоберите host. Пути к исходникам
+записываются при сборке; после переноса проекта нужна повторная сборка.
+Для Visual Studio build измените `dascript.compiler` на фактический путь
+`build/vs/bin/Release/dasSDL3_language_server.exe`.
+
+
 ## Устройство привязки
 
 Низкоуровневый модуль подключается через `require sdl3`. Пример использует

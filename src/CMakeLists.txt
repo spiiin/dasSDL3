@@ -32,6 +32,16 @@ if(WIN32)
     target_compile_definitions(dasSDL3 PUBLIC DAS_ENABLE_EXCEPTIONS=1)
 endif()
 
+# Editor validation host: same native SDL bindings as the application runner,
+# with a void main() entry point and command-line arguments for the VS Code LSP.
+add_executable(dasSDL3_language_server language_server.cpp)
+target_link_libraries(dasSDL3_language_server PRIVATE dasSDL3)
+target_compile_definitions(dasSDL3_language_server PRIVATE
+    DASSDL3_DAS_ROOT="${CMAKE_SOURCE_DIR}/third_party/daScript"
+    DASSDL3_MODULE_ROOT="${CMAKE_SOURCE_DIR}/dassdl3")
+set_target_properties(dasSDL3_language_server PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+
 add_executable(dasSDL3_runner runner.cpp)
 target_link_libraries(dasSDL3_runner PRIVATE dasSDL3)
 target_compile_definitions(dasSDL3_runner PRIVATE DASSDL3_DAS_ROOT="${CMAKE_SOURCE_DIR}/third_party/daScript")
@@ -258,7 +268,7 @@ if(BUILD_TESTING)
 endif()
 if(BUILD_TESTING)
     foreach(driver vulkan direct3d12)
-        foreach(script tests/gpu_native_adapters tests/gpu_native_array_operations examples/48_gpu_native_graphics examples/49_gpu_native_compute examples/50_gpu_native_transfer)
+        foreach(script tests/gpu_native_adapters tests/gpu_native_array_operations examples/48_gpu_native_graphics examples/49_gpu_native_compute examples/50_gpu_native_transfer examples/gpu/01_metaballs tests/gpu_float_upload)
             string(REPLACE "/" "_" name "${script}")
             add_test(NAME sdl3_${name}_${driver} COMMAND dasSDL3_runner ${CMAKE_SOURCE_DIR}/${script}.das --smoke-test)
             set_tests_properties(sdl3_${name}_${driver} PROPERTIES TIMEOUT 90 ENVIRONMENT "SDL_GPU_DRIVER=${driver};SDL_ASSERT=abort" FAIL_REGULAR_EXPRESSION "VUID-;Validation Error;D3D12 ERROR;D3D12 CORRUPTION")
@@ -432,4 +442,13 @@ if(BUILD_TESTING)
     add_test(NAME sdl3_pixel_views COMMAND dasSDL3_runner ${CMAKE_SOURCE_DIR}/tests/pixel_views.das --smoke-test)
     set_tests_properties(sdl3_pixel_views PROPERTIES ENVIRONMENT "SDL_VIDEODRIVER=dummy" TIMEOUT 30)
     add_test(NAME sdl3_pixel_view_escape COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tests/test_pixel_view_escape.py $<TARGET_FILE:dasSDL3_runner>)
+endif()
+
+foreach(shader metaballs.vert.spv metaballs.frag.spv metaballs.vert.dxil metaballs.frag.dxil)
+    configure_file("${CMAKE_SOURCE_DIR}/examples/gpu/shaders/${shader}" "${CMAKE_BINARY_DIR}/bin/assets/shaders/${shader}" COPYONLY)
+endforeach()
+
+if(BUILD_TESTING)
+    add_test(NAME sdl3_metaballs_field COMMAND dasSDL3_runner ${CMAKE_SOURCE_DIR}/examples/gpu/test_metaballs_field.das --smoke-test)
+    set_tests_properties(sdl3_metaballs_field PROPERTIES TIMEOUT 30)
 endif()

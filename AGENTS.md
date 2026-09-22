@@ -239,3 +239,13 @@ executables during linking (WinError 32 is not an ACL failure).
 Do not overlap no-LLVM consumer configuration/build with clangbind-dependent
 builds or tests: they share daScript generated module configuration. Restore the
 production generator configuration after consumer checks before clangbind gates.
+
+## GPU application port
+
+`examples/gpu/01_metaballs.das` ports bgfx's CPU marching cubes to SDL GPU.
+Keep its algorithm, table and controls local to the example. See
+`examples/gpu/README.md` for provenance, shader rebuilds, smoke pixel readback and
+syntax findings. Native float upload/uniform helpers copy contiguous float arrays
+synchronously; callers supply actual byte capacity and matching shader layout.
+Raw SDL remains unchanged; no generic struct serialization or mapped-memory view
+is implied by these two adapters. Metaballs runs on Vulkan/D3D12, not the web profile.

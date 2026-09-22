@@ -112,3 +112,12 @@ shader stages, uniform arrays, render/compute arrays, swapchain outputs, fence
 arrays and descriptor-ref operations. It retains CPU-only shader/data fixtures
 and raw setup; the adapter calls and GPU operations execute in script, with
 independent pixel/byte checks. See [validation results](gpu-native-validation.md).
+
+## Float uploads and application port
+
+`write_native_gpu_transfer_floats` and `push_native_gpu_vertex_uniforms` accept
+contiguous `array<float>` payloads without script byte packing. The transfer
+capacity must match its allocation; offsets/counts are checked in bytes and
+arrays are copied synchronously. Layout and valid live command/resource pointers
+remain caller preconditions. The [metaballs port](../examples/gpu/README.md) uses
+these helpers and documents remaining API friction.

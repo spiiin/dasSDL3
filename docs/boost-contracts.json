@@ -3886,5 +3886,17 @@
     "name": "should_close",
     "contract": "value",
     "signature": "def public should_close(event : SdlEvent; window : SDL_Window?) : bool"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "write_native_gpu_transfer_floats",
+    "contract": "Result",
+    "signature": "def public write_native_gpu_transfer_floats(device : SDL_GPUDevice?; transfer : SDL_GPUTransferBuffer?; capacity, offset : uint; values : array<float>; cycle : bool = true)"
+  },
+  {
+    "module": "sdl3_gpu_native_boost",
+    "name": "push_native_gpu_vertex_uniforms",
+    "contract": "Result",
+    "signature": "def public push_native_gpu_vertex_uniforms(command : SDL_GPUCommandBuffer?; slot : uint; values : array<float>)"
   }
 ]

@@ -306,3 +306,13 @@ def public native_gpu_end_compute_pass(var value : SDL_GPUComputePass?&) {
     value=null
     return sdl_ok()
 }
+
+// Capacity is the actual transfer-buffer allocation size, in bytes.
+def public write_native_gpu_transfer_floats(device : SDL_GPUDevice?; transfer : SDL_GPUTransferBuffer?;
+        capacity, offset : uint; values : array<float>; cycle : bool = true) {
+    return sdl_status(SDL_WriteGPUTransferBufferFloats(device,transfer,capacity,offset,values,cycle),"SDL_WriteGPUTransferBufferFloats")
+}
+
+def public push_native_gpu_vertex_uniforms(command : SDL_GPUCommandBuffer?; slot : uint; values : array<float>) {
+    return sdl_status(SDL_PushGPUVertexUniformFloats(command,slot,values),"SDL_PushGPUVertexUniformFloats")
+}

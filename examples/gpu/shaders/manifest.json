@@ -1,0 +1,8 @@
+{
+  "metaballs.vert.hlsl": "37b572817ea4e470779b03298fa7ec435896a678bb3a311667923ff82048c3d1",
+  "metaballs.vert.spv": "5feb06a44cf87ab50d47bb12aa61b0d59163a51d08a4d615ec86d410239d61b2",
+  "metaballs.vert.dxil": "662fb5a25c004ebb09ee0483b1e30ef7a6d9f6e795c18ea9dc95410fea7b0517",
+  "metaballs.frag.hlsl": "e556785129114d67055f916c6519f0a8ab80fdd9e159294f68220cd58fcbf2b5",
+  "metaballs.frag.spv": "4224398803f28f11a338a0beef59d8816ee9bc9c921e407def2cd2a0fedd8238",
+  "metaballs.frag.dxil": "2923f38ece12e37ad11d351e401761f168d01988430ca2ddee2333f761fe28ca"
+}
