@@ -1,5 +1,7 @@
 # Документация dasSDL3
 
+- [SDL_image](sdl-image.md): PNG/JPEG, surface/texture/animation, IO ownership и тесты.
+
 - [ImGui + SDL3 и примеры дополнительных библиотек](../examples/libraries/README.md).
 
 ## Начать

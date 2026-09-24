@@ -8,6 +8,9 @@
 #include <string>
 
 DECLARE_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_IMAGE
+DECLARE_MODULE(Module_sdl3_image);
+#endif
 #ifdef DASSDL3_WITH_IMGUI
 DECLARE_MODULE(Module_dasIMGUI);
 DECLARE_MODULE(Module_Clipboard);
@@ -70,6 +73,9 @@ int main(int argc, char ** argv) {
     das::setDasRoot(DASSDL3_DAS_ROOT);
     NEED_ALL_DEFAULT_MODULES;
     NEED_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_IMAGE
+    NEED_MODULE(Module_sdl3_image);
+#endif
 #ifdef DASSDL3_WITH_IMGUI
     NEED_MODULE(Module_Clipboard);
     NEED_MODULE(Module_dasIMGUI);

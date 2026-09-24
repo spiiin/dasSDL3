@@ -12,6 +12,11 @@
 
 ## Версии сначала
 
+24 сентября: SDL_image 3.2.4 подключён через `DASSDL3_WITH_IMAGE` без обновления
+core SDL. Все 59 raw-деклараций, Result/defer scopes и пример `02_image` добавлены;
+PNG/JPEG/alpha/GIF/IO проверены. Внешние AVIF/JXL/TIFF/WebP codecs выключены.
+Точные границы и оставшиеся проверки: [SDL_image](sdl-image.md).
+
 Текущий core — SDL 3.2.18. Прочитанные 19 сентября CMakeLists.txt веток main:
 SDL_image требует SDL 3.4.0, SDL_mixer — 3.4.0, SDL_ttf — 3.2.6,
 SDL_net — 3.0.0. Это требования просмотренных main snapshots, **не выбранные

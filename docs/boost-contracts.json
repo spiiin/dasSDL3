@@ -3905,5 +3905,145 @@
     "contract": "Result",
     "signature": "def public with_imgui(window : SDL_Window?; renderer : SDL_Renderer?; blk : block<() : $Result<auto(TT); SdlError>>)",
     "requires": "DASSDL3_WITH_IMGUI"
+  },
+  {
+    "module": "sdl3_image_boost",
+    "name": "load_image",
+    "contract": "Result",
+    "signature": "def public load_image(path : string)",
+    "requires": "DASSDL3_WITH_IMAGE"
+  },
+  {
+    "module": "sdl3_image_boost",
+    "name": "with_image",
+    "contract": "Result",
+    "signature": "def public with_image(path : string; blk : block<(value : SDL_Surface?) : $Result<auto(TT); SdlError>>)",
+    "requires": "DASSDL3_WITH_IMAGE"
+  },
+  {
+    "module": "sdl3_image_boost",
+    "name": "load_image",
+    "contract": "Result",
+    "signature": "def public load_image(io : SDL_IOStream?; kind : string = \"\")",
+    "requires": "DASSDL3_WITH_IMAGE"
+  },
+  {
+    "module": "sdl3_image_boost",
+    "name": "with_image",
+    "contract": "Result",
+    "signature": "def public with_image(io : SDL_IOStream?; blk : block<(value : SDL_Surface?) : $Result<auto(TT); SdlError>>)",
+    "requires": "DASSDL3_WITH_IMAGE"
+  },
+  {
+    "module": "sdl3_image_boost",
+    "name": "load_image_texture",
+    "contract": "Result",
+    "signature": "def public load_image_texture(renderer : SDL_Renderer?; path : string)",
+    "requires": "DASSDL3_WITH_IMAGE"
+  },
+  {
+    "module": "sdl3_image_boost",
+    "name": "with_image_texture",
+    "contract": "Result",
+    "signature": "def public with_image_texture(renderer : SDL_Renderer?; path : string; blk : block<(value : SDL_Texture?) : $Result<auto(TT); SdlError>>)",
+    "requires": "DASSDL3_WITH_IMAGE"
+  },
+  {
+    "module": "sdl3_image_boost",
+    "name": "load_image_texture",
+    "contract": "Result",
+    "signature": "def public load_image_texture(renderer : SDL_Renderer?; io : SDL_IOStream?; kind : string = \"\")",
+    "requires": "DASSDL3_WITH_IMAGE"
+  },
+  {
+    "module": "sdl3_image_boost",
+    "name": "with_image_texture",
+    "contract": "Result",
+    "signature": "def public with_image_texture(renderer : SDL_Renderer?; io : SDL_IOStream?; blk : block<(value : SDL_Texture?) : $Result<auto(TT); SdlError>>)",
+    "requires": "DASSDL3_WITH_IMAGE"
+  },
+  {
+    "module": "sdl3_image_boost",
+    "name": "load_image_animation",
+    "contract": "Result",
+    "signature": "def public load_image_animation(path : string)",
+    "requires": "DASSDL3_WITH_IMAGE"
+  },
+  {
+    "module": "sdl3_image_boost",
+    "name": "with_image_animation",
+    "contract": "Result",
+    "signature": "def public with_image_animation(path : string; blk : block<(value : IMG_Animation?) : $Result<auto(TT); SdlError>>)",
+    "requires": "DASSDL3_WITH_IMAGE"
+  },
+  {
+    "module": "sdl3_image_boost",
+    "name": "load_image_animation",
+    "contract": "Result",
+    "signature": "def public load_image_animation(io : SDL_IOStream?; kind : string = \"\")",
+    "requires": "DASSDL3_WITH_IMAGE"
+  },
+  {
+    "module": "sdl3_image_boost",
+    "name": "with_image_animation",
+    "contract": "Result",
+    "signature": "def public with_image_animation(io : SDL_IOStream?; blk : block<(value : IMG_Animation?) : $Result<auto(TT); SdlError>>)",
+    "requires": "DASSDL3_WITH_IMAGE"
+  },
+  {
+    "module": "sdl3_image_boost",
+    "name": "save_image_png",
+    "contract": "Result",
+    "signature": "def public save_image_png(surface : SDL_Surface?; path : string)",
+    "requires": "DASSDL3_WITH_IMAGE"
+  },
+  {
+    "module": "sdl3_image_boost",
+    "name": "save_image_png",
+    "contract": "Result",
+    "signature": "def public save_image_png(surface : SDL_Surface?; io : SDL_IOStream?)",
+    "requires": "DASSDL3_WITH_IMAGE"
+  },
+  {
+    "module": "sdl3_image_boost",
+    "name": "save_image_jpg",
+    "contract": "Result",
+    "signature": "def public save_image_jpg(surface : SDL_Surface?; path : string; quality : int = 90)",
+    "requires": "DASSDL3_WITH_IMAGE"
+  },
+  {
+    "module": "sdl3_image_boost",
+    "name": "save_image_jpg",
+    "contract": "Result",
+    "signature": "def public save_image_jpg(surface : SDL_Surface?; io : SDL_IOStream?; quality : int = 90)",
+    "requires": "DASSDL3_WITH_IMAGE"
+  },
+  {
+    "module": "sdl3_image_boost",
+    "name": "save_image_avif",
+    "contract": "Result",
+    "signature": "def public save_image_avif(surface : SDL_Surface?; path : string; quality : int = 90)",
+    "requires": "DASSDL3_WITH_IMAGE"
+  },
+  {
+    "module": "sdl3_image_boost",
+    "name": "save_image_avif",
+    "contract": "Result",
+    "signature": "def public save_image_avif(surface : SDL_Surface?; io : SDL_IOStream?; quality : int = 90)",
+    "requires": "DASSDL3_WITH_IMAGE"
+  },
+  {
+    "module": "sdl3_image_boost",
+    "name": "image_animation_frame",
+    "contract": "Result",
+    "signature": "def public image_animation_frame(animation : IMG_Animation?; index : int)",
+    "requires": "DASSDL3_WITH_IMAGE"
+  },
+  {
+    "module": "sdl3_image_boost",
+    "name": "image_animation_delay",
+    "contract": "Result",
+    "signature": "def public image_animation_delay(animation : IMG_Animation?; index : int)",
+    "requires": "DASSDL3_WITH_IMAGE"
   }
 ]

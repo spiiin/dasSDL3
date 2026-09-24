@@ -3,6 +3,9 @@
 #define SDL_MAIN_HANDLED
 #include <SDL3/SDL_main.h>
 DECLARE_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_IMAGE
+DECLARE_MODULE(Module_sdl3_image);
+#endif
 #ifdef DASSDL3_WITH_IMGUI
 DECLARE_MODULE(Module_Clipboard);
 DECLARE_MODULE(Module_dasIMGUI);
@@ -32,6 +35,9 @@ int main(int argc,char **argv) {
     if (argc != 2) return 5;
     SDL_SetMainReady(); setDasRoot(DASSDL3_DAS_ROOT);
     NEED_ALL_DEFAULT_MODULES; NEED_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_IMAGE
+    NEED_MODULE(Module_sdl3_image);
+#endif
 #ifdef DASSDL3_WITH_IMGUI
     NEED_MODULE(Module_Clipboard);
     NEED_MODULE(Module_dasIMGUI);

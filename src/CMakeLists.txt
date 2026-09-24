@@ -27,7 +27,7 @@ target_include_directories(dasSDL3 PUBLIC
     ${CMAKE_SOURCE_DIR}/third_party/daScript/3rdparty/fmt/include)
 target_link_libraries(dasSDL3 PUBLIC libDaScript SDL3::SDL3)
 target_compile_features(dasSDL3 PUBLIC cxx_std_17)
-if(DASSDL3_WITH_IMGUI)
+if(DASSDL3_WITH_IMGUI OR DASSDL3_WITH_IMAGE)
     add_subdirectory(libraries)
 endif()
 if(WIN32)

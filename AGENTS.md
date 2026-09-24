@@ -248,6 +248,10 @@ with official SDL3/SDLRenderer3 backends. See examples/libraries/README.md for
 dependencies, raw-event forwarding, current-context ownership and tests.
 Never load GLFW imgui_app into this SDL host. Web/SDLGPU3 integration is pending.
 The optional parity switch is DASSDL3_TEST_IMGUI; imgui_aot_runner disables fallback.
+SDL_image 3.2.4 is optional via DASSDL3_WITH_IMAGE and independent of ImGui.
+See docs/sdl-image.md: 59 raw declarations, built-in codec profile, borrowed IO
+boost overloads, animation frame ownership, snapshot generation and parity tests.
+Do not confuse declared AVIF/JXL/TIFF/WebP APIs with enabled codec support.
 
 `examples/gpu/01_metaballs.das` ports bgfx's CPU marching cubes to SDL GPU.
 Keep its algorithm, table and controls local to the example. See

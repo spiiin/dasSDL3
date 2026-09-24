@@ -3,6 +3,27 @@
 This directory has its own numbering. Optional libraries do not change core SDL
 binding coverage.
 
+## 02 — SDL_image
+
+`02_image.das` displays a PNG with alpha and an SVG, loaded through SDL_image 3.2.4.
+Enable independently or alongside ImGui:
+
+```powershell
+cmake -S . -B build/ninja -DDASSDL3_WITH_IMAGE=ON
+cmake --build build/ninja --target dasSDL3_libraries_runner --parallel 6
+.\build\ninja\bin\dasSDL3_libraries_runner.exe .\examples\libraries\02_image.das
+```
+
+The left image has opaque red and translucent cyan halves; the right is an opaque
+red SVG rectangle. Escape/close exits. `--smoke-test` renders three hidden frames.
+PNG/JPEG use the built-in stb backend; AVIF/JXL/TIFF/WebP are disabled in this
+dependency-free codec profile. See [SDL_image API and validation](../../docs/sdl-image.md).
+
+```powershell
+cmake --build build/ninja --target dasSDL3_image_io_test --parallel 6
+ctest --test-dir build/ninja -R '^sdl3_(image_io|tests_image|examples_libraries_02_image)$' --output-on-failure
+```
+
 ## 01 — daScript ImGui with SDL3
 
 `01_imgui.das` uses the existing daScript `imgui` module and Dear ImGui's official
