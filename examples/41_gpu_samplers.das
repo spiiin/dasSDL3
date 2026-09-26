@@ -6,11 +6,11 @@ require dassdl3/sdl3_gpu_sampler_boost
 // is a later API stage; this example exercises creation and scoped ownership.
 
 def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : SdlStatus {
-    var info = gpu_sampler()
-    info |> filters(SDL_GPUFilter.FILTER_LINEAR)
-    info |> mipmap_mode(SDL_GPUSamplerMipmapMode.SAMPLERMIPMAPMODE_LINEAR)
-    info |> address_modes(SDL_GPUSamplerAddressMode.SAMPLERADDRESSMODE_REPEAT)
-    info |> anisotropy(4.0)
+    var info = (gpu_sampler()
+        |> filters(SDL_GPUFilter.FILTER_LINEAR)
+        |> mipmap_mode(SDL_GPUSamplerMipmapMode.SAMPLERMIPMAPMODE_LINEAR)
+        |> address_modes(SDL_GPUSamplerAddressMode.SAMPLERADDRESSMODE_REPEAT)
+        |> anisotropy(4.0))
     return sdl_scope() {
         let sampler : GpuSamplerHandle = device |> with_gpu_sampler(info) |> sdl_use
         let description = gpu_sampler_descriptor(device, sampler) |> sdl_try

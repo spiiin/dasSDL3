@@ -174,24 +174,118 @@ References: [Rust API return values](https://rust-lang.github.io/api-guidelines/
 [public type aliases](https://deterministic.space/elegant-apis-in-rust.html#public-type-aliases).
 The last article discusses aliases; aliases alone do not introduce error variants.
 
-## Graphics pipeline builder
+## Fluent builder chains
 
-The mutating builder uses the existing GpuGraphicsPipelineOptions descriptor:
+All builder setters return an owned descriptor: window, shader, texture, sampler,
+compute, graphics pipeline and its color/depth/stencil state. They use value/move
+returns, with no unsafe and no returned references. Each setter is `[nodiscard]`:
+ignoring its result is a compile error, so old standalone calls must be migrated.
 
 ```daslang
-var settings <- gpu_pipeline(vertex,fragment)
-settings |> vertex_buffer(0u,20u)
-settings |> vertex_attribute(0u,0u,SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT3,0u)
-settings |> vertex_attribute(1u,0u,SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2,12u)
-settings |> color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM)
-settings |> depth_target(SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT)
-settings |> depth_test(SDL_GPUCompareOp.COMPAREOP_LESS)
-settings |> depth_write(true)
+var description <- (gpu_pipeline(vertex, fragment)
+    |> topology(SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST)
+    |> rasterizer(SDL_GPURasterizerState(
+        fill_mode = SDL_GPUFillMode.FILLMODE_FILL,
+        cull_mode = SDL_GPUCullMode.CULLMODE_BACK,
+        front_face = SDL_GPUFrontFace.FRONTFACE_COUNTER_CLOCKWISE,
+        enable_depth_clip = true))
+    |> sample_count(SDL_GPUSampleCount.SAMPLECOUNT_1)
+    |> color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM))
+```
+
+Parentheses are required around multiline expressions whose continuation lines
+start with `|>`. Use `var options = (...)` for copyable descriptors and
+`var options <- (...)` for GpuGraphicsPipelineOptions, which owns arrays.
+Setters transfer those arrays with `return <- settings`; they do not clone them.
+The chain's final result owns the descriptor, not the shaders or GPU resources.
+
+For conditional configuration, receive the value back explicitly:
+
+```daslang
+if (use_depth) {
+    description <- (description
+        |> depth_target(SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT)
+        |> depth_test(SDL_GPUCompareOp.COMPAREOP_LESS)
+        |> depth_write(true))
+}
+```
+
+A chain rooted in an existing pipeline descriptor moves its arrays out of that
+input. The input is left with empty arrays unless the result is assigned back.
+This is not Rust's static move checker: daScript does not forbid reading the
+moved-from variable. Scalars/native pointer fields are not unique ownership.
+Copyable descriptors may retain their input fields; always use the result.
+The compiler rejects binding a reference to a freshly returned temporary.
+
+`tests/fluent_builders.das` checks all families, repeated temporary construction,
+function-returned/moved arrays, reassignment, append order and descriptor fields.
+`tests/test_fluent_builder_errors.py` checks ignored results and temporary refs.
+
+Local verification (Windows, 2026-09-26): 38 affected main-runner CTests and
+81 baseline/CppGenBind/strict-AOT CTests passed, including Vulkan and Direct3D 12
+rendering and negative compilation cases. The no-LLVM consumer passed both the
+builder runtime test and the nine negative cases. Official das-fmt verification
+passed for all 23 checked scripts. Python/Clang generated declarations matched;
+CppGenBind declarations also matched, but its existing profile.json fingerprint
+for tools/clangbind_parity.das was stale. That unrelated profile was not changed.
+
+## Scoped access to descriptor-array elements
+
+The pinned `daslib/with_boost` already supplies `with_` from
+[daScript PR #2880](https://github.com/GaijinEntertainment/daScript/pull/2880).
+It works with our SDL handled types stored in arrays:
+
+```daslang
+require daslib/with_boost
+
+with_(description.colors[0]) $(target) {
+    target.blend_state.enable_blend = true
+    target.blend_state.enable_color_write_mask = true
+    target.blend_state.color_write_mask = uint8(7)
+}
+```
+
+Use it when several field changes need the same array element. Multiple array
+arguments are supported, e.g. `with_(attributes[0], buffers[0]) $(attribute, buffer)`.
+The macro locks containers during the block: changing element fields is allowed,
+but push/resize/erase/clear that would invalidate the reference panics. Bounds
+checks still apply. This is not SDL resource ownership or a memory-map scope.
+
+The macro accepts array/table element expressions rooted in named storage, not
+plain local descriptors, function results, array literals or nested containers
+whose outer storage cannot be locked. At most one table entry is allowed; missing
+table keys are inserted. The body returns void, so it cannot replace a Result
+scope or contain value-returning sdl_try propagation. It is independent of value-builder ownership and itself emits internal unsafe
+references protected by the locks. Do not add another SDL-specific copy of this macro.
+
+The example audit applies it to local readback channels in example 46. On the
+current compiler, using a function-argument container (including a field of an
+argument, such as `sequence.xy[i]`) fails with error[31019] inside the macro's
+pre-binding. Local containers work. Do not add unsafe or move/copy whole arrays
+just to force this notation; leave such cases as ordinary indexing.
+
+Plain language `with` is separate. Although useful for script structs, the current
+compiler rejects `with (info.rasterizer_state)` for our native SDL handled record;
+named initialization or existing state setters remain the appropriate syntax.
+
+## Graphics pipeline builder
+
+The value builder uses the existing GpuGraphicsPipelineOptions descriptor:
+
+```daslang
+var settings <- (gpu_pipeline(vertex,fragment)
+    |> vertex_buffer(0u,20u)
+    |> vertex_attribute(0u,0u,SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT3,0u)
+    |> vertex_attribute(1u,0u,SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2,12u)
+    |> color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM)
+    |> depth_target(SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT)
+    |> depth_test(SDL_GPUCompareOp.COMPAREOP_LESS)
+    |> depth_write(true))
 let pipeline : GpuPipelineHandle = device |> with_gpu_graphics_pipeline(settings) |> sdl_use
 ```
 
-The final line belongs inside sdl_scope. Builder calls return void and mutate the
-receiver; use separate pipe statements, not a chain of returned copies. Buffer,
+The final line belongs inside sdl_scope. Builder calls return an owned value;
+chains move descriptor arrays instead of copying them. Buffer,
 attribute and color-target calls append; duplicate slots/locations are not silently
 replaced. Validation stays in the existing creation path. Color targets also accept
 a complete SDL_GPUColorTargetDescription for explicit blending. Depth setters only
@@ -227,15 +321,15 @@ Existing explicit Result signatures remain valid and can be migrated incremental
 The shader builder uses the existing GpuShaderOptions and scoped ownership:
 
 ```daslang
-var description = gpu_shader(path,format,SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT)
-description |> entrypoint("main")
-description |> samplers(1u)
-description |> uniform_buffers(1u)
+var description = (gpu_shader(path,format,SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT)
+    |> entrypoint("main")
+    |> samplers(1u)
+    |> uniform_buffers(1u))
 let shader : GpuShaderHandle = device |> with_gpu_shader_file(description) |> sdl_use
 ```
 
 The acquisition line belongs inside sdl_scope. The constructor defaults to entry
-point main and zero resource counts. Setters return void and overwrite only their
+point main and zero resource counts. Setters return an owned descriptor and overwrite only their
 named field; storage_buffers and storage_textures work the same way. They describe
 trusted compiled shader code, not automatic reflection: counts must match its SDL
 binding ABI. Validation and resource creation remain in with_gpu_shader_file.
@@ -251,8 +345,8 @@ sdl3_gpu_native_boost. It feeds native pointer creation/scopes, not checked IDs:
 ```daslang
 var description = gpu_texture(256u,128u,SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM,
     SDL_GPU_TEXTUREUSAGE_SAMPLER | SDL_GPU_TEXTUREUSAGE_COLOR_TARGET)
-description |> texture_shape(SDL_GPUTextureType.TEXTURETYPE_2D_ARRAY,4u)
-description |> mip_levels(5u)
+description <- description |> texture_shape(SDL_GPUTextureType.TEXTURETYPE_2D_ARRAY,4u)
+description <- description |> mip_levels(5u)
 let result = with_native_gpu_texture(device,description) $(var texture : SDL_GPUTexture?) {
     // Use texture while its device and this scope remain alive.
     return sdl_ok()
@@ -262,7 +356,7 @@ let result = with_native_gpu_texture(device,description) $(var texture : SDL_GPU
 Defaults: 2D, one layer, one mip level, SAMPLECOUNT_1, zero properties.
 texture_shape sets the type and SDL layer_count_or_depth together; the caller
 supplies the appropriate array layer count, cube face count or volume depth.
-mip_levels, sample_count and texture_usage overwrite their field and return void.
+mip_levels, sample_count and texture_usage overwrite their field and return an owned descriptor.
 texture_usage replaces the entire mask; combine flags explicitly with bitwise OR.
 All descriptor fields remain directly editable. No resource is owned by the
 builder. It does not infer mip counts, clamp dimensions, check device support or
@@ -276,11 +370,11 @@ MSAA render/resolve pixel checks and creation of a mipmapped two-layer texture.
 Available from sdl3_gpu_sampler_boost; returns SDL_GPUSamplerCreateInfo:
 
 ```daslang
-var description = gpu_sampler()
-description |> filters(SDL_GPUFilter.FILTER_LINEAR)
-description |> mipmap_mode(SDL_GPUSamplerMipmapMode.SAMPLERMIPMAPMODE_LINEAR)
-description |> address_modes(SDL_GPUSamplerAddressMode.SAMPLERADDRESSMODE_REPEAT)
-description |> anisotropy(4.0)
+var description = (gpu_sampler()
+    |> filters(SDL_GPUFilter.FILTER_LINEAR)
+    |> mipmap_mode(SDL_GPUSamplerMipmapMode.SAMPLERMIPMAPMODE_LINEAR)
+    |> address_modes(SDL_GPUSamplerAddressMode.SAMPLERADDRESSMODE_REPEAT)
+    |> anisotropy(4.0))
 let sampler : GpuSamplerHandle = device |> with_gpu_sampler(description) |> sdl_use
 ```
 
@@ -291,7 +385,7 @@ filters accepts one filter or separate min/mag filters and does not change mipma
 mode. address_modes accepts one mode or separate U/V/W modes. lod_range and
 lod_bias set their named fields. anisotropy(maximum,enabled=true) and
 comparison(operation,enabled=true) set both the value and enable flag;
-pass false to disable. Each setter returns void and overwrites its fields.
+pass false to disable. Each setter returns an owned descriptor and overwrites its fields.
 No validation/clamping or capability inference occurs in setters. Existing
 creation validation and checked descriptor normalization remain unchanged.
 The descriptor also works with with_native_gpu_sampler; that scope returns a
@@ -305,10 +399,10 @@ existing ownership checks.
 Available from sdl3_gpu_native_boost; returns SDL_GPUComputePipelineCreateInfo:
 
 ```daslang
-var description = gpu_compute_pipeline(format)
-description |> threadgroup(4u,1u,1u)
-description |> readwrite_storage_buffers(1u)
-description |> uniform_buffers(1u)
+var description = (gpu_compute_pipeline(format)
+    |> threadgroup(4u,1u,1u)
+    |> readwrite_storage_buffers(1u)
+    |> uniform_buffers(1u))
 let pipeline = device |> load_native_gpu_compute_pipeline(description,path,"main") |> sdl_try
 ```
 
@@ -317,7 +411,7 @@ to with_native_gpu_compute_pipeline_file/bytes for existing scoped ownership.
 The constructor defaults to threadgroup 1x1x1, zero resource counts/properties and
 no code pointer. Format is explicit. File/byte loaders supply code and entrypoint;
 do not put borrowed script string or array pointers into the descriptor.
-Setters return void and overwrite only their fields: threadgroup, samplers,
+Setters return an owned descriptor and overwrite only their fields: threadgroup, samplers,
 uniform_buffers, readonly_storage_textures, readonly_storage_buffers,
 readwrite_storage_textures and readwrite_storage_buffers. Counts and threadgroup
 must match the trusted compiled shader and SDL binding ABI; there is no reflection,
@@ -345,13 +439,13 @@ var blend = target.blend_state
 blend.enable_blend = true
 blend.src_color_blendfactor = SDL_GPUBlendFactor.BLENDFACTOR_SRC_ALPHA
 blend.dst_color_blendfactor = SDL_GPUBlendFactor.BLENDFACTOR_ONE_MINUS_SRC_ALPHA
-target |> blending(blend)
-description |> color_target(target)
+target <- target |> blending(blend)
+description <- description |> color_target(target)
 ```
 
 blending replaces the entire blend state, including write-mask settings; ordering
 therefore matters. color_target copies the descriptor, so later target edits do
-not change an appended target. Setters return void and preserve existing creation
+not change an appended target. Setters return an owned descriptor and preserve existing creation
 validation. MSAA must match pass attachments and device support. Complete SDL
 state structs expose advanced fields without additional wrapper types.
 Example 43 uses topology, back-face culling and sample count. gpu_pipeline tests
@@ -375,9 +469,9 @@ pending their separate wasm validation; their syntax remains supported.
 Native shader loading now accepts the same GpuShaderOptions as checked loading:
 
 ```daslang
-var shader = gpu_shader(path,format,SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
-shader |> uniform_buffers(1u)
-shader |> entrypoint("main")
+var shader = (gpu_shader(path,format,SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
+    |> uniform_buffers(1u)
+    |> entrypoint("main"))
 let native = device |> load_native_gpu_shader(shader) |> sdl_try
 ```
 

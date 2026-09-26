@@ -97,12 +97,12 @@ def animate(device : SDL_GPUDevice?; window : SDL_Window?; pipeline : SDL_GPUGra
 
 def resources(device : SDL_GPUDevice?; window : SDL_Window?; var vertex, fragment : SDL_GPUShader?; smoke : bool) {
     var info = SDL_GPUGraphicsPipelineCreateInfo(vertex_shader = vertex, fragment_shader = fragment)
-    info |> topology(SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST)
-    info |> rasterizer(SDL_GPURasterizerState(enable_depth_clip = true))
-    info |> depth_target(SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT)
+    info <- info |> topology(SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST)
+    info <- info |> rasterizer(SDL_GPURasterizerState(enable_depth_clip = true))
+    info <- info |> depth_target(SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT)
     // Background writes depth 1, so use LESS_OR_EQUAL to retain the original colored quad.
-    info |> depth_test(SDL_GPUCompareOp.COMPAREOP_LESS_OR_EQUAL)
-    info |> depth_write(true)
+    info <- info |> depth_test(SDL_GPUCompareOp.COMPAREOP_LESS_OR_EQUAL)
+    info <- info |> depth_write(true)
     let colors <- array(gpu_color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM))
     var buffers : array<SDL_GPUVertexBufferDescription>
     var attributes : array<SDL_GPUVertexAttribute>
@@ -122,7 +122,7 @@ def run(device : SDL_GPUDevice?; window : SDL_Window?; smoke : bool) {
     let ext = spirv ? "spv" : "dxil"
     let base = "{SDL_GetBasePath()}assets/shaders/raymarch"
     var vs = gpu_shader("{base}.vert.{ext}", format, SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
-    vs |> uniform_buffers(1u)
+    vs <- vs |> uniform_buffers(1u)
     let fs = gpu_shader("{base}.frag.{ext}", format, SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT)
     return sdl_scope() {
         var vertex : SDL_GPUShader? = device |> with_native_gpu_shader_file(vs) |> sdl_use

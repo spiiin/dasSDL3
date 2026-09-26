@@ -61,11 +61,11 @@ def render_buffers(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle) : SdlS
 }
 
 def create_pipeline(device : SDL_GPUDevice?; vertex : GpuShaderHandle; fragment : GpuShaderHandle) : SdlStatus {
-    var description <- gpu_pipeline(vertex, fragment)
-    description |> vertex_buffer(0u, 20u)
-    description |> vertex_attribute(0u, 0u, SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2, 0u)
-    description |> vertex_attribute(1u, 0u, SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT3, 8u)
-    description |> color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM)
+    var description <- (gpu_pipeline(vertex, fragment)
+        |> vertex_buffer(0u, 20u)
+        |> vertex_attribute(0u, 0u, SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2, 0u)
+        |> vertex_attribute(1u, 0u, SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT3, 8u)
+        |> color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM))
     return sdl_scope() {
         let pipeline : GpuPipelineHandle = device |> with_gpu_graphics_pipeline(description) |> sdl_use
         return render_buffers(device, pipeline)

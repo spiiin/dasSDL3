@@ -14,13 +14,15 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : SdlStatus {
     return sdl_scope() {
         let vertex : GpuShaderHandle = device |> with_gpu_shader_file(vi) |> sdl_use
         let fragment : GpuShaderHandle = device |> with_gpu_shader_file(fi) |> sdl_use
-        var description <- gpu_pipeline(vertex, fragment)
-        description |> topology(SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST)
-        description |> rasterizer(SDL_GPURasterizerState(
-            fill_mode = SDL_GPUFillMode.FILLMODE_FILL, cull_mode = SDL_GPUCullMode.CULLMODE_BACK,
-            front_face = SDL_GPUFrontFace.FRONTFACE_COUNTER_CLOCKWISE, enable_depth_clip = true))
-        description |> sample_count(SDL_GPUSampleCount.SAMPLECOUNT_1)
-        description |> color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM)
+        var description <- (gpu_pipeline(vertex, fragment)
+            |> topology(SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST)
+            |> rasterizer(SDL_GPURasterizerState(
+                fill_mode = SDL_GPUFillMode.FILLMODE_FILL,
+                cull_mode = SDL_GPUCullMode.CULLMODE_BACK,
+                front_face = SDL_GPUFrontFace.FRONTFACE_COUNTER_CLOCKWISE,
+                enable_depth_clip = true))
+            |> sample_count(SDL_GPUSampleCount.SAMPLECOUNT_1)
+            |> color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM))
         let pipeline : GpuPipelineHandle = device |> with_gpu_graphics_pipeline(description) |> sdl_use
         let info = gpu_graphics_pipeline_descriptor(device, pipeline) |> sdl_try
         verify(info.primitive_type == SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST)

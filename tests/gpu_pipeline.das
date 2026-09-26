@@ -24,10 +24,10 @@ def check_triangle(device : SDL_GPUDevice?; vertex, fragment : string; format : 
             var blend = colors[0].blend_state
             blend.enable_blend = true
             blend.src_color_blendfactor = SDL_GPUBlendFactor.BLENDFACTOR_SRC_COLOR
-            colors[0] |> blending(blend)
+            colors[0] <- colors[0] |> blending(blend)
         }
         if (mode == 2) {
-            colors[0] |> color_write_mask(uint8(1))
+            colors[0] <- colors[0] |> color_write_mask(uint8(1))
         }
         let id = SDL_CreateGPUCheckedGraphicsPipeline(device, vs, fs, info, buffers, attributes, colors)
         verify(*id != 0ul); push(ids, id)
@@ -69,14 +69,14 @@ def check_vertex_layout(device : SDL_GPUDevice?; vertex, fragment : string; form
     buffers[1].slot = 0u; buffers[1].pitch = 8u; buffers[1].input_rate = SDL_GPUVertexInputRate.VERTEXINPUTRATE_VERTEX
     attributes[1].buffer_slot = 1u; attributes[1].offset = 0u
     var description <- gpu_pipeline(vs, fs)
-    description |> vertex_buffer(1u, 8u, SDL_GPUVertexInputRate.VERTEXINPUTRATE_INSTANCE)
-    description |> vertex_buffer(0u, 8u)
-    description |> vertex_attribute(0u, 0u, SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2, 0u)
-    description |> vertex_attribute(1u, 1u, SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2, 0u)
-    description |> color_target(colors[0])
-    description |> depth_target(SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT)
-    description |> depth_test(SDL_GPUCompareOp.COMPAREOP_LESS)
-    description |> depth_write(true)
+    description <- description |> vertex_buffer(1u, 8u, SDL_GPUVertexInputRate.VERTEXINPUTRATE_INSTANCE)
+    description <- description |> vertex_buffer(0u, 8u)
+    description <- description |> vertex_attribute(0u, 0u, SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2, 0u)
+    description <- description |> vertex_attribute(1u, 1u, SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2, 0u)
+    description <- description |> color_target(colors[0])
+    description <- description |> depth_target(SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT)
+    description <- description |> depth_test(SDL_GPUCompareOp.COMPAREOP_LESS)
+    description <- description |> depth_write(true)
     let scope_ok_0 = device |> with_gpu_graphics_pipeline(description) $(sorted : GpuPipelineHandle) {
         let queried = gpu_graphics_pipeline_descriptor(device, sorted)
         verify(is_ok(queried))
@@ -112,7 +112,7 @@ def check_states(device : SDL_GPUDevice?; vs : GpuShaderHandle; fs : GpuShaderHa
     var info = gpu_graphics_pipeline_info()
     var samples, depths = 0
     for (sample in array<SDL_GPUSampleCount>(SDL_GPUSampleCount.SAMPLECOUNT_1, SDL_GPUSampleCount.SAMPLECOUNT_2, SDL_GPUSampleCount.SAMPLECOUNT_4, SDL_GPUSampleCount.SAMPLECOUNT_8)) {
-        info |> multisampling(SDL_GPUMultisampleState(sample_count = sample))
+        info <- info |> multisampling(SDL_GPUMultisampleState(sample_count = sample))
         if (SDL_GPUTextureSupportsSampleCount(device, colors[0].format, sample)) {
             let scope_ok_1 = device |> with_gpu_graphics_pipeline(vs, fs, info, buffers, attributes, colors) $(id : GpuPipelineHandle) {
                 var query_result_3 : SDL_GPUGraphicsPipelineCreateInfo
@@ -125,19 +125,19 @@ def check_states(device : SDL_GPUDevice?; vs : GpuShaderHandle; fs : GpuShaderHa
             verify(scope_ok_1)
         } else { verify(*SDL_CreateGPUCheckedGraphicsPipeline(device, vs, fs, info, buffers, attributes, colors) == 0ul) }
     }
-    info |> sample_count(SDL_GPUSampleCount.SAMPLECOUNT_1)
+    info <- info |> sample_count(SDL_GPUSampleCount.SAMPLECOUNT_1)
     for (format in array<SDL_GPUTextureFormat>(SDL_GPUTextureFormat.TEXTUREFORMAT_D16_UNORM, SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT, SDL_GPUTextureFormat.TEXTUREFORMAT_D24_UNORM_S8_UINT, SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT_S8_UINT)) {
         if (SDL_GPUTextureSupportsFormat(device, format, SDL_GPUTextureType.TEXTURETYPE_2D, SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET)) {
-            info |> depth_target(format)
-            info |> depth_stencil(SDL_GPUDepthStencilState())
-            info |> depth_test(SDL_GPUCompareOp.COMPAREOP_LESS)
-            info |> depth_write(true)
-            info |> stencil_test(format == SDL_GPUTextureFormat.TEXTUREFORMAT_D24_UNORM_S8_UINT || format == SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT_S8_UINT)
+            info <- info |> depth_target(format)
+            info <- info |> depth_stencil(SDL_GPUDepthStencilState())
+            info <- info |> depth_test(SDL_GPUCompareOp.COMPAREOP_LESS)
+            info <- info |> depth_write(true)
+            info <- info |> stencil_test(format == SDL_GPUTextureFormat.TEXTUREFORMAT_D24_UNORM_S8_UINT || format == SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT_S8_UINT)
             let face = SDL_GPUStencilOpState(fail_op = SDL_GPUStencilOp.STENCILOP_KEEP,
                 pass_op = SDL_GPUStencilOp.STENCILOP_REPLACE, depth_fail_op = SDL_GPUStencilOp.STENCILOP_KEEP,
                 compare_op = SDL_GPUCompareOp.COMPAREOP_ALWAYS)
-            info |> stencil_faces(face)
-            info |> stencil_masks(uint8(255), uint8(255))
+            info <- info |> stencil_faces(face)
+            info <- info |> stencil_masks(uint8(255), uint8(255))
             let scope_ok_2 = device |> with_gpu_graphics_pipeline(vs, fs, info, buffers, attributes, colors) $(id : GpuPipelineHandle) {
                 var query_result_4 : SDL_GPUGraphicsPipelineCreateInfo
                 verify(is_ok(gpu_graphics_pipeline_descriptor(device, id, query_result_4)))

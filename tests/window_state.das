@@ -4,9 +4,9 @@ require dassdl3/sdl3_properties_boost
 [export]
 def main(smoke : bool) : int {
     var settings = window_options("Builder window", int2(120, 80))
-    settings |> window_flags(SDL_WINDOW_HIDDEN | SDL_WINDOW_BORDERLESS)
-    settings |> window_flags(SDL_WINDOW_BORDERLESS, false)
-    settings |> window_position(int2(SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED))
+    settings <- settings |> window_flags(SDL_WINDOW_HIDDEN | SDL_WINDOW_BORDERLESS)
+    settings <- settings |> window_flags(SDL_WINDOW_BORDERLESS, false)
+    settings <- settings |> window_position(int2(SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED))
     verify(settings.flags == (SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIDDEN))
     let initialized = with_sdl() {
         let built = with_window(settings) $(window : SDL_Window?) {

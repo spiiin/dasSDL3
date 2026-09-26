@@ -34,11 +34,18 @@ def draw(command : SDL_GPUCommandBuffer?; pipeline : SDL_GPUGraphicsPipeline?;
          width, height : uint; time : float) {
     let uniforms <- array<float>(time, float(width) / float(height), 0.1, 100.0)
     command |> push_native_gpu_vertex_uniforms(0u, uniforms) |> sdl_try
-    let targets <- array(SDL_GPUColorTargetInfo(texture = color, load_op = SDL_GPULoadOp.LOADOP_CLEAR,
-        store_op = SDL_GPUStoreOp.STOREOP_STORE, clear_color = SDL_FColor(r = 48.0 / 255.0, g = 48.0 / 255.0, b = 48.0 / 255.0, a = 1.0)))
-    let depth_target = SDL_GPUDepthStencilTargetInfo(texture = depth, clear_depth = 1.0,
-        load_op = SDL_GPULoadOp.LOADOP_CLEAR, store_op = SDL_GPUStoreOp.STOREOP_DONT_CARE,
-        stencil_load_op = SDL_GPULoadOp.LOADOP_DONT_CARE, stencil_store_op = SDL_GPUStoreOp.STOREOP_DONT_CARE)
+    let targets <- array(SDL_GPUColorTargetInfo(
+        texture = color,
+        load_op = SDL_GPULoadOp.LOADOP_CLEAR,
+        store_op = SDL_GPUStoreOp.STOREOP_STORE,
+        clear_color = SDL_FColor(r = 48.0 / 255.0, g = 48.0 / 255.0, b = 48.0 / 255.0, a = 1.0)))
+    let depth_target = SDL_GPUDepthStencilTargetInfo(
+        texture = depth,
+        clear_depth = 1.0,
+        load_op = SDL_GPULoadOp.LOADOP_CLEAR,
+        store_op = SDL_GPUStoreOp.STOREOP_DONT_CARE,
+        stencil_load_op = SDL_GPULoadOp.LOADOP_DONT_CARE,
+        stencil_store_op = SDL_GPUStoreOp.STOREOP_DONT_CARE)
     return sdl_scope() {
         var render_pass : SDL_GPURenderPass?& = with_native_gpu_render_pass(command, targets, depth_target) |> sdl_use
         SDL_BindGPUGraphicsPipeline(render_pass, pipeline)
@@ -96,13 +103,15 @@ def animate(device : SDL_GPUDevice?; window : SDL_Window?; pipeline : SDL_GPUGra
 def resources(device : SDL_GPUDevice?; window : SDL_Window?; var vertex, fragment : SDL_GPUShader?) {
     let mesh <- load_mesh("{SDL_GetBasePath()}assets/meshes/bunny.msh") |> sdl_try
     print("Bunny: {int(mesh.vertex_count)} vertices, {int(mesh.index_count/3u)} triangles.\n")
-    var info = SDL_GPUGraphicsPipelineCreateInfo(vertex_shader = vertex, fragment_shader = fragment)
-    info |> topology(SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST)
-    info |> rasterizer(SDL_GPURasterizerState(enable_depth_clip = true, cull_mode = SDL_GPUCullMode.CULLMODE_BACK,
-        front_face = SDL_GPUFrontFace.FRONTFACE_CLOCKWISE))
-    info |> depth_target(SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT)
-    info |> depth_test(SDL_GPUCompareOp.COMPAREOP_LESS)
-    info |> depth_write(true)
+    var info = (SDL_GPUGraphicsPipelineCreateInfo(vertex_shader = vertex, fragment_shader = fragment)
+        |> topology(SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST)
+        |> rasterizer(SDL_GPURasterizerState(
+            enable_depth_clip = true,
+            cull_mode = SDL_GPUCullMode.CULLMODE_BACK,
+            front_face = SDL_GPUFrontFace.FRONTFACE_CLOCKWISE))
+        |> depth_target(SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT)
+        |> depth_test(SDL_GPUCompareOp.COMPAREOP_LESS)
+        |> depth_write(true))
     let buffers <- array(SDL_GPUVertexBufferDescription(pitch = 24u))
     let attributes <- array(SDL_GPUVertexAttribute(location = 0u, format = SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT3),
         SDL_GPUVertexAttribute(location = 1u, format = SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT3, offset = 12u))
@@ -121,9 +130,9 @@ def run(device : SDL_GPUDevice?; window : SDL_Window?) {
     let spirv = (SDL_GetGPUShaderFormats(device) & SDL_GPU_SHADERFORMAT_SPIRV) != 0u
     let format = spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL
     let ext = spirv ? "spv" : "dxil"
-    let base = "{SDL_GetBasePath()}assets/shaders/mesh"
-    var vs = gpu_shader("{base}.vert.{ext}", format, SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
-    vs |> uniform_buffers(1u)
+    let base = "{SDL_GetBasePath()}assets/shaders/bgfx_mesh"
+    var vs = (gpu_shader("{base}.vert.{ext}", format, SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
+        |> uniform_buffers(1u))
     let fs = gpu_shader("{base}.frag.{ext}", format, SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT)
     return sdl_scope() {
         var vertex : SDL_GPUShader? = device |> with_native_gpu_shader_file(vs) |> sdl_use

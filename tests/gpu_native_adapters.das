@@ -31,8 +31,8 @@ def exercise(device : SDL_GPUDevice?) : bool {
             num_uniform_buffers = 1u
         )
         var shader_options = gpu_shader("missing-native-shader.bin", shader.format, shader.stage)
-        shader_options |> uniform_buffers(1u)
-        shader_options |> entrypoint("main")
+        shader_options <- shader_options |> uniform_buffers(1u)
+        shader_options <- shader_options |> entrypoint("main")
         var empty : array<uint8>
         verify(SDL_CreateGPUShaderBytes(device, shader, empty, "main") == null)
         var called = false
@@ -62,9 +62,9 @@ def exercise(device : SDL_GPUDevice?) : bool {
         var compute_info = gpu_compute_pipeline(shader.format)
         verify(compute_info.threadcount_x == 1u && compute_info.threadcount_y == 1u && compute_info.threadcount_z == 1u)
         verify(compute_info.num_samplers == 0u && compute_info.num_uniform_buffers == 0u && compute_info.props == 0u)
-        compute_info |> threadgroup(4u, 1u, 1u)
-        compute_info |> readwrite_storage_buffers(1u)
-        compute_info |> uniform_buffers(1u)
+        compute_info <- compute_info |> threadgroup(4u, 1u, 1u)
+        compute_info <- compute_info |> readwrite_storage_buffers(1u)
+        compute_info <- compute_info |> uniform_buffers(1u)
         verify(SDL_CreateGPUComputePipelineBytes(device, compute_info, empty, "main") == null)
         let compute_path = "{SDL_GetBasePath()}assets/shaders/native.comp.{ext}"
         let compute_file = fopen(compute_path, "rb"); verify(compute_file != null)
@@ -84,11 +84,11 @@ def exercise(device : SDL_GPUDevice?) : bool {
         verify(tex.num_levels == 1u && tex.layer_count_or_depth == 1u && tex.props == 0u)
         verify(tex.sample_count == SDL_GPUSampleCount.SAMPLECOUNT_1)
         verify(SDL_GPUTextureSupportsSampleCount(device, tex.format, SDL_GPUSampleCount.SAMPLECOUNT_4))
-        tex |> sample_count(SDL_GPUSampleCount.SAMPLECOUNT_4)
+        tex <- tex |> sample_count(SDL_GPUSampleCount.SAMPLECOUNT_4)
         textures[0] = SDL_CreateGPUTextureRef(device, tex); textures[1] = SDL_CreateGPUTextureRef(device, tex)
-        tex |> sample_count(SDL_GPUSampleCount.SAMPLECOUNT_1)
+        tex <- tex |> sample_count(SDL_GPUSampleCount.SAMPLECOUNT_1)
         textures[2] = SDL_CreateGPUTextureRef(device, tex); textures[3] = SDL_CreateGPUTextureRef(device, tex)
-        tex.format = SDL_GPUTextureFormat.TEXTUREFORMAT_D24_UNORM_S8_UINT; tex.usage = SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET; tex |> sample_count(SDL_GPUSampleCount.SAMPLECOUNT_4)
+        tex.format = SDL_GPUTextureFormat.TEXTUREFORMAT_D24_UNORM_S8_UINT; tex.usage = SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET; tex <- tex |> sample_count(SDL_GPUSampleCount.SAMPLECOUNT_4)
         if (!SDL_GPUTextureSupportsFormat(device, tex.format, tex.texture_type, tex.usage)) { tex.format = SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT_S8_UINT }
         verify(SDL_GPUTextureSupportsFormat(device, tex.format, tex.texture_type, tex.usage))
         // SDL 3.2.18 D3D12 queries the SRV format for depth MSAA, not the DSV
@@ -100,9 +100,9 @@ def exercise(device : SDL_GPUDevice?) : bool {
         } |> is_ok
         verify(texture_scoped)
         var layered = gpu_texture(8u, 8u, SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM, SDL_GPU_TEXTUREUSAGE_SAMPLER)
-        layered |> texture_shape(SDL_GPUTextureType.TEXTURETYPE_2D_ARRAY, 2u)
-        layered |> mip_levels(4u)
-        layered |> texture_usage(SDL_GPU_TEXTUREUSAGE_SAMPLER | SDL_GPU_TEXTUREUSAGE_COLOR_TARGET)
+        layered <- layered |> texture_shape(SDL_GPUTextureType.TEXTURETYPE_2D_ARRAY, 2u)
+        layered <- layered |> mip_levels(4u)
+        layered <- layered |> texture_usage(SDL_GPU_TEXTUREUSAGE_SAMPLER | SDL_GPU_TEXTUREUSAGE_COLOR_TARGET)
         let layered_scoped = with_native_gpu_texture(device, layered) $(var t : SDL_GPUTexture?) {
             verify(t != null)
             return sdl_ok()

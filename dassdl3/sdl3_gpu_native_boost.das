@@ -323,29 +323,71 @@ def public gpu_texture(width, height : uint; format : SDL_GPUTextureFormat; usag
         format = format, usage = usage, width = width, height = height, layer_count_or_depth = 1u,
         num_levels = 1u, sample_count = SDL_GPUSampleCount.SAMPLECOUNT_1)
 }
-def public texture_shape(var settings : SDL_GPUTextureCreateInfo; kind : SDL_GPUTextureType; layers_or_depth : uint) {
+// Value builders return an owned descriptor. Always use the result.
+// Pipeline arrays move out of the input; no reference escapes and no unsafe is needed.
+[nodiscard]
+def public texture_shape(var settings : SDL_GPUTextureCreateInfo; kind : SDL_GPUTextureType; layers_or_depth : uint) : SDL_GPUTextureCreateInfo {
     settings.texture_type = kind
     settings.layer_count_or_depth = layers_or_depth
+    return <- settings
 }
-def public mip_levels(var settings : SDL_GPUTextureCreateInfo; count : uint) { settings.num_levels = count }
-def public sample_count(var settings : SDL_GPUTextureCreateInfo; count : SDL_GPUSampleCount) { settings.sample_count = count }
-def public texture_usage(var settings : SDL_GPUTextureCreateInfo; flags : uint) { settings.usage = flags }
+[nodiscard]
+def public mip_levels(var settings : SDL_GPUTextureCreateInfo; count : uint) : SDL_GPUTextureCreateInfo {
+    settings.num_levels = count
+    return <- settings
+}
+[nodiscard]
+def public sample_count(var settings : SDL_GPUTextureCreateInfo; count : SDL_GPUSampleCount) : SDL_GPUTextureCreateInfo {
+    settings.sample_count = count
+    return <- settings
+}
+[nodiscard]
+def public texture_usage(var settings : SDL_GPUTextureCreateInfo; flags : uint) : SDL_GPUTextureCreateInfo {
+    settings.usage = flags
+    return <- settings
+}
 
 // Counts and threadgroup dimensions must match the trusted compiled shader.
 def public gpu_compute_pipeline(format : uint) : SDL_GPUComputePipelineCreateInfo {
     return SDL_GPUComputePipelineCreateInfo(format = format, threadcount_x = 1u, threadcount_y = 1u, threadcount_z = 1u)
 }
-def public threadgroup(var settings : SDL_GPUComputePipelineCreateInfo; x, y, z : uint) {
+[nodiscard]
+def public threadgroup(var settings : SDL_GPUComputePipelineCreateInfo; x, y, z : uint) : SDL_GPUComputePipelineCreateInfo {
     settings.threadcount_x = x
     settings.threadcount_y = y
     settings.threadcount_z = z
+    return <- settings
 }
-def public samplers(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) { settings.num_samplers = count }
-def public uniform_buffers(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) { settings.num_uniform_buffers = count }
-def public readonly_storage_textures(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) { settings.num_readonly_storage_textures = count }
-def public readonly_storage_buffers(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) { settings.num_readonly_storage_buffers = count }
-def public readwrite_storage_textures(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) { settings.num_readwrite_storage_textures = count }
-def public readwrite_storage_buffers(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) { settings.num_readwrite_storage_buffers = count }
+[nodiscard]
+def public samplers(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) : SDL_GPUComputePipelineCreateInfo {
+    settings.num_samplers = count
+    return <- settings
+}
+[nodiscard]
+def public uniform_buffers(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) : SDL_GPUComputePipelineCreateInfo {
+    settings.num_uniform_buffers = count
+    return <- settings
+}
+[nodiscard]
+def public readonly_storage_textures(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) : SDL_GPUComputePipelineCreateInfo {
+    settings.num_readonly_storage_textures = count
+    return <- settings
+}
+[nodiscard]
+def public readonly_storage_buffers(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) : SDL_GPUComputePipelineCreateInfo {
+    settings.num_readonly_storage_buffers = count
+    return <- settings
+}
+[nodiscard]
+def public readwrite_storage_textures(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) : SDL_GPUComputePipelineCreateInfo {
+    settings.num_readwrite_storage_textures = count
+    return <- settings
+}
+[nodiscard]
+def public readwrite_storage_buffers(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) : SDL_GPUComputePipelineCreateInfo {
+    settings.num_readwrite_storage_buffers = count
+    return <- settings
+}
 
 // The same owned path/entrypoint options work with checked and native shaders.
 def public load_native_gpu_shader(device : SDL_GPUDevice?; settings : GpuShaderOptions) {

@@ -17,11 +17,18 @@ def draw(command : SDL_GPUCommandBuffer?; pipeline : SDL_GPUGraphicsPipeline?;
          var color, depth : SDL_GPUTexture?; time : float) {
     let uniforms <- array<float>(time, float(WIDTH) / float(HEIGHT), 0.1, 100.0)
     command |> push_native_gpu_vertex_uniforms(0u, uniforms) |> sdl_try
-    let targets <- array(SDL_GPUColorTargetInfo(texture = color, load_op = SDL_GPULoadOp.LOADOP_CLEAR,
-        store_op = SDL_GPUStoreOp.STOREOP_STORE, clear_color = SDL_FColor(a = 1.0)))
-    let depth_target = SDL_GPUDepthStencilTargetInfo(texture = depth, clear_depth = 1.0,
-        load_op = SDL_GPULoadOp.LOADOP_CLEAR, store_op = SDL_GPUStoreOp.STOREOP_DONT_CARE,
-        stencil_load_op = SDL_GPULoadOp.LOADOP_DONT_CARE, stencil_store_op = SDL_GPUStoreOp.STOREOP_DONT_CARE)
+    let targets <- array(SDL_GPUColorTargetInfo(
+        texture = color,
+        load_op = SDL_GPULoadOp.LOADOP_CLEAR,
+        store_op = SDL_GPUStoreOp.STOREOP_STORE,
+        clear_color = SDL_FColor(a = 1.0)))
+    let depth_target = SDL_GPUDepthStencilTargetInfo(
+        texture = depth,
+        clear_depth = 1.0,
+        load_op = SDL_GPULoadOp.LOADOP_CLEAR,
+        store_op = SDL_GPUStoreOp.STOREOP_DONT_CARE,
+        stencil_load_op = SDL_GPULoadOp.LOADOP_DONT_CARE,
+        stencil_store_op = SDL_GPUStoreOp.STOREOP_DONT_CARE)
     return sdl_scope() {
         var render_pass : SDL_GPURenderPass?& = with_native_gpu_render_pass(command, targets, depth_target) |> sdl_use
         SDL_BindGPUGraphicsPipeline(render_pass, pipeline)
@@ -37,9 +44,12 @@ def frame(device : SDL_GPUDevice?; window : SDL_Window?; pipeline : SDL_GPUGraph
         // Keep the ray aspect ratio when resizing: letterbox the internal 16:9 image.
         let scale = min(float(width) / float(WIDTH), float(height) / float(HEIGHT))
         let w = uint(float(WIDTH) * scale); let h = uint(float(HEIGHT) * scale)
-        let blit = SDL_GPUBlitInfo(source = SDL_GPUBlitRegion(texture = color, w = WIDTH, h = HEIGHT),
+        let blit = SDL_GPUBlitInfo(
+            source = SDL_GPUBlitRegion(texture = color, w = WIDTH, h = HEIGHT),
             destination = SDL_GPUBlitRegion(texture = swapchain, x = (width - w) / 2u, y = (height - h) / 2u, w = w, h = h),
-            load_op = SDL_GPULoadOp.LOADOP_CLEAR, clear_color = SDL_FColor(a = 1.0), filter = SDL_GPUFilter.FILTER_LINEAR)
+            load_op = SDL_GPULoadOp.LOADOP_CLEAR,
+            clear_color = SDL_FColor(a = 1.0),
+            filter = SDL_GPUFilter.FILTER_LINEAR)
         SDL_BlitGPUTextureRef(command, blit)
         return sdl_ok()
     }
@@ -75,22 +85,28 @@ def animate(device : SDL_GPUDevice?; window : SDL_Window?; pipeline : SDL_GPUGra
 }
 
 def resources(device : SDL_GPUDevice?; window : SDL_Window?; var vertex, fragment : SDL_GPUShader?) {
-    var info = SDL_GPUGraphicsPipelineCreateInfo(vertex_shader = vertex, fragment_shader = fragment)
-    info |> topology(SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST)
-    info |> rasterizer(SDL_GPURasterizerState(enable_depth_clip = true))
-    info |> depth_target(SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT)
+    var info = (SDL_GPUGraphicsPipelineCreateInfo(vertex_shader = vertex, fragment_shader = fragment)
+        |> topology(SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST)
+        |> rasterizer(SDL_GPURasterizerState(enable_depth_clip = true))
+        |> depth_target(SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT))
     // Background writes depth 1, so use LESS_OR_EQUAL to retain the original colored quad.
-    info |> depth_test(SDL_GPUCompareOp.COMPAREOP_LESS_OR_EQUAL)
-    info |> depth_write(true)
+    info <- (info |> depth_test(SDL_GPUCompareOp.COMPAREOP_LESS_OR_EQUAL)
+        |> depth_write(true))
     let colors <- array(gpu_color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM))
     var buffers : array<SDL_GPUVertexBufferDescription>
     var attributes : array<SDL_GPUVertexAttribute>
     return sdl_scope() {
         let pipeline : SDL_GPUGraphicsPipeline? = device |> with_native_gpu_graphics_pipeline(info, buffers, attributes, colors) |> sdl_use
-        var color : SDL_GPUTexture? = device |> with_native_gpu_texture(gpu_texture(WIDTH, HEIGHT,
-            SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM, SDL_GPU_TEXTUREUSAGE_COLOR_TARGET | SDL_GPU_TEXTUREUSAGE_SAMPLER)) |> sdl_use
-        var depth : SDL_GPUTexture? = device |> with_native_gpu_texture(gpu_texture(WIDTH, HEIGHT,
-            SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT, SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET)) |> sdl_use
+        var color : SDL_GPUTexture? = device |> with_native_gpu_texture(gpu_texture(
+            WIDTH,
+            HEIGHT,
+            SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM,
+            SDL_GPU_TEXTUREUSAGE_COLOR_TARGET | SDL_GPU_TEXTUREUSAGE_SAMPLER)) |> sdl_use
+        var depth : SDL_GPUTexture? = device |> with_native_gpu_texture(gpu_texture(
+            WIDTH,
+            HEIGHT,
+            SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT,
+            SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET)) |> sdl_use
         return animate(device, window, pipeline, color, depth)
     }
 }
@@ -100,8 +116,8 @@ def run(device : SDL_GPUDevice?; window : SDL_Window?) {
     let format = spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL
     let ext = spirv ? "spv" : "dxil"
     let base = "{SDL_GetBasePath()}assets/shaders/raymarch"
-    var vs = gpu_shader("{base}.vert.{ext}", format, SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
-    vs |> uniform_buffers(1u)
+    var vs = (gpu_shader("{base}.vert.{ext}", format, SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
+        |> uniform_buffers(1u))
     let fs = gpu_shader("{base}.frag.{ext}", format, SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT)
     return sdl_scope() {
         var vertex : SDL_GPUShader? = device |> with_native_gpu_shader_file(vs) |> sdl_use

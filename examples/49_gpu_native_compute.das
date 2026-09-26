@@ -6,10 +6,10 @@ require daslib/defer
 def compute_values(device : SDL_GPUDevice?) : SdlStatus {
     let spirv = (SDL_GetGPUShaderFormats(device) & SDL_GPU_SHADERFORMAT_SPIRV) != 0u
     let ext = spirv ? "spv" : "dxil"
-    var info = gpu_compute_pipeline(spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL)
-    info |> threadgroup(4u, 1u, 1u)
-    info |> readwrite_storage_buffers(1u)
-    info |> uniform_buffers(1u)
+    var info = (gpu_compute_pipeline(spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL)
+        |> threadgroup(4u, 1u, 1u)
+        |> readwrite_storage_buffers(1u)
+        |> uniform_buffers(1u))
     let pipeline = device |> load_native_gpu_compute_pipeline(info, "{SDL_GetBasePath()}assets/shaders/native.comp.{ext}", "main") |> sdl_try
     {
         defer() { SDL_ReleaseGPUComputePipeline(device, pipeline) }

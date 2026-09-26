@@ -83,7 +83,15 @@ def public with_window(settings : WindowOptions;
 
 // Keep WindowOptions defaults; flag toggles preserve unrelated flags.
 def public window_options(title : string; size : int2) : WindowOptions { return WindowOptions(title = title, size = size) }
-def public window_flags(var settings : WindowOptions; flags : uint64; enabled : bool = true) {
+// Value builders return an owned descriptor. Always use the result.
+// Pipeline arrays move out of the input; no reference escapes and no unsafe is needed.
+[nodiscard]
+def public window_flags(var settings : WindowOptions; flags : uint64; enabled : bool = true) : WindowOptions {
     settings.flags = enabled ? (settings.flags | flags) : (settings.flags & ~flags)
+    return <- settings
 }
-def public window_position(var settings : WindowOptions; position : int2) { settings.position = position }
+[nodiscard]
+def public window_position(var settings : WindowOptions; position : int2) : WindowOptions {
+    settings.position = position
+    return <- settings
+}

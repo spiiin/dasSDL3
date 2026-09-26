@@ -50,28 +50,54 @@ def public gpu_sampler_descriptor(device : SDL_GPUDevice?; sampler : GpuSamplerH
 
 // Builders mutate the native descriptor and never own a GPU resource.
 def public gpu_sampler() : SDL_GPUSamplerCreateInfo { return gpu_sampler_info() }
-def public filters(var settings : SDL_GPUSamplerCreateInfo; minification, magnification : SDL_GPUFilter) {
+// Value builders return an owned descriptor. Always use the result.
+// Pipeline arrays move out of the input; no reference escapes and no unsafe is needed.
+[nodiscard]
+def public filters(var settings : SDL_GPUSamplerCreateInfo; minification, magnification : SDL_GPUFilter) : SDL_GPUSamplerCreateInfo {
     settings.min_filter = minification
     settings.mag_filter = magnification
+    return <- settings
 }
-def public filters(var settings : SDL_GPUSamplerCreateInfo; filter : SDL_GPUFilter) { filters(settings, filter, filter) }
-def public mipmap_mode(var settings : SDL_GPUSamplerCreateInfo; mode : SDL_GPUSamplerMipmapMode) { settings.mipmap_mode = mode }
-def public address_modes(var settings : SDL_GPUSamplerCreateInfo; u, v, w : SDL_GPUSamplerAddressMode) {
+[nodiscard]
+def public filters(var settings : SDL_GPUSamplerCreateInfo; filter : SDL_GPUFilter) : SDL_GPUSamplerCreateInfo {
+    return <- filters(settings, filter, filter)
+}
+[nodiscard]
+def public mipmap_mode(var settings : SDL_GPUSamplerCreateInfo; mode : SDL_GPUSamplerMipmapMode) : SDL_GPUSamplerCreateInfo {
+    settings.mipmap_mode = mode
+    return <- settings
+}
+[nodiscard]
+def public address_modes(var settings : SDL_GPUSamplerCreateInfo; u, v, w : SDL_GPUSamplerAddressMode) : SDL_GPUSamplerCreateInfo {
     settings.address_mode_u = u
     settings.address_mode_v = v
     settings.address_mode_w = w
+    return <- settings
 }
-def public address_modes(var settings : SDL_GPUSamplerCreateInfo; mode : SDL_GPUSamplerAddressMode) { address_modes(settings, mode, mode, mode) }
-def public lod_range(var settings : SDL_GPUSamplerCreateInfo; minimum, maximum : float) {
+[nodiscard]
+def public address_modes(var settings : SDL_GPUSamplerCreateInfo; mode : SDL_GPUSamplerAddressMode) : SDL_GPUSamplerCreateInfo {
+    return <- address_modes(settings, mode, mode, mode)
+}
+[nodiscard]
+def public lod_range(var settings : SDL_GPUSamplerCreateInfo; minimum, maximum : float) : SDL_GPUSamplerCreateInfo {
     settings.min_lod = minimum
     settings.max_lod = maximum
+    return <- settings
 }
-def public lod_bias(var settings : SDL_GPUSamplerCreateInfo; bias : float) { settings.mip_lod_bias = bias }
-def public anisotropy(var settings : SDL_GPUSamplerCreateInfo; maximum : float; enabled : bool = true) {
+[nodiscard]
+def public lod_bias(var settings : SDL_GPUSamplerCreateInfo; bias : float) : SDL_GPUSamplerCreateInfo {
+    settings.mip_lod_bias = bias
+    return <- settings
+}
+[nodiscard]
+def public anisotropy(var settings : SDL_GPUSamplerCreateInfo; maximum : float; enabled : bool = true) : SDL_GPUSamplerCreateInfo {
     settings.max_anisotropy = maximum
     settings.enable_anisotropy = enabled
+    return <- settings
 }
-def public comparison(var settings : SDL_GPUSamplerCreateInfo; operation : SDL_GPUCompareOp; enabled : bool = true) {
+[nodiscard]
+def public comparison(var settings : SDL_GPUSamplerCreateInfo; operation : SDL_GPUCompareOp; enabled : bool = true) : SDL_GPUSamplerCreateInfo {
     settings.compare_op = operation
     settings.enable_compare = enabled
+    return <- settings
 }

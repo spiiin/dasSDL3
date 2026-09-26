@@ -9,14 +9,14 @@ def check_descriptors(device : SDL_GPUDevice?) {
     for (mode in 0 .. 4) {
         var info = gpu_sampler()
         let filter = mode == 0 ? SDL_GPUFilter.FILTER_NEAREST : SDL_GPUFilter.FILTER_LINEAR
-        info |> filters(filter, filter)
-        info |> mipmap_mode(mode == 0 ? SDL_GPUSamplerMipmapMode.SAMPLERMIPMAPMODE_NEAREST : SDL_GPUSamplerMipmapMode.SAMPLERMIPMAPMODE_LINEAR)
-        info |> address_modes(SDL_GPUSamplerAddressMode.SAMPLERADDRESSMODE_CLAMP_TO_EDGE,
+        info <- info |> filters(filter, filter)
+        info <- info |> mipmap_mode(mode == 0 ? SDL_GPUSamplerMipmapMode.SAMPLERMIPMAPMODE_NEAREST : SDL_GPUSamplerMipmapMode.SAMPLERMIPMAPMODE_LINEAR)
+        info <- info |> address_modes(SDL_GPUSamplerAddressMode.SAMPLERADDRESSMODE_CLAMP_TO_EDGE,
             SDL_GPUSamplerAddressMode.SAMPLERADDRESSMODE_REPEAT, SDL_GPUSamplerAddressMode.SAMPLERADDRESSMODE_MIRRORED_REPEAT)
-        info |> lod_range(1.0, 8.0)
-        info |> lod_bias(mode == 0 ? -2.0 : 2.0)
-        info |> comparison(SDL_GPUCompareOp.COMPAREOP_LESS_OR_EQUAL, mode == 2)
-        info |> anisotropy(16.0, mode == 3)
+        info <- info |> lod_range(1.0, 8.0)
+        info <- info |> lod_bias(mode == 0 ? -2.0 : 2.0)
+        info <- info |> comparison(SDL_GPUCompareOp.COMPAREOP_LESS_OR_EQUAL, mode == 2)
+        info <- info |> anisotropy(16.0, mode == 3)
         let scope_ok_0 = device |> with_gpu_sampler(info) $(id : GpuSamplerHandle) {
             info.max_lod = 0.0 // Creation copied the descriptor.
             var query_result_1 : SDL_GPUSamplerCreateInfo

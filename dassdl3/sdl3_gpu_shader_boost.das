@@ -86,8 +86,30 @@ def public with_gpu_shader_file(device : SDL_GPUDevice?; settings : GpuShaderOpt
 def public gpu_shader(path : string; format : uint; stage : SDL_GPUShaderStage) : GpuShaderOptions {
     return GpuShaderOptions(path = path, info = gpu_shader_info(format, stage))
 }
-def public entrypoint(var settings : GpuShaderOptions; name : string) { settings.entrypoint = name }
-def public samplers(var settings : GpuShaderOptions; count : uint) { settings.info.num_samplers = count }
-def public uniform_buffers(var settings : GpuShaderOptions; count : uint) { settings.info.num_uniform_buffers = count }
-def public storage_buffers(var settings : GpuShaderOptions; count : uint) { settings.info.num_storage_buffers = count }
-def public storage_textures(var settings : GpuShaderOptions; count : uint) { settings.info.num_storage_textures = count }
+// Value builders return an owned descriptor. Always use the result.
+// Pipeline arrays move out of the input; no reference escapes and no unsafe is needed.
+[nodiscard]
+def public entrypoint(var settings : GpuShaderOptions; name : string) : GpuShaderOptions {
+    settings.entrypoint = name
+    return <- settings
+}
+[nodiscard]
+def public samplers(var settings : GpuShaderOptions; count : uint) : GpuShaderOptions {
+    settings.info.num_samplers = count
+    return <- settings
+}
+[nodiscard]
+def public uniform_buffers(var settings : GpuShaderOptions; count : uint) : GpuShaderOptions {
+    settings.info.num_uniform_buffers = count
+    return <- settings
+}
+[nodiscard]
+def public storage_buffers(var settings : GpuShaderOptions; count : uint) : GpuShaderOptions {
+    settings.info.num_storage_buffers = count
+    return <- settings
+}
+[nodiscard]
+def public storage_textures(var settings : GpuShaderOptions; count : uint) : GpuShaderOptions {
+    settings.info.num_storage_textures = count
+    return <- settings
+}

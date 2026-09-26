@@ -89,77 +89,174 @@ def public gpu_pipeline(vertex, fragment : GpuShaderHandle) {
     return <- settings
 }
 
+// Value builders return an owned descriptor. Always use the result.
+// Pipeline arrays move out of the input; no reference escapes and no unsafe is needed.
+[nodiscard]
 def public vertex_buffer(var settings : GpuGraphicsPipelineOptions; slot, pitch : uint;
-                         rate : SDL_GPUVertexInputRate = SDL_GPUVertexInputRate.VERTEXINPUTRATE_VERTEX) {
+                         rate : SDL_GPUVertexInputRate = SDL_GPUVertexInputRate.VERTEXINPUTRATE_VERTEX) : GpuGraphicsPipelineOptions {
     push(settings.buffers, SDL_GPUVertexBufferDescription(slot = slot, pitch = pitch, input_rate = rate))
+    return <- settings
 }
 
+[nodiscard]
 def public vertex_attribute(var settings : GpuGraphicsPipelineOptions; location, buffer_slot : uint;
-                            format : SDL_GPUVertexElementFormat; offset : uint) {
+                            format : SDL_GPUVertexElementFormat; offset : uint) : GpuGraphicsPipelineOptions {
     push(settings.attributes, SDL_GPUVertexAttribute(location = location, buffer_slot = buffer_slot, format = format, offset = offset))
+    return <- settings
 }
 
-def public color_target(var settings : GpuGraphicsPipelineOptions; format : SDL_GPUTextureFormat) {
+[nodiscard]
+def public color_target(var settings : GpuGraphicsPipelineOptions; format : SDL_GPUTextureFormat) : GpuGraphicsPipelineOptions {
     push(settings.colors, gpu_color_target(format))
+    return <- settings
 }
 
-def public color_target(var settings : GpuGraphicsPipelineOptions; description : SDL_GPUColorTargetDescription) {
+[nodiscard]
+def public color_target(var settings : GpuGraphicsPipelineOptions; description : SDL_GPUColorTargetDescription) : GpuGraphicsPipelineOptions {
     push(settings.colors, description)
+    return <- settings
 }
 
-def public depth_target(var settings : GpuGraphicsPipelineOptions; format : SDL_GPUTextureFormat) {
+[nodiscard]
+def public depth_target(var settings : GpuGraphicsPipelineOptions; format : SDL_GPUTextureFormat) : GpuGraphicsPipelineOptions {
     settings.info.target_info.has_depth_stencil_target = true
     settings.info.target_info.depth_stencil_format = format
+    return <- settings
 }
 
+[nodiscard]
 def public depth_test(var settings : GpuGraphicsPipelineOptions; compare : SDL_GPUCompareOp;
-                      enabled : bool = true) {
+                      enabled : bool = true) : GpuGraphicsPipelineOptions {
     settings.info.depth_stencil_state.compare_op = compare
     settings.info.depth_stencil_state.enable_depth_test = enabled
+    return <- settings
 }
 
-def public depth_write(var settings : GpuGraphicsPipelineOptions; enabled : bool) {
+[nodiscard]
+def public depth_write(var settings : GpuGraphicsPipelineOptions; enabled : bool) : GpuGraphicsPipelineOptions {
     settings.info.depth_stencil_state.enable_depth_write = enabled
+    return <- settings
 }
 
 // Native state overloads also support direct SDL pipeline creation.
-def public topology(var settings : SDL_GPUGraphicsPipelineCreateInfo; kind : SDL_GPUPrimitiveType) { settings.primitive_type = kind }
-def public rasterizer(var settings : SDL_GPUGraphicsPipelineCreateInfo; state : SDL_GPURasterizerState) { settings.rasterizer_state = state }
-def public sample_count(var settings : SDL_GPUGraphicsPipelineCreateInfo; count : SDL_GPUSampleCount) { settings.multisample_state.sample_count = count }
-def public topology(var settings : GpuGraphicsPipelineOptions; kind : SDL_GPUPrimitiveType) { topology(settings.info, kind) }
-def public rasterizer(var settings : GpuGraphicsPipelineOptions; state : SDL_GPURasterizerState) { rasterizer(settings.info, state) }
-def public sample_count(var settings : GpuGraphicsPipelineOptions; count : SDL_GPUSampleCount) { sample_count(settings.info, count) }
+[nodiscard]
+def public topology(var settings : SDL_GPUGraphicsPipelineCreateInfo; kind : SDL_GPUPrimitiveType) : SDL_GPUGraphicsPipelineCreateInfo {
+    settings.primitive_type = kind
+    return <- settings
+}
+[nodiscard]
+def public rasterizer(var settings : SDL_GPUGraphicsPipelineCreateInfo; state : SDL_GPURasterizerState) : SDL_GPUGraphicsPipelineCreateInfo {
+    settings.rasterizer_state = state
+    return <- settings
+}
+[nodiscard]
+def public sample_count(var settings : SDL_GPUGraphicsPipelineCreateInfo; count : SDL_GPUSampleCount) : SDL_GPUGraphicsPipelineCreateInfo {
+    settings.multisample_state.sample_count = count
+    return <- settings
+}
+[nodiscard]
+def public topology(var settings : GpuGraphicsPipelineOptions; kind : SDL_GPUPrimitiveType) : GpuGraphicsPipelineOptions {
+    settings.info <- topology(settings.info, kind)
+    return <- settings
+}
+[nodiscard]
+def public rasterizer(var settings : GpuGraphicsPipelineOptions; state : SDL_GPURasterizerState) : GpuGraphicsPipelineOptions {
+    settings.info <- rasterizer(settings.info, state)
+    return <- settings
+}
+[nodiscard]
+def public sample_count(var settings : GpuGraphicsPipelineOptions; count : SDL_GPUSampleCount) : GpuGraphicsPipelineOptions {
+    settings.info <- sample_count(settings.info, count)
+    return <- settings
+}
 // Complete state setters preserve access to less common SDL settings.
-def public multisampling(var settings : SDL_GPUGraphicsPipelineCreateInfo; state : SDL_GPUMultisampleState) { settings.multisample_state = state }
-def public multisampling(var settings : GpuGraphicsPipelineOptions; state : SDL_GPUMultisampleState) { multisampling(settings.info, state) }
-def public blending(var target : SDL_GPUColorTargetDescription; state : SDL_GPUColorTargetBlendState) { target.blend_state = state }
-def public color_write_mask(var target : SDL_GPUColorTargetDescription; mask : uint8; enabled : bool = true) {
+[nodiscard]
+def public multisampling(var settings : SDL_GPUGraphicsPipelineCreateInfo; state : SDL_GPUMultisampleState) : SDL_GPUGraphicsPipelineCreateInfo {
+    settings.multisample_state = state
+    return <- settings
+}
+[nodiscard]
+def public multisampling(var settings : GpuGraphicsPipelineOptions; state : SDL_GPUMultisampleState) : GpuGraphicsPipelineOptions {
+    settings.info <- multisampling(settings.info, state)
+    return <- settings
+}
+[nodiscard]
+def public blending(var target : SDL_GPUColorTargetDescription; state : SDL_GPUColorTargetBlendState) : SDL_GPUColorTargetDescription {
+    target.blend_state = state
+    return <- target
+}
+[nodiscard]
+def public color_write_mask(var target : SDL_GPUColorTargetDescription; mask : uint8; enabled : bool = true) : SDL_GPUColorTargetDescription {
     target.blend_state.color_write_mask = mask
     target.blend_state.enable_color_write_mask = enabled
+    return <- target
 }
 
-def public depth_stencil(var settings : SDL_GPUGraphicsPipelineCreateInfo; state : SDL_GPUDepthStencilState) { settings.depth_stencil_state = state }
-def public depth_stencil(var settings : GpuGraphicsPipelineOptions; state : SDL_GPUDepthStencilState) { depth_stencil(settings.info, state) }
-def public depth_target(var settings : SDL_GPUGraphicsPipelineCreateInfo; format : SDL_GPUTextureFormat) {
+[nodiscard]
+def public depth_stencil(var settings : SDL_GPUGraphicsPipelineCreateInfo; state : SDL_GPUDepthStencilState) : SDL_GPUGraphicsPipelineCreateInfo {
+    settings.depth_stencil_state = state
+    return <- settings
+}
+[nodiscard]
+def public depth_stencil(var settings : GpuGraphicsPipelineOptions; state : SDL_GPUDepthStencilState) : GpuGraphicsPipelineOptions {
+    settings.info <- depth_stencil(settings.info, state)
+    return <- settings
+}
+[nodiscard]
+def public depth_target(var settings : SDL_GPUGraphicsPipelineCreateInfo; format : SDL_GPUTextureFormat) : SDL_GPUGraphicsPipelineCreateInfo {
     settings.target_info.has_depth_stencil_target = true
     settings.target_info.depth_stencil_format = format
+    return <- settings
 }
-def public depth_test(var settings : SDL_GPUGraphicsPipelineCreateInfo; compare : SDL_GPUCompareOp; enabled : bool = true) {
+[nodiscard]
+def public depth_test(var settings : SDL_GPUGraphicsPipelineCreateInfo; compare : SDL_GPUCompareOp; enabled : bool = true) : SDL_GPUGraphicsPipelineCreateInfo {
     settings.depth_stencil_state.compare_op = compare
     settings.depth_stencil_state.enable_depth_test = enabled
+    return <- settings
 }
-def public depth_write(var settings : SDL_GPUGraphicsPipelineCreateInfo; enabled : bool) { settings.depth_stencil_state.enable_depth_write = enabled }
-def public stencil_test(var settings : SDL_GPUGraphicsPipelineCreateInfo; enabled : bool = true) { settings.depth_stencil_state.enable_stencil_test = enabled }
-def public stencil_faces(var settings : SDL_GPUGraphicsPipelineCreateInfo; front, back : SDL_GPUStencilOpState) {
+[nodiscard]
+def public depth_write(var settings : SDL_GPUGraphicsPipelineCreateInfo; enabled : bool) : SDL_GPUGraphicsPipelineCreateInfo {
+    settings.depth_stencil_state.enable_depth_write = enabled
+    return <- settings
+}
+[nodiscard]
+def public stencil_test(var settings : SDL_GPUGraphicsPipelineCreateInfo; enabled : bool = true) : SDL_GPUGraphicsPipelineCreateInfo {
+    settings.depth_stencil_state.enable_stencil_test = enabled
+    return <- settings
+}
+[nodiscard]
+def public stencil_faces(var settings : SDL_GPUGraphicsPipelineCreateInfo; front, back : SDL_GPUStencilOpState) : SDL_GPUGraphicsPipelineCreateInfo {
     settings.depth_stencil_state.front_stencil_state = front
     settings.depth_stencil_state.back_stencil_state = back
+    return <- settings
 }
-def public stencil_faces(var settings : SDL_GPUGraphicsPipelineCreateInfo; both : SDL_GPUStencilOpState) { stencil_faces(settings, both, both) }
-def public stencil_masks(var settings : SDL_GPUGraphicsPipelineCreateInfo; compare, write : uint8) {
+[nodiscard]
+def public stencil_faces(var settings : SDL_GPUGraphicsPipelineCreateInfo; both : SDL_GPUStencilOpState) : SDL_GPUGraphicsPipelineCreateInfo {
+    return <- stencil_faces(settings, both, both)
+}
+[nodiscard]
+def public stencil_masks(var settings : SDL_GPUGraphicsPipelineCreateInfo; compare, write : uint8) : SDL_GPUGraphicsPipelineCreateInfo {
     settings.depth_stencil_state.compare_mask = compare
     settings.depth_stencil_state.write_mask = write
+    return <- settings
 }
-def public stencil_test(var settings : GpuGraphicsPipelineOptions; enabled : bool = true) { stencil_test(settings.info, enabled) }
-def public stencil_faces(var settings : GpuGraphicsPipelineOptions; front, back : SDL_GPUStencilOpState) { stencil_faces(settings.info, front, back) }
-def public stencil_faces(var settings : GpuGraphicsPipelineOptions; both : SDL_GPUStencilOpState) { stencil_faces(settings.info, both) }
-def public stencil_masks(var settings : GpuGraphicsPipelineOptions; compare, write : uint8) { stencil_masks(settings.info, compare, write) }
+[nodiscard]
+def public stencil_test(var settings : GpuGraphicsPipelineOptions; enabled : bool = true) : GpuGraphicsPipelineOptions {
+    settings.info <- stencil_test(settings.info, enabled)
+    return <- settings
+}
+[nodiscard]
+def public stencil_faces(var settings : GpuGraphicsPipelineOptions; front, back : SDL_GPUStencilOpState) : GpuGraphicsPipelineOptions {
+    settings.info <- stencil_faces(settings.info, front, back)
+    return <- settings
+}
+[nodiscard]
+def public stencil_faces(var settings : GpuGraphicsPipelineOptions; both : SDL_GPUStencilOpState) : GpuGraphicsPipelineOptions {
+    settings.info <- stencil_faces(settings.info, both)
+    return <- settings
+}
+[nodiscard]
+def public stencil_masks(var settings : GpuGraphicsPipelineOptions; compare, write : uint8) : GpuGraphicsPipelineOptions {
+    settings.info <- stencil_masks(settings.info, compare, write)
+    return <- settings
+}

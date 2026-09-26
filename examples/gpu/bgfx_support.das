@@ -9,7 +9,7 @@ require daslib/defer
 
 def texture(device : SDL_GPUDevice?; width, height : uint; format : SDL_GPUTextureFormat; usage : uint; cube : bool = false) {
     var info = gpu_texture(width, height, format, usage)
-    if (cube) { info |> texture_shape(SDL_GPUTextureType.TEXTURETYPE_CUBE, 6u) }
+    if (cube) { info <- info |> texture_shape(SDL_GPUTextureType.TEXTURETYPE_CUBE, 6u) }
     var result = SDL_CreateGPUTextureRef(device, info)
     if (result == null) { return err(sdl_error("SDL_CreateGPUTexture"), type<SDL_GPUTexture?>) }
     return <- move_ok(result, type<SdlError>)
@@ -21,21 +21,21 @@ def pipeline(device : SDL_GPUDevice?; vertex_name, fragment_name : string; forma
     let shader_format = spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL
     let extension = spirv ? "spv" : "dxil"
     let path = "{SDL_GetBasePath()}assets/shaders/"
-    var vs = gpu_shader("{path}{vertex_name}.vert.{extension}", shader_format, SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
-    vs |> uniform_buffers(1u)
-    var fs = gpu_shader("{path}{fragment_name}.frag.{extension}", shader_format, SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT)
-    fs |> samplers(sampler_count)
+    var vs = (gpu_shader("{path}{vertex_name}.vert.{extension}", shader_format, SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
+        |> uniform_buffers(1u))
+    var fs = (gpu_shader("{path}{fragment_name}.frag.{extension}", shader_format, SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT)
+        |> samplers(sampler_count))
     return sdl_scope() {
         var vertex : SDL_GPUShader? = device |> with_native_gpu_shader_file(vs) |> sdl_use
         var fragment : SDL_GPUShader? = device |> with_native_gpu_shader_file(fs) |> sdl_use
-        var info = SDL_GPUGraphicsPipelineCreateInfo(vertex_shader = vertex, fragment_shader = fragment)
-        info |> topology(SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST)
-        info |> rasterizer(SDL_GPURasterizerState(enable_depth_clip = true))
+        var info = (SDL_GPUGraphicsPipelineCreateInfo(vertex_shader = vertex, fragment_shader = fragment)
+            |> topology(SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST)
+            |> rasterizer(SDL_GPURasterizerState(enable_depth_clip = true)))
         if (cull) { info.rasterizer_state.cull_mode = SDL_GPUCullMode.CULLMODE_BACK; info.rasterizer_state.front_face = SDL_GPUFrontFace.FRONTFACE_CLOCKWISE }
         if (depth) {
-            info |> depth_target(SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT)
-            info |> depth_test(SDL_GPUCompareOp.COMPAREOP_LESS)
-            info |> depth_write(true)
+            info <- (info |> depth_target(SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT)
+                |> depth_test(SDL_GPUCompareOp.COMPAREOP_LESS)
+                |> depth_write(true))
         }
         let colors <- array(gpu_color_target(format))
         return <- create_native_gpu_graphics_pipeline(device, info, buffers, attributes, colors)
@@ -92,8 +92,13 @@ def upload_bytes(device : SDL_GPUDevice?; var buffer : SDL_GPUBuffer?; bytes : a
 }
 
 def depth_attachment(var target : SDL_GPUTexture?) {
-    return SDL_GPUDepthStencilTargetInfo(texture = target, clear_depth = 1.0, load_op = SDL_GPULoadOp.LOADOP_CLEAR,
-        store_op = SDL_GPUStoreOp.STOREOP_DONT_CARE, stencil_load_op = SDL_GPULoadOp.LOADOP_DONT_CARE, stencil_store_op = SDL_GPUStoreOp.STOREOP_DONT_CARE)
+    return SDL_GPUDepthStencilTargetInfo(
+        texture = target,
+        clear_depth = 1.0,
+        load_op = SDL_GPULoadOp.LOADOP_CLEAR,
+        store_op = SDL_GPUStoreOp.STOREOP_DONT_CARE,
+        stencil_load_op = SDL_GPULoadOp.LOADOP_DONT_CARE,
+        stencil_store_op = SDL_GPUStoreOp.STOREOP_DONT_CARE)
 }
 
 def replace_depth(device : SDL_GPUDevice?; var target : SDL_GPUTexture?&; var size : uint2&; width, height : uint) {
