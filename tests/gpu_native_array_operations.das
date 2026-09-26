@@ -1,5 +1,6 @@
 options gen2
 require sdl3
+require dassdl3/sdl3_gpu_native_boost
 
 // Same independent pixel/byte oracles as the raw ABI test, now exercising
 // array, output-reference and record-reference conversion entry points.
@@ -154,7 +155,11 @@ def main(smoke : bool) : int {
         verify(SDL_BindGPUVertexStorageBuffersArray(render_pass, 0u, storage))
         verify(SDL_BindGPUFragmentStorageBuffersArray(render_pass, 0u, storage))
         verify(SDL_PushGPUVertexUniformDataArray(command, 0u, uniform_bytes(false, 0u)))
-        verify(SDL_PushGPUFragmentUniformDataArray(command, 0u, uniform_bytes(false, 0u)))
+        // Seed zero so a no-op float helper cannot satisfy the pixel oracle.
+        verify(SDL_PushGPUFragmentUniformDataArray(command, 0u, uniform_bytes(true, 0u)))
+        var fragment_values <- array<float>(1.0, 1.0, 1.0, 1.0)
+        verify(is_ok(push_native_gpu_fragment_uniforms(command, 0u, fragment_values)))
+        fragment_values[0] = 0.0 // SDL must already have copied the payload.
         var viewport = SDL_GPUViewport(w = 8.0, h = 8.0, max_depth = 1.0)
         SDL_SetGPUViewportRef(render_pass, viewport)
         var scissor = SDL_Rect(w = 4, h = 4)
@@ -181,7 +186,10 @@ def main(smoke : bool) : int {
         verify(SDL_BindGPUComputeSamplersArray(compute_pass, 0u, samples))
         verify(SDL_BindGPUComputeStorageTexturesArray(compute_pass, 0u, images))
         verify(SDL_BindGPUComputeStorageBuffersArray(compute_pass, 0u, storage))
-        verify(SDL_PushGPUComputeUniformDataArray(command, 0u, uniform_bytes(true, 11u)))
+        // The fixture shader expects uint bits; this adapter must not convert floats.
+        var compute_values <- array<float>(reinterpret<float>(11u), 0.0, 0.0, 0.0)
+        verify(is_ok(push_native_gpu_compute_uniforms(command, 0u, compute_values)))
+        compute_values[0] = 0.0 // Mutation after push must not change the dispatch.
         SDL_DispatchGPUCompute(compute_pass, 2u, 1u, 1u)
         SDL_EndGPUComputePass(compute_pass)
         // Snapshot the first dispatch before the second overwrites the output.

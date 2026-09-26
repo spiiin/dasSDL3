@@ -67,7 +67,8 @@ def draw_text_sequence(device : SDL_GPUDevice?; command : SDL_GPUCommandBuffer?;
 def compare_pixels(device : SDL_GPUDevice?; var target : SDL_GPUTexture?; font : TTF_Font?) {
     return sdl_scope() {
         var download : SDL_GPUTransferBuffer? = device |> with_native_gpu_transfer_buffer(SDL_GPUTransferBufferCreateInfo(
-            usage = SDL_GPUTransferBufferUsage.TRANSFERBUFFERUSAGE_DOWNLOAD, size = WIDTH * HEIGHT * 4u)) |> sdl_use
+            usage = SDL_GPUTransferBufferUsage.TRANSFERBUFFERUSAGE_DOWNLOAD,
+            size = WIDTH * HEIGHT * 4u)) |> sdl_use
         var command : SDL_GPUCommandBuffer?& = with_native_gpu_commands(device) |> sdl_use
         sdl_scope() {
             var copy_pass : SDL_GPUCopyPass?& = with_native_gpu_copy_pass(command) |> sdl_use
@@ -125,15 +126,20 @@ def frames(device : SDL_GPUDevice?; window : SDL_Window?; font : TTF_Font?; text
         if (frame == 2) { text |> set_text(TEXT) |> sdl_try }
         var sequences <- text |> gpu_text_draw_data() |> sdl_try
         with_native_gpu_swapchain(device, window) $(command; var swapchain; width, height) {
-            let clear_targets <- array(SDL_GPUColorTargetInfo(texture = target,
-                load_op = SDL_GPULoadOp.LOADOP_CLEAR, store_op = SDL_GPUStoreOp.STOREOP_STORE, clear_color = SDL_FColor(a = 1.0)))
+            let clear_targets <- array(SDL_GPUColorTargetInfo(
+                texture = target,
+                load_op = SDL_GPULoadOp.LOADOP_CLEAR,
+                store_op = SDL_GPUStoreOp.STOREOP_STORE,
+                clear_color = SDL_FColor(a = 1.0)))
             with_native_gpu_render_pass(command, clear_targets) $(var render_pass) { return sdl_ok() } |> sdl_try
             for (sequence in sequences) {
                 draw_text_sequence(device, command, pipeline, sampler, vertices, indices, upload, target, sequence) |> sdl_try
             }
-            let blit = SDL_GPUBlitInfo(source = SDL_GPUBlitRegion(texture = target, w = WIDTH, h = HEIGHT),
+            let blit = SDL_GPUBlitInfo(
+                source = SDL_GPUBlitRegion(texture = target, w = WIDTH, h = HEIGHT),
                 destination = SDL_GPUBlitRegion(texture = swapchain, w = width, h = height),
-                load_op = SDL_GPULoadOp.LOADOP_DONT_CARE, filter = SDL_GPUFilter.FILTER_LINEAR)
+                load_op = SDL_GPULoadOp.LOADOP_DONT_CARE,
+                filter = SDL_GPUFilter.FILTER_LINEAR)
             SDL_BlitGPUTextureRef(command, blit)
             return sdl_ok()
         } |> sdl_try
@@ -150,12 +156,19 @@ def resources(device : SDL_GPUDevice?; window : SDL_Window?; font : TTF_Font?; t
     let layout <- array(SDL_GPUVertexBufferDescription(slot = 0u, pitch = 16u, input_rate = SDL_GPUVertexInputRate.VERTEXINPUTRATE_VERTEX))
     let attributes <- array(SDL_GPUVertexAttribute(location = 0u, buffer_slot = 0u, format = SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2),
         SDL_GPUVertexAttribute(location = 1u, buffer_slot = 0u, format = SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2, offset = 8u))
-    let colors <- array(SDL_GPUColorTargetDescription(format = SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM,
-        blend_state = SDL_GPUColorTargetBlendState(enable_blend = true,
-            src_color_blendfactor = SDL_GPUBlendFactor.BLENDFACTOR_SRC_ALPHA, dst_color_blendfactor = SDL_GPUBlendFactor.BLENDFACTOR_ONE_MINUS_SRC_ALPHA,
-            color_blend_op = SDL_GPUBlendOp.BLENDOP_ADD, src_alpha_blendfactor = SDL_GPUBlendFactor.BLENDFACTOR_ONE,
-            dst_alpha_blendfactor = SDL_GPUBlendFactor.BLENDFACTOR_ONE_MINUS_SRC_ALPHA, alpha_blend_op = SDL_GPUBlendOp.BLENDOP_ADD)))
-    let info = SDL_GPUGraphicsPipelineCreateInfo(vertex_shader = vertex, fragment_shader = fragment,
+    let colors <- array(SDL_GPUColorTargetDescription(
+        format = SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM,
+        blend_state = SDL_GPUColorTargetBlendState(
+            enable_blend = true,
+            src_color_blendfactor = SDL_GPUBlendFactor.BLENDFACTOR_SRC_ALPHA,
+            dst_color_blendfactor = SDL_GPUBlendFactor.BLENDFACTOR_ONE_MINUS_SRC_ALPHA,
+            color_blend_op = SDL_GPUBlendOp.BLENDOP_ADD,
+            src_alpha_blendfactor = SDL_GPUBlendFactor.BLENDFACTOR_ONE,
+            dst_alpha_blendfactor = SDL_GPUBlendFactor.BLENDFACTOR_ONE_MINUS_SRC_ALPHA,
+            alpha_blend_op = SDL_GPUBlendOp.BLENDOP_ADD)))
+    let info = SDL_GPUGraphicsPipelineCreateInfo(
+        vertex_shader = vertex,
+        fragment_shader = fragment,
         primitive_type = SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST,
         rasterizer_state = SDL_GPURasterizerState(enable_depth_clip = true, cull_mode = SDL_GPUCullMode.CULLMODE_NONE))
     return sdl_scope() {
@@ -164,7 +177,8 @@ def resources(device : SDL_GPUDevice?; window : SDL_Window?; font : TTF_Font?; t
         var indices : SDL_GPUBuffer? = device |> with_native_gpu_buffer(SDL_GPUBufferCreateInfo(usage = SDL_GPU_BUFFERUSAGE_INDEX, size = CAPACITY)) |> sdl_use
         var upload : SDL_GPUTransferBuffer? = device |> with_native_gpu_transfer_buffer(SDL_GPUTransferBufferCreateInfo(usage = SDL_GPUTransferBufferUsage.TRANSFERBUFFERUSAGE_UPLOAD, size = CAPACITY)) |> sdl_use
         var sampler : SDL_GPUSampler? = device |> with_native_gpu_sampler(SDL_GPUSamplerCreateInfo(
-            min_filter = SDL_GPUFilter.FILTER_LINEAR, mag_filter = SDL_GPUFilter.FILTER_LINEAR,
+            min_filter = SDL_GPUFilter.FILTER_LINEAR,
+            mag_filter = SDL_GPUFilter.FILTER_LINEAR,
             address_mode_u = SDL_GPUSamplerAddressMode.SAMPLERADDRESSMODE_CLAMP_TO_EDGE,
             address_mode_v = SDL_GPUSamplerAddressMode.SAMPLERADDRESSMODE_CLAMP_TO_EDGE)) |> sdl_use
         var target : SDL_GPUTexture? = device |> with_native_gpu_texture(gpu_texture(WIDTH, HEIGHT, SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM, SDL_GPU_TEXTUREUSAGE_COLOR_TARGET | SDL_GPU_TEXTUREUSAGE_SAMPLER)) |> sdl_use
@@ -182,9 +196,13 @@ def run(device : SDL_GPUDevice?; window : SDL_Window?; smoke : bool) {
         let engine : TTF_TextEngine? = device |> with_gpu_text_engine() |> sdl_use
         let text : TTF_Text? = engine |> with_text(font, TEXT) |> sdl_use
         var vertex : SDL_GPUShader? = device |> with_native_gpu_shader_file(SDL_GPUShaderCreateInfo(
-            format = format, stage = SDL_GPUShaderStage.SHADERSTAGE_VERTEX, num_uniform_buffers = 1u), "{base}.vert.{ext}", "main") |> sdl_use
+            format = format,
+            stage = SDL_GPUShaderStage.SHADERSTAGE_VERTEX,
+            num_uniform_buffers = 1u), "{base}.vert.{ext}", "main") |> sdl_use
         var fragment : SDL_GPUShader? = device |> with_native_gpu_shader_file(SDL_GPUShaderCreateInfo(
-            format = format, stage = SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT, num_samplers = 1u), "{base}.frag.{ext}", "main") |> sdl_use
+            format = format,
+            stage = SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT,
+            num_samplers = 1u), "{base}.frag.{ext}", "main") |> sdl_use
         return resources(device, window, font, text, vertex, fragment, smoke)
     }
 }

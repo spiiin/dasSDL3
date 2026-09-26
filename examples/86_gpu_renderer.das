@@ -15,10 +15,14 @@ def run(smoke : bool) : SdlStatus {
         let device = SDL_GetGPURendererDevice(renderer)// Borrowed; renderer owns this device.
         let spirv = (SDL_GetGPUShaderFormats(device) & SDL_GPU_SHADERFORMAT_SPIRV) != 0u
         let extension = spirv ? "spv" : "dxil"
-        let info = SDL_GPUShaderCreateInfo(format = spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL,
-            stage = SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT, num_uniform_buffers = 1u)
-        var shader : SDL_GPUShader? = device |> with_native_gpu_shader_file(info,
-            "{SDL_GetBasePath()}assets/shaders/render_state.frag.{extension}", "main") |> sdl_use
+        let info = SDL_GPUShaderCreateInfo(
+            format = spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL,
+            stage = SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT,
+            num_uniform_buffers = 1u)
+        var shader : SDL_GPUShader? = device |> with_native_gpu_shader_file(
+            info,
+            "{SDL_GetBasePath()}assets/shaders/render_state.frag.{extension}",
+            "main") |> sdl_use
         var samplers : array<SDL_GPUTextureSamplerBinding>
         var textures : array<SDL_GPUTexture?>; var buffers : array<SDL_GPUBuffer?>
         let state : SDL_GPURenderState? = renderer |> with_gpu_render_state(shader, samplers, textures, buffers, 0u) |> sdl_use

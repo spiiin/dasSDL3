@@ -46,12 +46,18 @@ def draw(command : SDL_GPUCommandBuffer?; pipeline : SDL_GPUGraphicsPipeline?;
     let uniforms <- array<float>(sin(time * 0.67), cos(time * 0.67), sin(time), cos(time),
         f * float(HEIGHT) / float(WIDTH), f, 100.0 / 99.9, -10.0 / 99.9)
     command |> push_native_gpu_vertex_uniforms(0u, uniforms) |> sdl_try
-    let targets <- array(SDL_GPUColorTargetInfo(texture = color,
-        load_op = SDL_GPULoadOp.LOADOP_CLEAR, store_op = SDL_GPUStoreOp.STOREOP_STORE,
+    let targets <- array(SDL_GPUColorTargetInfo(
+        texture = color,
+        load_op = SDL_GPULoadOp.LOADOP_CLEAR,
+        store_op = SDL_GPUStoreOp.STOREOP_STORE,
         clear_color = SDL_FColor(r = 0.03, g = 0.03, b = 0.04, a = 1.0)))
-    let depth_target = SDL_GPUDepthStencilTargetInfo(texture = depth, clear_depth = 1.0,
-        load_op = SDL_GPULoadOp.LOADOP_CLEAR, store_op = SDL_GPUStoreOp.STOREOP_DONT_CARE,
-        stencil_load_op = SDL_GPULoadOp.LOADOP_DONT_CARE, stencil_store_op = SDL_GPUStoreOp.STOREOP_DONT_CARE)
+    let depth_target = SDL_GPUDepthStencilTargetInfo(
+        texture = depth,
+        clear_depth = 1.0,
+        load_op = SDL_GPULoadOp.LOADOP_CLEAR,
+        store_op = SDL_GPUStoreOp.STOREOP_DONT_CARE,
+        stencil_load_op = SDL_GPULoadOp.LOADOP_DONT_CARE,
+        stencil_store_op = SDL_GPUStoreOp.STOREOP_DONT_CARE)
     return sdl_scope() {
         var render_pass : SDL_GPURenderPass?& = with_native_gpu_render_pass(command, targets, depth_target) |> sdl_use
         SDL_BindGPUGraphicsPipeline(render_pass, pipeline)
@@ -79,7 +85,8 @@ def frame(device : SDL_GPUDevice?; window : SDL_Window?; pipeline : SDL_GPUGraph
         let blit = SDL_GPUBlitInfo(
             source = SDL_GPUBlitRegion(texture = color, w = WIDTH, h = HEIGHT),
             destination = SDL_GPUBlitRegion(texture = swapchain, w = width, h = height),
-            load_op = SDL_GPULoadOp.LOADOP_DONT_CARE, filter = SDL_GPUFilter.FILTER_LINEAR)
+            load_op = SDL_GPULoadOp.LOADOP_DONT_CARE,
+            filter = SDL_GPUFilter.FILTER_LINEAR)
         SDL_BlitGPUTextureRef(command, blit)
         return sdl_ok()
     } |> sdl_try
@@ -118,7 +125,9 @@ def resources(device : SDL_GPUDevice?; window : SDL_Window?; var vertex, fragmen
         SDL_GPUVertexAttribute(location = 1u, format = SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT3, offset = 12u),
         SDL_GPUVertexAttribute(location = 2u, format = SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT3, offset = 24u))
     let colors <- array(SDL_GPUColorTargetDescription(format = SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM))
-    let info = SDL_GPUGraphicsPipelineCreateInfo(vertex_shader = vertex, fragment_shader = fragment,
+    let info = SDL_GPUGraphicsPipelineCreateInfo(
+        vertex_shader = vertex,
+        fragment_shader = fragment,
         primitive_type = SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST,
         rasterizer_state = SDL_GPURasterizerState(enable_depth_clip = true, cull_mode = SDL_GPUCullMode.CULLMODE_NONE),
         depth_stencil_state = SDL_GPUDepthStencilState(enable_depth_test = true, enable_depth_write = true, compare_op = SDL_GPUCompareOp.COMPAREOP_LESS),

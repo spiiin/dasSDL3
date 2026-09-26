@@ -89,8 +89,11 @@ def draw(device : SDL_GPUDevice?; command : SDL_GPUCommandBuffer?; var r : CubeR
     upload_floats(device, command, r.instances, r.transfer, INSTANCE_CAPACITY, values) |> sdl_try
     let uniforms <- array<float>(time, float(width) / float(height), bump ? 7.0 : 35.0, normal_mapping ? 1.0 : 0.0)
     command |> push_native_gpu_vertex_uniforms(0u, uniforms) |> sdl_try
-    let targets <- array(SDL_GPUColorTargetInfo(texture = color, load_op = SDL_GPULoadOp.LOADOP_CLEAR,
-        store_op = SDL_GPUStoreOp.STOREOP_STORE, clear_color = SDL_FColor(r = 48.0 / 255.0, g = 48.0 / 255.0, b = 48.0 / 255.0, a = 1.0)))
+    let targets <- array(SDL_GPUColorTargetInfo(
+        texture = color,
+        load_op = SDL_GPULoadOp.LOADOP_CLEAR,
+        store_op = SDL_GPUStoreOp.STOREOP_STORE,
+        clear_color = SDL_FColor(r = 48.0 / 255.0, g = 48.0 / 255.0, b = 48.0 / 255.0, a = 1.0)))
     let depth_info = depth_attachment(depth)
     return with_native_gpu_render_pass(command, targets, depth_info) $(var render_pass) {
         SDL_BindGPUGraphicsPipeline(render_pass, r.graphics)

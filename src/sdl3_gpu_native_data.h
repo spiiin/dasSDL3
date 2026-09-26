@@ -146,3 +146,23 @@ inline bool SDL_PushGPUVertexUniformFloats(SDL_GPUCommandBuffer * command, uint3
     bytes.size = values.size * sizeof(float);
     return SDL_PushGPUVertexUniformDataArray(command, slot, bytes);
 }
+
+inline bool SDL_PushGPUFragmentUniformFloats(SDL_GPUCommandBuffer * command, uint32_t slot,
+    const das::TArray<float> & values) {
+    if (!command || !sdl3_native_gpu::array_valid(values) || values.size > UINT32_MAX / sizeof(float))
+        return SDL_SetError("GPU float uniforms: invalid array or byte count overflow");
+    das::TArray<uint8_t> bytes;
+    bytes.data = values.data;
+    bytes.size = values.size * sizeof(float);
+    return SDL_PushGPUFragmentUniformDataArray(command, slot, bytes);
+}
+
+inline bool SDL_PushGPUComputeUniformFloats(SDL_GPUCommandBuffer * command, uint32_t slot,
+    const das::TArray<float> & values) {
+    if (!command || !sdl3_native_gpu::array_valid(values) || values.size > UINT32_MAX / sizeof(float))
+        return SDL_SetError("GPU float uniforms: invalid array or byte count overflow");
+    das::TArray<uint8_t> bytes;
+    bytes.data = values.data;
+    bytes.size = values.size * sizeof(float);
+    return SDL_PushGPUComputeUniformDataArray(command, slot, bytes);
+}

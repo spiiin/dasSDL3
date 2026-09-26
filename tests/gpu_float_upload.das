@@ -14,6 +14,10 @@ def check_upload(device : SDL_GPUDevice?) {
         verify(is_err(write_native_gpu_transfer_floats(device, null, 32u, 0u, values)))
         device |> write_native_gpu_transfer_floats(upload, 32u, 8u, values) |> sdl_try
         var command : SDL_GPUCommandBuffer?& = with_native_gpu_commands(device) |> sdl_use
+        let empty : array<float>
+        SDL_SetErrorText("stale uniform error")
+        verify(is_ok(push_native_gpu_fragment_uniforms(command, 0u, empty)))
+        verify(is_ok(push_native_gpu_compute_uniforms(command, 0u, empty)))
         sdl_scope() {
             var copy_pass : SDL_GPUCopyPass?& = with_native_gpu_copy_pass(command) |> sdl_use
             let source = SDL_GPUTransferBufferLocation(transfer_buffer = upload, offset = 8u)
@@ -36,6 +40,12 @@ def check_upload(device : SDL_GPUDevice?) {
             for (j in 0 .. 4) { verify(uint(bytes[i * 4 + j]) == ((expected[i] >> uint(j * 8)) & 255u)) }
         }
         verify(is_err(push_native_gpu_vertex_uniforms(null, 0u, values)))
+        verify(is_err(push_native_gpu_fragment_uniforms(null, 0u, values)))
+        verify(is_err(push_native_gpu_compute_uniforms(null, 0u, values)))
+        let failure = push_native_gpu_fragment_uniforms(null, 0u, values)
+        SDL_ClearError()
+        verify(is_err(failure) && unwrap_err(failure).operation == "SDL_PushGPUFragmentUniformFloats")
+        verify(length(unwrap_err(failure).message) > 0)
         return sdl_ok()
     }
 }

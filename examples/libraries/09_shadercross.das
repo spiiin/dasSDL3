@@ -9,7 +9,8 @@ def main(smoke : bool) : int {
         with_shadercross() |> sdl_use
         let info = SDL_ShaderCross_HLSL_Info(
             source = "float4 main(float2 uv : TEXCOORD0) : SV_Target0 \{ return float4(uv, 0.5, 1.0); \}",
-            entrypoint = "main", shader_stage = SDL_ShaderCross_ShaderStage.SHADERSTAGE_FRAGMENT)
+            entrypoint = "main",
+            shader_stage = SDL_ShaderCross_ShaderStage.SHADERSTAGE_FRAGMENT)
         var spirv <- compile_hlsl_spirv(info) |> sdl_try
         var reflected <- reflect_graphics_spirv(spirv) |> sdl_try
         let msl = transpile_spirv_msl(spirv, "main", info.shader_stage) |> sdl_try

@@ -116,9 +116,26 @@ independent pixel/byte checks. See [gpu raw tests](gpu-raw-tests.md).
 
 ## Float uploads and application port
 
-`write_native_gpu_transfer_floats` and `push_native_gpu_vertex_uniforms` accept
+`write_native_gpu_transfer_floats`, `push_native_gpu_vertex_uniforms`,
+`push_native_gpu_fragment_uniforms` and `push_native_gpu_compute_uniforms` accept
 contiguous `array<float>` payloads without script byte packing. The transfer
 capacity must match its allocation; offsets/counts are checked in bytes and
 arrays are copied synchronously. Layout and valid live command/resource pointers
 remain caller preconditions. The [metaballs port](../examples/gpu/README.md) uses
 these helpers and documents remaining API friction.
+
+All three uniform helpers return SdlStatus and accept `(command, slot, values)`:
+
+```daslang
+command |> push_native_gpu_fragment_uniforms(0u, array<float>(1.0, 0.5, 0.0, 1.0)) |> sdl_try
+command |> push_native_gpu_compute_uniforms(0u, array<float>(0.25, 0.0, 0.0, 0.0)) |> sdl_try
+```
+
+Floats retain their native 32-bit representation; no implicit integer conversion,
+matrix transpose, shader reflection or std140 padding is performed. Supply the
+padding required by the shader (including 16-byte vec3/vec4 alignment). Slots,
+shader compatibility and recording state remain SDL caller preconditions.
+A null command or invalid/overflowing array yields Err with a copied message.
+An empty array on a nonnull valid command is a successful no-op, matching the
+byte-array adapters. SDL's underlying push calls are void: Ok acknowledges adapter
+validation and synchronous copying, not validation of every shader/device rule.

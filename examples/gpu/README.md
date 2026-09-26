@@ -342,10 +342,10 @@ or command-plan layer. Ordinary error returns clean up partial allocations.
 
 Remaining convenience gaps: upload setup and dynamic multi-target cleanup still
 need explicit code; shader ABI/vertex layout must match manually. Small arrays of
-float uniforms are supported for the vertex stage. These ports pass the needed
-fragment parameters through flat varyings, so a fragment float-array overload
-would be convenient but is not required for correctness. Shader/resource choices
-remain visible, and no unsafe script pointers are used.
+float uniforms are now supported for vertex, fragment and compute stages through
+`push_native_gpu_*_uniforms`. These ports still pass their fragment parameters
+through flat varyings; changing that shader interface is optional. Shader/resource
+choices remain visible, and no unsafe script pointers are used.
 
 Local verification (Windows, 2026-09-26): all six main-runner tests and all 18
 baseline/CppGenBind/strict-AOT tests passed across Vulkan and Direct3D 12.

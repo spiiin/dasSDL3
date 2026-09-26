@@ -7,8 +7,10 @@ def draw_frames(device : SDL_GPUDevice?; window : SDL_Window?; smoke : bool) : S
     let spirv = (SDL_GetGPUShaderFormats(device) & SDL_GPU_SHADERFORMAT_SPIRV) != 0u
     let ext = spirv ? "spv" : "dxil"
     let base = "{SDL_GetBasePath()}assets/shaders/triangle"
-    var shader = gpu_shader("{base}.vert.{ext}",
-        spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL, SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
+    var shader = gpu_shader(
+        "{base}.vert.{ext}",
+        spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL,
+        SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
     var vertex = device |> load_native_gpu_shader(shader) |> sdl_try
     {
         defer() { SDL_ReleaseGPUShader(device, vertex) }
@@ -30,8 +32,7 @@ def render_loop(device : SDL_GPUDevice?; window : SDL_Window?; pipeline : SDL_GP
                 texture = texture,
                 load_op = SDL_GPULoadOp.LOADOP_CLEAR,
                 store_op = SDL_GPUStoreOp.STOREOP_STORE,
-                clear_color = SDL_FColor(r = 0.05, b = 0.15, a = 1.0)
-            ))
+                clear_color = SDL_FColor(r = 0.05, b = 0.15, a = 1.0)))
             return sdl_scope() {
                 var render_pass : SDL_GPURenderPass?& = with_native_gpu_render_pass(command, targets) |> sdl_use
                 SDL_BindGPUGraphicsPipeline(render_pass, pipeline)
@@ -49,8 +50,7 @@ def render_pipeline(device : SDL_GPUDevice?; window : SDL_Window?; var vertex, f
     var info = SDL_GPUGraphicsPipelineCreateInfo(
         vertex_shader = vertex,
         fragment_shader = fragment,
-        primitive_type = SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST
-    )
+        primitive_type = SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST)
     info.rasterizer_state.enable_depth_clip = true
     var buffers : array<SDL_GPUVertexBufferDescription>
     var attributes : array<SDL_GPUVertexAttribute>

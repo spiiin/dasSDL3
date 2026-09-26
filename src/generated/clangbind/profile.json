@@ -4,7 +4,7 @@
   "llvm_sdk": "22.1.5",
   "inputs_sha256": {
     "tools/run_clangbind_parity.py": "155574a191ac152e787aa966da2f58adb9b4838ecb248e8a4c5b4709aeff545e",
-    "tools/clangbind_parity.das": "aeb2d652bada5805bca6bbf17203f2ad15c5c76789766d9081904e99232217ba",
+    "tools/clangbind_parity.das": "06bfeb9c4dbca537f24bff73e616a9fa07f251d40a21cdf09b8aab3bd66a7c82",
     "tools/bindings.json": "0ab5c0268aed135145070a18e32adc3f34aadc865396154c23d72820a4254415",
     "tools/api-policy.json": "95660ecc0caae63431bb854191e30cace29bad71d2d3d62c8c6689519133fc61"
   },

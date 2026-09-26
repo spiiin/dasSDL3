@@ -18,6 +18,7 @@ error and platform limitations.
 - [`sdl_try`: early return for SDL Results](sdl-try.md)
 - [`sdl_scope` and `sdl_use`: linear scoped acquisition](sdl-scope.md)
 - [Boost API ergonomics](api-ergonomics.md)
+- [Аудит контрактов boost-слоя](boost-contract-audit.md)
 - [SDL binding boundary](gpu-api-boundary.md)
 
 ## Generation and coverage

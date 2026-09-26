@@ -21,8 +21,10 @@ def update_field(var grid : array<GridPoint>; n : int; time : float) {
     var spheres : float4[16]
     for (i in 0 .. 16) {
         let f = float(i)
-        spheres[i] = float4(sin(time * f * 0.21 + f * 0.37) * 8.0,
-            sin(time * f * 0.37 + f * 0.67) * 8.0, cos(time * f * 0.11 + f * 0.13) * 8.0,
+        spheres[i] = float4(
+            sin(time * f * 0.21 + f * 0.37) * 8.0,
+            sin(time * f * 0.37 + f * 0.67) * 8.0,
+            cos(time * f * 0.11 + f * 0.13) * 8.0,
             1.0 / (3.0 + (sin(time * f * 0.13) * 0.5 + 0.5) * 0.9))
     }
     resize(grid, n * n * n)

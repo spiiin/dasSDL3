@@ -209,3 +209,15 @@ bloom and tone mapping. Usage, controls and test details: [GPU examples](gpu/REA
 91. [CPU information](91_cpuinfo.das): logical cores, RAM, cache/page sizes, SIMD alignment and features; no SDL initialization.
 
 93. [Surface bytes](93_surface_bytes.das): scoped RGB24 plane access, pitch-aware gradient and copied surface metadata.
+
+
+## Formatting
+
+Use the official `utils/das-fmt/dasfmt.das` from the pinned daScript checkout.
+When a call or record initializer needs multiline arguments, start its arguments
+on the next line, indent them four spaces relative to the call's line, and put
+one argument per line. Keep compact calls on one line. Packed data-array tables
+retain their logical rows. Example 43 demonstrates the style.
+
+The formatter preserves these argument breaks and indentation; it does not
+choose this layout automatically. After editing, run formatting and `--verify`.

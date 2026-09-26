@@ -1,0 +1,920 @@
+source,line,name,signature,mutable_in_signature,body_markers,defer_in_body
+dassdl3/sdl3_asyncio_boost.das,7,open_async_io,"def public open_async_io(path, mode : string)",false,"err,move_ok",false
+dassdl3/sdl3_asyncio_boost.das,12,async_io_size,def public async_io_size(io : SDL_AsyncIO?),false,"err,ok",false
+dassdl3/sdl3_asyncio_boost.das,18,read_async_io,"def public read_async_io(io : SDL_AsyncIO?; buffer : void?; offset, size : uint64; queue : SDL_AsyncIOQueue?; userdata : void?)",false,sdl_status,false
+dassdl3/sdl3_asyncio_boost.das,21,write_async_io,"def public write_async_io(io : SDL_AsyncIO?; buffer : void?; offset, size : uint64; queue : SDL_AsyncIOQueue?; userdata : void?)",false,sdl_status,false
+dassdl3/sdl3_asyncio_boost.das,25,close_async_io,def public close_async_io(var io : SDL_AsyncIO?&; flush : bool; queue : SDL_AsyncIOQueue?; userdata : void?),true,sdl_status,false
+dassdl3/sdl3_asyncio_boost.das,28,create_async_io_queue,def public create_async_io_queue(),false,"err,move_ok",false
+dassdl3/sdl3_asyncio_boost.das,34,get_async_io_result,def public get_async_io_result(queue : SDL_AsyncIOQueue?),false,"none,some",false
+dassdl3/sdl3_asyncio_boost.das,39,wait_async_io_result,def public wait_async_io_result(queue : SDL_AsyncIOQueue?; timeout_ms : int),false,"none,some",false
+dassdl3/sdl3_asyncio_boost.das,44,load_file_async,def public load_file_async(path : string; queue : SDL_AsyncIOQueue?; userdata : void?),false,sdl_status,false
+dassdl3/sdl3_asyncio_boost.das,48,take_async_file_bytes,def public take_async_file_bytes(var outcome : SDL_AsyncIOOutcome&),true,"err,move_ok",false
+dassdl3/sdl3_asyncio_boost.das,54,with_async_io_queue,def public with_async_io_queue(body : block<(queue : SDL_AsyncIOQueue?) : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_audio_boost.das,6,load_wav,def public load_wav(path : string),false,"err,move_ok",false
+dassdl3/sdl3_audio_boost.das,12,destroy_wav,def public destroy_wav(wav : SDL_Wav?),false,,false
+dassdl3/sdl3_audio_boost.das,13,wav_spec,def public wav_spec(wav : SDL_Wav?),false,"err,ok",false
+dassdl3/sdl3_audio_boost.das,17,wav_size,def public wav_size(wav : SDL_Wav?),false,"err,ok",false
+dassdl3/sdl3_audio_boost.das,21,audio_format,def public audio_format(spec : SDL_AudioSpec) : uint,false,,false
+dassdl3/sdl3_audio_boost.das,22,audio_spec,"def public audio_spec(format : uint; channels, frequency : int)",false,,false
+dassdl3/sdl3_audio_boost.das,25,with_wav,def public with_wav(path : string; blk : block<(wav : SDL_Wav?) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_audio_boost.das,37,create_audio_stream,"def public create_audio_stream(src, dst : SDL_AudioSpec)",false,"err,move_ok",false
+dassdl3/sdl3_audio_boost.das,43,open_playback,def public open_playback(spec : SDL_AudioSpec),false,"err,move_ok",false
+dassdl3/sdl3_audio_boost.das,49,destroy_audio_stream,def public destroy_audio_stream(stream : SDL_AudioStream?),false,,false
+dassdl3/sdl3_audio_boost.das,64,with_audio_stream,"def public with_audio_stream(src, dst : SDL_AudioSpec; blk : block<(stream : SDL_AudioStream?) : $Result<auto(TT); SdlError> >)",false,,false
+dassdl3/sdl3_audio_boost.das,69,with_playback,def public with_playback(spec : SDL_AudioSpec; blk : block<(stream : SDL_AudioStream?) : $Result<auto(TT); SdlError> >),false,,false
+dassdl3/sdl3_audio_boost.das,74,queue_wav,def public queue_wav(stream : SDL_AudioStream?; wav : SDL_Wav?),false,sdl_status,false
+dassdl3/sdl3_audio_boost.das,77,put_audio,def public put_audio(stream : SDL_AudioStream?; bytes : array<uint8>),false,sdl_status,false
+dassdl3/sdl3_audio_boost.das,80,read_audio,def public read_audio(stream : SDL_AudioStream?; var bytes : array<uint8>),true,"err,ok",false
+dassdl3/sdl3_audio_boost.das,86,queued_audio,def public queued_audio(stream : SDL_AudioStream?),false,"err,ok",false
+dassdl3/sdl3_audio_boost.das,92,available_audio,def public available_audio(stream : SDL_AudioStream?),false,"err,ok",false
+dassdl3/sdl3_audio_boost.das,98,flush_audio,def public flush_audio(stream : SDL_AudioStream?),false,sdl_status,false
+dassdl3/sdl3_audio_boost.das,101,clear_audio,def public clear_audio(stream : SDL_AudioStream?),false,sdl_status,false
+dassdl3/sdl3_audio_boost.das,104,resume_audio,def public resume_audio(stream : SDL_AudioStream?),false,sdl_status,false
+dassdl3/sdl3_audio_boost.das,107,pause_audio,def public pause_audio(stream : SDL_AudioStream?),false,sdl_status,false
+dassdl3/sdl3_audio_devices_boost.das,7,audio_playback_devices,def public audio_playback_devices(),false,"err,move_ok",false
+dassdl3/sdl3_audio_devices_boost.das,12,audio_recording_devices,def public audio_recording_devices(),false,"err,move_ok",false
+dassdl3/sdl3_audio_devices_boost.das,17,audio_driver,def public audio_driver(index : int),false,"none,some",false
+dassdl3/sdl3_audio_devices_boost.das,21,current_audio_driver,def public current_audio_driver(),false,"none,some",false
+dassdl3/sdl3_audio_devices_boost.das,26,audio_device_name,def public audio_device_name(device : uint),false,"err,ok",false
+dassdl3/sdl3_audio_devices_boost.das,31,audio_device_format,def public audio_device_format(device : uint; var sample_frames : int&),true,"err,ok",false
+dassdl3/sdl3_audio_devices_boost.das,38,audio_device_channel_map,def public audio_device_channel_map(device : uint),false,"err,move_ok,move_some",false
+dassdl3/sdl3_audio_devices_boost.das,46,open_audio_device,def public open_audio_device(device : uint),false,"err,ok",false
+dassdl3/sdl3_audio_devices_boost.das,51,open_audio_device,def public open_audio_device(device : uint; spec : SDL_AudioSpec),false,"err,ok",false
+dassdl3/sdl3_audio_devices_boost.das,56,close_audio_device,def public close_audio_device(var device : uint&),true,,false
+dassdl3/sdl3_audio_devices_boost.das,57,pause_audio_device,def public pause_audio_device(device : uint),false,sdl_status,false
+dassdl3/sdl3_audio_devices_boost.das,58,resume_audio_device,def public resume_audio_device(device : uint),false,sdl_status,false
+dassdl3/sdl3_audio_devices_boost.das,60,audio_device_paused,def public audio_device_paused(device : uint) : bool,false,,false
+dassdl3/sdl3_audio_devices_boost.das,61,audio_device_gain,def public audio_device_gain(device : uint),false,"err,ok",false
+dassdl3/sdl3_audio_devices_boost.das,66,set_audio_device_gain,def public set_audio_device_gain(device : uint; gain : float),false,sdl_status,false
+dassdl3/sdl3_audio_devices_boost.das,67,bind_audio_stream,def public bind_audio_stream(device : uint; stream : SDL_AudioStream?),false,sdl_status,false
+dassdl3/sdl3_audio_devices_boost.das,68,bind_audio_streams,def public bind_audio_streams(device : uint; streams : array<SDL_AudioStream?>),false,sdl_status,false
+dassdl3/sdl3_audio_devices_boost.das,69,unbind_audio_stream,def public unbind_audio_stream(stream : SDL_AudioStream?),false,,false
+dassdl3/sdl3_audio_devices_boost.das,70,unbind_audio_streams,def public unbind_audio_streams(streams : array<SDL_AudioStream?>),false,sdl_status,false
+dassdl3/sdl3_audio_devices_boost.das,72,with_audio_device,def public with_audio_device(device : uint; body : block<(id : uint) : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_audio_devices_boost.das,81,with_audio_device,def public with_audio_device(device : uint; spec : SDL_AudioSpec; body : block<(id : uint) : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_audio_devices_boost.das,92,audio_device_format,def public audio_device_format(device : uint),false,"err,ok",false
+dassdl3/sdl3_audio_final.das,6,audio_spec,"def public audio_spec(format : SDL_AudioFormat; channels, frequency : int)",false,,false
+dassdl3/sdl3_audio_final.das,7,audio_format_name,def public audio_format_name(format : SDL_AudioFormat) : string,false,,false
+dassdl3/sdl3_audio_final.das,8,audio_silence_value,def public audio_silence_value(format : SDL_AudioFormat) : int,false,,false
+dassdl3/sdl3_audio_final.das,10,set_audio_stream_get_callback,"def public set_audio_stream_get_callback(stream : SDL_AudioStream?; callback, userdata : void?)",false,sdl_status,false
+dassdl3/sdl3_audio_final.das,11,set_audio_stream_put_callback,"def public set_audio_stream_put_callback(stream : SDL_AudioStream?; callback, userdata : void?)",false,sdl_status,false
+dassdl3/sdl3_audio_final.das,12,set_audio_postmix_callback,"def public set_audio_postmix_callback(device : uint; callback, userdata : void?)",false,sdl_status,false
+dassdl3/sdl3_audio_final.das,13,open_audio_device_stream,def public open_audio_device_stream(device : uint; spec : SDL_AudioSpec; callback : void? = null; userdata : void? = null),false,"err,move_ok",false
+dassdl3/sdl3_audio_final.das,18,with_audio_device_stream,"def public with_audio_device_stream(device : uint; spec : SDL_AudioSpec; callback, userdata : void?; body : block<(stream : SDL_AudioStream?) : $Result<auto(TT); SdlError>>)",false,err,true
+dassdl3/sdl3_audio_final.das,28,load_wav_io,def public load_wav_io(io : SDL_IOStream?; var spec : SDL_AudioSpec&),true,"err,move_ok",false
+dassdl3/sdl3_audio_final.das,33,mix_audio,def public mix_audio(var dst : array<uint8>; src : array<uint8>; format : SDL_AudioFormat; count : uint; volume : float = 1.0),true,sdl_status,false
+dassdl3/sdl3_audio_final.das,34,convert_audio_samples,def public convert_audio_samples(src_spec : SDL_AudioSpec; bytes : array<uint8>; dst_spec : SDL_AudioSpec),false,"err,move_ok",false
+dassdl3/sdl3_audio_final.das,41,load_wav_io,def public load_wav_io(io : SDL_IOStream?),false,"err,move_ok",false
+dassdl3/sdl3_audio_stream_controls.das,6,audio_stream_properties,def public audio_stream_properties(stream : SDL_AudioStream?),false,"err,ok",false
+dassdl3/sdl3_audio_stream_controls.das,11,audio_stream_formats,"def public audio_stream_formats(stream : SDL_AudioStream?; var src, dst : SDL_AudioSpec&)",true,sdl_status,false
+dassdl3/sdl3_audio_stream_controls.das,12,set_audio_stream_formats,"def public set_audio_stream_formats(stream : SDL_AudioStream?; src, dst : SDL_AudioSpec)",false,sdl_status,false
+dassdl3/sdl3_audio_stream_controls.das,13,set_audio_stream_input_format,def public set_audio_stream_input_format(stream : SDL_AudioStream?; src : SDL_AudioSpec),false,sdl_status,false
+dassdl3/sdl3_audio_stream_controls.das,14,set_audio_stream_output_format,def public set_audio_stream_output_format(stream : SDL_AudioStream?; dst : SDL_AudioSpec),false,sdl_status,false
+dassdl3/sdl3_audio_stream_controls.das,15,audio_stream_frequency_ratio,def public audio_stream_frequency_ratio(stream : SDL_AudioStream?),false,"err,ok",false
+dassdl3/sdl3_audio_stream_controls.das,20,set_audio_stream_frequency_ratio,def public set_audio_stream_frequency_ratio(stream : SDL_AudioStream?; value : float),false,sdl_status,false
+dassdl3/sdl3_audio_stream_controls.das,21,audio_stream_gain,def public audio_stream_gain(stream : SDL_AudioStream?),false,"err,ok",false
+dassdl3/sdl3_audio_stream_controls.das,26,set_audio_stream_gain,def public set_audio_stream_gain(stream : SDL_AudioStream?; value : float),false,sdl_status,false
+dassdl3/sdl3_audio_stream_controls.das,27,set_audio_stream_input_channel_map,def public set_audio_stream_input_channel_map(stream : SDL_AudioStream?; map : array<int>),false,sdl_status,false
+dassdl3/sdl3_audio_stream_controls.das,28,reset_audio_stream_input_channel_map,def public reset_audio_stream_input_channel_map(stream : SDL_AudioStream?; channels : int),false,sdl_status,false
+dassdl3/sdl3_audio_stream_controls.das,29,set_audio_stream_output_channel_map,def public set_audio_stream_output_channel_map(stream : SDL_AudioStream?; map : array<int>),false,sdl_status,false
+dassdl3/sdl3_audio_stream_controls.das,30,reset_audio_stream_output_channel_map,def public reset_audio_stream_output_channel_map(stream : SDL_AudioStream?; channels : int),false,sdl_status,false
+dassdl3/sdl3_audio_stream_controls.das,31,lock_audio_stream,def public lock_audio_stream(stream : SDL_AudioStream?),false,sdl_status,false
+dassdl3/sdl3_audio_stream_controls.das,32,unlock_audio_stream,def public unlock_audio_stream(stream : SDL_AudioStream?),false,sdl_status,false
+dassdl3/sdl3_audio_stream_controls.das,34,with_audio_stream_lock,def public with_audio_stream_lock(stream : SDL_AudioStream?; body : block<() : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_audio_stream_controls.das,49,audio_stream_formats,def public audio_stream_formats(stream : SDL_AudioStream?),false,"err,ok",false
+dassdl3/sdl3_audio_stream_controls.das,57,audio_stream_input_channel_map,def public audio_stream_input_channel_map(stream : SDL_AudioStream?),false,"err,move_ok,move_some",false
+dassdl3/sdl3_audio_stream_controls.das,67,audio_stream_output_channel_map,def public audio_stream_output_channel_map(stream : SDL_AudioStream?),false,"err,move_ok,move_some",false
+dassdl3/sdl3_boost.das,7,sdl_init,def public sdl_init(flags : uint = SDL_INIT_VIDEO),false,sdl_status,false
+dassdl3/sdl3_boost.das,10,create_window,"def public create_window(title : string; width, height : int; flags : uint64 = SDL_WINDOW_RESIZABLE)",false,"err,move_ok",false
+dassdl3/sdl3_boost.das,17,create_renderer,"def public create_renderer(window : SDL_Window?; driver : string = """")",false,"err,move_ok",false
+dassdl3/sdl3_boost.das,23,destroy_renderer,def public destroy_renderer(renderer : SDL_Renderer?),false,,false
+dassdl3/sdl3_boost.das,26,destroy_window,def public destroy_window(window : SDL_Window?),false,,false
+dassdl3/sdl3_boost.das,29,poll_event,def public poll_event(var event : SDL_Event),true,"none,some",false
+dassdl3/sdl3_boost.das,35,push_event,def public push_event(var event : SDL_Event) : bool,true,,false
+dassdl3/sdl3_boost.das,38,should_close,def public should_close(event : SDL_Event) : bool,false,,false
+dassdl3/sdl3_boost.das,41,set_color,def public set_color(renderer : SDL_Renderer?; rgba : uint4),false,"err,sdl_status",false
+dassdl3/sdl3_boost.das,48,clear,"def public clear(renderer : SDL_Renderer?; rgba : uint4 = uint4(24u, 28u, 40u, 255u))",false,sdl_status,false
+dassdl3/sdl3_boost.das,53,fill_rect,def public fill_rect(renderer : SDL_Renderer?; rect : SDL_FRect),false,sdl_status,false
+dassdl3/sdl3_boost.das,56,present,def public present(renderer : SDL_Renderer?),false,sdl_status,false
+dassdl3/sdl3_boost.das,61,with_sdl,def public with_sdl(flags : uint; blk : block<() : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_boost.das,73,with_sdl,def public with_sdl(blk : block<() : $Result<auto(TT); SdlError> >),false,,false
+dassdl3/sdl3_boost.das,77,with_window,"def public with_window(title : string; width, height : int; flags : uint64; blk : block<(window : SDL_Window?) : $Result<auto(TT); SdlError> >)",false,err,true
+dassdl3/sdl3_boost.das,91,with_renderer,def public with_renderer(window : SDL_Window?; blk : block<(renderer : SDL_Renderer?) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_boost.das,104,load_bmp,def public load_bmp(path : string),false,"err,move_ok",false
+dassdl3/sdl3_boost.das,111,destroy_surface,def public destroy_surface(surface : SDL_Surface?),false,,false
+dassdl3/sdl3_boost.das,115,destroy_texture,def public destroy_texture(texture : SDL_Texture?),false,,false
+dassdl3/sdl3_boost.das,120,create_texture,def public create_texture(renderer : SDL_Renderer?; surface : SDL_Surface?),false,"err,move_ok",false
+dassdl3/sdl3_boost.das,127,texture_size,def public texture_size(texture : SDL_Texture?; var size : float2&),true,"err,sdl_ok",false
+dassdl3/sdl3_boost.das,135,draw_texture,def public draw_texture(renderer : SDL_Renderer?; texture : SDL_Texture?),false,sdl_status,false
+dassdl3/sdl3_boost.das,140,draw_texture,def public draw_texture(renderer : SDL_Renderer?; texture : SDL_Texture?; dst : SDL_FRect),false,sdl_status,false
+dassdl3/sdl3_boost.das,144,draw_texture,"def public draw_texture(renderer : SDL_Renderer?; texture : SDL_Texture?; src, dst : SDL_FRect)",false,sdl_status,false
+dassdl3/sdl3_boost.das,149,with_bmp,def public with_bmp(path : string; blk : block<(surface : SDL_Surface?) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_boost.das,163,load_texture,def public load_texture(renderer : SDL_Renderer?; path : string),false,"err,move_ok",true
+dassdl3/sdl3_boost.das,174,with_texture,def public with_texture(renderer : SDL_Renderer?; path : string; blk : block<(texture : SDL_Texture?) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_boost.das,190,key_event,def public key_event(event : SDL_Event; var key : SDL_KeyboardEvent),true,"none,some",false
+dassdl3/sdl3_boost.das,194,key_scancode,def public key_scancode(key : SDL_KeyboardEvent) : int,false,,false
+dassdl3/sdl3_boost.das,195,key_down,def public key_down(scancode : int) : bool,false,,false
+dassdl3/sdl3_boost.das,196,mouse_motion_event,def public mouse_motion_event(event : SDL_Event; var motion : SDL_MouseMotionEvent),true,"none,some",false
+dassdl3/sdl3_boost.das,200,mouse_button_event,def public mouse_button_event(event : SDL_Event; var button : SDL_MouseButtonEvent),true,"none,some",false
+dassdl3/sdl3_boost.das,204,mouse_wheel_event,def public mouse_wheel_event(event : SDL_Event; var wheel : SDL_MouseWheelEvent),true,"none,some",false
+dassdl3/sdl3_boost.das,209,wheel_delta,def public wheel_delta(wheel : SDL_MouseWheelEvent) : float2,false,,false
+dassdl3/sdl3_boost.das,213,mouse_state,def public mouse_state(var position : float2&) : uint,true,,false
+dassdl3/sdl3_boost.das,219,text_input_event,def public text_input_event(event : SDL_Event; var text : string&),true,"none,some",false
+dassdl3/sdl3_boost.das,223,text_editing_event,"def public text_editing_event(event : SDL_Event; var text : string&; var start, length : int&)",true,"none,some",false
+dassdl3/sdl3_boost.das,227,input_window_id,def public input_window_id(event : SDL_Event) : uint,false,,false
+dassdl3/sdl3_boost.das,230,should_close,def public should_close(event : SDL_Event; window : SDL_Window?) : bool,false,,false
+dassdl3/sdl3_boost.das,235,set_title,def public set_title(window : SDL_Window?; title : string),false,sdl_status,false
+dassdl3/sdl3_boost.das,240,with_text_input,def public with_text_input(window : SDL_Window?; blk : block<() : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_boost.das,257,texture_size,def public texture_size(texture : SDL_Texture?),false,"err,move_ok",false
+dassdl3/sdl3_boost.das,265,key_event,def public key_event(event : SDL_Event),false,"move_some,none",false
+dassdl3/sdl3_boost.das,273,mouse_motion_event,def public mouse_motion_event(event : SDL_Event),false,"move_some,none",false
+dassdl3/sdl3_boost.das,281,mouse_button_event,def public mouse_button_event(event : SDL_Event),false,"move_some,none",false
+dassdl3/sdl3_boost.das,289,mouse_wheel_event,def public mouse_wheel_event(event : SDL_Event),false,"move_some,none",false
+dassdl3/sdl3_boost.das,297,text_input_event,def public text_input_event(event : SDL_Event),false,"move_some,none",false
+dassdl3/sdl3_boost.das,305,text_editing_event,def public text_editing_event(event : SDL_Event),false,"move_some,none",false
+dassdl3/sdl3_boost.das,316,mouse_state,def public mouse_state() : MouseState,false,,false
+dassdl3/sdl3_camera_boost.das,12,cameras,def public cameras(),false,"err,move_ok",false
+dassdl3/sdl3_camera_boost.das,17,camera_supported_formats,def public camera_supported_formats(id : uint),false,"err,move_ok",false
+dassdl3/sdl3_camera_boost.das,22,camera_driver,def public camera_driver(index : int),false,"none,some",false
+dassdl3/sdl3_camera_boost.das,26,current_camera_driver,def public current_camera_driver(),false,"none,some",false
+dassdl3/sdl3_camera_boost.das,31,camera_name,def public camera_name(id : uint),false,"err,ok",false
+dassdl3/sdl3_camera_boost.das,37,camera_position,def public camera_position(id : uint),false,,false
+dassdl3/sdl3_camera_boost.das,39,camera_permission_state,def public camera_permission_state(camera : SDL_Camera?) : SDL_CameraPermissionState,false,,false
+dassdl3/sdl3_camera_boost.das,40,camera_id,def public camera_id(camera : SDL_Camera?),false,"err,ok",false
+dassdl3/sdl3_camera_boost.das,45,camera_properties,def public camera_properties(camera : SDL_Camera?),false,"err,ok",false
+dassdl3/sdl3_camera_boost.das,50,camera_format,def public camera_format(camera : SDL_Camera?),false,"err,ok",false
+dassdl3/sdl3_camera_boost.das,55,open_camera,def public open_camera(id : uint),false,"err,move_ok",false
+dassdl3/sdl3_camera_boost.das,60,open_camera,def public open_camera(id : uint; spec : SDL_CameraSpec),false,"err,move_ok",false
+dassdl3/sdl3_camera_boost.das,65,close_camera,def public close_camera(var camera : SDL_Camera?&),true,,false
+dassdl3/sdl3_camera_boost.das,66,acquire_camera_frame,def public acquire_camera_frame(camera : SDL_Camera?),false,"err,move_ok,move_some",false
+dassdl3/sdl3_camera_boost.das,74,release_camera_frame,def public release_camera_frame(camera : SDL_Camera?; var frame : CameraFrame),true,,false
+dassdl3/sdl3_camera_boost.das,79,with_camera,def public with_camera(id : uint; body : block<(camera : SDL_Camera?) : $Result<auto(CameraValue); SdlError>>),false,err,true
+dassdl3/sdl3_camera_boost.das,88,with_camera,def public with_camera(id : uint; spec : SDL_CameraSpec; body : block<(camera : SDL_Camera?) : $Result<auto(CameraValue); SdlError>>),false,err,true
+dassdl3/sdl3_camera_boost.das,98,with_camera_frame,def public with_camera_frame(camera : SDL_Camera?; body : block<(frame : CameraFrame) : $Result<auto(CameraValue); SdlError>>),false,"err,move_ok,move_some",true
+dassdl3/sdl3_common_boost.das,6,platform_name,def public platform_name(),false,,false
+dassdl3/sdl3_common_boost.das,7,sdl_revision,def public sdl_revision(),false,,false
+dassdl3/sdl3_common_boost.das,9,guid_from_string,def public guid_from_string(text : string),false,,false
+dassdl3/sdl3_common_boost.das,10,guid_string,def public guid_string(guid : SDL_GUID),false,,false
+dassdl3/sdl3_common_boost.das,11,open_url,def public open_url(url : string),false,sdl_status,false
+dassdl3/sdl3_common_boost.das,12,show_simple_message_box,"def public show_simple_message_box(flags : uint; title, message : string; window : SDL_Window? = null)",false,sdl_status,false
+dassdl3/sdl3_common_boost.das,19,show_message_box,"def public show_message_box(flags : uint; title, message : string; buttons : array<SDL_MessageBoxButtonData>; window : SDL_Window? = null)",false,,false
+dassdl3/sdl3_common_boost.das,24,show_message_box,"def public show_message_box(flags : uint; title, message : string; buttons : array<SDL_MessageBoxButtonData>; colors : SDL_MessageBoxColorScheme; window : SDL_Window? = null)",false,,false
+dassdl3/sdl3_diagnostics_boost.das,5,error_string,def public error_string : string,false,,false
+dassdl3/sdl3_diagnostics_boost.das,6,set_error,def public set_error(text : string) : SdlError,false,,false
+dassdl3/sdl3_diagnostics_boost.das,10,log_message,def public log_message(category : int; priority : SDL_LogPriority; text : string),false,,false
+dassdl3/sdl3_diagnostics_boost.das,13,current_time,def public current_time(var ticks : int64&),true,sdl_status,false
+dassdl3/sdl3_diagnostics_boost.das,14,time_to_date,def public time_to_date(ticks : int64; var date : SDL_DateTime; local_time : bool = false),true,sdl_status,false
+dassdl3/sdl3_diagnostics_boost.das,17,date_to_time,def public date_to_time(date : SDL_DateTime; var ticks : int64&),true,sdl_status,false
+dassdl3/sdl3_diagnostics_boost.das,21,current_time,def public current_time(),false,"err,move_ok",false
+dassdl3/sdl3_diagnostics_boost.das,29,date_to_time,def public date_to_time(date : SDL_DateTime),false,"err,move_ok",false
+dassdl3/sdl3_diagnostics_boost.das,37,time_to_date,def public time_to_date(ticks : int64; local_time : bool = false),false,"err,ok",false
+dassdl3/sdl3_event_queue.das,5,wait_event,def public wait_event(var event : SDL_Event),true,sdl_status,false
+dassdl3/sdl3_event_queue.das,8,wait_event,def public wait_event(),false,"err,move_ok",false
+dassdl3/sdl3_event_queue.das,15,wait_event_timeout,def public wait_event_timeout(var event : SDL_Event; timeout_ms : int),true,"err,none,ok,some",false
+dassdl3/sdl3_event_queue.das,20,wait_event_timeout,def public wait_event_timeout(timeout_ms : int),false,"err,move_ok,move_some,none,ok",false
+dassdl3/sdl3_event_queue.das,32,peep_events,def public peep_events(var events : array<SDL_Event>; action : SDL_EventAction; min_type : uint = SDL_EVENT_FIRST; max_type : uint = SDL_EVENT_LAST),true,"err,ok",false
+dassdl3/sdl3_event_queue.das,38,count_events,def public count_events(min_type : uint = SDL_EVENT_FIRST; max_type : uint = SDL_EVENT_LAST),false,"err,ok",false
+dassdl3/sdl3_event_queue.das,56,peek_events,def public peek_events(limit : int = 64; min_type : uint = SDL_EVENT_FIRST; max_type : uint = SDL_EVENT_LAST),false,,false
+dassdl3/sdl3_event_queue.das,59,take_events,def public take_events(limit : int = 64; min_type : uint = SDL_EVENT_FIRST; max_type : uint = SDL_EVENT_LAST),false,,false
+dassdl3/sdl3_event_queue.das,63,register_events,def public register_events(count : int),false,"err,ok",false
+dassdl3/sdl3_event_queue.das,74,event_window,def public event_window(event : SDL_Event),false,"move_some,none",false
+dassdl3/sdl3_event_queue.das,82,filter_events,def public filter_events(predicate : block<(var event : SDL_Event) : bool>),true,sdl_ok,false
+dassdl3/sdl3_events.das,278,decode_event,def public decode_event(event : SDL_Event) : SdlEvent,false,,false
+dassdl3/sdl3_events.das,543,poll_event,def public poll_event() : $Option<SdlEvent>,false,"move_some,none",false
+dassdl3/sdl3_events.das,551,poll_events,def public poll_events() : iterator<SdlEvent>,false,,false
+dassdl3/sdl3_events.das,564,should_close,def public should_close(event : SdlEvent) : bool,false,,false
+dassdl3/sdl3_events.das,569,should_close,def public should_close(event : SdlEvent; window : SDL_Window?) : bool,false,,false
+dassdl3/sdl3_filesystem_boost.das,5,base_path,def public base_path(),false,"err,ok",false
+dassdl3/sdl3_filesystem_boost.das,10,pref_path,"def public pref_path(org, app : string)",false,"err,ok",false
+dassdl3/sdl3_filesystem_boost.das,15,user_folder,def public user_folder(folder : SDL_Folder),false,"err,ok",false
+dassdl3/sdl3_filesystem_boost.das,20,current_directory,def public current_directory(),false,"err,ok",false
+dassdl3/sdl3_filesystem_boost.das,25,create_directory,def public create_directory(path : string),false,sdl_status,false
+dassdl3/sdl3_filesystem_boost.das,26,remove_path,def public remove_path(path : string),false,sdl_status,false
+dassdl3/sdl3_filesystem_boost.das,27,rename_path,"def public rename_path(oldpath, newpath : string)",false,sdl_status,false
+dassdl3/sdl3_filesystem_boost.das,28,copy_file,"def public copy_file(oldpath, newpath : string)",false,sdl_status,false
+dassdl3/sdl3_filesystem_boost.das,29,path_info,def public path_info(path : string),false,"err,ok",false
+dassdl3/sdl3_filesystem_boost.das,34,glob_directory,"def public glob_directory(path : string; pattern : string = ""*""; flags : uint = 0u)",false,"err,move_ok",false
+dassdl3/sdl3_filesystem_boost.das,39,enumerate_directory,def public enumerate_directory(path : string),false,"err,move_ok",false
+dassdl3/sdl3_geometry_boost.das,6,vertex,def public vertex(position : float2; rgba : float4; uv : float2 = float2(0.0)) : SDL_Vertex,false,,false
+dassdl3/sdl3_geometry_boost.das,10,draw_geometry,def public draw_geometry(renderer : SDL_Renderer?; vertices : array<SDL_Vertex>; texture : SDL_Texture? = null),false,sdl_status,false
+dassdl3/sdl3_geometry_boost.das,14,draw_geometry,def public draw_geometry(renderer : SDL_Renderer?; vertices : array<SDL_Vertex>; indices : array<int>; texture : SDL_Texture? = null),false,sdl_status,false
+dassdl3/sdl3_gl_egl.das,6,gl_attribute,def public gl_attribute(attribute : SDL_GLAttr),false,"err,ok",false
+dassdl3/sdl3_gl_egl.das,11,gl_swap_interval,def public gl_swap_interval(),false,"err,ok",false
+dassdl3/sdl3_gl_egl.das,16,set_gl_attribute,def public set_gl_attribute(attribute : SDL_GLAttr; value : int),false,sdl_status,false
+dassdl3/sdl3_gl_egl.das,17,set_gl_swap_interval,def public set_gl_swap_interval(value : int),false,sdl_status,false
+dassdl3/sdl3_gl_egl.das,18,swap_gl_window,def public swap_gl_window(window : SDL_Window?),false,sdl_status,false
+dassdl3/sdl3_gl_egl.das,19,make_gl_current,def public make_gl_current(window : SDL_Window?; context : SDL_GLContextState?),false,sdl_status,false
+dassdl3/sdl3_gl_egl.das,20,create_gl_context,def public create_gl_context(window : SDL_Window?),false,"err,move_ok",false
+dassdl3/sdl3_gl_egl.das,26,destroy_gl_context,def public destroy_gl_context(var context : SDL_GLContextState?&),true,"err,sdl_ok",false
+dassdl3/sdl3_gl_egl.das,33,with_gl_context,def public with_gl_context(window : SDL_Window?; body : block<(context : SDL_GLContextState?) : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_gl_egl.das,48,with_gl_current,def public with_gl_current(window : SDL_Window?; context : SDL_GLContextState?; body : block<() : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_gl_egl.das,64,with_gl_library,def public with_gl_library(path : string; body : block<() : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_gpu_boost.das,11,with_gpu_device,def public with_gpu_device(formats : uint; debug : bool; driver : string; blk : block<(device : SDL_GPUDevice?) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_gpu_boost.das,25,with_gpu_device,def public with_gpu_device(blk : block<(device : SDL_GPUDevice?) : $Result<auto(TT); SdlError> >),false,,false
+dassdl3/sdl3_gpu_boost.das,30,with_gpu_window,def public with_gpu_window(device : SDL_GPUDevice?; window : SDL_Window?; blk : block<() : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_gpu_buffers_boost.das,7,create_gpu_vertex_buffer,def public create_gpu_vertex_buffer(device : SDL_GPUDevice?; values : array<float>),false,checked_handle_result,false
+dassdl3/sdl3_gpu_buffers_boost.das,11,create_gpu_index_buffer,def public create_gpu_index_buffer(device : SDL_GPUDevice?; values : array<uint>; element : SDL_GPUIndexElementSize),false,checked_handle_result,false
+dassdl3/sdl3_gpu_buffers_boost.das,16,with_gpu_vertex_buffer,def public with_gpu_vertex_buffer(device : SDL_GPUDevice?; values : array<float>; blk : block<(buffer : GpuBufferHandle) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_gpu_buffers_boost.das,32,with_gpu_index_buffer,def public with_gpu_index_buffer(device : SDL_GPUDevice?; values : array<uint>; element : SDL_GPUIndexElementSize; blk : block<(buffer : GpuIndexBufferHandle) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_gpu_buffers_boost.das,48,gpu_viewport,"def public gpu_viewport(width, height : float) : SDL_GPUViewport",false,,false
+dassdl3/sdl3_gpu_formats_boost.das,5,gpu_format_block_bytes,def public gpu_format_block_bytes(format : uint),false,"err,ok",false
+dassdl3/sdl3_gpu_formats_boost.das,11,gpu_format_bytes,"def public gpu_format_bytes(format, width, height : uint; depth_or_layers : uint = 1u)",false,"err,ok",false
+dassdl3/sdl3_gpu_formats_boost.das,17,gpu_supports_format,"def public gpu_supports_format(device : SDL_GPUDevice?; format, texture_type, usage : uint)",false,"err,ok",false
+dassdl3/sdl3_gpu_formats_boost.das,23,gpu_supports_samples,"def public gpu_supports_samples(device : SDL_GPUDevice?; format, sample_count : uint)",false,"err,ok",false
+dassdl3/sdl3_gpu_formats_boost.das,30,gpu_format_block_extent,def public gpu_format_block_extent(format : uint),false,"err,ok",false
+dassdl3/sdl3_gpu_formats_boost.das,38,gpu_supports_texture_transfer,"def public gpu_supports_texture_transfer(device : SDL_GPUDevice?; format, texture_type : uint)",false,"err,ok",false
+dassdl3/sdl3_gpu_image_boost.das,6,create_gpu_color_target_texture,"def public create_gpu_color_target_texture(device : SDL_GPUDevice?; width, height, layers, levels, format : uint)",false,checked_handle_result,false
+dassdl3/sdl3_gpu_image_boost.das,10,with_gpu_color_target_texture,"def public with_gpu_color_target_texture(device : SDL_GPUDevice?; width, height, layers, levels, format : uint; blk : block<(texture : GpuTextureHandle) : $Result<auto(TT); SdlError> >)",false,err,true
+dassdl3/sdl3_gpu_image_boost.das,26,gpu_generate_mipmaps,def public gpu_generate_mipmaps(device : SDL_GPUDevice?; texture : GpuTextureHandle),false,sdl_status,false
+dassdl3/sdl3_gpu_image_boost.das,30,gpu_blit_texture,def public gpu_blit_texture(device : SDL_GPUDevice?; source : GpuTextureHandle; source_sub : uint2; source_rect : uint4; destination : GpuTextureHandle; dest_sub : uint2; dest_rect : uint4; filter_mode : uint = SDL_GPU_FILTER_NEAREST),false,sdl_status,false
+dassdl3/sdl3_gpu_native_boost.das,13,create_native_gpu_device,"def public create_native_gpu_device(formats : uint; debug : bool; driver : string = """")",false,native_gpu_pointer_result,false
+dassdl3/sdl3_gpu_native_boost.das,16,create_native_gpu_buffer,def public create_native_gpu_buffer(device : SDL_GPUDevice?; info : SDL_GPUBufferCreateInfo),false,native_gpu_pointer_result,false
+dassdl3/sdl3_gpu_native_boost.das,19,create_native_gpu_transfer_buffer,def public create_native_gpu_transfer_buffer(device : SDL_GPUDevice?; info : SDL_GPUTransferBufferCreateInfo),false,native_gpu_pointer_result,false
+dassdl3/sdl3_gpu_native_boost.das,22,load_native_gpu_shader,"def public load_native_gpu_shader(device : SDL_GPUDevice?; info : SDL_GPUShaderCreateInfo; path : string; entrypoint : string = ""main"")",false,native_gpu_pointer_result,false
+dassdl3/sdl3_gpu_native_boost.das,25,load_native_gpu_compute_pipeline,"def public load_native_gpu_compute_pipeline(device : SDL_GPUDevice?; info : SDL_GPUComputePipelineCreateInfo; path : string; entrypoint : string = ""main"")",false,native_gpu_pointer_result,false
+dassdl3/sdl3_gpu_native_boost.das,28,create_native_gpu_graphics_pipeline,def public create_native_gpu_graphics_pipeline(device : SDL_GPUDevice?; info : SDL_GPUGraphicsPipelineCreateInfo; buffers : array<SDL_GPUVertexBufferDescription>; attributes : array<SDL_GPUVertexAttribute>; colors : array<SDL_GPUColorTargetDescription>),false,native_gpu_pointer_result,false
+dassdl3/sdl3_gpu_native_boost.das,32,acquire_native_gpu_command_buffer,def public acquire_native_gpu_command_buffer(device : SDL_GPUDevice?),false,native_gpu_pointer_result,false
+dassdl3/sdl3_gpu_native_boost.das,38,with_native_gpu_device,def public with_native_gpu_device(formats : uint; debug : bool; driver : string; blk : block<(device : SDL_GPUDevice?) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_gpu_native_boost.das,49,with_native_gpu_buffer,def public with_native_gpu_buffer(device : SDL_GPUDevice?; info : SDL_GPUBufferCreateInfo; blk : block<(var resource : SDL_GPUBuffer?) : $Result<auto(TT); SdlError> >),true,err,true
+dassdl3/sdl3_gpu_native_boost.das,60,with_native_gpu_texture,def public with_native_gpu_texture(device : SDL_GPUDevice?; info : SDL_GPUTextureCreateInfo; blk : block<(var resource : SDL_GPUTexture?) : $Result<auto(TT); SdlError> >),true,err,true
+dassdl3/sdl3_gpu_native_boost.das,71,with_native_gpu_transfer_buffer,def public with_native_gpu_transfer_buffer(device : SDL_GPUDevice?; info : SDL_GPUTransferBufferCreateInfo; blk : block<(var resource : SDL_GPUTransferBuffer?) : $Result<auto(TT); SdlError> >),true,err,true
+dassdl3/sdl3_gpu_native_boost.das,82,with_native_gpu_sampler,def public with_native_gpu_sampler(device : SDL_GPUDevice?; info : SDL_GPUSamplerCreateInfo; blk : block<(var resource : SDL_GPUSampler?) : $Result<auto(TT); SdlError> >),true,err,true
+dassdl3/sdl3_gpu_native_boost.das,93,with_native_gpu_shader_bytes,def public with_native_gpu_shader_bytes(device : SDL_GPUDevice?; info : SDL_GPUShaderCreateInfo; bytes : array<uint8>; entrypoint : string; blk : block<(var resource : SDL_GPUShader?) : $Result<auto(TT); SdlError> >),true,err,true
+dassdl3/sdl3_gpu_native_boost.das,104,with_native_gpu_shader_file,def public with_native_gpu_shader_file(device : SDL_GPUDevice?; info : SDL_GPUShaderCreateInfo; path : string; entrypoint : string; blk : block<(var resource : SDL_GPUShader?) : $Result<auto(TT); SdlError> >),true,err,true
+dassdl3/sdl3_gpu_native_boost.das,115,with_native_gpu_compute_pipeline_bytes,def public with_native_gpu_compute_pipeline_bytes(device : SDL_GPUDevice?; info : SDL_GPUComputePipelineCreateInfo; bytes : array<uint8>; entrypoint : string; blk : block<(var resource : SDL_GPUComputePipeline?) : $Result<auto(TT); SdlError> >),true,err,true
+dassdl3/sdl3_gpu_native_boost.das,126,with_native_gpu_compute_pipeline_file,def public with_native_gpu_compute_pipeline_file(device : SDL_GPUDevice?; info : SDL_GPUComputePipelineCreateInfo; path : string; entrypoint : string; blk : block<(var resource : SDL_GPUComputePipeline?) : $Result<auto(TT); SdlError> >),true,err,true
+dassdl3/sdl3_gpu_native_boost.das,137,with_native_gpu_graphics_pipeline,def public with_native_gpu_graphics_pipeline(device : SDL_GPUDevice?; info : SDL_GPUGraphicsPipelineCreateInfo; buffers : array<SDL_GPUVertexBufferDescription>; attributes : array<SDL_GPUVertexAttribute>; colors : array<SDL_GPUColorTargetDescription>; blk : block<(pipeline : SDL_GPUGraphicsPipeline?) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_gpu_native_boost.das,149,native_gpu_submit,def public native_gpu_submit(var command : SDL_GPUCommandBuffer?&),true,"err,sdl_status",false
+dassdl3/sdl3_gpu_native_boost.das,155,native_gpu_cancel,def public native_gpu_cancel(var command : SDL_GPUCommandBuffer?&),true,"err,sdl_status",false
+dassdl3/sdl3_gpu_native_boost.das,161,native_gpu_submit_fence,def public native_gpu_submit_fence(var command : SDL_GPUCommandBuffer?&),true,"err,move_ok",false
+dassdl3/sdl3_gpu_native_boost.das,171,with_native_gpu_commands,def public with_native_gpu_commands(device : SDL_GPUDevice?; blk : block<(var command : SDL_GPUCommandBuffer?&) : $Result<auto(TT); SdlError> >),true,err,true
+dassdl3/sdl3_gpu_native_boost.das,181,with_native_gpu_copy_pass,def public with_native_gpu_copy_pass(command : SDL_GPUCommandBuffer?; blk : block<(var copy_pass : SDL_GPUCopyPass?&) : $Result<auto(TT); SdlError> >),true,err,true
+dassdl3/sdl3_gpu_native_boost.das,191,with_native_gpu_render_pass,def public with_native_gpu_render_pass(command : SDL_GPUCommandBuffer?; colors : array<SDL_GPUColorTargetInfo>; blk : block<(var render_pass : SDL_GPURenderPass?&) : $Result<auto(TT); SdlError> >),true,err,true
+dassdl3/sdl3_gpu_native_boost.das,201,with_native_gpu_render_pass,def public with_native_gpu_render_pass(command : SDL_GPUCommandBuffer?; colors : array<SDL_GPUColorTargetInfo>; depth : SDL_GPUDepthStencilTargetInfo; blk : block<(var render_pass : SDL_GPURenderPass?&) : $Result<auto(TT); SdlError> >),true,err,true
+dassdl3/sdl3_gpu_native_boost.das,211,with_native_gpu_compute_pass,def public with_native_gpu_compute_pass(command : SDL_GPUCommandBuffer?; textures : array<SDL_GPUStorageTextureReadWriteBinding>; buffers : array<SDL_GPUStorageBufferReadWriteBinding>; blk : block<(var compute_pass : SDL_GPUComputePass?&) : $Result<auto(TT); SdlError> >),true,err,true
+dassdl3/sdl3_gpu_native_boost.das,227,native_gpu_swapchain,def public native_gpu_swapchain(command : SDL_GPUCommandBuffer?; window : SDL_Window?; wait : bool = true),false,"err,move_ok,move_some,none",false
+dassdl3/sdl3_gpu_native_boost.das,242,with_native_gpu_swapchain,"def public with_native_gpu_swapchain(device : SDL_GPUDevice?; window : SDL_Window?; blk : block<(command : SDL_GPUCommandBuffer?; var texture : SDL_GPUTexture?; width, height : uint) : $Result<auto(TT); SdlError> >)",true,"err,move_ok,move_some,none",true
+dassdl3/sdl3_gpu_native_boost.das,287,native_gpu_end_copy_pass,def public native_gpu_end_copy_pass(var value : SDL_GPUCopyPass?&),true,"err,sdl_ok",false
+dassdl3/sdl3_gpu_native_boost.das,295,native_gpu_end_render_pass,def public native_gpu_end_render_pass(var value : SDL_GPURenderPass?&),true,"err,sdl_ok",false
+dassdl3/sdl3_gpu_native_boost.das,303,native_gpu_end_compute_pass,def public native_gpu_end_compute_pass(var value : SDL_GPUComputePass?&),true,"err,sdl_ok",false
+dassdl3/sdl3_gpu_native_boost.das,311,write_native_gpu_transfer_floats,"def public write_native_gpu_transfer_floats(device : SDL_GPUDevice?; transfer : SDL_GPUTransferBuffer?; capacity, offset : uint; values : array<float>; cycle : bool = true)",false,sdl_status,false
+dassdl3/sdl3_gpu_native_boost.das,316,push_native_gpu_vertex_uniforms,def public push_native_gpu_vertex_uniforms(command : SDL_GPUCommandBuffer?; slot : uint; values : array<float>),false,sdl_status,false
+dassdl3/sdl3_gpu_native_boost.das,320,push_native_gpu_fragment_uniforms,def public push_native_gpu_fragment_uniforms(command : SDL_GPUCommandBuffer?; slot : uint; values : array<float>),false,sdl_status,false
+dassdl3/sdl3_gpu_native_boost.das,324,push_native_gpu_compute_uniforms,def public push_native_gpu_compute_uniforms(command : SDL_GPUCommandBuffer?; slot : uint; values : array<float>),false,sdl_status,false
+dassdl3/sdl3_gpu_native_boost.das,329,gpu_texture,"def public gpu_texture(width, height : uint; format : SDL_GPUTextureFormat; usage : uint) : SDL_GPUTextureCreateInfo",false,,false
+dassdl3/sdl3_gpu_native_boost.das,337,texture_shape,def public texture_shape(var settings : SDL_GPUTextureCreateInfo; kind : SDL_GPUTextureType; layers_or_depth : uint) : SDL_GPUTextureCreateInfo,true,,false
+dassdl3/sdl3_gpu_native_boost.das,343,mip_levels,def public mip_levels(var settings : SDL_GPUTextureCreateInfo; count : uint) : SDL_GPUTextureCreateInfo,true,,false
+dassdl3/sdl3_gpu_native_boost.das,348,sample_count,def public sample_count(var settings : SDL_GPUTextureCreateInfo; count : SDL_GPUSampleCount) : SDL_GPUTextureCreateInfo,true,,false
+dassdl3/sdl3_gpu_native_boost.das,353,texture_usage,def public texture_usage(var settings : SDL_GPUTextureCreateInfo; flags : uint) : SDL_GPUTextureCreateInfo,true,,false
+dassdl3/sdl3_gpu_native_boost.das,359,gpu_compute_pipeline,def public gpu_compute_pipeline(format : uint) : SDL_GPUComputePipelineCreateInfo,false,,false
+dassdl3/sdl3_gpu_native_boost.das,363,threadgroup,"def public threadgroup(var settings : SDL_GPUComputePipelineCreateInfo; x, y, z : uint) : SDL_GPUComputePipelineCreateInfo",true,,false
+dassdl3/sdl3_gpu_native_boost.das,370,samplers,def public samplers(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) : SDL_GPUComputePipelineCreateInfo,true,,false
+dassdl3/sdl3_gpu_native_boost.das,375,uniform_buffers,def public uniform_buffers(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) : SDL_GPUComputePipelineCreateInfo,true,,false
+dassdl3/sdl3_gpu_native_boost.das,380,readonly_storage_textures,def public readonly_storage_textures(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) : SDL_GPUComputePipelineCreateInfo,true,,false
+dassdl3/sdl3_gpu_native_boost.das,385,readonly_storage_buffers,def public readonly_storage_buffers(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) : SDL_GPUComputePipelineCreateInfo,true,,false
+dassdl3/sdl3_gpu_native_boost.das,390,readwrite_storage_textures,def public readwrite_storage_textures(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) : SDL_GPUComputePipelineCreateInfo,true,,false
+dassdl3/sdl3_gpu_native_boost.das,395,readwrite_storage_buffers,def public readwrite_storage_buffers(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) : SDL_GPUComputePipelineCreateInfo,true,,false
+dassdl3/sdl3_gpu_native_boost.das,401,load_native_gpu_shader,def public load_native_gpu_shader(device : SDL_GPUDevice?; settings : GpuShaderOptions),false,,false
+dassdl3/sdl3_gpu_native_boost.das,404,with_native_gpu_shader_file,def public with_native_gpu_shader_file(device : SDL_GPUDevice?; settings : GpuShaderOptions; blk : block<(var resource : SDL_GPUShader?) : $Result<auto(TT); SdlError>>),true,,false
+dassdl3/sdl3_gpu_native_boost.das,408,with_native_gpu_shader_bytes,def public with_native_gpu_shader_bytes(device : SDL_GPUDevice?; bytes : array<uint8>; settings : GpuShaderOptions; blk : block<(var resource : SDL_GPUShader?) : $Result<auto(TT); SdlError>>),true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,6,create_gpu_graphics_pipeline,def public create_gpu_graphics_pipeline(device : SDL_GPUDevice?; vertex : GpuShaderHandle; fragment : GpuShaderHandle; info : SDL_GPUGraphicsPipelineCreateInfo; buffers : array<SDL_GPUVertexBufferDescription>; attributes : array<SDL_GPUVertexAttribute>; colors : array<SDL_GPUColorTargetDescription>),false,checked_handle_result,false
+dassdl3/sdl3_gpu_pipeline_boost.das,12,gpu_graphics_pipeline_info,def public gpu_graphics_pipeline_info() : SDL_GPUGraphicsPipelineCreateInfo,false,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,22,gpu_color_target,def public gpu_color_target(format : SDL_GPUTextureFormat) : SDL_GPUColorTargetDescription,false,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,33,with_gpu_graphics_pipeline,def public with_gpu_graphics_pipeline(device : SDL_GPUDevice?; vertex : GpuShaderHandle; fragment : GpuShaderHandle; info : SDL_GPUGraphicsPipelineCreateInfo; buffers : array<SDL_GPUVertexBufferDescription>; attributes : array<SDL_GPUVertexAttribute>; colors : array<SDL_GPUColorTargetDescription>; blk : block<(pipeline : GpuPipelineHandle) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_gpu_pipeline_boost.das,50,with_gpu_graphics_pipeline,def public with_gpu_graphics_pipeline(device : SDL_GPUDevice?; vertex : GpuShaderHandle; fragment : GpuShaderHandle; format : SDL_GPUTextureFormat; blk : block<(pipeline : GpuPipelineHandle) : $Result<auto(TT); SdlError> >),false,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,58,gpu_graphics_pipeline_descriptor,def public gpu_graphics_pipeline_descriptor(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle; var info : SDL_GPUGraphicsPipelineCreateInfo),true,sdl_status,false
+dassdl3/sdl3_gpu_pipeline_boost.das,62,gpu_graphics_pipeline_descriptor,def public gpu_graphics_pipeline_descriptor(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle),false,"err,move_ok",false
+dassdl3/sdl3_gpu_pipeline_boost.das,79,with_gpu_graphics_pipeline,def public with_gpu_graphics_pipeline(device : SDL_GPUDevice?; settings : GpuGraphicsPipelineOptions; blk : block<(pipeline : GpuPipelineHandle) : $Result<auto(TT); SdlError>>),false,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,87,gpu_pipeline,"def public gpu_pipeline(vertex, fragment : GpuShaderHandle)",false,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,95,vertex_buffer,"def public vertex_buffer(var settings : GpuGraphicsPipelineOptions; slot, pitch : uint; rate : SDL_GPUVertexInputRate = SDL_GPUVertexInputRate.VERTEXINPUTRATE_VERTEX) : GpuGraphicsPipelineOptions",true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,102,vertex_attribute,"def public vertex_attribute(var settings : GpuGraphicsPipelineOptions; location, buffer_slot : uint; format : SDL_GPUVertexElementFormat; offset : uint) : GpuGraphicsPipelineOptions",true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,109,color_target,def public color_target(var settings : GpuGraphicsPipelineOptions; format : SDL_GPUTextureFormat) : GpuGraphicsPipelineOptions,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,115,color_target,def public color_target(var settings : GpuGraphicsPipelineOptions; description : SDL_GPUColorTargetDescription) : GpuGraphicsPipelineOptions,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,121,depth_target,def public depth_target(var settings : GpuGraphicsPipelineOptions; format : SDL_GPUTextureFormat) : GpuGraphicsPipelineOptions,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,128,depth_test,def public depth_test(var settings : GpuGraphicsPipelineOptions; compare : SDL_GPUCompareOp; enabled : bool = true) : GpuGraphicsPipelineOptions,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,136,depth_write,def public depth_write(var settings : GpuGraphicsPipelineOptions; enabled : bool) : GpuGraphicsPipelineOptions,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,143,topology,def public topology(var settings : SDL_GPUGraphicsPipelineCreateInfo; kind : SDL_GPUPrimitiveType) : SDL_GPUGraphicsPipelineCreateInfo,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,148,rasterizer,def public rasterizer(var settings : SDL_GPUGraphicsPipelineCreateInfo; state : SDL_GPURasterizerState) : SDL_GPUGraphicsPipelineCreateInfo,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,153,sample_count,def public sample_count(var settings : SDL_GPUGraphicsPipelineCreateInfo; count : SDL_GPUSampleCount) : SDL_GPUGraphicsPipelineCreateInfo,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,158,topology,def public topology(var settings : GpuGraphicsPipelineOptions; kind : SDL_GPUPrimitiveType) : GpuGraphicsPipelineOptions,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,163,rasterizer,def public rasterizer(var settings : GpuGraphicsPipelineOptions; state : SDL_GPURasterizerState) : GpuGraphicsPipelineOptions,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,168,sample_count,def public sample_count(var settings : GpuGraphicsPipelineOptions; count : SDL_GPUSampleCount) : GpuGraphicsPipelineOptions,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,174,multisampling,def public multisampling(var settings : SDL_GPUGraphicsPipelineCreateInfo; state : SDL_GPUMultisampleState) : SDL_GPUGraphicsPipelineCreateInfo,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,179,multisampling,def public multisampling(var settings : GpuGraphicsPipelineOptions; state : SDL_GPUMultisampleState) : GpuGraphicsPipelineOptions,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,184,blending,def public blending(var target : SDL_GPUColorTargetDescription; state : SDL_GPUColorTargetBlendState) : SDL_GPUColorTargetDescription,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,189,color_write_mask,def public color_write_mask(var target : SDL_GPUColorTargetDescription; mask : uint8; enabled : bool = true) : SDL_GPUColorTargetDescription,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,196,depth_stencil,def public depth_stencil(var settings : SDL_GPUGraphicsPipelineCreateInfo; state : SDL_GPUDepthStencilState) : SDL_GPUGraphicsPipelineCreateInfo,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,201,depth_stencil,def public depth_stencil(var settings : GpuGraphicsPipelineOptions; state : SDL_GPUDepthStencilState) : GpuGraphicsPipelineOptions,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,206,depth_target,def public depth_target(var settings : SDL_GPUGraphicsPipelineCreateInfo; format : SDL_GPUTextureFormat) : SDL_GPUGraphicsPipelineCreateInfo,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,212,depth_test,def public depth_test(var settings : SDL_GPUGraphicsPipelineCreateInfo; compare : SDL_GPUCompareOp; enabled : bool = true) : SDL_GPUGraphicsPipelineCreateInfo,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,218,depth_write,def public depth_write(var settings : SDL_GPUGraphicsPipelineCreateInfo; enabled : bool) : SDL_GPUGraphicsPipelineCreateInfo,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,223,stencil_test,def public stencil_test(var settings : SDL_GPUGraphicsPipelineCreateInfo; enabled : bool = true) : SDL_GPUGraphicsPipelineCreateInfo,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,228,stencil_faces,"def public stencil_faces(var settings : SDL_GPUGraphicsPipelineCreateInfo; front, back : SDL_GPUStencilOpState) : SDL_GPUGraphicsPipelineCreateInfo",true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,234,stencil_faces,def public stencil_faces(var settings : SDL_GPUGraphicsPipelineCreateInfo; both : SDL_GPUStencilOpState) : SDL_GPUGraphicsPipelineCreateInfo,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,238,stencil_masks,"def public stencil_masks(var settings : SDL_GPUGraphicsPipelineCreateInfo; compare, write : uint8) : SDL_GPUGraphicsPipelineCreateInfo",true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,244,stencil_test,def public stencil_test(var settings : GpuGraphicsPipelineOptions; enabled : bool = true) : GpuGraphicsPipelineOptions,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,249,stencil_faces,"def public stencil_faces(var settings : GpuGraphicsPipelineOptions; front, back : SDL_GPUStencilOpState) : GpuGraphicsPipelineOptions",true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,254,stencil_faces,def public stencil_faces(var settings : GpuGraphicsPipelineOptions; both : SDL_GPUStencilOpState) : GpuGraphicsPipelineOptions,true,,false
+dassdl3/sdl3_gpu_pipeline_boost.das,259,stencil_masks,"def public stencil_masks(var settings : GpuGraphicsPipelineOptions; compare, write : uint8) : GpuGraphicsPipelineOptions",true,,false
+dassdl3/sdl3_gpu_recording_boost.das,9,acquire_gpu_command_buffer,def public acquire_gpu_command_buffer(device : SDL_GPUDevice?),false,checked_handle_result,false
+dassdl3/sdl3_gpu_recording_boost.das,13,with_gpu_command_buffer,def public with_gpu_command_buffer(device : SDL_GPUDevice?; blk : block<(command : GpuCommandBufferHandle) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_gpu_recording_boost.das,26,gpu_begin_render_pass,def public gpu_begin_render_pass(device : SDL_GPUDevice?; command : GpuCommandBufferHandle; target : GpuTextureHandle; sub : uint2; load : SDL_GPULoadOp; clear : SDL_FColor),false,checked_handle_result,false
+dassdl3/sdl3_gpu_recording_boost.das,30,gpu_end_render_pass,def public gpu_end_render_pass(device : SDL_GPUDevice?; render_pass : GpuRenderPassHandle),false,sdl_status,false
+dassdl3/sdl3_gpu_recording_boost.das,33,gpu_submit_command_buffer,def public gpu_submit_command_buffer(device : SDL_GPUDevice?; command : GpuCommandBufferHandle),false,sdl_status,false
+dassdl3/sdl3_gpu_recording_boost.das,36,gpu_cancel_command_buffer,def public gpu_cancel_command_buffer(device : SDL_GPUDevice?; command : GpuCommandBufferHandle),false,sdl_status,false
+dassdl3/sdl3_gpu_recording_boost.das,39,gpu_bind_pipeline,def public gpu_bind_pipeline(device : SDL_GPUDevice?; render_pass : GpuRenderPassHandle; pipeline : GpuPipelineHandle),false,sdl_status,false
+dassdl3/sdl3_gpu_recording_boost.das,42,gpu_set_viewport,def public gpu_set_viewport(device : SDL_GPUDevice?; render_pass : GpuRenderPassHandle; viewport : SDL_GPUViewport),false,sdl_status,false
+dassdl3/sdl3_gpu_recording_boost.das,45,gpu_set_scissor,def public gpu_set_scissor(device : SDL_GPUDevice?; render_pass : GpuRenderPassHandle; rect : uint4),false,sdl_status,false
+dassdl3/sdl3_gpu_recording_boost.das,48,gpu_set_blend_constants,def public gpu_set_blend_constants(device : SDL_GPUDevice?; render_pass : GpuRenderPassHandle; color : SDL_FColor),false,sdl_status,false
+dassdl3/sdl3_gpu_recording_boost.das,51,gpu_bind_vertex_buffers,def public gpu_bind_vertex_buffers(device : SDL_GPUDevice?; render_pass : GpuRenderPassHandle; first : uint; buffers : array<GpuBufferHandle>; offsets : array<uint>),false,sdl_status,false
+dassdl3/sdl3_gpu_recording_boost.das,55,gpu_bind_index_buffer,def public gpu_bind_index_buffer(device : SDL_GPUDevice?; render_pass : GpuRenderPassHandle; index : GpuIndexBufferHandle),false,sdl_status,false
+dassdl3/sdl3_gpu_recording_boost.das,58,gpu_bind_samplers,def public gpu_bind_samplers(device : SDL_GPUDevice?; render_pass : GpuRenderPassHandle; stage : SDL_GPUShaderStage; textures : array<GpuTextureHandle>; samplers : array<GpuSamplerHandle>),false,sdl_status,false
+dassdl3/sdl3_gpu_recording_boost.das,62,gpu_push_uniform,def public gpu_push_uniform(device : SDL_GPUDevice?; command : GpuCommandBufferHandle; stage : SDL_GPUShaderStage; slot : uint; values : array<float4>),false,sdl_status,false
+dassdl3/sdl3_gpu_recording_boost.das,66,gpu_push_uniform_bytes,def public gpu_push_uniform_bytes(device : SDL_GPUDevice?; command : GpuCommandBufferHandle; stage : SDL_GPUShaderStage; slot : uint; bytes : array<uint8>),false,sdl_status,false
+dassdl3/sdl3_gpu_recording_boost.das,70,gpu_draw_primitives,def public gpu_draw_primitives(device : SDL_GPUDevice?; render_pass : GpuRenderPassHandle; vertices : uint; instances : uint = 1u; first_vertex : uint = 0u),false,sdl_status,false
+dassdl3/sdl3_gpu_recording_boost.das,74,gpu_draw_indexed_primitives,def public gpu_draw_indexed_primitives(device : SDL_GPUDevice?; render_pass : GpuRenderPassHandle; indices : uint; instances : uint = 1u; first_index : uint = 0u; base_vertex : int = 0),false,sdl_status,false
+dassdl3/sdl3_gpu_result.das,18,checked_handle_result,def public checked_handle_result(handle : auto(T); operation : string),false,"err,ok",false
+dassdl3/sdl3_gpu_sampler_boost.das,7,create_gpu_sampler,def public create_gpu_sampler(device : SDL_GPUDevice?; info : SDL_GPUSamplerCreateInfo),false,checked_handle_result,false
+dassdl3/sdl3_gpu_sampler_boost.das,11,gpu_sampler_info,def public gpu_sampler_info(filter : SDL_GPUFilter = SDL_GPUFilter.FILTER_NEAREST; address : SDL_GPUSamplerAddressMode = SDL_GPUSamplerAddressMode.SAMPLERADDRESSMODE_CLAMP_TO_EDGE) : SDL_GPUSamplerCreateInfo,false,,false
+dassdl3/sdl3_gpu_sampler_boost.das,22,with_gpu_sampler,def public with_gpu_sampler(device : SDL_GPUDevice?; info : SDL_GPUSamplerCreateInfo; blk : block<(sampler : GpuSamplerHandle) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_gpu_sampler_boost.das,36,with_gpu_sampler,def public with_gpu_sampler(device : SDL_GPUDevice?; blk : block<(sampler : GpuSamplerHandle) : $Result<auto(TT); SdlError> >),false,,false
+dassdl3/sdl3_gpu_sampler_boost.das,39,gpu_sampler_descriptor,def public gpu_sampler_descriptor(device : SDL_GPUDevice?; sampler : GpuSamplerHandle; var info : SDL_GPUSamplerCreateInfo),true,sdl_status,false
+dassdl3/sdl3_gpu_sampler_boost.das,43,gpu_sampler_descriptor,def public gpu_sampler_descriptor(device : SDL_GPUDevice?; sampler : GpuSamplerHandle),false,"err,move_ok",false
+dassdl3/sdl3_gpu_sampler_boost.das,52,gpu_sampler,def public gpu_sampler() : SDL_GPUSamplerCreateInfo,false,,false
+dassdl3/sdl3_gpu_sampler_boost.das,56,filters,"def public filters(var settings : SDL_GPUSamplerCreateInfo; minification, magnification : SDL_GPUFilter) : SDL_GPUSamplerCreateInfo",true,,false
+dassdl3/sdl3_gpu_sampler_boost.das,62,filters,def public filters(var settings : SDL_GPUSamplerCreateInfo; filter : SDL_GPUFilter) : SDL_GPUSamplerCreateInfo,true,,false
+dassdl3/sdl3_gpu_sampler_boost.das,66,mipmap_mode,def public mipmap_mode(var settings : SDL_GPUSamplerCreateInfo; mode : SDL_GPUSamplerMipmapMode) : SDL_GPUSamplerCreateInfo,true,,false
+dassdl3/sdl3_gpu_sampler_boost.das,71,address_modes,"def public address_modes(var settings : SDL_GPUSamplerCreateInfo; u, v, w : SDL_GPUSamplerAddressMode) : SDL_GPUSamplerCreateInfo",true,,false
+dassdl3/sdl3_gpu_sampler_boost.das,78,address_modes,def public address_modes(var settings : SDL_GPUSamplerCreateInfo; mode : SDL_GPUSamplerAddressMode) : SDL_GPUSamplerCreateInfo,true,,false
+dassdl3/sdl3_gpu_sampler_boost.das,82,lod_range,"def public lod_range(var settings : SDL_GPUSamplerCreateInfo; minimum, maximum : float) : SDL_GPUSamplerCreateInfo",true,,false
+dassdl3/sdl3_gpu_sampler_boost.das,88,lod_bias,def public lod_bias(var settings : SDL_GPUSamplerCreateInfo; bias : float) : SDL_GPUSamplerCreateInfo,true,,false
+dassdl3/sdl3_gpu_sampler_boost.das,93,anisotropy,def public anisotropy(var settings : SDL_GPUSamplerCreateInfo; maximum : float; enabled : bool = true) : SDL_GPUSamplerCreateInfo,true,,false
+dassdl3/sdl3_gpu_sampler_boost.das,99,comparison,def public comparison(var settings : SDL_GPUSamplerCreateInfo; operation : SDL_GPUCompareOp; enabled : bool = true) : SDL_GPUSamplerCreateInfo,true,,false
+dassdl3/sdl3_gpu_shader_boost.das,7,create_gpu_shader,def public create_gpu_shader(device : SDL_GPUDevice?; bytes : array<uint8>; info : SDL_GPUShaderCreateInfo; entrypoint : string),false,checked_handle_result,false
+dassdl3/sdl3_gpu_shader_boost.das,12,load_gpu_shader,def public load_gpu_shader(device : SDL_GPUDevice?; path : string; info : SDL_GPUShaderCreateInfo; entrypoint : string),false,checked_handle_result,false
+dassdl3/sdl3_gpu_shader_boost.das,17,gpu_shader_info,def public gpu_shader_info(format : uint; stage : SDL_GPUShaderStage) : SDL_GPUShaderCreateInfo,false,,false
+dassdl3/sdl3_gpu_shader_boost.das,22,with_gpu_shader,def public with_gpu_shader(device : SDL_GPUDevice?; bytes : array<uint8>; info : SDL_GPUShaderCreateInfo; entrypoint : string; blk : block<(shader : GpuShaderHandle) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_gpu_shader_boost.das,36,with_gpu_shader,def public with_gpu_shader(device : SDL_GPUDevice?; bytes : array<uint8>; info : SDL_GPUShaderCreateInfo; blk : block<(shader : GpuShaderHandle) : $Result<auto(TT); SdlError> >),false,,false
+dassdl3/sdl3_gpu_shader_boost.das,40,with_gpu_shader_file,def public with_gpu_shader_file(device : SDL_GPUDevice?; path : string; info : SDL_GPUShaderCreateInfo; entrypoint : string; blk : block<(shader : GpuShaderHandle) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_gpu_shader_boost.das,54,with_gpu_shader_file,def public with_gpu_shader_file(device : SDL_GPUDevice?; path : string; info : SDL_GPUShaderCreateInfo; blk : block<(shader : GpuShaderHandle) : $Result<auto(TT); SdlError> >),false,,false
+dassdl3/sdl3_gpu_shader_boost.das,58,gpu_shader_descriptor,def public gpu_shader_descriptor(device : SDL_GPUDevice?; shader : GpuShaderHandle; var info : SDL_GPUShaderCreateInfo),true,sdl_status,false
+dassdl3/sdl3_gpu_shader_boost.das,61,gpu_shader_entrypoint,def public gpu_shader_entrypoint(device : SDL_GPUDevice?; shader : GpuShaderHandle),false,"err,ok",false
+dassdl3/sdl3_gpu_shader_boost.das,67,gpu_shader_descriptor,def public gpu_shader_descriptor(device : SDL_GPUDevice?; shader : GpuShaderHandle),false,"err,move_ok",false
+dassdl3/sdl3_gpu_shader_boost.das,80,with_gpu_shader_file,def public with_gpu_shader_file(device : SDL_GPUDevice?; settings : GpuShaderOptions; blk : block<(shader : GpuShaderHandle) : $Result<auto(TT); SdlError>>),false,,false
+dassdl3/sdl3_gpu_shader_boost.das,86,gpu_shader,def public gpu_shader(path : string; format : uint; stage : SDL_GPUShaderStage) : GpuShaderOptions,false,,false
+dassdl3/sdl3_gpu_shader_boost.das,92,entrypoint,def public entrypoint(var settings : GpuShaderOptions; name : string) : GpuShaderOptions,true,,false
+dassdl3/sdl3_gpu_shader_boost.das,97,samplers,def public samplers(var settings : GpuShaderOptions; count : uint) : GpuShaderOptions,true,,false
+dassdl3/sdl3_gpu_shader_boost.das,102,uniform_buffers,def public uniform_buffers(var settings : GpuShaderOptions; count : uint) : GpuShaderOptions,true,,false
+dassdl3/sdl3_gpu_shader_boost.das,107,storage_buffers,def public storage_buffers(var settings : GpuShaderOptions; count : uint) : GpuShaderOptions,true,,false
+dassdl3/sdl3_gpu_shader_boost.das,112,storage_textures,def public storage_textures(var settings : GpuShaderOptions; count : uint) : GpuShaderOptions,true,,false
+dassdl3/sdl3_gpu_swapchain_boost.das,5,gpu_supports_present_mode,def public gpu_supports_present_mode(device : SDL_GPUDevice?; window : SDL_Window?; mode : uint),false,"err,ok",false
+dassdl3/sdl3_gpu_swapchain_boost.das,10,gpu_supports_composition,def public gpu_supports_composition(device : SDL_GPUDevice?; window : SDL_Window?; composition : uint),false,"err,ok",false
+dassdl3/sdl3_gpu_swapchain_boost.das,15,gpu_swapchain_format,def public gpu_swapchain_format(device : SDL_GPUDevice?; window : SDL_Window?),false,"err,ok",false
+dassdl3/sdl3_gpu_swapchain_boost.das,23,gpu_configure_swapchain,"def public gpu_configure_swapchain(device : SDL_GPUDevice?; window : SDL_Window?; composition, mode : uint)",false,"err,ok",false
+dassdl3/sdl3_gpu_swapchain_boost.das,30,gpu_frames_in_flight,def public gpu_frames_in_flight(device : SDL_GPUDevice?; count : uint),false,sdl_status,false
+dassdl3/sdl3_gpu_swapchain_boost.das,34,gpu_wait_swapchain,def public gpu_wait_swapchain(device : SDL_GPUDevice?; window : SDL_Window?),false,sdl_status,false
+dassdl3/sdl3_gpu_texture_transfer_boost.das,7,create_gpu_transfer_texture,"def public create_gpu_transfer_texture(device : SDL_GPUDevice?; width, height, layers, levels, format, texture_type : uint)",false,checked_handle_result,false
+dassdl3/sdl3_gpu_texture_transfer_boost.das,11,create_gpu_color_texture,"def public create_gpu_color_texture(device : SDL_GPUDevice?; width, height, layers, levels, format : uint)",false,checked_handle_result,false
+dassdl3/sdl3_gpu_texture_transfer_boost.das,15,request_gpu_texture_readback,def public request_gpu_texture_readback(device : SDL_GPUDevice?; texture : GpuTextureHandle; sub : uint2; region : uint4),false,checked_handle_result,false
+dassdl3/sdl3_gpu_texture_transfer_boost.das,20,with_gpu_transfer_texture,"def public with_gpu_transfer_texture(device : SDL_GPUDevice?; width, height, layers, levels, format, texture_type : uint; blk : block<(texture : GpuTextureHandle) : $Result<auto(TT); SdlError> >)",false,err,true
+dassdl3/sdl3_gpu_texture_transfer_boost.das,35,with_gpu_color_texture,"def public with_gpu_color_texture(device : SDL_GPUDevice?; width, height, layers, levels, format : uint; blk : block<(texture : GpuTextureHandle) : $Result<auto(TT); SdlError> >)",false,err,true
+dassdl3/sdl3_gpu_texture_transfer_boost.das,50,with_gpu_rgba_texture,"def public with_gpu_rgba_texture(device : SDL_GPUDevice?; width, height, layers, levels : uint; blk : block<(texture : GpuTextureHandle) : $Result<auto(TT); SdlError> >)",false,,false
+dassdl3/sdl3_gpu_texture_transfer_boost.das,54,with_gpu_rgba_texture,"def public with_gpu_rgba_texture(device : SDL_GPUDevice?; width, height : uint; blk : block<(texture : GpuTextureHandle) : $Result<auto(TT); SdlError> >)",false,,false
+dassdl3/sdl3_gpu_texture_transfer_boost.das,60,gpu_upload_texture,def public gpu_upload_texture(device : SDL_GPUDevice?; texture : GpuTextureHandle; sub : uint2; region : uint4; bytes : array<uint8>; pitch : uint; cycle : bool = false),false,sdl_status,false
+dassdl3/sdl3_gpu_texture_transfer_boost.das,65,gpu_copy_texture,"def public gpu_copy_texture(device : SDL_GPUDevice?; source : GpuTextureHandle; source_sub : uint2; source_region : uint4; destination : GpuTextureHandle; dest_sub, dest_origin : uint2)",false,sdl_status,false
+dassdl3/sdl3_gpu_texture_transfer_boost.das,72,with_gpu_texture_readback,def public with_gpu_texture_readback(device : SDL_GPUDevice?; texture : GpuTextureHandle; sub : uint2; region : uint4; blk : block<(ticket : GpuReadbackHandle) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_gpu_transfer_boost.das,7,create_gpu_buffer,def public create_gpu_buffer(device : SDL_GPUDevice?; bytes : array<uint8>; usage : uint),false,checked_handle_result,false
+dassdl3/sdl3_gpu_transfer_boost.das,11,request_gpu_buffer_readback,"def public request_gpu_buffer_readback(device : SDL_GPUDevice?; buffer : GpuBufferHandle; offset, size : uint)",false,checked_handle_result,false
+dassdl3/sdl3_gpu_transfer_boost.das,15,with_gpu_buffer,def public with_gpu_buffer(device : SDL_GPUDevice?; bytes : array<uint8>; usage : uint; blk : block<(buffer : GpuBufferHandle) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_gpu_transfer_boost.das,31,gpu_update_buffer,def public gpu_update_buffer(device : SDL_GPUDevice?; buffer : GpuBufferHandle; offset : uint; bytes : array<uint8>; cycle : bool = false),false,sdl_status,false
+dassdl3/sdl3_gpu_transfer_boost.das,36,gpu_copy_buffer,"def public gpu_copy_buffer(device : SDL_GPUDevice?; source : GpuBufferHandle; source_offset : uint; destination : GpuBufferHandle; destination_offset, size : uint)",false,sdl_status,false
+dassdl3/sdl3_gpu_transfer_boost.das,43,with_gpu_readback,"def public with_gpu_readback(device : SDL_GPUDevice?; buffer : GpuBufferHandle; offset, size : uint; blk : block<(readback : GpuReadbackHandle) : $Result<auto(TT); SdlError> >)",false,err,true
+dassdl3/sdl3_gpu_transfer_boost.das,59,gpu_poll_readback,def public gpu_poll_readback(device : SDL_GPUDevice?; ticket : GpuReadbackHandle),false,"err,ok",false
+dassdl3/sdl3_gpu_transfer_boost.das,65,gpu_wait_readback,def public gpu_wait_readback(device : SDL_GPUDevice?; ticket : GpuReadbackHandle),false,sdl_status,false
+dassdl3/sdl3_gpu_transfer_boost.das,70,gpu_readback_bytes,def public gpu_readback_bytes(device : SDL_GPUDevice?; ticket : GpuReadbackHandle; var bytes : array<uint8>),true,sdl_status,false
+dassdl3/sdl3_gpu_utilities_boost.das,6,gpu_driver_names,def public gpu_driver_names(),false,"err,move_ok",false
+dassdl3/sdl3_gpu_utilities_boost.das,13,gpu_supports_shaders,"def public gpu_supports_shaders(formats : uint; driver : string = """")",false,"err,ok",false
+dassdl3/sdl3_gpu_utilities_boost.das,18,gpu_buffer_name,def public gpu_buffer_name(device : SDL_GPUDevice?; buffer : GpuBufferHandle; name : string),false,sdl_status,false
+dassdl3/sdl3_gpu_utilities_boost.das,21,gpu_texture_name,def public gpu_texture_name(device : SDL_GPUDevice?; texture : GpuTextureHandle; name : string),false,sdl_status,false
+dassdl3/sdl3_gpu_volume_boost.das,7,create_gpu_volume,def public create_gpu_volume(device : SDL_GPUDevice?; size : uint3; levels : uint; format : SDL_GPUTextureFormat),false,checked_handle_result,false
+dassdl3/sdl3_gpu_volume_boost.das,11,request_gpu_volume_readback,"def public request_gpu_volume_readback(device : SDL_GPUDevice?; volume : GpuVolumeHandle; mip : uint; origin, size : uint3)",false,checked_handle_result,false
+dassdl3/sdl3_gpu_volume_boost.das,15,with_gpu_volume,def public with_gpu_volume(device : SDL_GPUDevice?; size : uint3; levels : uint; format : SDL_GPUTextureFormat; blk : block<(volume : GpuVolumeHandle) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_gpu_volume_boost.das,29,with_gpu_volume,def public with_gpu_volume(device : SDL_GPUDevice?; size : uint3; blk : block<(volume : GpuVolumeHandle) : $Result<auto(TT); SdlError> >),false,,false
+dassdl3/sdl3_gpu_volume_boost.das,33,gpu_upload_volume,"def public gpu_upload_volume(device : SDL_GPUDevice?; volume : GpuVolumeHandle; mip : uint; origin, size : uint3; bytes : array<uint8>; row_pitch, slice_pitch : uint; cycle : bool = false)",false,sdl_status,false
+dassdl3/sdl3_gpu_volume_boost.das,37,gpu_copy_volume,"def public gpu_copy_volume(device : SDL_GPUDevice?; source : GpuVolumeHandle; source_mip : uint; source_origin, size : uint3; destination : GpuVolumeHandle; dest_mip : uint; dest_origin : uint3)",false,sdl_status,false
+dassdl3/sdl3_gpu_volume_boost.das,42,with_gpu_volume_readback,"def public with_gpu_volume_readback(device : SDL_GPUDevice?; volume : GpuVolumeHandle; mip : uint; origin, size : uint3; blk : block<(ticket : GpuReadbackHandle) : $Result<auto(TT); SdlError> >)",false,err,true
+dassdl3/sdl3_image_boost.das,10,load_image,def public load_image(path : string),false,"err,move_ok",false
+dassdl3/sdl3_image_boost.das,16,with_image,def public with_image(path : string; blk : block<(value : SDL_Surface?) : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_image_boost.das,29,load_image,"def public load_image(io : SDL_IOStream?; kind : string = """")",false,"err,move_ok",false
+dassdl3/sdl3_image_boost.das,35,with_image,def public with_image(io : SDL_IOStream?; blk : block<(value : SDL_Surface?) : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_image_boost.das,48,load_image_texture,def public load_image_texture(renderer : SDL_Renderer?; path : string),false,"err,move_ok",false
+dassdl3/sdl3_image_boost.das,54,with_image_texture,def public with_image_texture(renderer : SDL_Renderer?; path : string; blk : block<(value : SDL_Texture?) : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_image_boost.das,67,load_image_texture,"def public load_image_texture(renderer : SDL_Renderer?; io : SDL_IOStream?; kind : string = """")",false,"err,move_ok",false
+dassdl3/sdl3_image_boost.das,73,with_image_texture,def public with_image_texture(renderer : SDL_Renderer?; io : SDL_IOStream?; blk : block<(value : SDL_Texture?) : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_image_boost.das,86,load_image_animation,def public load_image_animation(path : string),false,"err,move_ok",false
+dassdl3/sdl3_image_boost.das,92,with_image_animation,def public with_image_animation(path : string; blk : block<(value : IMG_Animation?) : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_image_boost.das,105,load_image_animation,"def public load_image_animation(io : SDL_IOStream?; kind : string = """")",false,"err,move_ok",false
+dassdl3/sdl3_image_boost.das,111,with_image_animation,def public with_image_animation(io : SDL_IOStream?; blk : block<(value : IMG_Animation?) : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_image_boost.das,124,save_image_png,def public save_image_png(surface : SDL_Surface?; path : string),false,sdl_status,false
+dassdl3/sdl3_image_boost.das,128,save_image_png,def public save_image_png(surface : SDL_Surface?; io : SDL_IOStream?),false,sdl_status,false
+dassdl3/sdl3_image_boost.das,132,save_image_jpg,def public save_image_jpg(surface : SDL_Surface?; path : string; quality : int = 90),false,sdl_status,false
+dassdl3/sdl3_image_boost.das,136,save_image_jpg,def public save_image_jpg(surface : SDL_Surface?; io : SDL_IOStream?; quality : int = 90),false,sdl_status,false
+dassdl3/sdl3_image_boost.das,140,save_image_avif,def public save_image_avif(surface : SDL_Surface?; path : string; quality : int = 90),false,sdl_status,false
+dassdl3/sdl3_image_boost.das,144,save_image_avif,def public save_image_avif(surface : SDL_Surface?; io : SDL_IOStream?; quality : int = 90),false,sdl_status,false
+dassdl3/sdl3_image_boost.das,149,image_animation_frame,def public image_animation_frame(animation : IMG_Animation?; index : int),false,"err,move_ok",false
+dassdl3/sdl3_image_boost.das,154,image_animation_delay,def public image_animation_delay(animation : IMG_Animation?; index : int),false,"err,ok",false
+dassdl3/sdl3_imgui.das,10,with_imgui,def public with_imgui(window : SDL_Window?; renderer : SDL_Renderer?; blk : block<() : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_init_boost.das,8,with_sdl_subsystems,def public with_sdl_subsystems(flags : uint; blk : block<() : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_init_boost.das,16,hint_string,def public hint_string(name : string),false,"none,some",false
+dassdl3/sdl3_init_boost.das,21,app_metadata_string,def public app_metadata_string(name : string),false,"err,none,ok,some",false
+dassdl3/sdl3_iostream_boost.das,6,open_io_file,"def public open_io_file(path, mode : string)",false,"err,move_ok",false
+dassdl3/sdl3_iostream_boost.das,11,open_io_dynamic,def public open_io_dynamic(),false,"err,move_ok",false
+dassdl3/sdl3_iostream_boost.das,16,open_io,def public open_io(iface : SDL_IOStreamInterface; userdata : void?),false,"err,move_ok",false
+dassdl3/sdl3_iostream_boost.das,22,close_io,def public close_io(var io : SDL_IOStream?&),true,sdl_status,false
+dassdl3/sdl3_iostream_boost.das,24,flush_io,def public flush_io(io : SDL_IOStream?),false,"err,ok",false
+dassdl3/sdl3_iostream_boost.das,30,io_size,def public io_size(io : SDL_IOStream?),false,"err,ok",false
+dassdl3/sdl3_iostream_boost.das,35,tell_io,def public tell_io(io : SDL_IOStream?),false,"err,ok",false
+dassdl3/sdl3_iostream_boost.das,40,seek_io,def public seek_io(io : SDL_IOStream?; offset : int64; whence : SDL_IOWhence = SDL_IOWhence.IO_SEEK_SET),false,"err,ok",false
+dassdl3/sdl3_iostream_boost.das,46,read_io,def public read_io(io : SDL_IOStream?; var bytes : array<uint8>; count : uint64; var transferred : uint64&; offset : uint64 = 0ul),true,"err,ok",false
+dassdl3/sdl3_iostream_boost.das,52,write_io,def public write_io(io : SDL_IOStream?; bytes : array<uint8>; count : uint64; var transferred : uint64&; offset : uint64 = 0ul),true,"err,ok",false
+dassdl3/sdl3_iostream_boost.das,57,load_file,def public load_file(path : string),false,"err,move_ok",false
+dassdl3/sdl3_iostream_boost.das,62,load_io,def public load_io(io : SDL_IOStream?),false,"err,move_ok",false
+dassdl3/sdl3_iostream_boost.das,67,save_file,def public save_file(path : string; bytes : array<uint8>),false,sdl_status,false
+dassdl3/sdl3_iostream_boost.das,68,save_io,def public save_io(io : SDL_IOStream?; bytes : array<uint8>),false,sdl_status,false
+dassdl3/sdl3_iostream_boost.das,70,with_io,def public with_io(io : SDL_IOStream?; body : block<(stream : SDL_IOStream?) : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_iostream_boost.das,83,with_io_file,"def public with_io_file(path, mode : string; body : block<(stream : SDL_IOStream?) : $Result<auto(TT); SdlError>>)",false,err,false
+dassdl3/sdl3_iostream_boost.das,88,with_io_dynamic,def public with_io_dynamic(body : block<(stream : SDL_IOStream?) : $Result<auto(TT); SdlError>>),false,err,false
+dassdl3/sdl3_iostream_boost.das,96,read_io,def public read_io(io : SDL_IOStream?; var bytes : array<uint8>; count : uint64) : IoTransfer,true,,false
+dassdl3/sdl3_iostream_boost.das,101,write_io,def public write_io(io : SDL_IOStream?; bytes : array<uint8>; count : uint64) : IoTransfer,false,,false
+dassdl3/sdl3_joystick_gamepad_boost.das,6,joysticks,def public joysticks(),false,"err,move_ok",false
+dassdl3/sdl3_joystick_gamepad_boost.das,11,gamepads,def public gamepads(),false,"err,move_ok",false
+dassdl3/sdl3_joystick_gamepad_boost.das,16,gamepad_bindings,def public gamepad_bindings(gamepad : SDL_Gamepad?),false,"err,move_ok",false
+dassdl3/sdl3_joystick_gamepad_boost.das,21,gamepad_mappings,def public gamepad_mappings(),false,"err,move_ok",false
+dassdl3/sdl3_joystick_gamepad_boost.das,26,open_joystick,def public open_joystick(id : uint),false,"err,move_ok",false
+dassdl3/sdl3_joystick_gamepad_boost.das,31,with_joystick,def public with_joystick(id : uint; body : block<(device : SDL_Joystick?) : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_joystick_gamepad_boost.das,42,joystick_name,def public joystick_name(device : SDL_Joystick?),false,"err,ok",false
+dassdl3/sdl3_joystick_gamepad_boost.das,47,joystick_path,def public joystick_path(device : SDL_Joystick?),false,"none,some",false
+dassdl3/sdl3_joystick_gamepad_boost.das,52,joystick_serial,def public joystick_serial(device : SDL_Joystick?),false,"none,some",false
+dassdl3/sdl3_joystick_gamepad_boost.das,57,rumble_joystick,"def public rumble_joystick(device : SDL_Joystick?; low, high : uint; duration : uint)",false,sdl_status,false
+dassdl3/sdl3_joystick_gamepad_boost.das,58,rumble_joystick_triggers,"def public rumble_joystick_triggers(device : SDL_Joystick?; left, right : uint; duration : uint)",false,sdl_status,false
+dassdl3/sdl3_joystick_gamepad_boost.das,59,set_joystick_led,"def public set_joystick_led(device : SDL_Joystick?; red, green, blue : uint)",false,sdl_status,false
+dassdl3/sdl3_joystick_gamepad_boost.das,60,send_joystick_effect,def public send_joystick_effect(device : SDL_Joystick?; data : array<uint8>),false,sdl_status,false
+dassdl3/sdl3_joystick_gamepad_boost.das,61,open_gamepad,def public open_gamepad(id : uint),false,"err,move_ok",false
+dassdl3/sdl3_joystick_gamepad_boost.das,66,with_gamepad,def public with_gamepad(id : uint; body : block<(device : SDL_Gamepad?) : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_joystick_gamepad_boost.das,77,gamepad_name,def public gamepad_name(device : SDL_Gamepad?),false,"err,ok",false
+dassdl3/sdl3_joystick_gamepad_boost.das,82,gamepad_path,def public gamepad_path(device : SDL_Gamepad?),false,"none,some",false
+dassdl3/sdl3_joystick_gamepad_boost.das,87,gamepad_serial,def public gamepad_serial(device : SDL_Gamepad?),false,"none,some",false
+dassdl3/sdl3_joystick_gamepad_boost.das,92,rumble_gamepad,"def public rumble_gamepad(device : SDL_Gamepad?; low, high : uint; duration : uint)",false,sdl_status,false
+dassdl3/sdl3_joystick_gamepad_boost.das,93,rumble_gamepad_triggers,"def public rumble_gamepad_triggers(device : SDL_Gamepad?; left, right : uint; duration : uint)",false,sdl_status,false
+dassdl3/sdl3_joystick_gamepad_boost.das,94,set_gamepad_led,"def public set_gamepad_led(device : SDL_Gamepad?; red, green, blue : uint)",false,sdl_status,false
+dassdl3/sdl3_joystick_gamepad_boost.das,95,send_gamepad_effect,def public send_gamepad_effect(device : SDL_Gamepad?; data : array<uint8>),false,sdl_status,false
+dassdl3/sdl3_joystick_gamepad_boost.das,96,with_joysticks_lock,def public with_joysticks_lock(body : block<() : $Result<auto(TT); SdlError>>),false,,true
+dassdl3/sdl3_joystick_gamepad_boost.das,106,attach_virtual_joystick,def public attach_virtual_joystick(desc : SDL_VirtualJoystickDesc; name : string; touchpads : array<SDL_VirtualJoystickTouchpadDesc>; sensors : array<SDL_VirtualJoystickSensorDesc>),false,"err,ok",false
+dassdl3/sdl3_joystick_gamepad_boost.das,112,with_virtual_joystick,def public with_virtual_joystick(desc : SDL_VirtualJoystickDesc; name : string; touchpads : array<SDL_VirtualJoystickTouchpadDesc>; sensors : array<SDL_VirtualJoystickSensorDesc>; body : block<(id : uint) : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_joystick_gamepad_boost.das,125,gamepad_mapping,def public gamepad_mapping(device : SDL_Gamepad?),false,"err,ok",false
+dassdl3/sdl3_joystick_gamepad_boost.das,130,add_gamepad_mapping,def public add_gamepad_mapping(mapping : string),false,"err,ok",false
+dassdl3/sdl3_joystick_gamepad_boost.das,135,joystick_axis_initial_state,def public joystick_axis_initial_state(device : SDL_Joystick?; axis : int),false,"none,some",false
+dassdl3/sdl3_joystick_gamepad_boost.das,140,joystick_ball,def public joystick_ball(device : SDL_Joystick?; ball : int),false,"err,ok",false
+dassdl3/sdl3_joystick_gamepad_boost.das,145,gamepad_touchpad_finger,"def public gamepad_touchpad_finger(device : SDL_Gamepad?; pad, finger : int; var down : bool&; var position : float2&; var pressure : float&)",true,sdl_status,false
+dassdl3/sdl3_joystick_gamepad_boost.das,149,gamepad_sensor_data,def public gamepad_sensor_data(device : SDL_Gamepad?; sensor : SDL_SensorType; count : int = 3),false,"err,move_ok",false
+dassdl3/sdl3_joystick_gamepad_boost.das,156,send_virtual_sensor_data,def public send_virtual_sensor_data(device : SDL_Joystick?; sensor : SDL_SensorType; timestamp : uint64; data : array<float>),false,sdl_status,false
+dassdl3/sdl3_joystick_gamepad_boost.das,161,gamepad_touchpad_finger,"def public gamepad_touchpad_finger(device : SDL_Gamepad?; pad, finger : int)",false,"err,ok",false
+dassdl3/sdl3_keyboard_mouse_boost.das,6,keyboards,def public keyboards(),false,"err,move_ok",false
+dassdl3/sdl3_keyboard_mouse_boost.das,11,mice,def public mice(),false,"err,move_ok",false
+dassdl3/sdl3_keyboard_mouse_boost.das,16,keyboard_state,def public keyboard_state(),false,,false
+dassdl3/sdl3_keyboard_mouse_boost.das,21,keyboard_name,def public keyboard_name(id : uint),false,"err,ok",false
+dassdl3/sdl3_keyboard_mouse_boost.das,26,mouse_name,def public mouse_name(id : uint),false,"err,ok",false
+dassdl3/sdl3_keyboard_mouse_boost.das,32,key_name,def public key_name(key : uint) : string,false,,false
+dassdl3/sdl3_keyboard_mouse_boost.das,33,scancode_name,def public scancode_name(code : SDL_Scancode) : string,false,,false
+dassdl3/sdl3_keyboard_mouse_boost.das,34,scancode_from_key,def public scancode_from_key(key : uint; var mods : uint&) : SDL_Scancode,true,,false
+dassdl3/sdl3_keyboard_mouse_boost.das,35,global_mouse_state,def public global_mouse_state(var position : float2&) : uint,true,,false
+dassdl3/sdl3_keyboard_mouse_boost.das,37,relative_mouse_state,def public relative_mouse_state(var delta : float2&) : uint,true,,false
+dassdl3/sdl3_keyboard_mouse_boost.das,38,set_text_input_area,def public set_text_input_area(window : SDL_Window?; rect : SDL_Rect; cursor : int),false,sdl_status,false
+dassdl3/sdl3_keyboard_mouse_boost.das,39,text_input_area,def public text_input_area(window : SDL_Window?; var rect : SDL_Rect; var cursor : int&),true,sdl_status,false
+dassdl3/sdl3_keyboard_mouse_boost.das,40,set_relative_mouse_mode,def public set_relative_mouse_mode(window : SDL_Window?; enabled : bool),false,sdl_status,false
+dassdl3/sdl3_keyboard_mouse_boost.das,41,capture_mouse,def public capture_mouse(enabled : bool),false,sdl_status,false
+dassdl3/sdl3_keyboard_mouse_boost.das,42,warp_mouse_global,def public warp_mouse_global(position : float2),false,sdl_status,false
+dassdl3/sdl3_keyboard_mouse_boost.das,43,set_cursor,def public set_cursor(cursor : SDL_Cursor?),false,sdl_status,false
+dassdl3/sdl3_keyboard_mouse_boost.das,44,show_cursor,def public show_cursor(),false,sdl_status,false
+dassdl3/sdl3_keyboard_mouse_boost.das,45,hide_cursor,def public hide_cursor(),false,sdl_status,false
+dassdl3/sdl3_keyboard_mouse_boost.das,47,keyboard_focus,def public keyboard_focus(),false,"move_some,none",false
+dassdl3/sdl3_keyboard_mouse_boost.das,53,mouse_focus,def public mouse_focus(),false,"move_some,none",false
+dassdl3/sdl3_keyboard_mouse_boost.das,59,current_cursor,def public current_cursor(),false,"move_some,none",false
+dassdl3/sdl3_keyboard_mouse_boost.das,65,default_cursor,def public default_cursor(),false,"move_some,none",false
+dassdl3/sdl3_keyboard_mouse_boost.das,70,create_system_cursor,def public create_system_cursor(id : SDL_SystemCursor),false,"err,move_ok",false
+dassdl3/sdl3_keyboard_mouse_boost.das,75,create_color_cursor,"def public create_color_cursor(surface : SDL_Surface?; hot_x, hot_y : int)",false,"err,move_ok",false
+dassdl3/sdl3_keyboard_mouse_boost.das,80,create_cursor,"def public create_cursor(data, mask : array<uint8>; w, h, hot_x, hot_y : int)",false,"err,move_ok",false
+dassdl3/sdl3_keyboard_mouse_boost.das,86,with_system_cursor,def public with_system_cursor(id : SDL_SystemCursor; body : block<(cursor : SDL_Cursor?) : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_keyboard_mouse_boost.das,98,with_color_cursor,"def public with_color_cursor(surface : SDL_Surface?; hot_x, hot_y : int; body : block<(cursor : SDL_Cursor?) : $Result<auto(TT); SdlError>>)",false,err,true
+dassdl3/sdl3_keyboard_mouse_boost.das,110,with_cursor,"def public with_cursor(data, mask : array<uint8>; w, h, hot_x, hot_y : int; body : block<(cursor : SDL_Cursor?) : $Result<auto(TT); SdlError>>)",false,err,true
+dassdl3/sdl3_keyboard_mouse_boost.das,122,with_text_input_properties,def public with_text_input_properties(window : SDL_Window?; props : uint; body : block<() : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_keyboard_mouse_boost.das,135,global_mouse_state,def public global_mouse_state() : MouseState,false,,false
+dassdl3/sdl3_keyboard_mouse_boost.das,140,relative_mouse_state,def public relative_mouse_state() : MouseState,false,,false
+dassdl3/sdl3_keyboard_mouse_boost.das,146,scancode_from_key,def public scancode_from_key(key : uint) : ScancodeMapping,false,,false
+dassdl3/sdl3_keyboard_mouse_boost.das,152,text_input_area,def public text_input_area(window : SDL_Window?),false,"err,ok",false
+dassdl3/sdl3_mixer_boost.das,8,with_mixer_system,def public with_mixer_system(blk : block<() : $Result<auto(MixValue); SdlError>>) : $Result<MixValue; SdlError>,false,err,true
+dassdl3/sdl3_mixer_boost.das,19,create_mixer,def public create_mixer(spec : SDL_AudioSpec),false,"err,move_ok",false
+dassdl3/sdl3_mixer_boost.das,24,with_mixer,def public with_mixer(spec : SDL_AudioSpec; blk : block<(value : MIX_Mixer?) : $Result<auto(MixValue); SdlError>>) : $Result<MixValue; SdlError>,false,err,true
+dassdl3/sdl3_mixer_boost.das,37,create_mixer_device,def public create_mixer_device(device : uint; spec : SDL_AudioSpec),false,"err,move_ok",false
+dassdl3/sdl3_mixer_boost.das,42,with_mixer_device,def public with_mixer_device(device : uint; spec : SDL_AudioSpec; blk : block<(value : MIX_Mixer?) : $Result<auto(MixValue); SdlError>>) : $Result<MixValue; SdlError>,false,err,true
+dassdl3/sdl3_mixer_boost.das,55,create_mix_audio,def public create_mix_audio(mixer : MIX_Mixer?; path : string; predecode : bool),false,"err,move_ok",false
+dassdl3/sdl3_mixer_boost.das,60,with_mix_audio,def public with_mix_audio(mixer : MIX_Mixer?; path : string; predecode : bool; blk : block<(value : MIX_Audio?) : $Result<auto(MixValue); SdlError>>) : $Result<MixValue; SdlError>,false,err,true
+dassdl3/sdl3_mixer_boost.das,73,create_mix_audio_io,def public create_mix_audio_io(mixer : MIX_Mixer?; io : SDL_IOStream?; predecode : bool),false,"err,move_ok",false
+dassdl3/sdl3_mixer_boost.das,78,with_mix_audio_io,def public with_mix_audio_io(mixer : MIX_Mixer?; io : SDL_IOStream?; predecode : bool; blk : block<(value : MIX_Audio?) : $Result<auto(MixValue); SdlError>>) : $Result<MixValue; SdlError>,false,err,true
+dassdl3/sdl3_mixer_boost.das,91,create_mix_raw_audio,"def public create_mix_raw_audio(mixer : MIX_Mixer?; samples : array<float>; channels, frequency : int)",false,"err,move_ok",false
+dassdl3/sdl3_mixer_boost.das,96,with_mix_raw_audio,"def public with_mix_raw_audio(mixer : MIX_Mixer?; samples : array<float>; channels, frequency : int; blk : block<(value : MIX_Audio?) : $Result<auto(MixValue); SdlError>>) : $Result<MixValue; SdlError>",false,err,true
+dassdl3/sdl3_mixer_boost.das,109,create_mix_sine_audio,def public create_mix_sine_audio(mixer : MIX_Mixer?; hz : int; amplitude : float; milliseconds : int64),false,"err,move_ok",false
+dassdl3/sdl3_mixer_boost.das,114,with_mix_sine_audio,def public with_mix_sine_audio(mixer : MIX_Mixer?; hz : int; amplitude : float; milliseconds : int64; blk : block<(value : MIX_Audio?) : $Result<auto(MixValue); SdlError>>) : $Result<MixValue; SdlError>,false,err,true
+dassdl3/sdl3_mixer_boost.das,127,create_mix_track,def public create_mix_track(mixer : MIX_Mixer?),false,"err,move_ok",false
+dassdl3/sdl3_mixer_boost.das,132,with_mix_track,def public with_mix_track(mixer : MIX_Mixer?; blk : block<(value : MIX_Track?) : $Result<auto(MixValue); SdlError>>) : $Result<MixValue; SdlError>,false,err,true
+dassdl3/sdl3_mixer_boost.das,145,create_mix_group,def public create_mix_group(mixer : MIX_Mixer?),false,"err,move_ok",false
+dassdl3/sdl3_mixer_boost.das,150,with_mix_group,def public with_mix_group(mixer : MIX_Mixer?; blk : block<(value : MIX_Group?) : $Result<auto(MixValue); SdlError>>) : $Result<MixValue; SdlError>,false,err,true
+dassdl3/sdl3_mixer_boost.das,163,create_mix_decoder,def public create_mix_decoder(path : string; props : uint),false,"err,move_ok",false
+dassdl3/sdl3_mixer_boost.das,168,with_mix_decoder,def public with_mix_decoder(path : string; props : uint; blk : block<(value : MIX_AudioDecoder?) : $Result<auto(MixValue); SdlError>>) : $Result<MixValue; SdlError>,false,err,true
+dassdl3/sdl3_mixer_boost.das,181,mix_format,def public mix_format(mixer : MIX_Mixer?),false,"err,ok",false
+dassdl3/sdl3_mixer_boost.das,187,mix_audio_format,def public mix_audio_format(audio : MIX_Audio?),false,"err,ok",false
+dassdl3/sdl3_mixer_boost.das,193,mix_decoder_format,def public mix_decoder_format(decoder : MIX_AudioDecoder?),false,"err,ok",false
+dassdl3/sdl3_mixer_boost.das,199,mix_track_position,def public mix_track_position(track : MIX_Track?),false,"err,ok",false
+dassdl3/sdl3_mixer_boost.das,205,set_mix_audio,def public set_mix_audio(track : MIX_Track?; audio : MIX_Audio?),false,sdl_status,false
+dassdl3/sdl3_mixer_boost.das,207,play_mix_track,def public play_mix_track(track : MIX_Track?; props : uint = 0u),false,sdl_status,false
+dassdl3/sdl3_mixer_boost.das,209,stop_mix_track,def public stop_mix_track(track : MIX_Track?; fade_frames : int64 = 0l),false,sdl_status,false
+dassdl3/sdl3_mixer_boost.das,211,pause_mix_track,def public pause_mix_track(track : MIX_Track?),false,sdl_status,false
+dassdl3/sdl3_mixer_boost.das,213,resume_mix_track,def public resume_mix_track(track : MIX_Track?),false,sdl_status,false
+dassdl3/sdl3_mixer_boost.das,215,set_mix_gain,def public set_mix_gain(track : MIX_Track?; gain : float),false,sdl_status,false
+dassdl3/sdl3_mixer_boost.das,217,seek_mix_track,def public seek_mix_track(track : MIX_Track?; frames : int64),false,sdl_status,false
+dassdl3/sdl3_mixer_boost.das,219,generate_mix_audio,def public generate_mix_audio(mixer : MIX_Mixer?; var bytes : array<uint8>),true,"err,ok",false
+dassdl3/sdl3_mixer_boost.das,225,generate_mix_audio,def public generate_mix_audio(mixer : MIX_Mixer?; var samples : array<float>),true,"err,ok",false
+dassdl3/sdl3_mixer_boost.das,231,decode_mix_audio,def public decode_mix_audio(decoder : MIX_AudioDecoder?; var bytes : array<uint8>; spec : SDL_AudioSpec),true,"err,ok",false
+dassdl3/sdl3_net_boost.das,9,with_net,def public with_net(blk : block<() : $Result<auto(NetScopeValue); SdlError>>) : $Result<NetScopeValue; SdlError>,false,err,true
+dassdl3/sdl3_net_boost.das,20,resolve_hostname,def public resolve_hostname(host : string),false,"err,move_ok",false
+dassdl3/sdl3_net_boost.das,25,with_net_address,def public with_net_address(host : string; blk : block<(value : NET_Address?) : $Result<auto(NetScopeValue); SdlError>>) : $Result<NetScopeValue; SdlError>,false,err,true
+dassdl3/sdl3_net_boost.das,38,create_net_client,def public create_net_client(address : NET_Address?; port : uint16; props : uint = 0u),false,"err,move_ok",false
+dassdl3/sdl3_net_boost.das,43,with_net_client,def public with_net_client(address : NET_Address?; port : uint16; props : uint; blk : block<(value : NET_StreamSocket?) : $Result<auto(NetScopeValue); SdlError>>) : $Result<NetScopeValue; SdlError>,false,err,true
+dassdl3/sdl3_net_boost.das,56,create_net_server,def public create_net_server(address : NET_Address?; port : uint16; props : uint = 0u),false,"err,move_ok",false
+dassdl3/sdl3_net_boost.das,61,with_net_server,def public with_net_server(address : NET_Address?; port : uint16; props : uint; blk : block<(value : NET_Server?) : $Result<auto(NetScopeValue); SdlError>>) : $Result<NetScopeValue; SdlError>,false,err,true
+dassdl3/sdl3_net_boost.das,74,create_net_datagram_socket,def public create_net_datagram_socket(address : NET_Address?; port : uint16; props : uint = 0u),false,"err,move_ok",false
+dassdl3/sdl3_net_boost.das,79,with_net_datagram_socket,def public with_net_datagram_socket(address : NET_Address?; port : uint16; props : uint; blk : block<(value : NET_DatagramSocket?) : $Result<auto(NetScopeValue); SdlError>>) : $Result<NetScopeValue; SdlError>,false,err,true
+dassdl3/sdl3_net_boost.das,97,address_ready,def public address_ready(address : NET_Address?),false,err,false
+dassdl3/sdl3_net_boost.das,101,wait_address,def public wait_address(address : NET_Address?; timeout_ms : int),false,err,false
+dassdl3/sdl3_net_boost.das,105,connection_ready,def public connection_ready(socket : NET_StreamSocket?),false,err,false
+dassdl3/sdl3_net_boost.das,109,wait_connection,def public wait_connection(socket : NET_StreamSocket?; timeout_ms : int),false,err,false
+dassdl3/sdl3_net_boost.das,114,address_string,def public address_string(address : NET_Address?),false,"err,ok",false
+dassdl3/sdl3_net_boost.das,119,address_bytes,def public address_bytes(address : NET_Address?),false,"err,move_ok",false
+dassdl3/sdl3_net_boost.das,124,accept_client,def public accept_client(server : NET_Server?),false,"err,move_ok,move_some,none",false
+dassdl3/sdl3_net_boost.das,131,write_stream,def public write_stream(socket : NET_StreamSocket?; bytes : array<uint8>),false,sdl_status,false
+dassdl3/sdl3_net_boost.das,134,read_stream,def public read_stream(socket : NET_StreamSocket?; var bytes : array<uint8>),true,"err,ok",false
+dassdl3/sdl3_net_boost.das,139,send_datagram,def public send_datagram(socket : NET_DatagramSocket?; address : NET_Address?; port : uint; bytes : array<uint8>),false,sdl_status,false
+dassdl3/sdl3_net_boost.das,147,receive_datagram,def public receive_datagram(socket : NET_DatagramSocket?),false,"err,move_ok,move_some,none",true
+dassdl3/sdl3_net_boost.das,165,wait_net_input,def public wait_net_input(socket : NET_Server?; timeout_ms : int),false,"err,ok",false
+dassdl3/sdl3_net_boost.das,170,wait_net_input,def public wait_net_input(socket : NET_StreamSocket?; timeout_ms : int),false,"err,ok",false
+dassdl3/sdl3_net_boost.das,175,wait_net_input,def public wait_net_input(socket : NET_DatagramSocket?; timeout_ms : int),false,"err,ok",false
+dassdl3/sdl3_net_boost.das,180,pending_stream_writes,def public pending_stream_writes(socket : NET_StreamSocket?),false,"err,ok",false
+dassdl3/sdl3_net_boost.das,185,drain_stream,def public drain_stream(socket : NET_StreamSocket?; timeout_ms : int),false,"err,ok",false
+dassdl3/sdl3_net_boost.das,191,with_net_client,def public with_net_client(address : NET_Address?; port : uint16; blk : block<(value : NET_StreamSocket?) : $Result<auto(NetScopeValue); SdlError>>) : $Result<NetScopeValue; SdlError>,false,,false
+dassdl3/sdl3_net_boost.das,195,with_net_server,def public with_net_server(address : NET_Address?; port : uint16; blk : block<(value : NET_Server?) : $Result<auto(NetScopeValue); SdlError>>) : $Result<NetScopeValue; SdlError>,false,,false
+dassdl3/sdl3_net_boost.das,199,with_net_datagram_socket,def public with_net_datagram_socket(address : NET_Address?; port : uint16; blk : block<(value : NET_DatagramSocket?) : $Result<auto(NetScopeValue); SdlError>>) : $Result<NetScopeValue; SdlError>,false,,false
+dassdl3/sdl3_peripherals_boost.das,6,touch_devices,def public touch_devices(),false,"err,move_ok",false
+dassdl3/sdl3_peripherals_boost.das,11,touch_fingers,def public touch_fingers(id : uint64),false,"err,move_ok",false
+dassdl3/sdl3_peripherals_boost.das,16,sensors,def public sensors(),false,"err,move_ok",false
+dassdl3/sdl3_peripherals_boost.das,21,haptics,def public haptics(),false,"err,move_ok",false
+dassdl3/sdl3_peripherals_boost.das,26,open_sensor,def public open_sensor(id : uint),false,"err,move_ok",false
+dassdl3/sdl3_peripherals_boost.das,31,with_sensor,def public with_sensor(id : uint; body : block<(device : SDL_Sensor?) : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_peripherals_boost.das,42,open_haptic,def public open_haptic(id : uint),false,"err,move_ok",false
+dassdl3/sdl3_peripherals_boost.das,47,with_haptic,def public with_haptic(id : uint; body : block<(device : SDL_Haptic?) : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_peripherals_boost.das,58,touch_device_name,def public touch_device_name(device : uint64),false,"err,ok",false
+dassdl3/sdl3_peripherals_boost.das,63,sensor_name,def public sensor_name(device : SDL_Sensor?),false,"err,ok",false
+dassdl3/sdl3_peripherals_boost.das,68,haptic_name,def public haptic_name(device : SDL_Haptic?),false,"err,ok",false
+dassdl3/sdl3_peripherals_boost.das,73,sensor_data,def public sensor_data(device : SDL_Sensor?; var data : array<float>),true,sdl_status,false
+dassdl3/sdl3_peripherals_boost.das,75,haptic_effect_supported,def public haptic_effect_supported(device : SDL_Haptic?; effect : SDL_HapticEffect) : bool,false,,false
+dassdl3/sdl3_peripherals_boost.das,76,create_haptic_effect,def public create_haptic_effect(device : SDL_Haptic?; effect : SDL_HapticEffect),false,"err,ok",false
+dassdl3/sdl3_peripherals_boost.das,81,with_haptic_effect,def public with_haptic_effect(device : SDL_Haptic?; effect : SDL_HapticEffect; body : block<(id : int) : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_peripherals_boost.das,92,update_haptic_effect,def public update_haptic_effect(device : SDL_Haptic?; id : int; effect : SDL_HapticEffect),false,sdl_status,false
+dassdl3/sdl3_peripherals_boost.das,93,run_haptic_effect,def public run_haptic_effect(device : SDL_Haptic?; id : int; iterations : uint),false,sdl_status,false
+dassdl3/sdl3_peripherals_boost.das,94,stop_haptic_effect,def public stop_haptic_effect(device : SDL_Haptic?; id : int),false,sdl_status,false
+dassdl3/sdl3_peripherals_boost.das,102,hid_device_info,def public hid_device_info(info : SDL_hid_device_info?) : $Option<HidDeviceInfo>,false,"none,some",false
+dassdl3/sdl3_peripherals_boost.das,112,hid_devices,def public hid_devices(vendor : uint = 0u; product : uint = 0u),false,,true
+dassdl3/sdl3_peripherals_boost.das,126,with_hid,def public with_hid(body : block<() : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_peripherals_boost.das,136,open_hid,def public open_hid(path : string),false,"err,move_ok",false
+dassdl3/sdl3_peripherals_boost.das,141,with_hid_device,def public with_hid_device(path : string; body : block<(device : SDL_hid_device?) : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_peripherals_boost.das,152,hid_write,def public hid_write(device : SDL_hid_device?; data : array<uint8>),false,"err,ok",false
+dassdl3/sdl3_peripherals_boost.das,157,hid_read,def public hid_read(device : SDL_hid_device?; var data : array<uint8>),true,"err,ok",false
+dassdl3/sdl3_peripherals_boost.das,162,hid_send_feature_report,def public hid_send_feature_report(device : SDL_hid_device?; data : array<uint8>),false,"err,ok",false
+dassdl3/sdl3_peripherals_boost.das,167,hid_get_feature_report,def public hid_get_feature_report(device : SDL_hid_device?; var data : array<uint8>),true,"err,ok",false
+dassdl3/sdl3_peripherals_boost.das,172,hid_get_input_report,def public hid_get_input_report(device : SDL_hid_device?; var data : array<uint8>),true,"err,ok",false
+dassdl3/sdl3_peripherals_boost.das,177,hid_get_report_descriptor,def public hid_get_report_descriptor(device : SDL_hid_device?; var data : array<uint8>),true,"err,ok",false
+dassdl3/sdl3_peripherals_boost.das,182,hid_read_timeout,def public hid_read_timeout(device : SDL_hid_device?; var data : array<uint8>; milliseconds : int),true,"err,ok",false
+dassdl3/sdl3_pixel_views.das,8,rgba8,"def public rgba8(r, g, b, a : uint) : uint",false,,false
+dassdl3/sdl3_pixel_views.das,10,set_pixel,"def public set_pixel(pixels : SdlPixelView#; x, y : int; color : uint4)",false,"err,sdl_status",false
+dassdl3/sdl3_pixel_views.das,17,with_row,def public with_row(pixels : SdlPixelView#; y : int; blk : block<(var data : array<uint>#) : $Result<auto(TT); SdlError>>),true,err,false
+dassdl3/sdl3_pixel_views.das,28,with_pixels,def public with_pixels(pixels : SdlPixelView#; blk : block<(var data : array<uint8>#) : $Result<auto(TT); SdlError>>),true,err,false
+dassdl3/sdl3_pixel_views.das,39,with_locked_surface_pixels_rgba8,def public with_locked_surface_pixels_rgba8(surface : SDL_Surface?; blk : block<(pixels : SdlPixelView#) : $Result<auto(TT); SdlError>>),false,err,false
+dassdl3/sdl3_pixel_views.das,49,with_texture_pixels_rgba8,def public with_texture_pixels_rgba8(texture : SDL_Texture?; rect : SDL_Rect; blk : block<(pixels : SdlPixelView#) : $Result<auto(TT); SdlError>>),false,,false
+dassdl3/sdl3_pixel_views.das,57,with_surface_pixels_rgba8,def public with_surface_pixels_rgba8(surface : SDL_Surface?; blk : block<(pixels : SdlPixelView#) : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_pixels_boost.das,8,rgba8_buffer_size,"def public rgba8_buffer_size(width, height, pitch : int)",false,"err,ok",false
+dassdl3/sdl3_pixels_boost.das,29,with_streaming_texture,"def public with_streaming_texture(renderer : SDL_Renderer?; width, height : int; blk : block<(texture : SDL_Texture?) : $Result<auto(TT); SdlError> >)",false,,false
+dassdl3/sdl3_pixels_boost.das,34,with_target_texture,"def public with_target_texture(renderer : SDL_Renderer?; width, height : int; blk : block<(texture : SDL_Texture?) : $Result<auto(TT); SdlError> >)",false,,false
+dassdl3/sdl3_pixels_boost.das,40,upload_rgba8,def public upload_rgba8(texture : SDL_Texture?; bytes : array<uint8>; pitch : int),false,sdl_status,false
+dassdl3/sdl3_pixels_boost.das,46,with_render_target,def public with_render_target(renderer : SDL_Renderer?; texture : SDL_Texture?; blk : block<() : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_pixels_boost.das,61,with_read_pixels,def public with_read_pixels(renderer : SDL_Renderer?; blk : block<(surface : SDL_Surface?) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_pixels_boost.das,74,surface_size,def public surface_size(surface : SDL_Surface?; var size : int2&),true,"err,sdl_ok",false
+dassdl3/sdl3_pixels_boost.das,82,copy_surface_rgba8,def public copy_surface_rgba8(surface : SDL_Surface?; var bytes : array<uint8>; pitch : int),true,sdl_status,false
+dassdl3/sdl3_pixels_boost.das,86,surface_size,def public surface_size(surface : SDL_Surface?),false,"err,move_ok",false
+dassdl3/sdl3_platform_services.das,11,power_info,def public power_info(),false,"err,none,ok,some",false
+dassdl3/sdl3_platform_services.das,18,preferred_locales,def public preferred_locales(),false,"err,move_ok",false
+dassdl3/sdl3_platform_services.das,23,dxgi_output,def public dxgi_output(display : uint),false,"err,ok",false
+dassdl3/sdl3_platform_services.das,28,create_tray,def public create_tray(icon : SDL_Surface?; tooltip : string),false,"err,move_ok",false
+dassdl3/sdl3_platform_services.das,33,destroy_tray,def public destroy_tray(var tray : SDL_Tray?&),true,,false
+dassdl3/sdl3_platform_services.das,34,with_tray,def public with_tray(icon : SDL_Surface?; tooltip : string; blk : block<(tray : SDL_Tray?) : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_platform_services.das,45,create_tray_menu,def public create_tray_menu(tray : SDL_Tray?),false,"err,move_ok",false
+dassdl3/sdl3_platform_services.das,51,create_tray_submenu,def public create_tray_submenu(entry : SDL_TrayEntry?),false,"err,move_ok",false
+dassdl3/sdl3_platform_services.das,57,insert_tray_entry,def public insert_tray_entry(menu : SDL_TrayMenu?; pos : int; text_label : string; flags : uint),false,"err,move_ok",false
+dassdl3/sdl3_platform_services.das,63,tray_entries,def public tray_entries(menu : SDL_TrayMenu?),false,"err,move_ok",false
+dassdl3/sdl3_platform_services.das,68,tray_entry_label,def public tray_entry_label(entry : SDL_TrayEntry?),false,"err,ok",false
+dassdl3/sdl3_process_loadso.das,10,create_process,def public create_process(args : array<string>; pipe_stdio : bool = true),false,"err,move_ok",false
+dassdl3/sdl3_process_loadso.das,15,create_process,def public create_process(props : uint),false,"err,move_ok",false
+dassdl3/sdl3_process_loadso.das,20,destroy_process,def public destroy_process(var process : SDL_Process?&),true,,false
+dassdl3/sdl3_process_loadso.das,22,with_process,def public with_process(args : array<string>; pipe_stdio : bool; blk : block<(process : SDL_Process?) : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_process_loadso.das,32,read_process,def public read_process(process : SDL_Process?),false,"err,move_ok",false
+dassdl3/sdl3_process_loadso.das,37,wait_process,def public wait_process(process : SDL_Process?; blocking : bool = false),false,"err,none,ok,some",false
+dassdl3/sdl3_process_loadso.das,44,kill_process,def public kill_process(process : SDL_Process?; force : bool = false),false,sdl_status,false
+dassdl3/sdl3_process_loadso.das,45,load_object,def public load_object(path : string),false,"err,move_ok",false
+dassdl3/sdl3_process_loadso.das,55,load_function,def public load_function(object : SDL_SharedObject?; name : string),false,"err,ok",false
+dassdl3/sdl3_process_loadso.das,60,unload_object,def public unload_object(var object : SDL_SharedObject?&),true,,false
+dassdl3/sdl3_process_loadso.das,61,with_object,def public with_object(path : string; blk : block<(object : SDL_SharedObject?) : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_properties_boost.das,7,with_properties,def public with_properties(blk : block<(props : uint) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_properties_boost.das,16,with_properties_lock,def public with_properties_lock(props : uint; blk : block<() : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_properties_boost.das,24,property_string,"def public property_string(props : uint; name : string; fallback : string = """")",false,"err,ok",false
+dassdl3/sdl3_properties_boost.das,29,property_names,def public property_names(props : uint; var names : array<string>),true,sdl_status,false
+dassdl3/sdl3_properties_boost.das,33,property_names,def public property_names(props : uint),false,"err,move_ok",false
+dassdl3/sdl3_record_access.das,11,surface_info,def public surface_info(surface : SDL_Surface?),false,"err,ok",false
+dassdl3/sdl3_record_access.das,16,palette_colors,def public palette_colors(palette : SDL_Palette?),false,"err,move_ok",false
+dassdl3/sdl3_record_access.das,22,surface_plane_info,def public surface_plane_info(surface : SDL_Surface?; plane : int = 0),false,"err,ok",false
+dassdl3/sdl3_record_access.das,27,with_surface_bytes,def public with_surface_bytes(surface : SDL_Surface?; plane : int; blk : block<(var bytes : array<uint8>#; layout : int4) : $Result<auto(T); SdlError>>),true,err,true
+dassdl3/sdl3_record_access.das,41,create_gpu_device_with_vulkan_options,"def public create_gpu_device_with_vulkan_options(props : uint; config : SDL_GPUVulkanOptions; device_extensions, instance_extensions : array<string>)",false,"err,move_ok",false
+dassdl3/sdl3_rect_clipboard_boost.das,9,with_window_hit_test,def public with_window_hit_test(window : SDL_Window?; callback : block<(window : SDL_Window?; x : int; y : int) : SDL_HitTestResult>; body : block<() : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_rect_clipboard_boost.das,18,clipboard_text,def public clipboard_text(),false,"err,ok",false
+dassdl3/sdl3_rect_clipboard_boost.das,23,primary_selection_text,def public primary_selection_text(),false,"err,ok",false
+dassdl3/sdl3_rect_clipboard_boost.das,28,clipboard_data,def public clipboard_data(mime : string; var bytes : array<uint8>),true,sdl_status,false
+dassdl3/sdl3_rect_clipboard_boost.das,29,set_clipboard_data,def public set_clipboard_data(mime : string; bytes : array<uint8>),false,sdl_status,false
+dassdl3/sdl3_rect_clipboard_boost.das,30,clipboard_mime_types,def public clipboard_mime_types(var types : array<string>),true,sdl_status,false
+dassdl3/sdl3_rect_clipboard_boost.das,32,clipboard_data,def public clipboard_data(mime : string),false,"err,move_ok",false
+dassdl3/sdl3_rect_clipboard_boost.das,40,clipboard_mime_types,def public clipboard_mime_types(),false,"err,move_ok",false
+dassdl3/sdl3_remaining_34_boost.das,6,set_window_progress_state,def public set_window_progress_state(window : SDL_Window?; state : SDL_ProgressState),false,sdl_status,false
+dassdl3/sdl3_remaining_34_boost.das,9,window_progress_state,def public window_progress_state(window : SDL_Window?),false,"err,ok",false
+dassdl3/sdl3_remaining_34_boost.das,14,set_window_progress_value,def public set_window_progress_value(window : SDL_Window?; value : float),false,sdl_status,false
+dassdl3/sdl3_remaining_34_boost.das,17,window_progress_value,def public window_progress_value(window : SDL_Window?),false,"err,ok",false
+dassdl3/sdl3_remaining_34_boost.das,22,set_window_fill_document,def public set_window_fill_document(window : SDL_Window?; fill : bool),false,sdl_status,false
+dassdl3/sdl3_remaining_34_boost.das,25,pen_device_type,def public pen_device_type(id : uint),false,"err,ok",false
+dassdl3/sdl3_remaining_34_boost.das,31,hid_properties,def public hid_properties(device : SDL_hid_device?),false,"err,ok",false
+dassdl3/sdl3_remaining_34_boost.das,36,event_description,def public event_description(event : SDL_Event),false,,false
+dassdl3/sdl3_remaining_34_boost.das,37,put_audio_planar,"def public put_audio_planar(stream : SDL_AudioStream?; samples : array<float>; channels, frames : int)",false,sdl_status,false
+dassdl3/sdl3_remaining_34_boost.das,40,with_animated_cursor,"def public with_animated_cursor(frames : array<SDL_CursorFrameInfo>; x, y : int; body : block<(cursor : SDL_Cursor?) : $Result<auto(T); SdlError>>)",false,err,true
+dassdl3/sdl3_remaining_34_boost.das,53,put_audio_planar,"def public put_audio_planar(stream : SDL_AudioStream?; samples : array<uint8>; channels, frames : int)",false,sdl_status,false
+dassdl3/sdl3_render_surface_34_boost.das,11,default_texture_scale_mode,def public default_texture_scale_mode(renderer : SDL_Renderer?),false,"err,ok",false
+dassdl3/sdl3_render_surface_34_boost.das,16,render_texture_address_mode,def public render_texture_address_mode(renderer : SDL_Renderer?),false,"err,ok",false
+dassdl3/sdl3_render_surface_34_boost.das,21,set_default_texture_scale_mode,def public set_default_texture_scale_mode(renderer : SDL_Renderer?; mode : SDL_ScaleMode),false,sdl_status,false
+dassdl3/sdl3_render_surface_34_boost.das,24,set_render_texture_address_mode,"def public set_render_texture_address_mode(renderer : SDL_Renderer?; u, v : SDL_TextureAddressMode)",false,sdl_status,false
+dassdl3/sdl3_render_surface_34_boost.das,27,set_texture_palette,def public set_texture_palette(texture : SDL_Texture?; palette : SDL_Palette?),false,sdl_status,false
+dassdl3/sdl3_render_surface_34_boost.das,32,texture_palette,def public texture_palette(texture : SDL_Texture?),false,"err,move_ok,move_some,none",false
+dassdl3/sdl3_render_surface_34_boost.das,39,save_png,def public save_png(surface : SDL_Surface?; path : string),false,sdl_status,false
+dassdl3/sdl3_render_surface_34_boost.das,41,save_png,def public save_png(surface : SDL_Surface?; io : SDL_IOStream?),false,sdl_status,false
+dassdl3/sdl3_render_surface_34_boost.das,42,render_texture_9grid_tiled,"def public render_texture_9grid_tiled(renderer : SDL_Renderer?; texture : SDL_Texture?; src : SDL_FRect; left, right, top, bottom, scale : float; dst : SDL_FRect; tile_scale : float)",false,sdl_status,false
+dassdl3/sdl3_render_surface_34_boost.das,46,set_gpu_render_state,def public set_gpu_render_state(renderer : SDL_Renderer?; state : SDL_GPURenderState?),false,sdl_status,false
+dassdl3/sdl3_render_surface_34_boost.das,49,set_gpu_render_state_fragment_uniforms,def public set_gpu_render_state_fragment_uniforms(state : SDL_GPURenderState?; slot : uint; data : array<uint8>),false,sdl_status,false
+dassdl3/sdl3_render_surface_34_boost.das,52,set_gpu_render_state_fragment_uniforms,def public set_gpu_render_state_fragment_uniforms(state : SDL_GPURenderState?; slot : uint; data : array<float>),false,sdl_status,false
+dassdl3/sdl3_render_surface_34_boost.das,56,with_loaded_surface,def public with_loaded_surface(path : string; body : block<(resource : SDL_Surface?) : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_render_surface_34_boost.das,68,with_loaded_surface,def public with_loaded_surface(io : SDL_IOStream?; body : block<(resource : SDL_Surface?) : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_render_surface_34_boost.das,80,with_png,def public with_png(path : string; body : block<(resource : SDL_Surface?) : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_render_surface_34_boost.das,92,with_png,def public with_png(io : SDL_IOStream?; body : block<(resource : SDL_Surface?) : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_render_surface_34_boost.das,104,with_rotated_surface,def public with_rotated_surface(source : SDL_Surface?; angle : float; body : block<(resource : SDL_Surface?) : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_render_surface_34_boost.das,116,with_gpu_renderer,def public with_gpu_renderer(device : SDL_GPUDevice?; window : SDL_Window?; body : block<(resource : SDL_Renderer?) : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_render_surface_34_boost.das,128,with_gpu_render_state,def public with_gpu_render_state(renderer : SDL_Renderer?; shader : SDL_GPUShader?; samplers : array<SDL_GPUTextureSamplerBinding>; textures : array<SDL_GPUTexture?>; buffers : array<SDL_GPUBuffer?>; props : uint; body : block<(resource : SDL_GPURenderState?) : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_renderer_final_boost.das,5,convert_event_to_render,def public convert_event_to_render(renderer : SDL_Renderer?; var event : SDL_Event),true,sdl_status,false
+dassdl3/sdl3_renderer_final_boost.das,6,render_geometry_raw,def public render_geometry_raw(renderer : SDL_Renderer?; texture : SDL_Texture?; xy : array<SDL_FPoint>; colors : array<SDL_FColor>; uv : array<SDL_FPoint>),false,sdl_status,false
+dassdl3/sdl3_renderer_final_boost.das,7,render_geometry_raw,def public render_geometry_raw(renderer : SDL_Renderer?; texture : SDL_Texture?; xy : array<SDL_FPoint>; colors : array<SDL_FColor>; uv : array<SDL_FPoint>; indices : array<int>),false,sdl_status,false
+dassdl3/sdl3_renderer_operations_boost.das,6,with_window_renderer,"def public with_window_renderer(title : string; w, h : int; flags : uint64; blk : block<(window : SDL_Window?; renderer : SDL_Renderer?) : $Result<auto(TT); SdlError> >)",false,err,true
+dassdl3/sdl3_renderer_operations_boost.das,15,with_renderer_properties,def public with_renderer_properties(props : uint; blk : block<(renderer : SDL_Renderer?) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_renderer_operations_boost.das,24,with_read_pixels,def public with_read_pixels(renderer : SDL_Renderer?; rect : SDL_Rect; blk : block<(surface : SDL_Surface?) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_renderer_operations_boost.das,33,render_vsync,def public render_vsync(renderer : SDL_Renderer?; var vsync : int&),true,sdl_status,false
+dassdl3/sdl3_renderer_operations_boost.das,35,render_vsync,def public render_vsync(renderer : SDL_Renderer?),false,"err,move_ok",false
+dassdl3/sdl3_renderer_presentation_boost.das,5,render_driver,def public render_driver(index : int),false,"err,ok",false
+dassdl3/sdl3_renderer_presentation_boost.das,10,renderer_name,def public renderer_name(renderer : SDL_Renderer?),false,"err,ok",false
+dassdl3/sdl3_renderer_presentation_boost.das,15,render_logical_presentation,"def public render_logical_presentation(renderer : SDL_Renderer?; var w, h : int&; var mode : SDL_RendererLogicalPresentation&)",true,sdl_status,false
+dassdl3/sdl3_renderer_presentation_boost.das,18,render_from_window,"def public render_from_window(renderer : SDL_Renderer?; wx, wy : float; var x, y : float&)",true,sdl_status,false
+dassdl3/sdl3_renderer_presentation_boost.das,21,render_to_window,"def public render_to_window(renderer : SDL_Renderer?; x, y : float; var wx, wy : float&)",true,sdl_status,false
+dassdl3/sdl3_renderer_presentation_boost.das,25,render_logical_presentation,def public render_logical_presentation(renderer : SDL_Renderer?),false,"err,move_ok",false
+dassdl3/sdl3_renderer_presentation_boost.das,35,render_from_window,"def public render_from_window(renderer : SDL_Renderer?; wx, wy : float)",false,"err,move_ok",false
+dassdl3/sdl3_renderer_presentation_boost.das,44,render_to_window,"def public render_to_window(renderer : SDL_Renderer?; x, y : float)",false,"err,move_ok",false
+dassdl3/sdl3_renderer_primitives_boost.das,7,with_software_renderer,def public with_software_renderer(surface : SDL_Surface?; blk : block<(renderer : SDL_Renderer?) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_renderer_state_boost.das,5,render_output_size,"def public render_output_size(renderer : SDL_Renderer?; var w, h : int&)",true,sdl_status,false
+dassdl3/sdl3_renderer_state_boost.das,8,current_render_output_size,"def public current_render_output_size(renderer : SDL_Renderer?; var w, h : int&)",true,sdl_status,false
+dassdl3/sdl3_renderer_state_boost.das,11,render_scale,"def public render_scale(renderer : SDL_Renderer?; var x, y : float&)",true,sdl_status,false
+dassdl3/sdl3_renderer_state_boost.das,15,render_output_size,def public render_output_size(renderer : SDL_Renderer?),false,"err,move_ok",false
+dassdl3/sdl3_renderer_state_boost.das,24,current_render_output_size,def public current_render_output_size(renderer : SDL_Renderer?),false,"err,move_ok",false
+dassdl3/sdl3_renderer_state_boost.das,33,render_scale,def public render_scale(renderer : SDL_Renderer?),false,"err,move_ok",false
+dassdl3/sdl3_renderer_yuv_blend_boost.das,5,render_draw_color,"def public render_draw_color(renderer : SDL_Renderer?; var r, g, b, a : float&)",true,sdl_status,false
+dassdl3/sdl3_renderer_yuv_blend_boost.das,6,render_draw_color_bytes,"def public render_draw_color_bytes(renderer : SDL_Renderer?; var r, g, b, a : uint&)",true,sdl_status,false
+dassdl3/sdl3_renderer_yuv_blend_boost.das,7,render_color_scale,def public render_color_scale(renderer : SDL_Renderer?; var scale : float&),true,sdl_status,false
+dassdl3/sdl3_renderer_yuv_blend_boost.das,8,render_draw_blend_mode,def public render_draw_blend_mode(renderer : SDL_Renderer?; var mode : uint&),true,sdl_status,false
+dassdl3/sdl3_renderer_yuv_blend_boost.das,9,update_yuv_texture,def public update_yuv_texture(texture : SDL_Texture?; y : array<uint8>; yp : int; u : array<uint8>; up : int; v : array<uint8>; vp : int),false,sdl_status,false
+dassdl3/sdl3_renderer_yuv_blend_boost.das,10,update_nv_texture,def public update_nv_texture(texture : SDL_Texture?; y : array<uint8>; yp : int; uv : array<uint8>; uvp : int),false,sdl_status,false
+dassdl3/sdl3_renderer_yuv_blend_boost.das,12,render_draw_color,def public render_draw_color(renderer : SDL_Renderer?),false,"err,move_ok",false
+dassdl3/sdl3_renderer_yuv_blend_boost.das,23,render_draw_color_bytes,def public render_draw_color_bytes(renderer : SDL_Renderer?),false,"err,move_ok",false
+dassdl3/sdl3_renderer_yuv_blend_boost.das,34,render_color_scale,def public render_color_scale(renderer : SDL_Renderer?),false,"err,move_ok",false
+dassdl3/sdl3_renderer_yuv_blend_boost.das,42,render_draw_blend_mode,def public render_draw_blend_mode(renderer : SDL_Renderer?),false,"err,move_ok",false
+dassdl3/sdl3_result.das,24,SdlResult,"def public SdlResult(macroArgument, passArgument : TypeDeclPtr; T : TypeDeclPtr) : TypeDeclPtr",false,,false
+dassdl3/sdl3_result.das,31,sdl_ok,def public sdl_ok() : SdlStatus,false,ok,false
+dassdl3/sdl3_result.das,33,sdl_error,def public sdl_error(operation : string) : SdlError,false,,false
+dassdl3/sdl3_result.das,38,sdl_status,def public sdl_status(success : bool; operation : string) : SdlStatus,false,"err,sdl_ok",false
+dassdl3/sdl3_shadercross_boost.das,8,with_shadercross,def public with_shadercross(blk : block<() : $Result<auto(CrossValue); SdlError>>) : $Result<CrossValue; SdlError>,false,err,true
+dassdl3/sdl3_shadercross_boost.das,23,compile_hlsl_spirv,def public compile_hlsl_spirv(info : SDL_ShaderCross_HLSL_Info),false,"err,move_ok",false
+dassdl3/sdl3_shadercross_boost.das,28,compile_hlsl_dxil,def public compile_hlsl_dxil(info : SDL_ShaderCross_HLSL_Info),false,"err,move_ok",false
+dassdl3/sdl3_shadercross_boost.das,33,compile_hlsl_dxbc,def public compile_hlsl_dxbc(info : SDL_ShaderCross_HLSL_Info),false,"err,move_ok",false
+dassdl3/sdl3_shadercross_boost.das,38,compile_spirv_dxil,def public compile_spirv_dxil(bytes : array<uint8>; entry : string; stage : SDL_ShaderCross_ShaderStage; props : uint = 0u),false,"err,move_ok",false
+dassdl3/sdl3_shadercross_boost.das,43,compile_spirv_dxbc,def public compile_spirv_dxbc(bytes : array<uint8>; entry : string; stage : SDL_ShaderCross_ShaderStage; props : uint = 0u),false,"err,move_ok",false
+dassdl3/sdl3_shadercross_boost.das,48,transpile_spirv_msl,def public transpile_spirv_msl(bytes : array<uint8>; entry : string; stage : SDL_ShaderCross_ShaderStage; props : uint = 0u),false,"err,ok",false
+dassdl3/sdl3_shadercross_boost.das,53,transpile_spirv_hlsl,def public transpile_spirv_hlsl(bytes : array<uint8>; entry : string; stage : SDL_ShaderCross_ShaderStage; props : uint = 0u),false,"err,ok",false
+dassdl3/sdl3_shadercross_boost.das,58,reflect_graphics_spirv,def public reflect_graphics_spirv(bytes : array<uint8>; props : uint = 0u),false,"err,move_ok",false
+dassdl3/sdl3_shadercross_boost.das,65,reflect_compute_spirv,def public reflect_compute_spirv(bytes : array<uint8>; props : uint = 0u),false,"err,ok",false
+dassdl3/sdl3_shadercross_boost.das,72,compile_graphics_shader_spirv,def public compile_graphics_shader_spirv(device : SDL_GPUDevice?; bytes : array<uint8>; entry : string; stage : SDL_ShaderCross_ShaderStage; resources : SDL_ShaderCross_GraphicsShaderResourceInfo; props : uint = 0u),false,"err,move_ok",false
+dassdl3/sdl3_shadercross_boost.das,78,compile_compute_pipeline_spirv,def public compile_compute_pipeline_spirv(device : SDL_GPUDevice?; bytes : array<uint8>; entry : string; metadata : SDL_ShaderCross_ComputePipelineMetadata; props : uint = 0u),false,"err,move_ok",false
+dassdl3/sdl3_sound_boost.das,8,sound_error,def public sound_error(operation : string) : SdlError,false,,false
+dassdl3/sdl3_sound_boost.das,16,sound_actual_format,def public sound_actual_format(sample : Sound_Sample?),false,,false
+dassdl3/sdl3_sound_boost.das,21,sound_output_format,def public sound_output_format(sample : Sound_Sample?),false,,false
+dassdl3/sdl3_sound_boost.das,26,create_sound_sample,def public create_sound_sample(path : string; spec : SDL_AudioSpec; buffer_size : uint = 4096u),false,"err,move_ok",false
+dassdl3/sdl3_sound_boost.das,34,decode_sound,def public decode_sound(sample : Sound_Sample?; var bytes : array<uint8>),true,"err,ok",false
+dassdl3/sdl3_sound_boost.das,54,rewind_sound,def public rewind_sound(sample : Sound_Sample?),false,"err,sdl_ok",false
+dassdl3/sdl3_sound_boost.das,59,seek_sound,def public seek_sound(sample : Sound_Sample?; milliseconds : uint),false,"err,sdl_ok",false
+dassdl3/sdl3_sound_boost.das,64,with_sound,def public with_sound(blk : block<() : $Result<auto(SoundValue); SdlError>>) : $Result<SoundValue; SdlError>,false,err,true
+dassdl3/sdl3_sound_boost.das,74,with_sound_sample,def public with_sound_sample(path : string; spec : SDL_AudioSpec; buffer_size : uint; blk : block<(sample : Sound_Sample?) : $Result<auto(SoundValue); SdlError>>) : $Result<SoundValue; SdlError>,false,err,true
+dassdl3/sdl3_storage_boost.das,6,storage_ready,def public storage_ready(storage : SDL_Storage?) : bool,false,,false
+dassdl3/sdl3_storage_boost.das,8,storage_space_remaining,def public storage_space_remaining(storage : SDL_Storage?) : uint64,false,,false
+dassdl3/sdl3_storage_boost.das,9,close_storage,def public close_storage(var storage : SDL_Storage?&),true,sdl_status,false
+dassdl3/sdl3_storage_boost.das,10,open_file_storage,def public open_file_storage(path : string),false,"err,move_ok",false
+dassdl3/sdl3_storage_boost.das,15,open_title_storage,def public open_title_storage(path : string; props : uint = 0u),false,"err,move_ok",false
+dassdl3/sdl3_storage_boost.das,20,open_user_storage,"def public open_user_storage(org, app : string; props : uint = 0u)",false,"err,move_ok",false
+dassdl3/sdl3_storage_boost.das,25,open_storage,def public open_storage(iface : SDL_StorageInterface; userdata : void?),false,"err,move_ok",false
+dassdl3/sdl3_storage_boost.das,30,storage_file_size,def public storage_file_size(storage : SDL_Storage?; path : string),false,"err,ok",false
+dassdl3/sdl3_storage_boost.das,35,storage_path_info,def public storage_path_info(storage : SDL_Storage?; path : string),false,"err,ok",false
+dassdl3/sdl3_storage_boost.das,40,read_storage_file,def public read_storage_file(storage : SDL_Storage?; path : string; var bytes : array<uint8>; count : uint64),true,sdl_status,false
+dassdl3/sdl3_storage_boost.das,41,write_storage_file,def public write_storage_file(storage : SDL_Storage?; path : string; bytes : array<uint8>),false,sdl_status,false
+dassdl3/sdl3_storage_boost.das,42,create_storage_directory,def public create_storage_directory(storage : SDL_Storage?; path : string),false,sdl_status,false
+dassdl3/sdl3_storage_boost.das,43,remove_storage_path,def public remove_storage_path(storage : SDL_Storage?; path : string),false,sdl_status,false
+dassdl3/sdl3_storage_boost.das,44,rename_storage_path,"def public rename_storage_path(storage : SDL_Storage?; oldpath, newpath : string)",false,sdl_status,false
+dassdl3/sdl3_storage_boost.das,45,copy_storage_file,"def public copy_storage_file(storage : SDL_Storage?; oldpath, newpath : string)",false,sdl_status,false
+dassdl3/sdl3_storage_boost.das,46,load_storage_file,def public load_storage_file(storage : SDL_Storage?; path : string),false,"err,move_ok",false
+dassdl3/sdl3_storage_boost.das,51,enumerate_storage_directory,"def public enumerate_storage_directory(storage : SDL_Storage?; path : string = """")",false,"err,move_ok",false
+dassdl3/sdl3_storage_boost.das,56,glob_storage_directory,"def public glob_storage_directory(storage : SDL_Storage?; path : string; pattern : string = ""*""; flags : uint = 0u)",false,"err,move_ok",false
+dassdl3/sdl3_storage_boost.das,61,with_storage,def public with_storage(storage : SDL_Storage?; body : block<(store : SDL_Storage?) : $Result<auto(TT); SdlError>>),false,err,true
+dassdl3/sdl3_storage_boost.das,74,with_file_storage,def public with_file_storage(path : string; body : block<(store : SDL_Storage?) : $Result<auto(TT); SdlError>>),false,err,false
+dassdl3/sdl3_storage_boost.das,79,with_title_storage,def public with_title_storage(path : string; props : uint; body : block<(store : SDL_Storage?) : $Result<auto(TT); SdlError>>),false,err,false
+dassdl3/sdl3_storage_boost.das,84,with_user_storage,"def public with_user_storage(org, app : string; props : uint; body : block<(store : SDL_Storage?) : $Result<auto(TT); SdlError>>)",false,err,false
+dassdl3/sdl3_surface_pixels_boost.das,6,with_palette,def public with_palette(count : int; blk : block<(palette : SDL_Palette?) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_surface_pixels_boost.das,15,with_duplicate_surface,def public with_duplicate_surface(source : SDL_Surface?; blk : block<(surface : SDL_Surface?) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_surface_pixels_boost.das,24,with_scaled_surface,"def public with_scaled_surface(source : SDL_Surface?; w, h : int; mode : SDL_ScaleMode; blk : block<(surface : SDL_Surface?) : $Result<auto(TT); SdlError> >)",false,err,true
+dassdl3/sdl3_surface_pixels_boost.das,33,with_converted_surface,def public with_converted_surface(source : SDL_Surface?; format : SDL_PixelFormat; blk : block<(surface : SDL_Surface?) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_surface_pixels_boost.das,42,with_converted_surface,def public with_converted_surface(source : SDL_Surface?; format : SDL_PixelFormat; palette : SDL_Palette?; colorspace : SDL_Colorspace; props : uint; blk : block<(surface : SDL_Surface?) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_surface_pixels_boost.das,51,with_surface_lock,def public with_surface_lock(surface : SDL_Surface?; blk : block<() : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_surface_pixels_boost.das,59,read_surface_pixel,"def public read_surface_pixel(surface : SDL_Surface?; x, y : int; var r, g, b, a : uint&)",true,sdl_status,false
+dassdl3/sdl3_surface_pixels_boost.das,60,read_surface_pixel_float,"def public read_surface_pixel_float(surface : SDL_Surface?; x, y : int; var r, g, b, a : float&)",true,sdl_status,false
+dassdl3/sdl3_surface_pixels_boost.das,62,read_surface_pixel,"def public read_surface_pixel(surface : SDL_Surface?; x, y : int)",false,"err,move_ok",false
+dassdl3/sdl3_surface_pixels_boost.das,73,read_surface_pixel_float,"def public read_surface_pixel_float(surface : SDL_Surface?; x, y : int)",false,"err,move_ok",false
+dassdl3/sdl3_surface_state_boost.das,5,surface_color_key,def public surface_color_key(surface : SDL_Surface?),false,"err,none,ok,some",false
+dassdl3/sdl3_surface_state_boost.das,12,surface_color_mod,"def public surface_color_mod(surface : SDL_Surface?; var r, g, b : uint&)",true,sdl_status,false
+dassdl3/sdl3_surface_state_boost.das,13,surface_alpha_mod,def public surface_alpha_mod(surface : SDL_Surface?; var a : uint&),true,sdl_status,false
+dassdl3/sdl3_surface_state_boost.das,14,surface_blend_mode,def public surface_blend_mode(surface : SDL_Surface?; var mode : uint&),true,sdl_status,false
+dassdl3/sdl3_surface_state_boost.das,15,surface_clip,def public surface_clip(surface : SDL_Surface?; var rect : SDL_Rect),true,sdl_status,false
+dassdl3/sdl3_surface_state_boost.das,16,set_surface_clip,def public set_surface_clip(surface : SDL_Surface?; rect : SDL_Rect),false,"err,ok",false
+dassdl3/sdl3_surface_state_boost.das,20,reset_surface_clip,def public reset_surface_clip(surface : SDL_Surface?),false,"err,ok",false
+dassdl3/sdl3_surface_state_boost.das,25,surface_color_mod,def public surface_color_mod(surface : SDL_Surface?),false,"err,move_ok",false
+dassdl3/sdl3_surface_state_boost.das,35,surface_alpha_mod,def public surface_alpha_mod(surface : SDL_Surface?),false,"err,move_ok",false
+dassdl3/sdl3_surface_state_boost.das,43,surface_blend_mode,def public surface_blend_mode(surface : SDL_Surface?),false,"err,move_ok",false
+dassdl3/sdl3_surface_state_boost.das,51,surface_clip,def public surface_clip(surface : SDL_Surface?),false,"err,move_ok",false
+dassdl3/sdl3_surface_state_boost.das,59,surface_color_key,def public surface_color_key(surface : SDL_Surface?; var key : uint&),true,"err,ok",false
+dassdl3/sdl3_synchronization.das,7,create_mutex,def public create_mutex(),false,"err,move_ok",false
+dassdl3/sdl3_synchronization.das,12,destroy_mutex,def public destroy_mutex(var value : SDL_Mutex?&),true,,false
+dassdl3/sdl3_synchronization.das,13,with_mutex,def public with_mutex(blk : block<(value : SDL_Mutex?) : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_synchronization.das,24,create_rwlock,def public create_rwlock(),false,"err,move_ok",false
+dassdl3/sdl3_synchronization.das,29,destroy_rwlock,def public destroy_rwlock(var value : SDL_RWLock?&),true,,false
+dassdl3/sdl3_synchronization.das,30,with_rwlock,def public with_rwlock(blk : block<(value : SDL_RWLock?) : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_synchronization.das,41,create_semaphore,def public create_semaphore(initial_value : uint = 0u),false,"err,move_ok",false
+dassdl3/sdl3_synchronization.das,46,destroy_semaphore,def public destroy_semaphore(var value : SDL_Semaphore?&),true,,false
+dassdl3/sdl3_synchronization.das,47,with_semaphore,def public with_semaphore(initial_value : uint = 0u; blk : block<(value : SDL_Semaphore?) : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_synchronization.das,58,create_condition,def public create_condition(),false,"err,move_ok",false
+dassdl3/sdl3_synchronization.das,63,destroy_condition,def public destroy_condition(var value : SDL_Condition?&),true,,false
+dassdl3/sdl3_synchronization.das,64,with_condition,def public with_condition(blk : block<(value : SDL_Condition?) : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_synchronization.das,76,with_mutex_lock,def public with_mutex_lock(value : SDL_Mutex?; blk : block<() : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_synchronization.das,88,with_rwlock_read,def public with_rwlock_read(value : SDL_RWLock?; blk : block<() : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_synchronization.das,100,with_rwlock_write,def public with_rwlock_write(value : SDL_RWLock?; blk : block<() : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_synchronization.das,112,try_lock_mutex,def public try_lock_mutex(value : SDL_Mutex?) : bool,false,,false
+dassdl3/sdl3_synchronization.das,113,try_lock_rwlock_read,def public try_lock_rwlock_read(value : SDL_RWLock?) : bool,false,,false
+dassdl3/sdl3_synchronization.das,114,try_lock_rwlock_write,def public try_lock_rwlock_write(value : SDL_RWLock?) : bool,false,,false
+dassdl3/sdl3_synchronization.das,115,try_wait_semaphore,def public try_wait_semaphore(value : SDL_Semaphore?) : bool,false,,false
+dassdl3/sdl3_synchronization.das,116,wait_semaphore,def public wait_semaphore(value : SDL_Semaphore?; timeout_ms : int) : bool,false,,false
+dassdl3/sdl3_synchronization.das,117,wait_condition,def public wait_condition(value : SDL_Condition?; mutex : SDL_Mutex?; timeout_ms : int) : bool,false,,false
+dassdl3/sdl3_synchronization.das,119,should_init,def public should_init(var state : SDL_InitState&) : bool,true,,false
+dassdl3/sdl3_synchronization.das,120,should_quit,def public should_quit(var state : SDL_InitState&) : bool,true,,false
+dassdl3/sdl3_synchronization.das,121,set_initialized,def public set_initialized(var state : SDL_InitState&; initialized : bool),true,,false
+dassdl3/sdl3_texture_state_boost.das,7,with_texture,"def public with_texture(renderer : SDL_Renderer?; format : SDL_PixelFormat; access : SDL_TextureAccess; w, h : int; blk : block<(texture : SDL_Texture?) : $Result<auto(TT); SdlError> >)",false,err,true
+dassdl3/sdl3_texture_state_boost.das,16,with_texture_properties,def public with_texture_properties(renderer : SDL_Renderer?; props : uint; blk : block<(texture : SDL_Texture?) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_texture_state_boost.das,25,texture_color_mod,"def public texture_color_mod(texture : SDL_Texture?; var r, g, b : float&)",true,sdl_status,false
+dassdl3/sdl3_texture_state_boost.das,26,texture_alpha_mod,def public texture_alpha_mod(texture : SDL_Texture?; var a : float&),true,sdl_status,false
+dassdl3/sdl3_texture_state_boost.das,27,texture_scale_mode,def public texture_scale_mode(texture : SDL_Texture?; var mode : SDL_ScaleMode&),true,sdl_status,false
+dassdl3/sdl3_texture_state_boost.das,29,texture_color_mod,def public texture_color_mod(texture : SDL_Texture?),false,"err,move_ok",false
+dassdl3/sdl3_texture_state_boost.das,39,texture_alpha_mod,def public texture_alpha_mod(texture : SDL_Texture?),false,"err,move_ok",false
+dassdl3/sdl3_texture_state_boost.das,47,texture_scale_mode,def public texture_scale_mode(texture : SDL_Texture?),false,"err,move_ok",false
+dassdl3/sdl3_texture_transfer_boost.das,6,texture_color_mod_bytes,"def public texture_color_mod_bytes(texture : SDL_Texture?; var r, g, b : uint&)",true,sdl_status,false
+dassdl3/sdl3_texture_transfer_boost.das,7,texture_alpha_mod_byte,def public texture_alpha_mod_byte(texture : SDL_Texture?; var a : uint&),true,sdl_status,false
+dassdl3/sdl3_texture_transfer_boost.das,8,texture_blend_mode,def public texture_blend_mode(texture : SDL_Texture?; var mode : uint&),true,sdl_status,false
+dassdl3/sdl3_texture_transfer_boost.das,9,update_texture_rgba8,def public update_texture_rgba8(texture : SDL_Texture?; rect : SDL_Rect; bytes : array<uint8>; pitch : int),false,sdl_status,false
+dassdl3/sdl3_texture_transfer_boost.das,13,with_texture_surface,def public with_texture_surface(texture : SDL_Texture?; rect : SDL_Rect; blk : block<(surface : SDL_Surface?) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_texture_transfer_boost.das,23,texture_color_mod_bytes,def public texture_color_mod_bytes(texture : SDL_Texture?),false,"err,move_ok",false
+dassdl3/sdl3_texture_transfer_boost.das,33,texture_alpha_mod_byte,def public texture_alpha_mod_byte(texture : SDL_Texture?),false,"err,move_ok",false
+dassdl3/sdl3_texture_transfer_boost.das,41,texture_blend_mode,def public texture_blend_mode(texture : SDL_Texture?),false,"err,move_ok",false
+dassdl3/sdl3_thread_atomic.das,7,create_thread,def public create_thread(fn : void?; name : string; data : void? = null),false,"err,move_ok",false
+dassdl3/sdl3_thread_atomic.das,12,create_thread,def public create_thread(props : uint),false,"err,move_ok",false
+dassdl3/sdl3_thread_atomic.das,18,join_thread,def public join_thread(var thread : SDL_Thread?&) : int,true,,false
+dassdl3/sdl3_thread_atomic.das,19,detach_thread,def public detach_thread(var thread : SDL_Thread?&),true,,false
+dassdl3/sdl3_thread_atomic.das,20,with_thread,def public with_thread(fn : void?; name : string; data : void?; blk : block<(thread : SDL_Thread?) : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_thread_atomic.das,35,get_tls,def public get_tls(var id : SDL_AtomicInt&),true,"none,some",false
+dassdl3/sdl3_thread_atomic.das,40,set_tls,def public set_tls(var id : SDL_AtomicInt&; value : void?; destructor : void? = null),true,"err,sdl_ok",false
+dassdl3/sdl3_thread_atomic.das,44,atomic_get,def public atomic_get(var value : SDL_AtomicInt&),true,,false
+dassdl3/sdl3_thread_atomic.das,45,atomic_get,def public atomic_get(var value : SDL_AtomicU32&),true,,false
+dassdl3/sdl3_thread_atomic.das,46,atomic_get,def public atomic_get(var value : void?&),true,,false
+dassdl3/sdl3_thread_atomic.das,47,atomic_set,def public atomic_set(var value : SDL_AtomicInt&; next : int),true,,false
+dassdl3/sdl3_thread_atomic.das,48,atomic_set,def public atomic_set(var value : SDL_AtomicU32&; next : uint),true,,false
+dassdl3/sdl3_thread_atomic.das,49,atomic_set,def public atomic_set(var value : void?&; next : void?),true,,false
+dassdl3/sdl3_thread_atomic.das,50,atomic_add,def public atomic_add(var value : SDL_AtomicInt&; next : int),true,,false
+dassdl3/sdl3_thread_atomic.das,51,atomic_compare_exchange,def public atomic_compare_exchange(var value : SDL_AtomicInt&; expected : int; next : int) : bool,true,,false
+dassdl3/sdl3_thread_atomic.das,52,atomic_compare_exchange,def public atomic_compare_exchange(var value : SDL_AtomicU32&; expected : uint; next : uint) : bool,true,,false
+dassdl3/sdl3_thread_atomic.das,53,atomic_compare_exchange,def public atomic_compare_exchange(var value : void?&; expected : void?; next : void?) : bool,true,,false
+dassdl3/sdl3_try.das,11,sdl_try,def public sdl_try(value : $Result<auto(T); SdlError>) : T,false,,false
+dassdl3/sdl3_ttf_boost.das,9,with_ttf,def public with_ttf(blk : block<() : $Result<auto(TtfScopeValue); SdlError>>) : $Result<TtfScopeValue; SdlError>,false,err,true
+dassdl3/sdl3_ttf_boost.das,20,open_font,def public open_font(path : string; size : float),false,"err,move_ok",false
+dassdl3/sdl3_ttf_boost.das,26,with_font,def public with_font(path : string; size : float; blk : block<(value : TTF_Font?) : $Result<auto(TtfScopeValue); SdlError>>) : $Result<TtfScopeValue; SdlError>,false,err,true
+dassdl3/sdl3_ttf_boost.das,39,open_font,def public open_font(io : SDL_IOStream?; size : float),false,"err,move_ok",false
+dassdl3/sdl3_ttf_boost.das,45,with_font,def public with_font(io : SDL_IOStream?; size : float; blk : block<(value : TTF_Font?) : $Result<auto(TtfScopeValue); SdlError>>) : $Result<TtfScopeValue; SdlError>,false,err,true
+dassdl3/sdl3_ttf_boost.das,58,create_renderer_text_engine,def public create_renderer_text_engine(renderer : SDL_Renderer?),false,"err,move_ok",false
+dassdl3/sdl3_ttf_boost.das,64,with_renderer_text_engine,def public with_renderer_text_engine(renderer : SDL_Renderer?; blk : block<(value : TTF_TextEngine?) : $Result<auto(TtfScopeValue); SdlError>>) : $Result<TtfScopeValue; SdlError>,false,err,true
+dassdl3/sdl3_ttf_boost.das,77,create_surface_text_engine,def public create_surface_text_engine(),false,"err,move_ok",false
+dassdl3/sdl3_ttf_boost.das,83,with_surface_text_engine,def public with_surface_text_engine(blk : block<(value : TTF_TextEngine?) : $Result<auto(TtfScopeValue); SdlError>>) : $Result<TtfScopeValue; SdlError>,false,err,true
+dassdl3/sdl3_ttf_boost.das,96,create_gpu_text_engine,def public create_gpu_text_engine(device : SDL_GPUDevice?),false,"err,move_ok",false
+dassdl3/sdl3_ttf_boost.das,102,with_gpu_text_engine,def public with_gpu_text_engine(device : SDL_GPUDevice?; blk : block<(value : TTF_TextEngine?) : $Result<auto(TtfScopeValue); SdlError>>) : $Result<TtfScopeValue; SdlError>,false,err,true
+dassdl3/sdl3_ttf_boost.das,115,create_text,def public create_text(engine : TTF_TextEngine?; font : TTF_Font?; text : string),false,"err,move_ok",false
+dassdl3/sdl3_ttf_boost.das,121,with_text,def public with_text(engine : TTF_TextEngine?; font : TTF_Font?; text : string; blk : block<(value : TTF_Text?) : $Result<auto(TtfScopeValue); SdlError>>) : $Result<TtfScopeValue; SdlError>,false,err,true
+dassdl3/sdl3_ttf_boost.das,134,render_text_surface,def public render_text_surface(font : TTF_Font?; text : string; color : SDL_Color),false,"err,move_ok",false
+dassdl3/sdl3_ttf_boost.das,141,with_text_surface,def public with_text_surface(font : TTF_Font?; text : string; color : SDL_Color; blk : block<(value : SDL_Surface?) : $Result<auto(TtfScopeValue); SdlError>>) : $Result<TtfScopeValue; SdlError>,false,err,true
+dassdl3/sdl3_ttf_boost.das,154,text_size,def public text_size(text : TTF_Text?),false,"err,ok",false
+dassdl3/sdl3_ttf_boost.das,160,string_size,def public string_size(font : TTF_Font?; text : string),false,"err,ok",false
+dassdl3/sdl3_ttf_boost.das,166,set_text,def public set_text(text : TTF_Text?; value : string),false,sdl_status,false
+dassdl3/sdl3_ttf_boost.das,170,draw_text,"def public draw_text(text : TTF_Text?; x, y : float)",false,sdl_status,false
+dassdl3/sdl3_ttf_boost.das,174,draw_text,"def public draw_text(text : TTF_Text?; x, y : int; surface : SDL_Surface?)",false,sdl_status,false
+dassdl3/sdl3_ttf_boost.das,178,set_text_color,def public set_text_color(text : TTF_Text?; color : uint4),false,sdl_status,false
+dassdl3/sdl3_ttf_boost.das,187,glyph_metrics,def public glyph_metrics(font : TTF_Font?; codepoint : uint),false,"err,ok",false
+dassdl3/sdl3_ttf_boost.das,195,set_font_direction,def public set_font_direction(font : TTF_Font?; direction : TTF_Direction),false,sdl_status,false
+dassdl3/sdl3_ttf_boost.das,199,set_text_direction,def public set_text_direction(text : TTF_Text?; direction : TTF_Direction),false,sdl_status,false
+dassdl3/sdl3_ttf_boost.das,203,set_font_script,def public set_font_script(font : TTF_Font?; script : string),false,sdl_status,false
+dassdl3/sdl3_ttf_boost.das,207,set_text_script,def public set_text_script(text : TTF_Text?; script : string),false,sdl_status,false
+dassdl3/sdl3_ttf_boost.das,211,set_font_language,def public set_font_language(font : TTF_Font?; language : string),false,sdl_status,false
+dassdl3/sdl3_ttf_boost.das,225,gpu_text_draw_data,def public gpu_text_draw_data(text : TTF_Text?),false,"err,move_ok",false
+dassdl3/sdl3_video_boost.das,5,displays,def public displays(var output : array<uint>),true,sdl_status,false
+dassdl3/sdl3_video_boost.das,6,windows,def public windows(var output : array<SDL_Window?>),true,sdl_status,false
+dassdl3/sdl3_video_boost.das,7,display_modes,def public display_modes(display : uint; var output : array<SDL_DisplayMode>),true,sdl_status,false
+dassdl3/sdl3_video_boost.das,10,display_name,def public display_name(display : uint),false,"err,ok",false
+dassdl3/sdl3_video_boost.das,15,window_title,def public window_title(window : SDL_Window?),false,"err,ok",false
+dassdl3/sdl3_video_boost.das,20,window_size,"def public window_size(window : SDL_Window?; var w, h : int&)",true,sdl_status,false
+dassdl3/sdl3_video_boost.das,21,window_size_pixels,"def public window_size_pixels(window : SDL_Window?; var w, h : int&)",true,sdl_status,false
+dassdl3/sdl3_video_boost.das,22,window_position,"def public window_position(window : SDL_Window?; var x, y : int&)",true,sdl_status,false
+dassdl3/sdl3_video_boost.das,24,displays,def public displays(),false,"err,move_ok",false
+dassdl3/sdl3_video_boost.das,32,windows,def public windows(),false,"err,move_ok",false
+dassdl3/sdl3_video_boost.das,40,display_modes,def public display_modes(display : uint),false,"err,move_ok",false
+dassdl3/sdl3_video_boost.das,48,window_size,def public window_size(window : SDL_Window?),false,"err,move_ok",false
+dassdl3/sdl3_video_boost.das,57,window_size_pixels,def public window_size_pixels(window : SDL_Window?),false,"err,move_ok",false
+dassdl3/sdl3_video_boost.das,66,window_position,def public window_position(window : SDL_Window?),false,"err,move_ok",false
+dassdl3/sdl3_vulkan_metal.das,6,vulkan_instance_extensions,def public vulkan_instance_extensions(),false,"err,move_ok",false
+dassdl3/sdl3_vulkan_metal.das,11,with_vulkan_library,def public with_vulkan_library(path : string; body : block<() : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_vulkan_metal.das,19,create_vulkan_surface,def public create_vulkan_surface(window : SDL_Window?; instance : VkInstance_T?; allocator : VkAllocationCallbacks const? = null),false,"err,move_ok",false
+dassdl3/sdl3_vulkan_metal.das,25,destroy_vulkan_surface,def public destroy_vulkan_surface(instance : VkInstance_T?; var surface : VkSurfaceKHR_T?&; allocator : VkAllocationCallbacks const? = null),true,,false
+dassdl3/sdl3_vulkan_metal.das,28,with_vulkan_surface,def public with_vulkan_surface(window : SDL_Window?; instance : VkInstance_T?; allocator : VkAllocationCallbacks const?; body : block<(surface : VkSurfaceKHR_T?) : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_vulkan_metal.das,37,with_vulkan_surface,def public with_vulkan_surface(window : SDL_Window?; instance : VkInstance_T?; body : block<(surface : VkSurfaceKHR_T?) : $Result<auto(T); SdlError>>),false,,false
+dassdl3/sdl3_vulkan_metal.das,41,create_metal_view,def public create_metal_view(window : SDL_Window?),false,"err,move_ok",false
+dassdl3/sdl3_vulkan_metal.das,46,metal_layer,def public metal_layer(view : void?),false,"err,move_ok",false
+dassdl3/sdl3_vulkan_metal.das,51,with_metal_view,def public with_metal_view(window : SDL_Window?; body : block<(view : void?) : $Result<auto(T); SdlError>>),false,err,true
+dassdl3/sdl3_window_boost.das,8,with_window_properties,def public with_window_properties(props : uint; blk : block<(window : SDL_Window?) : $Result<auto(TT); SdlError> >),false,err,true
+dassdl3/sdl3_window_boost.das,17,with_popup_window,"def public with_popup_window(parent : SDL_Window?; x, y, w, h : int; flags : uint64; blk : block<(window : SDL_Window?) : $Result<auto(TT); SdlError> >)",false,err,true
+dassdl3/sdl3_window_boost.das,27,window_minimum_size,"def public window_minimum_size(window : SDL_Window?; var w, h : int&)",true,sdl_status,false
+dassdl3/sdl3_window_boost.das,30,window_maximum_size,"def public window_maximum_size(window : SDL_Window?; var w, h : int&)",true,sdl_status,false
+dassdl3/sdl3_window_boost.das,33,window_aspect_ratio,"def public window_aspect_ratio(window : SDL_Window?; var low, high : float&)",true,sdl_status,false
+dassdl3/sdl3_window_boost.das,37,window_minimum_size,def public window_minimum_size(window : SDL_Window?),false,"err,move_ok",false
+dassdl3/sdl3_window_boost.das,46,window_maximum_size,def public window_maximum_size(window : SDL_Window?),false,"err,move_ok",false
+dassdl3/sdl3_window_boost.das,55,window_aspect_ratio,def public window_aspect_ratio(window : SDL_Window?),false,"err,move_ok",false
+dassdl3/sdl3_window_boost.das,71,with_window,def public with_window(settings : WindowOptions; blk : block<(window : SDL_Window?) : $Result<auto(TT); SdlError>>),false,err,false
+dassdl3/sdl3_window_boost.das,85,window_options,def public window_options(title : string; size : int2) : WindowOptions,false,,false
+dassdl3/sdl3_window_boost.das,89,window_flags,def public window_flags(var settings : WindowOptions; flags : uint64; enabled : bool = true) : WindowOptions,true,,false
+dassdl3/sdl3_window_boost.das,94,window_position,def public window_position(var settings : WindowOptions; position : int2) : WindowOptions,true,,false
+dassdl3/sdl3_window_io_boost.das,8,with_surface,"def public with_surface(w, h : int; format : SDL_PixelFormat; blk : block<(surface : SDL_Surface?) : $Result<auto(TT); SdlError> >)",false,err,true
+dassdl3/sdl3_window_io_boost.das,17,window_surface_vsync,def public window_surface_vsync(window : SDL_Window?; var vsync : int&),true,sdl_status,false
+dassdl3/sdl3_window_io_boost.das,20,update_window_rects,def public update_window_rects(window : SDL_Window?; rects : array<SDL_Rect>),false,sdl_status,false
+dassdl3/sdl3_window_io_boost.das,23,window_icc_profile,def public window_icc_profile(window : SDL_Window?; var bytes : array<uint8>),true,sdl_status,false
+dassdl3/sdl3_window_io_boost.das,27,window_surface_vsync,def public window_surface_vsync(window : SDL_Window?),false,"err,move_ok",false
+dassdl3/sdl3_window_io_boost.das,35,window_icc_profile,def public window_icc_profile(window : SDL_Window?),false,"err,move_ok",false

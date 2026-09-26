@@ -6,7 +6,9 @@ def show_time : SdlStatus {
     var utc : SDL_DateTime
     current_time(ticks) |> sdl_try
     time_to_date(ticks, utc) |> sdl_try
-    log_message(int(SDL_LogCategory.LOG_CATEGORY_APPLICATION), SDL_LogPriority.LOG_PRIORITY_INFO,
+    log_message(
+        int(SDL_LogCategory.LOG_CATEGORY_APPLICATION),
+        SDL_LogPriority.LOG_PRIORITY_INFO,
         "UTC: {utc.year}-{utc.month}-{utc.day}, literal percent: 100%")
     let start = SDL_GetPerformanceCounter()
     SDL_Delay(1u)

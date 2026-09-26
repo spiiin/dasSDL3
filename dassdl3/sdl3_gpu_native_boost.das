@@ -317,6 +317,14 @@ def public push_native_gpu_vertex_uniforms(command : SDL_GPUCommandBuffer?; slot
     return sdl_status(SDL_PushGPUVertexUniformFloats(command, slot, values), "SDL_PushGPUVertexUniformFloats")
 }
 
+def public push_native_gpu_fragment_uniforms(command : SDL_GPUCommandBuffer?; slot : uint; values : array<float>) {
+    return sdl_status(SDL_PushGPUFragmentUniformFloats(command, slot, values), "SDL_PushGPUFragmentUniformFloats")
+}
+
+def public push_native_gpu_compute_uniforms(command : SDL_GPUCommandBuffer?; slot : uint; values : array<float>) {
+    return sdl_status(SDL_PushGPUComputeUniformFloats(command, slot, values), "SDL_PushGPUComputeUniformFloats")
+}
+
 // Native descriptor builder. Creation and validation stay with SDL.
 def public gpu_texture(width, height : uint; format : SDL_GPUTextureFormat; usage : uint) : SDL_GPUTextureCreateInfo {
     return SDL_GPUTextureCreateInfo(texture_type = SDL_GPUTextureType.TEXTURETYPE_2D,

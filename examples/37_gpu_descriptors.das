@@ -4,7 +4,10 @@ require dassdl3/sdl3_gpu_native_boost
 // Native descriptors and their builder. No GPU resources are created here.
 [export]
 def main(smoke : bool) : int {
-    var texture = gpu_texture(256u, 128u, SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM,
+    var texture = gpu_texture(
+        256u,
+        128u,
+        SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM,
         SDL_GPU_TEXTUREUSAGE_SAMPLER | SDL_GPU_TEXTUREUSAGE_COLOR_TARGET)
     verify(texture.props == 0u)
     let bytes = SDL_CalculateGPUTextureFormatSize(texture.format, texture.width, texture.height, texture.layer_count_or_depth)
@@ -16,15 +19,13 @@ def main(smoke : bool) : int {
         location = 0u,
         buffer_slot = vertex.slot,
         format = SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT3,
-        offset = 0u
-    )
+        offset = 0u)
 
     var raster = SDL_GPURasterizerState(
         fill_mode = SDL_GPUFillMode.FILLMODE_FILL,
         cull_mode = SDL_GPUCullMode.CULLMODE_BACK,
         front_face = SDL_GPUFrontFace.FRONTFACE_COUNTER_CLOCKWISE,
-        enable_depth_clip = true
-    )
+        enable_depth_clip = true)
     var samples = SDL_GPUMultisampleState(sample_count = SDL_GPUSampleCount.SAMPLECOUNT_1)
     verify(samples.sample_mask == 0u && !samples.enable_mask)
 
