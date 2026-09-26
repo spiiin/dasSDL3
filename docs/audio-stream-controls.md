@@ -24,24 +24,19 @@ adds no clamping or alternate resampling implementation.
 
 ## Channel maps
 
-Arrays are copied synchronously by SDL when set, and raw getters allocate arrays that require SDL_free (subject to the pinned
-defect below). An input map is recorded with queued
-input; changing it does not retroactively reorder earlier data. Output maps apply
-when retrieving data. Entries select channels; duplicates duplicate a source and
--1 mutes that output channel. They cannot change the channel count.
+Arrays are copied synchronously by SDL when set. Raw getters allocate custom
+maps that require SDL_free; default maps return NULL with the channel count.
+An input map is recorded with queued input; changing it does not retroactively
+reorder earlier data. Output maps apply when retrieving data. Entries select
+channels; duplicates duplicate a source and -1 mutes that output channel.
+They cannot change the channel count.
 
-The pinned `SDL_GetAudioStreamInputChannelMap` and output counterpart are unsafe
-for default maps: they pass a null `stream->src_chmap` / `dst_chmap` to
-SDL_ChannelMapDup, which unconditionally memcpy's it. The native test reproduced
-a process crash immediately after resetting a map. Query only a known, explicitly
-set non-default map while excluding concurrent reset/format changes. An identity
-map may normalize to NULL and is not sufficient for this precondition.
-
-Raw declarations are preserved and tested with non-default maps. Safe copied
-boost getters are deferred: there is no public SDL query to discover whether the
-internal map is null. No private struct-layout access, shadow registry or vendor
-patch is added. A future SDL fix can enable Result/Option copied getters. The
-AudioDevice map getter has a separate null guard and is unaffected.
+SDL 3.4.16 fixes the old 3.2.18 default-map crash: SDL_ChannelMapDup now checks
+for a null source. Tests cover both custom allocated maps and default NULL maps
+with no error. Copied boost getters remain a follow-up API addition; the old
+upstream crash no longer blocks them. A copied getter must distinguish a normal
+default map from allocation failure. No private struct-layout access or shadow
+registry is needed.
 
 Setters require exactly the current side's channel count. Empty arrays do not
 mean reset. Use `reset_audio_stream_input_channel_map(stream,channels)` or its

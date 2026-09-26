@@ -1,16 +1,17 @@
 # Покрытие SDL3
 
-Baseline: SDL 3.2.18, Windows x64/MSVC. Generated: 961; adapted: 14;
-pending: 251 of 1226 functions. GPU: 92 generated / 0 adapted / 0 pending.
+Baseline: SDL 3.4.16, Windows x64/MSVC. Generated: 965; adapted: 14;
+pending: 284 of 1263 functions. GPU: 95 generated / 0 adapted / 0 pending.
+See [upgrade and new API queue](sdl-3.4-upgrade.md).
 `adapted` means a documented partial adapter, not full raw API coverage.
 See [API boundary](gpu-api-boundary.md) and the generated header census.
 
 | Подсистема / сценарий | Raw API | Идиоматичный слой | Проверка / оставшаяся работа |
 | --- | --- | --- | --- |
-| Thread / Atomic / Process / LoadSO | 12/12 + 15/15 + 9/9 + 3/3 generated | Native callbacks, refs, owners, copied process output | [Threads](thread-atomic.md), [Processes](process-loadso.md) |
+| Thread / Atomic / Process / LoadSO | 12/12 + 16/16 + 9/9 + 3/3 generated | Native callbacks, refs, owners, copied process output | [Threads](thread-atomic.md), [Processes](process-loadso.md) |
 | System / Power / Locale / Dialog / Tray | 13/13 + 1/1 + 1/1 + 4/4 + 23/23 generated | Native callbacks; copied locales; tray scopes | [Platform contracts and validation limits](platform-services.md) |
 | Synchronization (P7) | 28/28 generated | Result owners, deferred locks, bool try/timeouts, InitState refs | [Contracts and thread limits](synchronization.md) |
-| Audio final API | 9 additional generated; Audio raw 56/56 | Native callback addresses, WAV IO and PCM arrays | [Contracts](audio-final-api.md); known map getter/postmix exceptions |
+| Audio final API | 9 additional generated; Audio raw 56/58 | Native callback addresses, WAV IO and PCM arrays | [Contracts](audio-final-api.md); known map getter/postmix exceptions |
 | Audio stream controls | 12 additional generated | Format refs, map setters, gain/ratio and deferred lock | [Contracts](audio-stream-controls.md); PCM and cross-thread unlock tests |
 | Camera | 15/15 generated | Copied discovery, Result/Option frames and defer scopes | [Contracts and hardware limits](camera.md) |
 | Audio devices | 21 additional generated; Audio total 56/56 | Copied discovery, logical scopes, binding and dummy recording | [Contracts](audio-devices.md); stream/callback/conversion connected; physical-device checks remain |
@@ -19,7 +20,7 @@ See [API boundary](gpu-api-boundary.md) and the generated header census.
 | IOStream | 46 generated / 1 fixed-text adapted / 1 va_list pending | Bounded byte transfers, counts/status, scalar refs and defer scopes | [Contracts and pinned bulk IO limits](iostream.md) |
 | Filesystem | 11/11 generated | Copied paths/lists and Result helpers | [Contracts](filesystem.md) |
 | Rect/Clipboard/hit-test | 18 + 11 + 1 generated | Ref/copy and lexical callback scopes | [Contracts](rect-clipboard-hittest.md); GL/EGL moved to P8 |
-| Surface/Pixels | Surface 58/58, Pixels 11/11 raw | Refs, packed arrays, copied pointer list, defer scopes | Native function execution, pixels and ownership; [contract](surface-pixels.md) |
+| Surface/Pixels | Surface 58/65, Pixels 11/11 raw | Refs, packed arrays, copied pointer list, defer scopes | Native function execution, pixels and ownership; [contract](surface-pixels.md) |
 | Surface state | 16 generated | Scalar/rect refs | State, key/modulation and clip pixels; [contract](surface-state.md) |
 | Renderer final APIs | 5 generated, fixed-text variadic adapter | Geometry arrays, event refs | [Interop limitations](renderer-final-api.md) |
 | Renderer operations | 10 новых generated; ReadPixels больше не adapted | Ref draw/readback/VSync, creation scopes | Spatial pixels, clipped readback, lifetime; [контракт](renderer-operations.md) |
@@ -53,7 +54,7 @@ See [API boundary](gpu-api-boundary.md) and the generated header census.
 | Геймпады | Нет | Нет | Отдельный этап |
 | Callbacks, потоки | Нет | Нет | Нужен контракт времени жизни замыканий и потока вызова |
 | Файловый IO, остальные подсистемы | Нет | Нет | Отдельные этапы |
-| GPU native API | Все 92 функции SDL_gpu.h активного Windows профиля | Массивы/ref, creation data, native defer scopes | Raw: 92 Vulkan / 90 D3D12; debug-group исключения явные |
+| GPU native API | Все 95 функций SDL_gpu.h активного Windows профиля | Массивы/ref, creation data, native defer scopes | Raw: 95 Vulkan / 95 D3D12; исключения debug groups сняты в 3.4.16 |
 | GPU attachments/compute/transfers | Render/copy/compute, swapchain/fences, storage/samplers/uniforms | Public примеры 48–50 без unsafe | MRT/MSAA/depth/stencil, offsets/cycling, CPU pixel/byte references |
 | GPU checked subset | Типизированные distinct IDs поверх uint64, ограниченные formats/layouts | Примеры 23–46 | Ограничения конкретного checked helper не ограничивают generated raw API |
 

@@ -16,6 +16,7 @@ set(DAS_TOOLS_DISABLED OFF CACHE BOOL "Build the standalone language executable"
 option(DASSDL3_WITH_IMGUI "Build the optional daScript ImGui + SDL Renderer example host" OFF)
 option(DASSDL3_WITH_IMAGE "Build the optional SDL_image bindings" OFF)
 option(DASSDL3_WITH_TTF "Build the optional SDL_ttf bindings" OFF)
+option(DASSDL3_WITH_NET "Build the optional SDL_net bindings" OFF)
 if(DASSDL3_WITH_IMGUI)
     # Upstream's ImGui CMake requires these modules even when its GLFW host
     # is unused. Keep the dependencies scoped to this opt-in configuration.
@@ -40,7 +41,7 @@ set(SDL_TEST_LIBRARY OFF CACHE BOOL "" FORCE)
 set(SDL_TESTS OFF CACHE BOOL "" FORCE)
 FetchContent_Declare(SDL3
     GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
-    GIT_TAG release-3.2.18
+    GIT_TAG release-3.4.16
     GIT_SHALLOW TRUE)
 FetchContent_MakeAvailable(SDL3)
 if(DASSDL3_WITH_IMAGE)
@@ -116,5 +117,14 @@ if(DASSDL3_WITH_TTF)
         URL_HASH SHA256=ff6b81d3dc39d843cc3ead6dedd68043a79513d266792ea89445547ef4e9b073
         DOWNLOAD_EXTRACT_TIMESTAMP TRUE)
     FetchContent_MakeAvailable(SDL3_ttf)
+endif()
+if(DASSDL3_WITH_NET)
+    set(BUILD_SHARED_LIBS OFF)
+    set(SDLNET_SAMPLES OFF CACHE BOOL "" FORCE)
+    FetchContent_Declare(SDL3_net
+        URL https://github.com/libsdl-org/SDL_net/archive/refs/tags/release-3.2.0.tar.gz
+        URL_HASH SHA256=195036ba82322e03fd3562149634fb582e5e9298ccc6cb2c5e362bf40c5018be
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE)
+    FetchContent_MakeAvailable(SDL3_net)
 endif()
 add_subdirectory(src)

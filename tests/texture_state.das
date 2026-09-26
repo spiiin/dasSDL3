@@ -103,7 +103,7 @@ def main(smoke : bool) : int {
     var r=9.0;var g=9.0;var b=9.0;var a=9.0;var mode=SDL_ScaleMode.SCALEMODE_INVALID
     verify(!is_ok(texture_color_mod(null,r,g,b)) && r==1.0 && g==1.0 && b==1.0)
     verify(!is_ok(texture_alpha_mod(null,a)) && a==1.0)
-    verify(!is_ok(texture_scale_mode(null,mode)) && mode==SDL_ScaleMode.SCALEMODE_LINEAR)
+    verify(!is_ok(texture_scale_mode(null,mode)) && mode==SDL_ScaleMode.SCALEMODE_INVALID)
     verify(SDL_GetRendererFromTexture(null)==null && SDL_GetTextureProperties(null)==0u)
     print("texture state: creation, modulation pixels and ownership passed\n")
     return 0

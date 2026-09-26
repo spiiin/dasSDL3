@@ -3279,7 +3279,7 @@
     "module": "sdl3_camera_boost",
     "name": "camera_permission_state",
     "contract": "value",
-    "signature": "def public camera_permission_state(camera : SDL_Camera?) : int"
+    "signature": "def public camera_permission_state(camera : SDL_Camera?) : SDL_CameraPermissionState"
   },
   {
     "module": "sdl3_camera_boost",
@@ -4241,5 +4241,173 @@
     "contract": "Result",
     "signature": "def public gpu_text_draw_data(text : TTF_Text?)",
     "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "with_net",
+    "contract": "Result",
+    "signature": "def public with_net(blk : block<() : $Result<auto(NetScopeValue); SdlError>>) : $Result<NetScopeValue; SdlError>"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "resolve_hostname",
+    "contract": "Result",
+    "signature": "def public resolve_hostname(host : string)"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "with_net_address",
+    "contract": "Result",
+    "signature": "def public with_net_address(host : string; blk : block<(value : NET_Address?) : $Result<auto(NetScopeValue); SdlError>>) : $Result<NetScopeValue; SdlError>"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "create_net_client",
+    "contract": "Result",
+    "signature": "def public create_net_client(address : NET_Address?; port : uint16; props : uint = 0u)"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "with_net_client",
+    "contract": "Result",
+    "signature": "def public with_net_client(address : NET_Address?; port : uint16; props : uint; blk : block<(value : NET_StreamSocket?) : $Result<auto(NetScopeValue); SdlError>>) : $Result<NetScopeValue; SdlError>"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "create_net_server",
+    "contract": "Result",
+    "signature": "def public create_net_server(address : NET_Address?; port : uint16; props : uint = 0u)"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "with_net_server",
+    "contract": "Result",
+    "signature": "def public with_net_server(address : NET_Address?; port : uint16; props : uint; blk : block<(value : NET_Server?) : $Result<auto(NetScopeValue); SdlError>>) : $Result<NetScopeValue; SdlError>"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "create_net_datagram_socket",
+    "contract": "Result",
+    "signature": "def public create_net_datagram_socket(address : NET_Address?; port : uint16; props : uint = 0u)"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "with_net_datagram_socket",
+    "contract": "Result",
+    "signature": "def public with_net_datagram_socket(address : NET_Address?; port : uint16; props : uint; blk : block<(value : NET_DatagramSocket?) : $Result<auto(NetScopeValue); SdlError>>) : $Result<NetScopeValue; SdlError>"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "address_ready",
+    "contract": "Result",
+    "signature": "def public address_ready(address : NET_Address?)"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "wait_address",
+    "contract": "Result",
+    "signature": "def public wait_address(address : NET_Address?; timeout_ms : int)"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "connection_ready",
+    "contract": "Result",
+    "signature": "def public connection_ready(socket : NET_StreamSocket?)"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "wait_connection",
+    "contract": "Result",
+    "signature": "def public wait_connection(socket : NET_StreamSocket?; timeout_ms : int)"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "address_string",
+    "contract": "Result",
+    "signature": "def public address_string(address : NET_Address?)"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "address_bytes",
+    "contract": "Result",
+    "signature": "def public address_bytes(address : NET_Address?)"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "accept_client",
+    "contract": "Result",
+    "signature": "def public accept_client(server : NET_Server?)"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "write_stream",
+    "contract": "Result",
+    "signature": "def public write_stream(socket : NET_StreamSocket?; bytes : array<uint8>)"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "read_stream",
+    "contract": "Result",
+    "signature": "def public read_stream(socket : NET_StreamSocket?; var bytes : array<uint8>)"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "send_datagram",
+    "contract": "Result",
+    "signature": "def public send_datagram(socket : NET_DatagramSocket?; address : NET_Address?; port : uint; bytes : array<uint8>)"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "receive_datagram",
+    "contract": "Result",
+    "signature": "def public receive_datagram(socket : NET_DatagramSocket?)"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "wait_net_input",
+    "contract": "Result",
+    "signature": "def public wait_net_input(socket : NET_Server?; timeout_ms : int)"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "wait_net_input",
+    "contract": "Result",
+    "signature": "def public wait_net_input(socket : NET_StreamSocket?; timeout_ms : int)"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "wait_net_input",
+    "contract": "Result",
+    "signature": "def public wait_net_input(socket : NET_DatagramSocket?; timeout_ms : int)"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "pending_stream_writes",
+    "contract": "Result",
+    "signature": "def public pending_stream_writes(socket : NET_StreamSocket?)"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "drain_stream",
+    "contract": "Result",
+    "signature": "def public drain_stream(socket : NET_StreamSocket?; timeout_ms : int)"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "with_net_client",
+    "contract": "Result",
+    "signature": "def public with_net_client(address : NET_Address?; port : uint16; blk : block<(value : NET_StreamSocket?) : $Result<auto(NetScopeValue); SdlError>>) : $Result<NetScopeValue; SdlError>"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "with_net_server",
+    "contract": "Result",
+    "signature": "def public with_net_server(address : NET_Address?; port : uint16; blk : block<(value : NET_Server?) : $Result<auto(NetScopeValue); SdlError>>) : $Result<NetScopeValue; SdlError>"
+  },
+  {
+    "module": "sdl3_net_boost",
+    "name": "with_net_datagram_socket",
+    "contract": "Result",
+    "signature": "def public with_net_datagram_socket(address : NET_Address?; port : uint16; blk : block<(value : NET_DatagramSocket?) : $Result<auto(NetScopeValue); SdlError>>) : $Result<NetScopeValue; SdlError>"
   }
 ]

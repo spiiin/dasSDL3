@@ -41,7 +41,7 @@ def main(smoke : bool) : int {
                 }
             }
             verify(is_ok(readback))
-            return with_window("Swapchain Result",32,32,SDL_WINDOW_HIDDEN) $(window : SDL_Window?) {
+            return with_window("Swapchain Result",32,32,0ul) $(window : SDL_Window?) {
                 return with_gpu_window(device,window) {
                     let frame=with_native_gpu_swapchain(device,window) $(command : SDL_GPUCommandBuffer?; var texture : SDL_GPUTexture?; w,h : uint) {
                         verify(texture!=null && w>0u && h>0u)

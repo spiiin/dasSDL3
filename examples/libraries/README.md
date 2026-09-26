@@ -151,3 +151,13 @@ ctest --test-dir build/ninja -R '^sdl3_(examples_libraries_05_ttf_gpu|tests_ttf_
 The optional `ttf_aot_runner` parity host includes example 05 and these contract
 tests; select `(baseline|cppgenbind|aot)_(examples_libraries_05_ttf_gpu|tests_ttf_gpu)_`
 in its CTest build. See [GPU ownership contract](../../docs/sdl-ttf.md#gpu-text).
+
+## 06 — SDL_net
+
+Enable `DASSDL3_WITH_NET=ON` (independent of the other optional libraries). [06_net.das](06_net.das) exchanges binary TCP and UDP data over 127.0.0.1. Ports 39173/39174 must be free.
+
+```powershell
+.\build\ninja\bin\dasSDL3_libraries_runner.exe .\examples\libraries\06_net.das
+```
+
+[SDL_net contracts](../../docs/sdl-net.md) describe async readiness, ownership, array copies and loopback/parity tests.

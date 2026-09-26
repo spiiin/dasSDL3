@@ -100,8 +100,9 @@ between passes, and the first pass exercises attachment cycling.
 SDL 3.2.18 D3D12's depth sample-count query uses the SRV format instead of the DSV
 format and reports false on this machine. The test checks depth format support,
 then actual 4x creation and pixel results with validation enabled; the binding
-does not change SDL's query result. The D3D12 debug-group and combined-buffer
-limitations in gpu-raw-tests.md also remain documented.
+does not change SDL's query result. The combined-buffer limitation remains
+documented in gpu-raw-tests.md. The old D3D12 debug-group exclusion was removed
+when updating to SDL 3.4.16; see sdl-3.4-upgrade.md.
 
 Shader maintenance: `tools/build_native_gpu_shaders.py --dxc <path> --spirv-val
 <path> [--check]`. Normal builds use the committed SPIR-V/DXIL files; no shader

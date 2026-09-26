@@ -22,6 +22,13 @@ def main(smoke : bool) : int {
         print("RAW_CALL SDL_CreateGPUDeviceWithProperties\n")
         SDLTest_raw_destroy_properties(props)
         verify(device != null)
+        verify(SDL_GetGPUDeviceProperties(device) != 0u)
+        print("RAW_CALL SDL_GetGPUDeviceProperties\n")
+        let pixel_format = SDL_GetPixelFormatFromGPUTextureFormat(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM)
+        verify(pixel_format != SDL_PixelFormat.PIXELFORMAT_UNKNOWN)
+        print("RAW_CALL SDL_GetPixelFormatFromGPUTextureFormat\n")
+        verify(SDL_GetGPUTextureFormatFromPixelFormat(pixel_format) == SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM)
+        print("RAW_CALL SDL_GetGPUTextureFormatFromPixelFormat\n")
         let dxil = SDL_GetGPUDeviceDriver(device) == "direct3d12"
         print("RAW_CALL SDL_GetGPUDeviceDriver\n")
         verify(SDL_GetGPUShaderFormats(device) != 0u)
@@ -95,14 +102,10 @@ def main(smoke : bool) : int {
         print("RAW_CALL SDL_AcquireGPUCommandBuffer\n")
         SDL_InsertGPUDebugLabel(command,"raw transfer/render/compute")
         print("RAW_CALL SDL_InsertGPUDebugLabel\n")
-        if (!dxil) {
-            SDL_PushGPUDebugGroup(command,"raw group")
-            print("RAW_CALL SDL_PushGPUDebugGroup\n")
-            SDL_PopGPUDebugGroup(command)
-            print("RAW_CALL SDL_PopGPUDebugGroup\n")
-        } else {
-            print("RAW_UNSUPPORTED SDL_PushGPUDebugGroup SDL_PopGPUDebugGroup pinned SDL 3.2.18 D3D12 metadata defect\n")
-        }
+        SDL_PushGPUDebugGroup(command,"raw group")
+        print("RAW_CALL SDL_PushGPUDebugGroup\n")
+        SDL_PopGPUDebugGroup(command)
+        print("RAW_CALL SDL_PopGPUDebugGroup\n")
         var copy_pass=SDL_BeginGPUCopyPass(command); verify(copy_pass!=null)
         print("RAW_CALL SDL_BeginGPUCopyPass\n")
         var transfer = SDL_GPUTransferBufferLocation(transfer_buffer = upload)

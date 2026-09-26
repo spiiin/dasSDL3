@@ -9,8 +9,8 @@ def read_one_frame(camera : SDL_Camera?) : $Result<SdlUnit; SdlError> {
     while(SDL_GetTicks()<deadline) {
         SDL_PumpEvents()
         let permission=camera |> camera_permission_state()
-        if(permission==0) {SDL_Delay(10u);continue}
-        if(permission<0) {
+        if(permission==SDL_CameraPermissionState.PENDING) {SDL_Delay(10u);continue}
+        if(permission==SDL_CameraPermissionState.DENIED) {
             return err(SdlError(operation="camera_permission_state",message="Camera access denied"),type<SdlUnit>)
         }
         var available <- camera |> with_camera_frame() $(frame) {

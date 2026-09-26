@@ -19,7 +19,7 @@ def main(smoke : bool) : int {
         caught = true
     }
     verify(caught && first == "first" && second == "second", "recover saw stale panic")
-    verify(SDL_GetVersion() == 3002018)
+    verify(SDL_GetVersion() == 3004016)
     print("Recover sees current panic; rethrow reaches outer handler: OK\n")
     return 0
 }

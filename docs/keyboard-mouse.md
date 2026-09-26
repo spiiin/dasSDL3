@@ -1,4 +1,8 @@
-# Keyboard and mouse (SDL 3.2.18)
+# Keyboard and mouse (SDL 3.4.16)
+
+ID 0 denotes the global keyboard or mouse in SDL 3.4. Name queries return
+"Keyboard" / "Mouse", and the copied boost getters return Ok. This differs from
+the invalid-ID behavior in 3.2.18; both native and dummy-driver tests cover it.
 
 All 24 Keyboard and 22 Mouse functions now have generated raw signatures:
 40 were added to the previous six. SDL_Cursor is opaque; SDL_Scancode,

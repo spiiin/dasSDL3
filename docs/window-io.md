@@ -1,6 +1,6 @@
 # Fullscreen, window surfaces and remaining window operations
 
-Pinned SDL 3.2.18, Windows x64/MSVC. Adds 25 generated Video functions and three
+SDL 3.4.16, Windows x64/MSVC (package originally added against 3.2.18). Adds 25 generated Video functions and three
 Surface functions (CreateSurface, FillSurfaceRect, MapSurfaceRGBA). Video now has
 89/109 generated functions; its remaining 20 are GL/EGL, explicitly deferred to P8.
 SetWindowHitTest is covered in [callback contracts](rect-clipboard-hittest.md).
@@ -51,12 +51,11 @@ SDL_GetGrabbedWindow and the grab getters report SDL's active state. Tests use
 hidden, non-focusable windows and release requested grabs immediately. Screensaver
 functions alter SDL's process state; tests restore the previous SDL enabled flag.
 
-## Pinned shape discrepancy and test limits
+## Shape removal and test limits
 
-SDL 3.2.18 documents NULL as removing the window shape, but its SDL_SetWindowShape
-implementation calls SDL_ConvertSurface(NULL), fails and retains the previous
-shape. The binding preserves this behavior; it does not patch SDL or manipulate
-private properties. Valid shape data is copied by SDL and requires a transparent
+SDL 3.4.16 supports SDL_SetWindowShape(window,NULL) to remove the shape; the
+regression test now expects success. This fixes the old 3.2.18 NULL conversion
+failure upstream. Valid shape data is copied by SDL and requires a transparent
 window. Icon/shape input surfaces remain caller-owned.
 
 [window_io.das](../tests/window_io.das) executes all 28 newly generated functions,

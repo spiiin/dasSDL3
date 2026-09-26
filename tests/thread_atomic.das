@@ -23,6 +23,8 @@ def atomics {
     verify(!SDL_CompareAndSwapAtomicU32(safe_addr(u),1u,2u))
     verify(SDL_CompareAndSwapAtomicU32(safe_addr(u),0xffffffffu,9u))
     verify(SDL_GetAtomicU32(safe_addr(u))==9u)
+    verify(SDL_AddAtomicU32(safe_addr(u),2)==9u)
+    verify(SDL_AddAtomicU32(safe_addr(u),-2)==11u)
     verify(atomic_set(u,2u)==9u && atomic_get(u)==2u && atomic_compare_exchange(u,2u,3u))
     var ptr : void?
     let marker=SDLTestThreadAddress(2)

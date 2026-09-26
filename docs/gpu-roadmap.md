@@ -1,6 +1,8 @@
 # P6: complete direct SDL GPU bindings
 
-> Current declaration coverage: all 92 active Windows GPU functions are generated.
+> Current core pin: SDL 3.4.16. See [migration and coverage changes](sdl-3.4-upgrade.md); older 3.2.18 counts below describe the original baseline.
+
+> Current declaration coverage: all 95 active Windows GPU functions are generated.
 > The five native-adapter follow-up steps are implemented and locally validated
 > on Vulkan/D3D12 (Windows x64). See [native guide](gpu-native-boost.md) and
 > [results and remaining limits](gpu-native-validation.md). This is not a
@@ -12,9 +14,10 @@ previous implementation chronology. Do not expand an engine layer to close an AP
 
 ## Current baseline
 
-SDL 3.2.18; Windows x64/MSVC. All 92 active Windows GPU declarations are
-available. Raw execution covers 92 Vulkan calls and 90 D3D12 calls; the two
-D3D12 debug-group calls are excluded for a pinned backend issue.
+SDL 3.4.16; Windows x64/MSVC. All 95 active Windows GPU declarations are
+available. Raw execution covers all 95 on Vulkan and D3D12. The upstream PIX
+implementation removes the old debug-group exclusion (labels may no-op without
+WinPixRuntime). See sdl-3.4-upgrade.md for upgrade validation.
 
 Completed follow-up:
 1. Shader/compute bytecode and file inputs; graphics pipeline descriptor arrays.

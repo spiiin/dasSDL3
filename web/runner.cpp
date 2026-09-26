@@ -78,5 +78,16 @@ void SDL_AppQuit(void * state,SDL_AppResult result) {
         delete s;
     }
     SDL_Quit();Module::Shutdown();
-    EM_ASM({Module.onSessionEnd?.($0);},result==SDL_APP_FAILURE ? 1 : 0);
+    // SDL 3.4.16 creates an empty recording object when opening playback.
+    // Its close path then leaves AudioContext running. After full SDL_Quit no
+    // device may use this context; finish host cleanup without patching SDL.
+    EM_ASM({
+        const audio = Module['SDL3'];
+        if (audio && audio.audioContext) {
+            const context = audio.audioContext;
+            audio.audioContext = undefined;
+            if (context.state !== 'closed') { context.close(); }
+        }
+        Module.onSessionEnd?.($0);
+    },result==SDL_APP_FAILURE ? 1 : 0);
 }

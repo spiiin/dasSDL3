@@ -1,5 +1,8 @@
 # Direct native GPU API
 
+> SDL 3.4.16 update: GPU now has 95 raw functions with no runtime backend
+> exclusions. Historical counts below describe 3.2.18; see [upgrade](sdl-3.4-upgrade.md).
+
 SDL 3.2.18, Windows x64: all 92 active SDL_gpu.h functions are now selected
 in tools/bindings.json. Both generator backends emit the original signatures.
 The two GDK-only suspend/resume declarations are inactive in this profile and

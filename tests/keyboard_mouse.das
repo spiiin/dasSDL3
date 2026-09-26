@@ -21,8 +21,9 @@ def test_input(window : SDL_Window?) {
     verify(length(snapshot) == int(SDL_Scancode.SCANCODE_COUNT))
     let has_keyboard = SDL_HasKeyboard(); let has_mouse = SDL_HasMouse()
     verify(has_keyboard == (length(ids)>0) && has_mouse == (length(mouse_ids)>0))
-    verify(SDL_GetKeyboardNameForID(0u)=="" && SDL_GetMouseNameForID(0u)=="")
-    verify(is_err(keyboard_name(0u)) && is_err(mouse_name(0u)))
+    // SDL 3.4 recognizes ID zero as the global keyboard/mouse.
+    verify(SDL_GetKeyboardNameForID(0u)=="Keyboard" && SDL_GetMouseNameForID(0u)=="Mouse")
+    verify(unwrap(keyboard_name(0u))=="Keyboard" && unwrap(mouse_name(0u))=="Mouse")
     var key_focus = SDL_GetKeyboardFocus(); var pointer_focus = SDL_GetMouseFocus()
     var key_option <- keyboard_focus(); var mouse_option <- mouse_focus()
     verify(is_some(key_option)==(key_focus!=null) && is_some(mouse_option)==(pointer_focus!=null))

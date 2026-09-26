@@ -190,6 +190,8 @@ DAS_BIND_ENUM_CAST(SDL_Sandbox);
 DAS_BASE_BIND_ENUM_GEN(SDL_Sandbox,SDL_Sandbox);
 DAS_BIND_ENUM_CAST(SDL_FileDialogType);
 DAS_BASE_BIND_ENUM_GEN(SDL_FileDialogType,SDL_FileDialogType);
+DAS_BIND_ENUM_CAST(SDL_CameraPermissionState);
+DAS_BASE_BIND_ENUM_GEN(SDL_CameraPermissionState,SDL_CameraPermissionState);
 MAKE_TYPE_FACTORY(SDL_GPUViewport, SDL_GPUViewport);
 MAKE_TYPE_FACTORY(SDL_GPUIndirectDrawCommand, SDL_GPUIndirectDrawCommand);
 MAKE_TYPE_FACTORY(SDL_GPUIndexedIndirectDrawCommand, SDL_GPUIndexedIndirectDrawCommand);
@@ -704,7 +706,7 @@ static_assert(int64_t(SDL_COLORSPACE_BT2020_FULL) == 571483657LL);
 addIEx("COLORSPACE_BT2020_FULL","SDL_COLORSPACE_BT2020_FULL",int64_t(SDL_COLORSPACE_BT2020_FULL),das::LineInfo());
 static_assert(int64_t(SDL_COLORSPACE_RGB_DEFAULT) == 301991328LL);
 addIEx("COLORSPACE_RGB_DEFAULT","SDL_COLORSPACE_RGB_DEFAULT",int64_t(SDL_COLORSPACE_RGB_DEFAULT),das::LineInfo());
-static_assert(int64_t(SDL_COLORSPACE_YUV_DEFAULT) == 570426566LL);
+static_assert(int64_t(SDL_COLORSPACE_YUV_DEFAULT) == 554703046LL);
 addIEx("COLORSPACE_YUV_DEFAULT","SDL_COLORSPACE_YUV_DEFAULT",int64_t(SDL_COLORSPACE_YUV_DEFAULT),das::LineInfo());
 } };
 static_assert(sizeof(SDL_Color) == 4 && alignof(SDL_Color) == 1);
@@ -822,6 +824,8 @@ static_assert(int64_t(SDL_SCALEMODE_NEAREST) == 0LL);
 addIEx("SCALEMODE_NEAREST","SDL_SCALEMODE_NEAREST",int64_t(SDL_SCALEMODE_NEAREST),das::LineInfo());
 static_assert(int64_t(SDL_SCALEMODE_LINEAR) == 1LL);
 addIEx("SCALEMODE_LINEAR","SDL_SCALEMODE_LINEAR",int64_t(SDL_SCALEMODE_LINEAR),das::LineInfo());
+static_assert(int64_t(SDL_SCALEMODE_PIXELART) == 2LL);
+addIEx("SCALEMODE_PIXELART","SDL_SCALEMODE_PIXELART",int64_t(SDL_SCALEMODE_PIXELART),das::LineInfo());
 } };
 static_assert(sizeof(SDL_FlipMode) == 4 && alignof(SDL_FlipMode) == 4);
 class Enumeration_SDL_FlipMode : public das::Enumeration {
@@ -833,6 +837,8 @@ static_assert(int64_t(SDL_FLIP_HORIZONTAL) == 1LL);
 addIEx("FLIP_HORIZONTAL","SDL_FLIP_HORIZONTAL",int64_t(SDL_FLIP_HORIZONTAL),das::LineInfo());
 static_assert(int64_t(SDL_FLIP_VERTICAL) == 2LL);
 addIEx("FLIP_VERTICAL","SDL_FLIP_VERTICAL",int64_t(SDL_FLIP_VERTICAL),das::LineInfo());
+static_assert(int64_t(SDL_FLIP_HORIZONTAL_AND_VERTICAL) == 3LL);
+addIEx("FLIP_HORIZONTAL_AND_VERTICAL","SDL_FLIP_HORIZONTAL_AND_VERTICAL",int64_t(SDL_FLIP_HORIZONTAL_AND_VERTICAL),das::LineInfo());
 } };
 static_assert(sizeof(SDL_CameraSpec) == 24 && alignof(SDL_CameraSpec) == 4);
 namespace das { struct SDL_CameraSpecAnnotation : ManagedStructureAnnotation<SDL_CameraSpec, false> {
@@ -861,6 +867,17 @@ static_assert(int64_t(SDL_CAMERA_POSITION_FRONT_FACING) == 1LL);
 addIEx("CAMERA_POSITION_FRONT_FACING","SDL_CAMERA_POSITION_FRONT_FACING",int64_t(SDL_CAMERA_POSITION_FRONT_FACING),das::LineInfo());
 static_assert(int64_t(SDL_CAMERA_POSITION_BACK_FACING) == 2LL);
 addIEx("CAMERA_POSITION_BACK_FACING","SDL_CAMERA_POSITION_BACK_FACING",int64_t(SDL_CAMERA_POSITION_BACK_FACING),das::LineInfo());
+} };
+static_assert(sizeof(SDL_CameraPermissionState) == 4 && alignof(SDL_CameraPermissionState) == 4);
+class Enumeration_SDL_CameraPermissionState : public das::Enumeration {
+public: Enumeration_SDL_CameraPermissionState() : das::Enumeration("SDL_CameraPermissionState") {
+external=true; cppName="SDL_CameraPermissionState"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_CameraPermissionState>::type>::type;
+static_assert(int64_t(SDL_CAMERA_PERMISSION_STATE_DENIED) == -1LL);
+addIEx("DENIED","SDL_CAMERA_PERMISSION_STATE_DENIED",int64_t(SDL_CAMERA_PERMISSION_STATE_DENIED),das::LineInfo());
+static_assert(int64_t(SDL_CAMERA_PERMISSION_STATE_PENDING) == 0LL);
+addIEx("PENDING","SDL_CAMERA_PERMISSION_STATE_PENDING",int64_t(SDL_CAMERA_PERMISSION_STATE_PENDING),das::LineInfo());
+static_assert(int64_t(SDL_CAMERA_PERMISSION_STATE_APPROVED) == 1LL);
+addIEx("APPROVED","SDL_CAMERA_PERMISSION_STATE_APPROVED",int64_t(SDL_CAMERA_PERMISSION_STATE_APPROVED),das::LineInfo());
 } };
 static_assert(sizeof(SDL_SystemTheme) == 4 && alignof(SDL_SystemTheme) == 4);
 class Enumeration_SDL_SystemTheme : public das::Enumeration {
@@ -1009,6 +1026,8 @@ static_assert(int64_t(SDL_SENSOR_ACCEL_R) == 5LL);
 addIEx("SENSOR_ACCEL_R","SDL_SENSOR_ACCEL_R",int64_t(SDL_SENSOR_ACCEL_R),das::LineInfo());
 static_assert(int64_t(SDL_SENSOR_GYRO_R) == 6LL);
 addIEx("SENSOR_GYRO_R","SDL_SENSOR_GYRO_R",int64_t(SDL_SENSOR_GYRO_R),das::LineInfo());
+static_assert(int64_t(SDL_SENSOR_COUNT) == 7LL);
+addIEx("SENSOR_COUNT","SDL_SENSOR_COUNT",int64_t(SDL_SENSOR_COUNT),das::LineInfo());
 } };
 static_assert(sizeof(SDL_JoystickType) == 4 && alignof(SDL_JoystickType) == 4);
 class Enumeration_SDL_JoystickType : public das::Enumeration {
@@ -1129,7 +1148,9 @@ static_assert(int64_t(SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT) == 9LL);
 addIEx("GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT","SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT",int64_t(SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT),das::LineInfo());
 static_assert(int64_t(SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR) == 10LL);
 addIEx("GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR","SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR",int64_t(SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR),das::LineInfo());
-static_assert(int64_t(SDL_GAMEPAD_TYPE_COUNT) == 11LL);
+static_assert(int64_t(SDL_GAMEPAD_TYPE_GAMECUBE) == 11LL);
+addIEx("GAMEPAD_TYPE_GAMECUBE","SDL_GAMEPAD_TYPE_GAMECUBE",int64_t(SDL_GAMEPAD_TYPE_GAMECUBE),das::LineInfo());
+static_assert(int64_t(SDL_GAMEPAD_TYPE_COUNT) == 12LL);
 addIEx("GAMEPAD_TYPE_COUNT","SDL_GAMEPAD_TYPE_COUNT",int64_t(SDL_GAMEPAD_TYPE_COUNT),das::LineInfo());
 } };
 static_assert(sizeof(SDL_GamepadButton) == 4 && alignof(SDL_GamepadButton) == 4);
@@ -2161,7 +2182,7 @@ static_assert(offsetof(SDL_TouchFingerEvent, windowID) == 52);
 addField<DAS_BIND_MANAGED_FIELD(windowID)>("windowID", "windowID");
 }
 }; }
-static_assert(sizeof(SDL_PenProximityEvent) == 24 && alignof(SDL_PenProximityEvent) == 8);
+static_assert(sizeof(SDL_PenProximityEvent) == 32 && alignof(SDL_PenProximityEvent) == 8);
 namespace das { struct SDL_PenProximityEventAnnotation : ManagedStructureAnnotation<SDL_PenProximityEvent, false> {
 SDL_PenProximityEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_PenProximityEvent", lib) {
 static_assert(offsetof(SDL_PenProximityEvent, timestamp) == 8);

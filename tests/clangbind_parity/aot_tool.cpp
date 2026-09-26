@@ -2,6 +2,9 @@
 #include <fstream>
 #include <iostream>
 DECLARE_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_NET
+DECLARE_MODULE(Module_sdl3_net);
+#endif
 #ifdef DASSDL3_WITH_TTF
 DECLARE_MODULE(Module_sdl3_ttf);
 #endif
@@ -61,6 +64,9 @@ int main(int argc, char **argv) {
     setDasRoot(DASSDL3_DAS_ROOT);
     NEED_ALL_DEFAULT_MODULES;
     NEED_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_NET
+    NEED_MODULE(Module_sdl3_net);
+#endif
 #ifdef DASSDL3_WITH_TTF
     NEED_MODULE(Module_sdl3_ttf);
 #endif

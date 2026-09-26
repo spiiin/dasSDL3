@@ -1,6 +1,7 @@
 # SDL binding boundary
 
-> Current declaration coverage: all 92 active Windows GPU functions are generated.
+> Current declaration coverage: all 95 active Windows GPU functions in SDL 3.4.16 are generated.
+> See [SDL upgrade](sdl-3.4-upgrade.md); counts below describe the original cleanup baseline.
 > See [native GPU API](gpu-native-api.md), [native scopes](gpu-native-boost.md)
 > and [local runtime/AOT results](gpu-native-validation.md). The older checked
 > subset and native pointer API have separate ownership contracts.

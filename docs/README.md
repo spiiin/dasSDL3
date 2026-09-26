@@ -114,3 +114,7 @@ Early-return syntax: [`sdl_try` macro and example](sdl-try.md).
 - [Camera](camera.md): 15 raw APIs, borrowed frames and dummy-only validation.
 
 - [Web / Emscripten и HTML-примеры](web-roadmap.md): десять HTML-примеров на SDL Renderer и штатном dasOpenGL проверены в Edge/Firefox; текущий приоритет — P7.
+
+- [SDL_net](sdl-net.md): optional SDL_net 3.2.0, 34 raw functions, TCP/UDP and async address resolution.
+
+- [SDL 3.4.16 upgrade](sdl-3.4-upgrade.md): migration, validation and new API queue.

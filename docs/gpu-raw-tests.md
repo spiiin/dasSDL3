@@ -45,11 +45,11 @@ operations; it does not cover every format, depth attachment, MSAA or MRT layout
 
 ## Backend limitations
 
-Vulkan exercises all 92 functions. D3D12 explicitly excludes only
-SDL_PushGPUDebugGroup and SDL_PopGPUDebugGroup because pinned SDL 3.2.18 passes
-invalid BeginEvent metadata with its debug layer (see the historical diagnostic
-in gpu-api-boundary.md). The test emits RAW_UNSUPPORTED for these two functions.
-Validation is not disabled. Individual debug labels execute on both backends.
+With SDL 3.4.16 both Vulkan and D3D12 exercise all 95 functions. The old
+3.2.18 D3D12 BeginEvent metadata defect no longer requires exclusions: debug
+groups use PIX and may no-op without its runtime DLL. The runtime matrix has
+no backend exclusions. Execution does not prove labels are visible in a capture.
+Validation is not disabled. See sdl-3.4-upgrade.md for current validation.
 
 During test development a buffer combining VERTEX/INDEX/INDIRECT usage produced
 the old compute result on Vulkan after indirect dispatch, while D3D12 passed.

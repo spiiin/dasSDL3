@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "sdl_version": "3.2.18",
+  "sdl_version": "3.4.16",
   "profiles": {
     "windows-x64-msvc": {
       "target": "x86_64-pc-windows-msvc",
@@ -1816,7 +1816,7 @@
       ]
     },
     "function:SDL_SetWindowShape": {
-      "reason": "Native signature preserved, including pinned SDL 3.2.18 NULL-removal failure. Valid shape copy and non-transparent-window/NULL cases are tested.",
+      "reason": "Native signature preserved. SDL 3.4.16 fixes NULL shape removal; success, valid shape copy and non-transparent-window cases are tested.",
       "contract": "docs/window-io.md",
       "tests": [
         "tests/window_io.das"
@@ -6391,7 +6391,7 @@
     },
     "function:SDL_GetAudioStreamInputChannelMap": {
       "boost_status": "pending",
-      "reason": "Pinned SDL 3.2.18 getter crashes for default null maps; raw custom-map execution tested, safe boost getter deferred.",
+      "reason": "SDL 3.4.16 fixes default-map null handling. Raw custom and default maps tested; copied boost getter remains a follow-up.",
       "contract": "docs/audio-stream-controls.md",
       "tests": [
         "tests/audio_stream_controls.das"
@@ -6399,7 +6399,7 @@
     },
     "function:SDL_GetAudioStreamOutputChannelMap": {
       "boost_status": "pending",
-      "reason": "Pinned SDL 3.2.18 getter crashes for default null maps; raw custom-map execution tested, safe boost getter deferred.",
+      "reason": "SDL 3.4.16 fixes default-map null handling. Raw custom and default maps tested; copied boost getter remains a follow-up.",
       "contract": "docs/audio-stream-controls.md",
       "tests": [
         "tests/audio_stream_controls.das"

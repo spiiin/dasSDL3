@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CATEGORIES = {
     "Mutex": (28, "synchronization"),
     "Thread": (12, "thread_atomic"),
-    "Atomic": (15, "thread_atomic"),
+    "Atomic": (16, "thread_atomic"),
     "Process": (9, "process_loadso"),
     "SharedObject": (3, "process_loadso"),
     "System": (13, "platform_services"),

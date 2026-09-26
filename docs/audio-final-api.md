@@ -4,7 +4,7 @@ The remaining nine Audio functions are generated: SDL_SetAudioStreamGetCallback,
 SDL_SetAudioStreamPutCallback, SDL_OpenAudioDeviceStream,
 SDL_SetAudioPostmixCallback, SDL_LoadWAV_IO, SDL_MixAudio,
 SDL_ConvertAudioSamples, SDL_GetAudioFormatName and SDL_GetSilenceValueForFormat.
-Audio raw declaration coverage is 56/56 for SDL 3.2.18. SDL_AudioFormat is now a
+Audio raw declaration coverage is 56/58 for SDL 3.4.16 (56/56 in the original 3.2.18 package). SDL_AudioFormat is now a
 selected enum, and SDL_AudioSpec exposes its format field in addition to channels
 and freq. Existing uint format constants and factories remain usable. Require
 `dassdl3/sdl3_audio_final` for the thin boost layer, including the enum factory
@@ -45,11 +45,10 @@ Raw SDL_OpenAudioDeviceStream also permits a NULL spec; the ref helper uses an
 explicit spec. No script callback trampoline, mixer graph or worker registry is
 introduced.
 
-Pinned exception: SDL_SetAudioPostmixCallback initializes its result to true and
-also returns true when an invalid ID cannot resolve a logical device. The boost
-setter preserves that return as Ok; callers must pass a live owned logical ID.
-A nonempty SDL_GetError after success does not turn it into Err. This behavior is
-covered by a test, not repaired in vendored SDL.
+SDL 3.4.16 rejects an invalid logical device ID in SDL_SetAudioPostmixCallback;
+the boost setter returns Err. This fixes the old 3.2.18 behavior that returned
+true in that case. A nonempty SDL_GetError after success still does not turn
+success into Err. The invalid-ID result is covered by a regression test.
 
 ## WAV and buffers
 
@@ -96,8 +95,8 @@ storage/atomics and are excluded from production. No physical microphone is used
 [Example 79](../examples/79_audio_conversion.das) mixes and converts PCM entirely
 in memory with Result/sdl_try and a scoped stream, without unsafe or test fixtures.
 
-[Stream channel-map getter defect](audio-stream-controls.md) remains: raw getters
-crash for default maps in pinned SDL; safe boost getters are deferred. Hardware
+[Stream channel-map default handling](audio-stream-controls.md) is fixed upstream
+in SDL 3.4.16 and tested; copied boost getters remain a follow-up. Hardware
 playback/capture, hotplug/default migration, callback deadline guarantees, unusual
 formats and other OS backends remain unverified. Camera is the next P5 section.
 

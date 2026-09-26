@@ -2898,7 +2898,7 @@
   "SDL_GetRGB": {
     "signature": "void (Uint32, const SDL_PixelFormatDetails *, const SDL_Palette *, Uint8 *, Uint8 *, Uint8 *) __attribute__((cdecl))",
     "arguments": [
-      "pixel",
+      "pixelvalue",
       "format",
       "palette",
       "r",
@@ -2909,7 +2909,7 @@
   "SDL_GetRGBA": {
     "signature": "void (Uint32, const SDL_PixelFormatDetails *, const SDL_Palette *, Uint8 *, Uint8 *, Uint8 *, Uint8 *) __attribute__((cdecl))",
     "arguments": [
-      "pixel",
+      "pixelvalue",
       "format",
       "palette",
       "r",
@@ -3324,7 +3324,7 @@
     ]
   },
   "SDL_SetClipboardData": {
-    "signature": "bool (SDL_ClipboardDataCallback, SDL_ClipboardCleanupCallback, void *, const char **, size_t) __attribute__((cdecl))",
+    "signature": "bool (SDL_ClipboardDataCallback, SDL_ClipboardCleanupCallback, void *, const char *const *, size_t) __attribute__((cdecl))",
     "arguments": [
       "callback",
       "cleanup",
@@ -4754,14 +4754,14 @@
     ]
   },
   "SDL_CreateHapticEffect": {
-    "signature": "int (SDL_Haptic *, const SDL_HapticEffect *) __attribute__((cdecl))",
+    "signature": "SDL_HapticEffectID (SDL_Haptic *, const SDL_HapticEffect *) __attribute__((cdecl))",
     "arguments": [
       "haptic",
       "effect"
     ]
   },
   "SDL_UpdateHapticEffect": {
-    "signature": "bool (SDL_Haptic *, int, const SDL_HapticEffect *) __attribute__((cdecl))",
+    "signature": "bool (SDL_Haptic *, SDL_HapticEffectID, const SDL_HapticEffect *) __attribute__((cdecl))",
     "arguments": [
       "haptic",
       "effect",
@@ -4769,7 +4769,7 @@
     ]
   },
   "SDL_RunHapticEffect": {
-    "signature": "bool (SDL_Haptic *, int, Uint32) __attribute__((cdecl))",
+    "signature": "bool (SDL_Haptic *, SDL_HapticEffectID, Uint32) __attribute__((cdecl))",
     "arguments": [
       "haptic",
       "effect",
@@ -4777,21 +4777,21 @@
     ]
   },
   "SDL_StopHapticEffect": {
-    "signature": "bool (SDL_Haptic *, int) __attribute__((cdecl))",
+    "signature": "bool (SDL_Haptic *, SDL_HapticEffectID) __attribute__((cdecl))",
     "arguments": [
       "haptic",
       "effect"
     ]
   },
   "SDL_DestroyHapticEffect": {
-    "signature": "void (SDL_Haptic *, int) __attribute__((cdecl))",
+    "signature": "void (SDL_Haptic *, SDL_HapticEffectID) __attribute__((cdecl))",
     "arguments": [
       "haptic",
       "effect"
     ]
   },
   "SDL_GetHapticEffectStatus": {
-    "signature": "bool (SDL_Haptic *, int) __attribute__((cdecl))",
+    "signature": "bool (SDL_Haptic *, SDL_HapticEffectID) __attribute__((cdecl))",
     "arguments": [
       "haptic",
       "effect"
@@ -5910,7 +5910,7 @@
     ]
   },
   "SDL_GetCameraPermissionState": {
-    "signature": "int (SDL_Camera *) __attribute__((cdecl))",
+    "signature": "SDL_CameraPermissionState (SDL_Camera *) __attribute__((cdecl))",
     "arguments": [
       "camera"
     ]
@@ -6639,5 +6639,30 @@
   "SDL_UpdateTrays": {
     "signature": "void (void) __attribute__((cdecl))",
     "arguments": []
+  },
+  "SDL_AddAtomicU32": {
+    "signature": "Uint32 (SDL_AtomicU32 *, int) __attribute__((cdecl))",
+    "arguments": [
+      "a",
+      "v"
+    ]
+  },
+  "SDL_GetGPUDeviceProperties": {
+    "signature": "SDL_PropertiesID (SDL_GPUDevice *) __attribute__((cdecl))",
+    "arguments": [
+      "device"
+    ]
+  },
+  "SDL_GetGPUTextureFormatFromPixelFormat": {
+    "signature": "SDL_GPUTextureFormat (SDL_PixelFormat) __attribute__((cdecl))",
+    "arguments": [
+      "format"
+    ]
+  },
+  "SDL_GetPixelFormatFromGPUTextureFormat": {
+    "signature": "SDL_PixelFormat (SDL_GPUTextureFormat) __attribute__((cdecl))",
+    "arguments": [
+      "format"
+    ]
   }
 }

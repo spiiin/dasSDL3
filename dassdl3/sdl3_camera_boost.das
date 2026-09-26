@@ -36,7 +36,7 @@ def public camera_name(id : uint) {
 // UNKNOWN can also be returned for an invalid id; preserve SDL's ambiguous sentinel.
 def public camera_position(id : uint) {return SDL_GetCameraPosition(id)}
 // Live camera precondition: -1 denied, 0 pending, 1 approved; not a bool or Result.
-def public camera_permission_state(camera : SDL_Camera?) : int {return SDL_GetCameraPermissionState(camera)}
+def public camera_permission_state(camera : SDL_Camera?) : SDL_CameraPermissionState {return SDL_GetCameraPermissionState(camera)}
 def public camera_id(camera : SDL_Camera?) {
     let id=SDL_GetCameraID(camera)
     if(id==0u) {return err(sdl_error("SDL_GetCameraID"),type<uint>)}

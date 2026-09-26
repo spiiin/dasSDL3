@@ -10,7 +10,7 @@
 #include "sdl3_video.h"
 #include "generated/sdl3_types.inc"
 static_assert(sizeof(void*)==4, "Web profile requires wasm32");
-static_assert(SDL_VERSION==3002018, "Revalidate Web profile on SDL update");
+static_assert(SDL_VERSION==3004016, "Revalidate Web profile on SDL update");
 namespace das {
 class Module_dasSDL3 : public Module {
 public:

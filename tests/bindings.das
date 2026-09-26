@@ -4,7 +4,7 @@ require sdl3
 [export]
 def main(smoke : bool) : int {
     verify(smoke)
-    verify(SDL_GetVersion() == 3002018)
+    verify(SDL_GetVersion() == 3004016)
     unsafe {
         var rect = SDL_MakeFRect(1.0, 2.0, 30.0, 40.0)
         verify(rect.x == 1.0 && rect.y == 2.0 && rect.w == 30.0 && rect.h == 40.0)

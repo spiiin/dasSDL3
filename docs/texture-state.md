@@ -4,7 +4,9 @@ Ten new generated functions: SDL_CreateTexture, SDL_CreateTextureWithProperties,
 SDL_GetTextureProperties, SDL_GetRendererFromTexture, SDL_SetTextureColorModFloat,
 SDL_GetTextureColorModFloat, SDL_SetTextureAlphaModFloat, SDL_GetTextureAlphaModFloat,
 SDL_SetTextureScaleMode and SDL_GetTextureScaleMode. SDL_TextureAccess and
-SDL_ScaleMode expose all values in pinned SDL 3.2.18, including invalid scale mode.
+SDL_ScaleMode expose all values in SDL 3.4.16, including invalid and pixel-art modes.
+A failed SDL_GetTextureScaleMode initializes its output to SCALEMODE_INVALID
+(previously SCALEMODE_LINEAR in 3.2.18); the adapter preserves that output.
 CreateTexture moves from partial adapted coverage to a general raw declaration.
 
 `with_texture(renderer,format,access,w,h)` and `with_texture_properties(renderer,props)`

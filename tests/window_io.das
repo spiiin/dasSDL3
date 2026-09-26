@@ -102,8 +102,8 @@ def main(smoke : bool) : int {
             let shaped=with_surface(16,16,SDL_PixelFormat.PIXELFORMAT_RGBA32) $(shape : SDL_Surface?) {
                 verify(SDL_FillSurfaceAll(shape,SDL_MapSurfaceRGBA(shape,uint(0),uint(0),uint(0),uint(255))))
                 verify(SDL_SetWindowShape(window,shape))
-                // Pinned SDL 3.2.18 contradicts documented NULL-removal behavior.
-                verify(!SDL_SetWindowShape(window,null))
+                // SDL 3.4 fixes removal of an existing window shape.
+                verify(SDL_SetWindowShape(window,null))
                 return sdl_ok()
             } |> is_ok
             verify(shaped)

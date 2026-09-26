@@ -119,8 +119,8 @@ def main(smoke : bool) : int {
         verify(posts>0 && gets>before_playback && SDLTestAudioFinalCount(2)==posts && SDLTestAudioFinalCount(0)==gets)
         SDL_DestroyAudioStream(stream)
         verify(SDL_GetAudioDeviceGain(device)<0.0)
-        // Pinned SDL returns true even for an invalid logical ID; preserve its return.
-        verify(is_ok(set_audio_postmix_callback(0u,null,null)))
+        // SDL 3.4 reports invalid logical device IDs as errors.
+        verify(is_err(set_audio_postmix_callback(0u,null,null)))
         let puts=SDLTestAudioFinalCount(1)
         let recording=with_audio_device_stream(SDL_AUDIO_DEVICE_DEFAULT_RECORDING,floatmono,SDLTestAudioFinalCallback(1),SDLTestAudioFinalData()) $(record_stream) {
             verify(SDL_ResumeAudioStreamDevice(record_stream))

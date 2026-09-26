@@ -52,10 +52,13 @@
     "SDL_GPUTextureSupportsSampleCount",
     "SDL_GenerateMipmapsForGPUTexture",
     "SDL_GetGPUDeviceDriver",
+    "SDL_GetGPUDeviceProperties",
     "SDL_GetGPUDriver",
     "SDL_GetGPUShaderFormats",
     "SDL_GetGPUSwapchainTextureFormat",
+    "SDL_GetGPUTextureFormatFromPixelFormat",
     "SDL_GetNumGPUDrivers",
+    "SDL_GetPixelFormatFromGPUTextureFormat",
     "SDL_InsertGPUDebugLabel",
     "SDL_MapGPUTransferBuffer",
     "SDL_PopGPUDebugGroup",
@@ -93,10 +96,5 @@
     "SDL_WindowSupportsGPUPresentMode",
     "SDL_WindowSupportsGPUSwapchainComposition"
   ],
-  "backend_exclusions": {
-    "direct3d12": [
-      "SDL_PushGPUDebugGroup",
-      "SDL_PopGPUDebugGroup"
-    ]
-  }
+  "backend_exclusions": {}
 }

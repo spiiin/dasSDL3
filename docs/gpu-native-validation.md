@@ -1,5 +1,8 @@
 # Native GPU follow-up validation — 2026-09-20
 
+> SDL 3.4.16 update: GPU now has 95 raw functions with no runtime backend
+> exclusions. Historical counts below describe 3.2.18; see [upgrade](sdl-3.4-upgrade.md).
+
 Scope: SDL 3.2.18, pinned daScript, Windows x64/MSVC, local Vulkan and D3D12.
 The five follow-up steps are implemented: script-owned creation inputs, bounded
 transfer bytes, native defer scopes, advanced GPU combinations, and public

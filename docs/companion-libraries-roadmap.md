@@ -1,5 +1,7 @@
 # Дополнительные библиотеки SDL
 
+> Current core pin: SDL 3.4.16. See [migration and coverage changes](sdl-3.4-upgrade.md); older 3.2.18 counts below describe the original baseline.
+
 19 сентября 2026. Это отдельные опциональные модули, не часть полноты core SDL.
 Список взят из [SDL Libraries](https://wiki.libsdl.org/SDL3/Libraries).
 Имена модулей и CMake options ниже — план, кроме отмеченных реализованных частей.
@@ -100,3 +102,7 @@ CRT, runtime DLL packaging и codecs; shader toolchain не тащить в core
 version/license/asset manifest и CI только при включённой опции. Интеграционный
 пример: PNG sprite + TTF label + mixer sound; GPU-вариант после стабилизации
 GPU layer. Net и UI не должны становиться зависимостями простого окна.
+
+## SDL_net implementation
+
+SDL_net 3.2.0 is now optional via `DASSDL3_WITH_NET`: all 34 raw exports, Result/Option boost, bounded byte adapters and loopback example/test. See [contracts and validation](sdl-net.md). Remote DNS/IPv6, other OSes and web remain follow-ups; no protocol framework was added.

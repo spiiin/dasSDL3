@@ -2,7 +2,7 @@
 
 Single-thread wasm32 interpreter profile: Hello, moving square, keyboard/mouse, BMP
 textures, streaming texture, render target, indexed geometry and queued audio. Uses the same SDL boost functions and sdl_try as desktop; SDL main
-callbacks replace the blocking loop. SDL 3.2.18, daScript pinned submodule,
+callbacks replace the blocking loop. SDL 3.4.16, daScript pinned submodule,
 Emscripten 5.0.3, single thread, SIMD and native Wasm exceptions.
 
 ## Build on Windows
@@ -17,7 +17,7 @@ web\build.cmd
 
 CMake 3.24+, Ninja and Python are needed. If Ninja is not in PATH, pass
 `-DCMAKE_MAKE_PROGRAM=C:/path/to/ninja.exe` to build.cmd. The first configure
-fetches SDL release-3.2.18; an existing matching checkout can be supplied with
+fetches SDL release-3.4.16; an existing matching checkout can be supplied with
 `-DFETCHCONTENT_SOURCE_DIR_SDL3=C:/path/to/SDL`. Windows developer binaries are
 not required by the web build; LLVM/dasClangBind are not linked into the browser.
 Upstream library/runtime output paths are redirected into build/web.
@@ -59,6 +59,10 @@ The native runner owns Program/Context/ModuleGroup until SDL_AppQuit. Events are
 borrowed synchronously. There are no retained stack blocks. app_quit runs also
 for partial app_init failure, once valid entry points have been checked.
 Resources across frames live in the example's state and are released in quit.
+SDL 3.4.16 leaves an AudioContext open after playback closure because its backend
+creates an unused recording placeholder. After full SDL_Quit, the web host closes
+any remaining context. This host-only compatibility cleanup never closes devices
+during a running session and does not modify upstream SDL.
 Defer/with_* remain valid inside synchronous operations, not across returned
 callbacks. Arbitrary panic/page close is not a defer cleanup guarantee.
 Stop requests SDL's next iteration to exit. Restart stops first and reloads the
@@ -68,7 +72,15 @@ No SDL_GPU WebGPU backend exists in pinned SDL. These pages use SDL Renderer
 through WebGL; they are not ports of the native GPU examples. Browser
 filesystem persistence, full event variants, AOT and workers are future work.
 
-## Local validation (2026-09-22)
+## SDL 3.4.16 validation (2026-09-26)
+
+Release rebuild passed with Emscripten 5.0.3 and the existing -O1 link profile.
+Edge and Firefox each passed the 15 Renderer/audio/lifecycle scenarios below and
+six OpenGL scenarios in tests/web/test_opengl.py (42 total). Audio tests retained
+the closed-context assertion after Stop and absent-context assertion after a
+partial-init error. See [upgrade report](../docs/sdl-3.4-upgrade.md).
+
+## Initial validation (2026-09-22)
 
 All eight pages passed in Edge/Chromium and Firefox using Playwright: 15 scenarios
 per browser (8 pages + 7 injected failures). Tests check foreground pixels,

@@ -57,7 +57,14 @@ def main(smoke : bool) : int {
         unsafe {verify(SDL_GetAudioStreamData(stream,addr(out[0]),16)==16)}
         verify(out[0]==0.0 && out[1]==0.25 && out[2]==0.0 && out[3]==-0.5)
         reset_audio_stream_output_channel_map(stream,2) |> sdl_try
-        // Pinned raw getters crash on a default (null) map; never query it.
+        // SDL 3.4 safely reports the default map as null, with its channel count.
+        unsafe {
+            SDL_ClearError()
+            verify(SDL_GetAudioStreamInputChannelMap(stream,addr(count))==null && count==2)
+            verify(SDL_GetError()=="")
+            verify(SDL_GetAudioStreamOutputChannelMap(stream,addr(count))==null && count==2)
+            verify(SDL_GetError()=="")
+        }
         var wrong <- array<int>(0)
         verify(is_err(set_audio_stream_input_channel_map(stream,wrong)))
         wrong <- array<int>(2,0)

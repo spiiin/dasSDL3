@@ -73,6 +73,7 @@ addEnumeration(new Enumeration_SDL_ThreadState());
 addEnumeration(new Enumeration_SDL_ProcessIO());
 addEnumeration(new Enumeration_SDL_Sandbox());
 addEnumeration(new Enumeration_SDL_FileDialogType());
+addEnumeration(new Enumeration_SDL_CameraPermissionState());
 addAnnotation(new DummyTypeAnnotation("SDL_Window", "SDL_Window", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Renderer", "SDL_Renderer", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Surface", "SDL_Surface", 1, 1));
@@ -1671,9 +1672,9 @@ addExtern<DAS_BIND_FUN(SDL_GetPixelFormatForMasks)>(*this, lib, "SDL_GetPixelFor
 // const char *(SDL_PixelFormat) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_GetPixelFormatName)>(*this, lib, "SDL_GetPixelFormatName", SideEffects::worstDefault, "SDL_GetPixelFormatName")->args({"format"});
 // void (Uint32, const SDL_PixelFormatDetails *, const SDL_Palette *, Uint8 *, Uint8 *, Uint8 *) __attribute__((cdecl))
-addExtern<DAS_BIND_FUN(SDL_GetRGB)>(*this, lib, "SDL_GetRGB", SideEffects::worstDefault, "SDL_GetRGB")->args({"pixel", "format", "palette", "r", "g", "b"});
+addExtern<DAS_BIND_FUN(SDL_GetRGB)>(*this, lib, "SDL_GetRGB", SideEffects::worstDefault, "SDL_GetRGB")->args({"pixelvalue", "format", "palette", "r", "g", "b"});
 // void (Uint32, const SDL_PixelFormatDetails *, const SDL_Palette *, Uint8 *, Uint8 *, Uint8 *, Uint8 *) __attribute__((cdecl))
-addExtern<DAS_BIND_FUN(SDL_GetRGBA)>(*this, lib, "SDL_GetRGBA", SideEffects::worstDefault, "SDL_GetRGBA")->args({"pixel", "format", "palette", "r", "g", "b", "a"});
+addExtern<DAS_BIND_FUN(SDL_GetRGBA)>(*this, lib, "SDL_GetRGBA", SideEffects::worstDefault, "SDL_GetRGBA")->args({"pixelvalue", "format", "palette", "r", "g", "b", "a"});
 // SDL_Surface **(SDL_Surface *, int *) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_GetSurfaceImages)>(*this, lib, "SDL_GetSurfaceImages", SideEffects::worstDefault, "SDL_GetSurfaceImages")->args({"surface", "count"});
 // SDL_Palette *(SDL_Surface *) __attribute__((cdecl))
@@ -1780,7 +1781,7 @@ addExtern<DAS_BIND_FUN(SDL_RectsEqual)>(*this, lib, "SDL_RectsEqual", SideEffect
 addExtern<DAS_BIND_FUN(SDL_RectsEqualEpsilon)>(*this, lib, "SDL_RectsEqualEpsilon", SideEffects::worstDefault, "SDL_RectsEqualEpsilon")->args({"a", "b", "epsilon"});
 // bool (const SDL_FRect *, const SDL_FRect *)
 addExtern<DAS_BIND_FUN(SDL_RectsEqualFloat)>(*this, lib, "SDL_RectsEqualFloat", SideEffects::worstDefault, "SDL_RectsEqualFloat")->args({"a", "b"});
-// bool (SDL_ClipboardDataCallback, SDL_ClipboardCleanupCallback, void *, const char **, size_t) __attribute__((cdecl))
+// bool (SDL_ClipboardDataCallback, SDL_ClipboardCleanupCallback, void *, const char *const *, size_t) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_SetClipboardData)>(*this, lib, "SDL_SetClipboardData", SideEffects::worstDefault, "SDL_SetClipboardDataAddress")->args({"callback", "cleanup", "userdata", "mime_types", "num_mime_types"});
 // bool (const char *) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_SetClipboardText)>(*this, lib, "SDL_SetClipboardText", SideEffects::worstDefault, "SDL_SetClipboardText")->args({"text"});
@@ -2230,17 +2231,17 @@ addExtern<DAS_BIND_FUN(SDL_GetHapticFeatures)>(*this, lib, "SDL_GetHapticFeature
 addExtern<DAS_BIND_FUN(SDL_GetNumHapticAxes)>(*this, lib, "SDL_GetNumHapticAxes", SideEffects::worstDefault, "SDL_GetNumHapticAxes")->args({"haptic"});
 // bool (SDL_Haptic *, const SDL_HapticEffect *) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_HapticEffectSupported)>(*this, lib, "SDL_HapticEffectSupported", SideEffects::worstDefault, "SDL_HapticEffectSupported")->args({"haptic", "effect"});
-// int (SDL_Haptic *, const SDL_HapticEffect *) __attribute__((cdecl))
+// SDL_HapticEffectID (SDL_Haptic *, const SDL_HapticEffect *) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_CreateHapticEffect)>(*this, lib, "SDL_CreateHapticEffect", SideEffects::worstDefault, "SDL_CreateHapticEffect")->args({"haptic", "effect"});
-// bool (SDL_Haptic *, int, const SDL_HapticEffect *) __attribute__((cdecl))
+// bool (SDL_Haptic *, SDL_HapticEffectID, const SDL_HapticEffect *) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_UpdateHapticEffect)>(*this, lib, "SDL_UpdateHapticEffect", SideEffects::worstDefault, "SDL_UpdateHapticEffect")->args({"haptic", "effect", "data"});
-// bool (SDL_Haptic *, int, Uint32) __attribute__((cdecl))
+// bool (SDL_Haptic *, SDL_HapticEffectID, Uint32) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_RunHapticEffect)>(*this, lib, "SDL_RunHapticEffect", SideEffects::worstDefault, "SDL_RunHapticEffect")->args({"haptic", "effect", "iterations"});
-// bool (SDL_Haptic *, int) __attribute__((cdecl))
+// bool (SDL_Haptic *, SDL_HapticEffectID) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_StopHapticEffect)>(*this, lib, "SDL_StopHapticEffect", SideEffects::worstDefault, "SDL_StopHapticEffect")->args({"haptic", "effect"});
-// void (SDL_Haptic *, int) __attribute__((cdecl))
+// void (SDL_Haptic *, SDL_HapticEffectID) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_DestroyHapticEffect)>(*this, lib, "SDL_DestroyHapticEffect", SideEffects::worstDefault, "SDL_DestroyHapticEffect")->args({"haptic", "effect"});
-// bool (SDL_Haptic *, int) __attribute__((cdecl))
+// bool (SDL_Haptic *, SDL_HapticEffectID) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_GetHapticEffectStatus)>(*this, lib, "SDL_GetHapticEffectStatus", SideEffects::worstDefault, "SDL_GetHapticEffectStatus")->args({"haptic", "effect"});
 // bool (SDL_Haptic *, int) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_SetHapticGain)>(*this, lib, "SDL_SetHapticGain", SideEffects::worstDefault, "SDL_SetHapticGain")->args({"haptic", "gain"});
@@ -2562,7 +2563,7 @@ addExtern<DAS_BIND_FUN(SDL_GetCameraName)>(*this, lib, "SDL_GetCameraName", Side
 addExtern<DAS_BIND_FUN(SDL_GetCameraPosition)>(*this, lib, "SDL_GetCameraPosition", SideEffects::worstDefault, "SDL_GetCameraPosition")->args({"instance_id"});
 // SDL_Camera *(SDL_CameraID, const SDL_CameraSpec *) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_OpenCamera)>(*this, lib, "SDL_OpenCamera", SideEffects::worstDefault, "SDL_OpenCamera")->args({"instance_id", "spec"});
-// int (SDL_Camera *) __attribute__((cdecl))
+// SDL_CameraPermissionState (SDL_Camera *) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_GetCameraPermissionState)>(*this, lib, "SDL_GetCameraPermissionState", SideEffects::worstDefault, "SDL_GetCameraPermissionState")->args({"camera"});
 // SDL_CameraID (SDL_Camera *) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_GetCameraID)>(*this, lib, "SDL_GetCameraID", SideEffects::worstDefault, "SDL_GetCameraID")->args({"camera"});
@@ -2794,3 +2795,11 @@ addExtern<DAS_BIND_FUN(SDL_ShowOpenFolderDialog)>(*this, lib, "SDL_ShowOpenFolde
 addExtern<DAS_BIND_FUN(SDL_ShowSaveFileDialog)>(*this, lib, "SDL_ShowSaveFileDialog", SideEffects::worstDefault, "SDL_ShowSaveFileDialogAddress")->args({"callback", "userdata", "window", "filters", "nfilters", "default_location"});
 // void (void) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_UpdateTrays)>(*this, lib, "SDL_UpdateTrays", SideEffects::worstDefault, "SDL_UpdateTrays");
+// Uint32 (SDL_AtomicU32 *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_AddAtomicU32)>(*this, lib, "SDL_AddAtomicU32", SideEffects::worstDefault, "SDL_AddAtomicU32")->args({"a", "v"});
+// SDL_PropertiesID (SDL_GPUDevice *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGPUDeviceProperties)>(*this, lib, "SDL_GetGPUDeviceProperties", SideEffects::worstDefault, "SDL_GetGPUDeviceProperties")->args({"device"});
+// SDL_GPUTextureFormat (SDL_PixelFormat) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetGPUTextureFormatFromPixelFormat)>(*this, lib, "SDL_GetGPUTextureFormatFromPixelFormat", SideEffects::worstDefault, "SDL_GetGPUTextureFormatFromPixelFormat")->args({"format"});
+// SDL_PixelFormat (SDL_GPUTextureFormat) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetPixelFormatFromGPUTextureFormat)>(*this, lib, "SDL_GetPixelFormatFromGPUTextureFormat", SideEffects::worstDefault, "SDL_GetPixelFormatFromGPUTextureFormat")->args({"format"});

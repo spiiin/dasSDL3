@@ -43,8 +43,8 @@ def main(smoke : bool) : int {
         verify(spec.width==320 && spec.height==240 && spec.framerate_numerator==30 && spec.framerate_denominator==1)
         verify(SDL_OpenCamera(0u,null)==null)
         verify(is_err(open_camera(0u)) && is_err(open_camera(0u,spec)))
-        verify(SDL_GetCameraPermissionState(null)==-1)
-        verify(camera_permission_state(null)==-1)
+        verify(SDL_GetCameraPermissionState(null)==SDL_CameraPermissionState.DENIED)
+        verify(camera_permission_state(null)==SDL_CameraPermissionState.DENIED)
         verify(SDL_GetCameraID(null)==0u && SDL_GetCameraProperties(null)==0u)
         verify(is_err(camera_id(null)) && is_err(camera_properties(null)))
         var timestamp=99ul

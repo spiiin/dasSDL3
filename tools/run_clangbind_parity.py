@@ -112,7 +112,7 @@ def main():
         headers = {path.name: hashlib.sha256(path.read_bytes().replace(b'\r\n', b'\n')).hexdigest()
                    for path in sorted((args.sdl_include / 'SDL3').glob('*.h'))}
         outputs['profile.json'] = json.dumps({
-            'target': 'x86_64-pc-windows-msvc', 'sdl_release': '3.2.18',
+            'target': 'x86_64-pc-windows-msvc', 'sdl_release': '3.4.16',
             'llvm_sdk': '22.1.5', 'inputs_sha256': inputs, 'headers_sha256': headers,
         }, indent=2) + '\n'
     if args.check:

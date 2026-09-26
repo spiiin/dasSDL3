@@ -3,7 +3,7 @@
 Основной CMake выбирает `DASSDL3_BINDING_BACKEND=clangbind` по умолчанию
 для MSVC Windows x64. Для остальных конфигураций остаётся `python`.
 Явный выбор неподдерживаемого CppGenBind-профиля завершается ошибкой.
-Профиль: SDL 3.2.18, LLVM SDK 22.1.5, x86_64-pc-windows-msvc,
+Профиль: SDL 3.4.16, LLVM SDK 22.1.5, x86_64-pc-windows-msvc,
 daScript из закреплённого сабмодуля. Это ещё не полная обвязка SDL.
 
 `src/generated/clangbind/` содержит текущую выборку tools/bindings.json.
@@ -26,7 +26,7 @@ build\consumer\bin\dasSDL3_runner.exe examples/02_square.das --smoke-test
 
 `DASSDL3_ENABLE_GENERATORS` по умолчанию OFF: ни Python, ни Clang, ни LLVM
 не нужны для привязок. SDL скачивается через FetchContent; для работы без сети
-задайте `-DFETCHCONTENT_SOURCE_DIR_SDL3=<папка исходников SDL 3.2.18>`.
+задайте `-DFETCHCONTENT_SOURCE_DIR_SDL3=<папка исходников SDL 3.4.16>`.
 daScript должен уже присутствовать как сабмодуль. Наличие LLVM на машине не
 мешает; потребитель его не ищет и не линкует.
 

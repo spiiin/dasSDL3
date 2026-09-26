@@ -102,7 +102,7 @@
 #include "../tests/gpu_types_probe.h"
 #include "../tests/gpu_pipeline_types_probe.h"
 #endif
-static_assert(SDL_VERSION == 3002018, "Regenerate and test bindings when updating SDL3");
+static_assert(SDL_VERSION == 3004016, "Regenerate and test bindings when updating SDL3");
 
 namespace das {
 class Module_dasSDL3 : public Module {

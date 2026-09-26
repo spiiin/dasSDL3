@@ -1,5 +1,7 @@
 # План полной привязки SDL3
 
+> Current core pin: SDL 3.4.16. See [migration and coverage changes](sdl-3.4-upgrade.md); older 3.2.18 counts below describe the original baseline.
+
 Актуализирован 22 сентября 2026. База: SDL 3.2.18, daScript
 `35bf260c0d8a79b94c64005bd3d2435adcf7e261`, Windows x64/MSVC.
 Текущее покрытие — [api-coverage.md](api-coverage.md); точные декларации и

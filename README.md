@@ -24,7 +24,7 @@ mesh/material/scene/batching и планы удалены из библиоте�
 
 - daScript: сабмодуль `third_party/daScript`, коммит
   `35bf260c0d8a79b94c64005bd3d2435adcf7e261` (0.6.4).
-- SDL: `release-3.2.18`, загружается CMake FetchContent.
+- SDL: `release-3.4.16`, загружается CMake FetchContent.
 - Опционально: [ImGui и SDL_image](examples/libraries/README.md),
   [SDL_ttf 3.2.2](docs/sdl-ttf.md) (`DASSDL3_WITH_TTF=ON`, FreeType 2.14.3 и HarfBuzz 10.4.0).
 - CMake 3.24+, Git, компилятор C++17. Проверено на Windows x64,
@@ -190,7 +190,7 @@ JIT не заявлен как проверенный режим.
 ./build/ninja/bin/dasSDL3_runner.exe examples/04_textures.das --smoke-test
 ```
 
-Основа — public-domain пример SDL 3.2.18 `examples/renderer/06-textures`.
+Основа — public-domain пример SDL 3.4.16 `examples/renderer/06-textures`.
 Используется собственный BMP из `examples/assets`; CMake копирует его рядом
 с runner в `bin/assets`. Путь определяется через SDL_GetBasePath и не зависит
 от текущей папки. Обычный запуск работает до Escape/закрытия окна;
@@ -483,3 +483,7 @@ Surface/Pixels: [contract](docs/surface-pixels.md), [example 66](examples/66_sur
 ```
 
 P2 Rect/Clipboard/hit-test: [contracts and tests](docs/rect-clipboard-hittest.md). GL/EGL is explicitly deferred to P8.
+
+Optional **SDL_net 3.2.0**: `DASSDL3_WITH_NET=ON`, import `dassdl3/sdl3_net_boost`; [TCP/UDP example and contracts](docs/sdl-net.md).
+
+SDL core is pinned to **3.4.16**. [Upgrade notes and new API queue](docs/sdl-3.4-upgrade.md).

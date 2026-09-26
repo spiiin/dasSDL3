@@ -89,12 +89,8 @@ def main(smoke : bool) : int {
 
         var command=SDL_AcquireGPUCommandBuffer(device); verify(command!=null)
         SDL_InsertGPUDebugLabel(command,"raw transfer/render/compute")
-        if (!dxil) {
-            SDL_PushGPUDebugGroup(command,"raw group")
-            SDL_PopGPUDebugGroup(command)
-        } else {
-            print("RAW_UNSUPPORTED SDL_PushGPUDebugGroup SDL_PopGPUDebugGroup pinned SDL 3.2.18 D3D12 metadata defect\n")
-        }
+        SDL_PushGPUDebugGroup(command,"raw group")
+        SDL_PopGPUDebugGroup(command)
         var copy_pass=SDL_BeginGPUCopyPass(command); verify(copy_pass!=null)
         var transfer = SDL_GPUTransferBufferLocation(transfer_buffer = upload)
         var region = SDL_GPUBufferRegion(buffer = geometry, size = 192u)
