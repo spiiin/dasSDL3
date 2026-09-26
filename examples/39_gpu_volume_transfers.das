@@ -4,7 +4,7 @@ require dassdl3/sdl3_gpu_volume_boost
 
 // Upload a padded 3D image, copy a box crossing two depth slices, read it back.
 
-def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; SdlError> {
+def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : SdlStatus {
     var source, expected, actual : array<uint8>
     let row_pitch = 23u
     let slice_pitch = 76u

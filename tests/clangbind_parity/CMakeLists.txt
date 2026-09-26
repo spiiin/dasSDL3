@@ -74,7 +74,7 @@ if(DASSDL3_TEST_IMGUI)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/imgui_${name}.aot.cpp")
         add_custom_command(OUTPUT "${output}"
             COMMAND parity_aot_tool "${ROOT}/${script}.das" "${output}"
-            DEPENDS parity_aot_tool "${ROOT}/${script}.das" ${_imgui_boost_dependencies} VERBATIM)
+            DEPENDS parity_aot_tool "${ROOT}/${script}.das" ${record_dependency} ${_imgui_boost_dependencies} VERBATIM)
         list(APPEND _imgui_aot_sources "${output}")
     endforeach()
     add_executable(imgui_aot_runner aot_runner.cpp ${_imgui_aot_sources})
@@ -117,7 +117,7 @@ if(DASSDL3_TEST_IMAGE)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/image_${name}.aot.cpp")
         add_custom_command(OUTPUT "${output}"
             COMMAND parity_aot_tool "${ROOT}/${script}.das" "${output}"
-            DEPENDS parity_aot_tool "${ROOT}/${script}.das" ${_image_boost_dependencies} VERBATIM)
+            DEPENDS parity_aot_tool "${ROOT}/${script}.das" ${record_dependency} ${_image_boost_dependencies} VERBATIM)
         list(APPEND _image_aot_sources "${output}")
     endforeach()
     add_executable(image_aot_runner aot_runner.cpp ${_image_aot_sources})
@@ -182,7 +182,7 @@ if(DASSDL3_TEST_TTF)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/ttf_${name}.aot.cpp")
         add_custom_command(OUTPUT "${output}"
             COMMAND parity_aot_tool "${ROOT}/${script}.das" "${output}"
-            DEPENDS parity_aot_tool "${ROOT}/${script}.das" ${_ttf_boost_dependencies} VERBATIM)
+            DEPENDS parity_aot_tool "${ROOT}/${script}.das" ${record_dependency} ${_ttf_boost_dependencies} VERBATIM)
         list(APPEND _ttf_aot_sources "${output}")
     endforeach()
     add_executable(ttf_aot_runner aot_runner.cpp ${_ttf_aot_sources})
@@ -235,7 +235,7 @@ list(APPEND AOT_SCRIPTS tests/event_queue examples/68_event_queue tests/event_ca
 list(APPEND AOT_SCRIPTS tests/pixels examples/05_streaming_texture examples/06_render_target)
 list(APPEND AOT_SCRIPTS tests/geometry examples/07_geometry)
 list(APPEND AOT_SCRIPTS tests/gpu)
-list(APPEND AOT_SCRIPTS examples/gpu/test_metaballs_field tests/gpu_raw tests/gpu_native_adapters tests/gpu_native_array_operations examples/48_gpu_native_graphics examples/49_gpu_native_compute examples/50_gpu_native_transfer examples/gpu/01_metaballs tests/gpu_float_upload)
+list(APPEND AOT_SCRIPTS examples/gpu/test_mesh_data examples/gpu/test_metaballs_field tests/gpu_raw tests/gpu_native_adapters tests/gpu_native_array_operations examples/48_gpu_native_graphics examples/49_gpu_native_compute examples/50_gpu_native_transfer examples/gpu/01_metaballs examples/gpu/02_raymarch examples/gpu/03_mesh tests/gpu_float_upload)
 list(APPEND AOT_SCRIPTS tests/gpu_native_fences examples/47_gpu_native_fences)
 list(APPEND AOT_SCRIPTS tests/gpu_astc_layout tests/gpu_astc examples/40_gpu_astc_blocks)
 list(APPEND AOT_SCRIPTS tests/gpu_vertex_buffers tests/gpu_recording examples/46_gpu_texture_uniform_bindings)
@@ -260,7 +260,7 @@ list(APPEND AOT_MODULES dassdl3/sdl3_gpu_result)
 list(APPEND AOT_MODULES dassdl3/sdl3_audio_stream_controls dassdl3/sdl3_audio_final)
 list(APPEND AOT_MODULES dassdl3/sdl3_asyncio_boost dassdl3/sdl3_audio_devices_boost)
 list(APPEND AOT_MODULES dassdl3/sdl3_camera_boost dassdl3/sdl3_synchronization dassdl3/sdl3_thread_atomic dassdl3/sdl3_process_loadso dassdl3/sdl3_platform_services)
-list(APPEND AOT_MODULES dassdl3/sdl3_pixel_views examples/gpu/metaballs_field examples/gpu/metaballs_tables)
+list(APPEND AOT_MODULES dassdl3/sdl3_pixel_views examples/gpu/metaballs_field examples/gpu/metaballs_tables examples/gpu/mesh_data)
 list(APPEND AOT_MODULES dassdl3/sdl3_render_surface_34_boost)
 list(APPEND AOT_SCRIPTS tests/render_surface_34 tests/gpu_renderer_34 examples/86_gpu_renderer)
 list(APPEND AOT_SCRIPTS tests/sdl34_remaining tests/sdl34_audio examples/87_window_progress)
@@ -268,7 +268,27 @@ list(APPEND AOT_MODULES dassdl3/sdl3_remaining_34_boost)
 list(APPEND AOT_SCRIPTS tests/hotplug_events tests/string_constants)
 list(APPEND AOT_SCRIPTS tests/common_api tests/display_render_pinch_events examples/88_system_info)
 list(APPEND AOT_MODULES dassdl3/sdl3_common_boost)
+list(APPEND AOT_SCRIPTS tests/gl_egl tests/gl_context examples/89_gl_context)
+list(APPEND AOT_MODULES dassdl3/sdl3_gl_egl)
+list(APPEND AOT_SCRIPTS tests/vulkan_metal tests/vulkan_surface examples/90_vulkan_extensions)
+list(APPEND AOT_MODULES dassdl3/sdl3_vulkan_metal)
+list(APPEND AOT_SCRIPTS tests/cpuinfo examples/91_cpuinfo)
+list(APPEND AOT_SCRIPTS tests/native_callbacks tests/native_timers examples/92_native_callbacks)
+list(APPEND AOT_SCRIPTS tests/record_surfaces tests/record_virtual_callbacks tests/record_vulkan_options examples/93_surface_bytes)
+list(APPEND AOT_MODULES dassdl3/sdl3_record_access)
 foreach(script IN LISTS AOT_SCRIPTS AOT_MODULES)
+    set(record_dependency)
+    if(script MATCHES "record_|93_surface_bytes")
+        set(record_dependency "${ROOT}/dassdl3/sdl3_record_access.das" "${ROOT}/dassdl3/sdl3_boost.das" "${ROOT}/dassdl3/sdl3_result.das" "${ROOT}/dassdl3/sdl3_try.das")
+    endif()
+    set(vm_dependency)
+    if(script MATCHES "vulkan_|90_vulkan")
+        set(vm_dependency "${ROOT}/dassdl3/sdl3_vulkan_metal.das" "${ROOT}/dassdl3/sdl3_result.das" "${ROOT}/dassdl3/sdl3_boost.das" "${ROOT}/dassdl3/sdl3_scope.das" "${ROOT}/dassdl3/sdl3_try.das")
+    endif()
+    set(gl_dependency)
+    if(script MATCHES "gl_egl|gl_context")
+        set(gl_dependency "${ROOT}/dassdl3/sdl3_gl_egl.das" "${ROOT}/dassdl3/sdl3_result.das" "${ROOT}/dassdl3/sdl3_boost.das" "${ROOT}/dassdl3/sdl3_scope.das" "${ROOT}/dassdl3/sdl3_try.das")
+    endif()
     set(remaining34_dependency "${ROOT}/dassdl3/sdl3_common_boost.das" "${ROOT}/dassdl3/sdl3_events.das")
     if(script MATCHES "sdl34_|remaining_34|87_window_progress")
         set(remaining34_dependency "${ROOT}/dassdl3/sdl3_remaining_34_boost.das"
@@ -330,6 +350,11 @@ foreach(script IN LISTS AOT_SCRIPTS AOT_MODULES)
     if(script MATCHES "peripheral")
         set(input_dependency "${ROOT}/dassdl3/sdl3_peripherals_boost.das" "${ROOT}/dassdl3/sdl3_events.das" "${ROOT}/dassdl3/sdl3_init_boost.das" "${ROOT}/dassdl3/sdl3_scope.das" "${ROOT}/dassdl3/sdl3_try.das")
     endif()
+    set(mesh_dependency)
+    if(script MATCHES "mesh")
+        set(mesh_dependency "${ROOT}/examples/gpu/mesh_data.das"
+            "${ROOT}/dassdl3/sdl3_iostream_boost.das" "${ROOT}/dassdl3/sdl3_events.das")
+    endif()
     set(metaballs_dependency)
     if(script MATCHES "metaballs")
         set(metaballs_dependency "${ROOT}/examples/gpu/metaballs_field.das" "${ROOT}/examples/gpu/metaballs_tables.das" "${ROOT}/dassdl3/sdl3_events.das" "${ROOT}/dassdl3/sdl3_iostream_boost.das")
@@ -345,8 +370,8 @@ foreach(script IN LISTS AOT_SCRIPTS AOT_MODULES)
     set(output "${CMAKE_CURRENT_BINARY_DIR}/${name}.aot.cpp")
     add_custom_command(OUTPUT "${output}"
         COMMAND parity_aot_tool "${ROOT}/${script}.das" "${output}"
-        DEPENDS ${remaining34_dependency} ${render34_dependency}
-        DEPENDS ${metaballs_dependency} ${event_dependency} ${input_dependency}
+        DEPENDS ${vm_dependency} ${gl_dependency} ${remaining34_dependency} ${render34_dependency}
+        DEPENDS ${mesh_dependency} ${metaballs_dependency} ${event_dependency} ${input_dependency}
         DEPENDS "${ROOT}/dassdl3/sdl3_gpu_result.das"
         DEPENDS "${ROOT}/dassdl3/sdl3_pixel_views.das" ${try_dependency} "${ROOT}/dassdl3/sdl3_result.das" "${ROOT}/dassdl3/sdl3_rect_clipboard_boost.das" "${ROOT}/dassdl3/sdl3_surface_pixels_boost.das" "${ROOT}/dassdl3/sdl3_surface_state_boost.das" "${ROOT}/dassdl3/sdl3_renderer_final_boost.das" "${ROOT}/dassdl3/sdl3_renderer_operations_boost.das" "${ROOT}/dassdl3/sdl3_renderer_yuv_blend_boost.das" "${ROOT}/dassdl3/sdl3_texture_transfer_boost.das" "${ROOT}/dassdl3/sdl3_texture_state_boost.das" "${ROOT}/dassdl3/sdl3_renderer_presentation_boost.das" "${ROOT}/dassdl3/sdl3_renderer_state_boost.das" "${ROOT}/dassdl3/sdl3_renderer_primitives_boost.das" "${ROOT}/dassdl3/sdl3_window_io_boost.das" "${ROOT}/dassdl3/sdl3_window_boost.das" "${ROOT}/dassdl3/sdl3_video_boost.das" "${ROOT}/dassdl3/sdl3_diagnostics_boost.das" "${ROOT}/dassdl3/sdl3_init_boost.das" "${ROOT}/dassdl3/sdl3_properties_boost.das" "${ROOT}/dassdl3/sdl3_gpu_native_boost.das" "${ROOT}/dassdl3/sdl3_gpu_recording_boost.das" "${ROOT}/dassdl3/sdl3_gpu_buffers_boost.das" "${ROOT}/dassdl3/sdl3_gpu_pipeline_boost.das" "${ROOT}/dassdl3/sdl3_gpu_shader_boost.das" "${ROOT}/dassdl3/sdl3_gpu_sampler_boost.das" "${ROOT}/dassdl3/sdl3_gpu_volume_boost.das" "${ROOT}/dassdl3/sdl3_gpu_image_boost.das" "${ROOT}/dassdl3/sdl3_gpu_swapchain_boost.das" "${ROOT}/dassdl3/sdl3_gpu_utilities_boost.das" "${ROOT}/dassdl3/sdl3_gpu_formats_boost.das" "${ROOT}/dassdl3/sdl3_gpu_texture_transfer_boost.das" "${ROOT}/dassdl3/sdl3_gpu_transfer_boost.das" parity_aot_tool "${ROOT}/${script}.das" "${ROOT}/dassdl3/sdl3_boost.das" "${ROOT}/dassdl3/sdl3_audio_boost.das" "${ROOT}/dassdl3/sdl3_pixels_boost.das" "${ROOT}/dassdl3/sdl3_geometry_boost.das" "${ROOT}/dassdl3/sdl3_gpu_boost.das"
         VERBATIM)
@@ -496,7 +521,7 @@ foreach(driver vulkan direct3d12)
     endforeach()
 endforeach()
 foreach(driver vulkan direct3d12)
-    foreach(script tests/gpu_native_adapters tests/gpu_native_array_operations examples/48_gpu_native_graphics examples/49_gpu_native_compute examples/50_gpu_native_transfer examples/gpu/01_metaballs tests/gpu_float_upload)
+    foreach(script tests/gpu_native_adapters tests/gpu_native_array_operations examples/48_gpu_native_graphics examples/49_gpu_native_compute examples/50_gpu_native_transfer examples/gpu/01_metaballs examples/gpu/02_raymarch examples/gpu/03_mesh tests/gpu_float_upload)
         string(REPLACE "/" "_" name "${script}")
         foreach(backend baseline cppgenbind parity_aot)
             if(backend STREQUAL "parity_aot")
@@ -573,7 +598,7 @@ foreach(backend baseline cppgenbind)
     add_test(NAME ${backend}_pixel_view_escape COMMAND ${Python3_EXECUTABLE} "${ROOT}/tests/test_pixel_view_escape.py" $<TARGET_FILE:${backend}_runner>)
 endforeach()
 
-foreach(shader metaballs.vert.spv metaballs.frag.spv metaballs.vert.dxil metaballs.frag.dxil)
+foreach(shader metaballs.vert.spv metaballs.frag.spv metaballs.vert.dxil metaballs.frag.dxil raymarch.vert.spv raymarch.frag.spv raymarch.vert.dxil raymarch.frag.dxil mesh.vert.spv mesh.frag.spv mesh.vert.dxil mesh.frag.dxil)
     configure_file("${ROOT}/examples/gpu/shaders/${shader}" "${CMAKE_CURRENT_BINARY_DIR}/assets/shaders/${shader}" COPYONLY)
 endforeach()
 
@@ -597,7 +622,7 @@ if(DASSDL3_TEST_NET)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/net_${name}.aot.cpp")
         add_custom_command(OUTPUT "${output}"
             COMMAND parity_aot_tool "${ROOT}/${script}.das" "${output}"
-            DEPENDS parity_aot_tool "${ROOT}/${script}.das" ${_net_boost_dependencies} VERBATIM)
+            DEPENDS parity_aot_tool "${ROOT}/${script}.das" ${record_dependency} ${_net_boost_dependencies} VERBATIM)
         list(APPEND _net_aot_sources "${output}")
     endforeach()
     add_executable(net_aot_runner aot_runner.cpp ${_net_aot_sources})
@@ -638,7 +663,7 @@ if(DASSDL3_TEST_MIXER)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/mixer_${name}.aot.cpp")
         add_custom_command(OUTPUT "${output}"
             COMMAND parity_aot_tool "${ROOT}/${script}.das" "${output}"
-            DEPENDS parity_aot_tool "${ROOT}/${script}.das" ${_mixer_boost_dependencies} VERBATIM)
+            DEPENDS parity_aot_tool "${ROOT}/${script}.das" ${record_dependency} ${_mixer_boost_dependencies} VERBATIM)
         list(APPEND _mixer_aot_sources "${output}")
     endforeach()
     add_executable(mixer_aot_runner aot_runner.cpp ${_mixer_aot_sources})
@@ -679,7 +704,7 @@ if(DASSDL3_TEST_SOUND)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/sound_${name}.aot.cpp")
         add_custom_command(OUTPUT "${output}"
             COMMAND parity_aot_tool "${ROOT}/${script}.das" "${output}"
-            DEPENDS parity_aot_tool "${ROOT}/${script}.das" ${_sound_boost_dependencies} VERBATIM)
+            DEPENDS parity_aot_tool "${ROOT}/${script}.das" ${record_dependency} ${_sound_boost_dependencies} VERBATIM)
         list(APPEND _sound_aot_sources "${output}")
     endforeach()
     add_executable(sound_aot_runner aot_runner.cpp ${_sound_aot_sources})
@@ -728,7 +753,7 @@ if(DASSDL3_TEST_SHADERCROSS)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/shadercross_${name}.aot.cpp")
         add_custom_command(OUTPUT "${output}"
             COMMAND parity_aot_tool "${ROOT}/${script}.das" "${output}"
-            DEPENDS parity_aot_tool "${ROOT}/${script}.das" ${_shadercross_boost_dependencies} VERBATIM)
+            DEPENDS parity_aot_tool "${ROOT}/${script}.das" ${record_dependency} ${_shadercross_boost_dependencies} VERBATIM)
         list(APPEND _shadercross_aot_sources "${output}")
     endforeach()
     add_executable(shadercross_aot_runner aot_runner.cpp ${_shadercross_aot_sources})
@@ -849,4 +874,124 @@ foreach(backend baseline cppgenbind common_aot)
         add_test(NAME common_${backend}_${name} COMMAND ${backend}_runner "${ROOT}/${script}.das" ${common_args})
         set_tests_properties(common_${backend}_${name} PROPERTIES TIMEOUT 60 ENVIRONMENT "SDL_VIDEO_DRIVER=dassdl3-no-message-box")
     endforeach()
+endforeach()
+
+add_executable(gl_aot_runner aot_runner.cpp
+    "${CMAKE_CURRENT_BINARY_DIR}/tests_gl_egl.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/tests_gl_context.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/examples_89_gl_context.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_result.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_boost.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_gl_egl.aot.cpp")
+target_link_libraries(gl_aot_runner PRIVATE cppgenbind_module)
+foreach(backend baseline cppgenbind gl_aot)
+    if(backend STREQUAL "gl_aot")
+        set(gl_args)
+    else()
+        set(gl_args --smoke-test)
+    endif()
+    foreach(script tests/gl_egl tests/gl_context examples/89_gl_context)
+        string(REPLACE "/" "_" name "${script}")
+        add_test(NAME gl_${backend}_${name} COMMAND ${backend}_runner "${ROOT}/${script}.das" ${gl_args})
+        set_tests_properties(gl_${backend}_${name} PROPERTIES TIMEOUT 60 RUN_SERIAL TRUE)
+    endforeach()
+endforeach()
+
+foreach(backend baseline cppgenbind)
+    target_include_directories(${backend}_module PUBLIC "${DAS}/modules/dasVulkan/vendor/Vulkan-Headers/include")
+endforeach()
+add_executable(vm_aot_runner aot_runner.cpp
+    "${CMAKE_CURRENT_BINARY_DIR}/tests_vulkan_metal.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/tests_vulkan_surface.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/examples_90_vulkan_extensions.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_result.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_boost.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_vulkan_metal.aot.cpp")
+target_link_libraries(vm_aot_runner PRIVATE cppgenbind_module)
+foreach(backend baseline cppgenbind vm_aot)
+    if(backend STREQUAL "vm_aot")
+        set(vm_args)
+    else()
+        set(vm_args --smoke-test)
+    endif()
+    foreach(script tests/vulkan_metal tests/vulkan_surface examples/90_vulkan_extensions)
+        string(REPLACE "/" "_" name "${script}")
+        add_test(NAME vm_${backend}_${name} COMMAND ${backend}_runner "${ROOT}/${script}.das" ${vm_args})
+        set_tests_properties(vm_${backend}_${name} PROPERTIES TIMEOUT 60 RUN_SERIAL TRUE)
+        if(DASSDL3_TEST_VULKAN_LAYERS_DISABLE)
+            set_property(TEST vm_${backend}_${name} APPEND PROPERTY ENVIRONMENT "VK_LOADER_LAYERS_DISABLE=${DASSDL3_TEST_VULKAN_LAYERS_DISABLE}")
+        endif()
+    endforeach()
+endforeach()
+
+add_executable(cpuinfo_aot_runner aot_runner.cpp
+    "${CMAKE_CURRENT_BINARY_DIR}/tests_cpuinfo.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/examples_91_cpuinfo.aot.cpp")
+target_link_libraries(cpuinfo_aot_runner PRIVATE cppgenbind_module)
+foreach(backend baseline cppgenbind cpuinfo_aot)
+    if(backend STREQUAL "cpuinfo_aot")
+        set(cpuinfo_args)
+    else()
+        set(cpuinfo_args --smoke-test)
+    endif()
+    foreach(mode native masked)
+        add_test(NAME cpuinfo_${backend}_${mode} COMMAND ${backend}_runner "${ROOT}/tests/cpuinfo.das" ${cpuinfo_args})
+        if(mode STREQUAL "masked")
+            set(mask "-all")
+        else()
+            set(mask "all")
+        endif()
+        set_tests_properties(cpuinfo_${backend}_${mode} PROPERTIES TIMEOUT 30 ENVIRONMENT "SDL_CPU_FEATURE_MASK=${mask}")
+    endforeach()
+    add_test(NAME cpuinfo_${backend}_example COMMAND ${backend}_runner "${ROOT}/examples/91_cpuinfo.das" ${cpuinfo_args})
+    set_tests_properties(cpuinfo_${backend}_example PROPERTIES TIMEOUT 30 ENVIRONMENT "SDL_CPU_FEATURE_MASK=all")
+endforeach()
+
+add_executable(callbacks_aot_runner aot_runner.cpp
+    "${CMAKE_CURRENT_BINARY_DIR}/tests_native_callbacks.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/tests_native_timers.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/examples_92_native_callbacks.aot.cpp")
+target_link_libraries(callbacks_aot_runner PRIVATE cppgenbind_module)
+foreach(backend baseline cppgenbind callbacks_aot)
+    set(callbacks_args --smoke-test)
+    if(backend STREQUAL "callbacks_aot")
+        set(callbacks_args)
+    endif()
+    foreach(script tests/native_callbacks tests/native_timers examples/92_native_callbacks)
+        string(REPLACE "/" "_" name "${script}")
+        add_test(NAME callbacks_${backend}_${name} COMMAND ${backend}_runner "${ROOT}/${script}.das" ${callbacks_args})
+        set_tests_properties(callbacks_${backend}_${name} PROPERTIES TIMEOUT 30 RUN_SERIAL TRUE)
+    endforeach()
+endforeach()
+
+add_executable(records_aot_runner aot_runner.cpp
+    "${CMAKE_CURRENT_BINARY_DIR}/tests_record_surfaces.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/tests_record_virtual_callbacks.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/tests_record_vulkan_options.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/examples_93_surface_bytes.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_record_access.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_result.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_boost.aot.cpp")
+target_link_libraries(records_aot_runner PRIVATE cppgenbind_module)
+foreach(backend baseline cppgenbind records_aot)
+    set(records_args --smoke-test)
+    if(backend STREQUAL "records_aot")
+        set(records_args)
+    endif()
+    foreach(script tests/record_surfaces tests/record_virtual_callbacks tests/record_vulkan_options examples/93_surface_bytes)
+        string(REPLACE "/" "_" name "${script}")
+        add_test(NAME records_${backend}_${name} COMMAND ${backend}_runner "${ROOT}/${script}.das" ${records_args})
+        set_tests_properties(records_${backend}_${name} PROPERTIES TIMEOUT 90 RUN_SERIAL TRUE)
+    endforeach()
+endforeach()
+
+configure_file("${ROOT}/examples/gpu/models/bunny.msh" "${CMAKE_CURRENT_BINARY_DIR}/assets/meshes/bunny.msh" COPYONLY)
+
+foreach(runner baseline_runner cppgenbind_runner parity_aot_runner)
+    if(runner STREQUAL "parity_aot_runner")
+        add_test(NAME mesh_data_${runner} COMMAND ${runner} ${ROOT}/examples/gpu/test_mesh_data.das)
+    else()
+        add_test(NAME mesh_data_${runner} COMMAND ${runner} ${ROOT}/examples/gpu/test_mesh_data.das --smoke-test)
+    endif()
+    set_tests_properties(mesh_data_${runner} PROPERTIES TIMEOUT 30)
 endforeach()

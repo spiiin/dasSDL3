@@ -2,7 +2,7 @@ options gen2
 require dassdl3/sdl3_filesystem_boost
 require dassdl3/sdl3_try
 
-def inspect_directory() : $Result<SdlUnit; SdlError> {
+def inspect_directory() : SdlStatus {
     let cwd=current_directory() |> sdl_try
     let base=base_path() |> sdl_try
     let info=path_info(cwd) |> sdl_try

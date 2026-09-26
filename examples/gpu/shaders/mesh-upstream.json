@@ -1,0 +1,9 @@
+{
+  "upstream": "https://github.com/bkaradzic/bgfx/tree/7e3060ccb97959dcda3f091b96d82515197028e0/examples/04-mesh",
+  "license": "BSD-2-Clause (../LICENSE-bgfx.txt); model terms: ../models/README.md",
+  "reference_sha256": {
+    "mesh.cpp": "eb267b54ec74e0b388cbf2d705d8ce13ef95351138199af77d161c58dad0ac87",
+    "vs_mesh.sc": "5c3c80c5deaf6727ffd267ebefffe03da50ab09d924654f5f55653cd4adde22f",
+    "fs_mesh.sc": "cae0516fb37ccbaec99ba272f63e04bc739195ba97cedabd4141b693ff40aed6"
+  }
+}

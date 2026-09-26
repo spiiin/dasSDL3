@@ -1,0 +1,8 @@
+{
+  "raymarch.vert.hlsl": "c43d226ae4cc5fba434a610fe9aaf9d9223ec17d111cbf5ec873c77da2362d5a",
+  "raymarch.vert.spv": "c82140de2e70d9f8bce1bef3c104baebb9ccf057b0d10c206cad3fa3bf653c33",
+  "raymarch.vert.dxil": "3f2426878720c4db60a45cb7d8b7b74722af7f0327165e9dda5fbf751592752c",
+  "raymarch.frag.hlsl": "e7660f0c7f04f754c71a14162523666bd8ff4eaeff2ec4e4f0616b005f1db6f8",
+  "raymarch.frag.spv": "d973018d4898636058d13073542434414ad24123f889ab8c12f976e001317f4f",
+  "raymarch.frag.dxil": "b4147ef4a8be1583962b106d60a197f0e2c0d116c0aa05ea41be6616089d591d"
+}

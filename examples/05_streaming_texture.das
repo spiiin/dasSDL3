@@ -5,7 +5,7 @@ require dassdl3/sdl3_pixels_boost
 // Scenario adapted from SDL release-3.2.18 examples/renderer/07-streaming-textures
 // (public domain). Own RGBA staging array replaces the borrowed locked surface.
 
-def render_streaming(window : SDL_Window?; renderer : SDL_Renderer?; texture : SDL_Texture?; smoke : bool; var frames : int&) : $Result<SdlUnit; SdlError> {
+def render_streaming(window : SDL_Window?; renderer : SDL_Renderer?; texture : SDL_Texture?; smoke : bool; var frames : int&) : SdlStatus {
     var pixels : array<uint8>
     let byte_count = rgba8_buffer_size(150, 150, 600) |> sdl_try
     pixels |> resize(byte_count)

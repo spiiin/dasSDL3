@@ -47,3 +47,31 @@ def public gpu_sampler_descriptor(device : SDL_GPUDevice?; sampler : GpuSamplerH
     var value = info
     return <- move_ok(value,type<SdlError>)
 }
+
+// Builders mutate the native descriptor and never own a GPU resource.
+def public gpu_sampler() : SDL_GPUSamplerCreateInfo { return gpu_sampler_info() }
+def public filters(var settings : SDL_GPUSamplerCreateInfo; minification, magnification : SDL_GPUFilter) {
+    settings.min_filter = minification
+    settings.mag_filter = magnification
+}
+def public filters(var settings : SDL_GPUSamplerCreateInfo; filter : SDL_GPUFilter) { filters(settings,filter,filter) }
+def public mipmap_mode(var settings : SDL_GPUSamplerCreateInfo; mode : SDL_GPUSamplerMipmapMode) { settings.mipmap_mode = mode }
+def public address_modes(var settings : SDL_GPUSamplerCreateInfo; u, v, w : SDL_GPUSamplerAddressMode) {
+    settings.address_mode_u = u
+    settings.address_mode_v = v
+    settings.address_mode_w = w
+}
+def public address_modes(var settings : SDL_GPUSamplerCreateInfo; mode : SDL_GPUSamplerAddressMode) { address_modes(settings,mode,mode,mode) }
+def public lod_range(var settings : SDL_GPUSamplerCreateInfo; minimum, maximum : float) {
+    settings.min_lod = minimum
+    settings.max_lod = maximum
+}
+def public lod_bias(var settings : SDL_GPUSamplerCreateInfo; bias : float) { settings.mip_lod_bias = bias }
+def public anisotropy(var settings : SDL_GPUSamplerCreateInfo; maximum : float; enabled : bool = true) {
+    settings.max_anisotropy = maximum
+    settings.enable_anisotropy = enabled
+}
+def public comparison(var settings : SDL_GPUSamplerCreateInfo; operation : SDL_GPUCompareOp; enabled : bool = true) {
+    settings.compare_op = operation
+    settings.enable_compare = enabled
+}

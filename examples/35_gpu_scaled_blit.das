@@ -2,7 +2,7 @@ options gen2
 require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_image_boost
 
-def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; SdlError> {
+def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : SdlStatus {
     var pixels, scaled : array<uint8>
     resize(pixels,16); resize(scaled,64)
     for (i in 0 .. 16) { pixels[i] = uint8(i*16) }

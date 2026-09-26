@@ -1,7 +1,7 @@
 options gen2
 require dassdl3/sdl3_scope
 require dassdl3/sdl3_pixel_views
-def render_example(renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; SdlError> {
+def render_example(renderer : SDL_Renderer?; smoke : bool) : SdlStatus {
     var rendered=false
     return sdl_scope() {
         let texture : SDL_Texture? = with_texture(renderer,SDL_PixelFormat.PIXELFORMAT_RGBA32,SDL_TextureAccess.TEXTUREACCESS_STREAMING,32,32) |> sdl_use

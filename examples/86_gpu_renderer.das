@@ -7,7 +7,7 @@ require math
 
 // SDL Renderer drawing with a custom SDL GPU fragment shader.
 // Shader binaries are shipped; no shader compiler is required at runtime.
-def run(smoke : bool) : $Result<SdlUnit; SdlError> {
+def run(smoke : bool) : SdlStatus {
     return sdl_scope() {
         with_sdl() |> sdl_use
         let window : SDL_Window? = with_window("SDL GPU Renderer - Escape to exit",640,480,0ul) |> sdl_use

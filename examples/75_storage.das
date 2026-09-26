@@ -2,7 +2,7 @@ options gen2
 require dassdl3/sdl3_storage_boost
 require dassdl3/sdl3_scope
 
-def inspect_storage() : $Result<SdlUnit; SdlError> {
+def inspect_storage() : SdlStatus {
     return sdl_scope() {
         let storage : SDL_Storage? = with_file_storage(".") |> sdl_use
         if(!storage_ready(storage)) {print("Storage is not ready yet.\n");return sdl_ok()}

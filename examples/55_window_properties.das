@@ -2,7 +2,7 @@ options gen2
 require dassdl3/sdl3_scope
 require dassdl3/sdl3_window_boost
 require dassdl3/sdl3_properties_boost
-def show_popup(window : SDL_Window?) : $Result<SdlUnit; SdlError> {
+def show_popup(window : SDL_Window?) : SdlStatus {
     if(!SDL_SetWindowResizable(window,true)) {return err(sdl_error("55_window_properties"),type<SdlUnit>)}
     return sdl_scope() {
         let popup : SDL_Window? = with_popup_window(window,10,10,100,40,SDL_WINDOW_TOOLTIP|SDL_WINDOW_HIDDEN) |> sdl_use

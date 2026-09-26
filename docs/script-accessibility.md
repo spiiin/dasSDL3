@@ -1,8 +1,9 @@
 # Script accessibility audit (SDL 3.4.16, Windows x64)
 
 This package leaves raw function signatures and resource ownership unchanged.
-The census is still 998 generated + 13 adapted / 1263 functions; constants and
-record fields are not counted as additional functions.
+Current function census is in [api-coverage.md](api-coverage.md); constants and
+record fields are not counted as additional functions. The complete-record follow-up
+is [record-field-accessibility.md](record-field-accessibility.md).
 
 ## String constants
 
@@ -33,7 +34,8 @@ The older audio_device_channel_map contract remains separate and ambiguous.
 
 SdlEvent adds keyboard_added/removed, mouse_added/removed,
 audio_device_added/removed/format_changed and
-camera_device_added/removed/approved/denied (64 alternatives total).
+camera_device_added/removed/approved/denied (64 alternatives in this original package;
+71 after [display/render/pinch](common-api.md)).
 The four payload records own timestamp and which; AudioDeviceEvent also owns
 recording. They carry IDs, not device owners or cached names. In particular a
 removed ID need not remain valid for querying the device. Existing polling,
@@ -62,8 +64,14 @@ Remaining intentional or specialized omissions:
 - Keyboard scancode / mouse-wheel direction: existing scalar predicate adapters.
 - Clipboard MIME / IME candidates and HID wchar_t/list links: copied adapters.
 - GamepadBinding input/output unions: existing tagged accessors.
-- VirtualJoystickDesc, IOStreamInterface and StorageInterface callback fields:
-  native-only callback lifetime; no automatic retained script block bridge.
+- IOStreamInterface (6), StorageInterface (11) and VirtualJoystickDesc (8) callback
+  slots have exported native-address setters.
+  No automatic retained script block bridge is provided.
+
+The complete-record follow-up found and closed SDL_GPUVulkanOptions (7 fields),
+read-only Surface/Palette metadata (4 fields), virtual callbacks (8 fields), and
+generic surface pitch/pixels (2 previously partial). See the
+[full field audit and implementation contracts](record-field-accessibility.md).
 
 Windows inspection does not replace other-platform ABI/build validation.
 

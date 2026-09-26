@@ -1,13 +1,17 @@
 # Покрытие SDL3
 
-Baseline: SDL 3.4.16, Windows x64/MSVC. Generated: 1005; adapted: 13;
-pending: 245 of 1263 functions. GPU: 95 generated / 0 adapted / 0 pending.
+Baseline: SDL 3.4.16, Windows x64/MSVC. Generated: 1062; adapted: 13;
+pending: 188 of 1263 functions. GPU: 95 generated / 0 adapted / 0 pending.
 See [upgrade and new API queue](sdl-3.4-upgrade.md).
 `adapted` means a documented partial adapter, not full raw API coverage.
 See [API boundary](gpu-api-boundary.md) and the generated header census.
 
 | Подсистема / сценарий | Raw API | Идиоматичный слой | Проверка / оставшаяся работа |
 | --- | --- | --- | --- |
+| Native callbacks | 9 additional generated: Hints, Timer, Log, Init, Properties | Native addresses and log output refs; no retained script blocks | [Contracts and lifetime tests](native-callbacks.md) |
+| CPUInfo | 19/19 generated | Direct scalar queries and bool predicates; no extra wrappers | [Contracts](cpuinfo.md) |
+| Vulkan / Metal | 7 + 3 generated | Copied extension names, native surface/view ownership, defer | [Contracts and platform limits](vulkan-metal.md) |
+| GL / EGL | 20 generated; Video 114/114 | Result attributes/swap/context, defer load/context/current scopes; native EGL callbacks | [Contracts and backend limits](gl-egl.md) |
 | Common API / owned events | 7 additional generated | MessageBox Result<Option<int>>, URL Result, GUID text, 14 display/render/pinch tags | [Contracts and validation limits](common-api.md) |
 | Thread / Atomic / Process / LoadSO | 12/12 + 16/16 + 9/9 + 3/3 generated | Native callbacks, refs, owners, copied process output | [Threads](thread-atomic.md), [Processes](process-loadso.md) |
 | System / Power / Locale / Dialog / Tray | 13/13 + 1/1 + 1/1 + 4/4 + 23/23 generated | Native callbacks; copied locales; tray scopes | [Platform contracts and validation limits](platform-services.md) |
@@ -20,7 +24,7 @@ See [API boundary](gpu-api-boundary.md) and the generated header census.
 | Storage | 17/17 generated | Native interfaces, copied lists/bytes, bounds and defer scopes | [Contracts](storage.md); positive user/cloud storage remains unverified |
 | IOStream | 46 generated / 1 fixed-text adapted / 1 va_list pending | Bounded byte transfers, counts/status, scalar refs and defer scopes | [Contracts and pinned bulk IO limits](iostream.md) |
 | Filesystem | 11/11 generated | Copied paths/lists and Result helpers | [Contracts](filesystem.md) |
-| Rect/Clipboard/hit-test | 18 + 11 + 1 generated | Ref/copy and lexical callback scopes | [Contracts](rect-clipboard-hittest.md); GL/EGL moved to P8 |
+| Rect/Clipboard/hit-test | 18 + 11 + 1 generated | Ref/copy and lexical callback scopes | [Contracts](rect-clipboard-hittest.md); GL/EGL completed in P8, see [GL/EGL](gl-egl.md) |
 | Surface/Pixels | Surface 65/65, Pixels 11/11 raw | Refs, packed arrays, copied pointer list, defer scopes | Native function execution, pixels and ownership; [contract](surface-pixels.md) |
 | Surface state | 16 generated | Scalar/rect refs | State, key/modulation and clip pixels; [contract](surface-state.md) |
 | Renderer final APIs | 5 generated, fixed-text variadic adapter | Geometry arrays, event refs | [Interop limitations](renderer-final-api.md) |
@@ -32,11 +36,11 @@ See [API boundary](gpu-api-boundary.md) and the generated header census.
 | Renderer state | 10 новых generated | Rect/scalar ref adapters, NULL reset | Full-image pixels, target-local state; [контракт](renderer-state.md) |
 | Software renderer/primitives | 10 новых generated | Surface lifetime scope, array/ref adapters | CPU pixels каждого примитива; [контракт](renderer-primitives.md) |
 | Window fullscreen/surface/IO | 25 Video + 3 Surface новых generated | Mode/ICC/rect/ref adapters; standalone surface defer | CPU pixels, surface lifecycle, native results; [ограничения](window-io.md) |
-| Window state | 27 новых generated; Video суммарно 94/114 | Property/popup defer scopes, ref/out | Constraints, parent/child ownership, early return; [контракт](window-state.md) |
+| Window state | 27 новых generated; Video суммарно 114/114 | Property/popup defer scopes, ref/out | Constraints, parent/child ownership, early return; [контракт](window-state.md) |
 | Video discovery | 31 новых generated | Copied display/mode/window lists, strings, ref/out | Real display queries, hidden window, invalid IDs; [контракт](video-discovery.md) |
 | Error/Log/Timer/Time | 22 новых generated и 10 fixed-text adapted | Error copy, ref/out time adapters | Thread errors, log filtering, UTC/FILETIME, timer removal; [контракт](diagnostics-time.md) |
-| Hints/Init | 6/8 Hints и 9/10 Init generated; 3 callbacks pending | Copied getters, metadata clear, with_sdl_subsystems | Приоритеты, UTF-8, nested/early return, partial init rollback; [контракт](init-hints.md) |
-| Properties | 19 из 21 generated; enumeration adapted; retained cleanup pending | with_properties, with_properties_lock, copied strings/names | Типы/defaults/UTF-8, early return, lock и native cleanup counters; [контракт](properties.md) |
+| Hints/Init | 8/8 Hints и 10/10 Init generated; native callbacks | Copied getters, metadata clear, with_sdl_subsystems | Приоритеты, UTF-8, nested/early return, partial init rollback; [контракт](init-hints.md) |
+| Properties | 20 из 21 generated; enumeration adapted; native cleanup | with_properties, with_properties_lock, copied strings/names | Типы/defaults/UTF-8, early return, lock и native cleanup counters; [контракт](properties.md) |
 | Базовая сессия SDL | GetVersion, Init, Quit, WasInit | sdl_init, with_sdl; boost возвращает Result, raw сохраняет SDL-контракт | bindings, boost; расширения Init и времени описаны выше |
 | Окно и renderer | Create/DestroyWindow, Create/DestroyRenderer, GetWindowID, GetWindowFromID, GetRenderer, SetWindowTitle | create/destroy, with_window, with_renderer, set_title | square, boost; управление окнами пока частичное |
 | Touch/Pen/Sensor/Haptic/HIDAPI | 4 + 1 + 14 + 31 + 23 generated | Owned device lists, HID UTF-8 metadata, arrays, effect refs and scopes; 13 event tags | [Contracts and hardware limits](peripherals.md) |
@@ -51,6 +55,13 @@ Render 101 raw + 1 fixed-text adapter. [Контракты и проверки](
 Pending не означает обязательную реализацию всех libc/SIMD/va_list функций:
 Все 169 записей Stdinc [классифицированы](stdinc-policy.md); raw pending сохранён,
 но большинство из них не входит в обязательный script-backlog.
+Оставшиеся [19 функций вне Stdinc](remaining-api-policy.md) тоже классифицированы:
+13 host-only, 2 language alternatives, 1 deferred, 3 va_list. Все 188 pending
+имеют индивидуальное решение; это не означает полную проверку полей, платформ и устройств.
+[Аудит всех complete records](record-field-accessibility.md): 840 полей,
+все выявленные 19 pending + 2 partial закрыты: read-only Surface/Palette,
+GPUVulkanOptions, virtual callback setters и общие surface plane byte views.
+Все 25 callback-полей имеют native setters. Это не проверка всех платформ и устройств.
 
 SDL 3.4 оставшиеся 13 дополнений подключены; [контракты и границы](sdl-34-remaining.md).
 

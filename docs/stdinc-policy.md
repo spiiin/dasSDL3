@@ -3,7 +3,8 @@
 All 169 pending Windows Stdinc functions have an explicit `script_disposition`
 in tools/api-policy.json. This is a priority decision, not an implementation or
 an assertion that SDL and daScript semantics are identical. Raw status remains
-pending: 998 generated + 13 adapted + 252 pending / 1263 functions overall.
+pending. See [current coverage](api-coverage.md) for library-wide totals and
+[the remaining non-Stdinc decisions](remaining-api-policy.md) for the other 19 entries.
 No denominator reduction or automatic exclusion by name prefix is used.
 The [generated inventory](generated/api-windows-x64-msvc.md) lists every function
 and its decision; JSON retains the per-function reason and contract.

@@ -2,7 +2,7 @@ options gen2
 require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_utilities_boost
 
-def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; SdlError> {
+def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : SdlStatus {
     let format = SDL_GPU_TEXTUREFORMAT_BC1_RGBA_UNORM
     var blocks, result : array<uint8>
     resize(blocks,32); resize(result,32)

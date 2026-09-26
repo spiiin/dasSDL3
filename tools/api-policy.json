@@ -873,10 +873,13 @@
       "contract": "docs/properties.md"
     },
     "function:SDL_SetPointerPropertyWithCleanup": {
-      "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "Retained script cleanup requires rooting, callback-thread and teardown contract; no script closure is retained across C ABI.",
-      "contract": "docs/properties.md"
+      "boost_status": "not_needed",
+      "reason": "Native C callback address ABI; no retained script Func/Block. Host owns callback code and userdata lifetime. Log getter has an output-reference adapter.",
+      "contract": "docs/native-callbacks.md",
+      "tests": [
+        "tests/native_callbacks.das",
+        "tests/native_timers.das"
+      ]
     },
     "function:SDL_SetHintWithPriority": {
       "reason": "Direct pinned SDL signature; native return values and lifetime rules preserved.",
@@ -963,22 +966,31 @@
       ]
     },
     "function:SDL_AddHintCallback": {
-      "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "Retained callback rooting, thread affinity and teardown contract pending.",
-      "contract": "docs/init-hints.md"
+      "boost_status": "not_needed",
+      "reason": "Native C callback address ABI; no retained script Func/Block. Host owns callback code and userdata lifetime. Log getter has an output-reference adapter.",
+      "contract": "docs/native-callbacks.md",
+      "tests": [
+        "tests/native_callbacks.das",
+        "tests/native_timers.das"
+      ]
     },
     "function:SDL_RemoveHintCallback": {
-      "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "Retained callback rooting, thread affinity and teardown contract pending.",
-      "contract": "docs/init-hints.md"
+      "boost_status": "not_needed",
+      "reason": "Native C callback address ABI; no retained script Func/Block. Host owns callback code and userdata lifetime. Log getter has an output-reference adapter.",
+      "contract": "docs/native-callbacks.md",
+      "tests": [
+        "tests/native_callbacks.das",
+        "tests/native_timers.das"
+      ]
     },
     "function:SDL_RunOnMainThread": {
-      "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "Retained callback rooting, thread affinity and teardown contract pending.",
-      "contract": "docs/init-hints.md"
+      "boost_status": "not_needed",
+      "reason": "Native C callback address ABI; no retained script Func/Block. Host owns callback code and userdata lifetime. Log getter has an output-reference adapter.",
+      "contract": "docs/native-callbacks.md",
+      "tests": [
+        "tests/native_callbacks.das",
+        "tests/native_timers.das"
+      ]
     },
     "function:SDL_ClearError": {
       "reason": "Direct pinned SDL signature; native results, clocks and lifetime rules preserved.",
@@ -1236,45 +1248,62 @@
     },
     "function:SDL_SetErrorV": {
       "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
-      "contract": "docs/diagnostics-time.md"
+      "boost_status": "not_needed",
+      "script_disposition": "c_abi_only",
+      "reason": "Native va_list is ABI-specific, not a script array/tuple. Existing SDL_SetErrorText and boost set_error accept interpolated literal text without C formatting.",
+      "contract": "docs/remaining-api-policy.md"
     },
     "function:SDL_LogMessageV": {
       "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
-      "contract": "docs/diagnostics-time.md"
+      "boost_status": "not_needed",
+      "script_disposition": "c_abi_only",
+      "reason": "Native va_list cannot be constructed from ordinary script values. Existing SDL_LogMessageText and boost log_message preserve fixed-text logging needs.",
+      "contract": "docs/remaining-api-policy.md"
     },
     "function:SDL_GetDefaultLogOutputFunction": {
-      "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
-      "contract": "docs/diagnostics-time.md"
+      "boost_status": "not_needed",
+      "reason": "Native C callback address ABI; no retained script Func/Block. Host owns callback code and userdata lifetime. Log getter has an output-reference adapter.",
+      "contract": "docs/native-callbacks.md",
+      "tests": [
+        "tests/native_callbacks.das",
+        "tests/native_timers.das"
+      ]
     },
     "function:SDL_GetLogOutputFunction": {
-      "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
-      "contract": "docs/diagnostics-time.md"
+      "boost_status": "not_needed",
+      "reason": "Native C callback address ABI; no retained script Func/Block. Host owns callback code and userdata lifetime. Log getter has an output-reference adapter.",
+      "contract": "docs/native-callbacks.md",
+      "tests": [
+        "tests/native_callbacks.das",
+        "tests/native_timers.das"
+      ]
     },
     "function:SDL_SetLogOutputFunction": {
-      "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
-      "contract": "docs/diagnostics-time.md"
+      "boost_status": "not_needed",
+      "reason": "Native C callback address ABI; no retained script Func/Block. Host owns callback code and userdata lifetime. Log getter has an output-reference adapter.",
+      "contract": "docs/native-callbacks.md",
+      "tests": [
+        "tests/native_callbacks.das",
+        "tests/native_timers.das"
+      ]
     },
     "function:SDL_AddTimer": {
-      "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
-      "contract": "docs/diagnostics-time.md"
+      "boost_status": "not_needed",
+      "reason": "Native C callback address ABI; no retained script Func/Block. Host owns callback code and userdata lifetime. Log getter has an output-reference adapter.",
+      "contract": "docs/native-callbacks.md",
+      "tests": [
+        "tests/native_callbacks.das",
+        "tests/native_timers.das"
+      ]
     },
     "function:SDL_AddTimerNS": {
-      "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
-      "contract": "docs/diagnostics-time.md"
+      "boost_status": "not_needed",
+      "reason": "Native C callback address ABI; no retained script Func/Block. Host owns callback code and userdata lifetime. Log getter has an output-reference adapter.",
+      "contract": "docs/native-callbacks.md",
+      "tests": [
+        "tests/native_callbacks.das",
+        "tests/native_timers.das"
+      ]
     },
     "function:SDL_GetNumVideoDrivers": {
       "reason": "Direct SDL video query; main-thread, borrowed pointer and SDL allocation lifetimes remain caller obligations. Copy/ref adapters are separate.",
@@ -5566,11 +5595,11 @@
       "adapter": "SDL_IOprintfText"
     },
     "function:SDL_IOvprintf": {
-      "boost_status": "pending",
-      "reason": "Native va_list ABI is not a script argument list; remains pending.",
-      "contract": "docs/iostream.md",
-      "tests": [],
-      "raw_status": "pending"
+      "raw_status": "pending",
+      "boost_status": "not_needed",
+      "script_disposition": "c_abi_only",
+      "reason": "Native va_list is not a script argument list. Existing SDL_IOprintfText handles completed text; bounded byte IO handles explicit serialization.",
+      "contract": "docs/remaining-api-policy.md"
     },
     "function:SDL_FlushIO": {
       "boost_status": "partial",
@@ -9043,6 +9072,532 @@
       "tests": [
         "tests/common_api.das"
       ]
+    },
+    "function:SDL_GL_LoadLibrary": {
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
+    },
+    "function:SDL_GL_GetProcAddress": {
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
+    },
+    "function:SDL_EGL_GetProcAddress": {
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
+    },
+    "function:SDL_GL_UnloadLibrary": {
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
+    },
+    "function:SDL_GL_ExtensionSupported": {
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
+    },
+    "function:SDL_GL_ResetAttributes": {
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
+    },
+    "function:SDL_GL_SetAttribute": {
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
+    },
+    "function:SDL_GL_GetAttribute": {
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
+    },
+    "function:SDL_GL_CreateContext": {
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
+    },
+    "function:SDL_GL_MakeCurrent": {
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
+    },
+    "function:SDL_GL_GetCurrentWindow": {
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
+    },
+    "function:SDL_GL_GetCurrentContext": {
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
+    },
+    "function:SDL_EGL_GetCurrentDisplay": {
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
+    },
+    "function:SDL_EGL_GetCurrentConfig": {
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
+    },
+    "function:SDL_EGL_GetWindowSurface": {
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
+    },
+    "function:SDL_EGL_SetAttributeCallbacks": {
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
+    },
+    "function:SDL_GL_SetSwapInterval": {
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
+    },
+    "function:SDL_GL_GetSwapInterval": {
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
+    },
+    "function:SDL_GL_SwapWindow": {
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
+    },
+    "function:SDL_GL_DestroyContext": {
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
+    },
+    "function:SDL_Vulkan_LoadLibrary": {
+      "boost_status": "partial",
+      "reason": "Native Vulkan/Metal interop; copied extension names, surface/view factories and defer lifetimes. Vulkan instance/physical device/allocators and Metal layers remain native host resources.",
+      "contract": "docs/vulkan-metal.md",
+      "tests": [
+        "tests/vulkan_metal.das",
+        "tests/vulkan_surface.das"
+      ]
+    },
+    "function:SDL_Vulkan_GetVkGetInstanceProcAddr": {
+      "boost_status": "partial",
+      "reason": "Native Vulkan/Metal interop; copied extension names, surface/view factories and defer lifetimes. Vulkan instance/physical device/allocators and Metal layers remain native host resources.",
+      "contract": "docs/vulkan-metal.md",
+      "tests": [
+        "tests/vulkan_metal.das",
+        "tests/vulkan_surface.das"
+      ]
+    },
+    "function:SDL_Vulkan_UnloadLibrary": {
+      "boost_status": "partial",
+      "reason": "Native Vulkan/Metal interop; copied extension names, surface/view factories and defer lifetimes. Vulkan instance/physical device/allocators and Metal layers remain native host resources.",
+      "contract": "docs/vulkan-metal.md",
+      "tests": [
+        "tests/vulkan_metal.das",
+        "tests/vulkan_surface.das"
+      ]
+    },
+    "function:SDL_Vulkan_GetInstanceExtensions": {
+      "boost_status": "partial",
+      "reason": "Native Vulkan/Metal interop; copied extension names, surface/view factories and defer lifetimes. Vulkan instance/physical device/allocators and Metal layers remain native host resources.",
+      "contract": "docs/vulkan-metal.md",
+      "tests": [
+        "tests/vulkan_metal.das",
+        "tests/vulkan_surface.das"
+      ]
+    },
+    "function:SDL_Vulkan_CreateSurface": {
+      "boost_status": "partial",
+      "reason": "Native Vulkan/Metal interop; copied extension names, surface/view factories and defer lifetimes. Vulkan instance/physical device/allocators and Metal layers remain native host resources.",
+      "contract": "docs/vulkan-metal.md",
+      "tests": [
+        "tests/vulkan_metal.das",
+        "tests/vulkan_surface.das"
+      ]
+    },
+    "function:SDL_Vulkan_DestroySurface": {
+      "boost_status": "partial",
+      "reason": "Native Vulkan/Metal interop; copied extension names, surface/view factories and defer lifetimes. Vulkan instance/physical device/allocators and Metal layers remain native host resources.",
+      "contract": "docs/vulkan-metal.md",
+      "tests": [
+        "tests/vulkan_metal.das",
+        "tests/vulkan_surface.das"
+      ]
+    },
+    "function:SDL_Vulkan_GetPresentationSupport": {
+      "boost_status": "partial",
+      "reason": "Native Vulkan/Metal interop; copied extension names, surface/view factories and defer lifetimes. Vulkan instance/physical device/allocators and Metal layers remain native host resources.",
+      "contract": "docs/vulkan-metal.md",
+      "tests": [
+        "tests/vulkan_metal.das",
+        "tests/vulkan_surface.das"
+      ]
+    },
+    "function:SDL_Metal_CreateView": {
+      "boost_status": "partial",
+      "reason": "Native Vulkan/Metal interop; copied extension names, surface/view factories and defer lifetimes. Vulkan instance/physical device/allocators and Metal layers remain native host resources.",
+      "contract": "docs/vulkan-metal.md",
+      "tests": [
+        "tests/vulkan_metal.das",
+        "tests/vulkan_surface.das"
+      ]
+    },
+    "function:SDL_Metal_DestroyView": {
+      "boost_status": "partial",
+      "reason": "Native Vulkan/Metal interop; copied extension names, surface/view factories and defer lifetimes. Vulkan instance/physical device/allocators and Metal layers remain native host resources.",
+      "contract": "docs/vulkan-metal.md",
+      "tests": [
+        "tests/vulkan_metal.das",
+        "tests/vulkan_surface.das"
+      ]
+    },
+    "function:SDL_Metal_GetLayer": {
+      "boost_status": "partial",
+      "reason": "Native Vulkan/Metal interop; copied extension names, surface/view factories and defer lifetimes. Vulkan instance/physical device/allocators and Metal layers remain native host resources.",
+      "contract": "docs/vulkan-metal.md",
+      "tests": [
+        "tests/vulkan_metal.das",
+        "tests/vulkan_surface.das"
+      ]
+    },
+    "function:SDL_GetNumLogicalCPUCores": {
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
+    },
+    "function:SDL_GetCPUCacheLineSize": {
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
+    },
+    "function:SDL_HasAltiVec": {
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
+    },
+    "function:SDL_HasMMX": {
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
+    },
+    "function:SDL_HasSSE": {
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
+    },
+    "function:SDL_HasSSE2": {
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
+    },
+    "function:SDL_HasSSE3": {
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
+    },
+    "function:SDL_HasSSE41": {
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
+    },
+    "function:SDL_HasSSE42": {
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
+    },
+    "function:SDL_HasAVX": {
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
+    },
+    "function:SDL_HasAVX2": {
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
+    },
+    "function:SDL_HasAVX512F": {
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
+    },
+    "function:SDL_HasARMSIMD": {
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
+    },
+    "function:SDL_HasNEON": {
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
+    },
+    "function:SDL_HasLSX": {
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
+    },
+    "function:SDL_HasLASX": {
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
+    },
+    "function:SDL_GetSystemRAM": {
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
+    },
+    "function:SDL_GetSIMDAlignment": {
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
+    },
+    "function:SDL_main": {
+      "raw_status": "pending",
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "Application-defined entry point, not an SDL-provided callable service; exported script main is invoked by the native runner instead.",
+      "contract": "docs/remaining-api-policy.md"
+    },
+    "function:SDL_SetMainReady": {
+      "raw_status": "pending",
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "Startup responsibility already implemented by src/runner.cpp and the SDK consumer host before SDL initialization; not script coverage.",
+      "contract": "docs/remaining-api-policy.md"
+    },
+    "function:SDL_RunApp": {
+      "raw_status": "pending",
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "Platform startup/teardown around a native C main function; belongs to the initial-thread host entry point, not a script launching its own host again.",
+      "contract": "docs/remaining-api-policy.md"
+    },
+    "function:SDL_EnterAppMainCallbacks": {
+      "raw_status": "pending",
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "SDL header startup helper, documented for sole use inside SDL_main; web/runner.cpp already uses SDL_MAIN_USE_CALLBACKS and native App callbacks.",
+      "contract": "docs/remaining-api-policy.md"
+    },
+    "function:SDL_RegisterApp": {
+      "raw_status": "pending",
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "Windows window-class startup customization and HINSTANCE lifetime; SDL video normally performs registration. Native hosts may opt in with paired unregister.",
+      "contract": "docs/remaining-api-policy.md"
+    },
+    "function:SDL_UnregisterApp": {
+      "raw_status": "pending",
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "Balances native Windows class registration; SDL video normally owns this lifetime, so an independent script call could invalidate host accounting.",
+      "contract": "docs/remaining-api-policy.md"
+    },
+    "function:SDL_GDKSuspendComplete": {
+      "raw_status": "pending",
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "Xbox GDK suspension acknowledgement requires native event-watch/GPU ordering. Desktop Windows implementation only sets unsupported error; revisit for a GDK host profile.",
+      "contract": "docs/remaining-api-policy.md"
+    },
+    "function:SDL_ReportAssertion": {
+      "raw_status": "pending",
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "SDL explicitly says not to call directly; C assertion macros supply persistent SDL_AssertData and source metadata. Not a Result error-reporting mechanism.",
+      "contract": "docs/remaining-api-policy.md"
+    },
+    "function:SDL_SetAssertionHandler": {
+      "raw_status": "pending",
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "Process-wide native diagnostic callback can run on arbitrary asserting threads and survives SDL_Quit; host owns handler lifetime and recovery policy.",
+      "contract": "docs/remaining-api-policy.md"
+    },
+    "function:SDL_GetAssertionHandler": {
+      "raw_status": "pending",
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "Native host diagnostic callback and userdata query, paired with host-wide handler installation/restoration; no script callback bridge required.",
+      "contract": "docs/remaining-api-policy.md"
+    },
+    "function:SDL_GetDefaultAssertionHandler": {
+      "raw_status": "pending",
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "Native assertion handler address for host diagnostics; unlike ordinary script failure this may show UI, break or abort.",
+      "contract": "docs/remaining-api-policy.md"
+    },
+    "function:SDL_GetAssertionReport": {
+      "raw_status": "pending",
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "Borrowed linked diagnostic report with reset/Quit invalidation; host tooling must coordinate asserting/resetting threads. Revisit with a copied-report contract if needed.",
+      "contract": "docs/remaining-api-policy.md"
+    },
+    "function:SDL_ResetAssertionReport": {
+      "raw_status": "pending",
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "Mutates process-wide native diagnostic state and is not thread safe; host diagnostic tooling must coordinate readers and asserting threads.",
+      "contract": "docs/remaining-api-policy.md"
+    },
+    "function:SDL_MostSignificantBitIndex32": {
+      "raw_status": "pending",
+      "boost_status": "not_needed",
+      "script_disposition": "stdlib",
+      "reason": "Use a uint input and guarded 31-int(clz(x)); x==0 must return -1. SDL entry is forced-inline, not a dynamic-library symbol.",
+      "contract": "docs/remaining-api-policy.md"
+    },
+    "function:SDL_HasExactlyOneBitSet32": {
+      "raw_status": "pending",
+      "boost_status": "not_needed",
+      "script_disposition": "stdlib",
+      "reason": "Use uint predicate x!=0u && (x & (x-1u))==0u; preserve false for zero. No SDL subsystem or ownership semantics.",
+      "contract": "docs/remaining-api-policy.md"
+    },
+    "function:SDL_SwapFloat": {
+      "raw_status": "pending",
+      "boost_status": "pending",
+      "script_disposition": "deferred",
+      "reason": "Optional exact-bit binary-format interop; byte swap differs from numeric conversion. Existing math_bits and integer IO cover common tasks; add only with float bit-pattern/interpreter/AOT tests and a concrete need.",
+      "contract": "docs/remaining-api-policy.md"
     }
   }
 }

@@ -2,7 +2,7 @@ options gen2
 require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_recording_boost
 
-def render_quad(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle; target : GpuTextureHandle; vb : GpuBufferHandle; ib : GpuIndexBufferHandle; vertex_texture : GpuTextureHandle; texture : GpuTextureHandle; sampler : GpuSamplerHandle) : $Result<SdlUnit; SdlError> {
+def render_quad(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle; target : GpuTextureHandle; vb : GpuBufferHandle; ib : GpuIndexBufferHandle; vertex_texture : GpuTextureHandle; texture : GpuTextureHandle; sampler : GpuSamplerHandle) : SdlStatus {
     var black = SDL_FColor(a = 1.0)
     var buffers <- array<GpuBufferHandle>(vb)
     var offsets <- array<uint>(0u)
@@ -44,23 +44,23 @@ def render_quad(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle; target : 
     return sdl_ok()
 }
 
-def run(device : SDL_GPUDevice?; linear : bool) : $Result<SdlUnit; SdlError> {
+def run(device : SDL_GPUDevice?; linear : bool) : SdlStatus {
     let spirv = (SDL_GetGPUShaderFormats(device) & SDL_GPU_SHADERFORMAT_SPIRV) != 0u
     let format = spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL
     let extension = spirv ? "spv" : "dxil"
     let base = "{SDL_GetBasePath()}assets/shaders/bindings"
-    var vi = gpu_shader_info(format,SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
-    var fi = gpu_shader_info(format,SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT)
-    vi.num_samplers = 1u; vi.num_uniform_buffers = 1u
-    fi.num_samplers = 1u; fi.num_uniform_buffers = 1u
+    var vi = gpu_shader("{base}.vert.{extension}",format,SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
+    var fi = gpu_shader("{base}.frag.{extension}",format,SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT)
+    vi |> samplers(1u); vi |> uniform_buffers(1u)
+    fi |> samplers(1u); fi |> uniform_buffers(1u)
     return sdl_scope() {
-        let vertex : GpuShaderHandle = device |> with_gpu_shader_file("{base}.vert.{extension}",vi) |> sdl_use
-        let fragment : GpuShaderHandle = device |> with_gpu_shader_file("{base}.frag.{extension}",fi) |> sdl_use
+        let vertex : GpuShaderHandle = device |> with_gpu_shader_file(vi) |> sdl_use
+        let fragment : GpuShaderHandle = device |> with_gpu_shader_file(fi) |> sdl_use
         return create_pipeline(device, vertex, fragment, linear)
     }
 }
 
-def upload_textures(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle; vb : GpuBufferHandle; ib : GpuIndexBufferHandle; vertex_texture : GpuTextureHandle; linear : bool) : $Result<SdlUnit; SdlError> {
+def upload_textures(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle; vb : GpuBufferHandle; ib : GpuIndexBufferHandle; vertex_texture : GpuTextureHandle; linear : bool) : SdlStatus {
     var vertex_color <- array<uint8>(uint8(128),uint8(255),uint8(128),uint8(255))
     device |> gpu_upload_texture(vertex_texture,uint2(0u),uint4(0u,0u,1u,1u),vertex_color,4u) |> sdl_try
     return sdl_scope() {
@@ -75,7 +75,7 @@ def upload_textures(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle; vb : 
     }
 }
 
-def render_buffers(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle; linear : bool) : $Result<SdlUnit; SdlError> {
+def render_buffers(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle; linear : bool) : SdlStatus {
     var vertices <- array<float>(-0.75,0.75,0.0,0.0, 0.75,0.75,1.0,0.0, 0.75,-0.75,1.0,1.0, -0.75,-0.75,0.0,1.0)
     var indices <- array<uint>(0u,1u,2u,0u,2u,3u)
     return sdl_scope() {
@@ -86,15 +86,14 @@ def render_buffers(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle; linear
     }
 }
 
-def create_pipeline(device : SDL_GPUDevice?; vertex : GpuShaderHandle; fragment : GpuShaderHandle; linear : bool) : $Result<SdlUnit; SdlError> {
-    var layouts <- array(SDL_GPUVertexBufferDescription(pitch=16u))
-    var attributes <- array(
-        SDL_GPUVertexAttribute(format=SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2),
-        SDL_GPUVertexAttribute(format=SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2,location=1u,offset=8u)
-    )
-    var colors <- array(gpu_color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM))
+def create_pipeline(device : SDL_GPUDevice?; vertex : GpuShaderHandle; fragment : GpuShaderHandle; linear : bool) : SdlStatus {
+    var description <- gpu_pipeline(vertex,fragment)
+    description |> vertex_buffer(0u,16u)
+    description |> vertex_attribute(0u,0u,SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2,0u)
+    description |> vertex_attribute(1u,0u,SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2,8u)
+    description |> color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM)
     return sdl_scope() {
-        let pipeline : GpuPipelineHandle = device |> with_gpu_graphics_pipeline(vertex,fragment,gpu_graphics_pipeline_info(),layouts,attributes,colors) |> sdl_use
+        let pipeline : GpuPipelineHandle = device |> with_gpu_graphics_pipeline(description) |> sdl_use
         return render_buffers(device, pipeline, linear)
     }
 }

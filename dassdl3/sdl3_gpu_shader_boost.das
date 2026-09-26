@@ -81,3 +81,13 @@ def public with_gpu_shader_file(device : SDL_GPUDevice?; settings : GpuShaderOpt
         blk : block<(shader : GpuShaderHandle) : $Result<auto(TT);SdlError>>) {
     return <- with_gpu_shader_file(device,settings.path,settings.info,settings.entrypoint,blk)
 }
+
+// These declarations describe trusted bytecode; they do not reflect shader code.
+def public gpu_shader(path : string; format : uint; stage : SDL_GPUShaderStage) : GpuShaderOptions {
+    return GpuShaderOptions(path=path,info=gpu_shader_info(format,stage))
+}
+def public entrypoint(var settings : GpuShaderOptions; name : string) { settings.entrypoint = name }
+def public samplers(var settings : GpuShaderOptions; count : uint) { settings.info.num_samplers = count }
+def public uniform_buffers(var settings : GpuShaderOptions; count : uint) { settings.info.num_uniform_buffers = count }
+def public storage_buffers(var settings : GpuShaderOptions; count : uint) { settings.info.num_storage_buffers = count }
+def public storage_textures(var settings : GpuShaderOptions; count : uint) { settings.info.num_storage_textures = count }

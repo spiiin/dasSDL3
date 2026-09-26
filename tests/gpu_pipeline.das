@@ -21,12 +21,13 @@ def check_triangle(device : SDL_GPUDevice?; vertex, fragment : string; format : 
     for (mode in 0 .. 3) {
         colors[0] = gpu_color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM)
         if (mode == 1) {
-            colors[0].blend_state.enable_blend = true
-            colors[0].blend_state.src_color_blendfactor = SDL_GPUBlendFactor.BLENDFACTOR_SRC_COLOR
+            var blend = colors[0].blend_state
+            blend.enable_blend = true
+            blend.src_color_blendfactor = SDL_GPUBlendFactor.BLENDFACTOR_SRC_COLOR
+            colors[0] |> blending(blend)
         }
         if (mode == 2) {
-            colors[0].blend_state.enable_color_write_mask = true
-            colors[0].blend_state.color_write_mask = uint8(1)
+            colors[0] |> color_write_mask(uint8(1))
         }
         let id = SDL_CreateGPUCheckedGraphicsPipeline(device,vs,fs,info,buffers,attributes,colors)
         verify(*id != 0ul); push(ids,id)
@@ -111,7 +112,7 @@ def check_states(device : SDL_GPUDevice?; vs : GpuShaderHandle; fs : GpuShaderHa
     var info = gpu_graphics_pipeline_info()
     var samples, depths = 0
     for (sample in array<SDL_GPUSampleCount>(SDL_GPUSampleCount.SAMPLECOUNT_1,SDL_GPUSampleCount.SAMPLECOUNT_2,SDL_GPUSampleCount.SAMPLECOUNT_4,SDL_GPUSampleCount.SAMPLECOUNT_8)) {
-        info.multisample_state.sample_count = sample
+        info |> multisampling(SDL_GPUMultisampleState(sample_count=sample))
         if (SDL_GPUTextureSupportsSampleCount(device,colors[0].format,sample)) {
             let scope_ok_1 = device |> with_gpu_graphics_pipeline(vs,fs,info,buffers,attributes,colors) $(id : GpuPipelineHandle) {
                 var query_result_3 : SDL_GPUGraphicsPipelineCreateInfo
@@ -124,25 +125,31 @@ def check_states(device : SDL_GPUDevice?; vs : GpuShaderHandle; fs : GpuShaderHa
             verify(scope_ok_1)
         } else { verify(*SDL_CreateGPUCheckedGraphicsPipeline(device,vs,fs,info,buffers,attributes,colors) == 0ul) }
     }
-    info.multisample_state.sample_count = SDL_GPUSampleCount.SAMPLECOUNT_1
+    info |> sample_count(SDL_GPUSampleCount.SAMPLECOUNT_1)
     for (format in array<SDL_GPUTextureFormat>(SDL_GPUTextureFormat.TEXTUREFORMAT_D16_UNORM,SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT,SDL_GPUTextureFormat.TEXTUREFORMAT_D24_UNORM_S8_UINT,SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT_S8_UINT)) {
         if (SDL_GPUTextureSupportsFormat(device,format,SDL_GPUTextureType.TEXTURETYPE_2D,SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET)) {
-            info.target_info.has_depth_stencil_target = true; info.target_info.depth_stencil_format = format
-            info.depth_stencil_state.enable_depth_test = true; info.depth_stencil_state.enable_depth_write = true
-            info.depth_stencil_state.compare_op = SDL_GPUCompareOp.COMPAREOP_LESS
-            info.depth_stencil_state.enable_stencil_test = format == SDL_GPUTextureFormat.TEXTUREFORMAT_D24_UNORM_S8_UINT || format == SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT_S8_UINT
-            info.depth_stencil_state.front_stencil_state.fail_op = SDL_GPUStencilOp.STENCILOP_KEEP
-            info.depth_stencil_state.front_stencil_state.pass_op = SDL_GPUStencilOp.STENCILOP_REPLACE
-            info.depth_stencil_state.front_stencil_state.depth_fail_op = SDL_GPUStencilOp.STENCILOP_KEEP
-            info.depth_stencil_state.front_stencil_state.compare_op = SDL_GPUCompareOp.COMPAREOP_ALWAYS
-            info.depth_stencil_state.back_stencil_state = info.depth_stencil_state.front_stencil_state
-            info.depth_stencil_state.compare_mask = uint8(255); info.depth_stencil_state.write_mask = uint8(255)
+            info |> depth_target(format)
+            info |> depth_stencil(SDL_GPUDepthStencilState())
+            info |> depth_test(SDL_GPUCompareOp.COMPAREOP_LESS)
+            info |> depth_write(true)
+            info |> stencil_test(format == SDL_GPUTextureFormat.TEXTUREFORMAT_D24_UNORM_S8_UINT || format == SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT_S8_UINT)
+            let face = SDL_GPUStencilOpState(fail_op=SDL_GPUStencilOp.STENCILOP_KEEP,
+                pass_op=SDL_GPUStencilOp.STENCILOP_REPLACE,depth_fail_op=SDL_GPUStencilOp.STENCILOP_KEEP,
+                compare_op=SDL_GPUCompareOp.COMPAREOP_ALWAYS)
+            info |> stencil_faces(face)
+            info |> stencil_masks(uint8(255),uint8(255))
             let scope_ok_2 = device |> with_gpu_graphics_pipeline(vs,fs,info,buffers,attributes,colors) $(id : GpuPipelineHandle) {
                 var query_result_4 : SDL_GPUGraphicsPipelineCreateInfo
                 verify(is_ok(gpu_graphics_pipeline_descriptor(device,id,query_result_4)))
                 let copy = query_result_4
                 verify(copy.target_info.has_depth_stencil_target && copy.target_info.depth_stencil_format == format)
                 verify(copy.depth_stencil_state.compare_op == SDL_GPUCompareOp.COMPAREOP_LESS && copy.depth_stencil_state.enable_depth_write)
+                verify(copy.depth_stencil_state.enable_stencil_test == info.depth_stencil_state.enable_stencil_test)
+                if (copy.depth_stencil_state.enable_stencil_test) {
+                    verify(copy.depth_stencil_state.front_stencil_state.pass_op == SDL_GPUStencilOp.STENCILOP_REPLACE)
+                    verify(copy.depth_stencil_state.back_stencil_state.pass_op == SDL_GPUStencilOp.STENCILOP_REPLACE)
+                    verify(copy.depth_stencil_state.compare_mask == uint8(255) && copy.depth_stencil_state.write_mask == uint8(255))
+                }
                 verify(SDLTest_graphics_pipeline_hidden(copy))
                 depths++
 

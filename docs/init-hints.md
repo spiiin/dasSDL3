@@ -1,9 +1,9 @@
 # Hints and initialization
 
-Pinned SDL 3.2.18: Hints has 6 generated functions of 8; Init has 9 of 10.
-The three pending functions are SDL_AddHintCallback, SDL_RemoveHintCallback and
-SDL_RunOnMainThread. Retained callbacks require rooting, thread affinity and
-shutdown rules. SDL hint callbacks can run on the setter thread, under SDL locks.
+SDL 3.4.16: Hints has 8/8 generated functions; Init has 10/10.
+SDL_AddHintCallback, SDL_RemoveHintCallback and SDL_RunOnMainThread accept
+native C addresses, not script blocks. See [native callback contracts](native-callbacks.md).
+SDL hint callbacks can run on the setter thread, under SDL locks.
 Startup AppInit/Iterate/Event/Quit host integration is separate.
 
 `dassdl3/sdl3_init_boost.das` provides with_sdl_subsystems(flags), hint_string(name)

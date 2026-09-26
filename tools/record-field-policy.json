@@ -1,0 +1,1964 @@
+{
+  "schema_version": 1,
+  "sdl_version": "3.4.16",
+  "profile": "windows-x64-msvc",
+  "groups": [
+    {
+      "record": "SDL_AssertData",
+      "fields": [
+        "always_ignore",
+        "trigger_count",
+        "condition",
+        "filename",
+        "linenum",
+        "function",
+        "next"
+      ],
+      "status": "host_only",
+      "reason": "Native assertion diagnostics and borrowed report lifetime; not script error handling.",
+      "sources": [
+        "docs/remaining-api-policy.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_AudioDeviceEvent",
+      "fields": [
+        "reserved",
+        "padding1",
+        "padding2",
+        "padding3"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_AudioDeviceEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_CameraDeviceEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_CameraDeviceEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_ClipboardEvent",
+      "fields": [
+        "mime_types"
+      ],
+      "status": "adapted",
+      "reason": "Copy MIME list; native pointer array is borrowed.",
+      "sources": [
+        "src/sdl3_event_lists.h"
+      ],
+      "entry_points": [
+        "SDL_ReadClipboardEvent"
+      ]
+    },
+    {
+      "record": "SDL_ClipboardEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_ClipboardEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_CommonEvent",
+      "fields": [
+        "timestamp"
+      ],
+      "status": "adapted",
+      "reason": "Tag-checked event readers and owned decode_event expose payloads; strings/lists copied, user pointers remain borrowed.",
+      "sources": [
+        "src/sdl3_input.h",
+        "src/sdl3_event_queue.h",
+        "src/sdl3_event_lists.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": [
+        "SDL_EventTimestamp"
+      ]
+    },
+    {
+      "record": "SDL_CommonEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_CommonEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_DisplayEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_DisplayEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_DisplayMode",
+      "fields": [
+        "internal"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_DropEvent",
+      "fields": [
+        "timestamp",
+        "windowID",
+        "x",
+        "y",
+        "source",
+        "data"
+      ],
+      "status": "adapted",
+      "reason": "Tag-checked event readers and owned decode_event expose payloads; strings/lists copied, user pointers remain borrowed.",
+      "sources": [
+        "src/sdl3_input.h",
+        "src/sdl3_event_queue.h",
+        "src/sdl3_event_lists.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": [
+        "SDL_EventTimestamp"
+      ]
+    },
+    {
+      "record": "SDL_DropEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_DropEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_Event",
+      "fields": [
+        "common",
+        "display",
+        "window",
+        "kdevice",
+        "key",
+        "edit",
+        "edit_candidates",
+        "text",
+        "mdevice",
+        "motion",
+        "button",
+        "wheel",
+        "jdevice",
+        "jaxis",
+        "jball",
+        "jhat",
+        "jbutton",
+        "jbattery",
+        "gdevice",
+        "gaxis",
+        "gbutton",
+        "gtouchpad",
+        "gsensor",
+        "adevice",
+        "cdevice",
+        "sensor",
+        "quit",
+        "user",
+        "tfinger",
+        "pinch",
+        "pproximity",
+        "ptouch",
+        "pmotion",
+        "pbutton",
+        "paxis",
+        "render",
+        "drop",
+        "clipboard"
+      ],
+      "status": "adapted",
+      "reason": "Tag-checked event readers and owned decode_event expose payloads; strings/lists copied, user pointers remain borrowed.",
+      "sources": [
+        "src/sdl3_input.h",
+        "src/sdl3_event_queue.h",
+        "src/sdl3_event_lists.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": [
+        "SDL_EventTimestamp"
+      ]
+    },
+    {
+      "record": "SDL_Event",
+      "fields": [
+        "padding"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_GPUBlitInfo",
+      "fields": [
+        "padding1",
+        "padding2",
+        "padding3"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_GPUColorTargetBlendState",
+      "fields": [
+        "padding1",
+        "padding2"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_GPUColorTargetInfo",
+      "fields": [
+        "padding1",
+        "padding2"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_GPUDepthStencilState",
+      "fields": [
+        "padding1",
+        "padding2",
+        "padding3"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_GPUGraphicsPipelineTargetInfo",
+      "fields": [
+        "padding1",
+        "padding2",
+        "padding3"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_GPUMultisampleState",
+      "fields": [
+        "padding2",
+        "padding3"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_GPURasterizerState",
+      "fields": [
+        "padding1",
+        "padding2"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_GPUSamplerCreateInfo",
+      "fields": [
+        "padding1",
+        "padding2"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_GPUStorageBufferReadWriteBinding",
+      "fields": [
+        "padding1",
+        "padding2",
+        "padding3"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_GPUStorageTextureReadWriteBinding",
+      "fields": [
+        "padding1",
+        "padding2",
+        "padding3"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_GamepadAxisEvent",
+      "fields": [
+        "reserved",
+        "padding1",
+        "padding2",
+        "padding3",
+        "padding4"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_GamepadAxisEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_GamepadBinding",
+      "fields": [
+        "input",
+        "output"
+      ],
+      "status": "adapted",
+      "reason": "Tagged native union accessors read the active input/output alternative.",
+      "sources": [
+        "src/sdl3_joystick_gamepad.h"
+      ],
+      "entry_points": [
+        "SDL_GamepadBindingInput",
+        "SDL_GamepadBindingOutput"
+      ]
+    },
+    {
+      "record": "SDL_GamepadButtonEvent",
+      "fields": [
+        "reserved",
+        "padding1",
+        "padding2"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_GamepadButtonEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_GamepadDeviceEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_GamepadDeviceEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_GamepadSensorEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_GamepadSensorEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_GamepadTouchpadEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_GamepadTouchpadEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_IOStreamInterface",
+      "fields": [
+        "size",
+        "seek",
+        "read",
+        "write",
+        "flush",
+        "close"
+      ],
+      "status": "native_callback",
+      "reason": "Native function addresses can be assigned by the existing callback setter; no script Func/Block retention.",
+      "sources": [
+        "src/sdl3_iostream.h",
+        "tests/iostream.das"
+      ],
+      "entry_points": [
+        "SDL_SetIOStreamInterfaceCallbacks"
+      ]
+    },
+    {
+      "record": "SDL_JoyAxisEvent",
+      "fields": [
+        "reserved",
+        "padding1",
+        "padding2",
+        "padding3",
+        "padding4"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_JoyAxisEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_JoyBallEvent",
+      "fields": [
+        "reserved",
+        "padding1",
+        "padding2",
+        "padding3"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_JoyBallEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_JoyBatteryEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_JoyBatteryEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_JoyButtonEvent",
+      "fields": [
+        "reserved",
+        "padding1",
+        "padding2"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_JoyButtonEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_JoyDeviceEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_JoyDeviceEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_JoyHatEvent",
+      "fields": [
+        "reserved",
+        "padding1",
+        "padding2"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_JoyHatEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_KeyboardDeviceEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_KeyboardDeviceEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_KeyboardEvent",
+      "fields": [
+        "scancode"
+      ],
+      "status": "adapted",
+      "reason": "Scalar scancode accessor avoids unprojected enum field.",
+      "sources": [
+        "src/sdl3_input.h"
+      ],
+      "entry_points": [
+        "SDL_KeyScancode"
+      ]
+    },
+    {
+      "record": "SDL_KeyboardEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_KeyboardEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_MouseButtonEvent",
+      "fields": [
+        "reserved",
+        "padding"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_MouseButtonEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_MouseDeviceEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_MouseDeviceEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_MouseMotionEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_MouseMotionEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_MouseWheelEvent",
+      "fields": [
+        "direction"
+      ],
+      "status": "adapted",
+      "reason": "Boolean flipped accessor covers the two current SDL direction values.",
+      "sources": [
+        "src/sdl3_input.h"
+      ],
+      "entry_points": [
+        "SDL_MouseWheelFlipped"
+      ]
+    },
+    {
+      "record": "SDL_MouseWheelEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_MouseWheelEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_Palette",
+      "fields": [
+        "version",
+        "refcount"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_Palette",
+      "fields": [
+        "ncolors",
+        "colors"
+      ],
+      "status": "adapted",
+      "reason": "Owned copy of palette colors; returned array length supplies ncolors.",
+      "sources": [
+        "src/sdl3_record_access.h",
+        "tests/record_surfaces.das"
+      ],
+      "entry_points": [
+        "SDL_GetPaletteColorsCopy"
+      ]
+    },
+    {
+      "record": "SDL_PenAxisEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_PenAxisEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_PenButtonEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_PenButtonEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_PenMotionEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_PenMotionEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_PenProximityEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_PenProximityEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_PenTouchEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_PenTouchEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_PinchFingerEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_PinchFingerEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_PixelFormatDetails",
+      "fields": [
+        "padding"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_QuitEvent",
+      "fields": [
+        "timestamp"
+      ],
+      "status": "adapted",
+      "reason": "Tag-checked event readers and owned decode_event expose payloads; strings/lists copied, user pointers remain borrowed.",
+      "sources": [
+        "src/sdl3_input.h",
+        "src/sdl3_event_queue.h",
+        "src/sdl3_event_lists.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": [
+        "SDL_EventTimestamp"
+      ]
+    },
+    {
+      "record": "SDL_QuitEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_QuitEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_RenderEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_RenderEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_SensorEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_SensorEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_StorageInterface",
+      "fields": [
+        "close"
+      ],
+      "status": "native_callback",
+      "reason": "Native function address setter already exists for this slot; host owns callback/userdata lifetime.",
+      "sources": [
+        "src/sdl3_storage.h",
+        "tests/storage.das"
+      ],
+      "entry_points": [
+        "SDL_SetStorageInterface_close"
+      ]
+    },
+    {
+      "record": "SDL_StorageInterface",
+      "fields": [
+        "copy"
+      ],
+      "status": "native_callback",
+      "reason": "Native function address setter already exists for this slot; host owns callback/userdata lifetime.",
+      "sources": [
+        "src/sdl3_storage.h",
+        "tests/storage.das"
+      ],
+      "entry_points": [
+        "SDL_SetStorageInterface_copy"
+      ]
+    },
+    {
+      "record": "SDL_StorageInterface",
+      "fields": [
+        "enumerate"
+      ],
+      "status": "native_callback",
+      "reason": "Native function address setter already exists for this slot; host owns callback/userdata lifetime.",
+      "sources": [
+        "src/sdl3_storage.h",
+        "tests/storage.das"
+      ],
+      "entry_points": [
+        "SDL_SetStorageInterface_enumerate"
+      ]
+    },
+    {
+      "record": "SDL_StorageInterface",
+      "fields": [
+        "info"
+      ],
+      "status": "native_callback",
+      "reason": "Native function address setter already exists for this slot; host owns callback/userdata lifetime.",
+      "sources": [
+        "src/sdl3_storage.h",
+        "tests/storage.das"
+      ],
+      "entry_points": [
+        "SDL_SetStorageInterface_info"
+      ]
+    },
+    {
+      "record": "SDL_StorageInterface",
+      "fields": [
+        "mkdir"
+      ],
+      "status": "native_callback",
+      "reason": "Native function address setter already exists for this slot; host owns callback/userdata lifetime.",
+      "sources": [
+        "src/sdl3_storage.h",
+        "tests/storage.das"
+      ],
+      "entry_points": [
+        "SDL_SetStorageInterface_mkdir"
+      ]
+    },
+    {
+      "record": "SDL_StorageInterface",
+      "fields": [
+        "read_file"
+      ],
+      "status": "native_callback",
+      "reason": "Native function address setter already exists for this slot; host owns callback/userdata lifetime.",
+      "sources": [
+        "src/sdl3_storage.h",
+        "tests/storage.das"
+      ],
+      "entry_points": [
+        "SDL_SetStorageInterface_read_file"
+      ]
+    },
+    {
+      "record": "SDL_StorageInterface",
+      "fields": [
+        "ready"
+      ],
+      "status": "native_callback",
+      "reason": "Native function address setter already exists for this slot; host owns callback/userdata lifetime.",
+      "sources": [
+        "src/sdl3_storage.h",
+        "tests/storage.das"
+      ],
+      "entry_points": [
+        "SDL_SetStorageInterface_ready"
+      ]
+    },
+    {
+      "record": "SDL_StorageInterface",
+      "fields": [
+        "remove"
+      ],
+      "status": "native_callback",
+      "reason": "Native function address setter already exists for this slot; host owns callback/userdata lifetime.",
+      "sources": [
+        "src/sdl3_storage.h",
+        "tests/storage.das"
+      ],
+      "entry_points": [
+        "SDL_SetStorageInterface_remove"
+      ]
+    },
+    {
+      "record": "SDL_StorageInterface",
+      "fields": [
+        "rename"
+      ],
+      "status": "native_callback",
+      "reason": "Native function address setter already exists for this slot; host owns callback/userdata lifetime.",
+      "sources": [
+        "src/sdl3_storage.h",
+        "tests/storage.das"
+      ],
+      "entry_points": [
+        "SDL_SetStorageInterface_rename"
+      ]
+    },
+    {
+      "record": "SDL_StorageInterface",
+      "fields": [
+        "space_remaining"
+      ],
+      "status": "native_callback",
+      "reason": "Native function address setter already exists for this slot; host owns callback/userdata lifetime.",
+      "sources": [
+        "src/sdl3_storage.h",
+        "tests/storage.das"
+      ],
+      "entry_points": [
+        "SDL_SetStorageInterface_space_remaining"
+      ]
+    },
+    {
+      "record": "SDL_StorageInterface",
+      "fields": [
+        "write_file"
+      ],
+      "status": "native_callback",
+      "reason": "Native function address setter already exists for this slot; host owns callback/userdata lifetime.",
+      "sources": [
+        "src/sdl3_storage.h",
+        "tests/storage.das"
+      ],
+      "entry_points": [
+        "SDL_SetStorageInterface_write_file"
+      ]
+    },
+    {
+      "record": "SDL_Surface",
+      "fields": [
+        "w",
+        "h"
+      ],
+      "status": "adapted",
+      "reason": "Surface dimensions returned through scalar ref adapter.",
+      "sources": [
+        "src/sdl3_pixels.h"
+      ],
+      "entry_points": [
+        "SDL_SurfaceSizeRef"
+      ]
+    },
+    {
+      "record": "SDL_Surface",
+      "fields": [
+        "refcount"
+      ],
+      "status": "host_only",
+      "reason": "Native resource reference count; script owners use SDL destruction/scopes, not direct count mutation.",
+      "sources": [
+        "docs/error-handling.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_Surface",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_Surface",
+      "fields": [
+        "pitch"
+      ],
+      "status": "adapted",
+      "reason": "Read-only metadata and temporary per-plane bytes for valid native SDL surfaces; caller must preserve backing storage and lock lifetime.",
+      "sources": [
+        "src/sdl3_record_access.h",
+        "tests/record_surfaces.das"
+      ],
+      "entry_points": [
+        "SDL_GetSurfaceMetadata"
+      ]
+    },
+    {
+      "record": "SDL_Surface",
+      "fields": [
+        "pixels"
+      ],
+      "status": "adapted",
+      "reason": "Read-only metadata and temporary per-plane bytes for valid native SDL surfaces; caller must preserve backing storage and lock lifetime.",
+      "sources": [
+        "src/sdl3_record_access.h",
+        "tests/record_surfaces.das"
+      ],
+      "entry_points": [
+        "SDL_WithSurfacePlaneBytes"
+      ]
+    },
+    {
+      "record": "SDL_Surface",
+      "fields": [
+        "flags"
+      ],
+      "status": "adapted",
+      "reason": "Read-only metadata and temporary per-plane bytes for valid native SDL surfaces; caller must preserve backing storage and lock lifetime.",
+      "sources": [
+        "src/sdl3_record_access.h",
+        "tests/record_surfaces.das"
+      ],
+      "entry_points": [
+        "SDL_GetSurfaceMetadata"
+      ]
+    },
+    {
+      "record": "SDL_Surface",
+      "fields": [
+        "format"
+      ],
+      "status": "adapted",
+      "reason": "Read-only metadata and temporary per-plane bytes for valid native SDL surfaces; caller must preserve backing storage and lock lifetime.",
+      "sources": [
+        "src/sdl3_record_access.h",
+        "tests/record_surfaces.das"
+      ],
+      "entry_points": [
+        "SDL_GetSurfaceMetadata"
+      ]
+    },
+    {
+      "record": "SDL_TextEditingCandidatesEvent",
+      "fields": [
+        "candidates"
+      ],
+      "status": "adapted",
+      "reason": "Copy candidate strings/list while the SDL payload is valid.",
+      "sources": [
+        "src/sdl3_event_lists.h"
+      ],
+      "entry_points": [
+        "SDL_ReadTextEditingCandidatesEvent"
+      ]
+    },
+    {
+      "record": "SDL_TextEditingCandidatesEvent",
+      "fields": [
+        "reserved",
+        "padding1",
+        "padding2",
+        "padding3"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_TextEditingCandidatesEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_TextEditingEvent",
+      "fields": [
+        "timestamp",
+        "windowID",
+        "text",
+        "start",
+        "length"
+      ],
+      "status": "adapted",
+      "reason": "Tag-checked event readers and owned decode_event expose payloads; strings/lists copied, user pointers remain borrowed.",
+      "sources": [
+        "src/sdl3_input.h",
+        "src/sdl3_event_queue.h",
+        "src/sdl3_event_lists.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": [
+        "SDL_EventTimestamp"
+      ]
+    },
+    {
+      "record": "SDL_TextEditingEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_TextEditingEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_TextInputEvent",
+      "fields": [
+        "timestamp",
+        "windowID",
+        "text"
+      ],
+      "status": "adapted",
+      "reason": "Tag-checked event readers and owned decode_event expose payloads; strings/lists copied, user pointers remain borrowed.",
+      "sources": [
+        "src/sdl3_input.h",
+        "src/sdl3_event_queue.h",
+        "src/sdl3_event_lists.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": [
+        "SDL_EventTimestamp"
+      ]
+    },
+    {
+      "record": "SDL_TextInputEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_TextInputEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_Texture",
+      "fields": [
+        "format",
+        "w",
+        "h"
+      ],
+      "status": "adapted",
+      "reason": "Read texture dimensions/format through SDL queries and texture properties; no writable native owner layout.",
+      "sources": [
+        "src/sdl3_adapters.h",
+        "dassdl3/sdl3_texture_state_boost.das"
+      ],
+      "entry_points": [
+        "SDL_GetTextureSize",
+        "SDL_GetTextureProperties"
+      ]
+    },
+    {
+      "record": "SDL_Texture",
+      "fields": [
+        "refcount"
+      ],
+      "status": "host_only",
+      "reason": "Native resource reference count; script owners use SDL destruction/scopes, not direct count mutation.",
+      "sources": [
+        "docs/error-handling.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_TouchFingerEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_TouchFingerEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_UserEvent",
+      "fields": [
+        "timestamp",
+        "windowID",
+        "code",
+        "data1",
+        "data2"
+      ],
+      "status": "adapted",
+      "reason": "Tag-checked event readers and owned decode_event expose payloads; strings/lists copied, user pointers remain borrowed.",
+      "sources": [
+        "src/sdl3_input.h",
+        "src/sdl3_event_queue.h",
+        "src/sdl3_event_lists.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": [
+        "SDL_EventTimestamp"
+      ]
+    },
+    {
+      "record": "SDL_UserEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_UserEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_VirtualJoystickDesc",
+      "fields": [
+        "padding",
+        "padding2"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_VirtualJoystickDesc",
+      "fields": [
+        "Update"
+      ],
+      "status": "native_callback",
+      "reason": "Native C address setter; userdata/code lifetime remains with the host.",
+      "sources": [
+        "src/sdl3_record_access.h",
+        "tests/record_virtual_callbacks.das"
+      ],
+      "entry_points": [
+        "SDL_SetVirtualJoystickDesc_Update"
+      ]
+    },
+    {
+      "record": "SDL_VirtualJoystickDesc",
+      "fields": [
+        "SetPlayerIndex"
+      ],
+      "status": "native_callback",
+      "reason": "Native C address setter; userdata/code lifetime remains with the host.",
+      "sources": [
+        "src/sdl3_record_access.h",
+        "tests/record_virtual_callbacks.das"
+      ],
+      "entry_points": [
+        "SDL_SetVirtualJoystickDesc_SetPlayerIndex"
+      ]
+    },
+    {
+      "record": "SDL_VirtualJoystickDesc",
+      "fields": [
+        "Rumble"
+      ],
+      "status": "native_callback",
+      "reason": "Native C address setter; userdata/code lifetime remains with the host.",
+      "sources": [
+        "src/sdl3_record_access.h",
+        "tests/record_virtual_callbacks.das"
+      ],
+      "entry_points": [
+        "SDL_SetVirtualJoystickDesc_Rumble"
+      ]
+    },
+    {
+      "record": "SDL_VirtualJoystickDesc",
+      "fields": [
+        "RumbleTriggers"
+      ],
+      "status": "native_callback",
+      "reason": "Native C address setter; userdata/code lifetime remains with the host.",
+      "sources": [
+        "src/sdl3_record_access.h",
+        "tests/record_virtual_callbacks.das"
+      ],
+      "entry_points": [
+        "SDL_SetVirtualJoystickDesc_RumbleTriggers"
+      ]
+    },
+    {
+      "record": "SDL_VirtualJoystickDesc",
+      "fields": [
+        "SetLED"
+      ],
+      "status": "native_callback",
+      "reason": "Native C address setter; userdata/code lifetime remains with the host.",
+      "sources": [
+        "src/sdl3_record_access.h",
+        "tests/record_virtual_callbacks.das"
+      ],
+      "entry_points": [
+        "SDL_SetVirtualJoystickDesc_SetLED"
+      ]
+    },
+    {
+      "record": "SDL_VirtualJoystickDesc",
+      "fields": [
+        "SendEffect"
+      ],
+      "status": "native_callback",
+      "reason": "Native C address setter; userdata/code lifetime remains with the host.",
+      "sources": [
+        "src/sdl3_record_access.h",
+        "tests/record_virtual_callbacks.das"
+      ],
+      "entry_points": [
+        "SDL_SetVirtualJoystickDesc_SendEffect"
+      ]
+    },
+    {
+      "record": "SDL_VirtualJoystickDesc",
+      "fields": [
+        "SetSensorsEnabled"
+      ],
+      "status": "native_callback",
+      "reason": "Native C address setter; userdata/code lifetime remains with the host.",
+      "sources": [
+        "src/sdl3_record_access.h",
+        "tests/record_virtual_callbacks.das"
+      ],
+      "entry_points": [
+        "SDL_SetVirtualJoystickDesc_SetSensorsEnabled"
+      ]
+    },
+    {
+      "record": "SDL_VirtualJoystickDesc",
+      "fields": [
+        "Cleanup"
+      ],
+      "status": "native_callback",
+      "reason": "Native C address setter; userdata/code lifetime remains with the host.",
+      "sources": [
+        "src/sdl3_record_access.h",
+        "tests/record_virtual_callbacks.das"
+      ],
+      "entry_points": [
+        "SDL_SetVirtualJoystickDesc_Cleanup"
+      ]
+    },
+    {
+      "record": "SDL_VirtualJoystickTouchpadDesc",
+      "fields": [
+        "padding"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_WindowEvent",
+      "fields": [
+        "timestamp",
+        "windowID",
+        "data1",
+        "data2"
+      ],
+      "status": "adapted",
+      "reason": "Tag-checked event readers and owned decode_event expose payloads; strings/lists copied, user pointers remain borrowed.",
+      "sources": [
+        "src/sdl3_input.h",
+        "src/sdl3_event_queue.h",
+        "src/sdl3_event_lists.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": [
+        "SDL_EventTimestamp"
+      ]
+    },
+    {
+      "record": "SDL_WindowEvent",
+      "fields": [
+        "reserved"
+      ],
+      "status": "internal",
+      "reason": "Padding, reserved or SDL-private implementation state; native ABI layout stays intact.",
+      "sources": [
+        "docs/script-accessibility.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_WindowEvent",
+      "fields": [
+        "type"
+      ],
+      "status": "tag",
+      "reason": "Discriminator comes from the enclosing SDL_Event; readers validate the active event alternative.",
+      "sources": [
+        "src/sdl3_input.h",
+        "dassdl3/sdl3_events.das"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_alignment_test",
+      "fields": [
+        "a",
+        "b"
+      ],
+      "status": "internal",
+      "reason": "Header ABI alignment probe, not an application record.",
+      "sources": [
+        "docs/remaining-api-policy.md"
+      ],
+      "entry_points": []
+    },
+    {
+      "record": "SDL_hid_device_info",
+      "fields": [
+        "serial_number",
+        "manufacturer_string",
+        "product_string"
+      ],
+      "status": "adapted",
+      "reason": "Borrowed next link has an accessor; wchar strings are copied through the UTF conversion adapter.",
+      "sources": [
+        "src/sdl3_peripherals.h"
+      ],
+      "entry_points": [
+        "SDL_HidInfoString"
+      ]
+    },
+    {
+      "record": "SDL_hid_device_info",
+      "fields": [
+        "next"
+      ],
+      "status": "adapted",
+      "reason": "Borrowed next link has an accessor; wchar strings are copied through the UTF conversion adapter.",
+      "sources": [
+        "src/sdl3_peripherals.h"
+      ],
+      "entry_points": [
+        "SDL_HidNext"
+      ]
+    }
+  ]
+}

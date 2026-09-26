@@ -2,7 +2,7 @@ options gen2
 require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_swapchain_boost
 
-def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; SdlError> {
+def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : SdlStatus {
     return sdl_scope() {
         let window : SDL_Window? = with_window("SDL GPU swapchain",320,240,0ul) |> sdl_use
         device |> with_gpu_window(window) |> sdl_use

@@ -137,8 +137,16 @@ def main(smoke : bool) : int {
             check_scopes(device,"{base}.vert.{extension}",format)
             // Real nonzero resource declarations, matching the trusted lit shader ABI.
             var info = gpu_shader_info(format,SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT)
-            info.num_samplers = 1u; info.num_uniform_buffers = 1u
-            let scope_ok_6 = device |> with_gpu_shader_file("{SDL_GetBasePath()}assets/shaders/lit.frag.{extension}",info) $(id : GpuShaderHandle) {
+            var settings = gpu_shader("{SDL_GetBasePath()}assets/shaders/lit.frag.{extension}",format,SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT)
+            settings |> entrypoint("main")
+            settings |> samplers(1u)
+            settings |> uniform_buffers(1u)
+            settings |> storage_buffers(2u)
+            settings |> storage_textures(3u)
+            verify(settings.info.num_storage_buffers == 2u && settings.info.num_storage_textures == 3u)
+            settings |> storage_buffers(0u)
+            settings |> storage_textures(0u)
+            let scope_ok_6 = device |> with_gpu_shader_file(settings) $(id : GpuShaderHandle) {
                 var query_result_4 : SDL_GPUShaderCreateInfo
                 verify(is_ok(gpu_shader_descriptor(device,id,query_result_4)))
                 let copy = query_result_4

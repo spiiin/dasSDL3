@@ -4,7 +4,7 @@ require dassdl3/sdl3_pixels_boost
 
 // Project example: offscreen render -> owned readback -> display the target.
 
-def render_target_example(window : SDL_Window?; renderer : SDL_Renderer?; target : SDL_Texture?; smoke : bool; var frames : int&) : $Result<SdlUnit; SdlError> {
+def render_target_example(window : SDL_Window?; renderer : SDL_Renderer?; target : SDL_Texture?; smoke : bool; var frames : int&) : SdlStatus {
     sdl_scope() {
         renderer |> with_render_target(target) |> sdl_use
         return paint_target(renderer)
@@ -27,7 +27,7 @@ def render_target_example(window : SDL_Window?; renderer : SDL_Renderer?; target
     return sdl_ok()
 }
 
-def verify_readback(surface : SDL_Surface?) : $Result<SdlUnit; SdlError> {
+def verify_readback(surface : SDL_Surface?) : SdlStatus {
     let size = surface_size(surface) |> sdl_try
     var bytes : array<uint8>
     let byte_count = rgba8_buffer_size(size.x, size.y, size.x * 4) |> sdl_try
@@ -39,7 +39,7 @@ def verify_readback(surface : SDL_Surface?) : $Result<SdlUnit; SdlError> {
     return sdl_ok()
 }
 
-def paint_target(renderer : SDL_Renderer?) : $Result<SdlUnit; SdlError> {
+def paint_target(renderer : SDL_Renderer?) : SdlStatus {
     renderer |> clear(uint4(20u, 40u, 80u, 255u)) |> sdl_try
     renderer |> set_color(uint4(255u, 160u, 20u, 255u)) |> sdl_try
     renderer |> fill_rect(SDL_MakeFRect(32.0, 32.0, 64.0, 64.0)) |> sdl_try

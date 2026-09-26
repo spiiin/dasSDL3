@@ -4,7 +4,7 @@ require dassdl3/sdl3_remaining_34_boost
 require dassdl3/sdl3_scope
 
 // SDL taskbar progress plus an ordinary Renderer progress bar.
-def run(smoke : bool) : $Result<SdlUnit; SdlError> {
+def run(smoke : bool) : SdlStatus {
     return sdl_scope() {
         with_sdl() |> sdl_use
         let window : SDL_Window? = with_window("SDL progress - Escape to exit",640,160,0ul) |> sdl_use

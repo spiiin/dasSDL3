@@ -4,7 +4,7 @@ require dassdl3/sdl3_iostream_boost
 require dassdl3/sdl3_scope
 require daslib/defer
 
-def example() : $Result<SdlUnit; SdlError> {
+def example() : SdlStatus {
     let path="asyncio-example-{SDL_GetTicksNS()}.bin"
     defer() {SDL_RemovePath(path)}
     var expected <- array<uint8>(10,20,30,40)

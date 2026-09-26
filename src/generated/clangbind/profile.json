@@ -3,10 +3,10 @@
   "sdl_release": "3.4.16",
   "llvm_sdk": "22.1.5",
   "inputs_sha256": {
-    "tools/run_clangbind_parity.py": "94af18919703c8c5ff554b087426fdd993cec62bc84eda3e3dca0193a7a3a723",
-    "tools/clangbind_parity.das": "0a4692c9474d4a7ad8c6fbfe1aed578d26d9cb9110f8b75af0975ea0a9889a73",
-    "tools/bindings.json": "d5b9212fbeaf750923c3fd7a48e95699e2ece7f325d414693775d49d0a6f9302",
-    "tools/api-policy.json": "f5ea7131c33ba03b1324499ece2fa372f6820198dceaa6cd479ae97fc51e62f0"
+    "tools/run_clangbind_parity.py": "155574a191ac152e787aa966da2f58adb9b4838ecb248e8a4c5b4709aeff545e",
+    "tools/clangbind_parity.das": "aeb2d652bada5805bca6bbf17203f2ad15c5c76789766d9081904e99232217ba",
+    "tools/bindings.json": "0ab5c0268aed135145070a18e32adc3f34aadc865396154c23d72820a4254415",
+    "tools/api-policy.json": "95660ecc0caae63431bb854191e30cace29bad71d2d3d62c8c6689519133fc61"
   },
   "headers_sha256": {
     "SDL.h": "6985a5d648e45b9e71be852ab7bcece191d748c4c2fc273535f56e1c3f0bd62d",

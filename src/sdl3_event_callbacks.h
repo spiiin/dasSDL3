@@ -1,4 +1,9 @@
 #pragma once
+#include "sdl3_native_callbacks.h"
+#include "sdl3_record_access.h"
+#ifdef DASSDL3_TESTING
+#include "../tests/native_callback_probe.h"
+#endif
 #include <SDL3/SDL.h>
 #include "daScript/simulate/aot.h"
 #include "daScript/simulate/aot_builtin.h"

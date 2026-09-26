@@ -80,3 +80,10 @@ def public with_window(settings : WindowOptions;
         return <- blk(window)
     }
 }
+
+// Keep WindowOptions defaults; flag toggles preserve unrelated flags.
+def public window_options(title : string; size : int2) : WindowOptions { return WindowOptions(title=title,size=size) }
+def public window_flags(var settings : WindowOptions; flags : uint64; enabled : bool = true) {
+    settings.flags = enabled ? (settings.flags | flags) : (settings.flags & ~flags)
+}
+def public window_position(var settings : WindowOptions; position : int2) { settings.position = position }

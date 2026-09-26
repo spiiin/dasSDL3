@@ -1,7 +1,7 @@
 options gen2
 require dassdl3/sdl3_try
 require dassdl3/sdl3_diagnostics_boost
-def show_time : $Result<SdlUnit; SdlError> {
+def show_time : SdlStatus {
     var ticks=0l
     var utc : SDL_DateTime
     current_time(ticks) |> sdl_try

@@ -1,0 +1,8 @@
+{
+  "source": "https://raw.githubusercontent.com/bkaradzic/bgfx/7e3060ccb97959dcda3f091b96d82515197028e0/examples/assets/meshes/bunny.obj",
+  "source_sha256": "008348bca990dcf70f381a8c79bb3470b04cd447099cc3a7ced0bf472a4a0c4a",
+  "vertices": 34834,
+  "indices": 208353,
+  "stride": 24,
+  "sha256": "df5697b76d19a8aa89e0647c8a80c0b5a0b6f7edaf7aae687e4d88a44cdac317"
+}

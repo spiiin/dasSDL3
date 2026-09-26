@@ -57,8 +57,10 @@ version to sizeof(SDL_VirtualJoystickDesc), including hidden callback fields.
 The generated descriptor exposes numeric fields, borrowed name/array pointers
 and userdata; native function-pointer fields are not writable script fields.
 Custom Update/SetPlayerIndex/Rumble/RumbleTriggers/SetLED/SendEffect/
-SetSensorsEnabled/Cleanup callbacks currently require a C/C++-constructed
-native descriptor. Never reinterpret daScript functions or blocks as C addresses.
+SetSensorsEnabled/Cleanup callbacks now have SDL_SetVirtualJoystickDesc_* native
+address setters; see [record access](record-field-accessibility.md). They can be
+configured from script with host-supplied addresses. Never reinterpret daScript
+functions or blocks as C addresses.
 A native caller owns callback code, userdata, synchronization and lifetime through
 SDL teardown (including possible cleanup after failed attachment).
 

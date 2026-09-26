@@ -2,7 +2,7 @@ options gen2
 require dassdl3/sdl3_audio_devices_boost
 require dassdl3/sdl3_scope
 
-def example() : $Result<SdlUnit; SdlError> {
+def example() : SdlStatus {
     return sdl_scope() {
         with_sdl(SDL_INIT_AUDIO) |> sdl_use
         let devices <- audio_playback_devices() |> sdl_try

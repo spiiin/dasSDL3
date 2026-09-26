@@ -1,0 +1,10 @@
+{
+  "upstream": "https://github.com/bkaradzic/bgfx/tree/01dbbbc08c093f7ccf8adf7bd685739b344e9102/examples/03-raymarch",
+  "license": "BSD-2-Clause (../LICENSE-bgfx.txt)",
+  "reference_sha256": {
+    "raymarch.cpp": "8ea2608181b179b3f8fa1eb76684ce684aa092f4f4ea3fc944b23e706e014716",
+    "fs_raymarching.sc": "3a06f7f495b29adc3bed7b89606852e4935f352b05b727b8322ecae750fc81a8",
+    "vs_raymarching.sc": "52d657b7d12efb3fdce27cc430faeb70389519216247bbdf54ff17a96cbb70c7",
+    "iq_sdf.sh": "46f9ca93afb4d189513600316990f3c1282616565ddbbc035820ac8ecd9bec90"
+  }
+}

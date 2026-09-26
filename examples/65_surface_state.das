@@ -3,7 +3,7 @@ require dassdl3/sdl3_scope
 require daslib/defer
 require dassdl3/sdl3_surface_state_boost
 require dassdl3/sdl3_renderer_operations_boost
-def render_example(renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; SdlError> {
+def render_example(renderer : SDL_Renderer?; smoke : bool) : SdlStatus {
     var rendered=false
     return sdl_scope() {
         let surface : SDL_Surface? = with_surface(8,8,SDL_PixelFormat.PIXELFORMAT_RGBA32) |> sdl_use

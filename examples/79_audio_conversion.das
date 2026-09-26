@@ -2,7 +2,7 @@ options gen2
 require dassdl3/sdl3_audio_final
 require dassdl3/sdl3_scope
 
-def example() : $Result<SdlUnit; SdlError> {
+def example() : SdlStatus {
     let format=SDL_AudioFormat.AUDIO_S16LE
     let input=audio_spec(format,1,8000)
     let output=audio_spec(SDL_AudioFormat.AUDIO_F32,2,8000)

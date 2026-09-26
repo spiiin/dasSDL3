@@ -33,9 +33,27 @@ Shadercross оставляем в текущем состоянии. Приор�
    функции сейчас не добавляем; allocator callbacks остаются задачей native host.
 5. **Common API подключён:** MessageBox/OpenURL/Platform/Revision/GUID — семь raw
    функций и тонкие Result/Option/copy adapters; [контракты](common-api.md).
-6. **Следующий пакет — GL/EGL; платформы и специализированные API:** GL/EGL, Vulkan/Metal interop, native
-   callbacks и CPU/SIMD добавлять по конкретным сценариям. Linux/macOS/web требуют
-   собственных build/ABI/runtime проверок; Windows-пакет не заявляет их готовность.
+6. **GL/EGL подключён:** 20 raw функций, контексты, атрибуты, swap и native EGL callbacks.
+   Video теперь 114/114; [контракты и проверки](gl-egl.md).
+7. **Vulkan/Metal interop подключён:** 7 + 3 raw, copied extensions и surface/view
+   scopes. Native Vulkan instance/surface проверяются на Windows; Metal success
+   требует macOS/iOS. [Контракты](vulkan-metal.md).
+8. **CPUInfo подключён:** 19/19 raw, scalar/predicate contracts без дополнительного
+   boost; [проверки](cpuinfo.md). Stdinc не расширяем.
+9. **Native callback API подключены:** девять функций Hints, Timer, Log,
+   RunOnMainThread и Properties cleanup; [lifetime/thread contracts](native-callbacks.md).
+   Script blocks не сохраняются; RemoveTimer не ждёт текущий callback.
+10. **Остаток вне Stdinc классифицирован:** 19 функций — 13 host_only, 2 stdlib,
+   1 deferred (SwapFloat), 3 c_abi_only; [решения по каждой функции](remaining-api-policy.md).
+   Raw pending и знаменатель сохранены; обязательного нового пакета функций здесь нет.
+11. **Все найденные field gaps закрыты:** read-only Surface/Palette metadata,
+   семь полей SDL_GPUVulkanOptions, восемь virtual callbacks, packed/planar/MJPG
+   surface byte views. [Контракты и ограничения](record-field-accessibility.md).
+   122 complete records / 840 полей: 586 direct, 84 adapted, 25 native callbacks,
+   38 event tags, 98 internal, 9 host-only; pending/partial = 0 в этом аудите.
+12. **Далее:** platform/runtime проверки и реальные сценарии примеров.
+   Не добавлять host/libc/va_list ради процента.
+   Linux/macOS/web требуют собственных проверок; Windows-пакет не заявляет их готовность.
 
 Raw callback address и script block — разные контракты. Произвольный script Context
 на worker-потоке SDL не является обязательным критерием готовности. Физическое
@@ -112,7 +130,7 @@ Camera: [15/15 raw](camera.md), dummy discovery/error contracts; далее P7. 
 
 | Этап | Объём | Критерий |
 | --- | --- | --- |
-| P1, остаток | Properties/Hints/Init/Error/Log/Timer callbacks, va_list и строковые макросы | Базовые пакеты реализованы; retained callbacks требуют отдельных контрактов |
+| P1, остаток | va_list и startup host integration | Native callbacks подключены; script blocks не сохраняются |
 | P2, функции подключены | Video/display/window без GL/EGL, Render, Surface/Pixels/Blend/Rect, Clipboard | Rect 18/18, Clipboard 11/11, hit-test; RenderDebugTextFormat — fixed-text adapter. Платформенная валидация ограничена |
 | P3 | Events, Keyboard/Mouse, Joystick/Gamepad, Touch/Pen/Sensor/Haptic/HIDAPI | Union tags, owned payload, hotplug, device IDs, отсутствие оборудования |
 | P4, основной API подключён | Filesystem 11/11; IOStream 46 raw + text adapter (IOvprintf pending); Storage 17/17; AsyncIO 11/11 | EOF/short read/error, retained buffers, completion/cancellation, shutdown |
@@ -129,14 +147,14 @@ version diff, не незаметное переключение FetchContent н
 ## Properties: реализованный пакет и остаток
 
 В закреплённом SDL_properties.h **21 функция**, не 15 из старого плана.
-Реализованы 19 generated функций, copied enumeration и defer scopes. Retained
-cleanup-callback остаётся pending; ограничения и найденная ошибка кэша SDL —
+Реализованы 20 generated функций, copied enumeration и defer scopes. Native
+cleanup-callback подключён ([контракт](native-callbacks.md)); ограничения и найденная ошибка кэша SDL —
 в [properties.md](properties.md). Hints/Init: 12 новых raw функций, copies и subsystem scopes реализованы;
 [контракт и оставшиеся callbacks](init-hints.md). Error/log/time также реализован: [контракты и остаток](diagnostics-time.md).
 Video discovery: 31 raw запроса и copy/ref adapters реализованы,
 [контракты](video-discovery.md). Создание и состояние окон также реализованы: [контракты](window-state.md).
 Fullscreen/surfaces и прочие оконные операции реализованы с ограничениями
-[window-io.md](window-io.md). Video: 89/109; оставшиеся 20 GL/EGL функций явно перенесены в P8. Hit-test, Rect и Clipboard подключены; [контракт](rect-clipboard-hittest.md). P7 подключён в Windows census; следующий основной раздел — P8; исключение IOvprintf и остаток P3 перечислены выше. Миграция [Result/Option boost API](result-option-plan.md) завершена и локально проверена. P2 не переоткрывается; GL/EGL остаётся в P8.
+[window-io.md](window-io.md). Video: 114/114 в SDL 3.4.16; 20 GL/EGL функций подключены в P8 ([контракт](gl-egl.md)). Hit-test, Rect и Clipboard подключены; [контракт](rect-clipboard-hittest.md). P7 подключён в Windows census; следующий основной раздел — P8; исключение IOvprintf и остаток P3 перечислены выше. Миграция [Result/Option boost API](result-option-plan.md) завершена и локально проверена. P2 не переоткрывается; GL/EGL остаётся в P8.
 Software renderer/primitives: ещё 10 raw функций; [контракт](renderer-primitives.md).
 Состояние Renderer (viewport/clip/scale/output): 10 raw функций и ref adapters; [контракт](renderer-state.md).
 Renderer queries/logical presentation: 10 raw функций, все режимы и преобразование координат; [контракт](renderer-presentation.md).
@@ -145,7 +163,8 @@ Byte modulation/blend modes и texture updates/locking: 10 raw функций, R
 YUV/NV, renderer color/blend и custom blend composition: 10 raw функций; [контракт](renderer-yuv-blend.md).
 Renderer creation/draw/readback/VSync/debug: 10 raw функций и scopes; [контракт](renderer-operations.md).
 Render: 88 generated / 1 adapted / 0 pending. [GeometryRaw/events/interop](renderer-final-api.md); DebugTextFormat ограничен fixed-text адаптером, положительные Metal/Vulkan interop сценарии не проверены. Surface state: 16 raw функций, ref-адаптеры и пиксельные тесты; [контракт](surface-state.md). Все 58 Surface и 11 Pixels функций имеют raw-привязки, включая palettes/alternate images, внешнюю память, blit и BMP IO; [контракт](surface-pixels.md). Проверка относится к закреплённому Windows-профилю; не означает все форматы и межплатформенные сценарии. Пакеты формируются по связанному поведению, без фиксированного числа функций.
-Ниже сохраняются критерии пакета; callback-пункт 5 остаётся открытым.
+Ниже сохраняются исходные критерии пакета; пункт 5 закрыт для native C callbacks,
+а произвольные retained script blocks не входят в контракт.
 
 1. Генерация 19 сигнатур без callbacks, SDL_PropertyType и SDL_PropertiesID;
    сверка raw status с реестром. Raw pointer properties остаются низкоуровневыми.

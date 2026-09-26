@@ -2,7 +2,7 @@ options gen2
 require dassdl3/sdl3_iostream_boost
 require dassdl3/sdl3_scope
 
-def roundtrip() : $Result<SdlUnit; SdlError> {
+def roundtrip() : SdlStatus {
     return sdl_scope() {
         let stream : SDL_IOStream? = with_io_dynamic() |> sdl_use
         var bytes <- array<uint8>(83,68,76,0,51)

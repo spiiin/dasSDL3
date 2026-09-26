@@ -5,7 +5,7 @@ require dassdl3/sdl3_audio_boost
 // Based on SDL 3.2.18 examples/audio/03-load-wav (public-domain code).
 // Original quiet tone asset; no callbacks from the audio thread into daScript.
 
-def play_audio(wav : SDL_Wav?; stream : SDL_AudioStream?) : $Result<SdlUnit; SdlError> {
+def play_audio(wav : SDL_Wav?; stream : SDL_AudioStream?) : SdlStatus {
     stream |> queue_wav(wav) |> sdl_try
     stream |> flush_audio() |> sdl_try
     stream |> resume_audio() |> sdl_try

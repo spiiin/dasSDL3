@@ -6,7 +6,7 @@ require math
 // Adapted from SDL release-3.2.18 examples/renderer/06-textures/textures.c
 // (public domain). Uses our own BMP and explicit scoped ownership instead of callbacks.
 
-def render_textures(renderer : SDL_Renderer?; texture : SDL_Texture?; smoke : bool; var frames : int&) : $Result<SdlUnit; SdlError> {
+def render_textures(renderer : SDL_Renderer?; texture : SDL_Texture?; smoke : bool; var frames : int&) : SdlStatus {
     let size = texture_size(texture) |> sdl_try
     var event = SDL_MakeEvent()
     var running = true

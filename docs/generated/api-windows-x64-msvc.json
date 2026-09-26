@@ -993,7 +993,7 @@
       "line": 470,
       "id": "enum:SDL_GLAttr",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5138,7 +5138,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_ACCELERATED_VISUAL",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5149,7 +5149,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_ACCUM_ALPHA_SIZE",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5160,7 +5160,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_ACCUM_BLUE_SIZE",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5171,7 +5171,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_ACCUM_GREEN_SIZE",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5182,7 +5182,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_ACCUM_RED_SIZE",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5193,7 +5193,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_ALPHA_SIZE",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5204,7 +5204,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_BLUE_SIZE",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5215,7 +5215,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_BUFFER_SIZE",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5226,7 +5226,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_CONTEXT_FLAGS",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5237,7 +5237,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_CONTEXT_MAJOR_VERSION",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5248,7 +5248,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_CONTEXT_MINOR_VERSION",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5259,7 +5259,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_CONTEXT_NO_ERROR",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5270,7 +5270,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_CONTEXT_PROFILE_MASK",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5281,7 +5281,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_CONTEXT_RELEASE_BEHAVIOR",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5292,7 +5292,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_CONTEXT_RESET_NOTIFICATION",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5303,7 +5303,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_DEPTH_SIZE",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5314,7 +5314,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_DOUBLEBUFFER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5325,7 +5325,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_EGL_PLATFORM",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5336,7 +5336,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_FLOATBUFFERS",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5347,7 +5347,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_FRAMEBUFFER_SRGB_CAPABLE",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5358,7 +5358,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_GREEN_SIZE",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5369,7 +5369,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_MULTISAMPLEBUFFERS",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5380,7 +5380,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_MULTISAMPLESAMPLES",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5391,7 +5391,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_RED_SIZE",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5402,7 +5402,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_RETAINED_BACKING",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5413,7 +5413,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_SHARE_WITH_CURRENT_CONTEXT",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5424,7 +5424,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_STENCIL_SIZE",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -5435,7 +5435,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_GL_STEREO",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -14729,10 +14729,14 @@
       ],
       "id": "function:SDL_AddHintCallback",
       "category": "Hints",
-      "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "Retained callback rooting, thread affinity and teardown contract pending.",
-      "contract": "docs/init-hints.md"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Native C callback address ABI; no retained script Func/Block. Host owns callback code and userdata lifetime. Log getter has an output-reference adapter.",
+      "contract": "docs/native-callbacks.md",
+      "tests": [
+        "tests/native_callbacks.das",
+        "tests/native_timers.das"
+      ]
     },
     {
       "name": "SDL_AddSurfaceAlternateImage",
@@ -14784,10 +14788,14 @@
       ],
       "id": "function:SDL_AddTimer",
       "category": "Timer",
-      "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
-      "contract": "docs/diagnostics-time.md"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Native C callback address ABI; no retained script Func/Block. Host owns callback code and userdata lifetime. Log getter has an output-reference adapter.",
+      "contract": "docs/native-callbacks.md",
+      "tests": [
+        "tests/native_callbacks.das",
+        "tests/native_timers.das"
+      ]
     },
     {
       "name": "SDL_AddTimerNS",
@@ -14812,10 +14820,14 @@
       ],
       "id": "function:SDL_AddTimerNS",
       "category": "Timer",
-      "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
-      "contract": "docs/diagnostics-time.md"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Native C callback address ABI; no retained script Func/Block. Host owns callback code and userdata lifetime. Log getter has an output-reference adapter.",
+      "contract": "docs/native-callbacks.md",
+      "tests": [
+        "tests/native_callbacks.das",
+        "tests/native_timers.das"
+      ]
     },
     {
       "name": "SDL_AddVulkanRenderSemaphores",
@@ -19117,8 +19129,14 @@
       "arguments": [],
       "id": "function:SDL_EGL_GetCurrentConfig",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
     },
     {
       "name": "SDL_EGL_GetCurrentDisplay",
@@ -19130,8 +19148,14 @@
       "arguments": [],
       "id": "function:SDL_EGL_GetCurrentDisplay",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
     },
     {
       "name": "SDL_EGL_GetProcAddress",
@@ -19148,8 +19172,14 @@
       ],
       "id": "function:SDL_EGL_GetProcAddress",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
     },
     {
       "name": "SDL_EGL_GetWindowSurface",
@@ -19166,8 +19196,14 @@
       ],
       "id": "function:SDL_EGL_GetWindowSurface",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
     },
     {
       "name": "SDL_EGL_SetAttributeCallbacks",
@@ -19196,8 +19232,14 @@
       ],
       "id": "function:SDL_EGL_SetAttributeCallbacks",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
     },
     {
       "name": "SDL_EnableScreenSaver",
@@ -19318,7 +19360,10 @@
       "id": "function:SDL_EnterAppMainCallbacks",
       "category": "Main",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "SDL header startup helper, documented for sole use inside SDL_main; web/runner.cpp already uses SDL_MAIN_USE_CALLBACKS and native App callbacks.",
+      "contract": "docs/remaining-api-policy.md"
     },
     {
       "name": "SDL_EnumerateDirectory",
@@ -19714,7 +19759,10 @@
       "id": "function:SDL_GDKSuspendComplete",
       "category": "Main",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "Xbox GDK suspension acknowledgement requires native event-watch/GPU ordering. Desktop Windows implementation only sets unsupported error; revisit for a GDK host profile.",
+      "contract": "docs/remaining-api-policy.md"
     },
     {
       "name": "SDL_GL_CreateContext",
@@ -19731,8 +19779,14 @@
       ],
       "id": "function:SDL_GL_CreateContext",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
     },
     {
       "name": "SDL_GL_DestroyContext",
@@ -19749,8 +19803,14 @@
       ],
       "id": "function:SDL_GL_DestroyContext",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
     },
     {
       "name": "SDL_GL_ExtensionSupported",
@@ -19767,8 +19827,14 @@
       ],
       "id": "function:SDL_GL_ExtensionSupported",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
     },
     {
       "name": "SDL_GL_GetAttribute",
@@ -19789,8 +19855,14 @@
       ],
       "id": "function:SDL_GL_GetAttribute",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
     },
     {
       "name": "SDL_GL_GetCurrentContext",
@@ -19802,8 +19874,14 @@
       "arguments": [],
       "id": "function:SDL_GL_GetCurrentContext",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
     },
     {
       "name": "SDL_GL_GetCurrentWindow",
@@ -19815,8 +19893,14 @@
       "arguments": [],
       "id": "function:SDL_GL_GetCurrentWindow",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
     },
     {
       "name": "SDL_GL_GetProcAddress",
@@ -19833,8 +19917,14 @@
       ],
       "id": "function:SDL_GL_GetProcAddress",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
     },
     {
       "name": "SDL_GL_GetSwapInterval",
@@ -19851,8 +19941,14 @@
       ],
       "id": "function:SDL_GL_GetSwapInterval",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
     },
     {
       "name": "SDL_GL_LoadLibrary",
@@ -19869,8 +19965,14 @@
       ],
       "id": "function:SDL_GL_LoadLibrary",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
     },
     {
       "name": "SDL_GL_MakeCurrent",
@@ -19891,8 +19993,14 @@
       ],
       "id": "function:SDL_GL_MakeCurrent",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
     },
     {
       "name": "SDL_GL_ResetAttributes",
@@ -19904,8 +20012,14 @@
       "arguments": [],
       "id": "function:SDL_GL_ResetAttributes",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
     },
     {
       "name": "SDL_GL_SetAttribute",
@@ -19926,8 +20040,14 @@
       ],
       "id": "function:SDL_GL_SetAttribute",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
     },
     {
       "name": "SDL_GL_SetSwapInterval",
@@ -19944,8 +20064,14 @@
       ],
       "id": "function:SDL_GL_SetSwapInterval",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
     },
     {
       "name": "SDL_GL_SwapWindow",
@@ -19962,8 +20088,14 @@
       ],
       "id": "function:SDL_GL_SwapWindow",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
     },
     {
       "name": "SDL_GL_UnloadLibrary",
@@ -19975,8 +20107,14 @@
       "arguments": [],
       "id": "function:SDL_GL_UnloadLibrary",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "GL contexts, attributes and swap Result/ref/defer adapters; EGL/proc callbacks retain native address and backend contracts.",
+      "contract": "docs/gl-egl.md",
+      "tests": [
+        "tests/gl_egl.das",
+        "tests/gl_context.das"
+      ]
     },
     {
       "name": "SDL_GPUSupportsProperties",
@@ -20369,7 +20507,10 @@
       "id": "function:SDL_GetAssertionHandler",
       "category": "Assert",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "Native host diagnostic callback and userdata query, paired with host-wide handler installation/restoration; no script callback bridge required.",
+      "contract": "docs/remaining-api-policy.md"
     },
     {
       "name": "SDL_GetAssertionReport",
@@ -20382,7 +20523,10 @@
       "id": "function:SDL_GetAssertionReport",
       "category": "Assert",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "Borrowed linked diagnostic report with reset/Quit invalidation; host tooling must coordinate asserting/resetting threads. Revisit with a copied-report contract if needed.",
+      "contract": "docs/remaining-api-policy.md"
     },
     {
       "name": "SDL_GetAsyncIOResult",
@@ -20982,8 +21126,13 @@
       "arguments": [],
       "id": "function:SDL_GetCPUCacheLineSize",
       "category": "CPUInfo",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
     },
     {
       "name": "SDL_GetCameraDriver",
@@ -21693,7 +21842,10 @@
       "id": "function:SDL_GetDefaultAssertionHandler",
       "category": "Assert",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "Native assertion handler address for host diagnostics; unlike ordinary script failure this may show UI, break or abort.",
+      "contract": "docs/remaining-api-policy.md"
     },
     {
       "name": "SDL_GetDefaultCursor",
@@ -21723,10 +21875,14 @@
       "arguments": [],
       "id": "function:SDL_GetDefaultLogOutputFunction",
       "category": "Log",
-      "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
-      "contract": "docs/diagnostics-time.md"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Native C callback address ABI; no retained script Func/Block. Host owns callback code and userdata lifetime. Log getter has an output-reference adapter.",
+      "contract": "docs/native-callbacks.md",
+      "tests": [
+        "tests/native_callbacks.das",
+        "tests/native_timers.das"
+      ]
     },
     {
       "name": "SDL_GetDefaultTextureScaleMode",
@@ -24779,10 +24935,14 @@
       ],
       "id": "function:SDL_GetLogOutputFunction",
       "category": "Log",
-      "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
-      "contract": "docs/diagnostics-time.md"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Native C callback address ABI; no retained script Func/Block. Host owns callback code and userdata lifetime. Log getter has an output-reference adapter.",
+      "contract": "docs/native-callbacks.md",
+      "tests": [
+        "tests/native_callbacks.das",
+        "tests/native_timers.das"
+      ]
     },
     {
       "name": "SDL_GetLogPriority",
@@ -25308,8 +25468,13 @@
       "arguments": [],
       "id": "function:SDL_GetNumLogicalCPUCores",
       "category": "CPUInfo",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
     },
     {
       "name": "SDL_GetNumRenderDrivers",
@@ -26922,8 +27087,13 @@
       "arguments": [],
       "id": "function:SDL_GetSIMDAlignment",
       "category": "CPUInfo",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
     },
     {
       "name": "SDL_GetSandbox",
@@ -27702,8 +27872,13 @@
       "arguments": [],
       "id": "function:SDL_GetSystemRAM",
       "category": "CPUInfo",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
     },
     {
       "name": "SDL_GetSystemTheme",
@@ -29386,8 +29561,13 @@
       "arguments": [],
       "id": "function:SDL_HasARMSIMD",
       "category": "CPUInfo",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
     },
     {
       "name": "SDL_HasAVX",
@@ -29399,8 +29579,13 @@
       "arguments": [],
       "id": "function:SDL_HasAVX",
       "category": "CPUInfo",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
     },
     {
       "name": "SDL_HasAVX2",
@@ -29412,8 +29597,13 @@
       "arguments": [],
       "id": "function:SDL_HasAVX2",
       "category": "CPUInfo",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
     },
     {
       "name": "SDL_HasAVX512F",
@@ -29425,8 +29615,13 @@
       "arguments": [],
       "id": "function:SDL_HasAVX512F",
       "category": "CPUInfo",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
     },
     {
       "name": "SDL_HasAltiVec",
@@ -29438,8 +29633,13 @@
       "arguments": [],
       "id": "function:SDL_HasAltiVec",
       "category": "CPUInfo",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
     },
     {
       "name": "SDL_HasClipboardData",
@@ -29552,7 +29752,10 @@
       "id": "function:SDL_HasExactlyOneBitSet32",
       "category": "Bits",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "not_needed",
+      "script_disposition": "stdlib",
+      "reason": "Use uint predicate x!=0u && (x & (x-1u))==0u; preserve false for zero. No SDL subsystem or ownership semantics.",
+      "contract": "docs/remaining-api-policy.md"
     },
     {
       "name": "SDL_HasGamepad",
@@ -29618,8 +29821,13 @@
       "arguments": [],
       "id": "function:SDL_HasLASX",
       "category": "CPUInfo",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
     },
     {
       "name": "SDL_HasLSX",
@@ -29631,8 +29839,13 @@
       "arguments": [],
       "id": "function:SDL_HasLSX",
       "category": "CPUInfo",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
     },
     {
       "name": "SDL_HasMMX",
@@ -29644,8 +29857,13 @@
       "arguments": [],
       "id": "function:SDL_HasMMX",
       "category": "CPUInfo",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
     },
     {
       "name": "SDL_HasMouse",
@@ -29675,8 +29893,13 @@
       "arguments": [],
       "id": "function:SDL_HasNEON",
       "category": "CPUInfo",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
     },
     {
       "name": "SDL_HasPrimarySelectionText",
@@ -29788,8 +30011,13 @@
       "arguments": [],
       "id": "function:SDL_HasSSE",
       "category": "CPUInfo",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
     },
     {
       "name": "SDL_HasSSE2",
@@ -29801,8 +30029,13 @@
       "arguments": [],
       "id": "function:SDL_HasSSE2",
       "category": "CPUInfo",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
     },
     {
       "name": "SDL_HasSSE3",
@@ -29814,8 +30047,13 @@
       "arguments": [],
       "id": "function:SDL_HasSSE3",
       "category": "CPUInfo",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
     },
     {
       "name": "SDL_HasSSE41",
@@ -29827,8 +30065,13 @@
       "arguments": [],
       "id": "function:SDL_HasSSE41",
       "category": "CPUInfo",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
     },
     {
       "name": "SDL_HasSSE42",
@@ -29840,8 +30083,13 @@
       "arguments": [],
       "id": "function:SDL_HasSSE42",
       "category": "CPUInfo",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Direct scalar CPU information or capability predicate; no ownership, out-parameters or SDL error sentinel to adapt.",
+      "contract": "docs/cpuinfo.md",
+      "tests": [
+        "tests/cpuinfo.das"
+      ]
     },
     {
       "name": "SDL_HasScreenKeyboardSupport",
@@ -30058,10 +30306,10 @@
       "id": "function:SDL_IOvprintf",
       "category": "IOStream",
       "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "Native va_list ABI is not a script argument list; remains pending.",
-      "contract": "docs/iostream.md",
-      "tests": []
+      "boost_status": "not_needed",
+      "script_disposition": "c_abi_only",
+      "reason": "Native va_list is not a script argument list. Existing SDL_IOprintfText handles completed text; bounded byte IO handles explicit serialization.",
+      "contract": "docs/remaining-api-policy.md"
     },
     {
       "name": "SDL_Init",
@@ -31236,9 +31484,10 @@
       "id": "function:SDL_LogMessageV",
       "category": "Log",
       "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
-      "contract": "docs/diagnostics-time.md"
+      "boost_status": "not_needed",
+      "script_disposition": "c_abi_only",
+      "reason": "Native va_list cannot be constructed from ordinary script values. Existing SDL_LogMessageText and boost log_message preserve fixed-text logging needs.",
+      "contract": "docs/remaining-api-policy.md"
     },
     {
       "name": "SDL_LogTrace",
@@ -31586,8 +31835,14 @@
       ],
       "id": "function:SDL_Metal_CreateView",
       "category": "Metal",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Vulkan/Metal interop; copied extension names, surface/view factories and defer lifetimes. Vulkan instance/physical device/allocators and Metal layers remain native host resources.",
+      "contract": "docs/vulkan-metal.md",
+      "tests": [
+        "tests/vulkan_metal.das",
+        "tests/vulkan_surface.das"
+      ]
     },
     {
       "name": "SDL_Metal_DestroyView",
@@ -31604,8 +31859,14 @@
       ],
       "id": "function:SDL_Metal_DestroyView",
       "category": "Metal",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Vulkan/Metal interop; copied extension names, surface/view factories and defer lifetimes. Vulkan instance/physical device/allocators and Metal layers remain native host resources.",
+      "contract": "docs/vulkan-metal.md",
+      "tests": [
+        "tests/vulkan_metal.das",
+        "tests/vulkan_surface.das"
+      ]
     },
     {
       "name": "SDL_Metal_GetLayer",
@@ -31622,8 +31883,14 @@
       ],
       "id": "function:SDL_Metal_GetLayer",
       "category": "Metal",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Vulkan/Metal interop; copied extension names, surface/view factories and defer lifetimes. Vulkan instance/physical device/allocators and Metal layers remain native host resources.",
+      "contract": "docs/vulkan-metal.md",
+      "tests": [
+        "tests/vulkan_metal.das",
+        "tests/vulkan_surface.das"
+      ]
     },
     {
       "name": "SDL_MinimizeWindow",
@@ -31703,7 +31970,10 @@
       "id": "function:SDL_MostSignificantBitIndex32",
       "category": "Bits",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "not_needed",
+      "script_disposition": "stdlib",
+      "reason": "Use a uint input and guarded 31-int(clz(x)); x==0 must return -1. SDL entry is forced-inline, not a dynamic-library symbol.",
+      "contract": "docs/remaining-api-policy.md"
     },
     {
       "name": "SDL_OnApplicationDidEnterBackground",
@@ -33694,7 +33964,10 @@
       "id": "function:SDL_RegisterApp",
       "category": "Main",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "Windows window-class startup customization and HINSTANCE lifetime; SDL video normally performs registration. Native hosts may opt in with paired unregister.",
+      "contract": "docs/remaining-api-policy.md"
     },
     {
       "name": "SDL_RegisterEvents",
@@ -34068,10 +34341,14 @@
       ],
       "id": "function:SDL_RemoveHintCallback",
       "category": "Hints",
-      "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "Retained callback rooting, thread affinity and teardown contract pending.",
-      "contract": "docs/init-hints.md"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Native C callback address ABI; no retained script Func/Block. Host owns callback code and userdata lifetime. Log getter has an output-reference adapter.",
+      "contract": "docs/native-callbacks.md",
+      "tests": [
+        "tests/native_callbacks.das",
+        "tests/native_timers.das"
+      ]
     },
     {
       "name": "SDL_RemovePath",
@@ -35163,7 +35440,10 @@
       "id": "function:SDL_ReportAssertion",
       "category": "Assert",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "SDL explicitly says not to call directly; C assertion macros supply persistent SDL_AssertData and source metadata. Not a Result error-reporting mechanism.",
+      "contract": "docs/remaining-api-policy.md"
     },
     {
       "name": "SDL_ResetAssertionReport",
@@ -35176,7 +35456,10 @@
       "id": "function:SDL_ResetAssertionReport",
       "category": "Assert",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "Mutates process-wide native diagnostic state and is not thread safe; host diagnostic tooling must coordinate readers and asserting threads.",
+      "contract": "docs/remaining-api-policy.md"
     },
     {
       "name": "SDL_ResetHint",
@@ -35538,7 +35821,10 @@
       "id": "function:SDL_RunApp",
       "category": "Main",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "Platform startup/teardown around a native C main function; belongs to the initial-thread host entry point, not a script launching its own host again.",
+      "contract": "docs/remaining-api-policy.md"
     },
     {
       "name": "SDL_RunHapticEffect",
@@ -35594,10 +35880,14 @@
       ],
       "id": "function:SDL_RunOnMainThread",
       "category": "Init",
-      "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "Retained callback rooting, thread affinity and teardown contract pending.",
-      "contract": "docs/init-hints.md"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Native C callback address ABI; no retained script Func/Block. Host owns callback code and userdata lifetime. Log getter has an output-reference adapter.",
+      "contract": "docs/native-callbacks.md",
+      "tests": [
+        "tests/native_callbacks.das",
+        "tests/native_timers.das"
+      ]
     },
     {
       "name": "SDL_SaveBMP",
@@ -36072,7 +36362,10 @@
       "id": "function:SDL_SetAssertionHandler",
       "category": "Assert",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "Process-wide native diagnostic callback can run on arbitrary asserting threads and survives SDL_Quit; host owns handler lifetime and recovery policy.",
+      "contract": "docs/remaining-api-policy.md"
     },
     {
       "name": "SDL_SetAtomicInt",
@@ -36665,9 +36958,10 @@
       "id": "function:SDL_SetErrorV",
       "category": "Error",
       "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
-      "contract": "docs/diagnostics-time.md"
+      "boost_status": "not_needed",
+      "script_disposition": "c_abi_only",
+      "reason": "Native va_list is ABI-specific, not a script array/tuple. Existing SDL_SetErrorText and boost set_error accept interpolated literal text without C formatting.",
+      "contract": "docs/remaining-api-policy.md"
     },
     {
       "name": "SDL_SetEventEnabled",
@@ -37610,10 +37904,14 @@
       ],
       "id": "function:SDL_SetLogOutputFunction",
       "category": "Log",
-      "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "va_list or retained callback ABI requires a separate contract; no script closure retained.",
-      "contract": "docs/diagnostics-time.md"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Native C callback address ABI; no retained script Func/Block. Host owns callback code and userdata lifetime. Log getter has an output-reference adapter.",
+      "contract": "docs/native-callbacks.md",
+      "tests": [
+        "tests/native_callbacks.das",
+        "tests/native_timers.das"
+      ]
     },
     {
       "name": "SDL_SetLogPriorities",
@@ -37703,7 +38001,10 @@
       "id": "function:SDL_SetMainReady",
       "category": "Main",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "Startup responsibility already implemented by src/runner.cpp and the SDK consumer host before SDL initialization; not script coverage.",
+      "contract": "docs/remaining-api-policy.md"
     },
     {
       "name": "SDL_SetMemoryFunctions",
@@ -37879,10 +38180,14 @@
       ],
       "id": "function:SDL_SetPointerPropertyWithCleanup",
       "category": "Properties",
-      "raw_status": "pending",
-      "boost_status": "pending",
-      "reason": "Retained script cleanup requires rooting, callback-thread and teardown contract; no script closure is retained across C ABI.",
-      "contract": "docs/properties.md"
+      "raw_status": "generated",
+      "boost_status": "not_needed",
+      "reason": "Native C callback address ABI; no retained script Func/Block. Host owns callback code and userdata lifetime. Log getter has an output-reference adapter.",
+      "contract": "docs/native-callbacks.md",
+      "tests": [
+        "tests/native_callbacks.das",
+        "tests/native_timers.das"
+      ]
     },
     {
       "name": "SDL_SetPrimarySelectionText",
@@ -40591,7 +40896,10 @@
       "id": "function:SDL_SwapFloat",
       "category": "Endian",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "deferred",
+      "reason": "Optional exact-bit binary-format interop; byte swap differs from numeric conversion. Existing math_bits and integer IO cover common tasks; add only with float bit-pattern/interpreter/AOT tests and a concrete need.",
+      "contract": "docs/remaining-api-policy.md"
     },
     {
       "name": "SDL_SyncWindow",
@@ -41178,7 +41486,10 @@
       "id": "function:SDL_UnregisterApp",
       "category": "Main",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "Balances native Windows class registration; SDL video normally owns this lifetime, so an independent script call could invalidate host accounting.",
+      "contract": "docs/remaining-api-policy.md"
     },
     {
       "name": "SDL_UnsetEnvironmentVariable",
@@ -41595,8 +41906,14 @@
       ],
       "id": "function:SDL_Vulkan_CreateSurface",
       "category": "Vulkan",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Vulkan/Metal interop; copied extension names, surface/view factories and defer lifetimes. Vulkan instance/physical device/allocators and Metal layers remain native host resources.",
+      "contract": "docs/vulkan-metal.md",
+      "tests": [
+        "tests/vulkan_metal.das",
+        "tests/vulkan_surface.das"
+      ]
     },
     {
       "name": "SDL_Vulkan_DestroySurface",
@@ -41621,8 +41938,14 @@
       ],
       "id": "function:SDL_Vulkan_DestroySurface",
       "category": "Vulkan",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Vulkan/Metal interop; copied extension names, surface/view factories and defer lifetimes. Vulkan instance/physical device/allocators and Metal layers remain native host resources.",
+      "contract": "docs/vulkan-metal.md",
+      "tests": [
+        "tests/vulkan_metal.das",
+        "tests/vulkan_surface.das"
+      ]
     },
     {
       "name": "SDL_Vulkan_GetInstanceExtensions",
@@ -41639,8 +41962,14 @@
       ],
       "id": "function:SDL_Vulkan_GetInstanceExtensions",
       "category": "Vulkan",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Vulkan/Metal interop; copied extension names, surface/view factories and defer lifetimes. Vulkan instance/physical device/allocators and Metal layers remain native host resources.",
+      "contract": "docs/vulkan-metal.md",
+      "tests": [
+        "tests/vulkan_metal.das",
+        "tests/vulkan_surface.das"
+      ]
     },
     {
       "name": "SDL_Vulkan_GetPresentationSupport",
@@ -41665,8 +41994,14 @@
       ],
       "id": "function:SDL_Vulkan_GetPresentationSupport",
       "category": "Vulkan",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Vulkan/Metal interop; copied extension names, surface/view factories and defer lifetimes. Vulkan instance/physical device/allocators and Metal layers remain native host resources.",
+      "contract": "docs/vulkan-metal.md",
+      "tests": [
+        "tests/vulkan_metal.das",
+        "tests/vulkan_surface.das"
+      ]
     },
     {
       "name": "SDL_Vulkan_GetVkGetInstanceProcAddr",
@@ -41678,8 +42013,14 @@
       "arguments": [],
       "id": "function:SDL_Vulkan_GetVkGetInstanceProcAddr",
       "category": "Vulkan",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Vulkan/Metal interop; copied extension names, surface/view factories and defer lifetimes. Vulkan instance/physical device/allocators and Metal layers remain native host resources.",
+      "contract": "docs/vulkan-metal.md",
+      "tests": [
+        "tests/vulkan_metal.das",
+        "tests/vulkan_surface.das"
+      ]
     },
     {
       "name": "SDL_Vulkan_LoadLibrary",
@@ -41696,8 +42037,14 @@
       ],
       "id": "function:SDL_Vulkan_LoadLibrary",
       "category": "Vulkan",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Vulkan/Metal interop; copied extension names, surface/view factories and defer lifetimes. Vulkan instance/physical device/allocators and Metal layers remain native host resources.",
+      "contract": "docs/vulkan-metal.md",
+      "tests": [
+        "tests/vulkan_metal.das",
+        "tests/vulkan_surface.das"
+      ]
     },
     {
       "name": "SDL_Vulkan_UnloadLibrary",
@@ -41709,8 +42056,14 @@
       "arguments": [],
       "id": "function:SDL_Vulkan_UnloadLibrary",
       "category": "Vulkan",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Native Vulkan/Metal interop; copied extension names, surface/view factories and defer lifetimes. Vulkan instance/physical device/allocators and Metal layers remain native host resources.",
+      "contract": "docs/vulkan-metal.md",
+      "tests": [
+        "tests/vulkan_metal.das",
+        "tests/vulkan_surface.das"
+      ]
     },
     {
       "name": "SDL_WaitAndAcquireGPUSwapchainTexture",
@@ -44995,7 +45348,10 @@
       "id": "function:SDL_main",
       "category": "Main",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "not_needed",
+      "script_disposition": "host_only",
+      "reason": "Application-defined entry point, not an SDL-provided callable service; exported script main is invoked by the native runner instead.",
+      "contract": "docs/remaining-api-policy.md"
     },
     {
       "name": "SDL_malloc",
@@ -52327,7 +52683,7 @@
       "function_like": false,
       "id": "macro:SDL_CACHELINE_SIZE",
       "category": "CPUInfo",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -54090,7 +54446,7 @@
       "function_like": false,
       "id": "macro:SDL_GL_CONTEXT_DEBUG_FLAG",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -54102,7 +54458,7 @@
       "function_like": false,
       "id": "macro:SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -54114,7 +54470,7 @@
       "function_like": false,
       "id": "macro:SDL_GL_CONTEXT_PROFILE_COMPATIBILITY",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -54126,7 +54482,7 @@
       "function_like": false,
       "id": "macro:SDL_GL_CONTEXT_PROFILE_CORE",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -54138,7 +54494,7 @@
       "function_like": false,
       "id": "macro:SDL_GL_CONTEXT_PROFILE_ES",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -54150,7 +54506,7 @@
       "function_like": false,
       "id": "macro:SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -54162,7 +54518,7 @@
       "function_like": false,
       "id": "macro:SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -54174,7 +54530,7 @@
       "function_like": false,
       "id": "macro:SDL_GL_CONTEXT_RESET_ISOLATION_FLAG",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -54186,7 +54542,7 @@
       "function_like": false,
       "id": "macro:SDL_GL_CONTEXT_RESET_LOSE_CONTEXT",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -54198,7 +54554,7 @@
       "function_like": false,
       "id": "macro:SDL_GL_CONTEXT_RESET_NO_NOTIFICATION",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -54210,7 +54566,7 @@
       "function_like": false,
       "id": "macro:SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -70856,7 +71212,7 @@
       "fields": [],
       "id": "record:SDL_GLContextState",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -72806,8 +73162,17 @@
       ],
       "id": "record:SDL_GPUVulkanOptions",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "vulkan_api_version",
+        "feature_list",
+        "vulkan_10_physical_device_features",
+        "device_extension_count",
+        "device_extension_names",
+        "instance_extension_count",
+        "instance_extension_names"
+      ]
     },
     {
       "name": "SDL_GUID",
@@ -76173,6 +76538,58 @@
       "boost_status": "unreviewed"
     },
     {
+      "name": "VkAllocationCallbacks",
+      "kind": "record",
+      "header": "SDL_vulkan.h",
+      "line": 70,
+      "complete": false,
+      "tag": "struct",
+      "fields": [],
+      "id": "record:VkAllocationCallbacks",
+      "category": "Vulkan",
+      "raw_status": "opaque",
+      "boost_status": "unreviewed"
+    },
+    {
+      "name": "VkInstance_T",
+      "kind": "record",
+      "header": "SDL_vulkan.h",
+      "line": 67,
+      "complete": false,
+      "tag": "struct",
+      "fields": [],
+      "id": "record:VkInstance_T",
+      "category": "Vulkan",
+      "raw_status": "opaque",
+      "boost_status": "unreviewed"
+    },
+    {
+      "name": "VkPhysicalDevice_T",
+      "kind": "record",
+      "header": "SDL_vulkan.h",
+      "line": 68,
+      "complete": false,
+      "tag": "struct",
+      "fields": [],
+      "id": "record:VkPhysicalDevice_T",
+      "category": "Vulkan",
+      "raw_status": "opaque",
+      "boost_status": "unreviewed"
+    },
+    {
+      "name": "VkSurfaceKHR_T",
+      "kind": "record",
+      "header": "SDL_vulkan.h",
+      "line": 69,
+      "complete": false,
+      "tag": "struct",
+      "fields": [],
+      "id": "record:VkSurfaceKHR_T",
+      "category": "Vulkan",
+      "raw_status": "opaque",
+      "boost_status": "unreviewed"
+    },
+    {
       "name": "SDL_AppEvent_func",
       "kind": "typedef",
       "header": "SDL_init.h",
@@ -77334,7 +77751,7 @@
       "callback": false,
       "id": "typedef:SDL_GLAttr",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -78624,8 +79041,17 @@
       "callback": false,
       "id": "typedef:SDL_GPUVulkanOptions",
       "category": "GPU",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "vulkan_api_version",
+        "feature_list",
+        "vulkan_10_physical_device_features",
+        "device_extension_count",
+        "device_extension_names",
+        "instance_extension_count",
+        "instance_extension_names"
+      ]
     },
     {
       "name": "SDL_GUID",
@@ -81190,6 +81616,42 @@
       "callback": false,
       "id": "typedef:Uint8",
       "category": "Stdinc",
+      "raw_status": "pending",
+      "boost_status": "unreviewed"
+    },
+    {
+      "name": "VkInstance",
+      "kind": "typedef",
+      "header": "SDL_vulkan.h",
+      "line": 67,
+      "c_type": "struct VkInstance_T *",
+      "callback": false,
+      "id": "typedef:VkInstance",
+      "category": "Vulkan",
+      "raw_status": "pending",
+      "boost_status": "unreviewed"
+    },
+    {
+      "name": "VkPhysicalDevice",
+      "kind": "typedef",
+      "header": "SDL_vulkan.h",
+      "line": 68,
+      "c_type": "struct VkPhysicalDevice_T *",
+      "callback": false,
+      "id": "typedef:VkPhysicalDevice",
+      "category": "Vulkan",
+      "raw_status": "pending",
+      "boost_status": "unreviewed"
+    },
+    {
+      "name": "VkSurfaceKHR",
+      "kind": "typedef",
+      "header": "SDL_vulkan.h",
+      "line": 69,
+      "c_type": "struct VkSurfaceKHR_T *",
+      "callback": false,
+      "id": "typedef:VkSurfaceKHR",
+      "category": "Vulkan",
       "raw_status": "pending",
       "boost_status": "unreviewed"
     }

@@ -1,7 +1,7 @@
 options gen2
 require dassdl3/sdl3_scope
 require dassdl3/sdl3_renderer_final_boost
-def render_example(renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; SdlError> {
+def render_example(renderer : SDL_Renderer?; smoke : bool) : SdlStatus {
     var rendered=false
     var uv : array<SDL_FPoint>
     var xy <- array(

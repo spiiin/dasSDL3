@@ -23,8 +23,9 @@ def generate(clang, include, spec_path=None, clang_args=()):
     spec = json.loads((spec_path or ROOT / "tools/bindings.json").read_text())
     command = [clang, "-x", "c", "-std=c11", "-fsyntax-only", "-Wno-pragma-pack",
                "-I", str(include), "-Xclang", "-ast-dump=json",
-               str(include / "SDL3/SDL.h")] + list(clang_args)
-    result = subprocess.run(command, capture_output=True, text=True, encoding="utf-8")
+               "-"] + list(clang_args)
+    source = "".join(f"#include <SDL3/{header}>\n" for header in spec.get("headers", ["SDL.h"]))
+    result = subprocess.run(command, input=source, capture_output=True, text=True, encoding="utf-8")
     if result.returncode:
         raise RuntimeError(result.stderr)
     nodes = list(walk(json.loads(result.stdout)))
@@ -117,7 +118,7 @@ def generate(clang, include, spec_path=None, clang_args=()):
         argnames = [n.get("name", f"arg{i}") for i, n in enumerate(args)]
         signature = decl["type"]["qualType"]
         manifest[name] = {"signature": signature, "arguments": argnames}
-        cpp_name = name + "Address" if name in ('SDL_SetClipboardData', 'SDL_SetWindowHitTest', 'SDL_SetEventFilter', 'SDL_GetEventFilter', 'SDL_AddEventWatch', 'SDL_RemoveEventWatch', 'SDL_FilterEvents', 'SDL_EnumerateDirectory', 'SDL_EnumerateStorageDirectory', 'SDL_SetAudioStreamGetCallback', 'SDL_SetAudioStreamPutCallback', 'SDL_OpenAudioDeviceStream', 'SDL_SetAudioPostmixCallback', 'SDL_PutAudioStreamDataNoCopy', 'SDL_SetRelativeMouseTransform', 'SDL_CreateThreadRuntime', 'SDL_CreateThreadWithPropertiesRuntime', 'SDL_SetTLS', 'SDL_LoadFunction', 'SDL_SetWindowsMessageHook', 'SDL_SetX11EventHook', 'SDL_SetTrayEntryCallback', 'SDL_ShowOpenFileDialog', 'SDL_ShowSaveFileDialog', 'SDL_ShowOpenFolderDialog', 'SDL_ShowFileDialogWithProperties') else name
+        cpp_name = name + "Address" if name in ('SDL_SetClipboardData', 'SDL_SetWindowHitTest', 'SDL_SetEventFilter', 'SDL_GetEventFilter', 'SDL_AddEventWatch', 'SDL_RemoveEventWatch', 'SDL_FilterEvents', 'SDL_EnumerateDirectory', 'SDL_EnumerateStorageDirectory', 'SDL_SetAudioStreamGetCallback', 'SDL_SetAudioStreamPutCallback', 'SDL_OpenAudioDeviceStream', 'SDL_SetAudioPostmixCallback', 'SDL_PutAudioStreamDataNoCopy', 'SDL_SetRelativeMouseTransform', 'SDL_CreateThreadRuntime', 'SDL_CreateThreadWithPropertiesRuntime', 'SDL_SetTLS', 'SDL_Vulkan_GetVkGetInstanceProcAddr', 'SDL_GL_GetProcAddress', 'SDL_EGL_GetProcAddress', 'SDL_EGL_SetAttributeCallbacks', 'SDL_LoadFunction', 'SDL_AddHintCallback', 'SDL_RemoveHintCallback', 'SDL_AddTimer', 'SDL_AddTimerNS', 'SDL_GetDefaultLogOutputFunction', 'SDL_GetLogOutputFunction', 'SDL_SetLogOutputFunction', 'SDL_RunOnMainThread', 'SDL_SetPointerPropertyWithCleanup', 'SDL_SetWindowsMessageHook', 'SDL_SetX11EventHook', 'SDL_SetTrayEntryCallback', 'SDL_ShowOpenFileDialog', 'SDL_ShowSaveFileDialog', 'SDL_ShowOpenFolderDialog', 'SDL_ShowFileDialogWithProperties') else name
         if name in ('SDL_hid_open', 'SDL_hid_get_manufacturer_string', 'SDL_hid_get_product_string', 'SDL_hid_get_serial_number_string', 'SDL_hid_get_indexed_string'): cpp_name = name + "Wide"
         node = ", SimNode_ExtFuncCallAndCopyOrMove" if signature.split("(", 1)[0].strip() in spec["structs"] else ""
         registrations.append(f'// {signature}\naddExtern<DAS_BIND_FUN({name}){node}>(*this, lib, "{name}", '

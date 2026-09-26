@@ -133,6 +133,15 @@ Early-return syntax: [`sdl_try` macro and example](sdl-try.md).
 
 - [Installed core SDK and standalone interpreter/AOT consumer](sdk.md).
 
+- [Native callbacks](native-callbacks.md): Hints, Timer, Log, main-thread dispatch and property cleanup; C addresses and lifetime tests.
 - [Stdinc: classification and script priorities](stdinc-policy.md).
+- [Remaining non-Stdinc API decisions](remaining-api-policy.md): all 19 pending Main/Assert/Bits/Endian/va_list functions.
+- [Complete record-field accessibility audit](record-field-accessibility.md): 840 classified fields, native callback setters, Surface/Palette access and Vulkan options.
 
 - [Common API and display/render/pinch events](common-api.md).
+
+- [GL/EGL contexts and native interop](gl-egl.md).
+
+- [Vulkan/Metal window interop](vulkan-metal.md).
+
+- [CPU information and SIMD capability queries](cpuinfo.md).

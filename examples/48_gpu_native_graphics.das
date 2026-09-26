@@ -3,19 +3,18 @@ require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_native_boost
 require daslib/defer
 
-def draw_frames(device : SDL_GPUDevice?; window : SDL_Window?; smoke : bool) : $Result<SdlUnit; SdlError> {
+def draw_frames(device : SDL_GPUDevice?; window : SDL_Window?; smoke : bool) : SdlStatus {
     let spirv=(SDL_GetGPUShaderFormats(device)&SDL_GPU_SHADERFORMAT_SPIRV)!=0u
     let ext=spirv ? "spv" : "dxil"
     let base="{SDL_GetBasePath()}assets/shaders/triangle"
-    var shader = SDL_GPUShaderCreateInfo(
-        format = spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL,
-        stage = SDL_GPUShaderStage.SHADERSTAGE_VERTEX
-    )
-    var vertex = device |> load_native_gpu_shader(shader,"{base}.vert.{ext}","main") |> sdl_try
+    var shader = gpu_shader("{base}.vert.{ext}",
+        spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL,SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
+    var vertex = device |> load_native_gpu_shader(shader) |> sdl_try
     {
         defer() { SDL_ReleaseGPUShader(device,vertex) }
-        shader.stage=SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT
-        var fragment = device |> load_native_gpu_shader(shader,"{base}.frag.{ext}","main") |> sdl_try
+        shader.info.stage=SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT
+        shader.path="{base}.frag.{ext}"
+        var fragment = device |> load_native_gpu_shader(shader) |> sdl_try
         {
             defer() { SDL_ReleaseGPUShader(device,fragment) }
             return render_pipeline(device, window, vertex, fragment, smoke)
@@ -23,7 +22,7 @@ def draw_frames(device : SDL_GPUDevice?; window : SDL_Window?; smoke : bool) : $
     }
 }
 
-def render_loop(device : SDL_GPUDevice?; window : SDL_Window?; pipeline : SDL_GPUGraphicsPipeline?; smoke : bool) : $Result<SdlUnit; SdlError> {
+def render_loop(device : SDL_GPUDevice?; window : SDL_Window?; pipeline : SDL_GPUGraphicsPipeline?; smoke : bool) : SdlStatus {
     var frame=0
     while (frame<(smoke ? 3 : 180)) {
         with_native_gpu_swapchain(device,window) $(command : SDL_GPUCommandBuffer?; var texture : SDL_GPUTexture?; width,height : uint) {
@@ -46,7 +45,7 @@ def render_loop(device : SDL_GPUDevice?; window : SDL_Window?; pipeline : SDL_GP
     return sdl_status(SDL_WaitForGPUIdle(device),"SDL_WaitForGPUIdle")
 }
 
-def render_pipeline(device : SDL_GPUDevice?; window : SDL_Window?; var vertex, fragment : SDL_GPUShader?; smoke : bool) : $Result<SdlUnit; SdlError> {
+def render_pipeline(device : SDL_GPUDevice?; window : SDL_Window?; var vertex, fragment : SDL_GPUShader?; smoke : bool) : SdlStatus {
     var info = SDL_GPUGraphicsPipelineCreateInfo(
         vertex_shader = vertex,
         fragment_shader = fragment,

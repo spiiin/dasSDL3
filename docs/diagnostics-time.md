@@ -29,9 +29,9 @@ SDL_ResetLogPriorities restores SDL defaults, not a prior application snapshot.
 The native test capture checks message bytes and filtering; prefix formatting by
 the platform's default output sink is not asserted by that capture.
 
-GetDefaultLogOutputFunction, GetLogOutputFunction and SetLogOutputFunction remain
-pending. A retained script callback needs rooting, teardown and a thread-affinity
-contract. The native callback in diagnostics_probe.h is test-only.
+GetDefaultLogOutputFunction, GetLogOutputFunction and SetLogOutputFunction are now
+generated with native C address adapters; GetLogOutputFunctionRef exposes both
+outputs. See [native callbacks](native-callbacks.md); no retained script block bridge.
 
 ## Time and timers
 
@@ -44,9 +44,10 @@ FILETIME has 100 ns precision; arbitrary nanosecond values lose precision on a
 roundtrip. Timing tests assert monotonicity and lower bounds, never tight upper
 bounds. SDL_DelayPrecise may busy-wait and is not a scheduling abstraction.
 
-SDL_RemoveTimer is generated; AddTimer/AddTimerNS remain pending because SDL
-executes their retained callbacks on timer threads. A native dormant callback is
-used only to exercise successful removal. It is not a public script timer bridge.
+SDL_RemoveTimer, AddTimer and AddTimerNS are generated. Timer callbacks are native
+C addresses and execute on SDL timer threads. Cancellation does not join an active
+callback; [the host lifetime contract and tests](native-callbacks.md) cover this.
+There is no retained script timer bridge.
 
 Example: [53_diagnostics_time.das](../examples/53_diagnostics_time.das).
 Tests: [diagnostics.das](../tests/diagnostics.das), including direct execution of

@@ -4,16 +4,16 @@ require dassdl3/sdl3_gpu_shader_boost
 
 // Trusted compiled assets, described with named shader options.
 
-def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; SdlError> {
+def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : SdlStatus {
     let spirv = (SDL_GetGPUShaderFormats(device) & SDL_GPU_SHADERFORMAT_SPIRV) != 0u
     let format = spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL
     let extension = spirv ? "spv" : "dxil"
     let base = "{SDL_GetBasePath()}assets/shaders/triangle"
-    let vertex_info = gpu_shader_info(format,SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
-    let fragment_info = gpu_shader_info(format,SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT)
+    let vertex_options = gpu_shader("{base}.vert.{extension}",format,SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
+    let fragment_options = gpu_shader("{base}.frag.{extension}",format,SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT)
     return sdl_scope() {
-        let vertex : GpuShaderHandle = device |> with_gpu_shader_file(GpuShaderOptions(path="{base}.vert.{extension}",info=vertex_info)) |> sdl_use
-        let fragment : GpuShaderHandle = device |> with_gpu_shader_file(GpuShaderOptions(path="{base}.frag.{extension}",info=fragment_info)) |> sdl_use
+        let vertex : GpuShaderHandle = device |> with_gpu_shader_file(vertex_options) |> sdl_use
+        let fragment : GpuShaderHandle = device |> with_gpu_shader_file(fragment_options) |> sdl_use
         verify(vertex != fragment)
         let description = gpu_shader_descriptor(device,fragment) |> sdl_try
         let entrypoint = gpu_shader_entrypoint(device,fragment) |> sdl_try

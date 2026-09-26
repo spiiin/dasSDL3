@@ -3,7 +3,7 @@ require dassdl3/sdl3_scope
 require math
 require dassdl3/sdl3_gpu_image_boost
 
-def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; SdlError> {
+def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : SdlStatus {
     var base, tiny : array<uint8>
     resize(base,64); resize(tiny,4)
     for (y in 0 .. 4) { for (x in 0 .. 4) {

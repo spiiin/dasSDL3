@@ -1,7 +1,7 @@
 options gen2
 require dassdl3/sdl3_scope
 require dassdl3/sdl3_renderer_presentation_boost
-def render_example(window : SDL_Window?; renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; SdlError> {
+def render_example(window : SDL_Window?; renderer : SDL_Renderer?; smoke : bool) : SdlStatus {
     var rendered=false
     print("Renderer: {renderer_name(renderer)}\n")
     if(!SDL_SetRenderLogicalPresentation(renderer,100,100,SDL_RendererLogicalPresentation.LOGICAL_PRESENTATION_LETTERBOX)) {return err(sdl_error("59_renderer_presentation"),type<SdlUnit>)}

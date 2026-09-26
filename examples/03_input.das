@@ -3,7 +3,7 @@ require dassdl3/sdl3_scope
 require dassdl3/sdl3_boost
 require math
 
-def input_loop(window : SDL_Window?; renderer : SDL_Renderer?; smoke : bool; var frames : int&) : $Result<SdlUnit; SdlError> {
+def input_loop(window : SDL_Window?; renderer : SDL_Renderer?; smoke : bool; var frames : int&) : SdlStatus {
     var event = SDL_MakeEvent()
     var key : SDL_KeyboardEvent
     var motion : SDL_MouseMotionEvent
@@ -65,7 +65,7 @@ def input_loop(window : SDL_Window?; renderer : SDL_Renderer?; smoke : bool; var
     return sdl_ok()
 }
 
-def run_input(window : SDL_Window?; renderer : SDL_Renderer?; smoke : bool; var frames : int&) : $Result<SdlUnit; SdlError> {
+def run_input(window : SDL_Window?; renderer : SDL_Renderer?; smoke : bool; var frames : int&) : SdlStatus {
     return sdl_scope() {
         with_text_input(window) |> sdl_use
         return input_loop(window, renderer, smoke, frames)

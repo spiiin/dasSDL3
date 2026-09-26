@@ -2,7 +2,7 @@ options gen2
 require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_texture_transfer_boost
 
-def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; SdlError> {
+def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : SdlStatus {
     // 5x3 RGBA image, with 7 unused bytes after each source row.
     var pixels, result : array<uint8>
     resize(pixels,74) // 2*27 + 5*4; no final-row padding required.

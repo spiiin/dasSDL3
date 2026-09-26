@@ -1,7 +1,7 @@
 # SDL Properties
 
-SDL 3.2.18: 19 generated functions, one partial enumeration adapter; retained
-SDL_SetPointerPropertyWithCleanup remains pending. SDL_PropertyType is a typed
+SDL 3.4.16: 20 generated functions and one partial enumeration adapter. Native
+SDL_SetPointerPropertyWithCleanup is available; see [callback lifetime and failure cleanup](native-callbacks.md). SDL_PropertyType is a typed
 enum; SDL_PropertiesID retains its Uint32 representation. No new ID registry.
 
 `require dassdl3/sdl3_properties_boost` adds with_properties (owns only a newly
@@ -24,10 +24,9 @@ SDL allocation/size failure returns false; script runtime allocation faults are
 not converted into SDL errors. Property groups must outlive concurrent users.
 
 Raw pointer properties borrow arbitrary native memory. The binding does not
-manage the pointee or make script-array retention safe. General cleanup callback
-support needs rooting, invocation-thread and shutdown rules; it is intentionally
-not exported yet. The test-only native cleanup probe verifies ordinary group
-ownership/replacement, not a supported script callback facility.
+manage the pointee or make script-array retention safe. Cleanup callbacks accept
+native C addresses only. The host must own their code and userdata until cleanup;
+the setter also invokes cleanup on failure. No retained script block bridge is provided.
 
 SDL_CopyProperties copies ordinary values, but skips pointer properties that
 have cleanup callbacks. String copies and enumeration results survive source
@@ -53,7 +52,10 @@ values retain SDL_GetStringProperty behavior. The test converts both scalar
 kinds, copies the group and destroys both, checking the preserved string result.
 Raw SDL_GetStringProperty/SDL_CopyProperties remain unmodified and retain this
 upstream limitation. The adapter cannot repair caches previously created by raw
-calls or other native code. Recheck when the SDL baseline is updated.
+calls or other native code. Source inspection confirms the same defect remains in SDL 3.4.16.
+SDL_CreateGPUDeviceWithVulkanOptions copies property values by type into a private
+group, avoiding this cache; pointer values are borrowed without cleanup ownership.
+Its regression test covers a pre-existing numeric string cache. Recheck on future upgrades.
 
 ## Validation — 2026-09-20
 

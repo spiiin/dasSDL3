@@ -4,8 +4,8 @@ SDL 3.4.16; profile `windows-x64-msvc`.
 
 Active declarations/macros only; inactive platform branches are NOT counted. Record and typedef entries are distinct declarations.
 
-Generated functions: **1005/1263** active non-excluded functions.
-Adapted functions: **13**; pending functions: **245**.
+Generated functions: **1062/1263** active non-excluded functions.
+Adapted functions: **13**; pending functions: **188**.
 Adapted coverage and boost coverage are not inferred from function names.
 
 | Category | Functions | Generated | Adapted | Pending |
@@ -16,7 +16,7 @@ Adapted coverage and boost coverage are not inferred from function names.
 | Audio | 58 | 58 | 0 | 0 |
 | Bits | 2 | 0 | 0 | 2 |
 | Blendmode | 1 | 1 | 0 | 0 |
-| CPUInfo | 19 | 1 | 0 | 18 |
+| CPUInfo | 19 | 19 | 0 | 0 |
 | Camera | 15 | 15 | 0 | 0 |
 | Clipboard | 11 | 11 | 0 | 0 |
 | Dialog | 4 | 4 | 0 | 0 |
@@ -29,16 +29,16 @@ Adapted coverage and boost coverage are not inferred from function names.
 | Gamepad | 73 | 73 | 0 | 0 |
 | HIDAPI | 23 | 23 | 0 | 0 |
 | Haptic | 31 | 31 | 0 | 0 |
-| Hints | 8 | 6 | 0 | 2 |
+| Hints | 8 | 8 | 0 | 0 |
 | IOStream | 48 | 46 | 1 | 1 |
-| Init | 10 | 9 | 0 | 1 |
+| Init | 10 | 10 | 0 | 0 |
 | Joystick | 58 | 58 | 0 | 0 |
 | Keyboard | 24 | 24 | 0 | 0 |
 | Locale | 1 | 1 | 0 | 0 |
-| Log | 18 | 5 | 9 | 4 |
+| Log | 18 | 8 | 9 | 1 |
 | Main | 7 | 0 | 0 | 7 |
 | Messagebox | 2 | 2 | 0 | 0 |
-| Metal | 3 | 0 | 0 | 3 |
+| Metal | 3 | 3 | 0 | 0 |
 | Misc | 1 | 1 | 0 | 0 |
 | Mouse | 24 | 24 | 0 | 0 |
 | Mutex | 28 | 28 | 0 | 0 |
@@ -47,7 +47,7 @@ Adapted coverage and boost coverage are not inferred from function names.
 | Platform | 1 | 1 | 0 | 0 |
 | Power | 1 | 1 | 0 | 0 |
 | Process | 9 | 9 | 0 | 0 |
-| Properties | 21 | 19 | 1 | 1 |
+| Properties | 21 | 20 | 1 | 0 |
 | Rect | 18 | 18 | 0 | 0 |
 | Render | 102 | 101 | 1 | 0 |
 | Sensor | 14 | 14 | 0 | 0 |
@@ -58,12 +58,12 @@ Adapted coverage and boost coverage are not inferred from function names.
 | System | 13 | 13 | 0 | 0 |
 | Thread | 12 | 12 | 0 | 0 |
 | Time | 9 | 9 | 0 | 0 |
-| Timer | 10 | 8 | 0 | 2 |
+| Timer | 10 | 10 | 0 | 0 |
 | Touch | 4 | 4 | 0 | 0 |
 | Tray | 23 | 23 | 0 | 0 |
 | Version | 2 | 2 | 0 | 0 |
-| Video | 114 | 94 | 0 | 20 |
-| Vulkan | 7 | 0 | 0 | 7 |
+| Video | 114 | 114 | 0 | 0 |
+| Vulkan | 7 | 7 | 0 | 0 |
 
 ## Script priority decisions
 
@@ -71,27 +71,45 @@ These decisions do not change raw coverage or remove declarations from its denom
 
 | Disposition | Functions |
 | --- | ---: |
-| c_abi_only | 10 |
-| deferred | 16 |
-| host_only | 6 |
+| c_abi_only | 13 |
+| deferred | 17 |
+| host_only | 19 |
 | native_interop | 15 |
-| stdlib | 122 |
+| stdlib | 124 |
 
 | Function | Disposition | Contract |
 | --- | --- | --- |
 | `SDL_CreateEnvironment` | deferred | [stdinc-policy](../stdinc-policy.md) |
 | `SDL_DestroyEnvironment` | deferred | [stdinc-policy](../stdinc-policy.md) |
+| `SDL_EnterAppMainCallbacks` | host_only | [remaining-api-policy](../remaining-api-policy.md) |
+| `SDL_GDKSuspendComplete` | host_only | [remaining-api-policy](../remaining-api-policy.md) |
+| `SDL_GetAssertionHandler` | host_only | [remaining-api-policy](../remaining-api-policy.md) |
+| `SDL_GetAssertionReport` | host_only | [remaining-api-policy](../remaining-api-policy.md) |
+| `SDL_GetDefaultAssertionHandler` | host_only | [remaining-api-policy](../remaining-api-policy.md) |
 | `SDL_GetEnvironment` | deferred | [stdinc-policy](../stdinc-policy.md) |
 | `SDL_GetEnvironmentVariable` | deferred | [stdinc-policy](../stdinc-policy.md) |
 | `SDL_GetEnvironmentVariables` | deferred | [stdinc-policy](../stdinc-policy.md) |
 | `SDL_GetMemoryFunctions` | host_only | [stdinc-policy](../stdinc-policy.md) |
 | `SDL_GetNumAllocations` | deferred | [stdinc-policy](../stdinc-policy.md) |
 | `SDL_GetOriginalMemoryFunctions` | host_only | [stdinc-policy](../stdinc-policy.md) |
+| `SDL_HasExactlyOneBitSet32` | stdlib | [remaining-api-policy](../remaining-api-policy.md) |
+| `SDL_IOvprintf` | c_abi_only | [remaining-api-policy](../remaining-api-policy.md) |
+| `SDL_LogMessageV` | c_abi_only | [remaining-api-policy](../remaining-api-policy.md) |
+| `SDL_MostSignificantBitIndex32` | stdlib | [remaining-api-policy](../remaining-api-policy.md) |
+| `SDL_RegisterApp` | host_only | [remaining-api-policy](../remaining-api-policy.md) |
+| `SDL_ReportAssertion` | host_only | [remaining-api-policy](../remaining-api-policy.md) |
+| `SDL_ResetAssertionReport` | host_only | [remaining-api-policy](../remaining-api-policy.md) |
+| `SDL_RunApp` | host_only | [remaining-api-policy](../remaining-api-policy.md) |
+| `SDL_SetAssertionHandler` | host_only | [remaining-api-policy](../remaining-api-policy.md) |
 | `SDL_SetEnvironmentVariable` | deferred | [stdinc-policy](../stdinc-policy.md) |
+| `SDL_SetErrorV` | c_abi_only | [remaining-api-policy](../remaining-api-policy.md) |
+| `SDL_SetMainReady` | host_only | [remaining-api-policy](../remaining-api-policy.md) |
 | `SDL_SetMemoryFunctions` | host_only | [stdinc-policy](../stdinc-policy.md) |
 | `SDL_StepBackUTF8` | stdlib | [stdinc-policy](../stdinc-policy.md) |
 | `SDL_StepUTF8` | stdlib | [stdinc-policy](../stdinc-policy.md) |
+| `SDL_SwapFloat` | deferred | [remaining-api-policy](../remaining-api-policy.md) |
 | `SDL_UCS4ToUTF8` | stdlib | [stdinc-policy](../stdinc-policy.md) |
+| `SDL_UnregisterApp` | host_only | [remaining-api-policy](../remaining-api-policy.md) |
 | `SDL_UnsetEnvironmentVariable` | deferred | [stdinc-policy](../stdinc-policy.md) |
 | `SDL_abs` | stdlib | [stdinc-policy](../stdinc-policy.md) |
 | `SDL_acos` | stdlib | [stdinc-policy](../stdinc-policy.md) |
@@ -157,6 +175,7 @@ These decisions do not change raw coverage or remove declarations from its denom
 | `SDL_lround` | stdlib | [stdinc-policy](../stdinc-policy.md) |
 | `SDL_lroundf` | stdlib | [stdinc-policy](../stdinc-policy.md) |
 | `SDL_ltoa` | stdlib | [stdinc-policy](../stdinc-policy.md) |
+| `SDL_main` | host_only | [remaining-api-policy](../remaining-api-policy.md) |
 | `SDL_malloc` | native_interop | [stdinc-policy](../stdinc-policy.md) |
 | `SDL_memcmp` | native_interop | [stdinc-policy](../stdinc-policy.md) |
 | `SDL_memcpy` | native_interop | [stdinc-policy](../stdinc-policy.md) |
@@ -255,8 +274,8 @@ Declaration counts (including explicitly excluded scaffolding):
 - enumerator: 1163
 - function: 1263
 - macro: 1816
-- record: 164
-- typedef: 352
+- record: 168
+- typedef: 355
 
 Unobserved, non-excluded headers (must be reviewed, not silently ignored):
 

@@ -172,12 +172,8 @@ def resources(device : SDL_GPUDevice?; window : SDL_Window?; var vertex, fragmen
         let pipeline : SDL_GPUGraphicsPipeline? = device |> with_native_gpu_graphics_pipeline(info,layout,attributes,colors) |> sdl_use
         var buffer : SDL_GPUBuffer? = device |> with_native_gpu_buffer(SDL_GPUBufferCreateInfo(usage=SDL_GPU_BUFFERUSAGE_VERTEX,size=CAPACITY)) |> sdl_use
         var upload : SDL_GPUTransferBuffer? = device |> with_native_gpu_transfer_buffer(SDL_GPUTransferBufferCreateInfo(usage=SDL_GPUTransferBufferUsage.TRANSFERBUFFERUSAGE_UPLOAD,size=CAPACITY)) |> sdl_use
-        var color : SDL_GPUTexture? = device |> with_native_gpu_texture(SDL_GPUTextureCreateInfo(
-            format=SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM,
-            usage=SDL_GPU_TEXTUREUSAGE_COLOR_TARGET|SDL_GPU_TEXTUREUSAGE_SAMPLER,width=WIDTH,height=HEIGHT,layer_count_or_depth=1u,num_levels=1u)) |> sdl_use
-        var depth : SDL_GPUTexture? = device |> with_native_gpu_texture(SDL_GPUTextureCreateInfo(
-            format=SDL_GPUTextureFormat.TEXTUREFORMAT_D16_UNORM,
-            usage=SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET,width=WIDTH,height=HEIGHT,layer_count_or_depth=1u,num_levels=1u)) |> sdl_use
+        var color : SDL_GPUTexture? = device |> with_native_gpu_texture(gpu_texture(WIDTH,HEIGHT,SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM,SDL_GPU_TEXTUREUSAGE_COLOR_TARGET|SDL_GPU_TEXTUREUSAGE_SAMPLER)) |> sdl_use
+        var depth : SDL_GPUTexture? = device |> with_native_gpu_texture(gpu_texture(WIDTH,HEIGHT,SDL_GPUTextureFormat.TEXTUREFORMAT_D16_UNORM,SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET)) |> sdl_use
         return animate(device,window,pipeline,buffer,upload,color,depth,smoke)
     }
 }

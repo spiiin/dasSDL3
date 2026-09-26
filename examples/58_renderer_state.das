@@ -1,7 +1,7 @@
 options gen2
 require dassdl3/sdl3_scope
 require dassdl3/sdl3_renderer_state_boost
-def render_example(window : SDL_Window?; renderer : SDL_Renderer?; smoke : bool) : $Result<SdlUnit; SdlError> {
+def render_example(window : SDL_Window?; renderer : SDL_Renderer?; smoke : bool) : SdlStatus {
     var rendered=false
     let size = render_output_size(renderer) |> sdl_try
     if(!SDL_SetRenderDrawColor(renderer,20u,25u,35u,255u) || !SDL_RenderClear(renderer)) {return err(sdl_error("58_renderer_state"),type<SdlUnit>)}

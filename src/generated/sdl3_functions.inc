@@ -78,6 +78,7 @@ addEnumeration(new Enumeration_SDL_TextureAddressMode());
 addEnumeration(new Enumeration_SDL_ProgressState());
 addEnumeration(new Enumeration_SDL_PenDeviceType());
 addEnumeration(new Enumeration_SDL_MessageBoxColorType());
+addEnumeration(new Enumeration_SDL_GLAttr());
 addAnnotation(new DummyTypeAnnotation("SDL_Window", "SDL_Window", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Renderer", "SDL_Renderer", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Surface", "SDL_Surface", 1, 1));
@@ -121,6 +122,11 @@ addAnnotation(new DummyTypeAnnotation("SDL_Tray", "SDL_Tray", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_TrayMenu", "SDL_TrayMenu", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_TrayEntry", "SDL_TrayEntry", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_GPURenderState", "SDL_GPURenderState", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_GLContextState", "SDL_GLContextState", 1, 1));
+addAnnotation(new DummyTypeAnnotation("VkInstance_T", "VkInstance_T", 1, 1));
+addAnnotation(new DummyTypeAnnotation("VkPhysicalDevice_T", "VkPhysicalDevice_T", 1, 1));
+addAnnotation(new DummyTypeAnnotation("VkSurfaceKHR_T", "VkSurfaceKHR_T", 1, 1));
+addAnnotation(new DummyTypeAnnotation("VkAllocationCallbacks", "VkAllocationCallbacks", 1, 1));
 addAnnotation(new SDL_GPUViewportAnnotation(lib));
 addAnnotation(new SDL_GPUIndirectDrawCommandAnnotation(lib));
 addAnnotation(new SDL_GPUIndexedIndirectDrawCommandAnnotation(lib));
@@ -230,6 +236,7 @@ addAnnotation(new SDL_MessageBoxButtonDataAnnotation(lib));
 addAnnotation(new SDL_MessageBoxColorAnnotation(lib));
 addAnnotation(new SDL_MessageBoxColorSchemeAnnotation(lib));
 addAnnotation(new SDL_MessageBoxDataAnnotation(lib));
+addAnnotation(new SDL_GPUVulkanOptionsAnnotation(lib));
 addConstant(*this, "SDL_GPU_FILTER_NEAREST", static_cast<uint32_t>(SDL_GPU_FILTER_NEAREST));
 addConstant(*this, "SDL_GPU_FILTER_LINEAR", static_cast<uint32_t>(SDL_GPU_FILTER_LINEAR));
 addConstant(*this, "SDL_GPU_PRESENTMODE_VSYNC", static_cast<uint32_t>(SDL_GPU_PRESENTMODE_VSYNC));
@@ -1455,6 +1462,18 @@ addConstant(*this, "SDL_EVENT_DISPLAY_USABLE_BOUNDS_CHANGED", static_cast<uint32
 addConstant(*this, "SDL_EVENT_PINCH_BEGIN", static_cast<uint32_t>(SDL_EVENT_PINCH_BEGIN));
 addConstant(*this, "SDL_EVENT_PINCH_UPDATE", static_cast<uint32_t>(SDL_EVENT_PINCH_UPDATE));
 addConstant(*this, "SDL_EVENT_PINCH_END", static_cast<uint32_t>(SDL_EVENT_PINCH_END));
+addConstant(*this, "SDL_GL_CONTEXT_PROFILE_CORE", static_cast<int32_t>(SDL_GL_CONTEXT_PROFILE_CORE));
+addConstant(*this, "SDL_GL_CONTEXT_PROFILE_COMPATIBILITY", static_cast<int32_t>(SDL_GL_CONTEXT_PROFILE_COMPATIBILITY));
+addConstant(*this, "SDL_GL_CONTEXT_PROFILE_ES", static_cast<int32_t>(SDL_GL_CONTEXT_PROFILE_ES));
+addConstant(*this, "SDL_GL_CONTEXT_DEBUG_FLAG", static_cast<int32_t>(SDL_GL_CONTEXT_DEBUG_FLAG));
+addConstant(*this, "SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG", static_cast<int32_t>(SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG));
+addConstant(*this, "SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG", static_cast<int32_t>(SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG));
+addConstant(*this, "SDL_GL_CONTEXT_RESET_ISOLATION_FLAG", static_cast<int32_t>(SDL_GL_CONTEXT_RESET_ISOLATION_FLAG));
+addConstant(*this, "SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE", static_cast<int32_t>(SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE));
+addConstant(*this, "SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH", static_cast<int32_t>(SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH));
+addConstant(*this, "SDL_GL_CONTEXT_RESET_NO_NOTIFICATION", static_cast<int32_t>(SDL_GL_CONTEXT_RESET_NO_NOTIFICATION));
+addConstant(*this, "SDL_GL_CONTEXT_RESET_LOSE_CONTEXT", static_cast<int32_t>(SDL_GL_CONTEXT_RESET_LOSE_CONTEXT));
+addConstant(*this, "SDL_CACHELINE_SIZE", static_cast<int32_t>(SDL_CACHELINE_SIZE));
 // Uint32 (SDL_GPUTextureFormat) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_GPUTextureFormatTexelBlockSize)>(*this, lib, "SDL_GPUTextureFormatTexelBlockSize", SideEffects::worstDefault, "SDL_GPUTextureFormatTexelBlockSize")->args({"format"});
 // Uint32 (SDL_GPUTextureFormat, Uint32, Uint32, Uint32) __attribute__((cdecl))
@@ -3465,3 +3484,117 @@ addExtern<DAS_BIND_FUN(SDL_GetRevision)>(*this, lib, "SDL_GetRevision", SideEffe
 addExtern<DAS_BIND_FUN(SDL_GUIDToString)>(*this, lib, "SDL_GUIDToString", SideEffects::worstDefault, "SDL_GUIDToString")->args({"guid", "pszGUID", "cbGUID"});
 // SDL_GUID (const char *) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_StringToGUID), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDL_StringToGUID", SideEffects::worstDefault, "SDL_StringToGUID")->args({"pchGUID"});
+// bool (const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GL_LoadLibrary)>(*this, lib, "SDL_GL_LoadLibrary", SideEffects::worstDefault, "SDL_GL_LoadLibrary")->args({"path"});
+// SDL_FunctionPointer (const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GL_GetProcAddress)>(*this, lib, "SDL_GL_GetProcAddress", SideEffects::worstDefault, "SDL_GL_GetProcAddressAddress")->args({"proc"});
+// SDL_FunctionPointer (const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_EGL_GetProcAddress)>(*this, lib, "SDL_EGL_GetProcAddress", SideEffects::worstDefault, "SDL_EGL_GetProcAddressAddress")->args({"proc"});
+// void (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GL_UnloadLibrary)>(*this, lib, "SDL_GL_UnloadLibrary", SideEffects::worstDefault, "SDL_GL_UnloadLibrary");
+// bool (const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GL_ExtensionSupported)>(*this, lib, "SDL_GL_ExtensionSupported", SideEffects::worstDefault, "SDL_GL_ExtensionSupported")->args({"extension"});
+// void (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GL_ResetAttributes)>(*this, lib, "SDL_GL_ResetAttributes", SideEffects::worstDefault, "SDL_GL_ResetAttributes");
+// bool (SDL_GLAttr, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GL_SetAttribute)>(*this, lib, "SDL_GL_SetAttribute", SideEffects::worstDefault, "SDL_GL_SetAttribute")->args({"attr", "value"});
+// bool (SDL_GLAttr, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GL_GetAttribute)>(*this, lib, "SDL_GL_GetAttribute", SideEffects::worstDefault, "SDL_GL_GetAttribute")->args({"attr", "value"});
+// SDL_GLContext (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GL_CreateContext)>(*this, lib, "SDL_GL_CreateContext", SideEffects::worstDefault, "SDL_GL_CreateContext")->args({"window"});
+// bool (SDL_Window *, SDL_GLContext) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GL_MakeCurrent)>(*this, lib, "SDL_GL_MakeCurrent", SideEffects::worstDefault, "SDL_GL_MakeCurrent")->args({"window", "context"});
+// SDL_Window *(void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GL_GetCurrentWindow)>(*this, lib, "SDL_GL_GetCurrentWindow", SideEffects::worstDefault, "SDL_GL_GetCurrentWindow");
+// SDL_GLContext (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GL_GetCurrentContext)>(*this, lib, "SDL_GL_GetCurrentContext", SideEffects::worstDefault, "SDL_GL_GetCurrentContext");
+// SDL_EGLDisplay (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_EGL_GetCurrentDisplay)>(*this, lib, "SDL_EGL_GetCurrentDisplay", SideEffects::worstDefault, "SDL_EGL_GetCurrentDisplay");
+// SDL_EGLConfig (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_EGL_GetCurrentConfig)>(*this, lib, "SDL_EGL_GetCurrentConfig", SideEffects::worstDefault, "SDL_EGL_GetCurrentConfig");
+// SDL_EGLSurface (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_EGL_GetWindowSurface)>(*this, lib, "SDL_EGL_GetWindowSurface", SideEffects::worstDefault, "SDL_EGL_GetWindowSurface")->args({"window"});
+// void (SDL_EGLAttribArrayCallback, SDL_EGLIntArrayCallback, SDL_EGLIntArrayCallback, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_EGL_SetAttributeCallbacks)>(*this, lib, "SDL_EGL_SetAttributeCallbacks", SideEffects::worstDefault, "SDL_EGL_SetAttributeCallbacksAddress")->args({"platformAttribCallback", "surfaceAttribCallback", "contextAttribCallback", "userdata"});
+// bool (int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GL_SetSwapInterval)>(*this, lib, "SDL_GL_SetSwapInterval", SideEffects::worstDefault, "SDL_GL_SetSwapInterval")->args({"interval"});
+// bool (int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GL_GetSwapInterval)>(*this, lib, "SDL_GL_GetSwapInterval", SideEffects::worstDefault, "SDL_GL_GetSwapInterval")->args({"interval"});
+// bool (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GL_SwapWindow)>(*this, lib, "SDL_GL_SwapWindow", SideEffects::worstDefault, "SDL_GL_SwapWindow")->args({"window"});
+// bool (SDL_GLContext) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GL_DestroyContext)>(*this, lib, "SDL_GL_DestroyContext", SideEffects::worstDefault, "SDL_GL_DestroyContext")->args({"context"});
+// bool (const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_Vulkan_LoadLibrary)>(*this, lib, "SDL_Vulkan_LoadLibrary", SideEffects::worstDefault, "SDL_Vulkan_LoadLibrary")->args({"path"});
+// SDL_FunctionPointer (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_Vulkan_GetVkGetInstanceProcAddr)>(*this, lib, "SDL_Vulkan_GetVkGetInstanceProcAddr", SideEffects::worstDefault, "SDL_Vulkan_GetVkGetInstanceProcAddrAddress");
+// void (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_Vulkan_UnloadLibrary)>(*this, lib, "SDL_Vulkan_UnloadLibrary", SideEffects::worstDefault, "SDL_Vulkan_UnloadLibrary");
+// const char *const *(Uint32 *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_Vulkan_GetInstanceExtensions)>(*this, lib, "SDL_Vulkan_GetInstanceExtensions", SideEffects::worstDefault, "SDL_Vulkan_GetInstanceExtensions")->args({"count"});
+// bool (SDL_Window *, VkInstance, const struct VkAllocationCallbacks *, VkSurfaceKHR *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_Vulkan_CreateSurface)>(*this, lib, "SDL_Vulkan_CreateSurface", SideEffects::worstDefault, "SDL_Vulkan_CreateSurface")->args({"window", "instance", "allocator", "surface"});
+// void (VkInstance, VkSurfaceKHR, const struct VkAllocationCallbacks *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_Vulkan_DestroySurface)>(*this, lib, "SDL_Vulkan_DestroySurface", SideEffects::worstDefault, "SDL_Vulkan_DestroySurface")->args({"instance", "surface", "allocator"});
+// bool (VkInstance, VkPhysicalDevice, Uint32) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_Vulkan_GetPresentationSupport)>(*this, lib, "SDL_Vulkan_GetPresentationSupport", SideEffects::worstDefault, "SDL_Vulkan_GetPresentationSupport")->args({"instance", "physicalDevice", "queueFamilyIndex"});
+// SDL_MetalView (SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_Metal_CreateView)>(*this, lib, "SDL_Metal_CreateView", SideEffects::worstDefault, "SDL_Metal_CreateView")->args({"window"});
+// void (SDL_MetalView) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_Metal_DestroyView)>(*this, lib, "SDL_Metal_DestroyView", SideEffects::worstDefault, "SDL_Metal_DestroyView")->args({"view"});
+// void *(SDL_MetalView) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_Metal_GetLayer)>(*this, lib, "SDL_Metal_GetLayer", SideEffects::worstDefault, "SDL_Metal_GetLayer")->args({"view"});
+// int (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetNumLogicalCPUCores)>(*this, lib, "SDL_GetNumLogicalCPUCores", SideEffects::worstDefault, "SDL_GetNumLogicalCPUCores");
+// int (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetCPUCacheLineSize)>(*this, lib, "SDL_GetCPUCacheLineSize", SideEffects::worstDefault, "SDL_GetCPUCacheLineSize");
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasAltiVec)>(*this, lib, "SDL_HasAltiVec", SideEffects::worstDefault, "SDL_HasAltiVec");
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasMMX)>(*this, lib, "SDL_HasMMX", SideEffects::worstDefault, "SDL_HasMMX");
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasSSE)>(*this, lib, "SDL_HasSSE", SideEffects::worstDefault, "SDL_HasSSE");
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasSSE2)>(*this, lib, "SDL_HasSSE2", SideEffects::worstDefault, "SDL_HasSSE2");
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasSSE3)>(*this, lib, "SDL_HasSSE3", SideEffects::worstDefault, "SDL_HasSSE3");
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasSSE41)>(*this, lib, "SDL_HasSSE41", SideEffects::worstDefault, "SDL_HasSSE41");
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasSSE42)>(*this, lib, "SDL_HasSSE42", SideEffects::worstDefault, "SDL_HasSSE42");
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasAVX)>(*this, lib, "SDL_HasAVX", SideEffects::worstDefault, "SDL_HasAVX");
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasAVX2)>(*this, lib, "SDL_HasAVX2", SideEffects::worstDefault, "SDL_HasAVX2");
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasAVX512F)>(*this, lib, "SDL_HasAVX512F", SideEffects::worstDefault, "SDL_HasAVX512F");
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasARMSIMD)>(*this, lib, "SDL_HasARMSIMD", SideEffects::worstDefault, "SDL_HasARMSIMD");
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasNEON)>(*this, lib, "SDL_HasNEON", SideEffects::worstDefault, "SDL_HasNEON");
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasLSX)>(*this, lib, "SDL_HasLSX", SideEffects::worstDefault, "SDL_HasLSX");
+// bool (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_HasLASX)>(*this, lib, "SDL_HasLASX", SideEffects::worstDefault, "SDL_HasLASX");
+// int (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSystemRAM)>(*this, lib, "SDL_GetSystemRAM", SideEffects::worstDefault, "SDL_GetSystemRAM");
+// size_t (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetSIMDAlignment)>(*this, lib, "SDL_GetSIMDAlignment", SideEffects::worstDefault, "SDL_GetSIMDAlignment");
+// bool (const char *, SDL_HintCallback, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_AddHintCallback)>(*this, lib, "SDL_AddHintCallback", SideEffects::worstDefault, "SDL_AddHintCallbackAddress")->args({"name", "callback", "userdata"});
+// void (const char *, SDL_HintCallback, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RemoveHintCallback)>(*this, lib, "SDL_RemoveHintCallback", SideEffects::worstDefault, "SDL_RemoveHintCallbackAddress")->args({"name", "callback", "userdata"});
+// SDL_TimerID (Uint32, SDL_TimerCallback, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_AddTimer)>(*this, lib, "SDL_AddTimer", SideEffects::worstDefault, "SDL_AddTimerAddress")->args({"interval", "callback", "userdata"});
+// SDL_TimerID (Uint64, SDL_NSTimerCallback, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_AddTimerNS)>(*this, lib, "SDL_AddTimerNS", SideEffects::worstDefault, "SDL_AddTimerNSAddress")->args({"interval", "callback", "userdata"});
+// SDL_LogOutputFunction (void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetDefaultLogOutputFunction)>(*this, lib, "SDL_GetDefaultLogOutputFunction", SideEffects::worstDefault, "SDL_GetDefaultLogOutputFunctionAddress");
+// void (SDL_LogOutputFunction *, void **) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetLogOutputFunction)>(*this, lib, "SDL_GetLogOutputFunction", SideEffects::worstDefault, "SDL_GetLogOutputFunctionAddress")->args({"callback", "userdata"});
+// void (SDL_LogOutputFunction, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetLogOutputFunction)>(*this, lib, "SDL_SetLogOutputFunction", SideEffects::worstDefault, "SDL_SetLogOutputFunctionAddress")->args({"callback", "userdata"});
+// bool (SDL_MainThreadCallback, void *, bool) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_RunOnMainThread)>(*this, lib, "SDL_RunOnMainThread", SideEffects::worstDefault, "SDL_RunOnMainThreadAddress")->args({"callback", "userdata", "wait_complete"});
+// bool (SDL_PropertiesID, const char *, void *, SDL_CleanupPropertyCallback, void *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_SetPointerPropertyWithCleanup)>(*this, lib, "SDL_SetPointerPropertyWithCleanup", SideEffects::worstDefault, "SDL_SetPointerPropertyWithCleanupAddress")->args({"props", "name", "value", "cleanup", "userdata"});

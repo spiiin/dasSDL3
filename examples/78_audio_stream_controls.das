@@ -2,7 +2,7 @@ options gen2
 require dassdl3/sdl3_audio_stream_controls
 require dassdl3/sdl3_scope
 
-def example() : $Result<SdlUnit; SdlError> {
+def example() : SdlStatus {
     let pcm=audio_spec(SDL_AUDIO_S16LE,2,48000)
     return sdl_scope() {
         let stream : SDL_AudioStream? = with_audio_stream(pcm,pcm) |> sdl_use

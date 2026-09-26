@@ -3,17 +3,13 @@ require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_native_boost
 require daslib/defer
 
-def compute_values(device : SDL_GPUDevice?) : $Result<SdlUnit; SdlError> {
+def compute_values(device : SDL_GPUDevice?) : SdlStatus {
     let spirv=(SDL_GetGPUShaderFormats(device)&SDL_GPU_SHADERFORMAT_SPIRV)!=0u
     let ext=spirv ? "spv" : "dxil"
-    var info = SDL_GPUComputePipelineCreateInfo(
-        format = spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL,
-        num_readwrite_storage_buffers = 1u,
-        num_uniform_buffers = 1u,
-        threadcount_x = 4u,
-        threadcount_y = 1u,
-        threadcount_z = 1u
-    )
+    var info = gpu_compute_pipeline(spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL)
+    info |> threadgroup(4u,1u,1u)
+    info |> readwrite_storage_buffers(1u)
+    info |> uniform_buffers(1u)
     let pipeline = device |> load_native_gpu_compute_pipeline(info,"{SDL_GetBasePath()}assets/shaders/native.comp.{ext}","main") |> sdl_try
     {
         defer() { SDL_ReleaseGPUComputePipeline(device,pipeline) }
@@ -26,7 +22,7 @@ def compute_values(device : SDL_GPUDevice?) : $Result<SdlUnit; SdlError> {
     }
 }
 
-def dispatch_and_check(device : SDL_GPUDevice?; pipeline : SDL_GPUComputePipeline?; var output : SDL_GPUBuffer?; var download : SDL_GPUTransferBuffer?) : $Result<SdlUnit; SdlError> {
+def dispatch_and_check(device : SDL_GPUDevice?; pipeline : SDL_GPUComputePipeline?; var output : SDL_GPUBuffer?; var download : SDL_GPUTransferBuffer?) : SdlStatus {
     var finished=false
     sdl_scope() {
         var command : SDL_GPUCommandBuffer?& = with_native_gpu_commands(device) |> sdl_use
@@ -69,7 +65,7 @@ def dispatch_and_check(device : SDL_GPUDevice?; pipeline : SDL_GPUComputePipelin
     return sdl_ok()
 }
 
-def read_compute_output(device : SDL_GPUDevice?; pipeline : SDL_GPUComputePipeline?; var output : SDL_GPUBuffer?) : $Result<SdlUnit; SdlError> {
+def read_compute_output(device : SDL_GPUDevice?; pipeline : SDL_GPUComputePipeline?; var output : SDL_GPUBuffer?) : SdlStatus {
     var transfer_info = SDL_GPUTransferBufferCreateInfo(usage = SDL_GPUTransferBufferUsage.TRANSFERBUFFERUSAGE_DOWNLOAD, size = 32u)
     var download = device |> create_native_gpu_transfer_buffer(transfer_info) |> sdl_try
     {

@@ -4,7 +4,7 @@ require dassdl3/sdl3_gpu_formats_boost
 
 // Encoded block bytes only: this example neither encodes nor samples ASTC pixels.
 
-def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; SdlError> {
+def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : SdlStatus {
     var selected = 0u
     for (format in SDL_GPU_TEXTUREFORMAT_ASTC_4x4_UNORM .. SDL_GPU_TEXTUREFORMAT_ASTC_12x12_FLOAT+1u) {
         let supported = device |> gpu_supports_texture_transfer(format,SDL_GPU_TEXTURETYPE_2D) |> sdl_try

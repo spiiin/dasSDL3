@@ -6948,5 +6948,322 @@
     "arguments": [
       "pchGUID"
     ]
+  },
+  "SDL_GL_LoadLibrary": {
+    "signature": "bool (const char *) __attribute__((cdecl))",
+    "arguments": [
+      "path"
+    ]
+  },
+  "SDL_GL_GetProcAddress": {
+    "signature": "SDL_FunctionPointer (const char *) __attribute__((cdecl))",
+    "arguments": [
+      "proc"
+    ]
+  },
+  "SDL_EGL_GetProcAddress": {
+    "signature": "SDL_FunctionPointer (const char *) __attribute__((cdecl))",
+    "arguments": [
+      "proc"
+    ]
+  },
+  "SDL_GL_UnloadLibrary": {
+    "signature": "void (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GL_ExtensionSupported": {
+    "signature": "bool (const char *) __attribute__((cdecl))",
+    "arguments": [
+      "extension"
+    ]
+  },
+  "SDL_GL_ResetAttributes": {
+    "signature": "void (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GL_SetAttribute": {
+    "signature": "bool (SDL_GLAttr, int) __attribute__((cdecl))",
+    "arguments": [
+      "attr",
+      "value"
+    ]
+  },
+  "SDL_GL_GetAttribute": {
+    "signature": "bool (SDL_GLAttr, int *) __attribute__((cdecl))",
+    "arguments": [
+      "attr",
+      "value"
+    ]
+  },
+  "SDL_GL_CreateContext": {
+    "signature": "SDL_GLContext (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GL_MakeCurrent": {
+    "signature": "bool (SDL_Window *, SDL_GLContext) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "context"
+    ]
+  },
+  "SDL_GL_GetCurrentWindow": {
+    "signature": "SDL_Window *(void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GL_GetCurrentContext": {
+    "signature": "SDL_GLContext (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_EGL_GetCurrentDisplay": {
+    "signature": "SDL_EGLDisplay (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_EGL_GetCurrentConfig": {
+    "signature": "SDL_EGLConfig (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_EGL_GetWindowSurface": {
+    "signature": "SDL_EGLSurface (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_EGL_SetAttributeCallbacks": {
+    "signature": "void (SDL_EGLAttribArrayCallback, SDL_EGLIntArrayCallback, SDL_EGLIntArrayCallback, void *) __attribute__((cdecl))",
+    "arguments": [
+      "platformAttribCallback",
+      "surfaceAttribCallback",
+      "contextAttribCallback",
+      "userdata"
+    ]
+  },
+  "SDL_GL_SetSwapInterval": {
+    "signature": "bool (int) __attribute__((cdecl))",
+    "arguments": [
+      "interval"
+    ]
+  },
+  "SDL_GL_GetSwapInterval": {
+    "signature": "bool (int *) __attribute__((cdecl))",
+    "arguments": [
+      "interval"
+    ]
+  },
+  "SDL_GL_SwapWindow": {
+    "signature": "bool (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GL_DestroyContext": {
+    "signature": "bool (SDL_GLContext) __attribute__((cdecl))",
+    "arguments": [
+      "context"
+    ]
+  },
+  "SDL_Vulkan_LoadLibrary": {
+    "signature": "bool (const char *) __attribute__((cdecl))",
+    "arguments": [
+      "path"
+    ]
+  },
+  "SDL_Vulkan_GetVkGetInstanceProcAddr": {
+    "signature": "SDL_FunctionPointer (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_Vulkan_UnloadLibrary": {
+    "signature": "void (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_Vulkan_GetInstanceExtensions": {
+    "signature": "const char *const *(Uint32 *) __attribute__((cdecl))",
+    "arguments": [
+      "count"
+    ]
+  },
+  "SDL_Vulkan_CreateSurface": {
+    "signature": "bool (SDL_Window *, VkInstance, const struct VkAllocationCallbacks *, VkSurfaceKHR *) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "instance",
+      "allocator",
+      "surface"
+    ]
+  },
+  "SDL_Vulkan_DestroySurface": {
+    "signature": "void (VkInstance, VkSurfaceKHR, const struct VkAllocationCallbacks *) __attribute__((cdecl))",
+    "arguments": [
+      "instance",
+      "surface",
+      "allocator"
+    ]
+  },
+  "SDL_Vulkan_GetPresentationSupport": {
+    "signature": "bool (VkInstance, VkPhysicalDevice, Uint32) __attribute__((cdecl))",
+    "arguments": [
+      "instance",
+      "physicalDevice",
+      "queueFamilyIndex"
+    ]
+  },
+  "SDL_Metal_CreateView": {
+    "signature": "SDL_MetalView (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_Metal_DestroyView": {
+    "signature": "void (SDL_MetalView) __attribute__((cdecl))",
+    "arguments": [
+      "view"
+    ]
+  },
+  "SDL_Metal_GetLayer": {
+    "signature": "void *(SDL_MetalView) __attribute__((cdecl))",
+    "arguments": [
+      "view"
+    ]
+  },
+  "SDL_GetNumLogicalCPUCores": {
+    "signature": "int (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetCPUCacheLineSize": {
+    "signature": "int (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_HasAltiVec": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_HasMMX": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_HasSSE": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_HasSSE2": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_HasSSE3": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_HasSSE41": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_HasSSE42": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_HasAVX": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_HasAVX2": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_HasAVX512F": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_HasARMSIMD": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_HasNEON": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_HasLSX": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_HasLASX": {
+    "signature": "bool (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetSystemRAM": {
+    "signature": "int (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetSIMDAlignment": {
+    "signature": "size_t (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_AddHintCallback": {
+    "signature": "bool (const char *, SDL_HintCallback, void *) __attribute__((cdecl))",
+    "arguments": [
+      "name",
+      "callback",
+      "userdata"
+    ]
+  },
+  "SDL_RemoveHintCallback": {
+    "signature": "void (const char *, SDL_HintCallback, void *) __attribute__((cdecl))",
+    "arguments": [
+      "name",
+      "callback",
+      "userdata"
+    ]
+  },
+  "SDL_AddTimer": {
+    "signature": "SDL_TimerID (Uint32, SDL_TimerCallback, void *) __attribute__((cdecl))",
+    "arguments": [
+      "interval",
+      "callback",
+      "userdata"
+    ]
+  },
+  "SDL_AddTimerNS": {
+    "signature": "SDL_TimerID (Uint64, SDL_NSTimerCallback, void *) __attribute__((cdecl))",
+    "arguments": [
+      "interval",
+      "callback",
+      "userdata"
+    ]
+  },
+  "SDL_GetDefaultLogOutputFunction": {
+    "signature": "SDL_LogOutputFunction (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetLogOutputFunction": {
+    "signature": "void (SDL_LogOutputFunction *, void **) __attribute__((cdecl))",
+    "arguments": [
+      "callback",
+      "userdata"
+    ]
+  },
+  "SDL_SetLogOutputFunction": {
+    "signature": "void (SDL_LogOutputFunction, void *) __attribute__((cdecl))",
+    "arguments": [
+      "callback",
+      "userdata"
+    ]
+  },
+  "SDL_RunOnMainThread": {
+    "signature": "bool (SDL_MainThreadCallback, void *, bool) __attribute__((cdecl))",
+    "arguments": [
+      "callback",
+      "userdata",
+      "wait_complete"
+    ]
+  },
+  "SDL_SetPointerPropertyWithCleanup": {
+    "signature": "bool (SDL_PropertiesID, const char *, void *, SDL_CleanupPropertyCallback, void *) __attribute__((cdecl))",
+    "arguments": [
+      "props",
+      "name",
+      "value",
+      "cleanup",
+      "userdata"
+    ]
   }
 }

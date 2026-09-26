@@ -1,19 +1,11 @@
 options gen2
-require sdl3
+require dassdl3/sdl3_gpu_native_boost
 
-// Generated value types only. This example does not create a graphics pipeline.
+// Native descriptors and their builder. No GPU resources are created here.
 [export]
 def main(smoke : bool) : int {
-    var texture = SDL_GPUTextureCreateInfo(
-        texture_type = SDL_GPUTextureType.TEXTURETYPE_2D,
-        format = SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM,
-        usage = SDL_GPU_TEXTUREUSAGE_SAMPLER | SDL_GPU_TEXTUREUSAGE_COLOR_TARGET,
-        width = 256u,
-        height = 128u,
-        layer_count_or_depth = 1u,
-        num_levels = 1u,
-        sample_count = SDL_GPUSampleCount.SAMPLECOUNT_1
-    )
+    var texture = gpu_texture(256u,128u,SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM,
+        SDL_GPU_TEXTUREUSAGE_SAMPLER | SDL_GPU_TEXTUREUSAGE_COLOR_TARGET)
     verify(texture.props == 0u)
     let bytes = SDL_CalculateGPUTextureFormatSize(texture.format,texture.width,texture.height,texture.layer_count_or_depth)
     verify(bytes == 131072u)

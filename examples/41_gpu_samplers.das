@@ -5,10 +5,12 @@ require dassdl3/sdl3_gpu_sampler_boost
 // Samplers are independent resources. Binding them to a general render pass
 // is a later API stage; this example exercises creation and scoped ownership.
 
-def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : $Result<SdlUnit; SdlError> {
-    var info = gpu_sampler_info(SDL_GPUFilter.FILTER_LINEAR,SDL_GPUSamplerAddressMode.SAMPLERADDRESSMODE_REPEAT)
-    info.enable_anisotropy = true
-    info.max_anisotropy = 4.0
+def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : SdlStatus {
+    var info = gpu_sampler()
+    info |> filters(SDL_GPUFilter.FILTER_LINEAR)
+    info |> mipmap_mode(SDL_GPUSamplerMipmapMode.SAMPLERMIPMAPMODE_LINEAR)
+    info |> address_modes(SDL_GPUSamplerAddressMode.SAMPLERADDRESSMODE_REPEAT)
+    info |> anisotropy(4.0)
     return sdl_scope() {
         let sampler : GpuSamplerHandle = device |> with_gpu_sampler(info) |> sdl_use
         let description = gpu_sampler_descriptor(device,sampler) |> sdl_try

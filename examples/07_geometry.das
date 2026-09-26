@@ -6,7 +6,7 @@ require math
 // Adapted scenario: SDL 3.2.18 examples/renderer/10-geometry/geometry.c (public domain).
 // Own checker BMP, PollEvent loop and resource scopes; all arrays belong to script.
 
-def render_geometry(window : SDL_Window?; renderer : SDL_Renderer?; texture : SDL_Texture?; smoke : bool; var frames : int&) : $Result<SdlUnit; SdlError> {
+def render_geometry(window : SDL_Window?; renderer : SDL_Renderer?; texture : SDL_Texture?; smoke : bool; var frames : int&) : SdlStatus {
     var triangle : array<SDL_Vertex>
     triangle |> resize(3)
     let white = float4(1.0)

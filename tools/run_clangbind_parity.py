@@ -60,7 +60,7 @@ def main():
         policy += [f'K\t{name}\t{ctype}' for name, ctype in spec['constants'].items()]
         allowlist.write_text('\n'.join(policy), encoding='utf-8')
         header = root / 'parity.h'
-        header.write_text('#include <SDL3/SDL.h>\n' + ''.join(
+        header.write_text(''.join(f'#include <SDL3/{name}>\n' for name in spec.get('headers', ['SDL.h'])) + ''.join(
             f'static {ctype} const DASSDL3_CONST_{name} = ({ctype})({name});\n'
             for name, ctype in spec['constants'].items()), encoding='utf-8')
         first, second = root / 'first', root / 'second'

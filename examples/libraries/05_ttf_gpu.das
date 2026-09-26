@@ -167,9 +167,7 @@ def resources(device : SDL_GPUDevice?; window : SDL_Window?; font : TTF_Font?; t
             min_filter=SDL_GPUFilter.FILTER_LINEAR,mag_filter=SDL_GPUFilter.FILTER_LINEAR,
             address_mode_u=SDL_GPUSamplerAddressMode.SAMPLERADDRESSMODE_CLAMP_TO_EDGE,
             address_mode_v=SDL_GPUSamplerAddressMode.SAMPLERADDRESSMODE_CLAMP_TO_EDGE)) |> sdl_use
-        var target : SDL_GPUTexture? = device |> with_native_gpu_texture(SDL_GPUTextureCreateInfo(
-            format=SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM,usage=SDL_GPU_TEXTUREUSAGE_COLOR_TARGET|SDL_GPU_TEXTUREUSAGE_SAMPLER,
-            width=WIDTH,height=HEIGHT,layer_count_or_depth=1u,num_levels=1u)) |> sdl_use
+        var target : SDL_GPUTexture? = device |> with_native_gpu_texture(gpu_texture(WIDTH,HEIGHT,SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM,SDL_GPU_TEXTUREUSAGE_COLOR_TARGET|SDL_GPU_TEXTUREUSAGE_SAMPLER)) |> sdl_use
         return frames(device,window,font,text,pipeline,sampler,vertices,indices,upload,target,smoke)
     }
 }

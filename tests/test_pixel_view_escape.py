@@ -17,3 +17,11 @@ with tempfile.TemporaryDirectory(prefix="sdl-pixel-escape-") as folder:
         if result.returncode==0 or diagnostic not in output:
             raise SystemExit(f"Expected {diagnostic}: {body}\n{output}")
 print("Pixel view, row and byte-array escape rejected")
+
+with tempfile.TemporaryDirectory(prefix="sdl-surface-plane-escape-") as folder:
+    path=Path(folder)/"escape.das"
+    path.write_text("options gen2\nrequire dassdl3/sdl3_record_access\nvar saved : array<uint8>\n[export]\ndef main(smoke : bool) : int {\nwith_surface_bytes(null,0) $(var bytes : array<uint8>#; layout : int4) {saved <- bytes;return sdl_ok()}\nreturn 0\n}\n",encoding="utf-8")
+    result=subprocess.run([sys.argv[1],str(path),"--smoke-test"],capture_output=True,text=True,timeout=30)
+    if result.returncode==0 or "can't move temporary" not in result.stdout+result.stderr:
+        raise SystemExit("Surface plane escaped or failed for the wrong reason: " + result.stdout+result.stderr)
+print("General surface byte-array escape rejected")

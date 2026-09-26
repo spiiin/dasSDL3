@@ -238,3 +238,189 @@ These aliases do not change checked GPU handle types or resource ownership.
 The generic alias uses the pinned standard Result's canonical tuple layout;
 tests/sdl3_result.das checks compatibility, move-only values and propagation.
 Existing explicit Result signatures remain valid and can be migrated incrementally.
+
+## GPU shader builder
+
+The shader builder uses the existing GpuShaderOptions and scoped ownership:
+
+```daslang
+var description = gpu_shader(path,format,SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT)
+description |> entrypoint("main")
+description |> samplers(1u)
+description |> uniform_buffers(1u)
+let shader : GpuShaderHandle = device |> with_gpu_shader_file(description) |> sdl_use
+```
+
+The acquisition line belongs inside sdl_scope. The constructor defaults to entry
+point main and zero resource counts. Setters return void and overwrite only their
+named field; storage_buffers and storage_textures work the same way. They describe
+trusted compiled shader code, not automatic reflection: counts must match its SDL
+binding ABI. Validation and resource creation remain in with_gpu_shader_file.
+The options own no GPU resources; native info fields remain directly editable.
+Example 42 uses the constructor; tests/gpu_shader.das verifies nonzero sampler and
+uniform counts using the lit shader, plus overwrite/reset of storage counts.
+
+## GPU texture descriptor builder
+
+The builder returns SDL_GPUTextureCreateInfo itself and is available from
+sdl3_gpu_native_boost. It feeds native pointer creation/scopes, not checked IDs:
+
+```daslang
+var description = gpu_texture(256u,128u,SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM,
+    SDL_GPU_TEXTUREUSAGE_SAMPLER | SDL_GPU_TEXTUREUSAGE_COLOR_TARGET)
+description |> texture_shape(SDL_GPUTextureType.TEXTURETYPE_2D_ARRAY,4u)
+description |> mip_levels(5u)
+let result = with_native_gpu_texture(device,description) $(var texture : SDL_GPUTexture?) {
+    // Use texture while its device and this scope remain alive.
+    return sdl_ok()
+}
+```
+
+Defaults: 2D, one layer, one mip level, SAMPLECOUNT_1, zero properties.
+texture_shape sets the type and SDL layer_count_or_depth together; the caller
+supplies the appropriate array layer count, cube face count or volume depth.
+mip_levels, sample_count and texture_usage overwrite their field and return void.
+texture_usage replaces the entire mask; combine flags explicitly with bitwise OR.
+All descriptor fields remain directly editable. No resource is owned by the
+builder. It does not infer mip counts, clamp dimensions, check device support or
+repair invalid combinations (for example MSAA with mipmaps). SDL validates creation;
+query device capabilities when choosing optional formats or sample counts.
+Example 37 shows defaults. tests/gpu_native_adapters.das uses the builder for real
+MSAA render/resolve pixel checks and creation of a mipmapped two-layer texture.
+
+## GPU sampler descriptor builder
+
+Available from sdl3_gpu_sampler_boost; returns SDL_GPUSamplerCreateInfo:
+
+```daslang
+var description = gpu_sampler()
+description |> filters(SDL_GPUFilter.FILTER_LINEAR)
+description |> mipmap_mode(SDL_GPUSamplerMipmapMode.SAMPLERMIPMAPMODE_LINEAR)
+description |> address_modes(SDL_GPUSamplerAddressMode.SAMPLERADDRESSMODE_REPEAT)
+description |> anisotropy(4.0)
+let sampler : GpuSamplerHandle = device |> with_gpu_sampler(description) |> sdl_use
+```
+
+The acquisition line belongs inside sdl_scope. Defaults are the existing
+gpu_sampler_info defaults: nearest min/mag/mip filters, clamp on all axes,
+LOD range 0..1000, zero bias, comparison and anisotropy disabled.
+filters accepts one filter or separate min/mag filters and does not change mipmap
+mode. address_modes accepts one mode or separate U/V/W modes. lod_range and
+lod_bias set their named fields. anisotropy(maximum,enabled=true) and
+comparison(operation,enabled=true) set both the value and enable flag;
+pass false to disable. Each setter returns void and overwrites its fields.
+No validation/clamping or capability inference occurs in setters. Existing
+creation validation and checked descriptor normalization remain unchanged.
+The descriptor also works with with_native_gpu_sampler; that scope returns a
+native SDL_GPUSampler pointer rather than a checked GpuSamplerHandle.
+Example 41 demonstrates the builder; gpu_sampler tests query real created
+samplers for filter, axis, LOD, compare and anisotropy settings and retain their
+existing ownership checks.
+
+## GPU compute pipeline descriptor builder
+
+Available from sdl3_gpu_native_boost; returns SDL_GPUComputePipelineCreateInfo:
+
+```daslang
+var description = gpu_compute_pipeline(format)
+description |> threadgroup(4u,1u,1u)
+description |> readwrite_storage_buffers(1u)
+description |> uniform_buffers(1u)
+let pipeline = device |> load_native_gpu_compute_pipeline(description,path,"main") |> sdl_try
+```
+
+Release this pipeline with SDL_ReleaseGPUComputePipeline, or pass the descriptor
+to with_native_gpu_compute_pipeline_file/bytes for existing scoped ownership.
+The constructor defaults to threadgroup 1x1x1, zero resource counts/properties and
+no code pointer. Format is explicit. File/byte loaders supply code and entrypoint;
+do not put borrowed script string or array pointers into the descriptor.
+Setters return void and overwrite only their fields: threadgroup, samplers,
+uniform_buffers, readonly_storage_textures, readonly_storage_buffers,
+readwrite_storage_textures and readwrite_storage_buffers. Counts and threadgroup
+must match the trusted compiled shader and SDL binding ABI; there is no reflection,
+validation or clamping in the builder. threadgroup specifies shader local size,
+not the number of groups passed to SDL_DispatchGPUCompute. Fields remain editable.
+Example 49 verifies dispatch output by readback; native adapter tests cover both
+file and byte loading with the same descriptor. Nonzero texture/sampler/readonly
+resource combinations are not newly GPU-tested by this builder change.
+
+## Graphics pipeline state builders
+
+GpuGraphicsPipelineOptions and native SDL_GPUGraphicsPipelineCreateInfo both
+accept topology(kind), rasterizer(SDL_GPURasterizerState), sample_count(count)
+and multisampling(SDL_GPUMultisampleState). The state-object setters replace the
+complete state, while sample_count changes only its named field. Explicitly set
+enable_depth_clip when constructing a new rasterizer state; a zero-initialized
+state does not inherit gpu_graphics_pipeline_info defaults.
+
+Color targets accept blending(SDL_GPUColorTargetBlendState) and
+color_write_mask(uint8_mask,enabled=true). Configure a target before appending it:
+
+```daslang
+var target = gpu_color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM)
+var blend = target.blend_state
+blend.enable_blend = true
+blend.src_color_blendfactor = SDL_GPUBlendFactor.BLENDFACTOR_SRC_ALPHA
+blend.dst_color_blendfactor = SDL_GPUBlendFactor.BLENDFACTOR_ONE_MINUS_SRC_ALPHA
+target |> blending(blend)
+description |> color_target(target)
+```
+
+blending replaces the entire blend state, including write-mask settings; ordering
+therefore matters. color_target copies the descriptor, so later target edits do
+not change an appended target. Setters return void and preserve existing creation
+validation. MSAA must match pass attachments and device support. Complete SDL
+state structs expose advanced fields without additional wrapper types.
+Example 43 uses topology, back-face culling and sample count. gpu_pipeline tests
+exercise blend/write-mask pixel results and supported MSAA pipeline creation.
+
+## Example migration to builders and public aliases
+
+The numbered desktop examples use SdlStatus for unit-valued SDL results.
+Examples 43/45/46 use shader options; 45/46 use the graphics pipeline builder for
+vertex layouts and color targets. Metaballs and SDL_ttf GPU text use gpu_texture
+for their native texture defaults. Existing short helpers (such as sampler_info
+with one filter) remain where a sequence of setters would be longer.
+Example 44 retains explicit acquisition/release, illustrating direct resource
+ownership. Native struct initializers remain useful examples of the underlying
+SDL API. Builders must preserve descriptor defaults rather than silently change
+filtering, LOD ranges or lifetime. Web examples retain explicit Result spellings
+pending their separate wasm validation; their syntax remains supported.
+
+## Shared shader options, depth/stencil, and window flags
+
+Native shader loading now accepts the same GpuShaderOptions as checked loading:
+
+```daslang
+var shader = gpu_shader(path,format,SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
+shader |> uniform_buffers(1u)
+shader |> entrypoint("main")
+let native = device |> load_native_gpu_shader(shader) |> sdl_try
+```
+
+Release native with SDL_ReleaseGPUShader, or use
+with_native_gpu_shader_file(device,shader) for scoped ownership.
+with_native_gpu_shader_bytes(device,bytes,shader) uses info/entrypoint and ignores
+path. Options own their strings, never the shader; native pointers and checked
+handles retain their different ownership contracts. sdl3_gpu_native_boost now
+publicly requires sdl3_gpu_shader_boost; explicit SDK AOT MODULES must include
+that transitive shared module when these helpers are used.
+
+Both GpuGraphicsPipelineOptions and SDL_GPUGraphicsPipelineCreateInfo accept
+complete depth_stencil(SDL_GPUDepthStencilState), depth_target, depth_test,
+depth_write, stencil_test(bool=true), stencil_faces(front,back) or
+stencil_faces(both), and stencil_masks(uint8_compare,uint8_write).
+depth_stencil replaces the entire state; the other setters alter only named
+fields. Face/mask setters do not enable stencil or select an attachment format.
+Set stencil_test explicitly and provide a compatible depth/stencil target.
+Stencil reference remains a dynamic command via SDL_SetGPUStencilReference.
+Native/checked creation validation is unchanged; current builder tests verify
+created pipeline descriptors, not a new stencil-specific pixel oracle.
+
+WindowOptions gains window_options(title,int2_size), window_flags(mask,enabled=true)
+and window_position(int2). Defaults remain resizable, 640x480 in the underlying
+struct, undefined position. The constructor takes explicit size; flag toggles
+preserve unrelated bits and false clears only the supplied mask. A full flags
+replacement is still settings.flags = mask. Example 02 uses a conditional hidden
+flag; tests/window_state.das verifies flags and actual window creation. Simple
+one-line with_window calls and named struct initialization remain supported.

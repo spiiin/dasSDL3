@@ -3,7 +3,7 @@ require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_native_boost
 require daslib/defer
 
-def transfer_roundtrip(device : SDL_GPUDevice?) : $Result<SdlUnit; SdlError> {
+def transfer_roundtrip(device : SDL_GPUDevice?) : SdlStatus {
     var info = SDL_GPUTransferBufferCreateInfo(usage = SDL_GPUTransferBufferUsage.TRANSFERBUFFERUSAGE_UPLOAD, size = 256u)
     var upload = device |> create_native_gpu_transfer_buffer(info) |> sdl_try
     {
@@ -17,7 +17,7 @@ def transfer_roundtrip(device : SDL_GPUDevice?) : $Result<SdlUnit; SdlError> {
     }
 }
 
-def copy_and_check(device : SDL_GPUDevice?; var source, destination : SDL_GPUBuffer?; var upload, download : SDL_GPUTransferBuffer?) : $Result<SdlUnit; SdlError> {
+def copy_and_check(device : SDL_GPUDevice?; var source, destination : SDL_GPUBuffer?; var upload, download : SDL_GPUTransferBuffer?) : SdlStatus {
         var bytes : array<uint8>; resize(bytes,100)
         for (i in 0..100) { bytes[i]=uint8((i*7+3)%256) }
         if (!SDL_WriteGPUTransferBufferBytes(device,upload,256u,32u,bytes,true)) { return err(sdl_error("transfer_roundtrip"),type<SdlUnit>) }
@@ -53,7 +53,7 @@ def copy_and_check(device : SDL_GPUDevice?; var source, destination : SDL_GPUBuf
     return sdl_ok()
 }
 
-def copy_to_destination(device : SDL_GPUDevice?; buffer_info : SDL_GPUBufferCreateInfo; var source : SDL_GPUBuffer?; var upload, download : SDL_GPUTransferBuffer?) : $Result<SdlUnit; SdlError> {
+def copy_to_destination(device : SDL_GPUDevice?; buffer_info : SDL_GPUBufferCreateInfo; var source : SDL_GPUBuffer?; var upload, download : SDL_GPUTransferBuffer?) : SdlStatus {
     var destination = device |> create_native_gpu_buffer(buffer_info) |> sdl_try
     {
         defer() { SDL_ReleaseGPUBuffer(device,destination) }
@@ -61,7 +61,7 @@ def copy_to_destination(device : SDL_GPUDevice?; buffer_info : SDL_GPUBufferCrea
     }
 }
 
-def copy_buffers(device : SDL_GPUDevice?; var upload, download : SDL_GPUTransferBuffer?) : $Result<SdlUnit; SdlError> {
+def copy_buffers(device : SDL_GPUDevice?; var upload, download : SDL_GPUTransferBuffer?) : SdlStatus {
     var buffer_info = SDL_GPUBufferCreateInfo(usage = SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_READ, size = 256u)
     var source = device |> create_native_gpu_buffer(buffer_info) |> sdl_try
     {

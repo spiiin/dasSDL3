@@ -2356,6 +2356,69 @@ addIEx("COLOR_BUTTON_SELECTED","SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED",int64_t(SD
 static_assert(int64_t(SDL_MESSAGEBOX_COLOR_COUNT) == 5LL);
 addIEx("COLOR_COUNT","SDL_MESSAGEBOX_COLOR_COUNT",int64_t(SDL_MESSAGEBOX_COLOR_COUNT),das::LineInfo());
 } };
+DAS_BIND_ENUM_CAST(SDL_GLAttr);
+DAS_BASE_BIND_ENUM_GEN(SDL_GLAttr,SDL_GLAttr);
+static_assert(sizeof(SDL_GLAttr) == 4);
+class Enumeration_SDL_GLAttr : public das::Enumeration {
+public: Enumeration_SDL_GLAttr() : das::Enumeration("SDL_GLAttr") {
+external=true; cppName="SDL_GLAttr"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_GLAttr>::type>::type;
+static_assert(int64_t(SDL_GL_RED_SIZE) == 0LL);
+addIEx("GL_RED_SIZE","SDL_GL_RED_SIZE",int64_t(SDL_GL_RED_SIZE),das::LineInfo());
+static_assert(int64_t(SDL_GL_GREEN_SIZE) == 1LL);
+addIEx("GL_GREEN_SIZE","SDL_GL_GREEN_SIZE",int64_t(SDL_GL_GREEN_SIZE),das::LineInfo());
+static_assert(int64_t(SDL_GL_BLUE_SIZE) == 2LL);
+addIEx("GL_BLUE_SIZE","SDL_GL_BLUE_SIZE",int64_t(SDL_GL_BLUE_SIZE),das::LineInfo());
+static_assert(int64_t(SDL_GL_ALPHA_SIZE) == 3LL);
+addIEx("GL_ALPHA_SIZE","SDL_GL_ALPHA_SIZE",int64_t(SDL_GL_ALPHA_SIZE),das::LineInfo());
+static_assert(int64_t(SDL_GL_BUFFER_SIZE) == 4LL);
+addIEx("GL_BUFFER_SIZE","SDL_GL_BUFFER_SIZE",int64_t(SDL_GL_BUFFER_SIZE),das::LineInfo());
+static_assert(int64_t(SDL_GL_DOUBLEBUFFER) == 5LL);
+addIEx("GL_DOUBLEBUFFER","SDL_GL_DOUBLEBUFFER",int64_t(SDL_GL_DOUBLEBUFFER),das::LineInfo());
+static_assert(int64_t(SDL_GL_DEPTH_SIZE) == 6LL);
+addIEx("GL_DEPTH_SIZE","SDL_GL_DEPTH_SIZE",int64_t(SDL_GL_DEPTH_SIZE),das::LineInfo());
+static_assert(int64_t(SDL_GL_STENCIL_SIZE) == 7LL);
+addIEx("GL_STENCIL_SIZE","SDL_GL_STENCIL_SIZE",int64_t(SDL_GL_STENCIL_SIZE),das::LineInfo());
+static_assert(int64_t(SDL_GL_ACCUM_RED_SIZE) == 8LL);
+addIEx("GL_ACCUM_RED_SIZE","SDL_GL_ACCUM_RED_SIZE",int64_t(SDL_GL_ACCUM_RED_SIZE),das::LineInfo());
+static_assert(int64_t(SDL_GL_ACCUM_GREEN_SIZE) == 9LL);
+addIEx("GL_ACCUM_GREEN_SIZE","SDL_GL_ACCUM_GREEN_SIZE",int64_t(SDL_GL_ACCUM_GREEN_SIZE),das::LineInfo());
+static_assert(int64_t(SDL_GL_ACCUM_BLUE_SIZE) == 10LL);
+addIEx("GL_ACCUM_BLUE_SIZE","SDL_GL_ACCUM_BLUE_SIZE",int64_t(SDL_GL_ACCUM_BLUE_SIZE),das::LineInfo());
+static_assert(int64_t(SDL_GL_ACCUM_ALPHA_SIZE) == 11LL);
+addIEx("GL_ACCUM_ALPHA_SIZE","SDL_GL_ACCUM_ALPHA_SIZE",int64_t(SDL_GL_ACCUM_ALPHA_SIZE),das::LineInfo());
+static_assert(int64_t(SDL_GL_STEREO) == 12LL);
+addIEx("GL_STEREO","SDL_GL_STEREO",int64_t(SDL_GL_STEREO),das::LineInfo());
+static_assert(int64_t(SDL_GL_MULTISAMPLEBUFFERS) == 13LL);
+addIEx("GL_MULTISAMPLEBUFFERS","SDL_GL_MULTISAMPLEBUFFERS",int64_t(SDL_GL_MULTISAMPLEBUFFERS),das::LineInfo());
+static_assert(int64_t(SDL_GL_MULTISAMPLESAMPLES) == 14LL);
+addIEx("GL_MULTISAMPLESAMPLES","SDL_GL_MULTISAMPLESAMPLES",int64_t(SDL_GL_MULTISAMPLESAMPLES),das::LineInfo());
+static_assert(int64_t(SDL_GL_ACCELERATED_VISUAL) == 15LL);
+addIEx("GL_ACCELERATED_VISUAL","SDL_GL_ACCELERATED_VISUAL",int64_t(SDL_GL_ACCELERATED_VISUAL),das::LineInfo());
+static_assert(int64_t(SDL_GL_RETAINED_BACKING) == 16LL);
+addIEx("GL_RETAINED_BACKING","SDL_GL_RETAINED_BACKING",int64_t(SDL_GL_RETAINED_BACKING),das::LineInfo());
+static_assert(int64_t(SDL_GL_CONTEXT_MAJOR_VERSION) == 17LL);
+addIEx("GL_CONTEXT_MAJOR_VERSION","SDL_GL_CONTEXT_MAJOR_VERSION",int64_t(SDL_GL_CONTEXT_MAJOR_VERSION),das::LineInfo());
+static_assert(int64_t(SDL_GL_CONTEXT_MINOR_VERSION) == 18LL);
+addIEx("GL_CONTEXT_MINOR_VERSION","SDL_GL_CONTEXT_MINOR_VERSION",int64_t(SDL_GL_CONTEXT_MINOR_VERSION),das::LineInfo());
+static_assert(int64_t(SDL_GL_CONTEXT_FLAGS) == 19LL);
+addIEx("GL_CONTEXT_FLAGS","SDL_GL_CONTEXT_FLAGS",int64_t(SDL_GL_CONTEXT_FLAGS),das::LineInfo());
+static_assert(int64_t(SDL_GL_CONTEXT_PROFILE_MASK) == 20LL);
+addIEx("GL_CONTEXT_PROFILE_MASK","SDL_GL_CONTEXT_PROFILE_MASK",int64_t(SDL_GL_CONTEXT_PROFILE_MASK),das::LineInfo());
+static_assert(int64_t(SDL_GL_SHARE_WITH_CURRENT_CONTEXT) == 21LL);
+addIEx("GL_SHARE_WITH_CURRENT_CONTEXT","SDL_GL_SHARE_WITH_CURRENT_CONTEXT",int64_t(SDL_GL_SHARE_WITH_CURRENT_CONTEXT),das::LineInfo());
+static_assert(int64_t(SDL_GL_FRAMEBUFFER_SRGB_CAPABLE) == 22LL);
+addIEx("GL_FRAMEBUFFER_SRGB_CAPABLE","SDL_GL_FRAMEBUFFER_SRGB_CAPABLE",int64_t(SDL_GL_FRAMEBUFFER_SRGB_CAPABLE),das::LineInfo());
+static_assert(int64_t(SDL_GL_CONTEXT_RELEASE_BEHAVIOR) == 23LL);
+addIEx("GL_CONTEXT_RELEASE_BEHAVIOR","SDL_GL_CONTEXT_RELEASE_BEHAVIOR",int64_t(SDL_GL_CONTEXT_RELEASE_BEHAVIOR),das::LineInfo());
+static_assert(int64_t(SDL_GL_CONTEXT_RESET_NOTIFICATION) == 24LL);
+addIEx("GL_CONTEXT_RESET_NOTIFICATION","SDL_GL_CONTEXT_RESET_NOTIFICATION",int64_t(SDL_GL_CONTEXT_RESET_NOTIFICATION),das::LineInfo());
+static_assert(int64_t(SDL_GL_CONTEXT_NO_ERROR) == 25LL);
+addIEx("GL_CONTEXT_NO_ERROR","SDL_GL_CONTEXT_NO_ERROR",int64_t(SDL_GL_CONTEXT_NO_ERROR),das::LineInfo());
+static_assert(int64_t(SDL_GL_FLOATBUFFERS) == 26LL);
+addIEx("GL_FLOATBUFFERS","SDL_GL_FLOATBUFFERS",int64_t(SDL_GL_FLOATBUFFERS),das::LineInfo());
+static_assert(int64_t(SDL_GL_EGL_PLATFORM) == 27LL);
+addIEx("GL_EGL_PLATFORM","SDL_GL_EGL_PLATFORM",int64_t(SDL_GL_EGL_PLATFORM),das::LineInfo());
+} };
 MAKE_TYPE_FACTORY(SDL_Window, SDL_Window);
 MAKE_TYPE_FACTORY(SDL_Renderer, SDL_Renderer);
 MAKE_TYPE_FACTORY(SDL_Surface, SDL_Surface);
@@ -2399,6 +2462,11 @@ MAKE_TYPE_FACTORY(SDL_Tray, SDL_Tray);
 MAKE_TYPE_FACTORY(SDL_TrayMenu, SDL_TrayMenu);
 MAKE_TYPE_FACTORY(SDL_TrayEntry, SDL_TrayEntry);
 MAKE_TYPE_FACTORY(SDL_GPURenderState, SDL_GPURenderState);
+MAKE_TYPE_FACTORY(SDL_GLContextState, SDL_GLContextState);
+MAKE_TYPE_FACTORY(VkInstance_T, VkInstance_T);
+MAKE_TYPE_FACTORY(VkPhysicalDevice_T, VkPhysicalDevice_T);
+MAKE_TYPE_FACTORY(VkSurfaceKHR_T, VkSurfaceKHR_T);
+MAKE_TYPE_FACTORY(VkAllocationCallbacks, VkAllocationCallbacks);
 MAKE_TYPE_FACTORY(SDL_GPUViewport, SDL_GPUViewport);
 MAKE_TYPE_FACTORY(SDL_GPUIndirectDrawCommand, SDL_GPUIndirectDrawCommand);
 MAKE_TYPE_FACTORY(SDL_GPUIndexedIndirectDrawCommand, SDL_GPUIndexedIndirectDrawCommand);
@@ -2508,6 +2576,7 @@ MAKE_TYPE_FACTORY(SDL_MessageBoxButtonData, SDL_MessageBoxButtonData);
 MAKE_TYPE_FACTORY(SDL_MessageBoxColor, SDL_MessageBoxColor);
 MAKE_TYPE_FACTORY(SDL_MessageBoxColorScheme, SDL_MessageBoxColorScheme);
 MAKE_TYPE_FACTORY(SDL_MessageBoxData, SDL_MessageBoxData);
+MAKE_TYPE_FACTORY(SDL_GPUVulkanOptions, SDL_GPUVulkanOptions);
 namespace das {
 struct SDL_GPUViewportAnnotation : ManagedStructureAnnotation<SDL_GPUViewport, false> {
     SDL_GPUViewportAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_GPUViewport", lib) {
@@ -3522,6 +3591,17 @@ struct SDL_MessageBoxDataAnnotation : ManagedStructureAnnotation<SDL_MessageBoxD
         addField<DAS_BIND_MANAGED_FIELD(numbuttons)>("numbuttons", "numbuttons");
         addField<DAS_BIND_MANAGED_FIELD(buttons)>("buttons", "buttons");
         addField<DAS_BIND_MANAGED_FIELD(colorScheme)>("colorScheme", "colorScheme");
+    }
+};
+struct SDL_GPUVulkanOptionsAnnotation : ManagedStructureAnnotation<SDL_GPUVulkanOptions, false> {
+    SDL_GPUVulkanOptionsAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_GPUVulkanOptions", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(vulkan_api_version)>("vulkan_api_version", "vulkan_api_version");
+        addField<DAS_BIND_MANAGED_FIELD(feature_list)>("feature_list", "feature_list");
+        addField<DAS_BIND_MANAGED_FIELD(vulkan_10_physical_device_features)>("vulkan_10_physical_device_features", "vulkan_10_physical_device_features");
+        addField<DAS_BIND_MANAGED_FIELD(device_extension_count)>("device_extension_count", "device_extension_count");
+        addField<DAS_BIND_MANAGED_FIELD(device_extension_names)>("device_extension_names", "device_extension_names");
+        addField<DAS_BIND_MANAGED_FIELD(instance_extension_count)>("instance_extension_count", "instance_extension_count");
+        addField<DAS_BIND_MANAGED_FIELD(instance_extension_names)>("instance_extension_names", "instance_extension_names");
     }
 };
 } // namespace das

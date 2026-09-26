@@ -1,7 +1,7 @@
 options gen2
 require daslib/defer
 module sdl3_gpu_native_boost shared public
-require dassdl3/sdl3_gpu_boost public
+require dassdl3/sdl3_gpu_shader_boost public
 
 // Only non-optional creation/acquisition uses this null-as-error conversion.
 // Swapchain texture absence retains its separate Result<Option<...>> contract.
@@ -315,4 +315,47 @@ def public write_native_gpu_transfer_floats(device : SDL_GPUDevice?; transfer : 
 
 def public push_native_gpu_vertex_uniforms(command : SDL_GPUCommandBuffer?; slot : uint; values : array<float>) {
     return sdl_status(SDL_PushGPUVertexUniformFloats(command,slot,values),"SDL_PushGPUVertexUniformFloats")
+}
+
+// Native descriptor builder. Creation and validation stay with SDL.
+def public gpu_texture(width, height : uint; format : SDL_GPUTextureFormat; usage : uint) : SDL_GPUTextureCreateInfo {
+    return SDL_GPUTextureCreateInfo(texture_type=SDL_GPUTextureType.TEXTURETYPE_2D,
+        format=format,usage=usage,width=width,height=height,layer_count_or_depth=1u,
+        num_levels=1u,sample_count=SDL_GPUSampleCount.SAMPLECOUNT_1)
+}
+def public texture_shape(var settings : SDL_GPUTextureCreateInfo; kind : SDL_GPUTextureType; layers_or_depth : uint) {
+    settings.texture_type = kind
+    settings.layer_count_or_depth = layers_or_depth
+}
+def public mip_levels(var settings : SDL_GPUTextureCreateInfo; count : uint) { settings.num_levels = count }
+def public sample_count(var settings : SDL_GPUTextureCreateInfo; count : SDL_GPUSampleCount) { settings.sample_count = count }
+def public texture_usage(var settings : SDL_GPUTextureCreateInfo; flags : uint) { settings.usage = flags }
+
+// Counts and threadgroup dimensions must match the trusted compiled shader.
+def public gpu_compute_pipeline(format : uint) : SDL_GPUComputePipelineCreateInfo {
+    return SDL_GPUComputePipelineCreateInfo(format=format,threadcount_x=1u,threadcount_y=1u,threadcount_z=1u)
+}
+def public threadgroup(var settings : SDL_GPUComputePipelineCreateInfo; x, y, z : uint) {
+    settings.threadcount_x = x
+    settings.threadcount_y = y
+    settings.threadcount_z = z
+}
+def public samplers(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) { settings.num_samplers = count }
+def public uniform_buffers(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) { settings.num_uniform_buffers = count }
+def public readonly_storage_textures(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) { settings.num_readonly_storage_textures = count }
+def public readonly_storage_buffers(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) { settings.num_readonly_storage_buffers = count }
+def public readwrite_storage_textures(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) { settings.num_readwrite_storage_textures = count }
+def public readwrite_storage_buffers(var settings : SDL_GPUComputePipelineCreateInfo; count : uint) { settings.num_readwrite_storage_buffers = count }
+
+// The same owned path/entrypoint options work with checked and native shaders.
+def public load_native_gpu_shader(device : SDL_GPUDevice?; settings : GpuShaderOptions) {
+    return <- load_native_gpu_shader(device,settings.info,settings.path,settings.entrypoint)
+}
+def public with_native_gpu_shader_file(device : SDL_GPUDevice?; settings : GpuShaderOptions;
+        blk : block<(var resource : SDL_GPUShader?) : $Result<auto(TT);SdlError>>) {
+    return <- with_native_gpu_shader_file(device,settings.info,settings.path,settings.entrypoint,blk)
+}
+def public with_native_gpu_shader_bytes(device : SDL_GPUDevice?; bytes : array<uint8>; settings : GpuShaderOptions;
+        blk : block<(var resource : SDL_GPUShader?) : $Result<auto(TT);SdlError>>) {
+    return <- with_native_gpu_shader_bytes(device,settings.info,bytes,settings.entrypoint,blk)
 }

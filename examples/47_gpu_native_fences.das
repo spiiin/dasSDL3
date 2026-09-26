@@ -4,7 +4,7 @@ require dassdl3/sdl3_scope
 require daslib/defer
 
 // Native SDL pointers and results. There is no command plan or readback-ticket object.
-def submit_and_wait(device : SDL_GPUDevice?) : $Result<SdlUnit; SdlError> {
+def submit_and_wait(device : SDL_GPUDevice?) : SdlStatus {
     var command = device |> acquire_native_gpu_command_buffer() |> sdl_try
     {
         defer() { if (command != null) { SDL_CancelGPUCommandBuffer(command) } }

@@ -13,16 +13,16 @@ small defaults/with_* boost helpers. Do not add new composite GPU objects to byp
 missing SDL functions. Count exported contracts, not internal calls, helper names,
 examples or native test fixtures. Five native GPU follow-up steps are locally
 verified; Properties now has 19 generated functions plus copied enumeration; retained
-cleanup callback remains pending. Read docs/properties.md for the pinned numeric
+cleanup callback now accepts native C addresses (docs/native-callbacks.md). Read docs/properties.md for the pinned numeric
 string-cache/CopyProperties double-free defect and copied-string adapter. Hints/Init adds 12 generated functions, copied getters and subsystem defer scopes;
-see docs/init-hints.md for pending callbacks and string constants. Next
+see docs/init-hints.md and docs/native-callbacks.md for native callbacks and string constants. Next
 library-wide queue: P7 Windows function declarations are connected; next declaration section is P8. Synchronization (SDL_mutex.h) now has 28/28 generated functions; see docs/synchronization.md for ownership, same-thread unlock, condition predicates and native-only test workers. Thread/TLS (12/12) and Atomic (15/15) are generated; see docs/thread-atomic.md. Process/LoadSO now has 9/9 + 3/3 raw functions; see docs/process-loadso.md for wait error probing, pipe closure and library address lifetime. System/Power/Locale/Dialog/Tray adds 42 raw functions; P7 now has all 109 active Windows function declarations. See docs/platform-services.md: Dialog tests cover invalid filters/null callback only, not interactive selection; X11 is a Windows stub and other OS branches are unverified. No synchronous Result or script callback bridge for asynchronous dialogs. Web follow-ups remain in docs/web-roadmap.md. Web bootstrap now builds with emsdk 5.0.3: web/build.cmd, 65 SDL raw functions in tools/bindings-web.json, 10 HTML examples, Edge/Firefox tests in tests/web/test_browser.py. See web/README.md; full census/CppGenBind/AOT remain. Examples 05-08 reuse pixel/target/geometry/audio boost adapters; browser audio starts on Start, queues copied PCM, and closes on Stop. OpenGL examples in examples/web/opengl link the existing daScript libDasModuleOpenGL (require opengl); do not add another GL binding. SDL owns window/context, GL owns shaders/programs; see examples/web/opengl/README.md. Uses single-thread wasm32 interpreter + SDL Renderer or SDL GL context; pinned SDL has no WebGPU GPU backend. Camera is 15/15 raw; see docs/camera.md for borrowed frames, permission/null semantics and dummy-only validation. Audio is 56/56 raw; see docs/audio-final-api.md for native-only callbacks, ownership, bounded PCM conversion and pinned postmix/WAV failure-output behavior. Audio stream controls add 12 raw functions (Audio now 56/56); see docs/audio-stream-controls.md for map timing, default-map getters fixed in SDL 3.4.16 (copied boost getters now available; see script-accessibility.md), silent bound-format ignores and same-thread defer unlock. Audio device discovery/open/binding adds 21 raw functions; see docs/audio-devices.md for logical ownership and dummy-only recording. AsyncIO has all 11 raw functions; see docs/asyncio.md for submission/completion separation and buffer ownership. Storage has all 17 raw functions; see
 docs/storage.md for native callback lifetime, readiness/space predicates, bounded
 file buffers and fallible close. Positive user/cloud storage is unverified. IOStream has 46 raw functions, fixed-text
 IOprintf and pending IOvprintf; see docs/iostream.md for partial counts/status,
 native callbacks, uint8/uint16 ref widening, close error precedence and the pinned
 SaveFile_IO short-write defect. Filesystem has all 11 raw
-functions and copied paths/lists; see docs/filesystem.md. P3 follow-ups include keyboard/mouse device hotplug payloads, native virtual callback fields and physical-device validation.
+functions and copied paths/lists; see docs/filesystem.md. P3 follow-ups include keyboard/mouse device hotplug payloads and physical-device validation; all eight native virtual callback fields now have setters.
 IME candidates and clipboard MIME lists are owned arrays; SdlEvent/Option/Result
 are move-only. Use <-, move_unwrap and emplace, or explicit clone_to_move/push_clone.
 See docs/event-list-payloads.md for raw borrowed user data and list validation.
@@ -42,7 +42,7 @@ SdlEvent now has 71 alternatives (see docs/common-api.md for display/render/pinc
 application user pointers remain raw. Full Result/Option migration is locally validated;
 see docs/result-option-plan.md for contracts and verification. P2 function declarations are connected, with
 RenderDebugTextFormat limited to fixed text and 20 GL/EGL Video functions explicitly
-deferred to P8. Rect/Clipboard/hit-test contracts: docs/rect-clipboard-hittest.md.
+completed in P8; see docs/gl-egl.md (current Video 114/114). Rect/Clipboard/hit-test contracts: docs/rect-clipboard-hittest.md.
 All 58 Surface and 11 Pixels functions now have raw signatures; see
 docs/surface-pixels.md for memory, palette and BMP ownership limits. Surface state adds 16 raw functions and scalar/rect adapters;
 see docs/surface-state.md. Choose cohesive behavioral packages, not a fixed function
@@ -66,7 +66,7 @@ Software renderer/primitives adds 10 raw functions; see docs/renderer-primitives
 for borrowed surface lifetime, array adapters and CPU pixel tests. Window IO adds 25 Video + 3 Surface
 raw functions; see docs/window-io.md for borrowed surfaces, conditional capabilities
 and NULL shape removal (fixed upstream in SDL 3.4.16). The raw ICC getter lacks native window
-validation; its copy adapter rejects NULL, while live-window/video preconditions remain. Video is 89/109; remaining GL/EGL is P8. Hit-test callbacks are lexical scopes;
+validation; its copy adapter rejects NULL, while live-window/video preconditions remain. Video is now 114/114 (SDL 3.4.16); GL/EGL is connected in P8. Hit-test callbacks are lexical scopes;
 Clipboard uses native-owned copied data or explicit native callback addresses.
 Window creation/state adds 27 raw functions and defer scopes; parent lifetime
 preconditions are documented in docs/window-state.md. Video discovery adds 31 raw
@@ -363,3 +363,64 @@ script_disposition in api-policy.json: 122 stdlib, 15 native_interop, 6 host_onl
 raw coverage. Keep raw pending and the denominator unchanged. SDL_free remains
 bound; never conflate daScript array/string storage with SDL-owned allocations.
 Header upgrades must review new entries; no automatic prefix-wide exclusions.
+
+GL/EGL: docs/gl-egl.md; Video is 114/114 for SDL 3.4.16. Native GL context is
+SDL_GLContextState?, EGL handles/proc addresses remain borrowed native pointers.
+with_gl_context does not restore prior selection; with_gl_current explicitly does.
+Keep saved/selected pairs alive; main-thread scopes use defer and preserve body Err.
+destroy_gl_context uses a pointer reference (?&) and clears only on success.
+EGL callbacks return SDL-allocated, EGL_NONE-terminated arrays and are native-only;
+ResetAttributes clears callbacks. No script Context bridge. Desktop tests use real
+GL pixel readback and two contexts; positive EGL creation/callbacks remain unverified.
+Do not add another GL binding: use existing daScript OpenGL where the host registers it.
+
+Vulkan/Metal: docs/vulkan-metal.md; all 7 + 3 raw declarations are generated.
+bindings.json headers explicitly includes SDL_vulkan.h/SDL_metal.h; keep the web
+profile independent. Census includes their seven Vk* native type declarations,
+not invented project types. Validated ABI is 64-bit opaque Vulkan pointers only.
+Raw GetInstanceExtensions dereferences the backend without a guard in this pin;
+boost checks a loaded GetVkGetInstanceProcAddr before copying borrowed names.
+Vulkan surface destruction must use the original instance/allocator before window
+teardown and loader unload. Native allocator callbacks are never script Contexts.
+PresentationSupport false is ambiguous (unsupported/error); keep raw bool.
+Metal success requires Apple testing; Windows covers unsupported paths only.
+Tests use native Vulkan headers only for fixtures; production SDL bindings and
+installed consumer must not require Vulkan SDK headers or libraries.
+
+CPUInfo: docs/cpuinfo.md; 19/19 raw functions, including 18 added queries and
+SDL_CACHELINE_SIZE. Direct scalar/bool API needs no Result or boost aliases.
+RAM is MiB, logical cores differ from physical cores, page size 0 is unknown.
+Feature masks must be set before detection; pinned SDL caches features and computes
+SIMD alignment before masking. Do not assume -all reduces alignment, aligns script
+arrays, or changes the AOT compiler instruction target. Tests run native/all and
+-all in separate processes and preserve stale SDL errors. Stdinc remains unchanged.
+
+Native callbacks follow-up: nine Hints/Timer/Log/RunOnMainThread/Properties declarations
+are generated. Read docs/native-callbacks.md. RemoveTimer does not join an in-flight
+callback; do not add a scope that frees userdata on cancellation. Property cleanup
+also runs on setter failure. RunOnMainThread requires a non-null native callback;
+workers waiting for completion need the main thread to pump events. No script closure bridge.
+
+Remaining function decisions: docs/remaining-api-policy.md. All 19 non-Stdinc
+pending functions have explicit script_disposition: 13 host_only, 2 stdlib,
+1 deferred (SDL_SwapFloat), 3 c_abi_only. Combined with Stdinc, all 188 pending
+functions are reviewed, not implemented or excluded. SDL_main is supplied by
+an application; SetMainReady already belongs to native runners. Do not bind
+startup/Assert/va_list solely to increase coverage. No assertion-to-panic bridge.
+Next priorities are concrete record/callback-field and platform/runtime gaps.
+
+Complete-record audit: docs/record-field-accessibility.md, tools/record-field-policy.json,
+tools/audit_record_fields.py --check. Covers all 122 named complete records/840 fields,
+not only registered structs. Every non-direct field has an explicit reviewed decision;
+new fields must fail the audit instead of inheriting a prefix-wide classification.
+IOStreamInterface has 6 native callback setters, StorageInterface 11, and
+VirtualJoystickDesc 8; no retained script callback bridge. All identified field
+gaps are now implemented in sdl3_record_access.h/.das: read-only surface metadata,
+copied palette colors, native SDL_GPUVulkanOptions, and temporary per-plane bytes.
+Byte spans exclude final-row padding; respect packed/sub-byte/YUV/MJPG layouts.
+P010 is fixture-tested (pinned CreateSurface cannot allocate it). Raw view needs a
+locked live surface; boost uses defer, never panic/catch. Never mutate refcounts.
+Vulkan helper copies typed property values into a private group (pointers borrowed,
+no cleanup ownership transfer and no SDL_CopyProperties string-cache defect),
+selects Vulkan and borrows extension arrays/native feature pointers during creation.
+Read docs/record-field-accessibility.md before altering these contracts.

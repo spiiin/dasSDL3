@@ -88,6 +88,20 @@ int unrelated_function(void);
         self.assertEqual(unseen["status"], "unobserved")
         self.assertEqual(data, self.generate())
 
+    def test_native_vulkan_types_are_header_declarations(self):
+        header = self.include / "SDL3/SDL_vulkan.h"
+        header.write_text("// # CategoryVulkan\n"
+                          "typedef struct VkInstance_T *VkInstance;\n"
+                          "struct VkAllocationCallbacks;\n"
+                          "int VkUnrelatedFunction(void);\n")
+        self.policy["profiles"]["test"]["entry_headers"].append("SDL_vulkan.h")
+        self.spec["opaque_types"].extend(["VkInstance_T", "VkAllocationCallbacks"])
+        symbols = {s["id"]: s for s in self.generate()["symbols"]}
+        self.assertEqual(symbols["record:VkInstance_T"]["raw_status"], "opaque")
+        self.assertEqual(symbols["record:VkAllocationCallbacks"]["category"], "Vulkan")
+        self.assertEqual(symbols["typedef:VkInstance"]["header"], "SDL_vulkan.h")
+        self.assertNotIn("function:VkUnrelatedFunction", symbols)
+
     def test_wrong_release_rejected(self):
         self.policy["sdl_version"] = "3.4.0"
         with self.assertRaisesRegex(RuntimeError, "Expected SDL"):
@@ -161,6 +175,90 @@ int unrelated_function(void);
             self.assertTrue((ROOT / decision["contract"]).is_file())
         free = next(s for s in data["symbols"] if s["id"] == "function:SDL_free")
         self.assertEqual(free["raw_status"], "generated")
+
+
+    def test_pinned_non_stdinc_review_is_complete_without_hiding_coverage(self):
+        data = json.loads((ROOT / "docs/generated/api-windows-x64-msvc.json").read_text(encoding="utf-8"))
+        policy = json.loads((ROOT / "tools/api-policy.json").read_text(encoding="utf-8"))
+        spec = json.loads((ROOT / "tools/bindings.json").read_text(encoding="utf-8"))
+        expected = {
+            "host_only": {
+                "SDL_main", "SDL_SetMainReady", "SDL_RunApp", "SDL_EnterAppMainCallbacks",
+                "SDL_RegisterApp", "SDL_UnregisterApp", "SDL_GDKSuspendComplete",
+                "SDL_ReportAssertion", "SDL_SetAssertionHandler", "SDL_GetAssertionHandler",
+                "SDL_GetDefaultAssertionHandler", "SDL_GetAssertionReport", "SDL_ResetAssertionReport",
+            },
+            "stdlib": {"SDL_MostSignificantBitIndex32", "SDL_HasExactlyOneBitSet32"},
+            "deferred": {"SDL_SwapFloat"},
+            "c_abi_only": {"SDL_SetErrorV", "SDL_LogMessageV", "SDL_IOvprintf"},
+        }
+        pending = [s for s in data["symbols"] if s["kind"] == "function"
+                   and s["category"] != "Stdinc" and s["raw_status"] == "pending"]
+        self.assertEqual({s["name"] for s in pending}, set.union(*expected.values()))
+        without_review = copy.deepcopy(policy)
+        for symbol in pending:
+            decision = policy["symbols"][symbol["id"]]
+            self.assertIn(symbol["name"], expected[decision["script_disposition"]])
+            self.assertEqual(symbol["script_disposition"], decision["script_disposition"])
+            self.assertEqual(decision["raw_status"], "pending")
+            self.assertTrue(decision["reason"])
+            self.assertTrue((ROOT / decision["contract"]).is_file())
+            del without_review["symbols"][symbol["id"]]
+        categories = {h["header"]: h["category"] for h in data["headers"]}
+        before = inventory.annotate(copy.deepcopy(data["symbols"]), spec, without_review, categories)
+        self.assertEqual({s["id"]: s["raw_status"] for s in data["symbols"]},
+                         {s["id"]: s["raw_status"] for s in before})
+        # A future pending declaration must be reviewed instead of silently entering the backlog.
+        all_pending = [s for s in data["symbols"] if s["kind"] == "function" and s["raw_status"] == "pending"]
+        self.assertEqual(len(all_pending), 188)
+        self.assertTrue(all(s.get("script_disposition") for s in all_pending))
+
+
+    def test_record_field_audit_snapshot_and_callback_slots(self):
+        module = importlib.util.spec_from_file_location("field_audit", ROOT / "tools/audit_record_fields.py")
+        field_audit = importlib.util.module_from_spec(module)
+        module.loader.exec_module(field_audit)
+        actual = field_audit.generate()
+        saved = json.loads((ROOT / "docs/generated/record-fields-windows-x64-msvc.json").read_text(encoding="utf-8"))
+        self.assertEqual(actual, saved)
+        self.assertEqual(field_audit.report(actual),
+                         (ROOT / "docs/generated/record-fields-windows-x64-msvc.md").read_text(encoding="utf-8"))
+        callbacks = [f for f in actual["fields"] if f["callback"]]
+        self.assertEqual(len(callbacks), 25)
+        self.assertEqual(sum(f["status"] == "native_callback" for f in callbacks), 25)
+        missing = {f["field"] for f in callbacks if f["record"] == "SDL_VirtualJoystickDesc"}
+        self.assertEqual(missing, {"Update", "SetPlayerIndex", "Rumble", "RumbleTriggers",
+                                   "SetLED", "SendEffect", "SetSensorsEnabled", "Cleanup"})
+        vulkan = [f for f in actual["fields"] if f["record"] == "SDL_GPUVulkanOptions"]
+        self.assertEqual(len(vulkan), 7)
+        self.assertTrue(all(f["status"] == "direct" for f in vulkan))
+        self.assertFalse(any(f["status"] in {"pending", "partial"} for f in actual["fields"]))
+
+    def test_record_field_audit_rejects_silent_drift_and_missing_adapters(self):
+        module = importlib.util.spec_from_file_location("field_audit", ROOT / "tools/audit_record_fields.py")
+        field_audit = importlib.util.module_from_spec(module)
+        module.loader.exec_module(field_audit)
+        data = json.loads((ROOT / "docs/generated/api-windows-x64-msvc.json").read_text(encoding="utf-8"))
+        spec = json.loads((ROOT / "tools/bindings.json").read_text(encoding="utf-8"))
+        policy = json.loads((ROOT / "tools/record-field-policy.json").read_text(encoding="utf-8"))
+        changed = copy.deepcopy(data)
+        record = next(s for s in changed["symbols"] if s["kind"] == "record" and s["name"] == "SDL_IOStreamInterface")
+        record["fields"].append({"name": "future_callback", "c_type": "void (*)(void *)"})
+        with self.assertRaisesRegex(RuntimeError, "Unreviewed field"):
+            field_audit.audit(changed, spec, policy)
+        changed_policy = copy.deepcopy(policy)
+        changed_policy["groups"].append(copy.deepcopy(changed_policy["groups"][0]))
+        with self.assertRaisesRegex(RuntimeError, "Duplicate field decision"):
+            field_audit.audit(data, spec, changed_policy)
+        changed_policy = copy.deepcopy(policy)
+        group = next(g for g in changed_policy["groups"] if g["status"] == "native_callback")
+        group["entry_points"] = ["SDL_NonexistentCallbackSetter"]
+        with self.assertRaisesRegex(RuntimeError, "Adapter is not registered"):
+            field_audit.audit(data, spec, changed_policy)
+        changed_spec = copy.deepcopy(spec)
+        changed_spec["structs"]["SDL_IOStreamInterface"].append("close")
+        with self.assertRaisesRegex(RuntimeError, "Stale field decisions"):
+            field_audit.audit(data, changed_spec, policy)
 
 
 if __name__ == "__main__":

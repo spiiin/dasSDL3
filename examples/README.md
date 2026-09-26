@@ -191,4 +191,15 @@ Web: [сборка и запуск HTML-галереи](../web/README.md), ис�
 [gpu/01_metaballs.das](gpu/01_metaballs.das) ports bgfx metaballs with CPU marching
 cubes, dynamic vertex upload, depth and lighting. See [usage and API findings](gpu/README.md).
 
+[gpu/03_mesh.das](gpu/03_mesh.das) ports bgfx mesh: Stanford bunny, static vertex/index
+buffers, shader deformation, lighting and rendering at the current window resolution.
+
 88. [System info](88_system_info.das): platform, revision and copied GUID text; noninteractive.
+
+89. [GL context](89_gl_context.das): hidden OpenGL window, context attributes and deferred cleanup.
+
+90. [Vulkan extensions](90_vulkan_extensions.das): copied required instance extensions and scoped loader.
+
+91. [CPU information](91_cpuinfo.das): logical cores, RAM, cache/page sizes, SIMD alignment and features; no SDL initialization.
+
+93. [Surface bytes](93_surface_bytes.das): scoped RGB24 plane access, pitch-aware gradient and copied surface metadata.

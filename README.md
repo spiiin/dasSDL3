@@ -1,495 +1,175 @@
 # dasSDL3
 
-Привязки SDL3 к daScript / daslang. Публичный API следует объектам и операциям SDL;
-mesh/material/scene/batching и планы удалены из библиотеки.
+**SDL3 bindings for daScript (daslang)** — native SDL access with an idiomatic scripting layer for resource scopes, errors, events and buffers.
 
-[Документация](docs/README.md) · [Граница API](docs/gpu-api-boundary.md) · [Примеры](examples/README.md) · [GPU roadmap](docs/gpu-roadmap.md).
+[Getting started](#getting-started) · [Examples](examples/README.md) · [Documentation](docs/README.md) · [Coverage](docs/api-coverage.md) · [Roadmap](docs/full-binding-roadmap.md)
 
-## План развития
+## Features
 
-Исследование от 19 сентября 2026 и план полной привязки:
+- Windows, 2D rendering, textures, surfaces, GPU, audio, input, events, files and platform services.
+- Standard `Result` / `Option`, `sdl_try` for error propagation, and `sdl_scope` / `sdl_use` for resource acquisition and reverse-order cleanup.
+- Owned event variants, copied text payloads and lazy `poll_events()` iteration.
+- Copied query results and temporary scoped pixel views, including surface planes and row pitch.
+- Interpreter and strict AOT execution, generated bindings and an installable core CMake SDK.
+- Optional ImGui, SDL_image, SDL_ttf, SDL_net, SDL_mixer, SDL_sound and SDL_shadercross integrations.
+- Web examples built with Emscripten: SDL Renderer, audio and the existing daScript OpenGL module.
 
-- [Основной план и этапы покрытия](docs/full-binding-roadmap.md).
-- [Аудит идиом daScript/dasBGFX/Rust и выбор генератора](docs/binding-design-review.md).
-- [SDL GPU, shadercross и DSL](docs/gpu-roadmap.md).
-- [Дополнительные библиотеки SDL](docs/companion-libraries-roadmap.md).
-- [Примеры для портирования и проверки](docs/porting-matrix.md).
+The public API follows SDL objects and operations. Application rendering algorithms live in examples.
 
-Эти документы описывают будущую работу; реализованное покрытие отдельно
-зафиксировано в [api-coverage.md](docs/api-coverage.md).
-Первый рабочий [реестр API Windows x64](docs/api-inventory.md) содержит
-воспроизводимый снимок закреплённых заголовков и отдельные проверки учёта.
+## Status
 
-## Зависимости
+The primary validated target is **Windows x64 / MSVC**. Dependencies are pinned to **SDL 3.4.16** and daScript commit `35bf260c0d8a79b94c64005bd3d2435adcf7e261`.
 
-- daScript: сабмодуль `third_party/daScript`, коммит
-  `35bf260c0d8a79b94c64005bd3d2435adcf7e261` (0.6.4).
-- SDL: `release-3.4.16`, загружается CMake FetchContent.
-- Опционально: [ImGui и SDL_image](examples/libraries/README.md),
-  [SDL_ttf 3.2.2](docs/sdl-ttf.md) (`DASSDL3_WITH_TTF=ON`, FreeType 2.14.3 и HarfBuzz 10.4.0).
-- CMake 3.24+, Git, компилятор C++17. Проверено на Windows x64,
-  MSVC 19.38, Ninja и CMake 3.31.6.
-- Только для повторной генерации: Python 3 и toolchain выбранного backend:
-  libclang 22.1.5/dasClangBind для CppGenBind, Clang 16.0.5 для baseline/census.
-  См. [настройку](docs/clangbind-setup.md); обычный consumer не требует LLVM.
+The Windows inventory records **1,062 generated functions and 13 adapted functions out of 1,263**. The remaining 188 have explicit decisions: 169 Stdinc functions and 19 host, standard-library, C ABI or deferred operations. They are not counted as implemented. All 95 active Windows SDL GPU function declarations are generated.
 
-При клонировании проекта используйте `git clone --recurse-submodules`.
-В существующей копии: `git submodule update --init --recursive`.
-У зафиксированного коммита daScript файл `.gitmodules` пуст: вложенных
-сабмодулей сейчас нет.
+The record audit classifies **840 fields across 122 complete records**, with no remaining `pending` or `partial` field-access entries. Some fields deliberately remain native-only or SDL-internal; classification does not imply unrestricted script access.
 
-## Сборка и запуск
+Tests cover interpreter, both binding generators, strict AOT and a separate installed-SDK consumer. This is not a claim of complete SDL coverage or validation on every platform/device. See [coverage](docs/api-coverage.md), [remaining API decisions](docs/remaining-api-policy.md) and [record access](docs/record-field-accessibility.md).
 
-Из **Developer PowerShell / x64 Native Tools Command Prompt for VS 2022**,
-в корне проекта (Ninja должен быть доступен):
+## Getting started
+
+Requirements: Git, CMake 3.24+, Ninja, Visual Studio 2022 C++ tools and Windows SDK. Tested with MSVC 19.38. The first build downloads dependencies.
+
+From a **VS 2022 x64 developer shell**:
 
 ```powershell
+git clone --recurse-submodules https://github.com/spiiin/dasSDL3.git
+cd dasSDL3
 cmake -S . -B build/ninja -G Ninja -DCMAKE_BUILD_TYPE=Release
-cmake --build build/ninja --target daslang_static dasSDL3_runner --parallel 6
-./third_party/daScript/bin/daslang_static.exe examples/01_hello.das
+cmake --build build/ninja --target dasSDL3_runner --parallel 6
 ./build/ninja/bin/dasSDL3_runner.exe examples/02_square.das
 ```
 
-Альтернатива с генератором Visual Studio:
+For an existing checkout, run `git submodule update --init --recursive` first. CMake downloads the pinned SDL source through FetchContent. The default build uses committed binding snapshots and needs **neither LLVM nor Python**.
 
-```powershell
-cmake -S . -B build/vs -A x64
-cmake --build build/vs --config Release --target daslang_static dasSDL3_runner --parallel 6
-./build/vs/bin/Release/dasSDL3_runner.exe examples/02_square.das
-```
+SDL and daScript are linked statically; no SDL3.dll is needed. The development runner uses script modules and the standard library from the source checkout. For applications outside the repository, use the [installed SDK](docs/sdk.md).
 
-В этой рабочей копии уже собран `build/ninja/bin/dasSDL3_runner.exe`.
-При настройке использована существующая копия SDL из C++ примера:
+## Script API
 
-```powershell
-cmake -S . -B build/ninja -DFETCHCONTENT_SOURCE_DIR_SDL3=C:/src/dasSDL3/test-app/build/_deps/sdl3-src
-```
-
-Это локальная оптимизация загрузки; новая копия проекта самостоятельно
-скачивает SDL, когда этот параметр не задан. Оригинальный `test-app` остаётся
-отдельным C++ примером.
-
-SDL и daScript линкуются статически. Копировать SDL3.dll не нужно.
-Runner использует `daslib` из исходников daScript; каталог исходников нужен
-при запуске. Путь к нему записывается в runner во время сборки. Для переноса
-в другую папку пересоберите runner; упаковка отдельного дистрибутива пока
-не реализована.
-
-## VS Code: language server
-
-В проекте используется расширение `profelis.dascript-plugin` (daScript language
-support) с зависимостью `eguskov.dascript`. Настройки `.vscode/settings.json`
-выбирают отдельный host с настоящими нативными SDL3 bindings:
-
-```powershell
-cmake --build build/ninja --target dasSDL3_language_server --parallel 6
-```
-
-После первой сборки выполните **Developer: Reload Window** в VS Code.
-Host запускает `validate_file.das` установленного расширения, поддерживает
-`--version` и аргументы валидатора после `--`. Он регистрирует `sdl3` и корень
-`dassdl3` также для вложенной компиляции файлов редактора. Обычный `daslang`
-эти bindings не содержит, а `dasSDL3_runner` ожидает другой `main`.
-
-Доступны диагностика, автодополнение, подсказки типов и навигация. Установленная
-версия расширения 1.3.7 не предоставляет semantic tokens: раскраска остаётся
-синтаксической. После изменений C++ bindings пересоберите host. Пути к исходникам
-записываются при сборке; после переноса проекта нужна повторная сборка.
-Для Visual Studio build измените `dascript.compiler` на фактический путь
-`build/vs/bin/Release/dasSDL3_language_server.exe`.
-
-
-## Устройство привязки
-
-Низкоуровневый модуль подключается через `require sdl3`. Пример использует
-`require dassdl3/sdl3_boost`: проверяемые операции и блоки владения ресурсами
-без `unsafe` и ручного получения адресов. Runner регистрирует модуль,
-компилирует `.das` и вызывает `[export] def main(smoke : bool) : int`.
-Возвращаемое значение становится кодом завершения процесса; ошибки
-компиляции, неверная сигнатура main и исключения дают ненулевой код.
-
-- `tools/bindings.json` — список экспортируемых функций, типов и констант.
-- `tools/generate_bindings.py` — анализ заголовков настоящим Clang AST.
-- `src/generated/` — сгенерированные регистрации и описание сигнатур.
-- `src/sdl3_adapters.h` — ручные фабрики значений и работа с событиями.
-- `daslib/defer` в boost-модулях — освобождение ресурсов при обычном/раннем выходе.
-- `src/module_sdl3.cpp` — модуль и подключение ручных адаптеров.
-- `dassdl3/sdl3_boost.das` — идиоматичный слой daScript.
-- `examples/02_square.das` — цикл событий и вся логика отрисовки на daScript.
-- `examples/04_textures.das` — BMP, текстуры, масштабирование и обрезка изображения.
-- `examples/03_input.das` — мышь, клавиатура, текстовый ввод и композиция IME.
-- `docs/input.md` — API ввода, время жизни текста и ограничения проверок.
-- `examples/08_audio.das` — WAV и воспроизведение через аудиопоток.
-- `dassdl3/sdl3_audio_boost.das`, `docs/audio.md` — аудиообёртки и их контракты.
-- `docs/api-coverage.md` — покрытие подсистем и оставшаяся работа.
-- `docs/bgfx-idioms.md` — изученные идиомы dasBGFX с источниками.
-- `docs/sdl3-boost.md` — принятые решения, ограничения и результаты проверок.
-- `AGENTS.md` — указатель на эти знания для следующих сессий в проекте.
-
-Подход изучен на `dasBGFX/src/dasBGFX.cpp`, `dasBGFX.main.cpp` и
-`daScript/modules/dasClangBind/bind/bind_bgfx.das`: генерируемые регистрации
-отделены от ручных дополнений; аргументы Uint8/Uint16 доступны как uint.
-CppGenBind с libclang 22.1.5 — основной генератор для MSVC Windows x64.
-Python/Clang JSON AST остаётся baseline/fallback. Отбор экспортов общий;
-ownership и языковые адаптеры не выводятся автоматически из C-сигнатур.
-
-SDL_Window и SDL_Renderer доступны как непрозрачные указатели. В примере
-время жизни задают блоки:
+Save this example as `hello.das` in the repository root, then run `./build/ninja/bin/dasSDL3_runner.exe hello.das`. Escape or close exits.
 
 ```das
-require dassdl3/sdl3_boost
-require dassdl3/sdl3_try
+options gen2
+require dassdl3/sdl3_init_boost
+require dassdl3/sdl3_scope
+require dassdl3/sdl3_events
 
-let result = with_sdl() {
-    return with_window("Hello", 800, 600, SDL_WINDOW_RESIZABLE) $(window : SDL_Window?) {
-        return window |> with_renderer() $(renderer : SDL_Renderer?) {
+[export]
+def main(smoke : bool) : int {
+    let result = sdl_scope() {
+        with_sdl(SDL_INIT_VIDEO) |> sdl_use
+        let flags = smoke ? SDL_WINDOW_HIDDEN : SDL_WINDOW_RESIZABLE
+        let window : SDL_Window? = with_window("Hello, SDL3", 640, 480, flags) |> sdl_use
+        let renderer : SDL_Renderer? = window |> with_renderer() |> sdl_use
+        var running = true
+        while (running) {
+            for (event in poll_events()) {
+                if (should_close(event, window)) { running = false; break }
+            }
+            if (!running) { break }
             renderer |> clear() |> sdl_try
-            return renderer |> present()
+            renderer |> present() |> sdl_try
+            if (smoke) { break }
+            SDL_Delay(16u)
         }
+        return sdl_ok()
     }
+    if (is_err(result)) {
+        let error = unwrap_err(result)
+        print("{error.operation}: {error.message}\n")
+        return 1
+    }
+    return 0
 }
-if (is_err(result)) {
-    let error = unwrap_err(result)
-    print("{error.operation}: {error.message}\n")
-}
 ```
 
-Блоки освобождают renderer, затем окно, затем вызывают SDL_Quit. Очистка выполняется через
-`defer` при обычном и раннем выходе. Ошибки boost возвращаются как Result/Option,
-без panic и перехвата. `with_*` возвращает Err при неудачном создании и не
-вызывает блок. Произвольный panic приложения по-прежнему обходит defer;
-см. [контракт ошибок](docs/error-handling.md).
-Для раннего возврата ошибки можно подключить `dassdl3/sdl3_try`:
-`let size = texture_size(texture) |> sdl_try` и `renderer |> present() |> sdl_try`.
-См. [контракт макроса](docs/sdl-try.md) и [пример](examples/results/02_sdl_try.das).
-Ссылочные адаптеры C++ позволяют poll_event/push_event/fill_rect работать
-без unsafe в скриптовом слое. Цвет задаётся uint4 RGBA в диапазоне 0..255.
+`require sdl3` exposes low-level bindings. The `dassdl3/*` modules add language and lifetime helpers. `sdl_try` returns errors to the caller; `sdl_use` nests the remaining scope inside the corresponding `with_*` call. Resources are released through `defer` on normal and early returns.
 
-Указатели внутри блоков заимствованы: их нельзя сохранять для последующего
-использования или вручную уничтожать. Уникальное владение системой типов
-не обеспечивается. Используйте один внешний with_sdl; вложенные независимые
-SDL-сессии этим слоем не поддерживаются.
+Resource pointers inside scopes are borrowed, not unique owning types: do not retain or manually destroy them. Arbitrary application panic is outside the deferred-cleanup guarantee. Native callback setters accept **C function addresses**, not retained daScript closures. See [scope macros](docs/sdl-scope.md), [errors](docs/error-handling.md) and [callbacks](docs/native-callbacks.md).
 
-SDL_Event сохраняет настоящий размер и выравнивание C union. Наружу
-экспортируется поле `event_type` (C-поле `type` — ключевое слово daScript).
-`SDL_EventIsEscape` читает key только для SDL_EVENT_KEY_DOWN.
-`SDL_MakeEvent` обнуляет union; `SDL_MakeKeyEvent` нужен для формирования
-и проверки событий клавиатуры. `SDL_MakeFRect` создаёт прямоугольник.
+## Examples
 
-Пустая строка имени renderer выбирает драйвер по умолчанию. Цветовые
-компоненты передаются как uint в диапазоне 0..255. Строку SDL_GetError
-следует использовать сразу: это сообщение из внутреннего буфера SDL.
-Callbacks, varargs, остальные устройства и универсальные владеющие типы
-пока не входят в эту версию. Interpreter и строгий AOT проверяются в parity;
-JIT не заявлен как проверенный режим.
+| Area | Start here |
+| --- | --- |
+| 2D rendering | [Moving square](examples/02_square.das), [textures](examples/04_textures.das), [geometry](examples/07_geometry.das) |
+| Result and events | [sdl_try](examples/results/02_sdl_try.das), [owned event iteration](examples/results/03_poll_events.das) |
+| SDL GPU | [GPU examples](examples/gpu/README.md), including the bgfx metaballs port |
+| Pixel memory | [Scoped surface bytes](examples/93_surface_bytes.das) |
+| Audio | [Audio stream](examples/08_audio.das) |
+| Companion libraries | [Library examples](examples/libraries/README.md) |
+| Browser | [Web guide](web/README.md), [OpenGL examples](examples/web/opengl/README.md) |
 
-## Пример с текстурами
+Most desktop examples accept `--smoke-test` for a bounded run:
 
 ```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/04_textures.das
-./build/ninja/bin/dasSDL3_runner.exe examples/04_textures.das --smoke-test
-```
-
-Основа — public-domain пример SDL 3.4.16 `examples/renderer/06-textures`.
-Используется собственный BMP из `examples/assets`; CMake копирует его рядом
-с runner в `bin/assets`. Путь определяется через SDL_GetBasePath и не зависит
-от текущей папки. Обычный запуск работает до Escape/закрытия окна;
-smoke-test отрисовывает 60 кадров в скрытом окне.
-
-`with_bmp(path) $(surface) { ... }` владеет поверхностью. `create_texture`
-копирует её пиксели, не забирая владение. `renderer |> with_texture(path)
-$(texture) { ... }` загружает BMP, сразу освобождает временную поверхность,
-а текстуру уничтожает при выходе из блока, до renderer. `texture_size`
-возвращает Result<float2,SdlError>. Перегрузки `draw_texture` рисуют всю текстуру, масштабируют
-её в dst или переносят фрагмент src в dst. Пример не требует unsafe.
-
-Тест текстур проверяет пиксели, размеры, реальные вызовы освобождения ресурсов,
-ранний выход и ошибку загрузки. Сборки с BUILD_TESTING=ON содержат
-служебные SDLTest*; это не часть публичного API.
-
-## Пример с вводом
-
-```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/03_input.das
-./build/ninja/bin/dasSDL3_runner.exe examples/03_input.das --smoke-test
-```
-
-Мышь перемещает квадрат, левый клик меняет цвет, колесо меняет размер;
-стрелки двигают квадрат. Введённый текст и незавершённая композиция IME
-отображаются в заголовке окна. Backspace очищает весь текст, Escape завершает
-пример. Для шрифтов внутри сцены потребуется отдельный этап.
-
-`key_event`, `mouse_motion_event`, `mouse_button_event`, `mouse_wheel_event`
-проверяют тип union и копируют данные в отдельную структуру. `text_input_event`
-и `text_editing_event` копируют UTF-8 в память daScript. `with_text_input(window)
-{ ... }` управляет сеансом ввода; `should_close(event, window)` учитывает окно.
-Подробные контракты и покрытие — в `docs/input.md`.
-
-## Пример с аудио
-
-```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/08_audio.das
-ctest --test-dir build/ninja -R '^sdl3_audio' --output-on-failure
-```
-
-Пример один раз проигрывает собственный тихий сигнал 440 Гц из WAV.
-Используется `require dassdl3/sdl3_audio_boost`, одна сессия
-`with_sdl(SDL_INIT_AUDIO)`, блоки `with_wav` и `with_playback`.
-Поток сначала на паузе: после queue_wav/flush_audio нужен resume_audio.
-Скрипт не вызывается из фонового аудиопотока. Для преобразования без устройства
-есть with_audio_stream(src, dst), для массивов uint8 — put_audio/read_audio.
-
-CTest выбирает dummy-драйвер в окружении аудиотестов и не требует колонок.
-Прямой запуск использует устройство по умолчанию. Подробности владения,
-размеров буферов и ограничения определения конца воспроизведения — в docs/audio.md.
-
-## Geometry
-
-```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/07_geometry.das
-ctest --test-dir build/ninja -R '^sdl3_geometry' --output-on-failure
-```
-
-`require dassdl3/sdl3_geometry_boost` добавляет `vertex` и `draw_geometry`
-для массивов вершин и индексов. Пример показывает цветной треугольник и
-текстурированный прямоугольник; `--smoke-test` ограничивает его 60 кадрами.
-[Контракты geometry](docs/geometry.md).
-
-## Пиксели и render target
-
-```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/05_streaming_texture.das
-./build/ninja/bin/dasSDL3_runner.exe examples/06_render_target.das
-ctest --test-dir build/ninja -R '^sdl3_(pixels|streaming_example|target_example)$' --output-on-failure
-```
-
-`require dassdl3/sdl3_pixels_boost` добавляет RGBA8 upload из собственного массива,
-scopes streaming/target texture и readback. Примеры не требуют unsafe; для
-ограниченного запуска добавьте `--smoke-test`. [Контракты и проверки](docs/pixels.md).
-
-## Повторная генерация
-
-Установка LLVM SDK и проверка экспериментального dasClangBind описаны в
-[docs/clangbind-setup.md](docs/clangbind-setup.md). Для MSVC Windows x64 теперь
-по умолчанию используются сохранённые CppGenBind-привязки; обычная сборка не
-требует LLVM/Python. [Выбор backend, генерация и consumer](docs/clangbind-production.md).
-Ограниченная генерация CppGenBind и строгий AOT consumer проверены отдельно:
-[результаты и команды](docs/clangbind-experiment.md).
-Совместимость текущих generated функций и interpreter-примеров проверяется
-отдельным [parity-проектом](docs/clangbind-parity.md). Теперь он также
-[генерирует типы/константы и проверяет ресурсный AOT](docs/clangbind-types-aot.md).
-
-Для прежнего backend (`-DDASSDL3_BINDING_BACKEND=python`) укажите папку,
-в которой находится `SDL3/SDL.h`:
-
-```powershell
-python tools/generate_bindings.py --clang clang --sdl-include build/ninja/_deps/sdl3-src/include
-python tools/generate_bindings.py --clang clang --sdl-include build/ninja/_deps/sdl3-src/include --check
-```
-
-При использовании локальной копии SDL укажите её `include` вместо пути выше.
-Clang можно задать полным путём. При `-DDASSDL3_ENABLE_GENERATORS=ON`,
-если CMake найдёт Python и Clang (либо
-получит `-DDASSDL3_CLANG_EXECUTABLE=...`), будет доступна цель
-`cmake --build build/ninja --target generate_bindings`.
-После генерации пересоберите runner. Генератор не меняет ручные адаптеры.
-Вывод генератора хранится в проекте, поэтому обычная сборка не требует Clang.
-
-## Проверки
-
-```powershell
-ctest --test-dir build/ninja -R "^(sdl3_|bindings_up_to_date)" --output-on-failure
 ./build/ninja/bin/dasSDL3_runner.exe examples/02_square.das --smoke-test
 ```
 
-Проверяются запуск daScript, версия SDL, чтение/изменение полей,
-распознавание Escape и Quit, передача события через очередь SDL и
-отрисовка 60 кадров в скрытом окне с освобождением ресурсов. При наличии
-Clang дополнительно проверяется воспроизводимость генерации.
-Отдельный тест boost проверяет очистку ресурсов при обычном/раннем выходе,
-ошибке SDL, неудачном создании renderer и недопустимом цвете, а также сохранение
-сообщения об ошибке. Состояние окна и renderer проверяется до SDL_Quit.
+See the [example index](examples/README.md) for the complete list and runtime requirements.
 
-GPU buffer copy and asynchronous fence/readback example (no window):
+## Optional libraries
 
-```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/23_gpu_copy_readback.das
-```
+All integrations are disabled by default.
 
-Contract: [GPU transfers](docs/gpu-transfer.md).
+| Integration | CMake option | Documentation |
+| --- | --- | --- |
+| daScript ImGui + SDL3 | `DASSDL3_WITH_IMGUI` | [ImGui example](examples/libraries/README.md) |
+| SDL_image | `DASSDL3_WITH_IMAGE` | [Images](docs/sdl-image.md) |
+| SDL_ttf | `DASSDL3_WITH_TTF` | [Fonts and text](docs/sdl-ttf.md) |
+| SDL_net | `DASSDL3_WITH_NET` | [Networking](docs/sdl-net.md) |
+| SDL_mixer | `DASSDL3_WITH_MIXER` | [Mixing and playback](docs/sdl-mixer.md) |
+| SDL_sound | `DASSDL3_WITH_SOUND` | [Decoding](docs/sdl-sound.md) |
+| SDL_shadercross | `DASSDL3_WITH_SHADERCROSS` | [Shader translation](docs/sdl-shadercross.md) |
 
-Texture-region upload/copy/readback with mip/layer selection:
-
-```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/24_gpu_texture_transfers.das
-```
-
-[Texture transfer contract](docs/gpu-texture-transfer.md).
-
-GPU format queries and R8 texture roundtrip:
+For example:
 
 ```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/25_gpu_formats.das
+cmake -S . -B build/ninja -DDASSDL3_WITH_IMAGE=ON
+cmake --build build/ninja --target dasSDL3_libraries_runner --parallel 6
+./build/ninja/bin/dasSDL3_libraries_runner.exe examples/libraries/02_image.das
 ```
 
-[Format contracts](docs/gpu-formats.md).
+Each integration has its own dependency, codec and platform requirements; see its documentation before enabling it.
 
-GPU API packages 26–29 add encoded BC transfers, cube faces, driver queries and
-resource names. Contracts: [docs/gpu-texture-types.md](docs/gpu-texture-types.md).
-From the repository root, for example:
+## Web
+
+The experimental web profile uses a single-threaded wasm32 interpreter and a selected SDL API subset. It supports SDL Renderer and audio examples, plus OpenGL examples using daScript's existing bindings. It does not provide desktop API parity or an SDL GPU/WebGPU backend.
+
+Build with Emscripten 5.0.3 using `web/build.cmd`, then serve the generated pages:
 
 ```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/26_gpu_bc_blocks.das
-./build/ninja/bin/dasSDL3_runner.exe examples/27_gpu_cube_faces.das
+python -m http.server 8080 --bind 127.0.0.1 --directory build/web/site
 ```
 
-Swapchain API examples 30–32 cover supported present modes/compositions,
-configuration and frames-in-flight. [Contracts and tests](docs/gpu-swapchain.md).
+Open <http://localhost:8080/>. Full setup and browser requirements are in the [Web guide](web/README.md).
+
+## Embedding and AOT
+
+The [core SDK](docs/sdk.md) installs C++ libraries, headers, script modules, the standard library, CMake targets and an AOT generator. An external application can use:
+
+```cmake
+find_package(dasSDL3 CONFIG REQUIRED)
+target_link_libraries(my_app PRIVATE dasSDL3::dasSDL3)
+```
+
+`dassdl3_add_aot(...)` adds compiled script registrations. The supported SDK profile is Windows x64, MSVC, single-config Release and `/MD`; companion libraries are not included. Consumers need neither LLVM nor Python. AOT applications still load script sources and standard-library resources; they are not source-free executables.
+
+See the [SDK instructions](docs/sdk.md) and [standalone consumer](examples/sdk-consumer).
+
+## Development
+
+Bindings are selected in `tools/bindings.json`. CppGenBind/dasClangBind is the primary Windows generator; Python/Clang AST is the reference backend. Both use committed snapshots. Ownership, callbacks and array adapters are implemented explicitly.
+
+- [Generator setup](docs/clangbind-setup.md) and [snapshot workflow](docs/clangbind-production.md)
+- [Interpreter/AOT parity](docs/clangbind-parity.md)
+- [API inventory](docs/api-inventory.md) and [record-field audit](docs/record-field-accessibility.md)
+- [Architecture](docs/gpu-api-boundary.md) and [roadmap](docs/full-binding-roadmap.md)
+
+Build the configured test targets before running CTest:
 
 ```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/31_gpu_present_modes.das
-./build/ninja/bin/dasSDL3_runner.exe examples/32_gpu_frame_latency.das
+cmake --build build/ninja --parallel 6
+ctest --test-dir build/ninja --output-on-failure
 ```
 
-GPU image examples 33–35 cover color-target texture ownership, generated mips
-and scaled blits, with public readback. [Contracts and tests](docs/gpu-image.md).
-
-```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/34_gpu_mipmaps.das
-./build/ninja/bin/dasSDL3_runner.exe examples/35_gpu_scaled_blit.das
-```
-
-GPU descriptors and independent resources: examples 37–43. Direct render passes,
-vertex/index buffers and textures/uniforms: examples 44–46.
-
-```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/44_gpu_render_pass.das
-./build/ninja/bin/dasSDL3_runner.exe examples/45_gpu_vertex_index_buffers.das
-./build/ninja/bin/dasSDL3_runner.exe examples/46_gpu_texture_uniform_bindings.das
-```
-
-[Direct recording limits](docs/gpu-recording.md) describe the older checked-ID subset.
-The native binding now exposes all 92 GPU functions active in the pinned Windows
-headers, with array/ref adapters and defer scopes for render/copy/compute and
-swapchain presentation. See [native GPU guide](docs/gpu-native-boost.md) and
-[validation results](docs/gpu-native-validation.md) for the tested contracts and
-backend limits. Examples 30–32 query/configure window properties; example 48
-presents frames through the native API.
-
-Native SDL GPU command/fence lifecycle: [example 47](examples/47_gpu_native_fences.das)
-and [contract](docs/gpu-native-fences.md). Original SDL pointers/results, generated
-signatures, borrowed fence-array adapter and explicit defer ownership.
-
-## Native GPU examples
-
-```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/48_gpu_native_graphics.das
-./build/ninja/bin/dasSDL3_runner.exe examples/49_gpu_native_compute.das
-./build/ninja/bin/dasSDL3_runner.exe examples/50_gpu_native_transfer.das
-```
-
-[Creation/transfers/defer contract](docs/gpu-native-boost.md) ·
-[Validation and backend limits](docs/gpu-native-validation.md).
-
-## Properties
-
-```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/51_properties.das
-```
-
-[Properties contract](docs/properties.md): typed values, copied strings/names,
-owned groups and lock scopes. Retained script cleanup callbacks remain pending.
-
-Hints and subsystem initialization: [contract](docs/init-hints.md),
-[example 52](examples/52_init_hints.das). Run from the repository root:
-
-```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/52_init_hints.das
-```
-
-Error/log/time: [contract](docs/diagnostics-time.md),
-[example 53](examples/53_diagnostics_time.das).
-
-```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/53_diagnostics_time.das
-```
-
-Video discovery: [contract](docs/video-discovery.md), [example 54](examples/54_video_discovery.das).
-
-```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/54_video_discovery.das
-```
-
-Window creation/state: [contract](docs/window-state.md), [example 55](examples/55_window_properties.das).
-
-```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/55_window_properties.das
-```
-
-Window surfaces: [contract](docs/window-io.md), [example 56](examples/56_window_surface.das).
-
-```powershell
-./build/ninja/bin/dasSDL3_runner.exe examples/56_window_surface.das
-```
-
-Software renderer: [contract](docs/renderer-primitives.md), [example 57](examples/57_software_renderer.das).
-```powershell
-.\build\ninja\bin\dasSDL3_runner.exe examples/57_software_renderer.das
-```
-
-Renderer state: [contract](docs/renderer-state.md), [example 58](examples/58_renderer_state.das).
-```powershell
-.\build\ninja\bin\dasSDL3_runner.exe examples/58_renderer_state.das
-```
-
-Logical presentation: [contract](docs/renderer-presentation.md), [example 59](examples/59_renderer_presentation.das).
-```powershell
-.\build\ninja\bin\dasSDL3_runner.exe examples/59_renderer_presentation.das
-```
-
-Texture state: [contract](docs/texture-state.md), [example 60](examples/60_texture_state.das).
-```powershell
-.\build\ninja\bin\dasSDL3_runner.exe examples/60_texture_state.das
-```
-
-Texture transfers: [contract](docs/texture-transfer.md), [example 61](examples/61_texture_transfer.das).
-```powershell
-.\build\ninja\bin\dasSDL3_runner.exe examples/61_texture_transfer.das
-```
-
-YUV and blending: [contract](docs/renderer-yuv-blend.md), [example 62](examples/62_renderer_yuv_blend.das).
-```powershell
-.\build\ninja\bin\dasSDL3_runner.exe examples/62_renderer_yuv_blend.das
-```
-
-Renderer operations: [contract](docs/renderer-operations.md), [example 63](examples/63_renderer_operations.das).
-```powershell
-.\build\ninja\bin\dasSDL3_runner.exe examples/63_renderer_operations.das
-```
-
-Renderer raw geometry: [contract](docs/renderer-final-api.md), [example 64](examples/64_renderer_raw_geometry.das).
-```powershell
-.\build\ninja\bin\dasSDL3_runner.exe examples/64_renderer_raw_geometry.das
-```
-
-Surface state: [contract](docs/surface-state.md), [example 65](examples/65_surface_state.das).
-```powershell
-.\build\ninja\bin\dasSDL3_runner.exe examples/65_surface_state.das
-```
-
-Surface/Pixels: [contract](docs/surface-pixels.md), [example 66](examples/66_surface_pixels.das).
-```powershell
-.\build\ninja\bin\dasSDL3_runner.exe examples/66_surface_pixels.das
-```
-
-P2 Rect/Clipboard/hit-test: [contracts and tests](docs/rect-clipboard-hittest.md). GL/EGL is explicitly deferred to P8.
-
-Optional **SDL_net 3.2.0**: `DASSDL3_WITH_NET=ON`, import `dassdl3/sdl3_net_boost`; [TCP/UDP example and contracts](docs/sdl-net.md).
-
-SDL core is pinned to **3.4.16**. [Upgrade notes and new API queue](docs/sdl-3.4-upgrade.md).
-
-Optional **SDL_mixer 3.2.4**: `DASSDL3_WITH_MIXER=ON`, import `dassdl3/sdl3_mixer_boost`; [example, codec profile and contracts](docs/sdl-mixer.md).
-
-Optional **SDL_sound 3.2.0**: `DASSDL3_WITH_SOUND=ON`, import `dassdl3/sdl3_sound_boost`; [PCM decoding example and contracts](docs/sdl-sound.md).
-
-Optional **SDL_shadercross**: `DASSDL3_WITH_SHADERCROSS=ON`; [offline compiler, runtime bindings and contracts](docs/sdl-shadercross.md).
+Some tests require graphics drivers, devices or optional dependencies. Generator freshness and parity checks require the separately documented developer toolchain; the default build does not enable them.

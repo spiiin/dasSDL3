@@ -82,7 +82,12 @@ def ast_inventory(tree, include, contents):
         filename = loc.get("file", inherited or last_file)
         header = header_name(filename, include)
         kind, name = KINDS.get(node.get("kind")), node.get("name", "")
-        if header and kind and public_name(name) and not node.get("isImplicit"):
+        # SDL_vulkan.h declares a small set of foreign native ABI types itself.
+        # Count those declarations, not arbitrary Vk-prefixed functions/macros.
+        vulkan_type = header == "SDL_vulkan.h" and kind in ("record", "typedef") and name in {
+            "VkInstance", "VkInstance_T", "VkPhysicalDevice", "VkPhysicalDevice_T",
+            "VkSurfaceKHR", "VkSurfaceKHR_T", "VkAllocationCallbacks"}
+        if header and kind and (public_name(name) or vulkan_type) and not node.get("isImplicit"):
             offset = loc.get("offset", 0)
             line = loc.get("line") or contents[header][:offset].count(b"\n") + 1
             item = {"name": name, "kind": kind, "header": header, "line": line}

@@ -4,7 +4,7 @@ require dassdl3/sdl3_scope
 
 // A normal run opens the first camera. Smoke mode only enumerates dummy devices.
 // Keep every borrowed surface inside this block. Copy it if it must outlive release.
-def read_one_frame(camera : SDL_Camera?) : $Result<SdlUnit; SdlError> {
+def read_one_frame(camera : SDL_Camera?) : SdlStatus {
     let deadline=SDL_GetTicks()+5000ul
     while(SDL_GetTicks()<deadline) {
         SDL_PumpEvents()
@@ -26,7 +26,7 @@ def read_one_frame(camera : SDL_Camera?) : $Result<SdlUnit; SdlError> {
     print("No frame within five seconds; permission may still be pending.\n")
     return sdl_ok()
 }
-def example(smoke : bool) : $Result<SdlUnit; SdlError> {
+def example(smoke : bool) : SdlStatus {
     return sdl_scope() {
         with_sdl(SDL_INIT_CAMERA) |> sdl_use
         let ids <- cameras() |> sdl_try

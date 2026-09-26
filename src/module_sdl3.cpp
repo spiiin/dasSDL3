@@ -13,6 +13,7 @@
 #include "sdl3_storage.h"
 #include "sdl3_asyncio.h"
 #include "sdl3_event_callbacks.h"
+#include "sdl3_native_callbacks.h"
 #include "sdl3_audio.h"
 #include "sdl3_audio_devices.h"
 #include "sdl3_audio_stream_controls.h"
@@ -23,6 +24,8 @@
 #include "sdl3_process_loadso.h"
 #include "sdl3_platform_services.h"
 #include "sdl3_common_api.h"
+#include "sdl3_gl_egl.h"
+#include "sdl3_vulkan_metal.h"
 #include "sdl3_pixels.h"
 #include "sdl3_geometry.h"
 #include "sdl3_gpu.h"
@@ -76,6 +79,9 @@
 #include "../tests/controller_events_probe.h"
 #include "../tests/hotplug_probe.h"
 #include "../tests/common_api_probe.h"
+#include "../tests/gl_probe.h"
+#include "../tests/native_callback_probe.h"
+#include "../tests/vulkan_interop_probe.h"
 #include "../tests/peripheral_events_probe.h"
 #include "../tests/peripherals_probe.h"
 #include "../tests/event_lists_probe.h"
@@ -525,6 +531,13 @@ public:
         addExtern<DAS_BIND_FUN(SDL_OpenURLText)>(*this,lib,"SDL_OpenURLText",SideEffects::worstDefault,"SDL_OpenURLText");
         addExtern<DAS_BIND_FUN(SDL_ShowMessageBoxArray)>(*this,lib,"SDL_ShowMessageBoxArray",SideEffects::worstDefault,"SDL_ShowMessageBoxArray");
         addExtern<DAS_BIND_FUN(SDL_ShowMessageBoxColors)>(*this,lib,"SDL_ShowMessageBoxColors",SideEffects::worstDefault,"SDL_ShowMessageBoxColors");
+        addExtern<DAS_BIND_FUN(SDL_Vulkan_LoadLibraryDefault)>(*this,lib,"SDL_Vulkan_LoadLibraryDefault",SideEffects::worstDefault,"SDL_Vulkan_LoadLibraryDefault");
+        addExtern<DAS_BIND_FUN(SDL_Vulkan_CreateSurfaceRef)>(*this,lib,"SDL_Vulkan_CreateSurfaceRef",SideEffects::worstDefault,"SDL_Vulkan_CreateSurfaceRef");
+        addExtern<DAS_BIND_FUN(SDL_Vulkan_DestroySurfaceRef)>(*this,lib,"SDL_Vulkan_DestroySurfaceRef",SideEffects::worstDefault,"SDL_Vulkan_DestroySurfaceRef");
+        addExtern<DAS_BIND_FUN(SDL_Vulkan_GetInstanceExtensionsCopy)>(*this,lib,"SDL_Vulkan_GetInstanceExtensionsCopy",SideEffects::worstDefault,"SDL_Vulkan_GetInstanceExtensionsCopy");
+        addExtern<DAS_BIND_FUN(SDL_GL_LoadLibraryDefault)>(*this,lib,"SDL_GL_LoadLibraryDefault",SideEffects::worstDefault,"SDL_GL_LoadLibraryDefault");
+        addExtern<DAS_BIND_FUN(SDL_GL_GetAttributeRef)>(*this,lib,"SDL_GL_GetAttributeRef",SideEffects::worstDefault,"SDL_GL_GetAttributeRef");
+        addExtern<DAS_BIND_FUN(SDL_GL_GetSwapIntervalRef)>(*this,lib,"SDL_GL_GetSwapIntervalRef",SideEffects::worstDefault,"SDL_GL_GetSwapIntervalRef");
         addExtern<DAS_BIND_FUN(SDL_ReadDisplayEvent)>(*this,lib,"SDL_ReadDisplayEvent",SideEffects::worstDefault,"SDL_ReadDisplayEvent");
         addExtern<DAS_BIND_FUN(SDL_ReadRenderEvent)>(*this,lib,"SDL_ReadRenderEvent",SideEffects::worstDefault,"SDL_ReadRenderEvent");
         addExtern<DAS_BIND_FUN(SDL_ReadPinchEvent)>(*this,lib,"SDL_ReadPinchEvent",SideEffects::worstDefault,"SDL_ReadPinchEvent");
@@ -850,6 +863,30 @@ public:
         addExtern<DAS_BIND_FUN(sdl3_callback_test::provider)>(*this,lib,"SDLTestClipboardProvider",SideEffects::worstDefault,"sdl3_callback_test::provider");
         addExtern<DAS_BIND_FUN(sdl3_callback_test::cleaner)>(*this,lib,"SDLTestClipboardCleaner",SideEffects::worstDefault,"sdl3_callback_test::cleaner");
         addExtern<DAS_BIND_FUN(sdl3_callback_test::hitter)>(*this,lib,"SDLTestHitCallback",SideEffects::worstDefault,"sdl3_callback_test::hitter");
+        addExtern<DAS_BIND_FUN(sdl3_vk_test::allocator)>(*this,lib,"SDLTestVkAllocator",SideEffects::worstDefault,"sdl3_vk_test::allocator");
+        addExtern<DAS_BIND_FUN(sdl3_vk_test::live)>(*this,lib,"SDLTestVkLive",SideEffects::worstDefault,"sdl3_vk_test::live");
+        addExtern<DAS_BIND_FUN(sdl3_vk_test::create)>(*this,lib,"SDLTestVkCreateInstance",SideEffects::worstDefault,"sdl3_vk_test::create");
+        addExtern<DAS_BIND_FUN(sdl3_vk_test::destroy)>(*this,lib,"SDLTestVkDestroyInstance",SideEffects::worstDefault,"sdl3_vk_test::destroy");
+        addExtern<DAS_BIND_FUN(sdl3_vk_test::physical)>(*this,lib,"SDLTestVkPhysical",SideEffects::worstDefault,"sdl3_vk_test::physical");
+        addExtern<DAS_BIND_FUN(sdl3_vk_test::queue)>(*this,lib,"SDLTestVkQueue",SideEffects::worstDefault,"sdl3_vk_test::queue");
+        addExtern<DAS_BIND_FUN(sdl3_vk_test::support)>(*this,lib,"SDLTestVkSupport",SideEffects::worstDefault,"sdl3_vk_test::support");
+        addExtern<DAS_BIND_FUN(SDLTestCallbackAddress)>(*this,lib,"SDLTestCallbackAddress",SideEffects::worstDefault,"SDLTestCallbackAddress");
+        addExtern<DAS_BIND_FUN(SDLTestCallbackData)>(*this,lib,"SDLTestCallbackData",SideEffects::worstDefault,"SDLTestCallbackData");
+        addExtern<DAS_BIND_FUN(SDLTestCallbackCount)>(*this,lib,"SDLTestCallbackCount",SideEffects::worstDefault,"SDLTestCallbackCount");
+        addExtern<DAS_BIND_FUN(SDLTestCallbackCheck)>(*this,lib,"SDLTestCallbackCheck",SideEffects::worstDefault,"SDLTestCallbackCheck");
+        addExtern<DAS_BIND_FUN(SDLTestTimerRelease)>(*this,lib,"SDLTestTimerRelease",SideEffects::worstDefault,"SDLTestTimerRelease");
+        addExtern<DAS_BIND_FUN(SDLTestStartMainWorker)>(*this,lib,"SDLTestStartMainWorker",SideEffects::worstDefault,"SDLTestStartMainWorker");
+        addExtern<DAS_BIND_FUN(SDLTestMainWorkerDone)>(*this,lib,"SDLTestMainWorkerDone",SideEffects::worstDefault,"SDLTestMainWorkerDone");
+        addExtern<DAS_BIND_FUN(SDLTestJoinMainWorker)>(*this,lib,"SDLTestJoinMainWorker",SideEffects::worstDefault,"SDLTestJoinMainWorker");
+        addExtern<DAS_BIND_FUN(SDLTestRecordCookie)>(*this,lib,"SDLTestRecordCookie",SideEffects::worstDefault,"SDLTestRecordCookie");
+        addExtern<DAS_BIND_FUN(SDLTestRecordCallback)>(*this,lib,"SDLTestRecordCallback",SideEffects::worstDefault,"SDLTestRecordCallback");
+        addExtern<DAS_BIND_FUN(SDLTestRecordCount)>(*this,lib,"SDLTestRecordCount",SideEffects::worstDefault,"SDLTestRecordCount");
+        addExtern<DAS_BIND_FUN(SDLTestRecordGood)>(*this,lib,"SDLTestRecordGood",SideEffects::worstDefault,"SDLTestRecordGood");
+        addExtern<DAS_BIND_FUN(SDLTestRecordSurface)>(*this,lib,"SDLTestRecordSurface",SideEffects::worstDefault,"SDLTestRecordSurface");
+        addExtern<DAS_BIND_FUN(SDLTestRecordByte)>(*this,lib,"SDLTestRecordByte",SideEffects::worstDefault,"SDLTestRecordByte");
+        addExtern<DAS_BIND_FUN(SDLTestRecordLocked)>(*this,lib,"SDLTestRecordLocked",SideEffects::worstDefault,"SDLTestRecordLocked");
+        addExtern<DAS_BIND_FUN(SDLTestRecordOptions)>(*this,lib,"SDLTestRecordOptions",SideEffects::worstDefault,"SDLTestRecordOptions");
+        addExtern<DAS_BIND_FUN(SDLTestGLPixel)>(*this,lib,"SDLTestGLPixel",SideEffects::worstDefault,"SDLTestGLPixel");
         addExtern<DAS_BIND_FUN(SDLTestCommonEvent), SimNode_ExtFuncCallAndCopyOrMove>(*this,lib,"SDLTestCommonEvent",SideEffects::none,"SDLTestCommonEvent");
         addExtern<DAS_BIND_FUN(SDLTestOpenURLNull)>(*this,lib,"SDLTestOpenURLNull",SideEffects::worstDefault,"SDLTestOpenURLNull");
         addExtern<DAS_BIND_FUN(SDLTestGUIDBuffer)>(*this,lib,"SDLTestGUIDBuffer",SideEffects::worstDefault,"SDLTestGUIDBuffer");
@@ -926,6 +963,20 @@ public:
         addExtern<DAS_BIND_FUN(SDL_SetTextInputAreaRef)>(*this, lib, "SDL_SetTextInputAreaRef", SideEffects::worstDefault, "SDL_SetTextInputAreaRef");
         addExtern<DAS_BIND_FUN(SDL_GetTextInputAreaRef)>(*this, lib, "SDL_GetTextInputAreaRef", SideEffects::worstDefault, "SDL_GetTextInputAreaRef");
         addExtern<DAS_BIND_FUN(SDL_CreateCursorArray)>(*this, lib, "SDL_CreateCursorArray", SideEffects::worstDefault, "SDL_CreateCursorArray");
+        addExtern<DAS_BIND_FUN(SDL_GetSurfaceMetadata)>(*this,lib,"SDL_GetSurfaceMetadata",SideEffects::worstDefault,"SDL_GetSurfaceMetadata");
+        addExtern<DAS_BIND_FUN(SDL_GetPaletteColorsCopy)>(*this,lib,"SDL_GetPaletteColorsCopy",SideEffects::worstDefault,"SDL_GetPaletteColorsCopy");
+        addExtern<DAS_BIND_FUN(SDL_GetSurfacePlaneInfo)>(*this,lib,"SDL_GetSurfacePlaneInfo",SideEffects::worstDefault,"SDL_GetSurfacePlaneInfo");
+        addExtern<DAS_BIND_FUN(SDL_WithSurfacePlaneBytes)>(*this,lib,"SDL_WithSurfacePlaneBytes",SideEffects::worstDefault,"SDL_WithSurfacePlaneBytes");
+        addExtern<DAS_BIND_FUN(SDL_CreateGPUDeviceWithVulkanOptions)>(*this,lib,"SDL_CreateGPUDeviceWithVulkanOptions",SideEffects::worstDefault,"SDL_CreateGPUDeviceWithVulkanOptions");
+        addExtern<DAS_BIND_FUN(SDL_SetVirtualJoystickDesc_Update)>(*this,lib,"SDL_SetVirtualJoystickDesc_Update",SideEffects::worstDefault,"SDL_SetVirtualJoystickDesc_Update");
+        addExtern<DAS_BIND_FUN(SDL_SetVirtualJoystickDesc_SetPlayerIndex)>(*this,lib,"SDL_SetVirtualJoystickDesc_SetPlayerIndex",SideEffects::worstDefault,"SDL_SetVirtualJoystickDesc_SetPlayerIndex");
+        addExtern<DAS_BIND_FUN(SDL_SetVirtualJoystickDesc_Rumble)>(*this,lib,"SDL_SetVirtualJoystickDesc_Rumble",SideEffects::worstDefault,"SDL_SetVirtualJoystickDesc_Rumble");
+        addExtern<DAS_BIND_FUN(SDL_SetVirtualJoystickDesc_RumbleTriggers)>(*this,lib,"SDL_SetVirtualJoystickDesc_RumbleTriggers",SideEffects::worstDefault,"SDL_SetVirtualJoystickDesc_RumbleTriggers");
+        addExtern<DAS_BIND_FUN(SDL_SetVirtualJoystickDesc_SetLED)>(*this,lib,"SDL_SetVirtualJoystickDesc_SetLED",SideEffects::worstDefault,"SDL_SetVirtualJoystickDesc_SetLED");
+        addExtern<DAS_BIND_FUN(SDL_SetVirtualJoystickDesc_SendEffect)>(*this,lib,"SDL_SetVirtualJoystickDesc_SendEffect",SideEffects::worstDefault,"SDL_SetVirtualJoystickDesc_SendEffect");
+        addExtern<DAS_BIND_FUN(SDL_SetVirtualJoystickDesc_SetSensorsEnabled)>(*this,lib,"SDL_SetVirtualJoystickDesc_SetSensorsEnabled",SideEffects::worstDefault,"SDL_SetVirtualJoystickDesc_SetSensorsEnabled");
+        addExtern<DAS_BIND_FUN(SDL_SetVirtualJoystickDesc_Cleanup)>(*this,lib,"SDL_SetVirtualJoystickDesc_Cleanup",SideEffects::worstDefault,"SDL_SetVirtualJoystickDesc_Cleanup");
+        addExtern<DAS_BIND_FUN(SDL_GetLogOutputFunctionRef)>(*this,lib,"SDL_GetLogOutputFunctionRef",SideEffects::worstDefault,"SDL_GetLogOutputFunctionRef");
         addExtern<DAS_BIND_FUN(SDL_GetEventFilterRef)>(*this, lib, "SDL_GetEventFilterRef", SideEffects::worstDefault, "SDL_GetEventFilterRef");
         addExtern<DAS_BIND_FUN(SDL_FilterEventsBlock)>(*this, lib, "SDL_FilterEventsBlock", SideEffects::worstDefault, "SDL_FilterEventsBlock");
         addExtern<DAS_BIND_FUN(SDL_ReadDropEvent)>(*this, lib, "SDL_ReadDropEvent", SideEffects::worstDefault, "SDL_ReadDropEvent");
