@@ -4,6 +4,46 @@ target_compile_definitions(dasSDL3_libraries_runner PRIVATE
     DASSDL3_DAS_ROOT="${PROJECT_SOURCE_DIR}/third_party/daScript"
     DASSDL3_MODULE_ROOT="${PROJECT_SOURCE_DIR}/dassdl3")
 set_target_properties(dasSDL3_libraries_runner PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+if(DASSDL3_WITH_TTF)
+    add_library(dasSDL3_ttf STATIC module_ttf.cpp)
+    target_link_libraries(dasSDL3_ttf PUBLIC dasSDL3 SDL3_ttf::SDL3_ttf)
+    target_link_libraries(dasSDL3_libraries_runner PRIVATE dasSDL3_ttf)
+    target_compile_definitions(dasSDL3_libraries_runner PRIVATE DASSDL3_WITH_TTF=1)
+    file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/bin/assets/libraries")
+    foreach(asset JetBrainsMono-Regular.ttf OFL.txt AUTHORS.txt Amiri-Regular.ttf Amiri-OFL.txt)
+        configure_file(${PROJECT_SOURCE_DIR}/examples/libraries/assets/${asset}
+            ${CMAKE_BINARY_DIR}/bin/assets/libraries/${asset} COPYONLY)
+    endforeach()
+    file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/bin/assets/libraries/shaders")
+    foreach(shader ttf.vert.spv ttf.frag.spv ttf.vert.dxil ttf.frag.dxil)
+        configure_file(${PROJECT_SOURCE_DIR}/examples/libraries/shaders/${shader}
+            ${CMAKE_BINARY_DIR}/bin/assets/libraries/shaders/${shader} COPYONLY)
+    endforeach()
+    if(BUILD_TESTING)
+        add_executable(dasSDL3_ttf_io_test ${PROJECT_SOURCE_DIR}/tests/ttf_io.cpp)
+        target_link_libraries(dasSDL3_ttf_io_test PRIVATE dasSDL3_ttf)
+        target_compile_definitions(dasSDL3_ttf_io_test PRIVATE
+            DASSDL3_DAS_ROOT="${PROJECT_SOURCE_DIR}/third_party/daScript"
+            DASSDL3_TTF_IO_SCRIPT="${PROJECT_SOURCE_DIR}/tests/ttf_io.das"
+            DASSDL3_TTF_FONT="${PROJECT_SOURCE_DIR}/examples/libraries/assets/JetBrainsMono-Regular.ttf")
+        add_test(NAME sdl3_ttf_io COMMAND dasSDL3_ttf_io_test)
+        set_tests_properties(sdl3_ttf_io PROPERTIES TIMEOUT 60)
+        foreach(driver vulkan direct3d12)
+            foreach(script examples/libraries/05_ttf_gpu tests/ttf_gpu)
+                string(REPLACE "/" "_" name "${script}")
+                add_test(NAME sdl3_${name}_${driver} COMMAND dasSDL3_libraries_runner ${PROJECT_SOURCE_DIR}/${script}.das --smoke-test)
+                set_tests_properties(sdl3_${name}_${driver} PROPERTIES TIMEOUT 90
+                    ENVIRONMENT "SDL_GPU_DRIVER=${driver};SDL_ASSERT=abort;VK_LOADER_LAYERS_DISABLE=${DASSDL3_TEST_VULKAN_LAYERS_DISABLE}"
+                    FAIL_REGULAR_EXPRESSION "VUID-;Validation Error;D3D12 ERROR;D3D12 CORRUPTION")
+            endforeach()
+        endforeach()
+        foreach(script examples/libraries/03_ttf tests/ttf examples/libraries/04_ttf_shaping tests/ttf_shaping)
+            string(REPLACE "/" "_" name "${script}")
+            add_test(NAME sdl3_${name} COMMAND dasSDL3_libraries_runner ${PROJECT_SOURCE_DIR}/${script}.das --smoke-test)
+            set_tests_properties(sdl3_${name} PROPERTIES ENVIRONMENT "SDL_RENDER_DRIVER=software" TIMEOUT 60)
+        endforeach()
+    endif()
+endif()
 if(DASSDL3_WITH_IMAGE)
     add_library(dasSDL3_image STATIC module_image.cpp)
     target_link_libraries(dasSDL3_image PUBLIC dasSDL3 SDL3_image::SDL3_image)

@@ -1,5 +1,7 @@
 # Документация dasSDL3
 
+- [SDL_ttf](sdl-ttf.md): Font/TextEngine/Text, UTF-8, ownership, dependencies and tests.
+
 - [SDL_image](sdl-image.md): PNG/JPEG, surface/texture/animation, IO ownership и тесты.
 
 - [ImGui + SDL3 и примеры дополнительных библиотек](../examples/libraries/README.md).

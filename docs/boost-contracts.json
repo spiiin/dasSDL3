@@ -4045,5 +4045,201 @@
     "contract": "Result",
     "signature": "def public image_animation_delay(animation : IMG_Animation?; index : int)",
     "requires": "DASSDL3_WITH_IMAGE"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "with_ttf",
+    "contract": "Result",
+    "signature": "def public with_ttf(blk : block<() : $Result<auto(TtfScopeValue); SdlError>>) : $Result<TtfScopeValue; SdlError>",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "open_font",
+    "contract": "Result",
+    "signature": "def public open_font(path : string; size : float)",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "with_font",
+    "contract": "Result",
+    "signature": "def public with_font(path : string; size : float; blk : block<(value : TTF_Font?) : $Result<auto(TtfScopeValue); SdlError>>) : $Result<TtfScopeValue; SdlError>",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "open_font",
+    "contract": "Result",
+    "signature": "def public open_font(io : SDL_IOStream?; size : float)",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "with_font",
+    "contract": "Result",
+    "signature": "def public with_font(io : SDL_IOStream?; size : float; blk : block<(value : TTF_Font?) : $Result<auto(TtfScopeValue); SdlError>>) : $Result<TtfScopeValue; SdlError>",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "create_renderer_text_engine",
+    "contract": "Result",
+    "signature": "def public create_renderer_text_engine(renderer : SDL_Renderer?)",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "with_renderer_text_engine",
+    "contract": "Result",
+    "signature": "def public with_renderer_text_engine(renderer : SDL_Renderer?; blk : block<(value : TTF_TextEngine?) : $Result<auto(TtfScopeValue); SdlError>>) : $Result<TtfScopeValue; SdlError>",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "create_surface_text_engine",
+    "contract": "Result",
+    "signature": "def public create_surface_text_engine()",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "with_surface_text_engine",
+    "contract": "Result",
+    "signature": "def public with_surface_text_engine(blk : block<(value : TTF_TextEngine?) : $Result<auto(TtfScopeValue); SdlError>>) : $Result<TtfScopeValue; SdlError>",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "create_gpu_text_engine",
+    "contract": "Result",
+    "signature": "def public create_gpu_text_engine(device : SDL_GPUDevice?)",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "with_gpu_text_engine",
+    "contract": "Result",
+    "signature": "def public with_gpu_text_engine(device : SDL_GPUDevice?; blk : block<(value : TTF_TextEngine?) : $Result<auto(TtfScopeValue); SdlError>>) : $Result<TtfScopeValue; SdlError>",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "create_text",
+    "contract": "Result",
+    "signature": "def public create_text(engine : TTF_TextEngine?; font : TTF_Font?; text : string)",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "with_text",
+    "contract": "Result",
+    "signature": "def public with_text(engine : TTF_TextEngine?; font : TTF_Font?; text : string; blk : block<(value : TTF_Text?) : $Result<auto(TtfScopeValue); SdlError>>) : $Result<TtfScopeValue; SdlError>",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "render_text_surface",
+    "contract": "Result",
+    "signature": "def public render_text_surface(font : TTF_Font?; text : string; color : SDL_Color)",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "with_text_surface",
+    "contract": "Result",
+    "signature": "def public with_text_surface(font : TTF_Font?; text : string; color : SDL_Color; blk : block<(value : SDL_Surface?) : $Result<auto(TtfScopeValue); SdlError>>) : $Result<TtfScopeValue; SdlError>",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "text_size",
+    "contract": "Result",
+    "signature": "def public text_size(text : TTF_Text?)",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "string_size",
+    "contract": "Result",
+    "signature": "def public string_size(font : TTF_Font?; text : string)",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "set_text",
+    "contract": "Result",
+    "signature": "def public set_text(text : TTF_Text?; value : string)",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "draw_text",
+    "contract": "Result",
+    "signature": "def public draw_text(text : TTF_Text?; x,y : float)",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "draw_text",
+    "contract": "Result",
+    "signature": "def public draw_text(text : TTF_Text?; x,y : int; surface : SDL_Surface?)",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "set_text_color",
+    "contract": "Result",
+    "signature": "def public set_text_color(text : TTF_Text?; color : uint4)",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "glyph_metrics",
+    "contract": "Result",
+    "signature": "def public glyph_metrics(font : TTF_Font?; codepoint : uint)",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "set_font_direction",
+    "contract": "Result",
+    "signature": "def public set_font_direction(font : TTF_Font?; direction : TTF_Direction)",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "set_text_direction",
+    "contract": "Result",
+    "signature": "def public set_text_direction(text : TTF_Text?; direction : TTF_Direction)",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "set_font_script",
+    "contract": "Result",
+    "signature": "def public set_font_script(font : TTF_Font?; script : string)",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "set_text_script",
+    "contract": "Result",
+    "signature": "def public set_text_script(text : TTF_Text?; script : string)",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "set_font_language",
+    "contract": "Result",
+    "signature": "def public set_font_language(font : TTF_Font?; language : string)",
+    "requires": "DASSDL3_WITH_TTF"
+  },
+  {
+    "module": "sdl3_ttf_boost",
+    "name": "gpu_text_draw_data",
+    "contract": "Result",
+    "signature": "def public gpu_text_draw_data(text : TTF_Text?)",
+    "requires": "DASSDL3_WITH_TTF"
   }
 ]

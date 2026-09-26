@@ -15,6 +15,7 @@ endforeach()
 set(DAS_TOOLS_DISABLED OFF CACHE BOOL "Build the standalone language executable")
 option(DASSDL3_WITH_IMGUI "Build the optional daScript ImGui + SDL Renderer example host" OFF)
 option(DASSDL3_WITH_IMAGE "Build the optional SDL_image bindings" OFF)
+option(DASSDL3_WITH_TTF "Build the optional SDL_ttf bindings" OFF)
 if(DASSDL3_WITH_IMGUI)
     # Upstream's ImGui CMake requires these modules even when its GLFW host
     # is unused. Keep the dependencies scoped to this opt-in configuration.
@@ -61,4 +62,59 @@ if(DASSDL3_WITH_IMAGE)
     FetchContent_MakeAvailable(SDL3_image)
 endif()
 
+if(DASSDL3_WITH_TTF)
+    set(BUILD_SHARED_LIBS OFF)
+    if(NOT TARGET freetype)
+        foreach(dep ZLIB BZIP2 PNG HARFBUZZ BROTLI)
+            set(FT_DISABLE_${dep} ON CACHE BOOL "Minimal shared FreeType profile" FORCE)
+        endforeach()
+        FetchContent_Declare(freetype_src
+            URL https://download.savannah.gnu.org/releases/freetype/freetype-2.14.3.tar.xz
+            URL_HASH SHA256=36bc4f1cc413335368ee656c42afca65c5a3987e8768cc28cf11ba775e785a5f
+            DOWNLOAD_EXTRACT_TIMESTAMP TRUE)
+        FetchContent_MakeAvailable(freetype_src)
+        if(WIN32)
+            get_target_property(_ft_sources freetype SOURCES)
+            list(FILTER _ft_sources EXCLUDE REGEX "ftver\\.rc$")
+            set_property(TARGET freetype PROPERTY SOURCES ${_ft_sources})
+        endif()
+    endif()
+    if(NOT TARGET Freetype::Freetype)
+        add_library(Freetype::Freetype ALIAS freetype)
+    endif()
+    # SDL_ttf uses find_package; resolve it to the same target as optional ImGui.
+    file(WRITE "${CMAKE_FIND_PACKAGE_REDIRECTS_DIR}/freetype-config.cmake"
+        "set(Freetype_FOUND TRUE)\nset(FREETYPE_FOUND TRUE)\nset(FREETYPE_VERSION_STRING 2.14.3)\n")
+    # FreeType is already built without HarfBuzz; HB's FT bridge reuses it.
+    # This avoids the optional FreeType -> HarfBuzz -> FreeType build cycle.
+    set(HB_HAVE_FREETYPE ON CACHE BOOL "SDL_ttf requires the hb-ft bridge" FORCE)
+    foreach(feature CAIRO GRAPHITE2 GLIB ICU GOBJECT INTROSPECTION CORETEXT UNISCRIBE GDI DIRECTWRITE)
+        set(HB_HAVE_${feature} OFF CACHE BOOL "Pinned OpenType shaping profile" FORCE)
+    endforeach()
+    set(HB_BUILD_UTILS OFF CACHE BOOL "" FORCE)
+    set(HB_BUILD_SUBSET OFF CACHE BOOL "" FORCE)
+    FetchContent_Declare(harfbuzz_src
+        URL https://github.com/harfbuzz/harfbuzz/archive/refs/tags/10.4.0.tar.gz
+        URL_HASH SHA256=0d25a3f74af4e8744700ac19050af5a80ae330378a5802a5cd71e523bb6fda1f
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE)
+    FetchContent_MakeAvailable(harfbuzz_src)
+    if(NOT TARGET harfbuzz::harfbuzz)
+        add_library(harfbuzz::harfbuzz ALIAS harfbuzz)
+    endif()
+    file(WRITE "${CMAKE_FIND_PACKAGE_REDIRECTS_DIR}/harfbuzz-config.cmake"
+        "set(harfbuzz_FOUND TRUE)\nset(harfbuzz_VERSION 10.4.0)\n")
+    include(CMakePackageConfigHelpers)
+    write_basic_package_version_file(
+        "${CMAKE_FIND_PACKAGE_REDIRECTS_DIR}/harfbuzz-config-version.cmake"
+        VERSION 10.4.0 COMPATIBILITY AnyNewerVersion)
+    set(SDLTTF_VENDORED OFF CACHE BOOL "" FORCE)
+    set(SDLTTF_HARFBUZZ ON CACHE BOOL "OpenType shaping via pinned HarfBuzz" FORCE)
+    set(SDLTTF_PLUTOSVG OFF CACHE BOOL "SVG emoji is a separate follow-up" FORCE)
+    set(SDLTTF_SAMPLES OFF CACHE BOOL "" FORCE)
+    FetchContent_Declare(SDL3_ttf
+        URL https://github.com/libsdl-org/SDL_ttf/archive/refs/tags/release-3.2.2.tar.gz
+        URL_HASH SHA256=ff6b81d3dc39d843cc3ead6dedd68043a79513d266792ea89445547ef4e9b073
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE)
+    FetchContent_MakeAvailable(SDL3_ttf)
+endif()
 add_subdirectory(src)

@@ -260,3 +260,21 @@ syntax findings. Native float upload/uniform helpers copy contiguous float array
 synchronously; callers supply actual byte capacity and matching shader layout.
 Raw SDL remains unchanged; no generic struct serialization or mapped-memory view
 is implied by these two adapters. Metaballs runs on Vulkan/D3D12, not the web profile.
+
+SDL_ttf 3.2.2 is optional via DASSDL3_WITH_TTF, independent of ImGui/image.
+See docs/sdl-ttf.md: 117 raw exports, FreeType shared with ImGui, HarfBuzz 10.4.0
+ON and PlutoSVG OFF. Font retains borrowed IO until CloseFont; text must die before font/engine.
+DASSDL3_TEST_TTF adds interpreter/AOT parity. GPU alpha-atlas drawing is tested on
+Vulkan/D3D12 in examples/libraries/05_ttf_gpu.das. Never infer shaping support from UTF-8 loading.
+
+SDL_ttf shaping: examples/libraries/04_ttf_shaping.das uses pinned Amiri 1.003.
+HarfBuzz handles directional/script runs; it does not implement paragraph bidi.
+Tests verify RTL clusters, Arabic joining/ZWNJ, marks, ligatures and canonical
+composition. Keep explicit direction/script/language and font provenance.
+
+TTF GPU draw snapshots copy xy/uv/indices but borrow atlas textures. Reacquire after
+text/font changes; consume before mutating/destroying owners. Fill operations have
+no atlas/UV and IMAGE_INVALID. Empty text is success; boost disambiguates NULL and
+rejects no-engine text (pinned raw getter null-dereference). GPU xy is negative-down
+Y. Keep alpha mask readback vs CPU and move-only Result scope regression tests.
+GPU pipeline/packing/shaders stay in the example, not a library renderer wrapper.

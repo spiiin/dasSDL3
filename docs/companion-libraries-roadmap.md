@@ -17,6 +17,13 @@ core SDL. Все 59 raw-деклараций, Result/defer scopes и приме�
 PNG/JPEG/alpha/GIF/IO проверены. Внешние AVIF/JXL/TIFF/WebP codecs выключены.
 Точные границы и оставшиеся проверки: [SDL_image](sdl-image.md).
 
+26 сентября: SDL_ttf 3.2.2 подключён через `DASSDL3_WITH_TTF`: 117 raw API,
+Font/TextEngine/Text scopes, UTF-8, metrics и пример `03_ttf`.
+HarfBuzz 10.4.0, арабский shaping и пример `04_ttf_shaping` добавлены.
+GPU alpha-atlas drawing добавлен в `05_ttf_gpu` (Vulkan/Direct3D12).
+PlutoSVG, paragraph bidi, GPU SDF/color/fill shaders и web остаются отдельными пунктами.
+Контракты и границы: [SDL_ttf](sdl-ttf.md).
+
 Текущий core — SDL 3.2.18. Прочитанные 19 сентября CMakeLists.txt веток main:
 SDL_image требует SDL 3.4.0, SDL_mixer — 3.4.0, SDL_ttf — 3.2.6,
 SDL_net — 3.0.0. Это требования просмотренных main snapshots, **не выбранные
@@ -83,7 +90,7 @@ RmlUI — C++ интерфейсы, поэтому механический ге
 несовместимых копий SDL внутри одного приложения. Проверять static/shared,
 CRT, runtime DLL packaging и codecs; shader toolchain не тащить в core.
 
-Повторно использовать доступные Surface/Texture/Audio scopes; IOStream ещё в плане,
+Повторно использовать доступные Surface/Texture/Audio/IOStream scopes,
 но соблюдать deleter каждой библиотеки. Init/refcount/shutdown модулей описать
 явно. Callbacks не вызывают общий script Context из произвольного worker thread.
 Сохраняемый IO/byte buffer живёт до decoder/async operation, а closeio-параметр

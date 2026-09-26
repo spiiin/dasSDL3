@@ -25,6 +25,8 @@ mesh/material/scene/batching и планы удалены из библиоте�
 - daScript: сабмодуль `third_party/daScript`, коммит
   `35bf260c0d8a79b94c64005bd3d2435adcf7e261` (0.6.4).
 - SDL: `release-3.2.18`, загружается CMake FetchContent.
+- Опционально: [ImGui и SDL_image](examples/libraries/README.md),
+  [SDL_ttf 3.2.2](docs/sdl-ttf.md) (`DASSDL3_WITH_TTF=ON`, FreeType 2.14.3 и HarfBuzz 10.4.0).
 - CMake 3.24+, Git, компилятор C++17. Проверено на Windows x64,
   MSVC 19.38, Ninja и CMake 3.31.6.
 - Только для повторной генерации: Python 3 и toolchain выбранного backend:
