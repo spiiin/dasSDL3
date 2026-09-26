@@ -487,3 +487,9 @@ P2 Rect/Clipboard/hit-test: [contracts and tests](docs/rect-clipboard-hittest.md
 Optional **SDL_net 3.2.0**: `DASSDL3_WITH_NET=ON`, import `dassdl3/sdl3_net_boost`; [TCP/UDP example and contracts](docs/sdl-net.md).
 
 SDL core is pinned to **3.4.16**. [Upgrade notes and new API queue](docs/sdl-3.4-upgrade.md).
+
+Optional **SDL_mixer 3.2.4**: `DASSDL3_WITH_MIXER=ON`, import `dassdl3/sdl3_mixer_boost`; [example, codec profile and contracts](docs/sdl-mixer.md).
+
+Optional **SDL_sound 3.2.0**: `DASSDL3_WITH_SOUND=ON`, import `dassdl3/sdl3_sound_boost`; [PCM decoding example and contracts](docs/sdl-sound.md).
+
+Optional **SDL_shadercross**: `DASSDL3_WITH_SHADERCROSS=ON`; [offline compiler, runtime bindings and contracts](docs/sdl-shadercross.md).

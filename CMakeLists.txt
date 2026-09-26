@@ -17,6 +17,7 @@ option(DASSDL3_WITH_IMGUI "Build the optional daScript ImGui + SDL Renderer exam
 option(DASSDL3_WITH_IMAGE "Build the optional SDL_image bindings" OFF)
 option(DASSDL3_WITH_TTF "Build the optional SDL_ttf bindings" OFF)
 option(DASSDL3_WITH_NET "Build the optional SDL_net bindings" OFF)
+option(DASSDL3_WITH_MIXER "Build the optional SDL_mixer bindings" OFF)
 if(DASSDL3_WITH_IMGUI)
     # Upstream's ImGui CMake requires these modules even when its GLFW host
     # is unused. Keep the dependencies scoped to this opt-in configuration.
@@ -126,5 +127,47 @@ if(DASSDL3_WITH_NET)
         URL_HASH SHA256=195036ba82322e03fd3562149634fb582e5e9298ccc6cb2c5e362bf40c5018be
         DOWNLOAD_EXTRACT_TIMESTAMP TRUE)
     FetchContent_MakeAvailable(SDL3_net)
+endif()
+if(DASSDL3_WITH_MIXER)
+    set(BUILD_SHARED_LIBS OFF)
+    foreach(feature INSTALL TESTS EXAMPLES VENDORED FLAC_LIBFLAC MP3_MPG123 GME MOD MIDI OPUS VORBIS_VORBISFILE VORBIS_TREMOR WAVPACK)
+        set(SDLMIXER_${feature} OFF CACHE BOOL "Built-in SDL_mixer codec profile" FORCE)
+    endforeach()
+    foreach(feature AIFF WAVE VOC AU FLAC FLAC_DRFLAC MP3 MP3_DRMP3 VORBIS_STB)
+        set(SDLMIXER_${feature} ON CACHE BOOL "Built-in SDL_mixer codec profile" FORCE)
+    endforeach()
+    FetchContent_Declare(SDL3_mixer
+        URL https://github.com/libsdl-org/SDL_mixer/releases/download/release-3.2.4/SDL3_mixer-3.2.4.tar.gz
+        URL_HASH SHA256=182a07c745375e113dc740d43964ff21b0be29f29f59876c4dbc4db3d32f6901
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE)
+    FetchContent_MakeAvailable(SDL3_mixer)
+endif()
+option(DASSDL3_WITH_SOUND "Build optional SDL_sound decoding bindings" OFF)
+if(DASSDL3_WITH_SOUND)
+    # SDL_sound unconditionally calls find_package; reuse our already-built SDL.
+    file(WRITE "${CMAKE_FIND_PACKAGE_REDIRECTS_DIR}/sdl3-config.cmake"
+        "set(SDL3_FOUND TRUE)\nset(SDL3_SDL3_FOUND TRUE)\n")
+    foreach(feature INSTALL BUILD_SHARED BUILD_TEST BUILD_DOCS DECODER_MIDI)
+        set(SDLSOUND_${feature} OFF CACHE BOOL "Pinned SDL_sound profile" FORCE)
+    endforeach()
+    set(SDLSOUND_BUILD_STATIC ON CACHE BOOL "" FORCE)
+    FetchContent_Declare(SDL3_sound
+        URL https://github.com/icculus/SDL_sound/archive/refs/tags/v3.2.0.tar.gz
+        URL_HASH SHA256=a1db90a81b77f4ee0637c2f4b0eac5187853fe4905c63e075f92d67e9adc2079
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE)
+    FetchContent_MakeAvailable(SDL3_sound)
+    # Embedded decoder symbols must remain private when linked beside SDL_mixer.
+    target_compile_definitions(SDL3_sound-static PRIVATE DRFLAC_API=static DRMP3_API=static)
+    # This bundled stb_vorbis predates STB_VORBIS_STATIC. Namespace its symbols.
+    file(READ "${sdl3_sound_SOURCE_DIR}/src/stb_vorbis.h" _sound_vorbis_header)
+    string(REGEX MATCHALL "stb_vorbis_[A-Za-z0-9_]+" _sound_vorbis_symbols "${_sound_vorbis_header}")
+    list(REMOVE_DUPLICATES _sound_vorbis_symbols)
+    foreach(symbol IN LISTS _sound_vorbis_symbols)
+        target_compile_definitions(SDL3_sound-static PRIVATE "${symbol}=dassdl_sound_${symbol}")
+    endforeach()
+endif()
+option(DASSDL3_WITH_SHADERCROSS "Build optional shader translation bindings and CLI" OFF)
+if(DASSDL3_WITH_SHADERCROSS)
+    include(cmake/ShaderCross.cmake)
 endif()
 add_subdirectory(src)

@@ -289,3 +289,29 @@ GPU pipeline/packing/shaders stay in the example, not a library renderer wrapper
 SDL_net 3.2.0 is optional via DASSDL3_WITH_NET; see docs/sdl-net.md. All 34 raw exports, 11 adapters; DASSDL3_TEST_NET enables parity/AOT. WAITING/timeout/None are normal outcomes. AcceptClient returns an owned socket; GetStreamSocketAddress adds a reference. Boost datagrams own copied bytes and sender text. Raw addr field is named address in script with native cppName preserved. Pinned null status returns WAITING: boost rejects null. Zero-byte UDP send is a successful no-op. Keep ports loopback-only in tests, bounded waits and CTest resource lock; no script callbacks or protocol framework.
 
 SDL upgraded to 3.4.16: see docs/sdl-3.4-upgrade.md for validation, changed camera enum and remaining 3.4 additions. Historical 3.2.18 bug notes are not proof the same bug exists in the current SDL. GPU now has 95 raw functions; Atomic 16. Regenerate both Windows backends and web snapshots after header changes.
+
+SDL_mixer 3.2.4 is optional via DASSDL3_WITH_MIXER; see docs/sdl-mixer.md. All 94 raw
+exports, 13 bounded/ref adapters, 33 Result/scoped helpers; DASSDL3_TEST_MIXER enables
+parity/AOT. MIX_Generate counts real bytes, fills trailing silence; Decode zero is
+EOF. StopTrack uses frames; StopAllTracks/StopTag use milliseconds. Negative fade
+means fade-out; loop -1 means infinite. Audio may be retained by a track after
+DestroyAudio, so borrowed IO/NoCopy buffers must outlive every retained reference.
+Callbacks are native addresses only; never invoke a script Context on audio workers.
+Tests use offline PCM or dummy device output. Only built-in codecs are enabled;
+WAV/raw/sine tested, other formats and web remain follow-ups.
+
+SDL_sound 3.2.0 is optional via DASSDL3_WITH_SOUND; see docs/sdl-sound.md.
+17 raw exports, read-only opaque samples with 15 adapters, 9 boost helpers.
+Sound_GetError is separate and consuming. EOF/EAGAIN are states, not errors.
+No retained script-array pointer helpers. Raw IO failure ownership is conditional
+in this pinned source; no unconditional consuming IO boost factory. SDL_sound Init
+is not reference-counted; use one outer SDL scope. Private decoder symbols permit
+static coexistence with SDL_mixer. DASSDL3_TEST_SOUND enables parity/AOT.
+
+SDL_shadercross is optional via DASSDL3_WITH_SHADERCROSS, pinned at 1ff05bec;
+see docs/sdl-shadercross.md. 15 raw functions, 7 structs, 11 adapters, 12 boost
+helpers; offline CLI and incremental assets. DXC is a prebuilt runtime dependency,
+not the libclang binding generator. Copy dxcompiler/dxil DLLs for external hosts.
+Reflection copies names/arrays; GPU factories return native SDL owners. Single
+Init/Quit session, no shader DSL, renderer plans or owner registry. Basic SPIR-V
+header validation is not full validation. DASSDL3_TEST_SHADERCROSS adds parity/AOT.

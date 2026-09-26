@@ -118,3 +118,9 @@ Early-return syntax: [`sdl_try` macro and example](sdl-try.md).
 - [SDL_net](sdl-net.md): optional SDL_net 3.2.0, 34 raw functions, TCP/UDP and async address resolution.
 
 - [SDL 3.4.16 upgrade](sdl-3.4-upgrade.md): migration, validation and new API queue.
+
+- [SDL_mixer](sdl-mixer.md): optional 3.2.4, 94 raw functions, offline/device mixing and resource scopes.
+
+- [SDL_sound](sdl-sound.md): optional decoding, PCM ownership, errors and scopes.
+
+- [SDL_shadercross](sdl-shadercross.md): pinned shader compiler, owned reflection, DXC deployment and offline assets.

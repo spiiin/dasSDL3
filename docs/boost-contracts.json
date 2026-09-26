@@ -4409,5 +4409,362 @@
     "name": "with_net_datagram_socket",
     "contract": "Result",
     "signature": "def public with_net_datagram_socket(address : NET_Address?; port : uint16; blk : block<(value : NET_DatagramSocket?) : $Result<auto(NetScopeValue); SdlError>>) : $Result<NetScopeValue; SdlError>"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "with_mixer_system",
+    "contract": "Result",
+    "signature": "def public with_mixer_system(blk : block<() : $Result<auto(MixValue); SdlError>>) : $Result<MixValue; SdlError>",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "create_mixer",
+    "contract": "Result",
+    "signature": "def public create_mixer(spec : SDL_AudioSpec)",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "with_mixer",
+    "contract": "Result",
+    "signature": "def public with_mixer(spec : SDL_AudioSpec; blk : block<(value : MIX_Mixer?) : $Result<auto(MixValue); SdlError>>) : $Result<MixValue; SdlError>",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "create_mixer_device",
+    "contract": "Result",
+    "signature": "def public create_mixer_device(device : uint; spec : SDL_AudioSpec)",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "with_mixer_device",
+    "contract": "Result",
+    "signature": "def public with_mixer_device(device : uint; spec : SDL_AudioSpec; blk : block<(value : MIX_Mixer?) : $Result<auto(MixValue); SdlError>>) : $Result<MixValue; SdlError>",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "create_mix_audio",
+    "contract": "Result",
+    "signature": "def public create_mix_audio(mixer : MIX_Mixer?; path : string; predecode : bool)",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "with_mix_audio",
+    "contract": "Result",
+    "signature": "def public with_mix_audio(mixer : MIX_Mixer?; path : string; predecode : bool; blk : block<(value : MIX_Audio?) : $Result<auto(MixValue); SdlError>>) : $Result<MixValue; SdlError>",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "create_mix_audio_io",
+    "contract": "Result",
+    "signature": "def public create_mix_audio_io(mixer : MIX_Mixer?; io : SDL_IOStream?; predecode : bool)",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "with_mix_audio_io",
+    "contract": "Result",
+    "signature": "def public with_mix_audio_io(mixer : MIX_Mixer?; io : SDL_IOStream?; predecode : bool; blk : block<(value : MIX_Audio?) : $Result<auto(MixValue); SdlError>>) : $Result<MixValue; SdlError>",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "create_mix_raw_audio",
+    "contract": "Result",
+    "signature": "def public create_mix_raw_audio(mixer : MIX_Mixer?; samples : array<float>; channels,frequency : int)",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "with_mix_raw_audio",
+    "contract": "Result",
+    "signature": "def public with_mix_raw_audio(mixer : MIX_Mixer?; samples : array<float>; channels,frequency : int; blk : block<(value : MIX_Audio?) : $Result<auto(MixValue); SdlError>>) : $Result<MixValue; SdlError>",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "create_mix_sine_audio",
+    "contract": "Result",
+    "signature": "def public create_mix_sine_audio(mixer : MIX_Mixer?; hz : int; amplitude : float; milliseconds : int64)",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "with_mix_sine_audio",
+    "contract": "Result",
+    "signature": "def public with_mix_sine_audio(mixer : MIX_Mixer?; hz : int; amplitude : float; milliseconds : int64; blk : block<(value : MIX_Audio?) : $Result<auto(MixValue); SdlError>>) : $Result<MixValue; SdlError>",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "create_mix_track",
+    "contract": "Result",
+    "signature": "def public create_mix_track(mixer : MIX_Mixer?)",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "with_mix_track",
+    "contract": "Result",
+    "signature": "def public with_mix_track(mixer : MIX_Mixer?; blk : block<(value : MIX_Track?) : $Result<auto(MixValue); SdlError>>) : $Result<MixValue; SdlError>",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "create_mix_group",
+    "contract": "Result",
+    "signature": "def public create_mix_group(mixer : MIX_Mixer?)",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "with_mix_group",
+    "contract": "Result",
+    "signature": "def public with_mix_group(mixer : MIX_Mixer?; blk : block<(value : MIX_Group?) : $Result<auto(MixValue); SdlError>>) : $Result<MixValue; SdlError>",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "create_mix_decoder",
+    "contract": "Result",
+    "signature": "def public create_mix_decoder(path : string; props : uint)",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "with_mix_decoder",
+    "contract": "Result",
+    "signature": "def public with_mix_decoder(path : string; props : uint; blk : block<(value : MIX_AudioDecoder?) : $Result<auto(MixValue); SdlError>>) : $Result<MixValue; SdlError>",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "mix_format",
+    "contract": "Result",
+    "signature": "def public mix_format(mixer : MIX_Mixer?)",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "mix_audio_format",
+    "contract": "Result",
+    "signature": "def public mix_audio_format(audio : MIX_Audio?)",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "mix_decoder_format",
+    "contract": "Result",
+    "signature": "def public mix_decoder_format(decoder : MIX_AudioDecoder?)",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "mix_track_position",
+    "contract": "Result",
+    "signature": "def public mix_track_position(track : MIX_Track?)",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "set_mix_audio",
+    "contract": "Result",
+    "signature": "def public set_mix_audio(track : MIX_Track?; audio : MIX_Audio?)",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "play_mix_track",
+    "contract": "Result",
+    "signature": "def public play_mix_track(track : MIX_Track?; props : uint = 0u)",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "stop_mix_track",
+    "contract": "Result",
+    "signature": "def public stop_mix_track(track : MIX_Track?; fade_frames : int64 = 0l)",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "pause_mix_track",
+    "contract": "Result",
+    "signature": "def public pause_mix_track(track : MIX_Track?)",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "resume_mix_track",
+    "contract": "Result",
+    "signature": "def public resume_mix_track(track : MIX_Track?)",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "set_mix_gain",
+    "contract": "Result",
+    "signature": "def public set_mix_gain(track : MIX_Track?; gain : float)",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "seek_mix_track",
+    "contract": "Result",
+    "signature": "def public seek_mix_track(track : MIX_Track?; frames : int64)",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "generate_mix_audio",
+    "contract": "Result",
+    "signature": "def public generate_mix_audio(mixer : MIX_Mixer?; var bytes : array<uint8>)",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "generate_mix_audio",
+    "contract": "Result",
+    "signature": "def public generate_mix_audio(mixer : MIX_Mixer?; var samples : array<float>)",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_mixer_boost",
+    "name": "decode_mix_audio",
+    "contract": "Result",
+    "signature": "def public decode_mix_audio(decoder : MIX_AudioDecoder?; var bytes : array<uint8>; spec : SDL_AudioSpec)",
+    "requires": "DASSDL3_WITH_MIXER"
+  },
+  {
+    "module": "sdl3_sound_boost",
+    "name": "sound_error",
+    "contract": "value",
+    "signature": "def public sound_error(operation : string) : SdlError"
+  },
+  {
+    "module": "sdl3_sound_boost",
+    "name": "sound_actual_format",
+    "contract": "value",
+    "signature": "def public sound_actual_format(sample : Sound_Sample?)"
+  },
+  {
+    "module": "sdl3_sound_boost",
+    "name": "sound_output_format",
+    "contract": "value",
+    "signature": "def public sound_output_format(sample : Sound_Sample?)"
+  },
+  {
+    "module": "sdl3_sound_boost",
+    "name": "create_sound_sample",
+    "contract": "Result",
+    "signature": "def public create_sound_sample(path : string; spec : SDL_AudioSpec; buffer_size : uint = 4096u)"
+  },
+  {
+    "module": "sdl3_sound_boost",
+    "name": "decode_sound",
+    "contract": "Result",
+    "signature": "def public decode_sound(sample : Sound_Sample?; var bytes : array<uint8>)"
+  },
+  {
+    "module": "sdl3_sound_boost",
+    "name": "rewind_sound",
+    "contract": "Result",
+    "signature": "def public rewind_sound(sample : Sound_Sample?)"
+  },
+  {
+    "module": "sdl3_sound_boost",
+    "name": "seek_sound",
+    "contract": "Result",
+    "signature": "def public seek_sound(sample : Sound_Sample?; milliseconds : uint)"
+  },
+  {
+    "module": "sdl3_sound_boost",
+    "name": "with_sound",
+    "contract": "Result",
+    "signature": "def public with_sound(blk : block<() : $Result<auto(SoundValue); SdlError>>) : $Result<SoundValue; SdlError>"
+  },
+  {
+    "module": "sdl3_sound_boost",
+    "name": "with_sound_sample",
+    "contract": "Result",
+    "signature": "def public with_sound_sample(path : string; spec : SDL_AudioSpec; buffer_size : uint;\n    blk : block<(sample : Sound_Sample?) : $Result<auto(SoundValue); SdlError>>) : $Result<SoundValue; SdlError>"
+  },
+  {
+    "module": "sdl3_shadercross_boost",
+    "name": "with_shadercross",
+    "contract": "Result",
+    "signature": "def public with_shadercross(blk : block<() : $Result<auto(CrossValue); SdlError>>) : $Result<CrossValue; SdlError>"
+  },
+  {
+    "module": "sdl3_shadercross_boost",
+    "name": "compile_hlsl_spirv",
+    "contract": "Result",
+    "signature": "def public compile_hlsl_spirv(info : SDL_ShaderCross_HLSL_Info)"
+  },
+  {
+    "module": "sdl3_shadercross_boost",
+    "name": "compile_hlsl_dxil",
+    "contract": "Result",
+    "signature": "def public compile_hlsl_dxil(info : SDL_ShaderCross_HLSL_Info)"
+  },
+  {
+    "module": "sdl3_shadercross_boost",
+    "name": "compile_hlsl_dxbc",
+    "contract": "Result",
+    "signature": "def public compile_hlsl_dxbc(info : SDL_ShaderCross_HLSL_Info)"
+  },
+  {
+    "module": "sdl3_shadercross_boost",
+    "name": "compile_spirv_dxil",
+    "contract": "Result",
+    "signature": "def public compile_spirv_dxil(bytes : array<uint8>; entry : string; stage : SDL_ShaderCross_ShaderStage; props : uint=0u)"
+  },
+  {
+    "module": "sdl3_shadercross_boost",
+    "name": "compile_spirv_dxbc",
+    "contract": "Result",
+    "signature": "def public compile_spirv_dxbc(bytes : array<uint8>; entry : string; stage : SDL_ShaderCross_ShaderStage; props : uint=0u)"
+  },
+  {
+    "module": "sdl3_shadercross_boost",
+    "name": "transpile_spirv_msl",
+    "contract": "Result",
+    "signature": "def public transpile_spirv_msl(bytes : array<uint8>; entry : string; stage : SDL_ShaderCross_ShaderStage; props : uint=0u)"
+  },
+  {
+    "module": "sdl3_shadercross_boost",
+    "name": "transpile_spirv_hlsl",
+    "contract": "Result",
+    "signature": "def public transpile_spirv_hlsl(bytes : array<uint8>; entry : string; stage : SDL_ShaderCross_ShaderStage; props : uint=0u)"
+  },
+  {
+    "module": "sdl3_shadercross_boost",
+    "name": "reflect_graphics_spirv",
+    "contract": "Result",
+    "signature": "def public reflect_graphics_spirv(bytes : array<uint8>; props : uint=0u)"
+  },
+  {
+    "module": "sdl3_shadercross_boost",
+    "name": "reflect_compute_spirv",
+    "contract": "Result",
+    "signature": "def public reflect_compute_spirv(bytes : array<uint8>; props : uint=0u)"
+  },
+  {
+    "module": "sdl3_shadercross_boost",
+    "name": "compile_graphics_shader_spirv",
+    "contract": "Result",
+    "signature": "def public compile_graphics_shader_spirv(device : SDL_GPUDevice?; bytes : array<uint8>; entry : string;\n    stage : SDL_ShaderCross_ShaderStage; resources : SDL_ShaderCross_GraphicsShaderResourceInfo; props : uint=0u)"
+  },
+  {
+    "module": "sdl3_shadercross_boost",
+    "name": "compile_compute_pipeline_spirv",
+    "contract": "Result",
+    "signature": "def public compile_compute_pipeline_spirv(device : SDL_GPUDevice?; bytes : array<uint8>; entry : string;\n    metadata : SDL_ShaderCross_ComputePipelineMetadata; props : uint=0u)"
   }
 ]

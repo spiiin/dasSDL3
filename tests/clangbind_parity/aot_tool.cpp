@@ -2,6 +2,15 @@
 #include <fstream>
 #include <iostream>
 DECLARE_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_MIXER
+DECLARE_MODULE(Module_sdl3_mixer);
+#endif
+#ifdef DASSDL3_WITH_SOUND
+DECLARE_MODULE(Module_sdl3_sound);
+#endif
+#ifdef DASSDL3_WITH_SHADERCROSS
+DECLARE_MODULE(Module_sdl3_shadercross);
+#endif
 #ifdef DASSDL3_WITH_NET
 DECLARE_MODULE(Module_sdl3_net);
 #endif
@@ -64,6 +73,15 @@ int main(int argc, char **argv) {
     setDasRoot(DASSDL3_DAS_ROOT);
     NEED_ALL_DEFAULT_MODULES;
     NEED_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_MIXER
+    NEED_MODULE(Module_sdl3_mixer);
+#endif
+#ifdef DASSDL3_WITH_SOUND
+    NEED_MODULE(Module_sdl3_sound);
+#endif
+#ifdef DASSDL3_WITH_SHADERCROSS
+    NEED_MODULE(Module_sdl3_shadercross);
+#endif
 #ifdef DASSDL3_WITH_NET
     NEED_MODULE(Module_sdl3_net);
 #endif

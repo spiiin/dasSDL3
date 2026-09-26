@@ -161,3 +161,43 @@ Enable `DASSDL3_WITH_NET=ON` (independent of the other optional libraries). [06_
 ```
 
 [SDL_net contracts](../../docs/sdl-net.md) describe async readiness, ownership, array copies and loopback/parity tests.
+
+## 07 — SDL_mixer
+
+Enable `DASSDL3_WITH_MIXER=ON`, then build `dasSDL3_libraries_runner`.
+[07_mixer.das](07_mixer.das) plays a quiet 440/660 Hz chord using two tracks and
+releases track/audio/mixer resources through sdl_scope/sdl_use.
+
+```powershell
+.\build\ninja\bin\dasSDL3_libraries_runner.exe .\examples\libraries\07_mixer.das
+```
+
+CTest uses dummy audio; normal launch uses the default playback device.
+[SDL_mixer contracts](../../docs/sdl-mixer.md) cover offline PCM, codecs, callbacks,
+Result counts and resource/IO ownership.
+
+## 08 — SDL_sound
+
+Enable `DASSDL3_WITH_SOUND=ON`, then build `dasSDL3_libraries_runner`.
+[08_sound.das](08_sound.das) decodes a short WAV and plays PCM through SDL audio.
+
+```powershell
+.\build\ninja\bin\dasSDL3_libraries_runner.exe .\examples\libraries\08_sound.das
+```
+
+[SDL_sound contracts](../../docs/sdl-sound.md) cover the consuming error channel,
+EOF/EAGAIN, read-only sample metadata, IO lifetime and tests.
+
+## 09 — SDL_shadercross
+
+Enable `DASSDL3_WITH_SHADERCROSS=ON`, then build `dasSDL3_libraries_runner`.
+[09_shadercross.das](09_shadercross.das) compiles HLSL to SPIR-V, reflects inputs/outputs,
+and produces DXIL/MSL without creating a GPU device.
+
+```powershell
+.\build\ninja\bin\dasSDL3_libraries_runner.exe .\examples\libraries\09_shadercross.das
+```
+
+DXC DLLs are copied beside the executable. The `shadercross` CLI and
+`dassdl3_shadercross_example_assets` build target prepare assets offline.
+See [dependency/ownership contracts](../../docs/sdl-shadercross.md).

@@ -26,7 +26,7 @@ GPU alpha-atlas drawing добавлен в `05_ttf_gpu` (Vulkan/Direct3D12).
 PlutoSVG, paragraph bidi, GPU SDF/color/fill shaders и web остаются отдельными пунктами.
 Контракты и границы: [SDL_ttf](sdl-ttf.md).
 
-Текущий core — SDL 3.2.18. Прочитанные 19 сентября CMakeLists.txt веток main:
+На момент первоначального исследования core был SDL 3.2.18. Прочитанные 19 сентября CMakeLists.txt веток main:
 SDL_image требует SDL 3.4.0, SDL_mixer — 3.4.0, SDL_ttf — 3.2.6,
 SDL_net — 3.0.0. Это требования просмотренных main snapshots, **не выбранные
 версии релизов** и не обещание совместимости любых будущих commits.
@@ -106,3 +106,29 @@ GPU layer. Net и UI не должны становиться зависимос
 ## SDL_net implementation
 
 SDL_net 3.2.0 is now optional via `DASSDL3_WITH_NET`: all 34 raw exports, Result/Option boost, bounded byte adapters and loopback example/test. See [contracts and validation](sdl-net.md). Remote DNS/IPv6, other OSes and web remain follow-ups; no protocol framework was added.
+
+## SDL_mixer implementation
+
+SDL_mixer 3.2.4 is optional via `DASSDL3_WITH_MIXER`, using SDL 3.4.16. All 94 raw
+exports, owner scopes, bounded PCM adapters and example 07 are implemented.
+Native callbacks remain C addresses; script-thread subscriptions are not added.
+See [contracts, codec profile and verification](sdl-mixer.md). Web, external codec
+profiles, shared builds and physical-device validation remain separate work.
+
+## SDL_sound implementation
+
+SDL_sound 3.2.0 is optional via `DASSDL3_WITH_SOUND`: all 17 raw exports,
+read-only sample metadata, Result/defer helpers and example 08 (decoder -> SDL
+playback stream). See [contracts and verification](sdl-sound.md). Built-in decoder
+symbols are isolated to coexist with SDL_mixer. Web, non-WAV codec fixtures,
+real nonblocking IO and upstream allocation-failure IO ownership remain follow-ups.
+
+## SDL_shadercross implementation
+
+Pinned commit `1ff05bec573988a98ef9e0260b4da44f512b8367` is available through
+`DASSDL3_WITH_SHADERCROSS`: offline CLI/incremental asset target, 15 raw functions,
+owned reflection and Result helpers. The existing native SDL GPU API owns created
+shader/compute objects. No shader DSL or new pipeline abstraction was introduced.
+See [contracts and verification](sdl-shadercross.md). Metal execution, web, broader
+resource-layout/define/include fixtures and shared/cross-platform packaging remain
+follow-ups. Compiler binaries do not become a core SDL dependency.

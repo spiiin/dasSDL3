@@ -26,3 +26,10 @@ Source release asset: `https://github.com/aliftype/amiri/releases/download/1.003
 Archive SHA256: `81af0aff7d2086d8af24cea7202f7546130997982534691373485cd96744d05e`.
 Font SHA256: `cd2550c0f4c05eb341bf97958211aaa39382bca96577ba3a67d4a3b4912c43c0`.
 Used by example 04 and shaping tests; the font supplies Arabic and Latin glyphs.
+
+## Mixer PCM fixture
+
+`mixer-tone.wav` was generated for this project, without third-party audio:
+4800 mono samples, 48 kHz, PCM16 little endian. Sample i is
+`int(2500 * sin(i * 2 * pi * 440 / 48000))`. It tests WAV loading and decoding;
+the public example uses MIX_CreateSineWaveAudio instead of loading this file.
