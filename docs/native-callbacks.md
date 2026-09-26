@@ -56,16 +56,3 @@ calls, callback arguments, registration/removal, cleanup on failure and success,
 log restoration, both timer units/rescheduling and cancellation during a blocked
 callback, and worker-to-main dispatch with both waiting modes. The tests run in interpreter, CppGenBind and strict AOT.
 `va_list` APIs remain outside this package.
-
-## Local validation (Windows x64/MSVC, 2026-09-26)
-
-- Main runner: the two contract tests and example 92 passed (3/3).
-- Baseline, CppGenBind, strict AOT and metadata comparison: 10/10.
-- Freshness, inventory and inventory contracts: 3/3; both generators agree.
-- Installed core SDK without LLVM/Python discovery: external example-92 consumer
-  passed interpreter, strict AOT and missing-AOT negative checks (3/3). This smoke
-  checks installed native log address/ref adapters, not the private callback fixtures.
-- Core census: 1062 generated / 13 adapted / 188 pending of 1263. The 169 Stdinc
-  pending declarations remain intentionally unbound by the user's decision.
-
-Other platforms and retained script callback bridges are not certified here.

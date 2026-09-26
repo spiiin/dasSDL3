@@ -1,6 +1,6 @@
 options gen2
-require metaballs_field
-require metaballs_tables
+require ../examples/gpu/metaballs_field.das
+require ../examples/gpu/metaballs_tables.das
 require math
 
 [export]

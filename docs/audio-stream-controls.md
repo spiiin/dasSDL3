@@ -1,4 +1,4 @@
-# Audio stream controls (SDL 3.2.18)
+# Audio stream controls
 
 Twelve additional raw functions cover stream properties, setting format, frequency
 ratio, gain, input/output channel maps and lock/unlock. Audio raw coverage is

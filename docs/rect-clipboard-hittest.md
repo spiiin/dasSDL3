@@ -31,24 +31,3 @@ Clipboard runtime tests use SDL_VIDEODRIVER=dummy and do not read or overwrite t
 system clipboard. Windows hit-test tests drive WM_NCHITTEST through SDL's window
 procedure; native test helpers provide callback addresses and OS event injection only.
 GL/EGL (20 Video functions) is explicitly deferred to P8. It no longer blocks P2.
-
-## Local verification (Windows x64/MSVC)
-
-Main regression suite: 151/151. After the AOT callback-cast and scope-lifetime fixes,
-all 3 affected tests passed again. Legacy/CppGenBind/AOT runs of those tests and
-metadata parity: 10/10. Generator/inventory/boundary gates: 6/6; standalone generator
-checks: 4/4. The no-LLVM consumer built and ran Rect/Clipboard and the API boundary
-check. Full AOT code was rebuilt; unrelated GPU parity runtime tests were not rerun.
-
-Tests: tests/rect_clipboard.das, tests/callback_lifetimes.das, tests/window_hittest.das.
-Clipboard tests cover UTF-8, binary copies, MIME copies, native provider invocation,
-replacement, clear, rejected parameters and Quit cleanup. Native backend failure
-after callback acceptance is handled by ownership logic reviewed against SDL source;
-it was not fault-injected. OS clipboard interoperability is not claimed from dummy
-backend tests. Hit-test tests cover real native and script callback dispatch,
-unregister/early return, nested rejection, invalid windows and body-side destruction.
-
-P2 function coverage: Rect 18/18, Clipboard 11/11, Video 89/109. The remaining
-20 GL/EGL Video functions are assigned to P8. Render retains its fixed-text variadic
-adapter and previously documented native interop validation limits. Overall inventory:
-458 generated, 13 adapted, 755 pending functions in the active Windows header profile.

@@ -1,132 +1,23 @@
-# sdl3_boost: decisions and maintenance notes
+# Boost modules
 
-The design references `bgfx-idioms.md` in this directory. That document contains
-reusable idioms and pinned upstream source links; this one describes our layer.
+`require sdl3` imports native declarations. `require dassdl3/sdl3_boost` re-exports
+them with Result/Option operations, copied queries and resource scopes.
 
-- `require dassdl3/sdl3_boost` re-exports the raw `sdl3` API and adds checked
-  script functions. The runner mounts the project's `dassdl3/` directory through
-  FsFileAccess.addFsRoot, independently of the current working directory.
-- GPU helpers are separate in `dassdl3/sdl3_gpu_boost`: device/window scopes,
-  independent device/window ownership. Multiple scoped GPU
-  devices and windows are supported. See `gpu-recording.md`
-  for the current direct graphics subset and validation tests.
-- `require dassdl3/sdl3_geometry_boost` adds initialized vertex values and checked
-  vertex/index arrays. Vertex colors are float4 in 0..1; positions are pixels.
-  See `geometry.md` for empty indexed draws, finite values and buffer lifetimes.
-- `require dassdl3/sdl3_pixels_boost` adds copied RGBA8 arrays, streaming/target
-  texture scopes, nested target restoration and owned readback scopes.
-  See `pixels.md` for pitch/bounds/copy contracts and interpreter/AOT coverage.
-- `require dassdl3/sdl3_audio_boost` adds audio and re-exports this base layer.
-  See `audio.md` for WAV ownership, stream queues, array limits and testing.
-  `with_sdl(flags)` supports audio-only or combined initialization; `with_sdl()`
-  keeps its VIDEO default. Both defer global SDL_Quit after successful initialization.
-- The current safe_addr macro rejects reference arguments as "not a local value".
-  Therefore synchronous SDL_PollEvent, SDL_PushEvent and SDL_RenderFillRect
-  use small C++ reference adapters. Texture size and rectangle adapters follow
-  the same rule. No native function may retain these
-  addresses. Callers pass an event by mutable reference or a rectangle by
-  const reference, without copying the union or taking an address in script.
-  Neither the boost module nor the example needs an unsafe block.
-- Creation and rendering helpers preserve failure results. Check Result/Option; errors are already copied before cleanup; see error-handling.md for scope return semantics.
-- `create_window` defaults to a resizable window; `create_renderer` accepts an
-  optional driver string (empty chooses the default).
-- Rendering helpers take renderer first for `renderer |> clear()` syntax.
-  Colors use uint4 RGBA with each component in 0..255; invalid input is rejected.
-- Prefer gen2 implicit trailing blocks: `with_sdl() { ... }`,
-  `with_window(...) $(window) { ... }`, and
-  `window |> with_renderer() $(renderer) { ... }`. The final block argument
-  needs no `<|`; a block without parameters also needs no `$()` marker.
-  The example and lifetime tests pass with these forms on the pinned interpreter.
-  This changes call syntax only; cleanup remains implemented by the helpers.
-- Ownership uses daslib/defer and direct script block invocation. Acquisition
-  failure returns Err without invoking the Result-returning block; successful scopes clean up
-  on normal/early return. No native exception bridge remains. See error-handling.md.
-- Arbitrary application panic still skips finally in the pinned runtime. SDL
-  failures no longer panic; do not use verify as production error handling.
-- `with_bmp(path)` lends an opaque SDL_Surface. `create_texture(renderer, surface)`
-  copies its pixels and leaves the surface owned by the caller. `load_texture`
-  releases its temporary surface before returning the owned texture;
-  `renderer |> with_texture(path) $(texture) { ... }` releases that texture on exit.
-  Texture scopes must be nested inside the renderer scope. Rendering stays on
-  the main thread. Raw pointers must not escape scopes or be manually destroyed.
-- `texture_size(texture)` returns Result<float2,SdlError>; the explicit ref overload returns Result<SdlUnit,SdlError>.
-  `draw_texture(texture)` uses the whole source/current target; adding a dst
-  rectangle scales the whole source; adding src and dst crops then scales.
-  Rectangles use SDL_FRect pixel coordinates and are borrowed synchronously.
-  Missing files and SDL failures return failure values; null handles are rejected. Null destroy
-  remains a no-op. Stale handles, foreign-renderer textures and invalid input
-  remain subject to SDL's contract; the layer does not track pointer ownership.
-- Use one outer with_sdl session. The current wrapper calls global SDL_Quit;
-  it is not a ref-counted nested SDL-subsystem owner. Window/renderer handles
-  supplied to a block must not escape it or be manually destroyed within it.
-- Native pointers still have manual ownership. Copies are aliases; there is no
-  unique-owner type or automatic use-after-destroy protection. Null destruction
-  is a no-op; destruction of a stale non-null handle is not supported.
-- The one-argument `should_close` still means Quit or any Escape key down.
-  The window overload also handles CloseRequested and filters window-specific
-  events by window ID. `input_window_id` covers supported input and window events.
-- Input readers and state adapters are in `src/sdl3_input.h`; see `input.md`
-  for the API, main-thread contract and text lifetime. Readers check the union
-  tag and copy typed snapshots; mismatch returns None. Value overloads return the snapshot; ref overloads clear output on mismatch.
-  UTF-8 input/composition strings are allocated in the daScript heap, never
-  returned as borrowed SDL pointers. Decode raw text events before polling again.
-- Scalar output parameters need explicit references in script wrappers:
-  `var text : string&`, `var start : int&`, `var position : float2&`.
-  Mutable value parameters would silently discard native output at return.
-- `with_text_input` uses direct no-argument block invocation and defer and only stops
-  input if it started the session. Nested scopes preserve the outer session,
-  on normal and early return. Do not manually toggle text input within these scopes.
-  State queries read physical state after polling; pushed events do not update it.
-- `tests/boost.das` exercises normal return, early return, SDL errors, failed renderer
-  creation and invalid color input. It checks actual SDL window/renderer state
-  before SDL_Quit, so the runner's final fallback cannot mask leaked resources.
-  It also tests the by-reference event wrappers and rendering with a const rect.
-- Texture tests observe SDL property cleanup callbacks before renderer teardown
-  and compare rendered pixels for all three draw overloads. They cover normal
-  exit, early return, SDL errors, failed creation after surface acquisition, missing
-  BMP and continued renderer use after failure. Test-only helpers are compiled
-  only with BUILD_TESTING=ON; they are not supported public bindings.
-- Project CTests cover generated output, standalone daslang,
-  raw bindings, boost example, boost lifetime tests, texture example and texture
-  lifetime/pixel tests, input events/text lifetime tests and the input example.
-  Audio tests cover PCM copies, conversion, queue bounds, resource cleanup and
-  dummy-device playback; audible output on physical hardware is not verified.
-  The 60-frame examples
-  and the boost module contain no unsafe/address expressions. Standard library
-  internals and the raw API are not claimed to be entirely unsafe-free.
-- Keep the original raw binding tests. Do not relax language pointer checking
-  or add a broad unsafe block to the example to make new signatures compile.
+| Module | Purpose |
+| --- | --- |
+| sdl3_scope | Linear acquisition with sdl_scope / sdl_use |
+| sdl3_try | Early error return |
+| sdl3_events | Owned event variants and polling |
+| sdl3_geometry_boost | Vertex/index array adapters |
+| sdl3_pixels_boost | Texture buffers, render targets and readback |
+| sdl3_record_access | Surface metadata/planes, palettes and Vulkan options |
+| sdl3_audio_boost | WAV and audio streams |
+| sdl3_gpu_native_boost | Native GPU resources and scopes |
+| sdl3_gpu_boost | Checked GPU helpers with distinct handles |
 
-Build and test commands are in README.md. This file and AGENTS.md are the
-persistent project context for future sessions; no global user settings or
-personal skill installation is required.
+Use one outer SDL lifetime and nested resource owners. Scope handles are borrowed;
+do not retain them or destroy them manually. Errors are copied before cleanup.
+Void scope work returns sdl_ok(); pending and absent states are distinct from errors.
 
-GPU API boundary: see gpu-api-boundary.md. Renderer-framework APIs and plans were
-removed, including their native exports. Current modules provide individual SDL
-resources and necessary array/lifetime adapters: sdl3_gpu_boost (device/window),
-sdl3_gpu_transfer_boost, sdl3_gpu_texture_transfer_boost, sdl3_gpu_formats_boost,
-sdl3_gpu_volume_boost, sdl3_gpu_image_boost, sdl3_gpu_utilities_boost,
-sdl3_gpu_swapchain_boost, sdl3_gpu_shader_boost, sdl3_gpu_sampler_boost,
-sdl3_gpu_pipeline_boost, sdl3_gpu_buffers_boost and sdl3_gpu_recording_boost.
-
-The direct recording module exposes SDL command-buffer/render-pass order and
-immediate bind/state/uniform/draw calls. Examples 44–46 use this path. It keeps
-deferred command cleanup and no exception interception. Read gpu-recording.md
-for its checked bounds. `sdl3_gpu_native_boost` separately provides native
-copy/compute/render/swapchain scopes and byte-array creation/transfers; see
-gpu-native-boost.md and examples 48–50. Native handles do not interoperate with IDs.
-Do not add another composite object to compensate for missing SDL bindings.
-Checked GPU IDs use [uint64-backed distinct handles](gpu-handles.md) in native
-adapter signatures, boost, arrays and Result/Option. Keep explicit nominal
-callback annotations; copies do not transfer ownership.
-
-- `sdl3_rect_clipboard_boost` uses copied clipboard payloads and a lexical
-  `with_window_hit_test` block. Keep `[never_inline]` on that scope: inline
-  substitution can destroy an AOT callback temporary after native registration,
-  before the scope body uses it. Native callbacks take C addresses, never cast a
-  script Func/Block to one. See [callback contracts](rect-clipboard-hittest.md).
-
-Result/Option boost API: [contracts and migration plan](result-option-plan.md).
-Opt-in [`sdl_try`](sdl-try.md) removes repetitive error guards without exceptions.
-Opt-in [`sdl3_events`](event-variants.md) adds tagged `SdlEvent` values and
-`poll_event() : Option<SdlEvent>` with owned text snapshots.
+See [errors](error-handling.md), [syntax](api-ergonomics.md), [scope macros](sdl-scope.md),
+[sdl_try](sdl-try.md) and the [API index](README.md).

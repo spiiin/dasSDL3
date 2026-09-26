@@ -63,4 +63,4 @@ teardown с открытой записью и сохранность коман
 
 Scopes очищают обычный/ранний выход через defer; panic приложения не даёт
 такой гарантии. Нативные device/window pointers не должны переживать scope.
-Актуальные общие результаты: [gpu-native-validation.md](gpu-native-validation.md).
+Актуальные общие результаты: [gpu raw tests](gpu-raw-tests.md).

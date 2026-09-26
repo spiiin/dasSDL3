@@ -1,9 +1,6 @@
 # Direct native GPU API
 
-> SDL 3.4.16 update: GPU now has 95 raw functions with no runtime backend
-> exclusions. Historical counts below describe 3.2.18; see [upgrade](sdl-3.4-upgrade.md).
-
-SDL 3.2.18, Windows x64: all 92 active SDL_gpu.h functions are now selected
+SDL 3.4.16, Windows x64: all 95 active SDL_gpu.h functions are now selected
 in tools/bindings.json. Both generator backends emit the original signatures.
 The two GDK-only suspend/resume declarations are inactive in this profile and
 are not included. Declaration coverage and runtime evidence are tracked
@@ -68,20 +65,13 @@ SDL_SetGPUBlendConstants takes SDL_FColor by value. Its interpreter cast_arg
 copies the managed record from its evaluated address into SDL's native argument;
 the original SDL function and AOT C++ signature remain unchanged.
 
-## Validation state and remaining work
+## Tests and limits
 
-Both snapshots generated deterministically; the production C++ build passed.
-The combined suite and new native adapter tests passed as documented in the
-[validation report](gpu-native-validation.md). Dedicated raw execution coverage:
- [raw GPU tests](gpu-raw-tests.md) execute all 92
-functions on Vulkan and 90 on D3D12, through both generators and AOT. The two
-D3D12 debug-group exclusions are explicit. Pixel and byte oracles verify actual
-GPU work, including the by-value color argument.
+[Raw GPU tests](gpu-raw-tests.md) exercise all 95 active Windows functions on
+Vulkan and D3D12 through both generators and AOT. Pixel and byte oracles verify
+GPU output. Debug labels may no-op without the platform capture runtime.
 
-The five follow-up implementation steps are covered by the native creation/data
-adapters, defer scopes, MRT/MSAA/depth/stencil tests and public examples 48–50;
-see [native boost](gpu-native-boost.md). Raw tests retain their pointer ABI role,
-while the new examples need no test fixture or script address expression.
-Retain pinned backend limitations and explicit native lifetime preconditions.
+Native adapters have separate creation, transfer, MRT/MSAA/depth/stencil and
+lifetime tests. Examples 48–50 use public modules without private fixtures or
+script address expressions; see [native boost](gpu-native-boost.md).
 This does not certify every parameter combination or other platform profile.
-General Properties API ergonomics and shader DSL remain separate work.

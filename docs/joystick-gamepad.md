@@ -1,4 +1,4 @@
-# Joystick and gamepad (SDL 3.2.18)
+# Joystick and gamepad
 
 Generated raw declarations cover Joystick 58/58 and Gamepad 73/73 (131 new
 functions). This is declaration coverage, not a claim that all devices, callback
@@ -116,17 +116,3 @@ not certified by virtual tests. All 21 Joystick/Gamepad event tags now have owne
 SdlEvent; see [event variants](event-variants.md). Example 71 also matches
 real axis/button events from its virtual device. Native callback-field address
 setters and property-name string macros remain explicit follow-ups.
-
-## Local validation — 2026-09-21
-
-Pinned Windows x64/MSVC: seven main tests passed, including the new raw/scopes/
-example and existing Events/Keyboard regressions. Six legacy/CppGenBind tests
-plus metadata parity passed; five strict-AOT tests passed with fallback disabled.
-All six main generation/inventory/boundary checks and four standalone clangbind
-checks passed. The raw script contains direct calls to all 58 Joystick and 73
-Gamepad functions; successful virtual and documented error paths are distinguished
-above. Validation uses virtual devices, not physical-controller certification.
-
-The BUILD_TESTING=OFF consumer rebuilt with generators off and LLVM/Clang/Python
-discovery disabled. Fixture-free scope tests and example 71 passed. The native
-virtual-descriptor test fixture was confirmed unavailable in that consumer.

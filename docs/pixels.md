@@ -92,7 +92,7 @@ SDL_Surface и SDL_Texture остаются opaque. Указатели из бл
   до teardown renderer. Stale pointers для теста не разыменовываются.
 
 Сценарии и boost компилируются и исполняются в interpreter/строгом AOT.
-Текущие сводные проверки: [gpu-native-validation.md](gpu-native-validation.md).
+Текущие сводные проверки: [gpu raw tests](gpu-raw-tests.md).
 Region uploads и другие форматы renderer остаются отдельной работой.
 
 Источники контрактов: [SDL_LockTexture](https://wiki.libsdl.org/SDL3/SDL_LockTexture),

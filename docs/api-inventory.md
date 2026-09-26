@@ -1,8 +1,6 @@
-# Реестр API: первый рабочий профиль
+# Реестр API
 
-Реализован 19 сентября 2026 для SDL 3.2.18, Clang 16.0.5,
-target `x86_64-pc-windows-msvc`, C11. Это первый результат P0,
-а не завершение всей инфраструктуры или межплатформенного census.
+Профиль: SDL 3.4.16, target `x86_64-pc-windows-msvc`, C11.
 
 `tools/inventory_api.py` извлекает объявления через JSON AST Clang и активные
 макросы через preprocessor с source line markers. `tools/api-policy.json`
@@ -15,13 +13,9 @@ target `x86_64-pc-windows-msvc`, C11. Это первый результат P0,
 поля records, callback typedefs и определения макросов без вычисления их
 значений. Это census, не ещё один генератор native bindings и не ABI validator.
 
-Сейчас 1226 активных функций, включая static inline и platform-visible
-декларации: 716 generated, 13 adapted, 497 pending. Adapted включает
-одну Audio, одну Properties, одну Error, одну Render и девять Log функций; каждая имеет ограниченный
-контракт. Аудит после примера 22 исправил ранее неучтённый default-playback
-adapter OpenAudioDeviceStream. Внутренние вызовы SDL и test-only helpers не
-считаются автоматически публичными привязками. См. `full-binding-roadmap.md`.
-Это не число всех экспортов SDL DLL и не процент готовности boost.
+Текущие числа публикуются в [покрытии](api-coverage.md) и generated census.
+Внутренние SDL-вызовы и test-only helpers не считаются публичными привязками.
+Число деклараций не равно числу DLL-экспортов или готовности boost.
 Structs с выбранными полями отмечены partial, opaque handles — opaque.
 Собственный wrapper SDL_Wav вынесен в policy `project_types` с местом
 объявления и причиной; он не увеличивает число типов самой SDL.
@@ -72,7 +66,7 @@ fixed arrays, uint64 macro spelling, #undef, повторные declarations,
 детерминизм, неверную версию, пропавший export и ошибочную policy.
 Дополнительно у 1226 функций настоящего SDL сверено имя с исходной строкой.
 
-Current snapshot/inventory gates pass; see [validation](gpu-native-validation.md).
+Current snapshot/inventory gates pass; see [gpu raw tests](gpu-raw-tests.md).
 Remaining P0 work: other platform profiles, macro/ABI expansion and install/export.
 CppGenBind is the Windows x64 production backend with saved snapshots;
 [setup](clangbind-setup.md), [generation](clangbind-production.md),

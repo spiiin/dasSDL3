@@ -1,4 +1,4 @@
-# AsyncIO (SDL 3.2.18)
+# AsyncIO
 
 All 11 functions in `SDL_asyncio.h` are generated, with the two opaque pointer
 kinds, both enums and all eight fields of `SDL_AsyncIOOutcome` (`type` is exposed

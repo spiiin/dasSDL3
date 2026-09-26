@@ -78,7 +78,7 @@ Release rebuild passed with Emscripten 5.0.3 and the existing -O1 link profile.
 Edge and Firefox each passed the 15 Renderer/audio/lifecycle scenarios below and
 six OpenGL scenarios in tests/web/test_opengl.py (42 total). Audio tests retained
 the closed-context assertion after Stop and absent-context assertion after a
-partial-init error. See [upgrade report](../docs/sdl-3.4-upgrade.md).
+partial-init error. See [api coverage](../docs/api-coverage.md).
 
 ## Initial validation (2026-09-22)
 

@@ -102,7 +102,7 @@ format and reports false on this machine. The test checks depth format support,
 then actual 4x creation and pixel results with validation enabled; the binding
 does not change SDL's query result. The combined-buffer limitation remains
 documented in gpu-raw-tests.md. The old D3D12 debug-group exclusion was removed
-when updating to SDL 3.4.16; see sdl-3.4-upgrade.md.
+when updating to SDL 3.4.16; see api-coverage.md.
 
 Shader maintenance: `tools/build_native_gpu_shaders.py --dxc <path> --spirv-val
 <path> [--check]`. Normal builds use the committed SPIR-V/DXIL files; no shader
@@ -112,7 +112,7 @@ compiler is required by consumers. No other platform/backend is certified here.
 shader stages, uniform arrays, render/compute arrays, swapchain outputs, fence
 arrays and descriptor-ref operations. It retains CPU-only shader/data fixtures
 and raw setup; the adapter calls and GPU operations execute in script, with
-independent pixel/byte checks. See [validation results](gpu-native-validation.md).
+independent pixel/byte checks. See [gpu raw tests](gpu-raw-tests.md).
 
 ## Float uploads and application port
 

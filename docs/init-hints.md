@@ -33,15 +33,3 @@ Tests: [init_hints.das](../tests/init_hints.das), including all 12 newly generat
 functions, priority rejection, copied UTF-8, metadata removal, nested references,
 early return and partial rollback with an intentionally unavailable audio driver.
 No physical audio device is used.
-
-## Local validation (Windows x64/MSVC, 2026-09-20)
-
-- Main regression suite: 120/120.
-- Package interpreter (baseline and CppGenBind), AOT and metadata parity: 7/7.
-- Generation/freshness/inventory/boundary gates: 6/6; standalone clangbind: 4/4.
-- Consumer configured without LLVM/Clang/Python discovery: build, example 52,
-  init_hints test and public API boundary check passed.
-- Documentation links and diff whitespace checks passed.
-
-The entire GPU parity runtime suite was not rerun for this package; the full AOT
-runner was rebuilt, and the new package plus metadata were executed.

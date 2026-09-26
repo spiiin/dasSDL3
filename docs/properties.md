@@ -56,22 +56,3 @@ calls or other native code. Source inspection confirms the same defect remains i
 SDL_CreateGPUDeviceWithVulkanOptions copies property values by type into a private
 group, avoiding this cache; pointer values are borrowed without cleanup ownership.
 Its regression test covers a pre-existing numeric string cache. Recheck on future upgrades.
-
-## Validation — 2026-09-20
-
-Windows x64/MSVC, pinned SDL/daScript:
-- Production build passed; full main project selection 118/118 passed.
-- Full baseline/CppGenBind/strict-AOT suite 320/320 passed with no skips.
-  The new Properties test and example passed in all three modes (six cases).
-- Snapshot freshness, inventory/contracts, preprocessor and API boundary: 6/6.
-  Standalone clangbind interpreter/AOT/negative checks: 4/4.
-- Consumer with BUILD_TESTING=OFF and generators/Clang/LLVM disabled built and
-  ran example 51. Its Ninja graph contains no libclang/libLLVM links or binding
-  generator commands. Removed-framework API rejection also passed.
-- Production generator configuration restored after consumer; Properties 2/2
-  and final infrastructure checks passed again. Documentation links and diff
-  whitespace checks passed. Snapshots use LF via the generator, not manual edits.
-
-Full logs are in the task workspace work/properties-main-full.log,
-properties-parity-full.log, properties-consumer.log and properties-final-gates.log.
-These results do not certify other platforms or retained script cleanup callbacks.

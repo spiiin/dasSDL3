@@ -3,7 +3,7 @@
 Windows x64/MSVC, SDL 3.2.18, pinned daScript, libclang 22.1.5.
 CppGenBind is the production default; the separate tests/clangbind_parity project
 compares it with Python/Clang baseline and executes scripts in both interpreters
-and strict AOT. Current results: [gpu-native-validation.md](gpu-native-validation.md).
+and strict AOT. Current results: [gpu raw tests](gpu-raw-tests.md).
 
 ## Contract
 

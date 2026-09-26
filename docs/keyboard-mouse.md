@@ -88,14 +88,8 @@ mask/key conversions, visibility restoration and cursor scopes. Windows tests
 require successful native mono/color/system cursor creation. Warps use the
 current position rather than deliberately moving the desktop pointer.
 
-### Local results — 2026-09-21
-
 Main runner: dummy test/example and native Windows test passed (3/3), along with
 four existing input/events regressions. Thirteen legacy/CppGenBind/strict-AOT
 checks passed, including native Windows cursor execution on all three runners.
 Metadata parity and six main plus four standalone generation/inventory/type
 checks passed. Physical hotplug and interactive IME behavior remain unverified.
-
-The consumer rebuilt with BUILD_TESTING=OFF, generators disabled and LLVM/Clang/
-Python discovery disabled. The same fixture-free test passed under dummy and
-Windows, and example 70 passed its smoke run (3/3).

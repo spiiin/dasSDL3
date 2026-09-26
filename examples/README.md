@@ -100,7 +100,7 @@ See [native GPU guide](../docs/gpu-native-boost.md) for ownership and execution.
 canonical Result-returning scopes and deferred cleanup. This separate sequence preserves
 existing example numbers. It renders the BMP texture and propagates failures as
 values; `--smoke-test` renders three frames. Contracts and language caveats:
-[Result/Option plan](../docs/result-option-plan.md).
+[error handling](../docs/error-handling.md).
 
 [results/02_sdl_try.das](results/02_sdl_try.das) shows the same application with
 [`sdl_try`](../docs/sdl-try.md). Numbered examples now use this macro for sequential

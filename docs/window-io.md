@@ -75,18 +75,3 @@ OSes and all graphics backends are not certified by this test.
 and updates it using only public helpers, without unsafe. Renderer/Surface API
 coverage is complete at the function level; GL/EGL is P8 and hit-test scopes are
 covered in [callback contracts](rect-clipboard-hittest.md).
-
-## Local validation (Windows x64/MSVC, 2026-09-20)
-
-- Main regression suite: 128/128.
-- Package interpreter (baseline and CppGenBind), AOT and metadata: 7/7.
-- Generation/freshness/inventory/boundary gates: 6/6; standalone clangbind: 4/4.
-- Local ICC query succeeded; copied bytes matched the raw allocation byte for byte.
-- Local surface VSync set/query both returned unsupported; positive support and
-  synchronization timing are not claimed.
-- No-LLVM consumer: build, full window_io test (exit 0), example 56 and public API
-  boundary check passed.
-- Documentation links and whitespace checks passed.
-
-The full AOT runner was rebuilt. Runtime parity was executed for this package
-and metadata; the entire GPU parity runtime suite was not repeated.

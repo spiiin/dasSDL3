@@ -76,7 +76,16 @@ Upstream daScript пишет библиотеки и shared modules в дере�
 
 ## Проверки
 
-Текущие результаты production/parity/consumer: [gpu-native-validation.md](gpu-native-validation.md).
+Текущие результаты production/parity/consumer: [gpu raw tests](gpu-raw-tests.md).
 Снимки проверяются через --check; свежесть, inventory и preprocessor gates
 запускаются после восстановления developer-конфигурации. Consumer с отключёнными
 генераторами/LLVM использует те же публичные API; тестовые exports недоступны.
+
+## Matching SDL headers
+
+An old FETCHCONTENT_SOURCE_DIR_SDL3 cache entry overrides the pinned release.
+Remove the override or point it to SDL 3.4.16 before building or regenerating.
+Desktop and web builds have separate caches. Generated bindings reject mismatched
+SDL versions. Do not overlap SDK consumer configuration with generator builds:
+daScript shares generated module configuration; restore the developer configuration
+before running ClangBind checks.

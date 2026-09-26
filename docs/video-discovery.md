@@ -57,15 +57,3 @@ Window creation/state is covered in [window-state.md](window-state.md).
 Fullscreen/ICC, surfaces and input grabs are covered in [window-io.md](window-io.md). GL/EGL integration,
 platform property keys and companion libraries remain separate. Hit-test scopes are
 covered in [callback contracts](rect-clipboard-hittest.md); GL/EGL is P8.
-
-## Local validation (Windows x64/MSVC, 2026-09-20)
-
-- Main regression suite: 124/124.
-- Package interpreter (baseline and CppGenBind), AOT and metadata: 7/7.
-- Generation/freshness/inventory/boundary gates: 6/6; standalone clangbind: 4/4.
-- No-LLVM consumer: build, full video_discovery test, example 54 and public API
-  boundary check passed.
-- Documentation links and whitespace checks passed.
-
-The full AOT runner was rebuilt. Runtime parity was executed for this package
-and metadata; the entire GPU parity runtime suite was not repeated.

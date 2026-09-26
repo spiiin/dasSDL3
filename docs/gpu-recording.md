@@ -80,7 +80,7 @@ Native fixtures cover oversized arrays, wrong thread, injected submit failure,
 foreign-device handles and device destruction with a live pass while another
 device's command survives. Vulkan and D3D12 are the local runtime targets.
 
-Latest combined verification: [gpu-native-validation.md](gpu-native-validation.md).
+Latest combined verification: [gpu raw tests](gpu-raw-tests.md).
 Current function census: [api-coverage.md](api-coverage.md).
 This page describes the checked subset. Full native pointers/arrays and scopes
 are documented in [gpu-native-boost.md](gpu-native-boost.md); IDs and native

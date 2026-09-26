@@ -75,18 +75,3 @@ Positive Metal view/layer behavior requires macOS/iOS and is not validated on
 Windows. Custom Vulkan allocators are native-only (a counted Windows fixture is tested);
 32-bit ABI, Linux/macOS and web remain unverified.
 This package does not claim rendered Vulkan frames or a full native Vulkan binding.
-
-## Local results (2026-09-26)
-
-- Main package: 3/3; inventory and inventory contracts: 2/2 (7 unit contracts).
-- Baseline / CppGenBind / strict AOT plus metadata: 10/10.
-- Generator freshness, preprocessor and binding regression: 3/3; baseline
-  regeneration also reproducible.
-- Installed core SDK, separate consumer: 6/6 (extension discovery and unavailable
-  backend checks in interpreter/AOT, plus no-fallback guards). No LLVM, Vulkan SDK
-  or source-tree header dependency in the consumer.
-- Documentation links and diff whitespace passed.
-
-The core census is now 1035 generated, 13 adapted, 215 pending out of 1263 Windows
-functions. Of these pending entries, 169 Stdinc functions remain intentionally
-outside the current work priority; their status and denominator were not changed.

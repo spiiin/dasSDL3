@@ -1,4 +1,4 @@
-# Event queue (SDL 3.2.18)
+# Event queue
 
 The Events header now has 19/19 generated functions. This queue package adds the
 eleven remaining non-callback functions: PeepEvents, HasEvent(s), FlushEvent(s),
@@ -98,18 +98,6 @@ shutdown errors, window lookup, enabled state and copied UTF-8 drop payloads.
 The fixture supplies only event data, never hides queue operations under test.
 Real drag-and-drop from external applications and other OS event backends are
 not established by these synthetic tests.
-
-## Local validation — 2026-09-21
-
-Pinned Windows x64/MSVC profile: the six main queue/events/input checks passed
-after adjusting the pointer-Option test to standard `move_unwrap`. All 19
-legacy/CppGenBind/strict-AOT checks passed, including metadata parity. Generation,
-inventory, preprocessor and API boundary gates passed (6/6), as did the four
-standalone clangbind checks. The no-LLVM, BUILD_TESTING=OFF consumer rebuilt and
-ran the fixture-free raw/boost queue cases and examples 67–68; the drop test
-fixture was confirmed unavailable. Full-queue behavior was checked against the
-pinned 65,535-entry capacity. Production generator configuration is restored
-after consumer validation.
 
 ## Owned list payloads and moves
 

@@ -57,5 +57,5 @@ backend и в строгом AOT. Это только тестовый AOT compa
 Команды — [clangbind-parity.md](clangbind-parity.md). MAIN_BUILD/SDL_INCLUDE
 должны соответствовать закреплённой SDL; vcvars64 и 6 parallel jobs.
 Список тестов задаётся CMake, текущие результаты —
-[gpu-native-validation.md](gpu-native-validation.md). Не использовать числа
+[gpu raw tests](gpu-raw-tests.md). Не использовать числа
 первоначального 50-function эксперимента как текущее покрытие.

@@ -58,7 +58,7 @@ Two additional formats (RGBA16 UNORM and RGBA32 UINT) exercise optional support:
 if SDL reports false, creation must fail and the test logs that case explicitly.
 No successful roundtrip is claimed for a format whose support query rejected it.
 
-Latest combined verification: [gpu-native-validation.md](gpu-native-validation.md).
+Latest combined verification: [gpu raw tests](gpu-raw-tests.md).
 Current function census: [api-coverage.md](api-coverage.md).
 This page describes the checked subset. Full native pointers/arrays and scopes
 are documented in [gpu-native-boost.md](gpu-native-boost.md); IDs and native

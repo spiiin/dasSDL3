@@ -138,22 +138,3 @@ that separately. The field audit remains separate from runtime tests.
 Scope excludes opaque forward declarations, anonymous union interiors (their
 parent field is classified), project-specific records, macro semantics and
 non-Windows ABI branches. Platform/browser and hardware validation remain separate.
-
-## Validation — 2026-09-26
-
-Windows x64/MSVC, SDL 3.4.16 and the pinned daScript revision:
-- Main runner: 4/4 record tests/example passed.
-- Baseline, CppGenBind and strict AOT plus metadata parity: 13/13 passed.
-- Installed SDK, generators/LLVM disabled: a separate consumer passed 5/5
-  interpreter/AOT tests, including rejection of AOT fallback.
-- Binding freshness and API inventory/contracts: 3/3 passed; record-field audit is current.
-- Temporary surface-byte escape is rejected by the compiler; existing pixel-view,
-  row and byte escape checks also pass.
-- The Vulkan tests create real devices, exercise absent extension failures and
-  preserve caller properties with an existing numeric-to-string cache.
-
-Surface layout fixtures cover packed/sub-byte/float and planar YUV formats,
-odd dimensions, row padding, empty spans, invalid planes and deferred unlock
-on body errors. Native virtual callbacks are invoked by SDL; Cleanup runs once
-on detach. Arbitrary Vulkan feature chains, forced allocator failures and
-other platform ABIs are not claimed by these tests.

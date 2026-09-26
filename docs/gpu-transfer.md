@@ -63,7 +63,7 @@ The rapid-discard regression submits 128 consecutive snapshots and closes their
 scopes immediately. Transfer CTests fail on Vulkan VUID/Validation Error or
 D3D12 ERROR output, even when byte assertions and the process exit code pass.
 
-Latest combined verification: [gpu-native-validation.md](gpu-native-validation.md).
+Latest combined verification: [gpu raw tests](gpu-raw-tests.md).
 Current function census: [api-coverage.md](api-coverage.md).
 This page describes the checked subset. Full native pointers/arrays and scopes
 are documented in [gpu-native-boost.md](gpu-native-boost.md); IDs and native

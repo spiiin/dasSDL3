@@ -1,5 +1,5 @@
 options gen2
-require mesh_data
+require ../examples/gpu/mesh_data.das
 
 def put_u32(var bytes : array<uint8>; offset : int; value : uint) {
     for (j in 0 .. 4) { bytes[offset+j]=uint8((value>>uint(j*8))&255u) }

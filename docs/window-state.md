@@ -60,15 +60,3 @@ Windows desktop; behavior on other window managers is not certified.
 
 [Example 55](../examples/55_window_properties.das) creates a property-configured
 hidden parent and a nested hidden tooltip, using public helpers without unsafe.
-
-## Local validation (Windows x64/MSVC, 2026-09-20)
-
-- Main regression suite: 126/126.
-- Package interpreter (baseline and CppGenBind), AOT and metadata: 7/7.
-- Generation/freshness/inventory/boundary gates: 6/6; standalone clangbind: 4/4.
-- No-LLVM consumer: build, full window_state test, example 55 and public API
-  boundary check passed.
-- Documentation links and whitespace checks passed.
-
-The full AOT runner was rebuilt. Runtime parity was executed for this package
-and metadata; the entire GPU parity runtime suite was not repeated.

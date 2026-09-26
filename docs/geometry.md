@@ -87,5 +87,5 @@ Test-only `geometry_probe.h` передаёт переполненные счё�
 Эти же сценарий и пример включены в strict AOT; сам geometry boost также
 компилируется в AOT. Это SDL renderer geometry, ещё не SDL GPU pipeline.
 
-Latest combined verification: [gpu-native-validation.md](gpu-native-validation.md).
+Latest combined verification: [gpu raw tests](gpu-raw-tests.md).
 Current function census: [api-coverage.md](api-coverage.md).

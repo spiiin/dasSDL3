@@ -52,14 +52,3 @@ There is no retained script timer bridge.
 Example: [53_diagnostics_time.das](../examples/53_diagnostics_time.das).
 Tests: [diagnostics.das](../tests/diagnostics.das), including direct execution of
 all 22 new raw functions and the fixed-text logging/error adapters.
-
-## Local validation (Windows x64/MSVC, 2026-09-20)
-
-- Main regression suite: 122/122.
-- Package interpreter (baseline and CppGenBind), AOT and metadata: 7/7.
-- Generation/freshness/inventory/boundary gates: 6/6; standalone clangbind: 4/4.
-- No-LLVM consumer build, example 53 and public API boundary check passed.
-- Documentation links and whitespace checks passed.
-
-The full AOT runner was rebuilt. Runtime parity was executed for this package
-and metadata; the entire GPU parity runtime suite was not repeated.

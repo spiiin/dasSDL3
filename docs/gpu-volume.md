@@ -69,7 +69,7 @@ ticket retirement, two live devices and pending-work teardown. A separate
 registry prevents volume IDs from being accepted by 2D transfer helpers.
 Example 39 uses only public helpers and needs no unsafe block or test exports.
 
-Latest combined verification: [gpu-native-validation.md](gpu-native-validation.md).
+Latest combined verification: [gpu raw tests](gpu-raw-tests.md).
 Current function census: [api-coverage.md](api-coverage.md).
 This page describes the checked subset. Full native pointers/arrays and scopes
 are documented in [gpu-native-boost.md](gpu-native-boost.md); IDs and native

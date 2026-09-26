@@ -1,5 +1,20 @@
 # GPU application examples
 
+Numbered scripts are interactive entry points. Their rendering implementation is
+in adjacent `metaballs_app.das`, `raymarch_app.das` and `mesh_app.das` modules.
+They contain no smoke mode, pixel readback or capture output. The unused bool in
+`main` is only the current runner entry-point convention.
+
+GPU regression harnesses live in `tests/bgfx_metaballs.das`, `tests/bgfx_raymarch.das`
+and `tests/bgfx_mesh.das`; they import the application rendering functions and own
+the deterministic loops, readback/fences, captures and pixel assertions. CTest
+runs these harnesses, not the interactive entry points. Tests set up their own
+resources; mesh tests also exercise offscreen output and automatic resize.
+
+```powershell
+.\build\ninja\bin\dasSDL3_runner.exe .\tests\bgfx_metaballs.das --smoke-test
+```
+
 ## 01 — Metaballs
 
 [01_metaballs.das](01_metaballs.das) ports the CPU marching-cubes / transient-vertex
@@ -76,12 +91,12 @@ Remaining syntax friction:
 
 ### Verification
 
-`--smoke-test` renders three deterministic animated frames, reads the last color
+The separate `tests/bgfx_metaballs.das` test renders three deterministic animated frames, reads the last color
 texture back through a fence and checks foreground coverage. Set environment
 `DASSDL3_METABALLS_CAPTURE` to a writable filename to save that smoke image as
 640×480 RGBA8 bytes. This is diagnostic output, not needed for normal execution.
 
-[test_metaballs_field.das](test_metaballs_field.das) checks all 256 topology rows,
+[bgfx_metaballs_field.das](../../tests/bgfx_metaballs_field.das) checks all 256 topology rows,
 a radius-6 analytic sphere (positions/normals), empty isosurfaces and animation.
 [GPU upload tests](../../tests/gpu_float_upload.das) check float bytes after GPU
 roundtrip at nonzero offsets, rejected ranges/null handles, and a null uniform
@@ -117,11 +132,11 @@ Run from the repository:
 
 ```powershell
 .\build\ninja\bin\dasSDL3_runner.exe .\examples\gpu\02_raymarch.das
-.\build\ninja\bin\dasSDL3_runner.exe .\examples\gpu\02_raymarch.das --smoke-test
+.\build\ninja\bin\dasSDL3_runner.exe .\tests\bgfx_raymarch.das --smoke-test
 ```
 
 Space pauses/resumes, R resets time, Escape/window close exits. Resize letterboxes
-the fixed 640x360 render target, preserving the 16:9 ray aspect ratio. Smoke renders
+the fixed 640x360 render target, preserving the 16:9 ray aspect ratio. The separate test renders
 times 0.6 and 1.2 and reads back both frames: grayscale foreground coverage,
 background corner orientation and changed image hashes must pass. Optional
 DASSDL3_RAYMARCH_CAPTURE writes the last RGBA8 image (640x360, top-down); the path
@@ -173,7 +188,7 @@ The model has separate [provenance and terms](models/README.md).
 
 ```powershell
 .\build\ninja\bin\dasSDL3_runner.exe .\examples\gpu\03_mesh.das
-.\build\ninja\bin\dasSDL3_runner.exe .\examples\gpu\03_mesh.das --smoke-test
+.\build\ninja\bin\dasSDL3_runner.exe .\tests\bgfx_mesh.das --smoke-test
 ```
 
 Space pauses, R resets time, Escape/window close exits. The application uploads
@@ -194,12 +209,12 @@ DXIL/SPIR-V assets are included. `python tools/build_mesh_shaders.py --check`
 recompiles and checks deterministic output with DXC/spirv-val; ordinary consumers
 need neither tool. `tools/build_mesh_asset.py --check` checks model conversion.
 
-Smoke renders deterministic times 0.6 and 1.2 into RGBA8 640x360 targets, waits on
+The separate `tests/bgfx_mesh.das` test renders deterministic times 0.6 and 1.2 into RGBA8 640x360 targets, waits on
 readback fences and checks foreground coverage, bright colored pixels, clear
 corners and changing image hashes. It then renders directly to the swapchain and
 resizes 960x540 to 800x600, requiring a changed depth-target size. Optional
 `DASSDL3_MESH_CAPTURE` writes the last offscreen image as top-down RGBA8 bytes.
-`test_mesh_data.das` tests valid decoding, missing files, truncated/extra payload,
+`tests/bgfx_mesh_data.das` tests valid decoding, missing files, truncated/extra payload,
 invalid header/counts/stride, non-finite vertices and out-of-range indices.
 
 ### Wrapper findings

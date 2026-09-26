@@ -6,7 +6,7 @@ Raw `SDL_*` keeps SDL signatures, sentinels and ownership. Boost operations use
 standard `daslib/result` and `daslib/option`, publicly re-exported by `sdl3_boost`.
 There are no legacy bool scopes, void-block scopes or `_result`/`_status_result`
 entry points. Pure constructors, predicates and void destroy/log functions remain
-ordinary values. This supersedes the previous additive migration.
+ordinary values.
 
 - Fallible commands return `Result<SdlUnit,SdlError>`; factories return
   `Result<resource,SdlError>`. `SdlError.operation/message` are owned script strings.
@@ -57,8 +57,7 @@ finally; Result does not promise cleanup after arbitrary application panic.
 writing the borrowed SDL_Event. Decode pointer-bearing text before polling again.
 The typed text readers return copied script strings. The opt-in
 [sdl3_events module](event-variants.md) provides `poll_event() : Option<SdlEvent>`
-with owned text for the documented input/window variants. Other payloads remain
-unknown (type/timestamp only), pending further P3 coverage.
+with owned payloads for supported variants. Unknown events preserve type and timestamp.
 
 For nested generic blocks, explicit argument types stabilize inference. Mutable
 native block arguments must retain `var`. Check a scope after assigning its result,
@@ -66,5 +65,8 @@ or use `with_*() { ... } |> is_ok`; wrapping a no-argument trailing block inside
 `is_ok(...)` can confuse this pinned parser. Arrays and mutable pointer containers
 use move_ok/move_some/move_unwrap, not implicit cloning.
 
-See [migration record](result-option-plan.md), [scope/data boundary](gpu-api-boundary.md)
-and [example](../examples/results/01_results.das).
+See [scope macros](sdl-scope.md) and [example](../examples/results/02_sdl_try.das).
+
+SdlUnit has one padding byte to match C++ empty-structure size in AOT.
+Arrays and events with owned lists use move constructors/extraction; explicit
+cloning creates independent storage. See [event payloads](event-list-payloads.md).

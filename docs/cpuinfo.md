@@ -42,16 +42,3 @@ Positive RAM/page assertions are Windows test expectations, not a promise that
 all SDL platforms can detect them. Interpreter/AOT parity does not establish
 ARM, PowerPC, LoongArch or browser detection; those need platform runs. Stdinc
 allocation/math functions remain outside this package as requested.
-
-## Local results (2026-09-26)
-
-- Main native/masked/example: 3/3.
-- Baseline / CppGenBind / strict AOT plus metadata: 10/10, in an isolated parity
-  build directory to avoid another build's Ninja/executable locks.
-- Installed core SDK consumer: 7/7 (native/masked/example in interpreter/AOT and
-  a negative no-fallback check).
-- Generator freshness, inventory and contract gates: 3/3; Python baseline
-  regeneration, documentation links and diff whitespace passed.
-
-Core census: 1053 generated, 13 adapted, 197 pending out of 1263 Windows functions.
-169 pending Stdinc entries remain unchanged. CPUInfo has no remaining declarations.

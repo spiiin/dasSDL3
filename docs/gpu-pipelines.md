@@ -84,7 +84,7 @@ device-specific cleanup. Supported depth/stencil and MSAA combinations are creat
 and inspected by this test. MRT/depth/stencil/MSAA and indexed instance offsets
 have additional pixel tests in gpu_native_adapters.das.
 
-Latest combined verification: [gpu-native-validation.md](gpu-native-validation.md).
+Latest combined verification: [gpu raw tests](gpu-raw-tests.md).
 Current function census: [api-coverage.md](api-coverage.md).
 This page describes the checked subset. Full native pointers/arrays and scopes
 are documented in [gpu-native-boost.md](gpu-native-boost.md); IDs and native

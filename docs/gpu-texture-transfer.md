@@ -68,7 +68,7 @@ normal/early-return cleanup and rapid retirement of 64 readback tickets.
 The new CTests fail on Vulkan VUID/Validation Error and D3D12 ERROR output.
 Hardware loss and injected allocation/submission failures remain unverified.
 
-Latest combined verification: [gpu-native-validation.md](gpu-native-validation.md).
+Latest combined verification: [gpu raw tests](gpu-raw-tests.md).
 Current function census: [api-coverage.md](api-coverage.md).
 This page describes the checked subset. Full native pointers/arrays and scopes
 are documented in [gpu-native-boost.md](gpu-native-boost.md); IDs and native

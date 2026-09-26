@@ -174,23 +174,6 @@ References: [Rust API return values](https://rust-lang.github.io/api-guidelines/
 [public type aliases](https://deterministic.space/elegant-apis-in-rust.html#public-type-aliases).
 The last article discusses aliases; aliases alone do not introduce error variants.
 
-### Local validation (2026-09-22, Windows x64)
-
-- Main regression selection: 140/140; later affected selection: 17/17.
-- Baseline/CppGenBind/AOT selection: 107 cases resolved successfully. One new
-  compound-return test initially had stale AOT output; adding its imported boost
-  modules to CMake dependencies regenerated it, and its repeat passed. This was
-  a dependency fix, not a disabled AOT check or interpreter fallback.
-- Standalone clangbind smoke: interpreter and AOT 2/2, including the shortened
-  managed-structure initializers.
-- Consumer built with LLVM/Clang/Python package discovery disabled; all 54 boost
-  modules import, pixel views/escape checks and examples 61, 67 and 74 pass.
-- Production generator configuration restored; bindings freshness, documentation
-  links and whitespace checks pass. Raw declaration coverage remains unchanged.
-
-Pixel views are currently exported by the native module; adding them to the Web
-profile and rebuilding its packaged scripts is a separate platform follow-up.
-
 ## Graphics pipeline builder
 
 The mutating builder uses the existing GpuGraphicsPipelineOptions descriptor:

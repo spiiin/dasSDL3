@@ -69,7 +69,7 @@ on the tested Vulkan/D3D12 drivers. It is not public general pipeline coverage.
 The shared oracle also retains the earlier triangle tests. Example 42 only loads
 and inspects shaders; it does not render.
 
-Latest combined verification: [gpu-native-validation.md](gpu-native-validation.md).
+Latest combined verification: [gpu raw tests](gpu-raw-tests.md).
 Current function census: [api-coverage.md](api-coverage.md).
 This page describes the checked subset. Full native pointers/arrays and scopes
 are documented in [gpu-native-boost.md](gpu-native-boost.md); IDs and native

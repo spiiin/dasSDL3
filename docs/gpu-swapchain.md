@@ -38,4 +38,4 @@ foreign/released windows, frame limits, two windows/devices and reclaim. It no
 longer relies on removed triangle helpers. Native graphics/raw tests cover actual
 acquisition/presentation. Capability reports do not prove HDR color accuracy.
 Other platforms and HDR displays need their own verification.
-See [combined results](gpu-native-validation.md).
+See [gpu raw tests](gpu-raw-tests.md).

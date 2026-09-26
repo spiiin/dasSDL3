@@ -75,5 +75,5 @@ Hardware evidence still required: execute the positive branch on supported ASTC
 UNORM/sRGB hardware, and FLOAT on an allowed backend with verified support.
 Cube/array variations, sampling decoded pixels and Metal/Linux validation remain
 unverified. Existing real BC, color and volume regressions protect
-the shared code paths. Current validation results: [gpu-native-validation.md](gpu-native-validation.md).
+the shared code paths. Current validation results: [gpu raw tests](gpu-raw-tests.md).
 Zero positive ASTC roundtrips is a limitation, not successful transfer coverage.

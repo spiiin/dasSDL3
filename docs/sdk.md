@@ -43,15 +43,3 @@ is not part of this profile. CMake rejects Debug, /MT, non-MSVC and non-x64 usag
 
 The `examples/sdk-consumer` project has three CTest
 checks: interpreter, strict AOT and rejection of a missing AOT registration.
-
-## Local validation (2026-09-26)
-
-The installed package was moved to a path containing spaces; an external copy
-of the consumer configured and built using only find_package. All three CTest
-checks passed. Moving the SDK again also preserved execution of the already
-built interpreter and strict AOT binaries when passed the new data directory.
-A fresh consumer build at the final prefix passed 3/3 again. Debug and /MT were
-rejected with explicit configuration errors. Export files and the consumer Ninja
-graph contain no producer repository/build paths. LLVM and Python discovery were
-disabled in the producer; the consumer needs neither. This is a core SDK smoke,
-not a repeat of every SDL runtime/backend test.

@@ -63,8 +63,7 @@ ctest --test-dir build/ninja -R "^(sdl3_|bindings_up_to_date)" --output-on-failu
 
 CppGenBind уже выбран production backend Windows x64. Следующие команды —
 [обновление snapshots](clangbind-production.md), [parity](clangbind-parity.md)
-и [AOT](clangbind-types-aot.md). Минимальный compiler regression сохранён в
-[clangbind-experiment.md](clangbind-experiment.md). Проверки других платформ
+и [AOT](clangbind-types-aot.md). Проверки других платформ
 остаются отдельной работой.
 
 Не запускайте consumer configure одновременно с генерацией: shared modules и

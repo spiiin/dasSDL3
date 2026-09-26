@@ -67,15 +67,3 @@ only executes GL drawing/readback; SDL operations under test remain in daScript.
 Live EGL success and callback invocation require an EGL backend and are not
 claimed by dummy failures or desktop WGL. These tests do not establish Linux,
 macOS, web or cross-driver behavior. Existing web bindings remain unchanged.
-
-## Local results (2026-09-26)
-
-- Main GL package and snapshot/inventory/contract gates: 6/6.
-- Baseline / CppGenBind / strict AOT plus metadata: 10/10.
-- Installed core SDK, separate consumer with no source-tree dependency: 6/6
-  (real context and dummy contracts in interpreter/AOT, plus no-fallback guards).
-- Python baseline regeneration check and documentation links: passed.
-
-Core census: 1025 generated, 13 adapted, 225 pending out of 1263 active Windows
-functions. Video: 114 generated, zero pending. This is declaration coverage;
-platform/runtime limitations above remain part of the contract.

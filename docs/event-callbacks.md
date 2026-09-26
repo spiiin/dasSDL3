@@ -1,4 +1,4 @@
-# Events callbacks (SDL 3.2.18)
+# Events callbacks
 
 All 19 Events functions now have generated raw bindings. Five native callback
 functions complete the declaration set: SDL_SetEventFilter, SDL_GetEventFilter,
@@ -47,17 +47,3 @@ script mutation/removal/order, empty queues and stale-error success.
 
 This completes Events declarations, not all event payload projections or all P3.
 Keyboard/Mouse and the remaining owned event payloads follow next.
-
-## Local validation — 2026-09-21
-
-Windows x64/MSVC: four main Events checks, three existing Clipboard/hit-test
-checks, eight legacy/CppGenBind interpreter checks and seven strict-AOT checks
-passed. Metadata parity and all ten generation/inventory/preprocessor/boundary
-checks passed. The negative callback-type probe rejects script blocks on all
-three interpreter runners. Tests cover native worker-thread callbacks; no
-script Context is entered by that worker.
-
-The BUILD_TESTING=OFF consumer rebuilt with LLVM, Clang and Python discovery
-disabled. Example 69 and a fixture-free raw/ref absent-filter probe passed;
-script blocks were rejected by raw callback APIs and test callback exports were
-confirmed unavailable.

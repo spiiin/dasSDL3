@@ -65,15 +65,3 @@ stale error, copied errors after later SDL calls and factory error operation nam
 `tests/sdl3_try.das` checks failed/successful and moving assignments with defer.
 GPU scope/pixel/readback tests exercise the factories through existing owners;
 compile-negative handle tests reject numbers and pointers passed to the helper.
-
-## Local validation — 2026-09-21
-
-Windows x64/MSVC with the pinned dependencies: 109 selected main checks and
-304 legacy/CppGenBind/AOT checks passed, including Vulkan/D3D12 examples and
-metadata parity. After replacing the type list with overloads, factory tests,
-compile-negative type checks and the production clangbind probe passed again.
-The rebuilt AOT runner and eight affected parity checks also passed with the
-overload-based helper, including example 44 and all ten handle types.
-The no-LLVM, BUILD_TESTING=OFF consumer passed the factory/macro tests, examples
-44, 47–50 and 67, both compile-negative suites and the public API boundary.
-Unavailable-device and missing-second-shader error paths were also checked.

@@ -53,7 +53,7 @@ foreign/stale IDs, early-return cleanup and ticket survival after source destruc
 Examples 33–35 demonstrate each package without a window. This does not verify
 SRGB behavior, general float filtering, Linux/Metal or arbitrary shader rendering.
 
-Latest combined verification: [gpu-native-validation.md](gpu-native-validation.md).
+Latest combined verification: [gpu raw tests](gpu-raw-tests.md).
 Current function census: [api-coverage.md](api-coverage.md).
 This page describes the checked subset. Full native pointers/arrays and scopes
 are documented in [gpu-native-boost.md](gpu-native-boost.md); IDs and native

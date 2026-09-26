@@ -68,11 +68,3 @@ Process/LoadSO and platform services are covered in [process-loadso.md](process-
 and [platform-services.md](platform-services.md). These bindings do not make concurrent calls into the
 same daScript Context safe. Desktop tests do not imply Web worker support; the
 existing Web profile is still single-threaded and is not expanded by this package.
-
-## Local validation (2026-09-22)
-
-Windows x64/MSVC: main test and example 2/2; legacy/CppGenBind/AOT test and
-example plus metadata/missing-AOT gates 8/8; generation/inventory/API-boundary
-and Result/scope/try regression gates 7/7. The no-LLVM/no-Clang consumer build
-runs example 81 and passes the public API boundary check. Generation remains
-deterministic. Other operating systems and Web workers are not validated here.

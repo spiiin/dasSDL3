@@ -52,16 +52,3 @@ linear and sRGB premultiplication, and BMP file/memory round trips (including cl
 success and failure). They are not an exhaustive matrix of every pixel format,
 filter, colorspace, HDR property or platform. Pixel-format helper macros are not
 included in the function-coverage count.
-
-## Local verification
-
-Windows x64/MSVC: combined main suite 148/148; both test files and both examples
-in legacy/CppGenBind/AOT plus metadata 13/13. Generator/inventory/boundary gates
-6/6 and standalone generator tests 4/4. A consumer configured without LLVM,
-Python package discovery or generators built and ran both tests and examples.
-The complete AOT runner was rebuilt; unrelated GPU parity runtime cases were
-not rerun. Main GPU tests were included in the main suite.
-
-Inventory: Surface 58 generated / 0 adapted / 0 pending; Pixels 11 / 0 / 0.
-The overall profile has 428 generated, 13 adapted and 785 pending functions.
-Five supporting IO/filesystem functions are counted in their own categories.

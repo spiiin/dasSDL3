@@ -1,426 +1,90 @@
-# dasSDL3 project guide
+# dasSDL3 contributor guide
 
-## Architectural boundary (current user requirement)
+## Scope
 
-Read docs/gpu-api-boundary.md before changing public API. The task is SDL bindings,
-not a renderer framework. Mesh/material/scene/batching/culling and command/render
-plans were removed, including native exports. Do not restore them as optional APIs
-or compatibility facades. This supersedes all historical instructions to preserve
-those APIs. Application algorithms belong in examples, after direct SDL access exists.
-
-Keep generated SDL declarations, necessary language/lifetime/array adapters, and
-small defaults/with_* boost helpers. Do not add new composite GPU objects to bypass
-missing SDL functions. Count exported contracts, not internal calls, helper names,
-examples or native test fixtures. Five native GPU follow-up steps are locally
-verified; Properties now has 19 generated functions plus copied enumeration; retained
-cleanup callback now accepts native C addresses (docs/native-callbacks.md). Read docs/properties.md for the pinned numeric
-string-cache/CopyProperties double-free defect and copied-string adapter. Hints/Init adds 12 generated functions, copied getters and subsystem defer scopes;
-see docs/init-hints.md and docs/native-callbacks.md for native callbacks and string constants. Next
-library-wide queue: P7 Windows function declarations are connected; next declaration section is P8. Synchronization (SDL_mutex.h) now has 28/28 generated functions; see docs/synchronization.md for ownership, same-thread unlock, condition predicates and native-only test workers. Thread/TLS (12/12) and Atomic (15/15) are generated; see docs/thread-atomic.md. Process/LoadSO now has 9/9 + 3/3 raw functions; see docs/process-loadso.md for wait error probing, pipe closure and library address lifetime. System/Power/Locale/Dialog/Tray adds 42 raw functions; P7 now has all 109 active Windows function declarations. See docs/platform-services.md: Dialog tests cover invalid filters/null callback only, not interactive selection; X11 is a Windows stub and other OS branches are unverified. No synchronous Result or script callback bridge for asynchronous dialogs. Web follow-ups remain in docs/web-roadmap.md. Web bootstrap now builds with emsdk 5.0.3: web/build.cmd, 65 SDL raw functions in tools/bindings-web.json, 10 HTML examples, Edge/Firefox tests in tests/web/test_browser.py. See web/README.md; full census/CppGenBind/AOT remain. Examples 05-08 reuse pixel/target/geometry/audio boost adapters; browser audio starts on Start, queues copied PCM, and closes on Stop. OpenGL examples in examples/web/opengl link the existing daScript libDasModuleOpenGL (require opengl); do not add another GL binding. SDL owns window/context, GL owns shaders/programs; see examples/web/opengl/README.md. Uses single-thread wasm32 interpreter + SDL Renderer or SDL GL context; pinned SDL has no WebGPU GPU backend. Camera is 15/15 raw; see docs/camera.md for borrowed frames, permission/null semantics and dummy-only validation. Audio is 56/56 raw; see docs/audio-final-api.md for native-only callbacks, ownership, bounded PCM conversion and pinned postmix/WAV failure-output behavior. Audio stream controls add 12 raw functions (Audio now 56/56); see docs/audio-stream-controls.md for map timing, default-map getters fixed in SDL 3.4.16 (copied boost getters now available; see script-accessibility.md), silent bound-format ignores and same-thread defer unlock. Audio device discovery/open/binding adds 21 raw functions; see docs/audio-devices.md for logical ownership and dummy-only recording. AsyncIO has all 11 raw functions; see docs/asyncio.md for submission/completion separation and buffer ownership. Storage has all 17 raw functions; see
-docs/storage.md for native callback lifetime, readiness/space predicates, bounded
-file buffers and fallible close. Positive user/cloud storage is unverified. IOStream has 46 raw functions, fixed-text
-IOprintf and pending IOvprintf; see docs/iostream.md for partial counts/status,
-native callbacks, uint8/uint16 ref widening, close error precedence and the pinned
-SaveFile_IO short-write defect. Filesystem has all 11 raw
-functions and copied paths/lists; see docs/filesystem.md. P3 follow-ups include keyboard/mouse device hotplug payloads and physical-device validation; all eight native virtual callback fields now have setters.
-IME candidates and clipboard MIME lists are owned arrays; SdlEvent/Option/Result
-are move-only. Use <-, move_unwrap and emplace, or explicit clone_to_move/push_clone.
-See docs/event-list-payloads.md for raw borrowed user data and list validation.
-Touch/Sensor/Haptic/HIDAPI have 71 raw declarations; Pen is event-only. Read
-docs/peripherals.md for native HID wchar_t/AOT storage, report counts and
-custom haptic pointer lifetime. Physical peripheral I/O remains unverified.
-Joystick/Gamepad raw declarations are 58/58 + 73/73; see docs/joystick-gamepad.md
-for retained native callback descriptors, copied configuration, GUID ABI and pinned
-virtual-driver defects (one pending sensor event before Update; no virtual balls;
-Uint8 update-index limit). Keyboard/Mouse is 24/24 + 22/22 raw
-and Events (19/19 raw). See docs/keyboard-mouse.md for retained scancode names,
-layout-aware keys, uint16 native mask storage, cursor ownership and backend limits.
-See docs/event-callbacks.md for native callback addresses and synchronous filtering.
-See docs/event-queue.md for timeout/error convention,
-partial ADD counts, registration limits and borrowed versus copied payloads.
-SdlEvent now has 71 alternatives (see docs/common-api.md for display/render/pinch), including all 13 Touch/Pen/Sensor and 21 Joystick/Gamepad tags, copied drop strings and user metadata;
-application user pointers remain raw. Full Result/Option migration is locally validated;
-see docs/result-option-plan.md for contracts and verification. P2 function declarations are connected, with
-RenderDebugTextFormat limited to fixed text and 20 GL/EGL Video functions explicitly
-completed in P8; see docs/gl-egl.md (current Video 114/114). Rect/Clipboard/hit-test contracts: docs/rect-clipboard-hittest.md.
-All 58 Surface and 11 Pixels functions now have raw signatures; see
-docs/surface-pixels.md for memory, palette and BMP ownership limits. Surface state adds 16 raw functions and scalar/rect adapters;
-see docs/surface-state.md. Choose cohesive behavioral packages, not a fixed function
-count; implement a package before testing it as a whole. Render has 88 generated signatures and one fixed-text
-variadic adapter; positive native Metal/Vulkan interop remains unverified.
-See docs/renderer-final-api.md. Renderer operations adds 10 raw functions;
-see docs/renderer-operations.md for paired creation, borrowed draw refs, owned
-clipped readback and VSync capability limits. YUV/color/blend adds 10 raw functions;
-see docs/renderer-yuv-blend.md for odd plane sizes, pitch/capacity checks and
-backend-dependent custom blend support. Texture bytes/transfer adds 10 raw
-functions; see docs/texture-transfer.md for byte refs, bounded RGBA32 updates
-and borrowed write-only surface locks. Raw LockTexture requires in-bounds rects. Texture creation/state adds 10 raw
-functions and defer scopes; see docs/texture-state.md. CreateTexture is now raw;
-the existing RGBA8 upload adapter still supports only streaming RGBA32.
-Renderer queries/logical presentation adds 10 raw functions; see
-docs/renderer-presentation.md for borrowed properties, copied names, enum refs
-and main-view coordinate conversion while a texture target is selected.
-Renderer state adds 10 raw functions and scalar/rect ref adapters; see
-docs/renderer-state.md for target-local state, NULL resets and full-image pixel tests.
-Software renderer/primitives adds 10 raw functions; see docs/renderer-primitives.md
-for borrowed surface lifetime, array adapters and CPU pixel tests. Window IO adds 25 Video + 3 Surface
-raw functions; see docs/window-io.md for borrowed surfaces, conditional capabilities
-and NULL shape removal (fixed upstream in SDL 3.4.16). The raw ICC getter lacks native window
-validation; its copy adapter rejects NULL, while live-window/video preconditions remain. Video is now 114/114 (SDL 3.4.16); GL/EGL is connected in P8. Hit-test callbacks are lexical scopes;
-Clipboard uses native-owned copied data or explicit native callback addresses.
-Window creation/state adds 27 raw functions and defer scopes; parent lifetime
-preconditions are documented in docs/window-state.md. Video discovery adds 31 raw
-queries and copied/ref adapters; see docs/video-discovery.md for native lifetimes. Error/log/time adds 22 raw functions
-and 10 fixed-text adapters; see docs/diagnostics-time.md for pending callback/va_list contracts. Shader DSL and companion libraries follow separately.
-Current queue: docs/full-binding-roadmap.md; GPU limitations: docs/gpu-roadmap.md;
-documentation index: docs/README.md. Run main, parity/AOT and consumer checks for
-binding changes; after fixes repeat affected tests rather than every suite
-without a reason. No repeated go-ahead requests. No commit or publication without
-a user request.
-
-Callback rules: native callback arguments are C function addresses, not script Func/Block
-values. Only explicitly reviewed callback APIs bypass dasclang's callback filter.
-Callback APIs use generated AOT cpp names for native address casts;
-keep both generators in sync. with_window_hit_test pins the lexical block/context
-until deferred unregister; keep its never_inline annotation so AOT temporaries live
-through the entire scope call. Do not store arbitrary script blocks for later callbacks.
-Clipboard copy data is native-owned through SDL cleanup even after backend failure.
-Tests that set clipboard data must use SDL_VIDEODRIVER=dummy.
+Read [API boundary](docs/gpu-api-boundary.md) before changing public API.
+This is an SDL binding, not a rendering framework. Keep generated declarations,
+necessary language/lifetime adapters and small boost helpers. Application algorithms
+belong in examples; no public mesh/material/scene/batching or rendering plans.
 
 ## Sources and generation
 
-SDL 3.4.16 upgrade details and current census are in docs/sdl-3.4-upgrade.md.
-Older package counts above describe their original implementation baseline.
-Global keyboard/mouse ID 0 is valid; invalid postmix device IDs return Err;
-failed texture scale-mode queries output INVALID. Swapchain tests requiring a
-body invocation need a visible window; hidden Vulkan windows can return None.
+- SDL 3.4.16 and daScript 35bf260c0d8a79b94c64005bd3d2435adcf7e261 are pinned.
+  Do not patch dependencies to fix binding behavior.
+- Never hand-edit src/generated or docs/generated. Change policies/generators and
+  regenerate both Windows backends; update separate web snapshots for header changes.
+- CppGenBind is primary on Windows; Python/Clang is the reference backend. Normal
+  consumers build without LLVM or shader compilers. Preserve /bigobj registration.
+- Keep deterministic output, calling conventions, field dependency registration order,
+  ABI/metadata parity and strict AOT without interpreter fallback.
+- New fields require explicit record-field policy decisions. Run
+  tools/audit_record_fields.py --check. Header coverage is not hardware validation.
+- See [setup](docs/clangbind-setup.md), [snapshots](docs/clangbind-production.md),
+  [AOT](docs/clangbind-types-aot.md) and [inventory](docs/api-inventory.md).
 
+## API and lifetime
 
-SDL 3.4.16 and daScript 35bf260c0d8a79b94c64005bd3d2435adcf7e261 are pinned.
-Do not edit their source to fix the binding. Inventory counts use pinned headers,
-not the moving SDL wiki. Read docs/bgfx-idioms.md and docs/sdl3-boost.md for language
-idioms. docs/full-binding-roadmap.md and binding-design-review.md preserve research;
-current boundary overrides old implementation/engine suggestions there.
+- Raw signatures/sentinels stay unchanged. Boost uses standard Result/Option under
+  canonical names, without *_result aliases or void scopes. SdlError has only
+  operation/message; never infer categories from SDL error strings.
+- Copy errors immediately after failure, before cleanup. Stale errors, pending,
+  absence and unsupported states are not failures. Body errors take precedence
+  over cleanup errors. push_event preserves SDL's ambiguous acceptance bool.
+- No wrapper panic/verify, try/recover or native protected-call bridges. Use direct
+  blocks and defer. Enter the cleanup scope AFTER successful acquisition: defer
+  is hoisted. Arbitrary application panic does not guarantee cleanup.
+- Scope handles are borrowed aliases, not unique ownership. Use one outer SDL
+  lifetime. Native callbacks take C addresses with exact ABI and host-owned state;
+  do not retain script closures or invoke script contexts on audio workers.
+- Keep with_window_hit_test never_inline for AOT temporary lifetime. Clipboard
+  mutation tests use the dummy video driver; network tests are bounded and loopback-only.
+- Check array sizes before narrowing/pointer arithmetic. Preserve pitches, SDL
+  allocator matching, event union tags and copied text. Managed pixel views must
+  reject copy/move/clone; # alone does not prevent managed cloning. Borrowed arrays
+  may be explicitly cloned to independent storage.
+- Prefer named initialization, returned query values, receiver-first pipes and
+  gen2 trailing blocks. Retain mutable buffers for in-place operations.
+- Examples use sdl_try and explicitly typed sdl_use bindings inside sdl_scope.
+  Report errors once in main; keep 01_results as the explicit Result comparison.
+  Do not weaken pointer checks to remove unsafe syntax. Respect macro placement
+  restrictions in [sdl_try](docs/sdl-try.md) and [sdl_scope](docs/sdl-scope.md).
+- See [errors](docs/error-handling.md), [ergonomics](docs/api-ergonomics.md),
+  [events](docs/event-variants.md) and subsystem contracts in [docs](docs/README.md).
 
-Generated files in src/generated and docs/generated must never be edited by hand.
-Edit tools/bindings.json, tools/api-policy.json or the generators, then regenerate.
-CppGenBind saved snapshots are the default on Windows x64/MSVC; normal consumers
-must build without LLVM or a shader compiler. MSVC module registration requires
-/bigobj (set on dasSDL3), as the expanded bindings exceed standard COFF sections. Preserve legacy/CppGenBind metadata
-parity, deterministic generation, preprocessor checks and missing-AOT negative tests.
-Setup/gates: docs/clangbind-setup.md, clangbind-production.md, clangbind-types-aot.md.
-Nested type annotations must register in field dependency order, not policy order.
+## GPU and memory
 
-## Runtime and language contracts
-
-Read docs/api-ergonomics.md for the current boost conventions. Prefer named POD
-initializers and returned query values. Pixel views must forbid copy/move/clone;
-temporary # alone does not prevent managed cloning. Borrowed arrays may be
-explicitly cloned into independent storage. Keep pitch and write-only lock rules.
-SdlError contains operation and message only; do not infer categories from SDL error strings.
-AOT tests must depend on all boost modules they import; stale generated code must
-be regenerated, never accepted through an interpreter fallback.
-Native pass scopes lend mutable references; use consuming end helpers so deferred
-cleanup sees null. Do not claim raw pointer aliases are linear ownership.
-
-
-
-SDL errors are return values, never panic/verify in boost wrappers. No script
-try/recover or native protected invocation/cleanup bridge. Read docs/error-handling.md.
-Use daslib/defer and direct block calls. Enter a nested cleanup scope AFTER a
-successful acquisition: defer is hoisted into the enclosing finally section.
-Boost uses standard Result/Option under canonical names; there are no legacy bool
-scopes, void-block scopes, *_result or *_status_result aliases. Scope blocks return
-Result; use sdl_ok() for successful void work. Preserve primary body error if cleanup
-also fails. Raw SDL signatures/sentinels stay unchanged. Optional event polling
-keeps its borrowed SDL_Event out parameter. The optional sdl3_events module adds
-poll_event() returning Option<SdlEvent> and decode_event(raw); see docs/event-variants.md.
-Only documented variant payloads are decoded; text is copied immediately into
-daScript storage, unknown events preserve type/timestamp without native pointers. Pure
-predicates remain bool; push_event retains SDL's ambiguous acceptance bool.
-Read docs/result-option-plan.md and docs/error-handling.md for the contract inventory.
-Capture errors before cleanup; pending/absent/unsupported are not SDL failures.
-Native swapchain commands with an acquired texture must submit even on body Err;
-SDL forbids cancellation after swapchain acquisition. None skips the body.
-Pinned panic skips defer/finally: do not promise cleanup after application panic.
-Test normal/early returns, SDL error results, partial initialization and cleanup order.
-Use trailing gen2 blocks: with_sdl() { ... }, with_window(...) $(window) { ... }.
-Keep example acquisition callbacks short: return nested Result directly, and move
-substantial loops/upload/draw/readback work into ordinary named Result-returning
-functions inside the example. Borrow handles synchronously; report errors once in
-main. Avoid global failure flags and blanket and_then nesting. Do not introduce
-public composite scopes or a shared rendering framework just to reduce indentation.
-For linear Result work, opt into dassdl3/sdl3_try; see docs/sdl-try.md. Use it only
-as a standalone statement, the sole initializer of one let/var, or the entire RHS
-of assignment to a variable in a Result function/block. Indexed/field targets
-remain unsupported. It performs ordinary early return, preserving defer; do not use
-it in cleanup, nested expressions or as a function pointer. Arrays require move
-initializers. Keep an ordinary success return so the enclosing Result type is known.
-Numbered examples use sdl_try; keep examples/results/01_results.das as the explicit
-Result/and_then comparison to examples/results/02_sdl_try.das. Report errors in main;
-retain Option defaults and normal false/pending/unsupported states.
-Prefer receiver-first pipes. Scalar out parameters require explicit references;
-managed structs differ. `pass`, `block` and `variant` are reserved identifiers.
-For linear scoped acquisition, import dassdl3/sdl3_scope and use explicit typed
-bindings such as `let vb : GpuBufferHandle = device |> with_gpu_vertex_buffer(vertices) |> sdl_use`
-inside `sdl_scope() { ... }`. Zero-parameter scopes use `with_sdl() |> sdl_use`.
-The macros nest existing wrappers; they introduce no ownership/cleanup mechanism.
-Keep lifetime boundaries and multi-parameter callbacks explicit. See docs/sdl-scope.md
-for supported placements, references and compile-time rejection rules.
-Keep public examples free of unsafe/address expressions; never relax language pointer
-checking to make them compile. A hidden unsafe operation is not an ownership proof.
-
-GPU checked IDs are monotonic, separate by native kind, device-specific and
-main-thread-only. They use native-registered uint64-backed distinct Gpu*Handle types; see
-docs/gpu-handles.md. Keep checked scalar/array signatures nominal in native exports
-and boost. Do not reintroduce uint64 overloads, enum substitutes or duplicate script
-typedefs. Use explicit *handle only for diagnostics/test fixtures; runtime kind,
-liveness and device checks remain necessary. Raw SDL pointers stay unchanged.
-GPU Result factories use checked_handle_result (limited to the ten distinct handle
-types); see docs/gpu-factories.md. Prefer these factories and sdl_try over repeated
-zero/null guards in examples. They do not own resources: preserve deferred cleanup.
-Direct recording is src/sdl3_gpu_recording.h and
-sdl3_gpu_recording_boost; no operation list or per-draw uniform snapshots. End/submit/
-cancel consume IDs. Scope cleanup ends an open offscreen pass and cancels unsubmitted
-commands. Native swapchain scopes submit after acquiring a non-null texture.
-Cancel open recordings before resource release on device teardown. Failed submission
-invalidates written targets. Keep interpreter/AOT, two-device and CPU pixel tests.
-
-Generated native SDL_GPUCommandBuffer/SDL_GPUFence pointers now have direct SDL
-acquire/submit/cancel/query/wait/release access. See docs/gpu-native-fences.md and
-example 47. They are NOT checked IDs and follow SDL manual ownership/thread rules.
-Do not add a registry or bridge to checked IDs merely to expose the next raw API.
-The wait-array adapter borrows pointer storage only for the synchronous SDL call.
-All 92 active Windows GPU functions now have generated native signatures.
-See docs/gpu-native-api.md and gpu-native-boost.md for array/out adapters and
-native ownership. Five native follow-up steps have local Windows validation in
-gpu-native-validation.md; do not claim all-platform GPU completion.
-sdl3_gpu_native_boost uses defer and native pointers, without a registry/checked-ID
-bridge. Resource callbacks must not release/retain borrowed handles; swapchain
-callbacks must not consume their command. Offscreen command scopes use the
-ref-consuming submit/cancel helpers. Byte transfer capacity must equal creation
-size; handle validity, usage and fence completion remain caller preconditions.
-Examples 48–50 are public and fixture-free. gpu_native_adapters checks advanced
-attachments/lifetimes; gpu_native_array_operations covers array/ref conversions.
-Raw execution: tests/gpu_raw.das, gpu_raw_coverage.json and
-test_gpu_raw_execution.py exercise 92 Vulkan functions and 90 D3D12 functions
-through legacy/CppGenBind/AOT. D3D12 debug groups remain explicitly excluded.
-Test-only CPU fixtures must not hide GPU operations under test. Keep call receipts,
-header census matching and pixel/byte oracles. See docs/gpu-raw-tests.md.
-
-Transfer contracts: gpu-transfer.md, gpu-texture-transfer.md, gpu-volume.md,
-gpu-texture-types.md, gpu-formats.md. Bound uint64 array sizes before narrowing or
-pointer arithmetic; no script memory retained. Preserve row/slice pitches, block
-extents, mip/layer checks and cycling validity. Pending readback release must retire
-its unsignaled fence until completion: pinned Vulkan otherwise resets an in-use
-fence (VUID 01123). Do not add wait-idle to normal production readback.
-ASTC HDR has a pinned Vulkan false-capability guard; positive local ASTC roundtrip
-is unverified. No arbitrary format support claims from generated enums alone.
-
-Independent shaders/pipelines/samplers: gpu-shaders.md, gpu-pipelines.md,
-gpu-samplers.md. Shader binaries and std140 layout are trusted inputs, not reflected.
-D3D12 indexes vertex descriptions by slot: normalize dense slots before native creation.
-Keep interstage DXIL signatures matching (including SV_Position). SDL handles Vulkan
-viewport Y; never insert another shader flip. Do not disable validation. FPS Monitor
-layer filtering is optional and process-local, not a global single-device restriction.
-
-Non-GPU contracts: pixels.md, geometry.md, input.md, audio.md. Preserve ref/out and
-array bounds, renderer/texture ownership, render-target restore, event union-tag checks,
-UTF-8 copying, SDL allocator matching and main-thread calls. No audio-thread script
-callbacks. Dummy audio tests do not verify physical playback. SDL scopes are not
-ref-counted sessions; prefer one outer with_sdl and nested resource owners.
+- Checked GPU handles are native uint64-backed distinct types with runtime kind,
+  liveness and device checks. Do not add uint64 overloads or a native-pointer registry.
+- End/submit/cancel consume checked IDs; native ref-consuming helpers null their
+  argument so defer sees consumption. Aliases retain caller preconditions.
+- Acquired swapchain textures require submit even on body Err; SDL forbids cancel.
+  None skips the body. Hidden windows may produce None.
+- Preserve asynchronous fence retirement; do not add wait-idle to normal readback.
+  Transfer capacity must match allocation size. No script memory escapes synchronous
+  borrows. Keep row/slice pitches, mip/layer and block extents explicit.
+- Preserve CPU pixel/byte oracles and raw call receipts. Keep validation enabled;
+  machine-specific Vulkan layer filtering is explicit and process-local.
+- Shader layout is a caller contract. Normalize D3D12 vertex slots, match interstage
+  signatures and do not introduce an extra Vulkan Y flip.
+- Vulkan options borrow native feature pointers and names synchronously. Copy
+  property values by type to avoid SDL_CopyProperties' string-cache defect and
+  cleanup ownership transfer; see [properties](docs/properties.md).
+- See [native GPU](docs/gpu-native-boost.md), [handles](docs/gpu-handles.md),
+  [raw tests](docs/gpu-raw-tests.md) and [record access](docs/record-field-accessibility.md).
 
 ## Work and verification
 
-Use git --no-optional-locks for read-only status: index refresh may recreate index
-with sandbox ownership and break Windows ACL setup. Preserve unrelated changes.
-Ninja with vcvars64 works; build with 6 parallel jobs. Run the project's CTest filter,
-standalone clangbind checks, interpreter/AOT parity and no-LLVM consumer as appropriate.
-Run tests/test_gpu_api_boundary.py against runners to prevent engine API reintroduction.
-Keep example numbers stable; removed numbers are documented in examples/README.md.
-Documents for removed GPU engine APIs were deleted; do not restore them as active instructions.
-
-Wait for parity builds to finish before executing their binaries: Windows locks
-executables during linking (WinError 32 is not an ACL failure).
-
-Do not overlap no-LLVM consumer configuration/build with clangbind-dependent
-builds or tests: they share daScript generated module configuration. Restore the
-production generator configuration after consumer checks before clangbind gates.
-
-## GPU application port
-
-Optional library examples live in `examples/libraries` with separate numbering.
-`DASSDL3_WITH_IMGUI` builds `dasSDL3_libraries_runner`, reusing upstream dasImgui
-with official SDL3/SDLRenderer3 backends. See examples/libraries/README.md for
-dependencies, raw-event forwarding, current-context ownership and tests.
-Never load GLFW imgui_app into this SDL host. Web/SDLGPU3 integration is pending.
-The optional parity switch is DASSDL3_TEST_IMGUI; imgui_aot_runner disables fallback.
-SDL_image 3.2.4 is optional via DASSDL3_WITH_IMAGE and independent of ImGui.
-See docs/sdl-image.md: 59 raw declarations, built-in codec profile, borrowed IO
-boost overloads, animation frame ownership, snapshot generation and parity tests.
-Do not confuse declared AVIF/JXL/TIFF/WebP APIs with enabled codec support.
-
-`examples/gpu/01_metaballs.das` ports bgfx's CPU marching cubes to SDL GPU.
-Keep its algorithm, table and controls local to the example. See
-`examples/gpu/README.md` for provenance, shader rebuilds, smoke pixel readback and
-syntax findings. Native float upload/uniform helpers copy contiguous float arrays
-synchronously; callers supply actual byte capacity and matching shader layout.
-Raw SDL remains unchanged; no generic struct serialization or mapped-memory view
-is implied by these two adapters. Metaballs runs on Vulkan/D3D12, not the web profile.
-
-SDL_ttf 3.2.2 is optional via DASSDL3_WITH_TTF, independent of ImGui/image.
-See docs/sdl-ttf.md: 117 raw exports, FreeType shared with ImGui, HarfBuzz 10.4.0
-ON and PlutoSVG OFF. Font retains borrowed IO until CloseFont; text must die before font/engine.
-DASSDL3_TEST_TTF adds interpreter/AOT parity. GPU alpha-atlas drawing is tested on
-Vulkan/D3D12 in examples/libraries/05_ttf_gpu.das. Never infer shaping support from UTF-8 loading.
-
-SDL_ttf shaping: examples/libraries/04_ttf_shaping.das uses pinned Amiri 1.003.
-HarfBuzz handles directional/script runs; it does not implement paragraph bidi.
-Tests verify RTL clusters, Arabic joining/ZWNJ, marks, ligatures and canonical
-composition. Keep explicit direction/script/language and font provenance.
-
-TTF GPU draw snapshots copy xy/uv/indices but borrow atlas textures. Reacquire after
-text/font changes; consume before mutating/destroying owners. Fill operations have
-no atlas/UV and IMAGE_INVALID. Empty text is success; boost disambiguates NULL and
-rejects no-engine text (pinned raw getter null-dereference). GPU xy is negative-down
-Y. Keep alpha mask readback vs CPU and move-only Result scope regression tests.
-GPU pipeline/packing/shaders stay in the example, not a library renderer wrapper.
-
-SDL_net 3.2.0 is optional via DASSDL3_WITH_NET; see docs/sdl-net.md. All 34 raw exports, 11 adapters; DASSDL3_TEST_NET enables parity/AOT. WAITING/timeout/None are normal outcomes. AcceptClient returns an owned socket; GetStreamSocketAddress adds a reference. Boost datagrams own copied bytes and sender text. Raw addr field is named address in script with native cppName preserved. Pinned null status returns WAITING: boost rejects null. Zero-byte UDP send is a successful no-op. Keep ports loopback-only in tests, bounded waits and CTest resource lock; no script callbacks or protocol framework.
-
-SDL upgraded to 3.4.16: see docs/sdl-3.4-upgrade.md for validation, changed camera enum and remaining 3.4 additions. Historical 3.2.18 bug notes are not proof the same bug exists in the current SDL. GPU now has 95 raw functions; Atomic 16. Regenerate both Windows backends and web snapshots after header changes.
-
-SDL_mixer 3.2.4 is optional via DASSDL3_WITH_MIXER; see docs/sdl-mixer.md. All 94 raw
-exports, 13 bounded/ref adapters, 33 Result/scoped helpers; DASSDL3_TEST_MIXER enables
-parity/AOT. MIX_Generate counts real bytes, fills trailing silence; Decode zero is
-EOF. StopTrack uses frames; StopAllTracks/StopTag use milliseconds. Negative fade
-means fade-out; loop -1 means infinite. Audio may be retained by a track after
-DestroyAudio, so borrowed IO/NoCopy buffers must outlive every retained reference.
-Callbacks are native addresses only; never invoke a script Context on audio workers.
-Tests use offline PCM or dummy device output. Only built-in codecs are enabled;
-WAV/raw/sine tested, other formats and web remain follow-ups.
-
-SDL_sound 3.2.0 is optional via DASSDL3_WITH_SOUND; see docs/sdl-sound.md.
-17 raw exports, read-only opaque samples with 15 adapters, 9 boost helpers.
-Sound_GetError is separate and consuming. EOF/EAGAIN are states, not errors.
-No retained script-array pointer helpers. Raw IO failure ownership is conditional
-in this pinned source; no unconditional consuming IO boost factory. SDL_sound Init
-is not reference-counted; use one outer SDL scope. Private decoder symbols permit
-static coexistence with SDL_mixer. DASSDL3_TEST_SOUND enables parity/AOT.
-
-SDL_shadercross is optional via DASSDL3_WITH_SHADERCROSS, pinned at 1ff05bec;
-see docs/sdl-shadercross.md. 15 raw functions, 7 structs, 11 adapters, 12 boost
-helpers; offline CLI and incremental assets. DXC is a prebuilt runtime dependency,
-not the libclang binding generator. Copy dxcompiler/dxil DLLs for external hosts.
-Reflection copies names/arrays; GPU factories return native SDL owners. Single
-Init/Quit session, no shader DSL, renderer plans or owner registry. Basic SPIR-V
-header validation is not full validation. DASSDL3_TEST_SHADERCROSS adds parity/AOT.
-
-SDL 3.4 Render/Surface adds 20 raw functions: Surface now 65/65, Render 101 raw
-plus one fixed-text adapter. See docs/render-surface-34.md and the practical queue
-at the top of docs/full-binding-roadmap.md. GPU Renderer/state are native SDL types,
-not restored render plans. State arrays are copied but GPU resources are borrowed;
-with_gpu_render_state clears selection before destroy and does not restore a previous
-state. PNG IO boost overloads borrow streams (closeio=false). Shadercross is left
-unchanged. Example 86 uses shipped SPIR-V/DXIL, no runtime compiler dependency.
-
-Remaining SDL 3.4 additions are connected: 998 generated / 13 adapted / 252 pending;
-all 37 functions added by the Windows upgrade have bindings. See docs/sdl-34-remaining.md.
-Planar byte/F32 arrays are copied under stream lock with validated format/counts;
-NoCopy is native retained storage/callback only (never script arrays or Context).
-An exact last read can retain the empty track until another read: wait for the
-completion callback before freeing. Mouse transforms are native retained callbacks;
-no script scope bridge. CppGenBind selected string macro constants use native type
-checking, header hashes and metadata parity. String-macro audit is now recorded in docs/script-accessibility.md.
-
-SDL 3.4 planar mono null-plane fast path rejects silence: the safe adapter supplies
-a temporary encoded silent plane (U8/F32 regressions); raw behavior is unchanged.
-NoCopy zero-length submission calls completion synchronously before returning,
-without acquiring the stream lock. Do not assume every completion is asynchronous.
-
-Script accessibility: docs/script-accessibility.md. All 552 active Windows hint/
-property string macros are bound; 13 oldnames markers excluded. SdlEvent now has
-64 alternatives (11 keyboard/mouse/audio/camera device tags) and pen proximity
-preserves pen_state. Stream map getters return Result<Option<array<int>>>; they
-clear stale SDL errors before native NULL/default/OOM disambiguation. SDL_malloc
-sets OOM in the pinned source. Device-map ambiguity remains a separate contract.
-Four previously omitted SDL 3.4 fields are exposed (depth mip/layer, multisample
-alpha-to-coverage, pen proximity flags); field access is not GPU feature testing.
-
-Installed SDK: docs/sdk.md, cmake/InstallSDK.cmake, examples/sdk-consumer. Opt-in
-DASSDL3_INSTALL_SDK requires Windows x64 MSVC single-config Release, testing and
-companions OFF, ClangBind/LLVM disabled. Install component dasSDL3SDK bundles
-static dependencies, headers and script data. No source/build paths in exports.
-Production AOT uses src/sdl3_aot.h and tools/sdk/aot.cpp, never test fixtures.
-Explicit MODULES in dassdl3_add_aot must include transitive shared modules;
-strict host disables fallback. AOT still needs source scripts and daslib at runtime.
-Keep consumer relocation and negative no-AOT/configuration checks. Do not overlap
-SDK production build with developer builds; restore developer configuration after.
-
-Stdinc decisions: docs/stdinc-policy.md. All 169 pending functions have explicit
-script_disposition in api-policy.json: 122 stdlib, 15 native_interop, 6 host_only,
-16 deferred, 10 c_abi_only. Decisions are priorities, NOT semantic equivalence or
-raw coverage. Keep raw pending and the denominator unchanged. SDL_free remains
-bound; never conflate daScript array/string storage with SDL-owned allocations.
-Header upgrades must review new entries; no automatic prefix-wide exclusions.
-
-GL/EGL: docs/gl-egl.md; Video is 114/114 for SDL 3.4.16. Native GL context is
-SDL_GLContextState?, EGL handles/proc addresses remain borrowed native pointers.
-with_gl_context does not restore prior selection; with_gl_current explicitly does.
-Keep saved/selected pairs alive; main-thread scopes use defer and preserve body Err.
-destroy_gl_context uses a pointer reference (?&) and clears only on success.
-EGL callbacks return SDL-allocated, EGL_NONE-terminated arrays and are native-only;
-ResetAttributes clears callbacks. No script Context bridge. Desktop tests use real
-GL pixel readback and two contexts; positive EGL creation/callbacks remain unverified.
-Do not add another GL binding: use existing daScript OpenGL where the host registers it.
-
-Vulkan/Metal: docs/vulkan-metal.md; all 7 + 3 raw declarations are generated.
-bindings.json headers explicitly includes SDL_vulkan.h/SDL_metal.h; keep the web
-profile independent. Census includes their seven Vk* native type declarations,
-not invented project types. Validated ABI is 64-bit opaque Vulkan pointers only.
-Raw GetInstanceExtensions dereferences the backend without a guard in this pin;
-boost checks a loaded GetVkGetInstanceProcAddr before copying borrowed names.
-Vulkan surface destruction must use the original instance/allocator before window
-teardown and loader unload. Native allocator callbacks are never script Contexts.
-PresentationSupport false is ambiguous (unsupported/error); keep raw bool.
-Metal success requires Apple testing; Windows covers unsupported paths only.
-Tests use native Vulkan headers only for fixtures; production SDL bindings and
-installed consumer must not require Vulkan SDK headers or libraries.
-
-CPUInfo: docs/cpuinfo.md; 19/19 raw functions, including 18 added queries and
-SDL_CACHELINE_SIZE. Direct scalar/bool API needs no Result or boost aliases.
-RAM is MiB, logical cores differ from physical cores, page size 0 is unknown.
-Feature masks must be set before detection; pinned SDL caches features and computes
-SIMD alignment before masking. Do not assume -all reduces alignment, aligns script
-arrays, or changes the AOT compiler instruction target. Tests run native/all and
--all in separate processes and preserve stale SDL errors. Stdinc remains unchanged.
-
-Native callbacks follow-up: nine Hints/Timer/Log/RunOnMainThread/Properties declarations
-are generated. Read docs/native-callbacks.md. RemoveTimer does not join an in-flight
-callback; do not add a scope that frees userdata on cancellation. Property cleanup
-also runs on setter failure. RunOnMainThread requires a non-null native callback;
-workers waiting for completion need the main thread to pump events. No script closure bridge.
-
-Remaining function decisions: docs/remaining-api-policy.md. All 19 non-Stdinc
-pending functions have explicit script_disposition: 13 host_only, 2 stdlib,
-1 deferred (SDL_SwapFloat), 3 c_abi_only. Combined with Stdinc, all 188 pending
-functions are reviewed, not implemented or excluded. SDL_main is supplied by
-an application; SetMainReady already belongs to native runners. Do not bind
-startup/Assert/va_list solely to increase coverage. No assertion-to-panic bridge.
-Next priorities are concrete record/callback-field and platform/runtime gaps.
-
-Complete-record audit: docs/record-field-accessibility.md, tools/record-field-policy.json,
-tools/audit_record_fields.py --check. Covers all 122 named complete records/840 fields,
-not only registered structs. Every non-direct field has an explicit reviewed decision;
-new fields must fail the audit instead of inheriting a prefix-wide classification.
-IOStreamInterface has 6 native callback setters, StorageInterface 11, and
-VirtualJoystickDesc 8; no retained script callback bridge. All identified field
-gaps are now implemented in sdl3_record_access.h/.das: read-only surface metadata,
-copied palette colors, native SDL_GPUVulkanOptions, and temporary per-plane bytes.
-Byte spans exclude final-row padding; respect packed/sub-byte/YUV/MJPG layouts.
-P010 is fixture-tested (pinned CreateSurface cannot allocate it). Raw view needs a
-locked live surface; boost uses defer, never panic/catch. Never mutate refcounts.
-Vulkan helper copies typed property values into a private group (pointers borrowed,
-no cleanup ownership transfer and no SDL_CopyProperties string-cache defect),
-selects Vulkan and borrows extension arrays/native feature pointers during creation.
-Read docs/record-field-accessibility.md before altering these contracts.
+- Preserve unrelated changes. Use git --no-optional-locks for read-only status
+  to avoid Windows index ownership refresh. No commit/publication unless requested.
+- Ninja with vcvars64, 6 build jobs. Wait for builds before running executables;
+  Windows linking locks are not ACL failures.
+- Do not overlap SDK/no-LLVM configuration with ClangBind work: daScript shares
+  generated module configuration. Restore developer configuration afterwards.
+- Binding changes need affected main tests, interpreter/CppGenBind/strict-AOT parity,
+  generation checks and a no-LLVM consumer. Repeat affected checks after fixes;
+  follow user-specified batching instead of needless full-suite reruns.
+- AOT dependencies must include imported boost modules. Do not accept stale code
+  through fallback. Keep negative API-boundary and missing-AOT checks.
+- Keep example numbers stable; library examples live in examples/libraries.
+- Physical devices, Metal, other OS profiles and browsers require their own evidence.
+  Dummy/virtual tests and Windows builds do not establish that support.
