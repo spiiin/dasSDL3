@@ -133,3 +133,21 @@ inline bool SDL_ReadCameraDeviceEvent(const SDL_Event & event,SDL_CameraDeviceEv
     out=event.cdevice;
     return true;
 }
+
+inline bool SDL_ReadDisplayEvent(const SDL_Event & event,SDL_DisplayEvent & out) {
+    out={};
+    if (event.type!=SDL_EVENT_DISPLAY_ORIENTATION && event.type!=SDL_EVENT_DISPLAY_ADDED && event.type!=SDL_EVENT_DISPLAY_REMOVED && event.type!=SDL_EVENT_DISPLAY_MOVED && event.type!=SDL_EVENT_DISPLAY_DESKTOP_MODE_CHANGED && event.type!=SDL_EVENT_DISPLAY_CURRENT_MODE_CHANGED && event.type!=SDL_EVENT_DISPLAY_CONTENT_SCALE_CHANGED && event.type!=SDL_EVENT_DISPLAY_USABLE_BOUNDS_CHANGED) return false;
+    out=event.display; return true;
+}
+
+inline bool SDL_ReadRenderEvent(const SDL_Event & event,SDL_RenderEvent & out) {
+    out={};
+    if (event.type!=SDL_EVENT_RENDER_TARGETS_RESET && event.type!=SDL_EVENT_RENDER_DEVICE_RESET && event.type!=SDL_EVENT_RENDER_DEVICE_LOST) return false;
+    out=event.render; return true;
+}
+
+inline bool SDL_ReadPinchEvent(const SDL_Event & event,SDL_PinchFingerEvent & out) {
+    out={};
+    if (event.type!=SDL_EVENT_PINCH_BEGIN && event.type!=SDL_EVENT_PINCH_UPDATE && event.type!=SDL_EVENT_PINCH_END) return false;
+    out=event.pinch; return true;
+}

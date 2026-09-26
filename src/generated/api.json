@@ -6904,5 +6904,49 @@
     "arguments": [
       "dev"
     ]
+  },
+  "SDL_ShowMessageBox": {
+    "signature": "bool (const SDL_MessageBoxData *, int *) __attribute__((cdecl))",
+    "arguments": [
+      "messageboxdata",
+      "buttonid"
+    ]
+  },
+  "SDL_ShowSimpleMessageBox": {
+    "signature": "bool (SDL_MessageBoxFlags, const char *, const char *, SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "flags",
+      "title",
+      "message",
+      "window"
+    ]
+  },
+  "SDL_OpenURL": {
+    "signature": "bool (const char *) __attribute__((cdecl))",
+    "arguments": [
+      "url"
+    ]
+  },
+  "SDL_GetPlatform": {
+    "signature": "const char *(void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetRevision": {
+    "signature": "const char *(void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GUIDToString": {
+    "signature": "void (SDL_GUID, char *, int) __attribute__((cdecl))",
+    "arguments": [
+      "guid",
+      "pszGUID",
+      "cbGUID"
+    ]
+  },
+  "SDL_StringToGUID": {
+    "signature": "SDL_GUID (const char *) __attribute__((cdecl))",
+    "arguments": [
+      "pchGUID"
+    ]
   }
 }

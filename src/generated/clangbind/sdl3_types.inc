@@ -199,6 +199,8 @@ DAS_BIND_ENUM_CAST(SDL_ProgressState);
 DAS_BASE_BIND_ENUM_GEN(SDL_ProgressState,SDL_ProgressState);
 DAS_BIND_ENUM_CAST(SDL_PenDeviceType);
 DAS_BASE_BIND_ENUM_GEN(SDL_PenDeviceType,SDL_PenDeviceType);
+DAS_BIND_ENUM_CAST(SDL_MessageBoxColorType);
+DAS_BASE_BIND_ENUM_GEN(SDL_MessageBoxColorType,SDL_MessageBoxColorType);
 MAKE_TYPE_FACTORY(SDL_GPUViewport, SDL_GPUViewport);
 MAKE_TYPE_FACTORY(SDL_GPUIndirectDrawCommand, SDL_GPUIndirectDrawCommand);
 MAKE_TYPE_FACTORY(SDL_GPUIndexedIndirectDrawCommand, SDL_GPUIndexedIndirectDrawCommand);
@@ -301,6 +303,13 @@ MAKE_TYPE_FACTORY(SDL_KeyboardDeviceEvent, SDL_KeyboardDeviceEvent);
 MAKE_TYPE_FACTORY(SDL_MouseDeviceEvent, SDL_MouseDeviceEvent);
 MAKE_TYPE_FACTORY(SDL_AudioDeviceEvent, SDL_AudioDeviceEvent);
 MAKE_TYPE_FACTORY(SDL_CameraDeviceEvent, SDL_CameraDeviceEvent);
+MAKE_TYPE_FACTORY(SDL_DisplayEvent, SDL_DisplayEvent);
+MAKE_TYPE_FACTORY(SDL_RenderEvent, SDL_RenderEvent);
+MAKE_TYPE_FACTORY(SDL_PinchFingerEvent, SDL_PinchFingerEvent);
+MAKE_TYPE_FACTORY(SDL_MessageBoxButtonData, SDL_MessageBoxButtonData);
+MAKE_TYPE_FACTORY(SDL_MessageBoxColor, SDL_MessageBoxColor);
+MAKE_TYPE_FACTORY(SDL_MessageBoxColorScheme, SDL_MessageBoxColorScheme);
+MAKE_TYPE_FACTORY(SDL_MessageBoxData, SDL_MessageBoxData);
 static_assert(sizeof(SDL_AsyncIOTaskType) == 4 && alignof(SDL_AsyncIOTaskType) == 4);
 class Enumeration_SDL_AsyncIOTaskType : public das::Enumeration {
 public: Enumeration_SDL_AsyncIOTaskType() : das::Enumeration("SDL_AsyncIOTaskType") {
@@ -1965,6 +1974,19 @@ addIEx("PEN_DEVICE_TYPE_DIRECT","SDL_PEN_DEVICE_TYPE_DIRECT",int64_t(SDL_PEN_DEV
 static_assert(int64_t(SDL_PEN_DEVICE_TYPE_INDIRECT) == 2LL);
 addIEx("PEN_DEVICE_TYPE_INDIRECT","SDL_PEN_DEVICE_TYPE_INDIRECT",int64_t(SDL_PEN_DEVICE_TYPE_INDIRECT),das::LineInfo());
 } };
+static_assert(sizeof(SDL_DisplayEvent) == 32 && alignof(SDL_DisplayEvent) == 8);
+namespace das { struct SDL_DisplayEventAnnotation : ManagedStructureAnnotation<SDL_DisplayEvent, false> {
+SDL_DisplayEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_DisplayEvent", lib) {
+static_assert(offsetof(SDL_DisplayEvent, timestamp) == 8);
+addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+static_assert(offsetof(SDL_DisplayEvent, displayID) == 16);
+addField<DAS_BIND_MANAGED_FIELD(displayID)>("displayID", "displayID");
+static_assert(offsetof(SDL_DisplayEvent, data1) == 20);
+addField<DAS_BIND_MANAGED_FIELD(data1)>("data1", "data1");
+static_assert(offsetof(SDL_DisplayEvent, data2) == 24);
+addField<DAS_BIND_MANAGED_FIELD(data2)>("data2", "data2");
+}
+}; }
 static_assert(sizeof(SDL_KeyboardDeviceEvent) == 24 && alignof(SDL_KeyboardDeviceEvent) == 8);
 namespace das { struct SDL_KeyboardDeviceEventAnnotation : ManagedStructureAnnotation<SDL_KeyboardDeviceEvent, false> {
 SDL_KeyboardDeviceEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_KeyboardDeviceEvent", lib) {
@@ -2249,6 +2271,15 @@ static_assert(offsetof(SDL_CameraDeviceEvent, which) == 16);
 addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
 }
 }; }
+static_assert(sizeof(SDL_RenderEvent) == 24 && alignof(SDL_RenderEvent) == 8);
+namespace das { struct SDL_RenderEventAnnotation : ManagedStructureAnnotation<SDL_RenderEvent, false> {
+SDL_RenderEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_RenderEvent", lib) {
+static_assert(offsetof(SDL_RenderEvent, timestamp) == 8);
+addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+static_assert(offsetof(SDL_RenderEvent, windowID) == 16);
+addField<DAS_BIND_MANAGED_FIELD(windowID)>("windowID", "windowID");
+}
+}; }
 static_assert(sizeof(SDL_TouchFingerEvent) == 56 && alignof(SDL_TouchFingerEvent) == 8);
 namespace das { struct SDL_TouchFingerEventAnnotation : ManagedStructureAnnotation<SDL_TouchFingerEvent, false> {
 SDL_TouchFingerEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_TouchFingerEvent", lib) {
@@ -2269,6 +2300,17 @@ addField<DAS_BIND_MANAGED_FIELD(dy)>("dy", "dy");
 static_assert(offsetof(SDL_TouchFingerEvent, pressure) == 48);
 addField<DAS_BIND_MANAGED_FIELD(pressure)>("pressure", "pressure");
 static_assert(offsetof(SDL_TouchFingerEvent, windowID) == 52);
+addField<DAS_BIND_MANAGED_FIELD(windowID)>("windowID", "windowID");
+}
+}; }
+static_assert(sizeof(SDL_PinchFingerEvent) == 24 && alignof(SDL_PinchFingerEvent) == 8);
+namespace das { struct SDL_PinchFingerEventAnnotation : ManagedStructureAnnotation<SDL_PinchFingerEvent, false> {
+SDL_PinchFingerEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_PinchFingerEvent", lib) {
+static_assert(offsetof(SDL_PinchFingerEvent, timestamp) == 8);
+addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+static_assert(offsetof(SDL_PinchFingerEvent, scale) == 16);
+addField<DAS_BIND_MANAGED_FIELD(scale)>("scale", "scale");
+static_assert(offsetof(SDL_PinchFingerEvent, windowID) == 20);
 addField<DAS_BIND_MANAGED_FIELD(windowID)>("windowID", "windowID");
 }
 }; }
@@ -3956,6 +3998,71 @@ addIEx("LOG_PRIORITY_CRITICAL","SDL_LOG_PRIORITY_CRITICAL",int64_t(SDL_LOG_PRIOR
 static_assert(int64_t(SDL_LOG_PRIORITY_COUNT) == 8LL);
 addIEx("LOG_PRIORITY_COUNT","SDL_LOG_PRIORITY_COUNT",int64_t(SDL_LOG_PRIORITY_COUNT),das::LineInfo());
 } };
+static_assert(sizeof(SDL_MessageBoxButtonData) == 16 && alignof(SDL_MessageBoxButtonData) == 8);
+namespace das { struct SDL_MessageBoxButtonDataAnnotation : ManagedStructureAnnotation<SDL_MessageBoxButtonData, false> {
+SDL_MessageBoxButtonDataAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_MessageBoxButtonData", lib) {
+static_assert(offsetof(SDL_MessageBoxButtonData, flags) == 0);
+addField<DAS_BIND_MANAGED_FIELD(flags)>("flags", "flags");
+static_assert(offsetof(SDL_MessageBoxButtonData, buttonID) == 4);
+addField<DAS_BIND_MANAGED_FIELD(buttonID)>("buttonID", "buttonID");
+static_assert(offsetof(SDL_MessageBoxButtonData, text) == 8);
+addField<DAS_BIND_MANAGED_FIELD(text)>("text", "text");
+}
+}; }
+static_assert(sizeof(SDL_MessageBoxColor) == 3 && alignof(SDL_MessageBoxColor) == 1);
+namespace das { struct SDL_MessageBoxColorAnnotation : ManagedStructureAnnotation<SDL_MessageBoxColor, false> {
+SDL_MessageBoxColorAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_MessageBoxColor", lib) {
+static_assert(offsetof(SDL_MessageBoxColor, r) == 0);
+addField<DAS_BIND_MANAGED_FIELD(r)>("r", "r");
+static_assert(offsetof(SDL_MessageBoxColor, g) == 1);
+addField<DAS_BIND_MANAGED_FIELD(g)>("g", "g");
+static_assert(offsetof(SDL_MessageBoxColor, b) == 2);
+addField<DAS_BIND_MANAGED_FIELD(b)>("b", "b");
+}
+}; }
+static_assert(sizeof(SDL_MessageBoxColorType) == 4 && alignof(SDL_MessageBoxColorType) == 4);
+class Enumeration_SDL_MessageBoxColorType : public das::Enumeration {
+public: Enumeration_SDL_MessageBoxColorType() : das::Enumeration("SDL_MessageBoxColorType") {
+external=true; cppName="SDL_MessageBoxColorType"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_MessageBoxColorType>::type>::type;
+static_assert(int64_t(SDL_MESSAGEBOX_COLOR_BACKGROUND) == 0LL);
+addIEx("COLOR_BACKGROUND","SDL_MESSAGEBOX_COLOR_BACKGROUND",int64_t(SDL_MESSAGEBOX_COLOR_BACKGROUND),das::LineInfo());
+static_assert(int64_t(SDL_MESSAGEBOX_COLOR_TEXT) == 1LL);
+addIEx("COLOR_TEXT","SDL_MESSAGEBOX_COLOR_TEXT",int64_t(SDL_MESSAGEBOX_COLOR_TEXT),das::LineInfo());
+static_assert(int64_t(SDL_MESSAGEBOX_COLOR_BUTTON_BORDER) == 2LL);
+addIEx("COLOR_BUTTON_BORDER","SDL_MESSAGEBOX_COLOR_BUTTON_BORDER",int64_t(SDL_MESSAGEBOX_COLOR_BUTTON_BORDER),das::LineInfo());
+static_assert(int64_t(SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND) == 3LL);
+addIEx("COLOR_BUTTON_BACKGROUND","SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND",int64_t(SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND),das::LineInfo());
+static_assert(int64_t(SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED) == 4LL);
+addIEx("COLOR_BUTTON_SELECTED","SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED",int64_t(SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED),das::LineInfo());
+static_assert(int64_t(SDL_MESSAGEBOX_COLOR_COUNT) == 5LL);
+addIEx("COLOR_COUNT","SDL_MESSAGEBOX_COLOR_COUNT",int64_t(SDL_MESSAGEBOX_COLOR_COUNT),das::LineInfo());
+} };
+static_assert(sizeof(SDL_MessageBoxColorScheme) == 15 && alignof(SDL_MessageBoxColorScheme) == 1);
+namespace das { struct SDL_MessageBoxColorSchemeAnnotation : ManagedStructureAnnotation<SDL_MessageBoxColorScheme, false> {
+SDL_MessageBoxColorSchemeAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_MessageBoxColorScheme", lib) {
+static_assert(offsetof(SDL_MessageBoxColorScheme, colors) == 0);
+addField<DAS_BIND_MANAGED_FIELD(colors)>("colors", "colors");
+}
+}; }
+static_assert(sizeof(SDL_MessageBoxData) == 56 && alignof(SDL_MessageBoxData) == 8);
+namespace das { struct SDL_MessageBoxDataAnnotation : ManagedStructureAnnotation<SDL_MessageBoxData, false> {
+SDL_MessageBoxDataAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_MessageBoxData", lib) {
+static_assert(offsetof(SDL_MessageBoxData, flags) == 0);
+addField<DAS_BIND_MANAGED_FIELD(flags)>("flags", "flags");
+static_assert(offsetof(SDL_MessageBoxData, window) == 8);
+addField<DAS_BIND_MANAGED_FIELD(window)>("window", "window");
+static_assert(offsetof(SDL_MessageBoxData, title) == 16);
+addField<DAS_BIND_MANAGED_FIELD(title)>("title", "title");
+static_assert(offsetof(SDL_MessageBoxData, message) == 24);
+addField<DAS_BIND_MANAGED_FIELD(message)>("message", "message");
+static_assert(offsetof(SDL_MessageBoxData, numbuttons) == 32);
+addField<DAS_BIND_MANAGED_FIELD(numbuttons)>("numbuttons", "numbuttons");
+static_assert(offsetof(SDL_MessageBoxData, buttons) == 40);
+addField<DAS_BIND_MANAGED_FIELD(buttons)>("buttons", "buttons");
+static_assert(offsetof(SDL_MessageBoxData, colorScheme) == 48);
+addField<DAS_BIND_MANAGED_FIELD(colorScheme)>("colorScheme", "colorScheme");
+}
+}; }
 static_assert(sizeof(SDL_ProcessIO) == 4 && alignof(SDL_ProcessIO) == 4);
 class Enumeration_SDL_ProcessIO : public das::Enumeration {
 public: Enumeration_SDL_ProcessIO() : das::Enumeration("SDL_ProcessIO") {

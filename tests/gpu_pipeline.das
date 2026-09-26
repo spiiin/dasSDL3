@@ -67,7 +67,23 @@ def check_vertex_layout(device : SDL_GPUDevice?; vertex, fragment : string; form
     buffers[0].slot = 1u; buffers[0].pitch = 8u; buffers[0].input_rate = SDL_GPUVertexInputRate.VERTEXINPUTRATE_INSTANCE
     buffers[1].slot = 0u; buffers[1].pitch = 8u; buffers[1].input_rate = SDL_GPUVertexInputRate.VERTEXINPUTRATE_VERTEX
     attributes[1].buffer_slot = 1u; attributes[1].offset = 0u
-    let scope_ok_0 = device |> with_gpu_graphics_pipeline(vs,fs,info,buffers,attributes,colors) $(sorted : GpuPipelineHandle) {
+    var description <- gpu_pipeline(vs,fs)
+    description |> vertex_buffer(1u,8u,SDL_GPUVertexInputRate.VERTEXINPUTRATE_INSTANCE)
+    description |> vertex_buffer(0u,8u)
+    description |> vertex_attribute(0u,0u,SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2,0u)
+    description |> vertex_attribute(1u,1u,SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2,0u)
+    description |> color_target(colors[0])
+    description |> depth_target(SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT)
+    description |> depth_test(SDL_GPUCompareOp.COMPAREOP_LESS)
+    description |> depth_write(true)
+    let scope_ok_0 = device |> with_gpu_graphics_pipeline(description) $(sorted : GpuPipelineHandle) {
+        let queried = gpu_graphics_pipeline_descriptor(device,sorted)
+        verify(is_ok(queried))
+        let actual = unwrap(queried)
+        verify(actual.target_info.has_depth_stencil_target)
+        verify(actual.target_info.depth_stencil_format == SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT)
+        verify(actual.depth_stencil_state.enable_depth_test && actual.depth_stencil_state.enable_depth_write)
+        verify(actual.depth_stencil_state.compare_op == SDL_GPUCompareOp.COMPAREOP_LESS)
         verify(SDLTest_graphics_pipeline_sorted(device,*sorted))
 
         return sdl_ok()

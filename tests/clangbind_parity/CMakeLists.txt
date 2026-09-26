@@ -266,8 +266,10 @@ list(APPEND AOT_SCRIPTS tests/render_surface_34 tests/gpu_renderer_34 examples/8
 list(APPEND AOT_SCRIPTS tests/sdl34_remaining tests/sdl34_audio examples/87_window_progress)
 list(APPEND AOT_MODULES dassdl3/sdl3_remaining_34_boost)
 list(APPEND AOT_SCRIPTS tests/hotplug_events tests/string_constants)
+list(APPEND AOT_SCRIPTS tests/common_api tests/display_render_pinch_events examples/88_system_info)
+list(APPEND AOT_MODULES dassdl3/sdl3_common_boost)
 foreach(script IN LISTS AOT_SCRIPTS AOT_MODULES)
-    set(remaining34_dependency)
+    set(remaining34_dependency "${ROOT}/dassdl3/sdl3_common_boost.das" "${ROOT}/dassdl3/sdl3_events.das")
     if(script MATCHES "sdl34_|remaining_34|87_window_progress")
         set(remaining34_dependency "${ROOT}/dassdl3/sdl3_remaining_34_boost.das"
             "${ROOT}/dassdl3/sdl3_try.das" "${ROOT}/dassdl3/sdl3_scope.das")
@@ -823,5 +825,28 @@ foreach(backend baseline cppgenbind accessibility_aot)
         string(REPLACE "/" "_" name "${script}")
         add_test(NAME accessibility_${backend}_${name} COMMAND ${backend}_runner "${ROOT}/${script}.das" ${accessibility_args})
         set_tests_properties(accessibility_${backend}_${name} PROPERTIES TIMEOUT 60 ENVIRONMENT "SDL_AUDIO_DRIVER=dummy")
+    endforeach()
+endforeach()
+
+add_executable(common_aot_runner aot_runner.cpp
+    "${CMAKE_CURRENT_BINARY_DIR}/tests_common_api.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/tests_display_render_pinch_events.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/examples_88_system_info.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_result.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_boost.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_events.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_event_queue.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_common_boost.aot.cpp")
+target_link_libraries(common_aot_runner PRIVATE cppgenbind_module)
+foreach(backend baseline cppgenbind common_aot)
+    if(backend STREQUAL "common_aot")
+        set(common_args)
+    else()
+        set(common_args --smoke-test)
+    endif()
+    foreach(script tests/common_api tests/display_render_pinch_events examples/88_system_info)
+        string(REPLACE "/" "_" name "${script}")
+        add_test(NAME common_${backend}_${name} COMMAND ${backend}_runner "${ROOT}/${script}.das" ${common_args})
+        set_tests_properties(common_${backend}_${name} PROPERTIES TIMEOUT 60 ENVIRONMENT "SDL_VIDEO_DRIVER=dassdl3-no-message-box")
     endforeach()
 endforeach()

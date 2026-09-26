@@ -134,3 +134,5 @@ Early-return syntax: [`sdl_try` macro and example](sdl-try.md).
 - [Installed core SDK and standalone interpreter/AOT consumer](sdk.md).
 
 - [Stdinc: classification and script priorities](stdinc-policy.md).
+
+- [Common API and display/render/pinch events](common-api.md).

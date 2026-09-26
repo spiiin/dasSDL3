@@ -8987,6 +8987,62 @@
       "script_disposition": "stdlib",
       "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
       "contract": "docs/stdinc-policy.md"
+    },
+    "function:SDL_ShowMessageBox": {
+      "boost_status": "partial",
+      "reason": "Thin common API helpers: owned GUID text, native permissive GUID parsing, static platform/revision strings and Result MessageBox/URL. Interactive success is not automated.",
+      "contract": "docs/common-api.md",
+      "tests": [
+        "tests/common_api.das"
+      ]
+    },
+    "function:SDL_ShowSimpleMessageBox": {
+      "boost_status": "partial",
+      "reason": "Thin common API helpers: owned GUID text, native permissive GUID parsing, static platform/revision strings and Result MessageBox/URL. Interactive success is not automated.",
+      "contract": "docs/common-api.md",
+      "tests": [
+        "tests/common_api.das"
+      ]
+    },
+    "function:SDL_OpenURL": {
+      "boost_status": "partial",
+      "reason": "Thin common API helpers: owned GUID text, native permissive GUID parsing, static platform/revision strings and Result MessageBox/URL. Interactive success is not automated.",
+      "contract": "docs/common-api.md",
+      "tests": [
+        "tests/common_api.das"
+      ]
+    },
+    "function:SDL_GetPlatform": {
+      "boost_status": "partial",
+      "reason": "Thin common API helpers: owned GUID text, native permissive GUID parsing, static platform/revision strings and Result MessageBox/URL. Interactive success is not automated.",
+      "contract": "docs/common-api.md",
+      "tests": [
+        "tests/common_api.das"
+      ]
+    },
+    "function:SDL_GetRevision": {
+      "boost_status": "partial",
+      "reason": "Thin common API helpers: owned GUID text, native permissive GUID parsing, static platform/revision strings and Result MessageBox/URL. Interactive success is not automated.",
+      "contract": "docs/common-api.md",
+      "tests": [
+        "tests/common_api.das"
+      ]
+    },
+    "function:SDL_GUIDToString": {
+      "boost_status": "partial",
+      "reason": "Thin common API helpers: owned GUID text, native permissive GUID parsing, static platform/revision strings and Result MessageBox/URL. Interactive success is not automated.",
+      "contract": "docs/common-api.md",
+      "tests": [
+        "tests/common_api.das"
+      ]
+    },
+    "function:SDL_StringToGUID": {
+      "boost_status": "partial",
+      "reason": "Thin common API helpers: owned GUID text, native permissive GUID parsing, static platform/revision strings and Result MessageBox/URL. Interactive success is not automated.",
+      "contract": "docs/common-api.md",
+      "tests": [
+        "tests/common_api.das"
+      ]
     }
   }
 }

@@ -57,7 +57,7 @@ Remaining intentional or specialized omissions:
 
 - reserved/padding/internal: ABI or SDL-private state, not application data.
 - SDL_Event union members: access through tag-checked readers and owned decoding;
-  display/render/pinch payload coverage remains a follow-up.
+  display/render/pinch payloads are now covered; see [common-api.md](common-api.md).
 - Per-event type fields: the parent SDL_Event supplies the tag.
 - Keyboard scancode / mouse-wheel direction: existing scalar predicate adapters.
 - Clipboard MIME / IME candidates and HID wchar_t/list links: copied adapters.

@@ -2337,6 +2337,25 @@ addIEx("PEN_DEVICE_TYPE_DIRECT","SDL_PEN_DEVICE_TYPE_DIRECT",int64_t(SDL_PEN_DEV
 static_assert(int64_t(SDL_PEN_DEVICE_TYPE_INDIRECT) == 2LL);
 addIEx("PEN_DEVICE_TYPE_INDIRECT","SDL_PEN_DEVICE_TYPE_INDIRECT",int64_t(SDL_PEN_DEVICE_TYPE_INDIRECT),das::LineInfo());
 } };
+DAS_BIND_ENUM_CAST(SDL_MessageBoxColorType);
+DAS_BASE_BIND_ENUM_GEN(SDL_MessageBoxColorType,SDL_MessageBoxColorType);
+static_assert(sizeof(SDL_MessageBoxColorType) == 4);
+class Enumeration_SDL_MessageBoxColorType : public das::Enumeration {
+public: Enumeration_SDL_MessageBoxColorType() : das::Enumeration("SDL_MessageBoxColorType") {
+external=true; cppName="SDL_MessageBoxColorType"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_MessageBoxColorType>::type>::type;
+static_assert(int64_t(SDL_MESSAGEBOX_COLOR_BACKGROUND) == 0LL);
+addIEx("COLOR_BACKGROUND","SDL_MESSAGEBOX_COLOR_BACKGROUND",int64_t(SDL_MESSAGEBOX_COLOR_BACKGROUND),das::LineInfo());
+static_assert(int64_t(SDL_MESSAGEBOX_COLOR_TEXT) == 1LL);
+addIEx("COLOR_TEXT","SDL_MESSAGEBOX_COLOR_TEXT",int64_t(SDL_MESSAGEBOX_COLOR_TEXT),das::LineInfo());
+static_assert(int64_t(SDL_MESSAGEBOX_COLOR_BUTTON_BORDER) == 2LL);
+addIEx("COLOR_BUTTON_BORDER","SDL_MESSAGEBOX_COLOR_BUTTON_BORDER",int64_t(SDL_MESSAGEBOX_COLOR_BUTTON_BORDER),das::LineInfo());
+static_assert(int64_t(SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND) == 3LL);
+addIEx("COLOR_BUTTON_BACKGROUND","SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND",int64_t(SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND),das::LineInfo());
+static_assert(int64_t(SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED) == 4LL);
+addIEx("COLOR_BUTTON_SELECTED","SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED",int64_t(SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED),das::LineInfo());
+static_assert(int64_t(SDL_MESSAGEBOX_COLOR_COUNT) == 5LL);
+addIEx("COLOR_COUNT","SDL_MESSAGEBOX_COLOR_COUNT",int64_t(SDL_MESSAGEBOX_COLOR_COUNT),das::LineInfo());
+} };
 MAKE_TYPE_FACTORY(SDL_Window, SDL_Window);
 MAKE_TYPE_FACTORY(SDL_Renderer, SDL_Renderer);
 MAKE_TYPE_FACTORY(SDL_Surface, SDL_Surface);
@@ -2482,6 +2501,13 @@ MAKE_TYPE_FACTORY(SDL_KeyboardDeviceEvent, SDL_KeyboardDeviceEvent);
 MAKE_TYPE_FACTORY(SDL_MouseDeviceEvent, SDL_MouseDeviceEvent);
 MAKE_TYPE_FACTORY(SDL_AudioDeviceEvent, SDL_AudioDeviceEvent);
 MAKE_TYPE_FACTORY(SDL_CameraDeviceEvent, SDL_CameraDeviceEvent);
+MAKE_TYPE_FACTORY(SDL_DisplayEvent, SDL_DisplayEvent);
+MAKE_TYPE_FACTORY(SDL_RenderEvent, SDL_RenderEvent);
+MAKE_TYPE_FACTORY(SDL_PinchFingerEvent, SDL_PinchFingerEvent);
+MAKE_TYPE_FACTORY(SDL_MessageBoxButtonData, SDL_MessageBoxButtonData);
+MAKE_TYPE_FACTORY(SDL_MessageBoxColor, SDL_MessageBoxColor);
+MAKE_TYPE_FACTORY(SDL_MessageBoxColorScheme, SDL_MessageBoxColorScheme);
+MAKE_TYPE_FACTORY(SDL_MessageBoxData, SDL_MessageBoxData);
 namespace das {
 struct SDL_GPUViewportAnnotation : ManagedStructureAnnotation<SDL_GPUViewport, false> {
     SDL_GPUViewportAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_GPUViewport", lib) {
@@ -3445,6 +3471,57 @@ struct SDL_CameraDeviceEventAnnotation : ManagedStructureAnnotation<SDL_CameraDe
     SDL_CameraDeviceEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_CameraDeviceEvent", lib) {
         addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
         addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
+    }
+};
+struct SDL_DisplayEventAnnotation : ManagedStructureAnnotation<SDL_DisplayEvent, false> {
+    SDL_DisplayEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_DisplayEvent", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+        addField<DAS_BIND_MANAGED_FIELD(displayID)>("displayID", "displayID");
+        addField<DAS_BIND_MANAGED_FIELD(data1)>("data1", "data1");
+        addField<DAS_BIND_MANAGED_FIELD(data2)>("data2", "data2");
+    }
+};
+struct SDL_RenderEventAnnotation : ManagedStructureAnnotation<SDL_RenderEvent, false> {
+    SDL_RenderEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_RenderEvent", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+        addField<DAS_BIND_MANAGED_FIELD(windowID)>("windowID", "windowID");
+    }
+};
+struct SDL_PinchFingerEventAnnotation : ManagedStructureAnnotation<SDL_PinchFingerEvent, false> {
+    SDL_PinchFingerEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_PinchFingerEvent", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+        addField<DAS_BIND_MANAGED_FIELD(scale)>("scale", "scale");
+        addField<DAS_BIND_MANAGED_FIELD(windowID)>("windowID", "windowID");
+    }
+};
+struct SDL_MessageBoxButtonDataAnnotation : ManagedStructureAnnotation<SDL_MessageBoxButtonData, false> {
+    SDL_MessageBoxButtonDataAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_MessageBoxButtonData", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(flags)>("flags", "flags");
+        addField<DAS_BIND_MANAGED_FIELD(buttonID)>("buttonID", "buttonID");
+        addField<DAS_BIND_MANAGED_FIELD(text)>("text", "text");
+    }
+};
+struct SDL_MessageBoxColorAnnotation : ManagedStructureAnnotation<SDL_MessageBoxColor, false> {
+    SDL_MessageBoxColorAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_MessageBoxColor", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(r)>("r", "r");
+        addField<DAS_BIND_MANAGED_FIELD(g)>("g", "g");
+        addField<DAS_BIND_MANAGED_FIELD(b)>("b", "b");
+    }
+};
+struct SDL_MessageBoxColorSchemeAnnotation : ManagedStructureAnnotation<SDL_MessageBoxColorScheme, false> {
+    SDL_MessageBoxColorSchemeAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_MessageBoxColorScheme", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(colors)>("colors", "colors");
+    }
+};
+struct SDL_MessageBoxDataAnnotation : ManagedStructureAnnotation<SDL_MessageBoxData, false> {
+    SDL_MessageBoxDataAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_MessageBoxData", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(flags)>("flags", "flags");
+        addField<DAS_BIND_MANAGED_FIELD(window)>("window", "window");
+        addField<DAS_BIND_MANAGED_FIELD(title)>("title", "title");
+        addField<DAS_BIND_MANAGED_FIELD(message)>("message", "message");
+        addField<DAS_BIND_MANAGED_FIELD(numbuttons)>("numbuttons", "numbuttons");
+        addField<DAS_BIND_MANAGED_FIELD(buttons)>("buttons", "buttons");
+        addField<DAS_BIND_MANAGED_FIELD(colorScheme)>("colorScheme", "colorScheme");
     }
 };
 } // namespace das

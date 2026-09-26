@@ -2905,6 +2905,20 @@
       "props"
     ]
   },
+  "SDL_GUIDToString": {
+    "signature": "void (SDL_GUID, char *, int)",
+    "arguments": [
+      "guid",
+      "pszGUID",
+      "cbGUID"
+    ]
+  },
+  "SDL_StringToGUID": {
+    "signature": "SDL_GUID (const char *)",
+    "arguments": [
+      "pchGUID"
+    ]
+  },
   "SDL_GetPowerInfo": {
     "signature": "SDL_PowerState (int *, int *)",
     "arguments": [
@@ -5597,6 +5611,32 @@
       "prefix"
     ]
   },
+  "SDL_ShowMessageBox": {
+    "signature": "bool (const SDL_MessageBoxData *, int *)",
+    "arguments": [
+      "messageboxdata",
+      "buttonid"
+    ]
+  },
+  "SDL_ShowSimpleMessageBox": {
+    "signature": "bool (SDL_MessageBoxFlags, const char *, const char *, SDL_Window *)",
+    "arguments": [
+      "flags",
+      "title",
+      "message",
+      "window"
+    ]
+  },
+  "SDL_OpenURL": {
+    "signature": "bool (const char *)",
+    "arguments": [
+      "url"
+    ]
+  },
+  "SDL_GetPlatform": {
+    "signature": "const char *(void)",
+    "arguments": []
+  },
   "SDL_CreateProcess": {
     "signature": "SDL_Process *(const char *const *, bool)",
     "arguments": [
@@ -6903,6 +6943,10 @@
   },
   "SDL_GetVersion": {
     "signature": "int (void)",
+    "arguments": []
+  },
+  "SDL_GetRevision": {
+    "signature": "const char *(void)",
     "arguments": []
   }
 }

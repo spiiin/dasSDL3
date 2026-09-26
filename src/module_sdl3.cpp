@@ -22,6 +22,7 @@
 #include "sdl3_thread_atomic.h"
 #include "sdl3_process_loadso.h"
 #include "sdl3_platform_services.h"
+#include "sdl3_common_api.h"
 #include "sdl3_pixels.h"
 #include "sdl3_geometry.h"
 #include "sdl3_gpu.h"
@@ -74,6 +75,7 @@
 #include "../tests/input_probe.h"
 #include "../tests/controller_events_probe.h"
 #include "../tests/hotplug_probe.h"
+#include "../tests/common_api_probe.h"
 #include "../tests/peripheral_events_probe.h"
 #include "../tests/peripherals_probe.h"
 #include "../tests/event_lists_probe.h"
@@ -519,6 +521,13 @@ public:
         addExtern<DAS_BIND_FUN(SDL_ReadMouseDeviceEvent)>(*this,lib,"SDL_ReadMouseDeviceEvent",SideEffects::worstDefault,"SDL_ReadMouseDeviceEvent");
         addExtern<DAS_BIND_FUN(SDL_ReadAudioDeviceEvent)>(*this,lib,"SDL_ReadAudioDeviceEvent",SideEffects::worstDefault,"SDL_ReadAudioDeviceEvent");
         addExtern<DAS_BIND_FUN(SDL_ReadCameraDeviceEvent)>(*this,lib,"SDL_ReadCameraDeviceEvent",SideEffects::worstDefault,"SDL_ReadCameraDeviceEvent");
+        addExtern<DAS_BIND_FUN(SDL_StringToGUIDText), SimNode_ExtFuncCallAndCopyOrMove>(*this,lib,"SDL_StringToGUIDText",SideEffects::worstDefault,"SDL_StringToGUIDText");
+        addExtern<DAS_BIND_FUN(SDL_OpenURLText)>(*this,lib,"SDL_OpenURLText",SideEffects::worstDefault,"SDL_OpenURLText");
+        addExtern<DAS_BIND_FUN(SDL_ShowMessageBoxArray)>(*this,lib,"SDL_ShowMessageBoxArray",SideEffects::worstDefault,"SDL_ShowMessageBoxArray");
+        addExtern<DAS_BIND_FUN(SDL_ShowMessageBoxColors)>(*this,lib,"SDL_ShowMessageBoxColors",SideEffects::worstDefault,"SDL_ShowMessageBoxColors");
+        addExtern<DAS_BIND_FUN(SDL_ReadDisplayEvent)>(*this,lib,"SDL_ReadDisplayEvent",SideEffects::worstDefault,"SDL_ReadDisplayEvent");
+        addExtern<DAS_BIND_FUN(SDL_ReadRenderEvent)>(*this,lib,"SDL_ReadRenderEvent",SideEffects::worstDefault,"SDL_ReadRenderEvent");
+        addExtern<DAS_BIND_FUN(SDL_ReadPinchEvent)>(*this,lib,"SDL_ReadPinchEvent",SideEffects::worstDefault,"SDL_ReadPinchEvent");
         addExtern<DAS_BIND_FUN(SDL_ReadJoyDeviceEvent)>(*this, lib, "SDL_ReadJoyDeviceEvent", SideEffects::worstDefault, "SDL_ReadJoyDeviceEvent")->args({"event", "out"});
         addExtern<DAS_BIND_FUN(SDL_ReadJoyBatteryEvent)>(*this, lib, "SDL_ReadJoyBatteryEvent", SideEffects::worstDefault, "SDL_ReadJoyBatteryEvent")->args({"event", "out"});
         addExtern<DAS_BIND_FUN(SDL_ReadGamepadAxisEvent)>(*this, lib, "SDL_ReadGamepadAxisEvent", SideEffects::worstDefault, "SDL_ReadGamepadAxisEvent")->args({"event", "out"});
@@ -841,6 +850,9 @@ public:
         addExtern<DAS_BIND_FUN(sdl3_callback_test::provider)>(*this,lib,"SDLTestClipboardProvider",SideEffects::worstDefault,"sdl3_callback_test::provider");
         addExtern<DAS_BIND_FUN(sdl3_callback_test::cleaner)>(*this,lib,"SDLTestClipboardCleaner",SideEffects::worstDefault,"sdl3_callback_test::cleaner");
         addExtern<DAS_BIND_FUN(sdl3_callback_test::hitter)>(*this,lib,"SDLTestHitCallback",SideEffects::worstDefault,"sdl3_callback_test::hitter");
+        addExtern<DAS_BIND_FUN(SDLTestCommonEvent), SimNode_ExtFuncCallAndCopyOrMove>(*this,lib,"SDLTestCommonEvent",SideEffects::none,"SDLTestCommonEvent");
+        addExtern<DAS_BIND_FUN(SDLTestOpenURLNull)>(*this,lib,"SDLTestOpenURLNull",SideEffects::worstDefault,"SDLTestOpenURLNull");
+        addExtern<DAS_BIND_FUN(SDLTestGUIDBuffer)>(*this,lib,"SDLTestGUIDBuffer",SideEffects::worstDefault,"SDLTestGUIDBuffer");
         addExtern<DAS_BIND_FUN(SDLTestHotplugEvent), SimNode_ExtFuncCallAndCopyOrMove>(*this,lib,"SDLTestHotplugEvent",SideEffects::none,"SDLTestHotplugEvent");
         addExtern<DAS_BIND_FUN(sdl3_callback_test::probe)>(*this,lib,"SDLTestWindowHit",SideEffects::worstDefault,"sdl3_callback_test::probe");
         addExtern<DAS_BIND_FUN(sdl3_test::cleanup_trace)>(*this, lib, "SDLTestCleanupTrace", SideEffects::worstDefault, "sdl3_test::cleanup_trace");

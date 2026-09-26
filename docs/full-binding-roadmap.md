@@ -19,8 +19,9 @@ Shadercross оставляем в текущем состоянии. Приор�
    Все 37 новых функций Windows census доступны; native callbacks не равны script blocks.
 2. **Script-доступность проверена:** 552 строковых hints/properties, четыре
    пропущенных поля SDL 3.4, copied stream channel maps и 11 owned device event tags.
-   [Аудит и ограничения](script-accessibility.md). Остаток: display/render/pinch
-   payloads, специализированные native callback fields и физические устройства.
+   [Аудит и ограничения](script-accessibility.md). Display/render/pinch подключены:
+   14 tags, 71 owned alternatives; [контракты](common-api.md). Остаток:
+   специализированные native callback fields и физические устройства.
 3. **Installed core SDK подключён:** CMake install/export, статические SDL/daScript,
    `.das` ресурсы, публичный AOT tool/header и отдельный consumer.
    [Сборка и ограничения](sdk.md): Windows x64/MSVC Release; другие профили,
@@ -28,9 +29,11 @@ Shadercross оставляем в текущем состоянии. Приор�
 4. **Stdinc классифицирован:** 122 stdlib, 15 native interop, 6 host-only,
    16 deferred и 10 C-ABI-only. [Решения и обоснования](stdinc-policy.md).
    Все 169 записей сохраняют raw pending; это не обязательный backlog и не
-   основание уменьшать знаменатель покрытия. SDL_Environment — первый кандидат
-   при появлении сценария конфигурации окружения; allocator callbacks — native host.
-5. **Платформы и специализированные API:** GL/EGL, Vulkan/Metal interop, native
+   основание уменьшать знаменатель покрытия. По решению пользователя новые Stdinc
+   функции сейчас не добавляем; allocator callbacks остаются задачей native host.
+5. **Common API подключён:** MessageBox/OpenURL/Platform/Revision/GUID — семь raw
+   функций и тонкие Result/Option/copy adapters; [контракты](common-api.md).
+6. **Следующий пакет — GL/EGL; платформы и специализированные API:** GL/EGL, Vulkan/Metal interop, native
    callbacks и CPU/SIMD добавлять по конкретным сценариям. Linux/macOS/web требуют
    собственных build/ABI/runtime проверок; Windows-пакет не заявляет их готовность.
 

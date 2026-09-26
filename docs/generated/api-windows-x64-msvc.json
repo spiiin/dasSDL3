@@ -1393,7 +1393,7 @@
       "line": 103,
       "id": "enum:SDL_MessageBoxColorType",
       "category": "Messagebox",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -3048,7 +3048,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_EVENT_DISPLAY_USABLE_BOUNDS_CHANGED",
       "category": "Events",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -3653,7 +3653,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_EVENT_PINCH_BEGIN",
       "category": "Events",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -3664,7 +3664,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_EVENT_PINCH_END",
       "category": "Events",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -3675,7 +3675,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_EVENT_PINCH_UPDATE",
       "category": "Events",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9021,7 +9021,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_MESSAGEBOX_COLOR_BACKGROUND",
       "category": "Messagebox",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9032,7 +9032,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND",
       "category": "Messagebox",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9043,7 +9043,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_MESSAGEBOX_COLOR_BUTTON_BORDER",
       "category": "Messagebox",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9054,7 +9054,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED",
       "category": "Messagebox",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9065,7 +9065,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_MESSAGEBOX_COLOR_COUNT",
       "category": "Messagebox",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9076,7 +9076,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_MESSAGEBOX_COLOR_TEXT",
       "category": "Messagebox",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -20145,8 +20145,13 @@
       ],
       "id": "function:SDL_GUIDToString",
       "category": "GUID",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Thin common API helpers: owned GUID text, native permissive GUID parsing, static platform/revision strings and Result MessageBox/URL. Interactive success is not automated.",
+      "contract": "docs/common-api.md",
+      "tests": [
+        "tests/common_api.das"
+      ]
     },
     {
       "name": "SDL_GamepadConnected",
@@ -25601,8 +25606,13 @@
       "arguments": [],
       "id": "function:SDL_GetPlatform",
       "category": "Platform",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Thin common API helpers: owned GUID text, native permissive GUID parsing, static platform/revision strings and Result MessageBox/URL. Interactive success is not automated.",
+      "contract": "docs/common-api.md",
+      "tests": [
+        "tests/common_api.das"
+      ]
     },
     {
       "name": "SDL_GetPointerProperty",
@@ -26894,8 +26904,13 @@
       "arguments": [],
       "id": "function:SDL_GetRevision",
       "category": "Version",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Thin common API helpers: owned GUID text, native permissive GUID parsing, static platform/revision strings and Result MessageBox/URL. Interactive success is not automated.",
+      "contract": "docs/common-api.md",
+      "tests": [
+        "tests/common_api.das"
+      ]
     },
     {
       "name": "SDL_GetSIMDAlignment",
@@ -32141,8 +32156,13 @@
       ],
       "id": "function:SDL_OpenURL",
       "category": "Misc",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Thin common API helpers: owned GUID text, native permissive GUID parsing, static platform/revision strings and Result MessageBox/URL. Interactive success is not automated.",
+      "contract": "docs/common-api.md",
+      "tests": [
+        "tests/common_api.das"
+      ]
     },
     {
       "name": "SDL_OpenUserStorage",
@@ -39862,8 +39882,13 @@
       ],
       "id": "function:SDL_ShowMessageBox",
       "category": "Messagebox",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Thin common API helpers: owned GUID text, native permissive GUID parsing, static platform/revision strings and Result MessageBox/URL. Interactive success is not automated.",
+      "contract": "docs/common-api.md",
+      "tests": [
+        "tests/common_api.das"
+      ]
     },
     {
       "name": "SDL_ShowOpenFileDialog",
@@ -40021,8 +40046,13 @@
       ],
       "id": "function:SDL_ShowSimpleMessageBox",
       "category": "Messagebox",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Thin common API helpers: owned GUID text, native permissive GUID parsing, static platform/revision strings and Result MessageBox/URL. Interactive success is not automated.",
+      "contract": "docs/common-api.md",
+      "tests": [
+        "tests/common_api.das"
+      ]
     },
     {
       "name": "SDL_ShowWindow",
@@ -40420,8 +40450,13 @@
       ],
       "id": "function:SDL_StringToGUID",
       "category": "GUID",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "Thin common API helpers: owned GUID text, native permissive GUID parsing, static platform/revision strings and Result MessageBox/URL. Interactive success is not automated.",
+      "contract": "docs/common-api.md",
+      "tests": [
+        "tests/common_api.das"
+      ]
     },
     {
       "name": "SDL_SubmitGPUCommandBuffer",
@@ -61299,7 +61334,7 @@
       "function_like": false,
       "id": "macro:SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT",
       "category": "Messagebox",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61311,7 +61346,7 @@
       "function_like": false,
       "id": "macro:SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT",
       "category": "Messagebox",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61323,7 +61358,7 @@
       "function_like": false,
       "id": "macro:SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT",
       "category": "Messagebox",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61335,7 +61370,7 @@
       "function_like": false,
       "id": "macro:SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT",
       "category": "Messagebox",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61360,7 +61395,7 @@
       "function_like": false,
       "id": "macro:SDL_MESSAGEBOX_ERROR",
       "category": "Messagebox",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61372,7 +61407,7 @@
       "function_like": false,
       "id": "macro:SDL_MESSAGEBOX_INFORMATION",
       "category": "Messagebox",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61384,7 +61419,7 @@
       "function_like": false,
       "id": "macro:SDL_MESSAGEBOX_WARNING",
       "category": "Messagebox",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -70359,8 +70394,14 @@
       ],
       "id": "record:SDL_DisplayEvent",
       "category": "Events",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "timestamp",
+        "displayID",
+        "data1",
+        "data2"
+      ]
     },
     {
       "name": "SDL_DisplayMode",
@@ -74167,8 +74208,13 @@
       ],
       "id": "record:SDL_MessageBoxButtonData",
       "category": "Messagebox",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "flags",
+        "buttonID",
+        "text"
+      ]
     },
     {
       "name": "SDL_MessageBoxColor",
@@ -74193,8 +74239,13 @@
       ],
       "id": "record:SDL_MessageBoxColor",
       "category": "Messagebox",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "r",
+        "g",
+        "b"
+      ]
     },
     {
       "name": "SDL_MessageBoxColorScheme",
@@ -74211,8 +74262,11 @@
       ],
       "id": "record:SDL_MessageBoxColorScheme",
       "category": "Messagebox",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "colors"
+      ]
     },
     {
       "name": "SDL_MessageBoxData",
@@ -74253,8 +74307,17 @@
       ],
       "id": "record:SDL_MessageBoxData",
       "category": "Messagebox",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "flags",
+        "window",
+        "title",
+        "message",
+        "numbuttons",
+        "buttons",
+        "colorScheme"
+      ]
     },
     {
       "name": "SDL_MouseButtonEvent",
@@ -74900,8 +74963,13 @@
       ],
       "id": "record:SDL_PinchFingerEvent",
       "category": "Events",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "timestamp",
+        "scale",
+        "windowID"
+      ]
     },
     {
       "name": "SDL_PixelFormatDetails",
@@ -75139,8 +75207,12 @@
       ],
       "id": "record:SDL_RenderEvent",
       "category": "Events",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "timestamp",
+        "windowID"
+      ]
     },
     {
       "name": "SDL_Renderer",
@@ -76849,8 +76921,14 @@
       "callback": false,
       "id": "typedef:SDL_DisplayEvent",
       "category": "Events",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "timestamp",
+        "displayID",
+        "data1",
+        "data2"
+      ]
     },
     {
       "name": "SDL_DisplayID",
@@ -79458,8 +79536,13 @@
       "callback": false,
       "id": "typedef:SDL_MessageBoxButtonData",
       "category": "Messagebox",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "flags",
+        "buttonID",
+        "text"
+      ]
     },
     {
       "name": "SDL_MessageBoxButtonFlags",
@@ -79482,8 +79565,13 @@
       "callback": false,
       "id": "typedef:SDL_MessageBoxColor",
       "category": "Messagebox",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "r",
+        "g",
+        "b"
+      ]
     },
     {
       "name": "SDL_MessageBoxColorScheme",
@@ -79494,8 +79582,11 @@
       "callback": false,
       "id": "typedef:SDL_MessageBoxColorScheme",
       "category": "Messagebox",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "colors"
+      ]
     },
     {
       "name": "SDL_MessageBoxColorType",
@@ -79506,7 +79597,7 @@
       "callback": false,
       "id": "typedef:SDL_MessageBoxColorType",
       "category": "Messagebox",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -79518,8 +79609,17 @@
       "callback": false,
       "id": "typedef:SDL_MessageBoxData",
       "category": "Messagebox",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "flags",
+        "window",
+        "title",
+        "message",
+        "numbuttons",
+        "buttons",
+        "colorScheme"
+      ]
     },
     {
       "name": "SDL_MessageBoxFlags",
@@ -79928,8 +80028,13 @@
       "callback": false,
       "id": "typedef:SDL_PinchFingerEvent",
       "category": "Events",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "timestamp",
+        "scale",
+        "windowID"
+      ]
     },
     {
       "name": "SDL_PixelFormat",
@@ -80123,8 +80228,12 @@
       "callback": false,
       "id": "typedef:SDL_RenderEvent",
       "category": "Events",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "timestamp",
+        "windowID"
+      ]
     },
     {
       "name": "SDL_Renderer",

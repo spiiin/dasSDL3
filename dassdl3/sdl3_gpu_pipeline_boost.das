@@ -81,3 +81,43 @@ def public with_gpu_graphics_pipeline(device : SDL_GPUDevice?; settings : GpuGra
     return <- with_gpu_graphics_pipeline(device,settings.vertex,settings.fragment,settings.info,
         settings.buffers,settings.attributes,settings.colors,blk)
 }
+
+// Mutating builder: array operations append; state setters overwrite only named fields.
+// No GPU ownership or validation until with_gpu_graphics_pipeline creates the resource.
+def public gpu_pipeline(vertex,fragment : GpuShaderHandle) {
+    var settings <- GpuGraphicsPipelineOptions(vertex=vertex,fragment=fragment)
+    return <- settings
+}
+
+def public vertex_buffer(var settings : GpuGraphicsPipelineOptions; slot,pitch : uint;
+        rate : SDL_GPUVertexInputRate = SDL_GPUVertexInputRate.VERTEXINPUTRATE_VERTEX) {
+    push(settings.buffers,SDL_GPUVertexBufferDescription(slot=slot,pitch=pitch,input_rate=rate))
+}
+
+def public vertex_attribute(var settings : GpuGraphicsPipelineOptions; location,buffer_slot : uint;
+        format : SDL_GPUVertexElementFormat; offset : uint) {
+    push(settings.attributes,SDL_GPUVertexAttribute(location=location,buffer_slot=buffer_slot,format=format,offset=offset))
+}
+
+def public color_target(var settings : GpuGraphicsPipelineOptions; format : SDL_GPUTextureFormat) {
+    push(settings.colors,gpu_color_target(format))
+}
+
+def public color_target(var settings : GpuGraphicsPipelineOptions; description : SDL_GPUColorTargetDescription) {
+    push(settings.colors,description)
+}
+
+def public depth_target(var settings : GpuGraphicsPipelineOptions; format : SDL_GPUTextureFormat) {
+    settings.info.target_info.has_depth_stencil_target=true
+    settings.info.target_info.depth_stencil_format=format
+}
+
+def public depth_test(var settings : GpuGraphicsPipelineOptions; compare : SDL_GPUCompareOp;
+        enabled : bool = true) {
+    settings.info.depth_stencil_state.compare_op=compare
+    settings.info.depth_stencil_state.enable_depth_test=enabled
+}
+
+def public depth_write(var settings : GpuGraphicsPipelineOptions; enabled : bool) {
+    settings.info.depth_stencil_state.enable_depth_write=enabled
+}

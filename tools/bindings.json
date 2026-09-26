@@ -997,7 +997,14 @@
     "SDL_SetWindowFillDocument",
     "SDL_SetWindowProgressState",
     "SDL_SetWindowProgressValue",
-    "SDL_hid_get_properties"
+    "SDL_hid_get_properties",
+    "SDL_ShowMessageBox",
+    "SDL_ShowSimpleMessageBox",
+    "SDL_OpenURL",
+    "SDL_GetPlatform",
+    "SDL_GetRevision",
+    "SDL_GUIDToString",
+    "SDL_StringToGUID"
   ],
   "opaque_types": [
     "SDL_Window",
@@ -2096,6 +2103,14 @@
       "SDL_PEN_DEVICE_TYPE_UNKNOWN": "PEN_DEVICE_TYPE_UNKNOWN",
       "SDL_PEN_DEVICE_TYPE_DIRECT": "PEN_DEVICE_TYPE_DIRECT",
       "SDL_PEN_DEVICE_TYPE_INDIRECT": "PEN_DEVICE_TYPE_INDIRECT"
+    },
+    "SDL_MessageBoxColorType": {
+      "SDL_MESSAGEBOX_COLOR_BACKGROUND": "COLOR_BACKGROUND",
+      "SDL_MESSAGEBOX_COLOR_TEXT": "COLOR_TEXT",
+      "SDL_MESSAGEBOX_COLOR_BUTTON_BORDER": "COLOR_BUTTON_BORDER",
+      "SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND": "COLOR_BUTTON_BACKGROUND",
+      "SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED": "COLOR_BUTTON_SELECTED",
+      "SDL_MESSAGEBOX_COLOR_COUNT": "COLOR_COUNT"
     }
   },
   "structs": {
@@ -2858,6 +2873,43 @@
     "SDL_CameraDeviceEvent": [
       "timestamp",
       "which"
+    ],
+    "SDL_DisplayEvent": [
+      "timestamp",
+      "displayID",
+      "data1",
+      "data2"
+    ],
+    "SDL_RenderEvent": [
+      "timestamp",
+      "windowID"
+    ],
+    "SDL_PinchFingerEvent": [
+      "timestamp",
+      "scale",
+      "windowID"
+    ],
+    "SDL_MessageBoxButtonData": [
+      "flags",
+      "buttonID",
+      "text"
+    ],
+    "SDL_MessageBoxColor": [
+      "r",
+      "g",
+      "b"
+    ],
+    "SDL_MessageBoxColorScheme": [
+      "colors"
+    ],
+    "SDL_MessageBoxData": [
+      "flags",
+      "window",
+      "title",
+      "message",
+      "numbuttons",
+      "buttons",
+      "colorScheme"
     ]
   },
   "field_names": {
@@ -4090,6 +4142,17 @@
     "SDL_PROP_WINDOW_WIN32_INSTANCE_POINTER": "const char *",
     "SDL_PROP_WINDOW_X11_DISPLAY_POINTER": "const char *",
     "SDL_PROP_WINDOW_X11_SCREEN_NUMBER": "const char *",
-    "SDL_PROP_WINDOW_X11_WINDOW_NUMBER": "const char *"
+    "SDL_PROP_WINDOW_X11_WINDOW_NUMBER": "const char *",
+    "SDL_MESSAGEBOX_ERROR": "uint32_t",
+    "SDL_MESSAGEBOX_WARNING": "uint32_t",
+    "SDL_MESSAGEBOX_INFORMATION": "uint32_t",
+    "SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT": "uint32_t",
+    "SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT": "uint32_t",
+    "SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT": "uint32_t",
+    "SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT": "uint32_t",
+    "SDL_EVENT_DISPLAY_USABLE_BOUNDS_CHANGED": "uint32_t",
+    "SDL_EVENT_PINCH_BEGIN": "uint32_t",
+    "SDL_EVENT_PINCH_UPDATE": "uint32_t",
+    "SDL_EVENT_PINCH_END": "uint32_t"
   }
 }

@@ -38,7 +38,7 @@ layout-aware keys, uint16 native mask storage, cursor ownership and backend limi
 See docs/event-callbacks.md for native callback addresses and synchronous filtering.
 See docs/event-queue.md for timeout/error convention,
 partial ADD counts, registration limits and borrowed versus copied payloads.
-SdlEvent now has 53 alternatives, including all 13 Touch/Pen/Sensor and 21 Joystick/Gamepad tags, copied drop strings and user metadata;
+SdlEvent now has 71 alternatives (see docs/common-api.md for display/render/pinch), including all 13 Touch/Pen/Sensor and 21 Joystick/Gamepad tags, copied drop strings and user metadata;
 application user pointers remain raw. Full Result/Option migration is locally validated;
 see docs/result-option-plan.md for contracts and verification. P2 function declarations are connected, with
 RenderDebugTextFormat limited to fixed text and 20 GL/EGL Video functions explicitly

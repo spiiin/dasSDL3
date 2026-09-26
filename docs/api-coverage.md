@@ -1,13 +1,14 @@
 # Покрытие SDL3
 
-Baseline: SDL 3.4.16, Windows x64/MSVC. Generated: 998; adapted: 13;
-pending: 252 of 1263 functions. GPU: 95 generated / 0 adapted / 0 pending.
+Baseline: SDL 3.4.16, Windows x64/MSVC. Generated: 1005; adapted: 13;
+pending: 245 of 1263 functions. GPU: 95 generated / 0 adapted / 0 pending.
 See [upgrade and new API queue](sdl-3.4-upgrade.md).
 `adapted` means a documented partial adapter, not full raw API coverage.
 See [API boundary](gpu-api-boundary.md) and the generated header census.
 
 | Подсистема / сценарий | Raw API | Идиоматичный слой | Проверка / оставшаяся работа |
 | --- | --- | --- | --- |
+| Common API / owned events | 7 additional generated | MessageBox Result<Option<int>>, URL Result, GUID text, 14 display/render/pinch tags | [Contracts and validation limits](common-api.md) |
 | Thread / Atomic / Process / LoadSO | 12/12 + 16/16 + 9/9 + 3/3 generated | Native callbacks, refs, owners, copied process output | [Threads](thread-atomic.md), [Processes](process-loadso.md) |
 | System / Power / Locale / Dialog / Tray | 13/13 + 1/1 + 1/1 + 4/4 + 23/23 generated | Native callbacks; copied locales; tray scopes | [Platform contracts and validation limits](platform-services.md) |
 | Synchronization (P7) | 28/28 generated | Result owners, deferred locks, bool try/timeouts, InitState refs | [Contracts and thread limits](synchronization.md) |

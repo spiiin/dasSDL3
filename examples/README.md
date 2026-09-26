@@ -190,3 +190,5 @@ Web: [сборка и запуск HTML-галереи](../web/README.md), ис�
 
 [gpu/01_metaballs.das](gpu/01_metaballs.das) ports bgfx metaballs with CPU marching
 cubes, dynamic vertex upload, depth and lighting. See [usage and API findings](gpu/README.md).
+
+88. [System info](88_system_info.das): platform, revision and copied GUID text; noninteractive.

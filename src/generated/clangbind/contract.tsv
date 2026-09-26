@@ -737,6 +737,11 @@ V	SDL_PenDeviceType	SDL_PEN_DEVICE_TYPE_INVALID	PEN_DEVICE_TYPE_INVALID	-1
 V	SDL_PenDeviceType	SDL_PEN_DEVICE_TYPE_UNKNOWN	PEN_DEVICE_TYPE_UNKNOWN	0
 V	SDL_PenDeviceType	SDL_PEN_DEVICE_TYPE_DIRECT	PEN_DEVICE_TYPE_DIRECT	1
 V	SDL_PenDeviceType	SDL_PEN_DEVICE_TYPE_INDIRECT	PEN_DEVICE_TYPE_INDIRECT	2
+S	SDL_DisplayEvent	32	8
+F	SDL_DisplayEvent	timestamp	timestamp	8
+F	SDL_DisplayEvent	displayID	displayID	16
+F	SDL_DisplayEvent	data1	data1	20
+F	SDL_DisplayEvent	data2	data2	24
 S	SDL_KeyboardDeviceEvent	24	8
 F	SDL_KeyboardDeviceEvent	timestamp	timestamp	8
 F	SDL_KeyboardDeviceEvent	which	which	16
@@ -849,6 +854,9 @@ F	SDL_AudioDeviceEvent	recording	recording	20
 S	SDL_CameraDeviceEvent	24	8
 F	SDL_CameraDeviceEvent	timestamp	timestamp	8
 F	SDL_CameraDeviceEvent	which	which	16
+S	SDL_RenderEvent	24	8
+F	SDL_RenderEvent	timestamp	timestamp	8
+F	SDL_RenderEvent	windowID	windowID	16
 S	SDL_TouchFingerEvent	56	8
 F	SDL_TouchFingerEvent	timestamp	timestamp	8
 F	SDL_TouchFingerEvent	touchID	touchID	16
@@ -859,6 +867,10 @@ F	SDL_TouchFingerEvent	dx	dx	40
 F	SDL_TouchFingerEvent	dy	dy	44
 F	SDL_TouchFingerEvent	pressure	pressure	48
 F	SDL_TouchFingerEvent	windowID	windowID	52
+S	SDL_PinchFingerEvent	24	8
+F	SDL_PinchFingerEvent	timestamp	timestamp	8
+F	SDL_PinchFingerEvent	scale	scale	16
+F	SDL_PinchFingerEvent	windowID	windowID	20
 S	SDL_PenProximityEvent	32	8
 F	SDL_PenProximityEvent	timestamp	timestamp	8
 F	SDL_PenProximityEvent	windowID	windowID	16
@@ -1572,6 +1584,31 @@ V	SDL_LogPriority	SDL_LOG_PRIORITY_WARN	LOG_PRIORITY_WARN	5
 V	SDL_LogPriority	SDL_LOG_PRIORITY_ERROR	LOG_PRIORITY_ERROR	6
 V	SDL_LogPriority	SDL_LOG_PRIORITY_CRITICAL	LOG_PRIORITY_CRITICAL	7
 V	SDL_LogPriority	SDL_LOG_PRIORITY_COUNT	LOG_PRIORITY_COUNT	8
+S	SDL_MessageBoxButtonData	16	8
+F	SDL_MessageBoxButtonData	flags	flags	0
+F	SDL_MessageBoxButtonData	buttonID	buttonID	4
+F	SDL_MessageBoxButtonData	text	text	8
+S	SDL_MessageBoxColor	3	1
+F	SDL_MessageBoxColor	r	r	0
+F	SDL_MessageBoxColor	g	g	1
+F	SDL_MessageBoxColor	b	b	2
+E	SDL_MessageBoxColorType	4	4
+V	SDL_MessageBoxColorType	SDL_MESSAGEBOX_COLOR_BACKGROUND	COLOR_BACKGROUND	0
+V	SDL_MessageBoxColorType	SDL_MESSAGEBOX_COLOR_TEXT	COLOR_TEXT	1
+V	SDL_MessageBoxColorType	SDL_MESSAGEBOX_COLOR_BUTTON_BORDER	COLOR_BUTTON_BORDER	2
+V	SDL_MessageBoxColorType	SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND	COLOR_BUTTON_BACKGROUND	3
+V	SDL_MessageBoxColorType	SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED	COLOR_BUTTON_SELECTED	4
+V	SDL_MessageBoxColorType	SDL_MESSAGEBOX_COLOR_COUNT	COLOR_COUNT	5
+S	SDL_MessageBoxColorScheme	15	1
+F	SDL_MessageBoxColorScheme	colors	colors	0
+S	SDL_MessageBoxData	56	8
+F	SDL_MessageBoxData	flags	flags	0
+F	SDL_MessageBoxData	window	window	8
+F	SDL_MessageBoxData	title	title	16
+F	SDL_MessageBoxData	message	message	24
+F	SDL_MessageBoxData	numbuttons	numbuttons	32
+F	SDL_MessageBoxData	buttons	buttons	40
+F	SDL_MessageBoxData	colorScheme	colorScheme	48
 E	SDL_ProcessIO	4	4
 V	SDL_ProcessIO	SDL_PROCESS_STDIO_INHERITED	PROCESS_STDIO_INHERITED	0
 V	SDL_ProcessIO	SDL_PROCESS_STDIO_NULL	PROCESS_STDIO_NULL	1
@@ -2844,3 +2881,14 @@ K	SDL_PROP_WINDOW_WIN32_INSTANCE_POINTER	const char *	native-string-macro
 K	SDL_PROP_WINDOW_X11_DISPLAY_POINTER	const char *	native-string-macro
 K	SDL_PROP_WINDOW_X11_SCREEN_NUMBER	const char *	native-string-macro
 K	SDL_PROP_WINDOW_X11_WINDOW_NUMBER	const char *	native-string-macro
+K	SDL_MESSAGEBOX_ERROR	uint32_t	0x10
+K	SDL_MESSAGEBOX_WARNING	uint32_t	0x20
+K	SDL_MESSAGEBOX_INFORMATION	uint32_t	0x40
+K	SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT	uint32_t	0x80
+K	SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT	uint32_t	0x100
+K	SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT	uint32_t	0x1
+K	SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT	uint32_t	0x2
+K	SDL_EVENT_DISPLAY_USABLE_BOUNDS_CHANGED	uint32_t	0x158
+K	SDL_EVENT_PINCH_BEGIN	uint32_t	0x710
+K	SDL_EVENT_PINCH_UPDATE	uint32_t	0x711
+K	SDL_EVENT_PINCH_END	uint32_t	0x712

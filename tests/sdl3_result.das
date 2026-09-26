@@ -1,11 +1,36 @@
 options gen2
 require dassdl3/sdl3_init_boost
+require dassdl3/sdl3_scope
+
+def alias_value(fail : bool) : $SdlResult<int> {
+    if (fail) { return err(SdlError(operation="alias",message="failed"),type<int>) }
+    return ok(42,type<SdlError>)
+}
+def alias_status(fail : bool) : SdlStatus {
+    let value = alias_value(fail) |> sdl_try
+    verify(value == 42)
+    return sdl_ok()
+}
+def alias_array : $SdlResult<array<int>> {
+    var values <- array(7,9)
+    return <- move_ok(values,type<SdlError>)
+}
+
 [export]
 def main(smoke : bool) : int {
+    let canonical : $Result<int; SdlError> = alias_value(false)
+    let aliased : $SdlResult<int> = canonical
+    verify(unwrap(aliased) == 42)
+    verify(is_ok(alias_status(false)))
+    let alias_error = alias_status(true)
+    verify(is_err(alias_error) && unwrap_err(alias_error).operation == "alias")
+    var alias_values <- alias_array()
+    var owned_values <- move_unwrap(alias_values)
+    verify(length(owned_values) == 2 && owned_values[1] == 9)
     let value = ok(42, type<SdlError>)
     verify(is_ok(value) && unwrap(value) == 42)
     var optional = none(type<SDL_Texture?>)
-    var nested <- move_ok(optional, type<SdlError>)
+    var nested : $SdlResult<$Option<SDL_Texture?>> <- move_ok(optional, type<SdlError>)
     verify(is_ok(nested))
     var extracted_option <- move_unwrap(nested)
     verify(is_none(extracted_option))

@@ -190,3 +190,51 @@ The last article discusses aliases; aliases alone do not introduce error variant
 
 Pixel views are currently exported by the native module; adding them to the Web
 profile and rebuilding its packaged scripts is a separate platform follow-up.
+
+## Graphics pipeline builder
+
+The mutating builder uses the existing GpuGraphicsPipelineOptions descriptor:
+
+```daslang
+var settings <- gpu_pipeline(vertex,fragment)
+settings |> vertex_buffer(0u,20u)
+settings |> vertex_attribute(0u,0u,SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT3,0u)
+settings |> vertex_attribute(1u,0u,SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2,12u)
+settings |> color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM)
+settings |> depth_target(SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT)
+settings |> depth_test(SDL_GPUCompareOp.COMPAREOP_LESS)
+settings |> depth_write(true)
+let pipeline : GpuPipelineHandle = device |> with_gpu_graphics_pipeline(settings) |> sdl_use
+```
+
+The final line belongs inside sdl_scope. Builder calls return void and mutate the
+receiver; use separate pipe statements, not a chain of returned copies. Buffer,
+attribute and color-target calls append; duplicate slots/locations are not silently
+replaced. Validation stays in the existing creation path. Color targets also accept
+a complete SDL_GPUColorTargetDescription for explicit blending. Depth setters only
+change their named state: depth_target does not enable depth testing/writing;
+depth_test(compare,false) disables testing; depth_write(false) disables writes.
+Native descriptor fields remain directly editable. The descriptor owns its arrays,
+not shaders or GPU resources. Shader inputs and pass attachments must match it.
+Example 43 demonstrates acquisition. tests/gpu_pipeline.das exercises reordered
+vertex/instance slots and depth state through real pipeline creation.
+
+## Public SDL result type names
+
+`SdlStatus` is a public typedef for `$Result<SdlUnit; SdlError>`.
+`$SdlResult<T>` is a public type macro for `$Result<T; SdlError>`:
+
+```daslang
+def render_triangle(device : SDL_GPUDevice?) : SdlStatus { /* ... */ }
+def load_value() : $SdlResult<int> { return ok(42,type<SdlError>) }
+```
+
+Both resolve to the standard Result type, with identical layout and ownership.
+Existing ok/err, move_ok/move_err, is_ok/is_err, unwrap/move_unwrap and sdl_try
+continue to work; no conversion is necessary. Keep type<SdlError> on constructors.
+Use SdlStatus for success without a payload and $SdlResult<T> for a payload.
+Nested $SdlResult<$Option<T>> still distinguishes absence from failure.
+These aliases do not change checked GPU handle types or resource ownership.
+The generic alias uses the pinned standard Result's canonical tuple layout;
+tests/sdl3_result.das checks compatibility, move-only values and propagation.
+Existing explicit Result signatures remain valid and can be migrated incrementally.

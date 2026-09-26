@@ -23,6 +23,7 @@
 #include "sdl3_thread_atomic.h"
 #include "sdl3_process_loadso.h"
 #include "sdl3_platform_services.h"
+#include "sdl3_common_api.h"
 #include "sdl3_pixels.h"
 #include "sdl3_geometry.h"
 #include "sdl3_gpu.h"

@@ -77,6 +77,7 @@ addEnumeration(new Enumeration_SDL_CameraPermissionState());
 addEnumeration(new Enumeration_SDL_TextureAddressMode());
 addEnumeration(new Enumeration_SDL_ProgressState());
 addEnumeration(new Enumeration_SDL_PenDeviceType());
+addEnumeration(new Enumeration_SDL_MessageBoxColorType());
 addAnnotation(new DummyTypeAnnotation("SDL_Window", "SDL_Window", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Renderer", "SDL_Renderer", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Surface", "SDL_Surface", 1, 1));
@@ -222,6 +223,13 @@ addAnnotation(new SDL_KeyboardDeviceEventAnnotation(lib));
 addAnnotation(new SDL_MouseDeviceEventAnnotation(lib));
 addAnnotation(new SDL_AudioDeviceEventAnnotation(lib));
 addAnnotation(new SDL_CameraDeviceEventAnnotation(lib));
+addAnnotation(new SDL_DisplayEventAnnotation(lib));
+addAnnotation(new SDL_RenderEventAnnotation(lib));
+addAnnotation(new SDL_PinchFingerEventAnnotation(lib));
+addAnnotation(new SDL_MessageBoxButtonDataAnnotation(lib));
+addAnnotation(new SDL_MessageBoxColorAnnotation(lib));
+addAnnotation(new SDL_MessageBoxColorSchemeAnnotation(lib));
+addAnnotation(new SDL_MessageBoxDataAnnotation(lib));
 addConstant(*this, "SDL_GPU_FILTER_NEAREST", static_cast<uint32_t>(SDL_GPU_FILTER_NEAREST));
 addConstant(*this, "SDL_GPU_FILTER_LINEAR", static_cast<uint32_t>(SDL_GPU_FILTER_LINEAR));
 addConstant(*this, "SDL_GPU_PRESENTMODE_VSYNC", static_cast<uint32_t>(SDL_GPU_PRESENTMODE_VSYNC));
@@ -1436,6 +1444,17 @@ addConstant(*this, "SDL_PROP_WINDOW_WIN32_INSTANCE_POINTER", static_cast<const c
 addConstant(*this, "SDL_PROP_WINDOW_X11_DISPLAY_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_X11_DISPLAY_POINTER));
 addConstant(*this, "SDL_PROP_WINDOW_X11_SCREEN_NUMBER", static_cast<const char *>(SDL_PROP_WINDOW_X11_SCREEN_NUMBER));
 addConstant(*this, "SDL_PROP_WINDOW_X11_WINDOW_NUMBER", static_cast<const char *>(SDL_PROP_WINDOW_X11_WINDOW_NUMBER));
+addConstant(*this, "SDL_MESSAGEBOX_ERROR", static_cast<uint32_t>(SDL_MESSAGEBOX_ERROR));
+addConstant(*this, "SDL_MESSAGEBOX_WARNING", static_cast<uint32_t>(SDL_MESSAGEBOX_WARNING));
+addConstant(*this, "SDL_MESSAGEBOX_INFORMATION", static_cast<uint32_t>(SDL_MESSAGEBOX_INFORMATION));
+addConstant(*this, "SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT", static_cast<uint32_t>(SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT));
+addConstant(*this, "SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT", static_cast<uint32_t>(SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT));
+addConstant(*this, "SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT", static_cast<uint32_t>(SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT));
+addConstant(*this, "SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT", static_cast<uint32_t>(SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT));
+addConstant(*this, "SDL_EVENT_DISPLAY_USABLE_BOUNDS_CHANGED", static_cast<uint32_t>(SDL_EVENT_DISPLAY_USABLE_BOUNDS_CHANGED));
+addConstant(*this, "SDL_EVENT_PINCH_BEGIN", static_cast<uint32_t>(SDL_EVENT_PINCH_BEGIN));
+addConstant(*this, "SDL_EVENT_PINCH_UPDATE", static_cast<uint32_t>(SDL_EVENT_PINCH_UPDATE));
+addConstant(*this, "SDL_EVENT_PINCH_END", static_cast<uint32_t>(SDL_EVENT_PINCH_END));
 // Uint32 (SDL_GPUTextureFormat) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_GPUTextureFormatTexelBlockSize)>(*this, lib, "SDL_GPUTextureFormatTexelBlockSize", SideEffects::worstDefault, "SDL_GPUTextureFormatTexelBlockSize")->args({"format"});
 // Uint32 (SDL_GPUTextureFormat, Uint32, Uint32, Uint32) __attribute__((cdecl))
@@ -3432,3 +3451,17 @@ addExtern<DAS_BIND_FUN(SDL_SetWindowProgressState)>(*this, lib, "SDL_SetWindowPr
 addExtern<DAS_BIND_FUN(SDL_SetWindowProgressValue)>(*this, lib, "SDL_SetWindowProgressValue", SideEffects::worstDefault, "SDL_SetWindowProgressValue")->args({"window", "value"});
 // SDL_PropertiesID (SDL_hid_device *) __attribute__((cdecl))
 addExtern<DAS_BIND_FUN(SDL_hid_get_properties)>(*this, lib, "SDL_hid_get_properties", SideEffects::worstDefault, "SDL_hid_get_properties")->args({"dev"});
+// bool (const SDL_MessageBoxData *, int *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ShowMessageBox)>(*this, lib, "SDL_ShowMessageBox", SideEffects::worstDefault, "SDL_ShowMessageBox")->args({"messageboxdata", "buttonid"});
+// bool (SDL_MessageBoxFlags, const char *, const char *, SDL_Window *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_ShowSimpleMessageBox)>(*this, lib, "SDL_ShowSimpleMessageBox", SideEffects::worstDefault, "SDL_ShowSimpleMessageBox")->args({"flags", "title", "message", "window"});
+// bool (const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_OpenURL)>(*this, lib, "SDL_OpenURL", SideEffects::worstDefault, "SDL_OpenURL")->args({"url"});
+// const char *(void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetPlatform)>(*this, lib, "SDL_GetPlatform", SideEffects::worstDefault, "SDL_GetPlatform");
+// const char *(void) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GetRevision)>(*this, lib, "SDL_GetRevision", SideEffects::worstDefault, "SDL_GetRevision");
+// void (SDL_GUID, char *, int) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_GUIDToString)>(*this, lib, "SDL_GUIDToString", SideEffects::worstDefault, "SDL_GUIDToString")->args({"guid", "pszGUID", "cbGUID"});
+// SDL_GUID (const char *) __attribute__((cdecl))
+addExtern<DAS_BIND_FUN(SDL_StringToGUID), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDL_StringToGUID", SideEffects::worstDefault, "SDL_StringToGUID")->args({"pchGUID"});

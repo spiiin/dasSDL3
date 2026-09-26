@@ -103,6 +103,7 @@ addEnumeration(new Enumeration_SDL_TouchDeviceType());
 addAnnotation(new SDL_FingerAnnotation(lib));
 addEnumeration(new Enumeration_SDL_PenAxis());
 addEnumeration(new Enumeration_SDL_PenDeviceType());
+addAnnotation(new SDL_DisplayEventAnnotation(lib));
 addAnnotation(new SDL_KeyboardDeviceEventAnnotation(lib));
 addAnnotation(new SDL_KeyboardEventAnnotation(lib));
 addAnnotation(new SDL_TextEditingCandidatesEventAnnotation(lib));
@@ -123,7 +124,9 @@ addAnnotation(new SDL_GamepadTouchpadEventAnnotation(lib));
 addAnnotation(new SDL_GamepadSensorEventAnnotation(lib));
 addAnnotation(new SDL_AudioDeviceEventAnnotation(lib));
 addAnnotation(new SDL_CameraDeviceEventAnnotation(lib));
+addAnnotation(new SDL_RenderEventAnnotation(lib));
 addAnnotation(new SDL_TouchFingerEventAnnotation(lib));
+addAnnotation(new SDL_PinchFingerEventAnnotation(lib));
 addAnnotation(new SDL_PenProximityEventAnnotation(lib));
 addAnnotation(new SDL_PenMotionEventAnnotation(lib));
 addAnnotation(new SDL_PenTouchEventAnnotation(lib));
@@ -210,6 +213,11 @@ addEnumeration(new Enumeration_SDL_HintPriority());
 addAnnotation(new SDL_LocaleAnnotation(lib));
 addEnumeration(new Enumeration_SDL_LogCategory());
 addEnumeration(new Enumeration_SDL_LogPriority());
+addAnnotation(new SDL_MessageBoxButtonDataAnnotation(lib));
+addAnnotation(new SDL_MessageBoxColorAnnotation(lib));
+addEnumeration(new Enumeration_SDL_MessageBoxColorType());
+addAnnotation(new SDL_MessageBoxColorSchemeAnnotation(lib));
+addAnnotation(new SDL_MessageBoxDataAnnotation(lib));
 addEnumeration(new Enumeration_SDL_ProcessIO());
 addAnnotation(new SDL_VertexAnnotation(lib));
 addEnumeration(new Enumeration_SDL_TextureAccess());
@@ -2097,6 +2105,28 @@ addConstant(*this, "SDL_PROP_WINDOW_WIN32_INSTANCE_POINTER", static_cast<const c
 addConstant(*this, "SDL_PROP_WINDOW_X11_DISPLAY_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_X11_DISPLAY_POINTER));
 addConstant(*this, "SDL_PROP_WINDOW_X11_SCREEN_NUMBER", static_cast<const char *>(SDL_PROP_WINDOW_X11_SCREEN_NUMBER));
 addConstant(*this, "SDL_PROP_WINDOW_X11_WINDOW_NUMBER", static_cast<const char *>(SDL_PROP_WINDOW_X11_WINDOW_NUMBER));
+static_assert(static_cast<uint32_t>(SDL_MESSAGEBOX_ERROR) == static_cast<uint32_t>(0x10ULL));
+addConstant(*this, "SDL_MESSAGEBOX_ERROR", static_cast<uint32_t>(0x10ULL));
+static_assert(static_cast<uint32_t>(SDL_MESSAGEBOX_WARNING) == static_cast<uint32_t>(0x20ULL));
+addConstant(*this, "SDL_MESSAGEBOX_WARNING", static_cast<uint32_t>(0x20ULL));
+static_assert(static_cast<uint32_t>(SDL_MESSAGEBOX_INFORMATION) == static_cast<uint32_t>(0x40ULL));
+addConstant(*this, "SDL_MESSAGEBOX_INFORMATION", static_cast<uint32_t>(0x40ULL));
+static_assert(static_cast<uint32_t>(SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT) == static_cast<uint32_t>(0x80ULL));
+addConstant(*this, "SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT", static_cast<uint32_t>(0x80ULL));
+static_assert(static_cast<uint32_t>(SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT) == static_cast<uint32_t>(0x100ULL));
+addConstant(*this, "SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT", static_cast<uint32_t>(0x100ULL));
+static_assert(static_cast<uint32_t>(SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT) == static_cast<uint32_t>(0x1ULL));
+addConstant(*this, "SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT", static_cast<uint32_t>(0x1ULL));
+static_assert(static_cast<uint32_t>(SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT) == static_cast<uint32_t>(0x2ULL));
+addConstant(*this, "SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT", static_cast<uint32_t>(0x2ULL));
+static_assert(static_cast<uint32_t>(SDL_EVENT_DISPLAY_USABLE_BOUNDS_CHANGED) == static_cast<uint32_t>(0x158ULL));
+addConstant(*this, "SDL_EVENT_DISPLAY_USABLE_BOUNDS_CHANGED", static_cast<uint32_t>(0x158ULL));
+static_assert(static_cast<uint32_t>(SDL_EVENT_PINCH_BEGIN) == static_cast<uint32_t>(0x710ULL));
+addConstant(*this, "SDL_EVENT_PINCH_BEGIN", static_cast<uint32_t>(0x710ULL));
+static_assert(static_cast<uint32_t>(SDL_EVENT_PINCH_UPDATE) == static_cast<uint32_t>(0x711ULL));
+addConstant(*this, "SDL_EVENT_PINCH_UPDATE", static_cast<uint32_t>(0x711ULL));
+static_assert(static_cast<uint32_t>(SDL_EVENT_PINCH_END) == static_cast<uint32_t>(0x712ULL));
+addConstant(*this, "SDL_EVENT_PINCH_END", static_cast<uint32_t>(0x712ULL));
 // from SDL3/SDL_stdinc.h:1427:34
 	makeExtern< void (*)(void *) , SDL_free , SimNode_ExtFuncCall >(lib,"SDL_free","SDL_free")
 		->args({"mem"})
@@ -3679,6 +3709,14 @@ makeExtern<decltype(&SDL_ShowOpenFileDialog), SDL_ShowOpenFileDialog, SimNode_Ex
 makeExtern<decltype(&SDL_ShowSaveFileDialog), SDL_ShowSaveFileDialog, SimNode_ExtFuncCall>(lib,"SDL_ShowSaveFileDialog","SDL_ShowSaveFileDialogAddress")->args({"callback","userdata","window","filters","nfilters","default_location"})->addToModule(*this, SideEffects::worstDefault);
 makeExtern<decltype(&SDL_ShowOpenFolderDialog), SDL_ShowOpenFolderDialog, SimNode_ExtFuncCall>(lib,"SDL_ShowOpenFolderDialog","SDL_ShowOpenFolderDialogAddress")->args({"callback","userdata","window","default_location","allow_many"})->addToModule(*this, SideEffects::worstDefault);
 makeExtern<decltype(&SDL_ShowFileDialogWithProperties), SDL_ShowFileDialogWithProperties, SimNode_ExtFuncCall>(lib,"SDL_ShowFileDialogWithProperties","SDL_ShowFileDialogWithPropertiesAddress")->args({"type","callback","userdata","props"})->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_guid.h:80:34
+	makeExtern< void (*)(struct SDL_GUID,char *,int) , SDL_GUIDToString , SimNode_ExtFuncCall >(lib,"SDL_GUIDToString","SDL_GUIDToString")
+		->args({"guid","pszGUID","cbGUID"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_guid.h:98:38
+	makeExtern< struct SDL_GUID (*)(const char *) , SDL_StringToGUID , SimNode_ExtFuncCallAndCopyOrMove >(lib,"SDL_StringToGUID","SDL_StringToGUID")
+		->args({"pchGUID"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_power.h:100:44
 	makeExtern< enum SDL_PowerState (*)(int *,int *) , SDL_GetPowerInfo , SimNode_ExtFuncCall >(lib,"SDL_GetPowerInfo","SDL_GetPowerInfo")
 		->args({"seconds","percent"})
@@ -5217,6 +5255,21 @@ makeExtern<decltype(&SDL_LoadFunction), SDL_LoadFunction, SimNode_ExtFuncCall>(l
 	makeExtern< bool (*)(enum SDL_LogPriority,const char *) , SDL_SetLogPriorityPrefix , SimNode_ExtFuncCall >(lib,"SDL_SetLogPriorityPrefix","SDL_SetLogPriorityPrefix")
 		->args({"priority","prefix"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_messagebox.h:177:34
+	makeExtern< bool (*)(const struct SDL_MessageBoxData *,int *) , SDL_ShowMessageBox , SimNode_ExtFuncCall >(lib,"SDL_ShowMessageBox","SDL_ShowMessageBox")
+		->args({"messageboxdata","buttonid"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_messagebox.h:221:34
+	makeExtern< bool (*)(unsigned int,const char *,const char *,struct SDL_Window *) , SDL_ShowSimpleMessageBox , SimNode_ExtFuncCall >(lib,"SDL_ShowSimpleMessageBox","SDL_ShowSimpleMessageBox")
+		->args({"flags","title","message","window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_misc.h:72:34
+	makeExtern< bool (*)(const char *) , SDL_OpenURL , SimNode_ExtFuncCall >(lib,"SDL_OpenURL","SDL_OpenURL")
+		->args({"url"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_platform.h:58:42
+	makeExtern< const char * (*)() , SDL_GetPlatform , SimNode_ExtFuncCall >(lib,"SDL_GetPlatform","SDL_GetPlatform")
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_process.h:106:43
 	makeExtern< struct SDL_Process * (*)(const char *const *,bool) , SDL_CreateProcess , SimNode_ExtFuncCall >(lib,"SDL_CreateProcess","SDL_CreateProcess")
 		->args({"args","pipe_stdio"})
@@ -5912,4 +5965,7 @@ makeExtern<decltype(&SDL_SetTrayEntryCallback), SDL_SetTrayEntryCallback, SimNod
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_version.h:160:33
 	makeExtern< int (*)() , SDL_GetVersion , SimNode_ExtFuncCall >(lib,"SDL_GetVersion","SDL_GetVersion")
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_version.h:189:42
+	makeExtern< const char * (*)() , SDL_GetRevision , SimNode_ExtFuncCall >(lib,"SDL_GetRevision","SDL_GetRevision")
 		->addToModule(*this, SideEffects::worstDefault);

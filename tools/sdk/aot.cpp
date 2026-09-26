@@ -22,7 +22,11 @@ static int generate_script(const char *input, const char *output, const std::str
         }
     }
     Context scriptContext(script->getContextStackSize()), compilerContext(compiler->getContextStackSize());
-    if (!script->simulate(scriptContext, log) || !compiler->simulate(compilerContext, log)) return 2;
+    if (!script->simulate(scriptContext, log) || !compiler->simulate(compilerContext, log)) {
+        for (auto program : {script, compiler})
+            for (auto &e : program->errors) log << reportError(e.at, e.what, e.extra, e.fixme, e.cerr);
+        return 2;
+    }
     auto entry = compilerContext.findFunction("run_aot");
     if (!entry) return 3;
     vec4f args[] = {cast<Program *>::from(script.get()), cast<Context *>::from(&scriptContext), cast<CodeOfPolicies *>::from(&policy)};

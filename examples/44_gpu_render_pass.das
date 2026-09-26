@@ -4,7 +4,7 @@ require dassdl3/sdl3_gpu_recording_boost
 require daslib/defer
 
 // SDL errors return normally, so defer can release every acquired resource.
-def render_triangle(device : SDL_GPUDevice?) : $Result<SdlUnit; SdlError> {
+def render_triangle(device : SDL_GPUDevice?) : SdlStatus {
     var vertex : GpuShaderHandle
     var fragment : GpuShaderHandle
     var pipeline : GpuPipelineHandle

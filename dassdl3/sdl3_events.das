@@ -195,7 +195,17 @@ struct CameraDeviceEvent {
     which : uint
 }
 
+struct DisplayEvent { timestamp : uint64; event_type, display_id : uint; data : int2 }
+struct RenderEvent { timestamp : uint64; window_id : uint }
+struct PinchEvent { timestamp : uint64; window_id : uint; scale : float }
 variant SdlEvent {
+    display : DisplayEvent
+    render_targets_reset : RenderEvent
+    render_device_reset : RenderEvent
+    render_device_lost : RenderEvent
+    pinch_begin : PinchEvent
+    pinch_update : PinchEvent
+    pinch_end : PinchEvent
     keyboard_added : KeyboardDeviceEvent
     keyboard_removed : KeyboardDeviceEvent
     mouse_added : MouseDeviceEvent
@@ -268,6 +278,28 @@ variant SdlEvent {
 def public decode_event(event : SDL_Event) : SdlEvent {
     let kind = event.event_type
     let timestamp = SDL_EventTimestamp(event)
+    if (kind==SDL_EVENT_DISPLAY_ORIENTATION || kind==SDL_EVENT_DISPLAY_ADDED || kind==SDL_EVENT_DISPLAY_REMOVED || kind==SDL_EVENT_DISPLAY_MOVED || kind==SDL_EVENT_DISPLAY_DESKTOP_MODE_CHANGED || kind==SDL_EVENT_DISPLAY_CURRENT_MODE_CHANGED || kind==SDL_EVENT_DISPLAY_CONTENT_SCALE_CHANGED || kind==SDL_EVENT_DISPLAY_USABLE_BOUNDS_CHANGED) {
+        var raw : SDL_DisplayEvent
+        SDL_ReadDisplayEvent(event,raw)
+        return <- SdlEvent(display=DisplayEvent(timestamp=timestamp,event_type=kind,display_id=raw.displayID,data=int2(raw.data1,raw.data2)))
+    }
+    if (kind==SDL_EVENT_RENDER_TARGETS_RESET || kind==SDL_EVENT_RENDER_DEVICE_RESET || kind==SDL_EVENT_RENDER_DEVICE_LOST) {
+        var raw : SDL_RenderEvent
+        SDL_ReadRenderEvent(event,raw)
+        let value=RenderEvent(timestamp=timestamp,window_id=raw.windowID)
+        if(kind==SDL_EVENT_RENDER_TARGETS_RESET) {return <- SdlEvent(render_targets_reset=value)}
+        if(kind==SDL_EVENT_RENDER_DEVICE_RESET) {return <- SdlEvent(render_device_reset=value)}
+        if(kind==SDL_EVENT_RENDER_DEVICE_LOST) {return <- SdlEvent(render_device_lost=value)}
+    }
+    if (kind==SDL_EVENT_PINCH_BEGIN || kind==SDL_EVENT_PINCH_UPDATE || kind==SDL_EVENT_PINCH_END) {
+        var raw : SDL_PinchFingerEvent
+        SDL_ReadPinchEvent(event,raw)
+        let value=PinchEvent(timestamp=timestamp,window_id=raw.windowID,scale=raw.scale)
+        if(kind==SDL_EVENT_PINCH_BEGIN) {return <- SdlEvent(pinch_begin=value)}
+        if(kind==SDL_EVENT_PINCH_UPDATE) {return <- SdlEvent(pinch_update=value)}
+        if(kind==SDL_EVENT_PINCH_END) {return <- SdlEvent(pinch_end=value)}
+    }
+
     if (kind == SDL_EVENT_KEYBOARD_ADDED || kind == SDL_EVENT_KEYBOARD_REMOVED) {
         var raw : SDL_KeyboardDeviceEvent
         SDL_ReadKeyboardDeviceEvent(event,raw)
