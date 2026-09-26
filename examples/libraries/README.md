@@ -90,3 +90,64 @@ header supplies the missing upstream AOT declaration for
 `das::DisableIniPersistence` without editing daScript.
 The example and lifetime tests also pass in a consumer build with LLVM, Clang and
 Python discovery disabled and binding generators OFF.
+
+## 03 — SDL_ttf
+
+Enable `-DDASSDL3_WITH_TTF=ON`, then build `dasSDL3_libraries_runner`.
+This option works independently of ImGui and SDL_image. CMake downloads pinned
+SDL_ttf 3.2.2, FreeType 2.14.3 and HarfBuzz 10.4.0, reusing FreeType when ImGui is enabled.
+The bundled JetBrains Mono font and license are copied beside the executable.
+
+```powershell
+.\build\ninja\bin\dasSDL3_libraries_runner.exe .\examples\libraries\03_ttf.das
+```
+
+The example renders UTF-8 text using Font, renderer TextEngine and Text scopes.
+Escape closes the window; `--smoke-test` renders three frames and exits.
+See [SDL_ttf contracts and limitations](../../docs/sdl-ttf.md).
+
+```powershell
+cmake --build build/ninja --target dasSDL3_ttf_io_test --parallel 6
+ctest --test-dir build/ninja -R '^sdl3_(ttf_io|tests_ttf|examples_libraries_03_ttf)$' --output-on-failure
+```
+
+## 04 — SDL_ttf shaping
+
+```powershell
+.\build\ninja\bin\dasSDL3_libraries_runner.exe .\examples\libraries\04_ttf_shaping.das
+```
+
+Cyan Arabic text uses joining and diacritics with explicit RTL/Arab/ar settings.
+The amber Latin specimen shows ligatures and precomposed/combining accent forms.
+The Amiri 1.003 font is included under SIL OFL; no system font lookup is needed.
+Escape exits; `--smoke-test` renders three hidden frames. This is run shaping,
+not automatic mixed-script paragraph bidi layout.
+
+```powershell
+ctest --test-dir build/ninja -R '^sdl3_(ttf_io|tests_ttf.*|examples_libraries_0[34]_ttf.*)$' --output-on-failure
+```
+
+## 05 — SDL_ttf GPU atlas
+
+```powershell
+$env:SDL_GPU_DRIVER = "vulkan" # or "direct3d12"
+.\build\ninja\bin\dasSDL3_libraries_runner.exe .\examples\libraries\05_ttf_gpu.das
+```
+
+Cyan text appears on black; it changes briefly and returns to the original line.
+Escape/close exits. Geometry comes from SDL_ttf GPU TextEngine; the example uploads
+vertices/indices and records native SDL GPU draw calls. No SDL_Renderer is used.
+The alpha-only shader explicitly rejects SDF/color/fill sequences.
+
+With `--smoke-test`, three frames are followed by GPU-to-CPU readback and comparison
+with FreeType's CPU glyph mask. Tests also force several atlas pages and check
+empty text, mutation, array ownership, winding and fills. Vulkan and Direct3D12
+are registered separately and validation errors fail the run:
+
+```powershell
+ctest --test-dir build/ninja -R '^sdl3_(examples_libraries_05_ttf_gpu|tests_ttf_gpu)_' --output-on-failure
+```
+
+The optional `ttf_aot_runner` parity host includes example 05 and these contract
+tests; select `(baseline|cppgenbind|aot)_(examples_libraries_05_ttf_gpu|tests_ttf_gpu)_`
+in its CTest build. See [GPU ownership contract](../../docs/sdl-ttf.md#gpu-text).
