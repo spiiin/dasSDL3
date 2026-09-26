@@ -21,6 +21,7 @@ inline SDL_Event peripheral_event(uint32_t type) {
     case SDL_EVENT_PEN_PROXIMITY_OUT:
         e.pproximity.windowID=42;
         e.pproximity.which=0xf1234567u;
+        e.pproximity.pen_state=SDL_PEN_INPUT_DOWN|SDL_PEN_INPUT_ERASER_TIP;
         break;
     case SDL_EVENT_PEN_MOTION:
         e.pmotion.windowID=42;

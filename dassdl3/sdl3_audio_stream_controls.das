@@ -52,3 +52,23 @@ def public audio_stream_formats(stream : SDL_AudioStream?) {
     if(is_err(status)) { return err(unwrap_err(status),type<AudioStreamFormats>) }
     return ok(value,type<SdlError>)
 }
+
+// None is SDL's default channel order; Some owns an independent map.
+def public audio_stream_input_channel_map(stream : SDL_AudioStream?) {
+    var values : array<int>
+    let status=SDL_GetAudioStreamInputChannelMapCopy(stream,values)
+    if(status<0) {return err(sdl_error("SDL_GetAudioStreamInputChannelMap"),type<$Option<array<int>>>)}
+    var value : $Option<array<int>>
+    if(status>0) {value <- move_some(values)}
+    return <- move_ok(value,type<SdlError>)
+}
+
+// None is SDL's default channel order; Some owns an independent map.
+def public audio_stream_output_channel_map(stream : SDL_AudioStream?) {
+    var values : array<int>
+    let status=SDL_GetAudioStreamOutputChannelMapCopy(stream,values)
+    if(status<0) {return err(sdl_error("SDL_GetAudioStreamOutputChannelMap"),type<$Option<array<int>>>)}
+    var value : $Option<array<int>>
+    if(status>0) {value <- move_some(values)}
+    return <- move_ok(value,type<SdlError>)
+}

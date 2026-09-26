@@ -61,7 +61,7 @@ def main():
         allowlist.write_text('\n'.join(policy), encoding='utf-8')
         header = root / 'parity.h'
         header.write_text('#include <SDL3/SDL.h>\n' + ''.join(
-            f'static const {ctype} DASSDL3_CONST_{name} = ({ctype})({name});\n'
+            f'static {ctype} const DASSDL3_CONST_{name} = ({ctype})({name});\n'
             for name, ctype in spec['constants'].items()), encoding='utf-8')
         first, second = root / 'first', root / 'second'
         first.mkdir(); second.mkdir()

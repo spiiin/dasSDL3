@@ -20,9 +20,9 @@ writers with the entire lookup/copy operation: copying does not make lookup atom
 SDL_ClearAppMetadataProperty passes native NULL, preserving the difference from an
 empty string. Metadata should be set before initializing subsystems.
 
-SDL_HintPriority and all eight initialization flags are generated. String macro
-constants are not exported yet; pass SDL hint names (such as SDL_AUDIO_DRIVER) and
-metadata keys (such as SDL.app.metadata.name) literally. No with_hint restoration
+SDL_HintPriority and all eight initialization flags are generated. String hint/property macro
+constants are exported from the pinned headers; see [the accessibility audit](script-accessibility.md).
+Literal strings remain valid for dynamic/custom names. No with_hint restoration
 scope: SDL cannot query the previous priority. ResetHint resets to the environment,
 not the previous explicit setting; ResetHints changes all hints in this process.
 Environment values take override priority. A rejected lower-priority setter returns

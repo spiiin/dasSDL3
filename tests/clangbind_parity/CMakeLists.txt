@@ -261,8 +261,27 @@ list(APPEND AOT_MODULES dassdl3/sdl3_audio_stream_controls dassdl3/sdl3_audio_fi
 list(APPEND AOT_MODULES dassdl3/sdl3_asyncio_boost dassdl3/sdl3_audio_devices_boost)
 list(APPEND AOT_MODULES dassdl3/sdl3_camera_boost dassdl3/sdl3_synchronization dassdl3/sdl3_thread_atomic dassdl3/sdl3_process_loadso dassdl3/sdl3_platform_services)
 list(APPEND AOT_MODULES dassdl3/sdl3_pixel_views examples/gpu/metaballs_field examples/gpu/metaballs_tables)
+list(APPEND AOT_MODULES dassdl3/sdl3_render_surface_34_boost)
+list(APPEND AOT_SCRIPTS tests/render_surface_34 tests/gpu_renderer_34 examples/86_gpu_renderer)
+list(APPEND AOT_SCRIPTS tests/sdl34_remaining tests/sdl34_audio examples/87_window_progress)
+list(APPEND AOT_MODULES dassdl3/sdl3_remaining_34_boost)
+list(APPEND AOT_SCRIPTS tests/hotplug_events tests/string_constants)
 foreach(script IN LISTS AOT_SCRIPTS AOT_MODULES)
+    set(remaining34_dependency)
+    if(script MATCHES "sdl34_|remaining_34|87_window_progress")
+        set(remaining34_dependency "${ROOT}/dassdl3/sdl3_remaining_34_boost.das"
+            "${ROOT}/dassdl3/sdl3_try.das" "${ROOT}/dassdl3/sdl3_scope.das")
+    endif()
+    set(render34_dependency)
+    if(script MATCHES "render_surface_34|gpu_renderer_34|86_gpu_renderer")
+        set(render34_dependency "${ROOT}/dassdl3/sdl3_render_surface_34_boost.das"
+            "${ROOT}/dassdl3/sdl3_iostream_boost.das" "${ROOT}/dassdl3/sdl3_events.das"
+            "${ROOT}/dassdl3/sdl3_try.das" "${ROOT}/dassdl3/sdl3_scope.das")
+    endif()
     set(try_dependency)
+    if(script MATCHES "hotplug_events")
+        set(try_dependency "${ROOT}/dassdl3/sdl3_events.das")
+    endif()
     set(input_dependency)
     if(script MATCHES "compound_returns")
         set(input_dependency "${ROOT}/dassdl3/sdl3_audio_final.das"
@@ -324,6 +343,7 @@ foreach(script IN LISTS AOT_SCRIPTS AOT_MODULES)
     set(output "${CMAKE_CURRENT_BINARY_DIR}/${name}.aot.cpp")
     add_custom_command(OUTPUT "${output}"
         COMMAND parity_aot_tool "${ROOT}/${script}.das" "${output}"
+        DEPENDS ${remaining34_dependency} ${render34_dependency}
         DEPENDS ${metaballs_dependency} ${event_dependency} ${input_dependency}
         DEPENDS "${ROOT}/dassdl3/sdl3_gpu_result.das"
         DEPENDS "${ROOT}/dassdl3/sdl3_pixel_views.das" ${try_dependency} "${ROOT}/dassdl3/sdl3_result.das" "${ROOT}/dassdl3/sdl3_rect_clipboard_boost.das" "${ROOT}/dassdl3/sdl3_surface_pixels_boost.das" "${ROOT}/dassdl3/sdl3_surface_state_boost.das" "${ROOT}/dassdl3/sdl3_renderer_final_boost.das" "${ROOT}/dassdl3/sdl3_renderer_operations_boost.das" "${ROOT}/dassdl3/sdl3_renderer_yuv_blend_boost.das" "${ROOT}/dassdl3/sdl3_texture_transfer_boost.das" "${ROOT}/dassdl3/sdl3_texture_state_boost.das" "${ROOT}/dassdl3/sdl3_renderer_presentation_boost.das" "${ROOT}/dassdl3/sdl3_renderer_state_boost.das" "${ROOT}/dassdl3/sdl3_renderer_primitives_boost.das" "${ROOT}/dassdl3/sdl3_window_io_boost.das" "${ROOT}/dassdl3/sdl3_window_boost.das" "${ROOT}/dassdl3/sdl3_video_boost.das" "${ROOT}/dassdl3/sdl3_diagnostics_boost.das" "${ROOT}/dassdl3/sdl3_init_boost.das" "${ROOT}/dassdl3/sdl3_properties_boost.das" "${ROOT}/dassdl3/sdl3_gpu_native_boost.das" "${ROOT}/dassdl3/sdl3_gpu_recording_boost.das" "${ROOT}/dassdl3/sdl3_gpu_buffers_boost.das" "${ROOT}/dassdl3/sdl3_gpu_pipeline_boost.das" "${ROOT}/dassdl3/sdl3_gpu_shader_boost.das" "${ROOT}/dassdl3/sdl3_gpu_sampler_boost.das" "${ROOT}/dassdl3/sdl3_gpu_volume_boost.das" "${ROOT}/dassdl3/sdl3_gpu_image_boost.das" "${ROOT}/dassdl3/sdl3_gpu_swapchain_boost.das" "${ROOT}/dassdl3/sdl3_gpu_utilities_boost.das" "${ROOT}/dassdl3/sdl3_gpu_formats_boost.das" "${ROOT}/dassdl3/sdl3_gpu_texture_transfer_boost.das" "${ROOT}/dassdl3/sdl3_gpu_transfer_boost.das" parity_aot_tool "${ROOT}/${script}.das" "${ROOT}/dassdl3/sdl3_boost.das" "${ROOT}/dassdl3/sdl3_audio_boost.das" "${ROOT}/dassdl3/sdl3_pixels_boost.das" "${ROOT}/dassdl3/sdl3_geometry_boost.das" "${ROOT}/dassdl3/sdl3_gpu_boost.das"
@@ -724,3 +744,84 @@ if(DASSDL3_TEST_SHADERCROSS)
         endforeach()
     endforeach()
 endif()
+
+add_executable(render34_aot_runner aot_runner.cpp
+    "${CMAKE_CURRENT_BINARY_DIR}/tests_render_surface_34.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/tests_gpu_renderer_34.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/examples_86_gpu_renderer.aot.cpp")
+target_link_libraries(render34_aot_runner PRIVATE cppgenbind_module)
+# Shared modules have their own AOT registration units (script AOT excludes them).
+foreach(module sdl3_result sdl3_boost sdl3_pixels_boost sdl3_surface_pixels_boost
+    sdl3_texture_state_boost sdl3_events sdl3_render_surface_34_boost)
+    target_sources(render34_aot_runner PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_${module}.aot.cpp")
+endforeach()
+foreach(shader render_state.frag.spv render_state.frag.dxil)
+    configure_file("${ROOT}/examples/assets/shaders/${shader}" "${CMAKE_CURRENT_BINARY_DIR}/assets/shaders/${shader}" COPYONLY)
+endforeach()
+foreach(backend baseline cppgenbind aot)
+    if(backend STREQUAL "aot")
+        set(render34_runner render34_aot_runner)
+        set(render34_args)
+    else()
+        set(render34_runner ${backend}_runner)
+        set(render34_args --smoke-test)
+    endif()
+    add_test(NAME render34_${backend}_surface COMMAND ${render34_runner} "${ROOT}/tests/render_surface_34.das" ${render34_args})
+    set_tests_properties(render34_${backend}_surface PROPERTIES TIMEOUT 60 RESOURCE_LOCK render34_files)
+    foreach(driver vulkan direct3d12)
+        foreach(script tests/gpu_renderer_34 examples/86_gpu_renderer)
+            string(REPLACE "/" "_" name "${script}")
+            add_test(NAME render34_${backend}_${name}_${driver} COMMAND ${render34_runner} "${ROOT}/${script}.das" ${render34_args})
+            set_tests_properties(render34_${backend}_${name}_${driver} PROPERTIES TIMEOUT 60 RESOURCE_LOCK sdl_gpu
+                ENVIRONMENT "SDL_GPU_DRIVER=${driver};VK_LOADER_LAYERS_DISABLE=VK_LAYER_RENDERDOC_Capture"
+                FAIL_REGULAR_EXPRESSION "VUID-;Validation Error;D3D12 ERROR;D3D12 CORRUPTION")
+        endforeach()
+    endforeach()
+endforeach()
+
+add_executable(remaining34_aot_runner aot_runner.cpp
+    "${CMAKE_CURRENT_BINARY_DIR}/tests_sdl34_remaining.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/tests_sdl34_audio.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/examples_87_window_progress.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_result.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_boost.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_audio_boost.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_remaining_34_boost.aot.cpp")
+target_link_libraries(remaining34_aot_runner PRIVATE cppgenbind_module)
+foreach(backend baseline cppgenbind remaining34_aot)
+    if(backend STREQUAL "remaining34_aot")
+        set(remaining34_args)
+    else()
+        set(remaining34_args --smoke-test)
+    endif()
+    foreach(script tests/sdl34_remaining tests/sdl34_audio examples/87_window_progress)
+        string(REPLACE "/" "_" name "${script}")
+        add_test(NAME remaining34_${backend}_${name} COMMAND ${backend}_runner "${ROOT}/${script}.das" ${remaining34_args})
+        set_tests_properties(remaining34_${backend}_${name} PROPERTIES TIMEOUT 60)
+    endforeach()
+endforeach()
+
+add_executable(accessibility_aot_runner aot_runner.cpp
+    "${CMAKE_CURRENT_BINARY_DIR}/tests_audio_stream_controls.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/examples_78_audio_stream_controls.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/tests_hotplug_events.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/tests_string_constants.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_result.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_boost.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_audio_boost.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_audio_devices_boost.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_audio_stream_controls.aot.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/dassdl3_sdl3_events.aot.cpp")
+target_link_libraries(accessibility_aot_runner PRIVATE cppgenbind_module)
+foreach(backend baseline cppgenbind accessibility_aot)
+    if(backend STREQUAL "accessibility_aot")
+        set(accessibility_args)
+    else()
+        set(accessibility_args --smoke-test)
+    endif()
+    foreach(script tests/audio_stream_controls examples/78_audio_stream_controls tests/hotplug_events tests/string_constants)
+        string(REPLACE "/" "_" name "${script}")
+        add_test(NAME accessibility_${backend}_${name} COMMAND ${backend}_runner "${ROOT}/${script}.das" ${accessibility_args})
+        set_tests_properties(accessibility_${backend}_${name} PROPERTIES TIMEOUT 60 ENVIRONMENT "SDL_AUDIO_DRIVER=dummy")
+    endforeach()
+endforeach()

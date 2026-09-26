@@ -6390,16 +6390,16 @@
       ]
     },
     "function:SDL_GetAudioStreamInputChannelMap": {
-      "boost_status": "pending",
-      "reason": "SDL 3.4.16 fixes default-map null handling. Raw custom and default maps tested; copied boost getter remains a follow-up.",
+      "boost_status": "partial",
+      "reason": "Copied Result<Option<array<int>>> getter: default None, custom owned array, null stream/allocation error Err. Clears stale SDL error before ambiguous native null.",
       "contract": "docs/audio-stream-controls.md",
       "tests": [
         "tests/audio_stream_controls.das"
       ]
     },
     "function:SDL_GetAudioStreamOutputChannelMap": {
-      "boost_status": "pending",
-      "reason": "SDL 3.4.16 fixes default-map null handling. Raw custom and default maps tested; copied boost getter remains a follow-up.",
+      "boost_status": "partial",
+      "reason": "Copied Result<Option<array<int>>> getter: default None, custom owned array, null stream/allocation error Err. Clears stale SDL error before ambiguous native null.",
       "contract": "docs/audio-stream-controls.md",
       "tests": [
         "tests/audio_stream_controls.das"
@@ -7506,6 +7506,303 @@
       "contract": "docs/platform-services.md",
       "tests": [
         "tests/platform_services.das"
+      ]
+    },
+    "function:SDL_LoadSurface": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
+    },
+    "function:SDL_LoadSurface_IO": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
+    },
+    "function:SDL_LoadPNG": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
+    },
+    "function:SDL_LoadPNG_IO": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
+    },
+    "function:SDL_SavePNG": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
+    },
+    "function:SDL_SavePNG_IO": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
+    },
+    "function:SDL_RotateSurface": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
+    },
+    "function:SDL_CreateGPURenderer": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
+    },
+    "function:SDL_GetGPURendererDevice": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
+    },
+    "function:SDL_SetTexturePalette": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
+    },
+    "function:SDL_GetTexturePalette": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
+    },
+    "function:SDL_RenderTexture9GridTiled": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
+    },
+    "function:SDL_SetRenderTextureAddressMode": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
+    },
+    "function:SDL_GetRenderTextureAddressMode": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
+    },
+    "function:SDL_SetDefaultTextureScaleMode": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
+    },
+    "function:SDL_GetDefaultTextureScaleMode": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
+    },
+    "function:SDL_CreateGPURenderState": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
+    },
+    "function:SDL_SetGPURenderStateFragmentUniforms": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
+    },
+    "function:SDL_SetGPURenderState": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
+    },
+    "function:SDL_DestroyGPURenderState": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
+    },
+    "function:SDL_CreateAnimatedCursor": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
+    },
+    "function:SDL_GetEventDescription": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
+    },
+    "function:SDL_GetPenDeviceType": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
+    },
+    "function:SDL_GetSystemPageSize": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
+    },
+    "function:SDL_GetWindowProgressState": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
+    },
+    "function:SDL_GetWindowProgressValue": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
+    },
+    "function:SDL_PutAudioStreamDataNoCopy": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
+    },
+    "function:SDL_PutAudioStreamPlanarData": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
+    },
+    "function:SDL_SetRelativeMouseTransform": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
+    },
+    "function:SDL_SetWindowFillDocument": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
+    },
+    "function:SDL_SetWindowProgressState": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
+    },
+    "function:SDL_SetWindowProgressValue": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
+    },
+    "function:SDL_hid_get_properties": {
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
       ]
     }
   }

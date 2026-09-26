@@ -2,11 +2,42 @@
 
 > Current core pin: SDL 3.4.16. See [migration and coverage changes](sdl-3.4-upgrade.md); older 3.2.18 counts below describe the original baseline.
 
-Актуализирован 22 сентября 2026. База: SDL 3.2.18, daScript
+Актуализирован 26 сентября 2026. База: SDL 3.4.16, daScript
 `35bf260c0d8a79b94c64005bd3d2435adcf7e261`, Windows x64/MSVC.
 Текущее покрытие — [api-coverage.md](api-coverage.md); точные декларации и
 платформенные guards — [реестр заголовков](generated/api-windows-x64-msvc.md).
 Категории wiki помогают навигации, но не заменяют закреплённые заголовки.
+
+## Практическая очередь после переоценки готовности
+
+Shadercross оставляем в текущем состоянии. Приоритет — SDL и пригодность привязки
+для daScript-приложений, а не формальные 100% заголовков.
+
+1. **Render/Surface SDL 3.4 подключены:** +20 raw; Surface 65/65, Render 101 raw
+   + fixed-text DebugTextFormat. [Контракты](render-surface-34.md). Остальные
+   **13 API SDL 3.4 также подключены**: [контракты и ограничения](sdl-34-remaining.md).
+   Все 37 новых функций Windows census доступны; native callbacks не равны script blocks.
+2. **Script-доступность проверена:** 552 строковых hints/properties, четыре
+   пропущенных поля SDL 3.4, copied stream channel maps и 11 owned device event tags.
+   [Аудит и ограничения](script-accessibility.md). Остаток: display/render/pinch
+   payloads, специализированные native callback fields и физические устройства.
+3. **Внешний consumer:** минимальный проект вне дерева репозитория, ресурсы .das/DLL,
+   документированный interpreter/AOT build. Существующий no-LLVM source consumer
+   не подменяет install/export SDK и пользовательскую AOT-интеграцию.
+4. **Согласованные исключения:** классифицировать 169 pending Stdinc функций;
+   не переносить автоматически libc/math/memory аналоги стандартной библиотеки.
+   C va_list не нужен обычному script API; fixed-text адаптеры сохраняются.
+   Пока исключения не обоснованы в policy, inventory продолжает показывать pending.
+5. **Платформы и специализированные API:** GL/EGL, Vulkan/Metal interop, native
+   callbacks и CPU/SIMD добавлять по конкретным сценариям. Linux/macOS/web требуют
+   собственных build/ABI/runtime проверок; Windows-пакет не заявляет их готовность.
+
+Raw callback address и script block — разные контракты. Произвольный script Context
+на worker-потоке SDL не является обязательным критерием готовности. Физическое
+оборудование проверяется отдельно; неподтверждённые сценарии явно документируются.
+
+Исторические этапы ниже сохраняют принятые границы и исходный объём пакетов;
+текущие количества берутся из generated inventory.
 
 ## Принятая архитектура
 

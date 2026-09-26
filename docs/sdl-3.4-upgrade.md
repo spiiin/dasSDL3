@@ -43,44 +43,12 @@ upgrade does not automatically delete defensive adapters or promise fixes.
 
 ## Coverage
 
-Windows inventory: 965 generated, 14 adapted, 284 pending out of 1263 active
-non-excluded functions. Header update adds 37 functions; four are included in
-this migration, and the remaining 33 need their own API/lifetime/runtime work.
-This is not a claim of full SDL 3.4 coverage. Pending additions:
-
-- `SDL_CreateAnimatedCursor`
-- `SDL_CreateGPURenderState`
-- `SDL_CreateGPURenderer`
-- `SDL_DestroyGPURenderState`
-- `SDL_GetDefaultTextureScaleMode`
-- `SDL_GetEventDescription`
-- `SDL_GetGPURendererDevice`
-- `SDL_GetPenDeviceType`
-- `SDL_GetRenderTextureAddressMode`
-- `SDL_GetSystemPageSize`
-- `SDL_GetTexturePalette`
-- `SDL_GetWindowProgressState`
-- `SDL_GetWindowProgressValue`
-- `SDL_LoadPNG`
-- `SDL_LoadPNG_IO`
-- `SDL_LoadSurface`
-- `SDL_LoadSurface_IO`
-- `SDL_PutAudioStreamDataNoCopy`
-- `SDL_PutAudioStreamPlanarData`
-- `SDL_RenderTexture9GridTiled`
-- `SDL_RotateSurface`
-- `SDL_SavePNG`
-- `SDL_SavePNG_IO`
-- `SDL_SetDefaultTextureScaleMode`
-- `SDL_SetGPURenderState`
-- `SDL_SetGPURenderStateFragmentUniforms`
-- `SDL_SetRelativeMouseTransform`
-- `SDL_SetRenderTextureAddressMode`
-- `SDL_SetTexturePalette`
-- `SDL_SetWindowFillDocument`
-- `SDL_SetWindowProgressState`
-- `SDL_SetWindowProgressValue`
-- `SDL_hid_get_properties`
+Current Windows inventory: **998 generated, 14 adapted, 251 pending / 1263**.
+All 37 function additions identified in this Windows upgrade are now connected:
+four in the migration, twenty in [Render/Surface](render-surface-34.md), and thirteen
+in [the remaining SDL 3.4 package](sdl-34-remaining.md). This does not mean full SDL
+coverage or physical-device/platform validation. Retained audio/mouse callbacks
+remain native addresses; ordinary script audio uses copied arrays.
 
 ## Validation
 

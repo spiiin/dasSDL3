@@ -113,7 +113,7 @@ Early-return syntax: [`sdl_try` macro and example](sdl-try.md).
 
 - [Camera](camera.md): 15 raw APIs, borrowed frames and dummy-only validation.
 
-- [Web / Emscripten и HTML-примеры](web-roadmap.md): десять HTML-примеров на SDL Renderer и штатном dasOpenGL проверены в Edge/Firefox; текущий приоритет — P7.
+- [Web / Emscripten и HTML-примеры](web-roadmap.md): десять HTML-примеров на SDL Renderer и штатном dasOpenGL проверены в Edge/Firefox.
 
 - [SDL_net](sdl-net.md): optional SDL_net 3.2.0, 34 raw functions, TCP/UDP and async address resolution.
 
@@ -124,3 +124,9 @@ Early-return syntax: [`sdl_try` macro and example](sdl-try.md).
 - [SDL_sound](sdl-sound.md): optional decoding, PCM ownership, errors and scopes.
 
 - [SDL_shadercross](sdl-shadercross.md): pinned shader compiler, owned reflection, DXC deployment and offline assets.
+
+- [SDL 3.4 Render/Surface](render-surface-34.md): PNG, rotation, texture settings and native GPU Renderer/state.
+
+- [Remaining SDL 3.4 additions](sdl-34-remaining.md): progress/cursor/event diagnostics, planar audio and native no-copy/mouse callbacks.
+
+- [Script accessibility: string constants, channel maps, owned device events](script-accessibility.md).

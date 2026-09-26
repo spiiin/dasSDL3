@@ -8,6 +8,11 @@ def example() : $Result<SdlUnit; SdlError> {
         let stream : SDL_AudioStream? = with_audio_stream(pcm,pcm) |> sdl_use
         stream |> with_audio_stream_lock() |> sdl_use
         stream |> set_audio_stream_input_channel_map(array<int>(1,0)) |> sdl_try
+        var configured <- stream |> audio_stream_input_channel_map() |> sdl_try
+        if(is_some(configured)) {
+            var channels <- move_unwrap(configured)
+            print("Input mapping: {channels[0]}, {channels[1]}\n")
+        }
         stream |> set_audio_stream_gain(0.5) |> sdl_try
         stream |> set_audio_stream_frequency_ratio(1.0) |> sdl_try
         // Two stereo PCM16 frames: (1024,2048), (-1024,-2048).

@@ -74,7 +74,7 @@ retained in arrays/Option across subsequent polls and source mutation, poisoned
 inactive union members, null text, unknown tags and empty queues. Existing raw
 input readers remain covered by `tests/input.das`. The [event queue package](event-queue.md)
 adds batch/wait decoding and tests the six additional drop/user tags in
-`tests/event_queue.das`; the variant now has 53 alternatives.
+`tests/event_queue.das`; that package brought the variant to 53 alternatives.
 
 ## Joystick and gamepad events
 
@@ -125,7 +125,7 @@ Thirteen additional tags are supported, all with `timestamp : uint64`:
 | Tags | Payload fields |
 | --- | --- |
 | `finger_down`, `finger_up`, `finger_motion`, `finger_canceled` | touch_id:uint64, finger_id:uint64, window_id:uint, position/delta:float2, pressure:float |
-| `pen_proximity_in`, `pen_proximity_out` | which:uint, window_id:uint |
+| `pen_proximity_in`, `pen_proximity_out` | which:uint, window_id:uint, pen_state:uint |
 | `pen_motion` | which, window_id, pen_state:uint; position:float2 |
 | `pen_down`, `pen_up` | motion fields plus eraser:bool |
 | `pen_button_down`, `pen_button_up` | motion fields plus button:uint8 |
@@ -139,3 +139,9 @@ pen identities. Sensor data is copied inline, with its independent sensor clock.
 No pointer to the original SDL_Event survives. See [peripheral contracts](peripherals.md)
 and [payload tests](../tests/peripheral_events.das). Hardware event delivery is
 separate from the synthetic decode/queue checks.
+
+## Device lifecycle events (SDL 3.4 audit)
+
+Eleven keyboard/mouse/audio/camera tags bring SdlEvent to 64 alternatives.
+See [payloads and validation limits](script-accessibility.md). IDs are copied
+values and do not own devices. Pen proximity also preserves pen_state.

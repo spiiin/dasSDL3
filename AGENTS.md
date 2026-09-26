@@ -16,7 +16,7 @@ verified; Properties now has 19 generated functions plus copied enumeration; ret
 cleanup callback remains pending. Read docs/properties.md for the pinned numeric
 string-cache/CopyProperties double-free defect and copied-string adapter. Hints/Init adds 12 generated functions, copied getters and subsystem defer scopes;
 see docs/init-hints.md for pending callbacks and string constants. Next
-library-wide queue: P7 Windows function declarations are connected; next declaration section is P8. Synchronization (SDL_mutex.h) now has 28/28 generated functions; see docs/synchronization.md for ownership, same-thread unlock, condition predicates and native-only test workers. Thread/TLS (12/12) and Atomic (15/15) are generated; see docs/thread-atomic.md. Process/LoadSO now has 9/9 + 3/3 raw functions; see docs/process-loadso.md for wait error probing, pipe closure and library address lifetime. System/Power/Locale/Dialog/Tray adds 42 raw functions; P7 now has all 109 active Windows function declarations. See docs/platform-services.md: Dialog tests cover invalid filters/null callback only, not interactive selection; X11 is a Windows stub and other OS branches are unverified. No synchronous Result or script callback bridge for asynchronous dialogs. Web follow-ups remain in docs/web-roadmap.md. Web bootstrap now builds with emsdk 5.0.3: web/build.cmd, 65 SDL raw functions in tools/bindings-web.json, 10 HTML examples, Edge/Firefox tests in tests/web/test_browser.py. See web/README.md; full census/CppGenBind/AOT remain. Examples 05-08 reuse pixel/target/geometry/audio boost adapters; browser audio starts on Start, queues copied PCM, and closes on Stop. OpenGL examples in examples/web/opengl link the existing daScript libDasModuleOpenGL (require opengl); do not add another GL binding. SDL owns window/context, GL owns shaders/programs; see examples/web/opengl/README.md. Uses single-thread wasm32 interpreter + SDL Renderer or SDL GL context; pinned SDL has no WebGPU GPU backend. Camera is 15/15 raw; see docs/camera.md for borrowed frames, permission/null semantics and dummy-only validation. Audio is 56/56 raw; see docs/audio-final-api.md for native-only callbacks, ownership, bounded PCM conversion and pinned postmix/WAV failure-output behavior. Audio stream controls add 12 raw functions (Audio now 56/56); see docs/audio-stream-controls.md for map timing, default-map getters fixed in SDL 3.4.16 (copied boost getters still pending), silent bound-format ignores and same-thread defer unlock. Audio device discovery/open/binding adds 21 raw functions; see docs/audio-devices.md for logical ownership and dummy-only recording. AsyncIO has all 11 raw functions; see docs/asyncio.md for submission/completion separation and buffer ownership. Storage has all 17 raw functions; see
+library-wide queue: P7 Windows function declarations are connected; next declaration section is P8. Synchronization (SDL_mutex.h) now has 28/28 generated functions; see docs/synchronization.md for ownership, same-thread unlock, condition predicates and native-only test workers. Thread/TLS (12/12) and Atomic (15/15) are generated; see docs/thread-atomic.md. Process/LoadSO now has 9/9 + 3/3 raw functions; see docs/process-loadso.md for wait error probing, pipe closure and library address lifetime. System/Power/Locale/Dialog/Tray adds 42 raw functions; P7 now has all 109 active Windows function declarations. See docs/platform-services.md: Dialog tests cover invalid filters/null callback only, not interactive selection; X11 is a Windows stub and other OS branches are unverified. No synchronous Result or script callback bridge for asynchronous dialogs. Web follow-ups remain in docs/web-roadmap.md. Web bootstrap now builds with emsdk 5.0.3: web/build.cmd, 65 SDL raw functions in tools/bindings-web.json, 10 HTML examples, Edge/Firefox tests in tests/web/test_browser.py. See web/README.md; full census/CppGenBind/AOT remain. Examples 05-08 reuse pixel/target/geometry/audio boost adapters; browser audio starts on Start, queues copied PCM, and closes on Stop. OpenGL examples in examples/web/opengl link the existing daScript libDasModuleOpenGL (require opengl); do not add another GL binding. SDL owns window/context, GL owns shaders/programs; see examples/web/opengl/README.md. Uses single-thread wasm32 interpreter + SDL Renderer or SDL GL context; pinned SDL has no WebGPU GPU backend. Camera is 15/15 raw; see docs/camera.md for borrowed frames, permission/null semantics and dummy-only validation. Audio is 56/56 raw; see docs/audio-final-api.md for native-only callbacks, ownership, bounded PCM conversion and pinned postmix/WAV failure-output behavior. Audio stream controls add 12 raw functions (Audio now 56/56); see docs/audio-stream-controls.md for map timing, default-map getters fixed in SDL 3.4.16 (copied boost getters now available; see script-accessibility.md), silent bound-format ignores and same-thread defer unlock. Audio device discovery/open/binding adds 21 raw functions; see docs/audio-devices.md for logical ownership and dummy-only recording. AsyncIO has all 11 raw functions; see docs/asyncio.md for submission/completion separation and buffer ownership. Storage has all 17 raw functions; see
 docs/storage.md for native callback lifetime, readiness/space predicates, bounded
 file buffers and fallible close. Positive user/cloud storage is unverified. IOStream has 46 raw functions, fixed-text
 IOprintf and pending IOvprintf; see docs/iostream.md for partial counts/status,
@@ -315,3 +315,34 @@ not the libclang binding generator. Copy dxcompiler/dxil DLLs for external hosts
 Reflection copies names/arrays; GPU factories return native SDL owners. Single
 Init/Quit session, no shader DSL, renderer plans or owner registry. Basic SPIR-V
 header validation is not full validation. DASSDL3_TEST_SHADERCROSS adds parity/AOT.
+
+SDL 3.4 Render/Surface adds 20 raw functions: Surface now 65/65, Render 101 raw
+plus one fixed-text adapter. See docs/render-surface-34.md and the practical queue
+at the top of docs/full-binding-roadmap.md. GPU Renderer/state are native SDL types,
+not restored render plans. State arrays are copied but GPU resources are borrowed;
+with_gpu_render_state clears selection before destroy and does not restore a previous
+state. PNG IO boost overloads borrow streams (closeio=false). Shadercross is left
+unchanged. Example 86 uses shipped SPIR-V/DXIL, no runtime compiler dependency.
+
+Remaining SDL 3.4 additions are connected: 998 generated / 14 adapted / 251 pending;
+all 37 functions added by the Windows upgrade have bindings. See docs/sdl-34-remaining.md.
+Planar byte/F32 arrays are copied under stream lock with validated format/counts;
+NoCopy is native retained storage/callback only (never script arrays or Context).
+An exact last read can retain the empty track until another read: wait for the
+completion callback before freeing. Mouse transforms are native retained callbacks;
+no script scope bridge. CppGenBind selected string macro constants use native type
+checking, header hashes and metadata parity. String-macro audit is now recorded in docs/script-accessibility.md.
+
+SDL 3.4 planar mono null-plane fast path rejects silence: the safe adapter supplies
+a temporary encoded silent plane (U8/F32 regressions); raw behavior is unchanged.
+NoCopy zero-length submission calls completion synchronously before returning,
+without acquiring the stream lock. Do not assume every completion is asynchronous.
+
+Script accessibility: docs/script-accessibility.md. All 552 active Windows hint/
+property string macros are bound; 13 oldnames markers excluded. SdlEvent now has
+64 alternatives (11 keyboard/mouse/audio/camera device tags) and pen proximity
+preserves pen_state. Stream map getters return Result<Option<array<int>>>; they
+clear stale SDL errors before native NULL/default/OOM disambiguation. SDL_malloc
+sets OOM in the pinned source. Device-map ambiguity remains a separate contract.
+Four previously omitted SDL 3.4 fields are exposed (depth mip/layer, multisample
+alpha-to-coverage, pen proximity flags); field access is not GPU feature testing.

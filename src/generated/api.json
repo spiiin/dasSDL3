@@ -6664,5 +6664,245 @@
     "arguments": [
       "format"
     ]
+  },
+  "SDL_LoadSurface": {
+    "signature": "SDL_Surface *(const char *) __attribute__((cdecl))",
+    "arguments": [
+      "file"
+    ]
+  },
+  "SDL_LoadSurface_IO": {
+    "signature": "SDL_Surface *(SDL_IOStream *, bool) __attribute__((cdecl))",
+    "arguments": [
+      "src",
+      "closeio"
+    ]
+  },
+  "SDL_LoadPNG": {
+    "signature": "SDL_Surface *(const char *) __attribute__((cdecl))",
+    "arguments": [
+      "file"
+    ]
+  },
+  "SDL_LoadPNG_IO": {
+    "signature": "SDL_Surface *(SDL_IOStream *, bool) __attribute__((cdecl))",
+    "arguments": [
+      "src",
+      "closeio"
+    ]
+  },
+  "SDL_SavePNG": {
+    "signature": "bool (SDL_Surface *, const char *) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "file"
+    ]
+  },
+  "SDL_SavePNG_IO": {
+    "signature": "bool (SDL_Surface *, SDL_IOStream *, bool) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "dst",
+      "closeio"
+    ]
+  },
+  "SDL_RotateSurface": {
+    "signature": "SDL_Surface *(SDL_Surface *, float) __attribute__((cdecl))",
+    "arguments": [
+      "surface",
+      "angle"
+    ]
+  },
+  "SDL_CreateGPURenderer": {
+    "signature": "SDL_Renderer *(SDL_GPUDevice *, SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "device",
+      "window"
+    ]
+  },
+  "SDL_GetGPURendererDevice": {
+    "signature": "SDL_GPUDevice *(SDL_Renderer *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer"
+    ]
+  },
+  "SDL_SetTexturePalette": {
+    "signature": "bool (SDL_Texture *, SDL_Palette *) __attribute__((cdecl))",
+    "arguments": [
+      "texture",
+      "palette"
+    ]
+  },
+  "SDL_GetTexturePalette": {
+    "signature": "SDL_Palette *(SDL_Texture *) __attribute__((cdecl))",
+    "arguments": [
+      "texture"
+    ]
+  },
+  "SDL_RenderTexture9GridTiled": {
+    "signature": "bool (SDL_Renderer *, SDL_Texture *, const SDL_FRect *, float, float, float, float, float, const SDL_FRect *, float) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "texture",
+      "srcrect",
+      "left_width",
+      "right_width",
+      "top_height",
+      "bottom_height",
+      "scale",
+      "dstrect",
+      "tileScale"
+    ]
+  },
+  "SDL_SetRenderTextureAddressMode": {
+    "signature": "bool (SDL_Renderer *, SDL_TextureAddressMode, SDL_TextureAddressMode) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "u_mode",
+      "v_mode"
+    ]
+  },
+  "SDL_GetRenderTextureAddressMode": {
+    "signature": "bool (SDL_Renderer *, SDL_TextureAddressMode *, SDL_TextureAddressMode *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "u_mode",
+      "v_mode"
+    ]
+  },
+  "SDL_SetDefaultTextureScaleMode": {
+    "signature": "bool (SDL_Renderer *, SDL_ScaleMode) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "scale_mode"
+    ]
+  },
+  "SDL_GetDefaultTextureScaleMode": {
+    "signature": "bool (SDL_Renderer *, SDL_ScaleMode *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "scale_mode"
+    ]
+  },
+  "SDL_CreateGPURenderState": {
+    "signature": "SDL_GPURenderState *(SDL_Renderer *, const SDL_GPURenderStateCreateInfo *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "createinfo"
+    ]
+  },
+  "SDL_SetGPURenderStateFragmentUniforms": {
+    "signature": "bool (SDL_GPURenderState *, Uint32, const void *, Uint32) __attribute__((cdecl))",
+    "arguments": [
+      "state",
+      "slot_index",
+      "data",
+      "length"
+    ]
+  },
+  "SDL_SetGPURenderState": {
+    "signature": "bool (SDL_Renderer *, SDL_GPURenderState *) __attribute__((cdecl))",
+    "arguments": [
+      "renderer",
+      "state"
+    ]
+  },
+  "SDL_DestroyGPURenderState": {
+    "signature": "void (SDL_GPURenderState *) __attribute__((cdecl))",
+    "arguments": [
+      "state"
+    ]
+  },
+  "SDL_CreateAnimatedCursor": {
+    "signature": "SDL_Cursor *(SDL_CursorFrameInfo *, int, int, int) __attribute__((cdecl))",
+    "arguments": [
+      "frames",
+      "frame_count",
+      "hot_x",
+      "hot_y"
+    ]
+  },
+  "SDL_GetEventDescription": {
+    "signature": "int (const SDL_Event *, char *, int) __attribute__((cdecl))",
+    "arguments": [
+      "event",
+      "buf",
+      "buflen"
+    ]
+  },
+  "SDL_GetPenDeviceType": {
+    "signature": "SDL_PenDeviceType (SDL_PenID) __attribute__((cdecl))",
+    "arguments": [
+      "instance_id"
+    ]
+  },
+  "SDL_GetSystemPageSize": {
+    "signature": "int (void) __attribute__((cdecl))",
+    "arguments": []
+  },
+  "SDL_GetWindowProgressState": {
+    "signature": "SDL_ProgressState (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_GetWindowProgressValue": {
+    "signature": "float (SDL_Window *) __attribute__((cdecl))",
+    "arguments": [
+      "window"
+    ]
+  },
+  "SDL_PutAudioStreamDataNoCopy": {
+    "signature": "bool (SDL_AudioStream *, const void *, int, SDL_AudioStreamDataCompleteCallback, void *) __attribute__((cdecl))",
+    "arguments": [
+      "stream",
+      "buf",
+      "len",
+      "callback",
+      "userdata"
+    ]
+  },
+  "SDL_PutAudioStreamPlanarData": {
+    "signature": "bool (SDL_AudioStream *, const void *const *, int, int) __attribute__((cdecl))",
+    "arguments": [
+      "stream",
+      "channel_buffers",
+      "num_channels",
+      "num_samples"
+    ]
+  },
+  "SDL_SetRelativeMouseTransform": {
+    "signature": "bool (SDL_MouseMotionTransformCallback, void *) __attribute__((cdecl))",
+    "arguments": [
+      "callback",
+      "userdata"
+    ]
+  },
+  "SDL_SetWindowFillDocument": {
+    "signature": "bool (SDL_Window *, bool) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "fill"
+    ]
+  },
+  "SDL_SetWindowProgressState": {
+    "signature": "bool (SDL_Window *, SDL_ProgressState) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "state"
+    ]
+  },
+  "SDL_SetWindowProgressValue": {
+    "signature": "bool (SDL_Window *, float) __attribute__((cdecl))",
+    "arguments": [
+      "window",
+      "value"
+    ]
+  },
+  "SDL_hid_get_properties": {
+    "signature": "SDL_PropertiesID (SDL_hid_device *) __attribute__((cdecl))",
+    "arguments": [
+      "dev"
+    ]
   }
 }

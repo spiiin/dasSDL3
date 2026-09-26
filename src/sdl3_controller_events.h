@@ -105,3 +105,31 @@ inline bool SDL_ReadSensorEvent(const SDL_Event & event,SDL_SensorEvent & out) {
     if (event.type!=SDL_EVENT_SENSOR_UPDATE)return false;
     out=event.sensor;return true;
 }
+
+inline bool SDL_ReadKeyboardDeviceEvent(const SDL_Event & event,SDL_KeyboardDeviceEvent & out) {
+    out={};
+    if (event.type != SDL_EVENT_KEYBOARD_ADDED && event.type != SDL_EVENT_KEYBOARD_REMOVED) return false;
+    out=event.kdevice;
+    return true;
+}
+
+inline bool SDL_ReadMouseDeviceEvent(const SDL_Event & event,SDL_MouseDeviceEvent & out) {
+    out={};
+    if (event.type != SDL_EVENT_MOUSE_ADDED && event.type != SDL_EVENT_MOUSE_REMOVED) return false;
+    out=event.mdevice;
+    return true;
+}
+
+inline bool SDL_ReadAudioDeviceEvent(const SDL_Event & event,SDL_AudioDeviceEvent & out) {
+    out={};
+    if (event.type != SDL_EVENT_AUDIO_DEVICE_ADDED && event.type != SDL_EVENT_AUDIO_DEVICE_REMOVED && event.type != SDL_EVENT_AUDIO_DEVICE_FORMAT_CHANGED) return false;
+    out=event.adevice;
+    return true;
+}
+
+inline bool SDL_ReadCameraDeviceEvent(const SDL_Event & event,SDL_CameraDeviceEvent & out) {
+    out={};
+    if (event.type != SDL_EVENT_CAMERA_DEVICE_ADDED && event.type != SDL_EVENT_CAMERA_DEVICE_REMOVED && event.type != SDL_EVENT_CAMERA_DEVICE_APPROVED && event.type != SDL_EVENT_CAMERA_DEVICE_DENIED) return false;
+    out=event.cdevice;
+    return true;
+}

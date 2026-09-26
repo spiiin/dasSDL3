@@ -40,6 +40,7 @@ addAnnotation(new DummyTypeAnnotation("SDL_SharedObject", "SDL_SharedObject", 1,
 addAnnotation(new DummyTypeAnnotation("SDL_Tray", "SDL_Tray", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_TrayMenu", "SDL_TrayMenu", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_TrayEntry", "SDL_TrayEntry", 1, 1));
+addAnnotation(new DummyTypeAnnotation("SDL_GPURenderState", "SDL_GPURenderState", 1, 1));
 addEnumeration(new Enumeration_SDL_AsyncIOTaskType());
 addEnumeration(new Enumeration_SDL_AsyncIOResult());
 addAnnotation(new SDL_AsyncIOOutcomeAnnotation(lib));
@@ -75,6 +76,7 @@ addEnumeration(new Enumeration_SDL_SystemTheme());
 addAnnotation(new SDL_DisplayModeAnnotation(lib));
 addEnumeration(new Enumeration_SDL_DisplayOrientation());
 addEnumeration(new Enumeration_SDL_FlashOperation());
+addEnumeration(new Enumeration_SDL_ProgressState());
 addEnumeration(new Enumeration_SDL_HitTestResult());
 addAnnotation(new SDL_DialogFileFilterAnnotation(lib));
 addEnumeration(new Enumeration_SDL_FileDialogType());
@@ -96,11 +98,15 @@ addEnumeration(new Enumeration_SDL_Scancode());
 addEnumeration(new Enumeration_SDL_TextInputType());
 addEnumeration(new Enumeration_SDL_Capitalization());
 addEnumeration(new Enumeration_SDL_SystemCursor());
+addAnnotation(new SDL_CursorFrameInfoAnnotation(lib));
 addEnumeration(new Enumeration_SDL_TouchDeviceType());
 addAnnotation(new SDL_FingerAnnotation(lib));
 addEnumeration(new Enumeration_SDL_PenAxis());
+addEnumeration(new Enumeration_SDL_PenDeviceType());
+addAnnotation(new SDL_KeyboardDeviceEventAnnotation(lib));
 addAnnotation(new SDL_KeyboardEventAnnotation(lib));
 addAnnotation(new SDL_TextEditingCandidatesEventAnnotation(lib));
+addAnnotation(new SDL_MouseDeviceEventAnnotation(lib));
 addAnnotation(new SDL_MouseMotionEventAnnotation(lib));
 addAnnotation(new SDL_MouseButtonEventAnnotation(lib));
 addAnnotation(new SDL_MouseWheelEventAnnotation(lib));
@@ -115,6 +121,8 @@ addAnnotation(new SDL_GamepadButtonEventAnnotation(lib));
 addAnnotation(new SDL_GamepadDeviceEventAnnotation(lib));
 addAnnotation(new SDL_GamepadTouchpadEventAnnotation(lib));
 addAnnotation(new SDL_GamepadSensorEventAnnotation(lib));
+addAnnotation(new SDL_AudioDeviceEventAnnotation(lib));
+addAnnotation(new SDL_CameraDeviceEventAnnotation(lib));
 addAnnotation(new SDL_TouchFingerEventAnnotation(lib));
 addAnnotation(new SDL_PenProximityEventAnnotation(lib));
 addAnnotation(new SDL_PenMotionEventAnnotation(lib));
@@ -205,7 +213,9 @@ addEnumeration(new Enumeration_SDL_LogPriority());
 addEnumeration(new Enumeration_SDL_ProcessIO());
 addAnnotation(new SDL_VertexAnnotation(lib));
 addEnumeration(new Enumeration_SDL_TextureAccess());
+addEnumeration(new Enumeration_SDL_TextureAddressMode());
 addEnumeration(new Enumeration_SDL_RendererLogicalPresentation());
+addAnnotation(new SDL_GPURenderStateCreateInfoAnnotation(lib));
 addAnnotation(new SDL_StorageInterfaceAnnotation(lib));
 addEnumeration(new Enumeration_SDL_Sandbox());
 addAnnotation(new SDL_DateTimeAnnotation(lib));
@@ -1533,6 +1543,560 @@ static_assert(static_cast<uint32_t>(SDL_TRAYENTRY_DISABLED) == static_cast<uint3
 addConstant(*this, "SDL_TRAYENTRY_DISABLED", static_cast<uint32_t>(0x80000000ULL));
 static_assert(static_cast<uint32_t>(SDL_TRAYENTRY_CHECKED) == static_cast<uint32_t>(0x40000000ULL));
 addConstant(*this, "SDL_TRAYENTRY_CHECKED", static_cast<uint32_t>(0x40000000ULL));
+static_assert(static_cast<uint64_t>(SDL_WINDOW_FILL_DOCUMENT) == static_cast<uint64_t>(0x200000ULL));
+addConstant(*this, "SDL_WINDOW_FILL_DOCUMENT", static_cast<uint64_t>(0x200000ULL));
+addConstant(*this, "SDL_PROP_HIDAPI_LIBUSB_DEVICE_HANDLE_POINTER", static_cast<const char *>(SDL_PROP_HIDAPI_LIBUSB_DEVICE_HANDLE_POINTER));
+addConstant(*this, "SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED", static_cast<const char *>(SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED));
+addConstant(*this, "SDL_HINT_ANDROID_AAUDIO_INPUT_PRESET", static_cast<const char *>(SDL_HINT_ANDROID_AAUDIO_INPUT_PRESET));
+addConstant(*this, "SDL_HINT_ANDROID_ALLOW_RECREATE_ACTIVITY", static_cast<const char *>(SDL_HINT_ANDROID_ALLOW_RECREATE_ACTIVITY));
+addConstant(*this, "SDL_HINT_ANDROID_BLOCK_ON_PAUSE", static_cast<const char *>(SDL_HINT_ANDROID_BLOCK_ON_PAUSE));
+addConstant(*this, "SDL_HINT_ANDROID_LOW_LATENCY_AUDIO", static_cast<const char *>(SDL_HINT_ANDROID_LOW_LATENCY_AUDIO));
+addConstant(*this, "SDL_HINT_ANDROID_TRAP_BACK_BUTTON", static_cast<const char *>(SDL_HINT_ANDROID_TRAP_BACK_BUTTON));
+addConstant(*this, "SDL_HINT_APPLE_TV_CONTROLLER_UI_EVENTS", static_cast<const char *>(SDL_HINT_APPLE_TV_CONTROLLER_UI_EVENTS));
+addConstant(*this, "SDL_HINT_APPLE_TV_REMOTE_ALLOW_ROTATION", static_cast<const char *>(SDL_HINT_APPLE_TV_REMOTE_ALLOW_ROTATION));
+addConstant(*this, "SDL_HINT_APP_ID", static_cast<const char *>(SDL_HINT_APP_ID));
+addConstant(*this, "SDL_HINT_APP_NAME", static_cast<const char *>(SDL_HINT_APP_NAME));
+addConstant(*this, "SDL_HINT_ASSERT", static_cast<const char *>(SDL_HINT_ASSERT));
+addConstant(*this, "SDL_HINT_AUDIO_ALSA_DEFAULT_DEVICE", static_cast<const char *>(SDL_HINT_AUDIO_ALSA_DEFAULT_DEVICE));
+addConstant(*this, "SDL_HINT_AUDIO_ALSA_DEFAULT_PLAYBACK_DEVICE", static_cast<const char *>(SDL_HINT_AUDIO_ALSA_DEFAULT_PLAYBACK_DEVICE));
+addConstant(*this, "SDL_HINT_AUDIO_ALSA_DEFAULT_RECORDING_DEVICE", static_cast<const char *>(SDL_HINT_AUDIO_ALSA_DEFAULT_RECORDING_DEVICE));
+addConstant(*this, "SDL_HINT_AUDIO_CATEGORY", static_cast<const char *>(SDL_HINT_AUDIO_CATEGORY));
+addConstant(*this, "SDL_HINT_AUDIO_CHANNELS", static_cast<const char *>(SDL_HINT_AUDIO_CHANNELS));
+addConstant(*this, "SDL_HINT_AUDIO_DEVICE_APP_ICON_NAME", static_cast<const char *>(SDL_HINT_AUDIO_DEVICE_APP_ICON_NAME));
+addConstant(*this, "SDL_HINT_AUDIO_DEVICE_RAW_STREAM", static_cast<const char *>(SDL_HINT_AUDIO_DEVICE_RAW_STREAM));
+addConstant(*this, "SDL_HINT_AUDIO_DEVICE_SAMPLE_FRAMES", static_cast<const char *>(SDL_HINT_AUDIO_DEVICE_SAMPLE_FRAMES));
+addConstant(*this, "SDL_HINT_AUDIO_DEVICE_STREAM_NAME", static_cast<const char *>(SDL_HINT_AUDIO_DEVICE_STREAM_NAME));
+addConstant(*this, "SDL_HINT_AUDIO_DEVICE_STREAM_ROLE", static_cast<const char *>(SDL_HINT_AUDIO_DEVICE_STREAM_ROLE));
+addConstant(*this, "SDL_HINT_AUDIO_DISK_INPUT_FILE", static_cast<const char *>(SDL_HINT_AUDIO_DISK_INPUT_FILE));
+addConstant(*this, "SDL_HINT_AUDIO_DISK_OUTPUT_FILE", static_cast<const char *>(SDL_HINT_AUDIO_DISK_OUTPUT_FILE));
+addConstant(*this, "SDL_HINT_AUDIO_DISK_TIMESCALE", static_cast<const char *>(SDL_HINT_AUDIO_DISK_TIMESCALE));
+addConstant(*this, "SDL_HINT_AUDIO_DRIVER", static_cast<const char *>(SDL_HINT_AUDIO_DRIVER));
+addConstant(*this, "SDL_HINT_AUDIO_DUMMY_TIMESCALE", static_cast<const char *>(SDL_HINT_AUDIO_DUMMY_TIMESCALE));
+addConstant(*this, "SDL_HINT_AUDIO_FORMAT", static_cast<const char *>(SDL_HINT_AUDIO_FORMAT));
+addConstant(*this, "SDL_HINT_AUDIO_FREQUENCY", static_cast<const char *>(SDL_HINT_AUDIO_FREQUENCY));
+addConstant(*this, "SDL_HINT_AUDIO_INCLUDE_MONITORS", static_cast<const char *>(SDL_HINT_AUDIO_INCLUDE_MONITORS));
+addConstant(*this, "SDL_HINT_AUTO_UPDATE_JOYSTICKS", static_cast<const char *>(SDL_HINT_AUTO_UPDATE_JOYSTICKS));
+addConstant(*this, "SDL_HINT_AUTO_UPDATE_SENSORS", static_cast<const char *>(SDL_HINT_AUTO_UPDATE_SENSORS));
+addConstant(*this, "SDL_HINT_BMP_SAVE_LEGACY_FORMAT", static_cast<const char *>(SDL_HINT_BMP_SAVE_LEGACY_FORMAT));
+addConstant(*this, "SDL_HINT_CAMERA_DRIVER", static_cast<const char *>(SDL_HINT_CAMERA_DRIVER));
+addConstant(*this, "SDL_HINT_CPU_FEATURE_MASK", static_cast<const char *>(SDL_HINT_CPU_FEATURE_MASK));
+addConstant(*this, "SDL_HINT_DISPLAY_USABLE_BOUNDS", static_cast<const char *>(SDL_HINT_DISPLAY_USABLE_BOUNDS));
+addConstant(*this, "SDL_HINT_EGL_LIBRARY", static_cast<const char *>(SDL_HINT_EGL_LIBRARY));
+addConstant(*this, "SDL_HINT_EMSCRIPTEN_ASYNCIFY", static_cast<const char *>(SDL_HINT_EMSCRIPTEN_ASYNCIFY));
+addConstant(*this, "SDL_HINT_EMSCRIPTEN_CANVAS_SELECTOR", static_cast<const char *>(SDL_HINT_EMSCRIPTEN_CANVAS_SELECTOR));
+addConstant(*this, "SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT", static_cast<const char *>(SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT));
+addConstant(*this, "SDL_HINT_ENABLE_SCREEN_KEYBOARD", static_cast<const char *>(SDL_HINT_ENABLE_SCREEN_KEYBOARD));
+addConstant(*this, "SDL_HINT_ENABLE_STEAM_SCREEN_KEYBOARD", static_cast<const char *>(SDL_HINT_ENABLE_STEAM_SCREEN_KEYBOARD));
+addConstant(*this, "SDL_HINT_EVDEV_DEVICES", static_cast<const char *>(SDL_HINT_EVDEV_DEVICES));
+addConstant(*this, "SDL_HINT_EVENT_LOGGING", static_cast<const char *>(SDL_HINT_EVENT_LOGGING));
+addConstant(*this, "SDL_HINT_FILE_DIALOG_DRIVER", static_cast<const char *>(SDL_HINT_FILE_DIALOG_DRIVER));
+addConstant(*this, "SDL_HINT_FORCE_RAISEWINDOW", static_cast<const char *>(SDL_HINT_FORCE_RAISEWINDOW));
+addConstant(*this, "SDL_HINT_FRAMEBUFFER_ACCELERATION", static_cast<const char *>(SDL_HINT_FRAMEBUFFER_ACCELERATION));
+addConstant(*this, "SDL_HINT_GAMECONTROLLERCONFIG", static_cast<const char *>(SDL_HINT_GAMECONTROLLERCONFIG));
+addConstant(*this, "SDL_HINT_GAMECONTROLLERCONFIG_FILE", static_cast<const char *>(SDL_HINT_GAMECONTROLLERCONFIG_FILE));
+addConstant(*this, "SDL_HINT_GAMECONTROLLERTYPE", static_cast<const char *>(SDL_HINT_GAMECONTROLLERTYPE));
+addConstant(*this, "SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES", static_cast<const char *>(SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES));
+addConstant(*this, "SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT", static_cast<const char *>(SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT));
+addConstant(*this, "SDL_HINT_GAMECONTROLLER_SENSOR_FUSION", static_cast<const char *>(SDL_HINT_GAMECONTROLLER_SENSOR_FUSION));
+addConstant(*this, "SDL_HINT_GDK_TEXTINPUT_DEFAULT_TEXT", static_cast<const char *>(SDL_HINT_GDK_TEXTINPUT_DEFAULT_TEXT));
+addConstant(*this, "SDL_HINT_GDK_TEXTINPUT_DESCRIPTION", static_cast<const char *>(SDL_HINT_GDK_TEXTINPUT_DESCRIPTION));
+addConstant(*this, "SDL_HINT_GDK_TEXTINPUT_MAX_LENGTH", static_cast<const char *>(SDL_HINT_GDK_TEXTINPUT_MAX_LENGTH));
+addConstant(*this, "SDL_HINT_GDK_TEXTINPUT_SCOPE", static_cast<const char *>(SDL_HINT_GDK_TEXTINPUT_SCOPE));
+addConstant(*this, "SDL_HINT_GDK_TEXTINPUT_TITLE", static_cast<const char *>(SDL_HINT_GDK_TEXTINPUT_TITLE));
+addConstant(*this, "SDL_HINT_GPU_DRIVER", static_cast<const char *>(SDL_HINT_GPU_DRIVER));
+addConstant(*this, "SDL_HINT_HIDAPI_ENUMERATE_ONLY_CONTROLLERS", static_cast<const char *>(SDL_HINT_HIDAPI_ENUMERATE_ONLY_CONTROLLERS));
+addConstant(*this, "SDL_HINT_HIDAPI_IGNORE_DEVICES", static_cast<const char *>(SDL_HINT_HIDAPI_IGNORE_DEVICES));
+addConstant(*this, "SDL_HINT_HIDAPI_LIBUSB", static_cast<const char *>(SDL_HINT_HIDAPI_LIBUSB));
+addConstant(*this, "SDL_HINT_HIDAPI_LIBUSB_GAMECUBE", static_cast<const char *>(SDL_HINT_HIDAPI_LIBUSB_GAMECUBE));
+addConstant(*this, "SDL_HINT_HIDAPI_LIBUSB_WHITELIST", static_cast<const char *>(SDL_HINT_HIDAPI_LIBUSB_WHITELIST));
+addConstant(*this, "SDL_HINT_HIDAPI_UDEV", static_cast<const char *>(SDL_HINT_HIDAPI_UDEV));
+addConstant(*this, "SDL_HINT_IME_IMPLEMENTED_UI", static_cast<const char *>(SDL_HINT_IME_IMPLEMENTED_UI));
+addConstant(*this, "SDL_HINT_INVALID_PARAM_CHECKS", static_cast<const char *>(SDL_HINT_INVALID_PARAM_CHECKS));
+addConstant(*this, "SDL_HINT_IOS_HIDE_HOME_INDICATOR", static_cast<const char *>(SDL_HINT_IOS_HIDE_HOME_INDICATOR));
+addConstant(*this, "SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS", static_cast<const char *>(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS));
+addConstant(*this, "SDL_HINT_JOYSTICK_ARCADESTICK_DEVICES", static_cast<const char *>(SDL_HINT_JOYSTICK_ARCADESTICK_DEVICES));
+addConstant(*this, "SDL_HINT_JOYSTICK_ARCADESTICK_DEVICES_EXCLUDED", static_cast<const char *>(SDL_HINT_JOYSTICK_ARCADESTICK_DEVICES_EXCLUDED));
+addConstant(*this, "SDL_HINT_JOYSTICK_BLACKLIST_DEVICES", static_cast<const char *>(SDL_HINT_JOYSTICK_BLACKLIST_DEVICES));
+addConstant(*this, "SDL_HINT_JOYSTICK_BLACKLIST_DEVICES_EXCLUDED", static_cast<const char *>(SDL_HINT_JOYSTICK_BLACKLIST_DEVICES_EXCLUDED));
+addConstant(*this, "SDL_HINT_JOYSTICK_DEVICE", static_cast<const char *>(SDL_HINT_JOYSTICK_DEVICE));
+addConstant(*this, "SDL_HINT_JOYSTICK_DIRECTINPUT", static_cast<const char *>(SDL_HINT_JOYSTICK_DIRECTINPUT));
+addConstant(*this, "SDL_HINT_JOYSTICK_ENHANCED_REPORTS", static_cast<const char *>(SDL_HINT_JOYSTICK_ENHANCED_REPORTS));
+addConstant(*this, "SDL_HINT_JOYSTICK_FLIGHTSTICK_DEVICES", static_cast<const char *>(SDL_HINT_JOYSTICK_FLIGHTSTICK_DEVICES));
+addConstant(*this, "SDL_HINT_JOYSTICK_FLIGHTSTICK_DEVICES_EXCLUDED", static_cast<const char *>(SDL_HINT_JOYSTICK_FLIGHTSTICK_DEVICES_EXCLUDED));
+addConstant(*this, "SDL_HINT_JOYSTICK_GAMECUBE_DEVICES", static_cast<const char *>(SDL_HINT_JOYSTICK_GAMECUBE_DEVICES));
+addConstant(*this, "SDL_HINT_JOYSTICK_GAMECUBE_DEVICES_EXCLUDED", static_cast<const char *>(SDL_HINT_JOYSTICK_GAMECUBE_DEVICES_EXCLUDED));
+addConstant(*this, "SDL_HINT_JOYSTICK_GAMEINPUT", static_cast<const char *>(SDL_HINT_JOYSTICK_GAMEINPUT));
+addConstant(*this, "SDL_HINT_JOYSTICK_GAMEINPUT_RAW", static_cast<const char *>(SDL_HINT_JOYSTICK_GAMEINPUT_RAW));
+addConstant(*this, "SDL_HINT_JOYSTICK_HAPTIC_AXES", static_cast<const char *>(SDL_HINT_JOYSTICK_HAPTIC_AXES));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_8BITDO", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_8BITDO));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_COMBINE_JOY_CONS", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_COMBINE_JOY_CONS));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_FLYDIGI", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_FLYDIGI));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE_RUMBLE_BRAKE", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE_RUMBLE_BRAKE));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_GIP", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_GIP));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_GIP_RESET_FOR_METADATA", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_GIP_RESET_FOR_METADATA));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_JOYCON_HOME_LED", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_JOYCON_HOME_LED));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_JOY_CONS", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_JOY_CONS));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_LG4FF", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_LG4FF));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_LUNA", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_LUNA));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_NINTENDO_CLASSIC", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_NINTENDO_CLASSIC));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_PS3", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_PS3));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_PS3_SIXAXIS_DRIVER", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_PS3_SIXAXIS_DRIVER));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_PS4", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_PS4));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_PS4_REPORT_INTERVAL", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_PS4_REPORT_INTERVAL));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_PS5", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_PS5));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_PS5_PLAYER_LED", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_PS5_PLAYER_LED));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_SHIELD", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_SHIELD));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_SINPUT", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_SINPUT));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_STADIA", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_STADIA));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_STEAM", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_STEAM));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_STEAMDECK", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_STEAMDECK));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_STEAM_HOME_LED", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_STEAM_HOME_LED));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_STEAM_HORI", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_STEAM_HORI));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_SWITCH", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_SWITCH));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_SWITCH2", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_SWITCH2));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_SWITCH_HOME_LED", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_SWITCH_HOME_LED));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_SWITCH_PLAYER_LED", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_SWITCH_PLAYER_LED));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_VERTICAL_JOY_CONS", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_VERTICAL_JOY_CONS));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_WII", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_WII));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_WII_PLAYER_LED", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_WII_PLAYER_LED));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_XBOX", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_XBOX));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_XBOX_360", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_XBOX_360));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_PLAYER_LED", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_PLAYER_LED));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_WIRELESS", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_WIRELESS));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE_HOME_LED", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE_HOME_LED));
+addConstant(*this, "SDL_HINT_JOYSTICK_HIDAPI_ZUIKI", static_cast<const char *>(SDL_HINT_JOYSTICK_HIDAPI_ZUIKI));
+addConstant(*this, "SDL_HINT_JOYSTICK_IOKIT", static_cast<const char *>(SDL_HINT_JOYSTICK_IOKIT));
+addConstant(*this, "SDL_HINT_JOYSTICK_LINUX_CLASSIC", static_cast<const char *>(SDL_HINT_JOYSTICK_LINUX_CLASSIC));
+addConstant(*this, "SDL_HINT_JOYSTICK_LINUX_DEADZONES", static_cast<const char *>(SDL_HINT_JOYSTICK_LINUX_DEADZONES));
+addConstant(*this, "SDL_HINT_JOYSTICK_LINUX_DIGITAL_HATS", static_cast<const char *>(SDL_HINT_JOYSTICK_LINUX_DIGITAL_HATS));
+addConstant(*this, "SDL_HINT_JOYSTICK_LINUX_HAT_DEADZONES", static_cast<const char *>(SDL_HINT_JOYSTICK_LINUX_HAT_DEADZONES));
+addConstant(*this, "SDL_HINT_JOYSTICK_MFI", static_cast<const char *>(SDL_HINT_JOYSTICK_MFI));
+addConstant(*this, "SDL_HINT_JOYSTICK_RAWINPUT", static_cast<const char *>(SDL_HINT_JOYSTICK_RAWINPUT));
+addConstant(*this, "SDL_HINT_JOYSTICK_RAWINPUT_CORRELATE_XINPUT", static_cast<const char *>(SDL_HINT_JOYSTICK_RAWINPUT_CORRELATE_XINPUT));
+addConstant(*this, "SDL_HINT_JOYSTICK_ROG_CHAKRAM", static_cast<const char *>(SDL_HINT_JOYSTICK_ROG_CHAKRAM));
+addConstant(*this, "SDL_HINT_JOYSTICK_THREAD", static_cast<const char *>(SDL_HINT_JOYSTICK_THREAD));
+addConstant(*this, "SDL_HINT_JOYSTICK_THROTTLE_DEVICES", static_cast<const char *>(SDL_HINT_JOYSTICK_THROTTLE_DEVICES));
+addConstant(*this, "SDL_HINT_JOYSTICK_THROTTLE_DEVICES_EXCLUDED", static_cast<const char *>(SDL_HINT_JOYSTICK_THROTTLE_DEVICES_EXCLUDED));
+addConstant(*this, "SDL_HINT_JOYSTICK_WGI", static_cast<const char *>(SDL_HINT_JOYSTICK_WGI));
+addConstant(*this, "SDL_HINT_JOYSTICK_WHEEL_DEVICES", static_cast<const char *>(SDL_HINT_JOYSTICK_WHEEL_DEVICES));
+addConstant(*this, "SDL_HINT_JOYSTICK_WHEEL_DEVICES_EXCLUDED", static_cast<const char *>(SDL_HINT_JOYSTICK_WHEEL_DEVICES_EXCLUDED));
+addConstant(*this, "SDL_HINT_JOYSTICK_ZERO_CENTERED_DEVICES", static_cast<const char *>(SDL_HINT_JOYSTICK_ZERO_CENTERED_DEVICES));
+addConstant(*this, "SDL_HINT_KEYCODE_OPTIONS", static_cast<const char *>(SDL_HINT_KEYCODE_OPTIONS));
+addConstant(*this, "SDL_HINT_KMSDRM_ATOMIC", static_cast<const char *>(SDL_HINT_KMSDRM_ATOMIC));
+addConstant(*this, "SDL_HINT_KMSDRM_DEVICE_INDEX", static_cast<const char *>(SDL_HINT_KMSDRM_DEVICE_INDEX));
+addConstant(*this, "SDL_HINT_KMSDRM_REQUIRE_DRM_MASTER", static_cast<const char *>(SDL_HINT_KMSDRM_REQUIRE_DRM_MASTER));
+addConstant(*this, "SDL_HINT_LOGGING", static_cast<const char *>(SDL_HINT_LOGGING));
+addConstant(*this, "SDL_HINT_MAC_BACKGROUND_APP", static_cast<const char *>(SDL_HINT_MAC_BACKGROUND_APP));
+addConstant(*this, "SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK", static_cast<const char *>(SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK));
+addConstant(*this, "SDL_HINT_MAC_OPENGL_ASYNC_DISPATCH", static_cast<const char *>(SDL_HINT_MAC_OPENGL_ASYNC_DISPATCH));
+addConstant(*this, "SDL_HINT_MAC_OPTION_AS_ALT", static_cast<const char *>(SDL_HINT_MAC_OPTION_AS_ALT));
+addConstant(*this, "SDL_HINT_MAC_PRESS_AND_HOLD", static_cast<const char *>(SDL_HINT_MAC_PRESS_AND_HOLD));
+addConstant(*this, "SDL_HINT_MAC_SCROLL_MOMENTUM", static_cast<const char *>(SDL_HINT_MAC_SCROLL_MOMENTUM));
+addConstant(*this, "SDL_HINT_MAIN_CALLBACK_RATE", static_cast<const char *>(SDL_HINT_MAIN_CALLBACK_RATE));
+addConstant(*this, "SDL_HINT_MOUSE_AUTO_CAPTURE", static_cast<const char *>(SDL_HINT_MOUSE_AUTO_CAPTURE));
+addConstant(*this, "SDL_HINT_MOUSE_DEFAULT_SYSTEM_CURSOR", static_cast<const char *>(SDL_HINT_MOUSE_DEFAULT_SYSTEM_CURSOR));
+addConstant(*this, "SDL_HINT_MOUSE_DOUBLE_CLICK_RADIUS", static_cast<const char *>(SDL_HINT_MOUSE_DOUBLE_CLICK_RADIUS));
+addConstant(*this, "SDL_HINT_MOUSE_DOUBLE_CLICK_TIME", static_cast<const char *>(SDL_HINT_MOUSE_DOUBLE_CLICK_TIME));
+addConstant(*this, "SDL_HINT_MOUSE_DPI_SCALE_CURSORS", static_cast<const char *>(SDL_HINT_MOUSE_DPI_SCALE_CURSORS));
+addConstant(*this, "SDL_HINT_MOUSE_EMULATE_WARP_WITH_RELATIVE", static_cast<const char *>(SDL_HINT_MOUSE_EMULATE_WARP_WITH_RELATIVE));
+addConstant(*this, "SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH", static_cast<const char *>(SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH));
+addConstant(*this, "SDL_HINT_MOUSE_NORMAL_SPEED_SCALE", static_cast<const char *>(SDL_HINT_MOUSE_NORMAL_SPEED_SCALE));
+addConstant(*this, "SDL_HINT_MOUSE_RELATIVE_CURSOR_VISIBLE", static_cast<const char *>(SDL_HINT_MOUSE_RELATIVE_CURSOR_VISIBLE));
+addConstant(*this, "SDL_HINT_MOUSE_RELATIVE_MODE_CENTER", static_cast<const char *>(SDL_HINT_MOUSE_RELATIVE_MODE_CENTER));
+addConstant(*this, "SDL_HINT_MOUSE_RELATIVE_SPEED_SCALE", static_cast<const char *>(SDL_HINT_MOUSE_RELATIVE_SPEED_SCALE));
+addConstant(*this, "SDL_HINT_MOUSE_RELATIVE_SYSTEM_SCALE", static_cast<const char *>(SDL_HINT_MOUSE_RELATIVE_SYSTEM_SCALE));
+addConstant(*this, "SDL_HINT_MOUSE_RELATIVE_WARP_MOTION", static_cast<const char *>(SDL_HINT_MOUSE_RELATIVE_WARP_MOTION));
+addConstant(*this, "SDL_HINT_MOUSE_TOUCH_EVENTS", static_cast<const char *>(SDL_HINT_MOUSE_TOUCH_EVENTS));
+addConstant(*this, "SDL_HINT_MUTE_CONSOLE_KEYBOARD", static_cast<const char *>(SDL_HINT_MUTE_CONSOLE_KEYBOARD));
+addConstant(*this, "SDL_HINT_NO_SIGNAL_HANDLERS", static_cast<const char *>(SDL_HINT_NO_SIGNAL_HANDLERS));
+addConstant(*this, "SDL_HINT_OPENGL_ES_DRIVER", static_cast<const char *>(SDL_HINT_OPENGL_ES_DRIVER));
+addConstant(*this, "SDL_HINT_OPENGL_FORCE_SRGB_FRAMEBUFFER", static_cast<const char *>(SDL_HINT_OPENGL_FORCE_SRGB_FRAMEBUFFER));
+addConstant(*this, "SDL_HINT_OPENGL_LIBRARY", static_cast<const char *>(SDL_HINT_OPENGL_LIBRARY));
+addConstant(*this, "SDL_HINT_OPENVR_LIBRARY", static_cast<const char *>(SDL_HINT_OPENVR_LIBRARY));
+addConstant(*this, "SDL_HINT_ORIENTATIONS", static_cast<const char *>(SDL_HINT_ORIENTATIONS));
+addConstant(*this, "SDL_HINT_PEN_MOUSE_EVENTS", static_cast<const char *>(SDL_HINT_PEN_MOUSE_EVENTS));
+addConstant(*this, "SDL_HINT_PEN_TOUCH_EVENTS", static_cast<const char *>(SDL_HINT_PEN_TOUCH_EVENTS));
+addConstant(*this, "SDL_HINT_POLL_SENTINEL", static_cast<const char *>(SDL_HINT_POLL_SENTINEL));
+addConstant(*this, "SDL_HINT_PREFERRED_LOCALES", static_cast<const char *>(SDL_HINT_PREFERRED_LOCALES));
+addConstant(*this, "SDL_HINT_PS2_GS_HEIGHT", static_cast<const char *>(SDL_HINT_PS2_GS_HEIGHT));
+addConstant(*this, "SDL_HINT_PS2_GS_MODE", static_cast<const char *>(SDL_HINT_PS2_GS_MODE));
+addConstant(*this, "SDL_HINT_PS2_GS_PROGRESSIVE", static_cast<const char *>(SDL_HINT_PS2_GS_PROGRESSIVE));
+addConstant(*this, "SDL_HINT_PS2_GS_WIDTH", static_cast<const char *>(SDL_HINT_PS2_GS_WIDTH));
+addConstant(*this, "SDL_HINT_QUIT_ON_LAST_WINDOW_CLOSE", static_cast<const char *>(SDL_HINT_QUIT_ON_LAST_WINDOW_CLOSE));
+addConstant(*this, "SDL_HINT_RENDER_DIRECT3D11_DEBUG", static_cast<const char *>(SDL_HINT_RENDER_DIRECT3D11_DEBUG));
+addConstant(*this, "SDL_HINT_RENDER_DIRECT3D11_WARP", static_cast<const char *>(SDL_HINT_RENDER_DIRECT3D11_WARP));
+addConstant(*this, "SDL_HINT_RENDER_DIRECT3D_THREADSAFE", static_cast<const char *>(SDL_HINT_RENDER_DIRECT3D_THREADSAFE));
+addConstant(*this, "SDL_HINT_RENDER_DRIVER", static_cast<const char *>(SDL_HINT_RENDER_DRIVER));
+addConstant(*this, "SDL_HINT_RENDER_GPU_DEBUG", static_cast<const char *>(SDL_HINT_RENDER_GPU_DEBUG));
+addConstant(*this, "SDL_HINT_RENDER_GPU_LOW_POWER", static_cast<const char *>(SDL_HINT_RENDER_GPU_LOW_POWER));
+addConstant(*this, "SDL_HINT_RENDER_LINE_METHOD", static_cast<const char *>(SDL_HINT_RENDER_LINE_METHOD));
+addConstant(*this, "SDL_HINT_RENDER_METAL_PREFER_LOW_POWER_DEVICE", static_cast<const char *>(SDL_HINT_RENDER_METAL_PREFER_LOW_POWER_DEVICE));
+addConstant(*this, "SDL_HINT_RENDER_VSYNC", static_cast<const char *>(SDL_HINT_RENDER_VSYNC));
+addConstant(*this, "SDL_HINT_RENDER_VULKAN_DEBUG", static_cast<const char *>(SDL_HINT_RENDER_VULKAN_DEBUG));
+addConstant(*this, "SDL_HINT_RETURN_KEY_HIDES_IME", static_cast<const char *>(SDL_HINT_RETURN_KEY_HIDES_IME));
+addConstant(*this, "SDL_HINT_ROG_GAMEPAD_MICE", static_cast<const char *>(SDL_HINT_ROG_GAMEPAD_MICE));
+addConstant(*this, "SDL_HINT_ROG_GAMEPAD_MICE_EXCLUDED", static_cast<const char *>(SDL_HINT_ROG_GAMEPAD_MICE_EXCLUDED));
+addConstant(*this, "SDL_HINT_RPI_VIDEO_LAYER", static_cast<const char *>(SDL_HINT_RPI_VIDEO_LAYER));
+addConstant(*this, "SDL_HINT_SCREENSAVER_INHIBIT_ACTIVITY_NAME", static_cast<const char *>(SDL_HINT_SCREENSAVER_INHIBIT_ACTIVITY_NAME));
+addConstant(*this, "SDL_HINT_SHUTDOWN_DBUS_ON_QUIT", static_cast<const char *>(SDL_HINT_SHUTDOWN_DBUS_ON_QUIT));
+addConstant(*this, "SDL_HINT_STORAGE_TITLE_DRIVER", static_cast<const char *>(SDL_HINT_STORAGE_TITLE_DRIVER));
+addConstant(*this, "SDL_HINT_STORAGE_USER_DRIVER", static_cast<const char *>(SDL_HINT_STORAGE_USER_DRIVER));
+addConstant(*this, "SDL_HINT_THREAD_FORCE_REALTIME_TIME_CRITICAL", static_cast<const char *>(SDL_HINT_THREAD_FORCE_REALTIME_TIME_CRITICAL));
+addConstant(*this, "SDL_HINT_THREAD_PRIORITY_POLICY", static_cast<const char *>(SDL_HINT_THREAD_PRIORITY_POLICY));
+addConstant(*this, "SDL_HINT_TIMER_RESOLUTION", static_cast<const char *>(SDL_HINT_TIMER_RESOLUTION));
+addConstant(*this, "SDL_HINT_TOUCH_MOUSE_EVENTS", static_cast<const char *>(SDL_HINT_TOUCH_MOUSE_EVENTS));
+addConstant(*this, "SDL_HINT_TRACKPAD_IS_TOUCH_ONLY", static_cast<const char *>(SDL_HINT_TRACKPAD_IS_TOUCH_ONLY));
+addConstant(*this, "SDL_HINT_TV_REMOTE_AS_JOYSTICK", static_cast<const char *>(SDL_HINT_TV_REMOTE_AS_JOYSTICK));
+addConstant(*this, "SDL_HINT_VIDEO_ALLOW_SCREENSAVER", static_cast<const char *>(SDL_HINT_VIDEO_ALLOW_SCREENSAVER));
+addConstant(*this, "SDL_HINT_VIDEO_DISPLAY_PRIORITY", static_cast<const char *>(SDL_HINT_VIDEO_DISPLAY_PRIORITY));
+addConstant(*this, "SDL_HINT_VIDEO_DOUBLE_BUFFER", static_cast<const char *>(SDL_HINT_VIDEO_DOUBLE_BUFFER));
+addConstant(*this, "SDL_HINT_VIDEO_DRIVER", static_cast<const char *>(SDL_HINT_VIDEO_DRIVER));
+addConstant(*this, "SDL_HINT_VIDEO_DUMMY_SAVE_FRAMES", static_cast<const char *>(SDL_HINT_VIDEO_DUMMY_SAVE_FRAMES));
+addConstant(*this, "SDL_HINT_VIDEO_EGL_ALLOW_GETDISPLAY_FALLBACK", static_cast<const char *>(SDL_HINT_VIDEO_EGL_ALLOW_GETDISPLAY_FALLBACK));
+addConstant(*this, "SDL_HINT_VIDEO_FORCE_EGL", static_cast<const char *>(SDL_HINT_VIDEO_FORCE_EGL));
+addConstant(*this, "SDL_HINT_VIDEO_MAC_FULLSCREEN_MENU_VISIBILITY", static_cast<const char *>(SDL_HINT_VIDEO_MAC_FULLSCREEN_MENU_VISIBILITY));
+addConstant(*this, "SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES", static_cast<const char *>(SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES));
+addConstant(*this, "SDL_HINT_VIDEO_MATCH_EXCLUSIVE_MODE_ON_MOVE", static_cast<const char *>(SDL_HINT_VIDEO_MATCH_EXCLUSIVE_MODE_ON_MOVE));
+addConstant(*this, "SDL_HINT_VIDEO_METAL_AUTO_RESIZE_DRAWABLE", static_cast<const char *>(SDL_HINT_VIDEO_METAL_AUTO_RESIZE_DRAWABLE));
+addConstant(*this, "SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS", static_cast<const char *>(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS));
+addConstant(*this, "SDL_HINT_VIDEO_OFFSCREEN_SAVE_FRAMES", static_cast<const char *>(SDL_HINT_VIDEO_OFFSCREEN_SAVE_FRAMES));
+addConstant(*this, "SDL_HINT_VIDEO_SYNC_WINDOW_OPERATIONS", static_cast<const char *>(SDL_HINT_VIDEO_SYNC_WINDOW_OPERATIONS));
+addConstant(*this, "SDL_HINT_VIDEO_WAYLAND_ALLOW_LIBDECOR", static_cast<const char *>(SDL_HINT_VIDEO_WAYLAND_ALLOW_LIBDECOR));
+addConstant(*this, "SDL_HINT_VIDEO_WAYLAND_MODE_EMULATION", static_cast<const char *>(SDL_HINT_VIDEO_WAYLAND_MODE_EMULATION));
+addConstant(*this, "SDL_HINT_VIDEO_WAYLAND_MODE_SCALING", static_cast<const char *>(SDL_HINT_VIDEO_WAYLAND_MODE_SCALING));
+addConstant(*this, "SDL_HINT_VIDEO_WAYLAND_PREFER_LIBDECOR", static_cast<const char *>(SDL_HINT_VIDEO_WAYLAND_PREFER_LIBDECOR));
+addConstant(*this, "SDL_HINT_VIDEO_WAYLAND_SCALE_TO_DISPLAY", static_cast<const char *>(SDL_HINT_VIDEO_WAYLAND_SCALE_TO_DISPLAY));
+addConstant(*this, "SDL_HINT_VIDEO_WIN_D3DCOMPILER", static_cast<const char *>(SDL_HINT_VIDEO_WIN_D3DCOMPILER));
+addConstant(*this, "SDL_HINT_VIDEO_X11_ENABLE_XSYNC_EXT", static_cast<const char *>(SDL_HINT_VIDEO_X11_ENABLE_XSYNC_EXT));
+addConstant(*this, "SDL_HINT_VIDEO_X11_EXTERNAL_WINDOW_INPUT", static_cast<const char *>(SDL_HINT_VIDEO_X11_EXTERNAL_WINDOW_INPUT));
+addConstant(*this, "SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR", static_cast<const char *>(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR));
+addConstant(*this, "SDL_HINT_VIDEO_X11_NET_WM_PING", static_cast<const char *>(SDL_HINT_VIDEO_X11_NET_WM_PING));
+addConstant(*this, "SDL_HINT_VIDEO_X11_NODIRECTCOLOR", static_cast<const char *>(SDL_HINT_VIDEO_X11_NODIRECTCOLOR));
+addConstant(*this, "SDL_HINT_VIDEO_X11_SCALING_FACTOR", static_cast<const char *>(SDL_HINT_VIDEO_X11_SCALING_FACTOR));
+addConstant(*this, "SDL_HINT_VIDEO_X11_VISUALID", static_cast<const char *>(SDL_HINT_VIDEO_X11_VISUALID));
+addConstant(*this, "SDL_HINT_VIDEO_X11_WINDOW_VISUALID", static_cast<const char *>(SDL_HINT_VIDEO_X11_WINDOW_VISUALID));
+addConstant(*this, "SDL_HINT_VIDEO_X11_XRANDR", static_cast<const char *>(SDL_HINT_VIDEO_X11_XRANDR));
+addConstant(*this, "SDL_HINT_VITA_ENABLE_BACK_TOUCH", static_cast<const char *>(SDL_HINT_VITA_ENABLE_BACK_TOUCH));
+addConstant(*this, "SDL_HINT_VITA_ENABLE_FRONT_TOUCH", static_cast<const char *>(SDL_HINT_VITA_ENABLE_FRONT_TOUCH));
+addConstant(*this, "SDL_HINT_VITA_MODULE_PATH", static_cast<const char *>(SDL_HINT_VITA_MODULE_PATH));
+addConstant(*this, "SDL_HINT_VITA_PVR_INIT", static_cast<const char *>(SDL_HINT_VITA_PVR_INIT));
+addConstant(*this, "SDL_HINT_VITA_PVR_OPENGL", static_cast<const char *>(SDL_HINT_VITA_PVR_OPENGL));
+addConstant(*this, "SDL_HINT_VITA_RESOLUTION", static_cast<const char *>(SDL_HINT_VITA_RESOLUTION));
+addConstant(*this, "SDL_HINT_VITA_TOUCH_MOUSE_DEVICE", static_cast<const char *>(SDL_HINT_VITA_TOUCH_MOUSE_DEVICE));
+addConstant(*this, "SDL_HINT_VULKAN_DISPLAY", static_cast<const char *>(SDL_HINT_VULKAN_DISPLAY));
+addConstant(*this, "SDL_HINT_VULKAN_LIBRARY", static_cast<const char *>(SDL_HINT_VULKAN_LIBRARY));
+addConstant(*this, "SDL_HINT_WAVE_CHUNK_LIMIT", static_cast<const char *>(SDL_HINT_WAVE_CHUNK_LIMIT));
+addConstant(*this, "SDL_HINT_WAVE_FACT_CHUNK", static_cast<const char *>(SDL_HINT_WAVE_FACT_CHUNK));
+addConstant(*this, "SDL_HINT_WAVE_RIFF_CHUNK_SIZE", static_cast<const char *>(SDL_HINT_WAVE_RIFF_CHUNK_SIZE));
+addConstant(*this, "SDL_HINT_WAVE_TRUNCATION", static_cast<const char *>(SDL_HINT_WAVE_TRUNCATION));
+addConstant(*this, "SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4", static_cast<const char *>(SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4));
+addConstant(*this, "SDL_HINT_WINDOWS_ENABLE_MENU_MNEMONICS", static_cast<const char *>(SDL_HINT_WINDOWS_ENABLE_MENU_MNEMONICS));
+addConstant(*this, "SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP", static_cast<const char *>(SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP));
+addConstant(*this, "SDL_HINT_WINDOWS_ERASE_BACKGROUND_MODE", static_cast<const char *>(SDL_HINT_WINDOWS_ERASE_BACKGROUND_MODE));
+addConstant(*this, "SDL_HINT_WINDOWS_FORCE_SEMAPHORE_KERNEL", static_cast<const char *>(SDL_HINT_WINDOWS_FORCE_SEMAPHORE_KERNEL));
+addConstant(*this, "SDL_HINT_WINDOWS_GAMEINPUT", static_cast<const char *>(SDL_HINT_WINDOWS_GAMEINPUT));
+addConstant(*this, "SDL_HINT_WINDOWS_INTRESOURCE_ICON", static_cast<const char *>(SDL_HINT_WINDOWS_INTRESOURCE_ICON));
+addConstant(*this, "SDL_HINT_WINDOWS_INTRESOURCE_ICON_SMALL", static_cast<const char *>(SDL_HINT_WINDOWS_INTRESOURCE_ICON_SMALL));
+addConstant(*this, "SDL_HINT_WINDOWS_RAW_KEYBOARD", static_cast<const char *>(SDL_HINT_WINDOWS_RAW_KEYBOARD));
+addConstant(*this, "SDL_HINT_WINDOWS_RAW_KEYBOARD_EXCLUDE_HOTKEYS", static_cast<const char *>(SDL_HINT_WINDOWS_RAW_KEYBOARD_EXCLUDE_HOTKEYS));
+addConstant(*this, "SDL_HINT_WINDOWS_RAW_KEYBOARD_INPUTSINK", static_cast<const char *>(SDL_HINT_WINDOWS_RAW_KEYBOARD_INPUTSINK));
+addConstant(*this, "SDL_HINT_WINDOWS_USE_D3D9EX", static_cast<const char *>(SDL_HINT_WINDOWS_USE_D3D9EX));
+addConstant(*this, "SDL_HINT_WINDOW_ACTIVATE_WHEN_RAISED", static_cast<const char *>(SDL_HINT_WINDOW_ACTIVATE_WHEN_RAISED));
+addConstant(*this, "SDL_HINT_WINDOW_ACTIVATE_WHEN_SHOWN", static_cast<const char *>(SDL_HINT_WINDOW_ACTIVATE_WHEN_SHOWN));
+addConstant(*this, "SDL_HINT_WINDOW_ALLOW_TOPMOST", static_cast<const char *>(SDL_HINT_WINDOW_ALLOW_TOPMOST));
+addConstant(*this, "SDL_HINT_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN", static_cast<const char *>(SDL_HINT_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN));
+addConstant(*this, "SDL_HINT_X11_FORCE_OVERRIDE_REDIRECT", static_cast<const char *>(SDL_HINT_X11_FORCE_OVERRIDE_REDIRECT));
+addConstant(*this, "SDL_HINT_X11_WINDOW_TYPE", static_cast<const char *>(SDL_HINT_X11_WINDOW_TYPE));
+addConstant(*this, "SDL_HINT_X11_XCB_LIBRARY", static_cast<const char *>(SDL_HINT_X11_XCB_LIBRARY));
+addConstant(*this, "SDL_HINT_XINPUT_ENABLED", static_cast<const char *>(SDL_HINT_XINPUT_ENABLED));
+addConstant(*this, "SDL_PROP_APP_METADATA_COPYRIGHT_STRING", static_cast<const char *>(SDL_PROP_APP_METADATA_COPYRIGHT_STRING));
+addConstant(*this, "SDL_PROP_APP_METADATA_CREATOR_STRING", static_cast<const char *>(SDL_PROP_APP_METADATA_CREATOR_STRING));
+addConstant(*this, "SDL_PROP_APP_METADATA_IDENTIFIER_STRING", static_cast<const char *>(SDL_PROP_APP_METADATA_IDENTIFIER_STRING));
+addConstant(*this, "SDL_PROP_APP_METADATA_NAME_STRING", static_cast<const char *>(SDL_PROP_APP_METADATA_NAME_STRING));
+addConstant(*this, "SDL_PROP_APP_METADATA_TYPE_STRING", static_cast<const char *>(SDL_PROP_APP_METADATA_TYPE_STRING));
+addConstant(*this, "SDL_PROP_APP_METADATA_URL_STRING", static_cast<const char *>(SDL_PROP_APP_METADATA_URL_STRING));
+addConstant(*this, "SDL_PROP_APP_METADATA_VERSION_STRING", static_cast<const char *>(SDL_PROP_APP_METADATA_VERSION_STRING));
+addConstant(*this, "SDL_PROP_AUDIOSTREAM_AUTO_CLEANUP_BOOLEAN", static_cast<const char *>(SDL_PROP_AUDIOSTREAM_AUTO_CLEANUP_BOOLEAN));
+addConstant(*this, "SDL_PROP_DISPLAY_HDR_ENABLED_BOOLEAN", static_cast<const char *>(SDL_PROP_DISPLAY_HDR_ENABLED_BOOLEAN));
+addConstant(*this, "SDL_PROP_DISPLAY_KMSDRM_PANEL_ORIENTATION_NUMBER", static_cast<const char *>(SDL_PROP_DISPLAY_KMSDRM_PANEL_ORIENTATION_NUMBER));
+addConstant(*this, "SDL_PROP_DISPLAY_WAYLAND_WL_OUTPUT_POINTER", static_cast<const char *>(SDL_PROP_DISPLAY_WAYLAND_WL_OUTPUT_POINTER));
+addConstant(*this, "SDL_PROP_DISPLAY_WINDOWS_HMONITOR_POINTER", static_cast<const char *>(SDL_PROP_DISPLAY_WINDOWS_HMONITOR_POINTER));
+addConstant(*this, "SDL_PROP_FILE_DIALOG_ACCEPT_STRING", static_cast<const char *>(SDL_PROP_FILE_DIALOG_ACCEPT_STRING));
+addConstant(*this, "SDL_PROP_FILE_DIALOG_CANCEL_STRING", static_cast<const char *>(SDL_PROP_FILE_DIALOG_CANCEL_STRING));
+addConstant(*this, "SDL_PROP_FILE_DIALOG_FILTERS_POINTER", static_cast<const char *>(SDL_PROP_FILE_DIALOG_FILTERS_POINTER));
+addConstant(*this, "SDL_PROP_FILE_DIALOG_LOCATION_STRING", static_cast<const char *>(SDL_PROP_FILE_DIALOG_LOCATION_STRING));
+addConstant(*this, "SDL_PROP_FILE_DIALOG_MANY_BOOLEAN", static_cast<const char *>(SDL_PROP_FILE_DIALOG_MANY_BOOLEAN));
+addConstant(*this, "SDL_PROP_FILE_DIALOG_NFILTERS_NUMBER", static_cast<const char *>(SDL_PROP_FILE_DIALOG_NFILTERS_NUMBER));
+addConstant(*this, "SDL_PROP_FILE_DIALOG_TITLE_STRING", static_cast<const char *>(SDL_PROP_FILE_DIALOG_TITLE_STRING));
+addConstant(*this, "SDL_PROP_FILE_DIALOG_WINDOW_POINTER", static_cast<const char *>(SDL_PROP_FILE_DIALOG_WINDOW_POINTER));
+addConstant(*this, "SDL_PROP_GAMEPAD_CAP_MONO_LED_BOOLEAN", static_cast<const char *>(SDL_PROP_GAMEPAD_CAP_MONO_LED_BOOLEAN));
+addConstant(*this, "SDL_PROP_GAMEPAD_CAP_PLAYER_LED_BOOLEAN", static_cast<const char *>(SDL_PROP_GAMEPAD_CAP_PLAYER_LED_BOOLEAN));
+addConstant(*this, "SDL_PROP_GAMEPAD_CAP_RGB_LED_BOOLEAN", static_cast<const char *>(SDL_PROP_GAMEPAD_CAP_RGB_LED_BOOLEAN));
+addConstant(*this, "SDL_PROP_GAMEPAD_CAP_RUMBLE_BOOLEAN", static_cast<const char *>(SDL_PROP_GAMEPAD_CAP_RUMBLE_BOOLEAN));
+addConstant(*this, "SDL_PROP_GAMEPAD_CAP_TRIGGER_RUMBLE_BOOLEAN", static_cast<const char *>(SDL_PROP_GAMEPAD_CAP_TRIGGER_RUMBLE_BOOLEAN));
+addConstant(*this, "SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER", static_cast<const char *>(SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER));
+addConstant(*this, "SDL_PROP_GPU_BUFFER_CREATE_NAME_STRING", static_cast<const char *>(SDL_PROP_GPU_BUFFER_CREATE_NAME_STRING));
+addConstant(*this, "SDL_PROP_GPU_COMPUTEPIPELINE_CREATE_NAME_STRING", static_cast<const char *>(SDL_PROP_GPU_COMPUTEPIPELINE_CREATE_NAME_STRING));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_CREATE_D3D12_AGILITY_SDK_PATH_STRING", static_cast<const char *>(SDL_PROP_GPU_DEVICE_CREATE_D3D12_AGILITY_SDK_PATH_STRING));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_CREATE_D3D12_AGILITY_SDK_VERSION_NUMBER", static_cast<const char *>(SDL_PROP_GPU_DEVICE_CREATE_D3D12_AGILITY_SDK_VERSION_NUMBER));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_CREATE_D3D12_ALLOW_FEWER_RESOURCE_SLOTS_BOOLEAN", static_cast<const char *>(SDL_PROP_GPU_DEVICE_CREATE_D3D12_ALLOW_FEWER_RESOURCE_SLOTS_BOOLEAN));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING", static_cast<const char *>(SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOLEAN", static_cast<const char *>(SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOLEAN));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_CREATE_FEATURE_ANISOTROPY_BOOLEAN", static_cast<const char *>(SDL_PROP_GPU_DEVICE_CREATE_FEATURE_ANISOTROPY_BOOLEAN));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_CREATE_FEATURE_CLIP_DISTANCE_BOOLEAN", static_cast<const char *>(SDL_PROP_GPU_DEVICE_CREATE_FEATURE_CLIP_DISTANCE_BOOLEAN));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_CREATE_FEATURE_DEPTH_CLAMPING_BOOLEAN", static_cast<const char *>(SDL_PROP_GPU_DEVICE_CREATE_FEATURE_DEPTH_CLAMPING_BOOLEAN));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_CREATE_FEATURE_INDIRECT_DRAW_FIRST_INSTANCE_BOOLEAN", static_cast<const char *>(SDL_PROP_GPU_DEVICE_CREATE_FEATURE_INDIRECT_DRAW_FIRST_INSTANCE_BOOLEAN));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_CREATE_METAL_ALLOW_MACFAMILY1_BOOLEAN", static_cast<const char *>(SDL_PROP_GPU_DEVICE_CREATE_METAL_ALLOW_MACFAMILY1_BOOLEAN));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING", static_cast<const char *>(SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOLEAN", static_cast<const char *>(SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOLEAN));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOLEAN", static_cast<const char *>(SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOLEAN));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOLEAN", static_cast<const char *>(SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOLEAN));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOLEAN", static_cast<const char *>(SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOLEAN));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOLEAN", static_cast<const char *>(SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOLEAN));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOLEAN", static_cast<const char *>(SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOLEAN));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOLEAN", static_cast<const char *>(SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOLEAN));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_CREATE_VERBOSE_BOOLEAN", static_cast<const char *>(SDL_PROP_GPU_DEVICE_CREATE_VERBOSE_BOOLEAN));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_CREATE_VULKAN_OPTIONS_POINTER", static_cast<const char *>(SDL_PROP_GPU_DEVICE_CREATE_VULKAN_OPTIONS_POINTER));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_CREATE_VULKAN_REQUIRE_HARDWARE_ACCELERATION_BOOLEAN", static_cast<const char *>(SDL_PROP_GPU_DEVICE_CREATE_VULKAN_REQUIRE_HARDWARE_ACCELERATION_BOOLEAN));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_DRIVER_INFO_STRING", static_cast<const char *>(SDL_PROP_GPU_DEVICE_DRIVER_INFO_STRING));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_DRIVER_NAME_STRING", static_cast<const char *>(SDL_PROP_GPU_DEVICE_DRIVER_NAME_STRING));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_DRIVER_VERSION_STRING", static_cast<const char *>(SDL_PROP_GPU_DEVICE_DRIVER_VERSION_STRING));
+addConstant(*this, "SDL_PROP_GPU_DEVICE_NAME_STRING", static_cast<const char *>(SDL_PROP_GPU_DEVICE_NAME_STRING));
+addConstant(*this, "SDL_PROP_GPU_GRAPHICSPIPELINE_CREATE_NAME_STRING", static_cast<const char *>(SDL_PROP_GPU_GRAPHICSPIPELINE_CREATE_NAME_STRING));
+addConstant(*this, "SDL_PROP_GPU_SAMPLER_CREATE_NAME_STRING", static_cast<const char *>(SDL_PROP_GPU_SAMPLER_CREATE_NAME_STRING));
+addConstant(*this, "SDL_PROP_GPU_SHADER_CREATE_NAME_STRING", static_cast<const char *>(SDL_PROP_GPU_SHADER_CREATE_NAME_STRING));
+addConstant(*this, "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_A_FLOAT", static_cast<const char *>(SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_A_FLOAT));
+addConstant(*this, "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_B_FLOAT", static_cast<const char *>(SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_B_FLOAT));
+addConstant(*this, "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_DEPTH_FLOAT", static_cast<const char *>(SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_DEPTH_FLOAT));
+addConstant(*this, "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_G_FLOAT", static_cast<const char *>(SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_G_FLOAT));
+addConstant(*this, "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_R_FLOAT", static_cast<const char *>(SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_R_FLOAT));
+addConstant(*this, "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_NUMBER", static_cast<const char *>(SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_NUMBER));
+addConstant(*this, "SDL_PROP_GPU_TEXTURE_CREATE_NAME_STRING", static_cast<const char *>(SDL_PROP_GPU_TEXTURE_CREATE_NAME_STRING));
+addConstant(*this, "SDL_PROP_GPU_TRANSFERBUFFER_CREATE_NAME_STRING", static_cast<const char *>(SDL_PROP_GPU_TRANSFERBUFFER_CREATE_NAME_STRING));
+addConstant(*this, "SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER", static_cast<const char *>(SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER));
+addConstant(*this, "SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER", static_cast<const char *>(SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER));
+addConstant(*this, "SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER", static_cast<const char *>(SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER));
+addConstant(*this, "SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER", static_cast<const char *>(SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER));
+addConstant(*this, "SDL_PROP_IOSTREAM_MEMORY_FREE_FUNC_POINTER", static_cast<const char *>(SDL_PROP_IOSTREAM_MEMORY_FREE_FUNC_POINTER));
+addConstant(*this, "SDL_PROP_IOSTREAM_MEMORY_POINTER", static_cast<const char *>(SDL_PROP_IOSTREAM_MEMORY_POINTER));
+addConstant(*this, "SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER", static_cast<const char *>(SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER));
+addConstant(*this, "SDL_PROP_IOSTREAM_STDIO_FILE_POINTER", static_cast<const char *>(SDL_PROP_IOSTREAM_STDIO_FILE_POINTER));
+addConstant(*this, "SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER", static_cast<const char *>(SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER));
+addConstant(*this, "SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN", static_cast<const char *>(SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN));
+addConstant(*this, "SDL_PROP_JOYSTICK_CAP_PLAYER_LED_BOOLEAN", static_cast<const char *>(SDL_PROP_JOYSTICK_CAP_PLAYER_LED_BOOLEAN));
+addConstant(*this, "SDL_PROP_JOYSTICK_CAP_RGB_LED_BOOLEAN", static_cast<const char *>(SDL_PROP_JOYSTICK_CAP_RGB_LED_BOOLEAN));
+addConstant(*this, "SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN", static_cast<const char *>(SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN));
+addConstant(*this, "SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN", static_cast<const char *>(SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN));
+addConstant(*this, "SDL_PROP_NAME_STRING", static_cast<const char *>(SDL_PROP_NAME_STRING));
+addConstant(*this, "SDL_PROP_PROCESS_BACKGROUND_BOOLEAN", static_cast<const char *>(SDL_PROP_PROCESS_BACKGROUND_BOOLEAN));
+addConstant(*this, "SDL_PROP_PROCESS_CREATE_ARGS_POINTER", static_cast<const char *>(SDL_PROP_PROCESS_CREATE_ARGS_POINTER));
+addConstant(*this, "SDL_PROP_PROCESS_CREATE_BACKGROUND_BOOLEAN", static_cast<const char *>(SDL_PROP_PROCESS_CREATE_BACKGROUND_BOOLEAN));
+addConstant(*this, "SDL_PROP_PROCESS_CREATE_CMDLINE_STRING", static_cast<const char *>(SDL_PROP_PROCESS_CREATE_CMDLINE_STRING));
+addConstant(*this, "SDL_PROP_PROCESS_CREATE_ENVIRONMENT_POINTER", static_cast<const char *>(SDL_PROP_PROCESS_CREATE_ENVIRONMENT_POINTER));
+addConstant(*this, "SDL_PROP_PROCESS_CREATE_STDERR_NUMBER", static_cast<const char *>(SDL_PROP_PROCESS_CREATE_STDERR_NUMBER));
+addConstant(*this, "SDL_PROP_PROCESS_CREATE_STDERR_POINTER", static_cast<const char *>(SDL_PROP_PROCESS_CREATE_STDERR_POINTER));
+addConstant(*this, "SDL_PROP_PROCESS_CREATE_STDERR_TO_STDOUT_BOOLEAN", static_cast<const char *>(SDL_PROP_PROCESS_CREATE_STDERR_TO_STDOUT_BOOLEAN));
+addConstant(*this, "SDL_PROP_PROCESS_CREATE_STDIN_NUMBER", static_cast<const char *>(SDL_PROP_PROCESS_CREATE_STDIN_NUMBER));
+addConstant(*this, "SDL_PROP_PROCESS_CREATE_STDIN_POINTER", static_cast<const char *>(SDL_PROP_PROCESS_CREATE_STDIN_POINTER));
+addConstant(*this, "SDL_PROP_PROCESS_CREATE_STDOUT_NUMBER", static_cast<const char *>(SDL_PROP_PROCESS_CREATE_STDOUT_NUMBER));
+addConstant(*this, "SDL_PROP_PROCESS_CREATE_STDOUT_POINTER", static_cast<const char *>(SDL_PROP_PROCESS_CREATE_STDOUT_POINTER));
+addConstant(*this, "SDL_PROP_PROCESS_CREATE_WORKING_DIRECTORY_STRING", static_cast<const char *>(SDL_PROP_PROCESS_CREATE_WORKING_DIRECTORY_STRING));
+addConstant(*this, "SDL_PROP_PROCESS_PID_NUMBER", static_cast<const char *>(SDL_PROP_PROCESS_PID_NUMBER));
+addConstant(*this, "SDL_PROP_PROCESS_STDERR_POINTER", static_cast<const char *>(SDL_PROP_PROCESS_STDERR_POINTER));
+addConstant(*this, "SDL_PROP_PROCESS_STDIN_POINTER", static_cast<const char *>(SDL_PROP_PROCESS_STDIN_POINTER));
+addConstant(*this, "SDL_PROP_PROCESS_STDOUT_POINTER", static_cast<const char *>(SDL_PROP_PROCESS_STDOUT_POINTER));
+addConstant(*this, "SDL_PROP_RENDERER_CREATE_GPU_DEVICE_POINTER", static_cast<const char *>(SDL_PROP_RENDERER_CREATE_GPU_DEVICE_POINTER));
+addConstant(*this, "SDL_PROP_RENDERER_CREATE_GPU_SHADERS_DXIL_BOOLEAN", static_cast<const char *>(SDL_PROP_RENDERER_CREATE_GPU_SHADERS_DXIL_BOOLEAN));
+addConstant(*this, "SDL_PROP_RENDERER_CREATE_GPU_SHADERS_MSL_BOOLEAN", static_cast<const char *>(SDL_PROP_RENDERER_CREATE_GPU_SHADERS_MSL_BOOLEAN));
+addConstant(*this, "SDL_PROP_RENDERER_CREATE_GPU_SHADERS_SPIRV_BOOLEAN", static_cast<const char *>(SDL_PROP_RENDERER_CREATE_GPU_SHADERS_SPIRV_BOOLEAN));
+addConstant(*this, "SDL_PROP_RENDERER_CREATE_NAME_STRING", static_cast<const char *>(SDL_PROP_RENDERER_CREATE_NAME_STRING));
+addConstant(*this, "SDL_PROP_RENDERER_CREATE_OUTPUT_COLORSPACE_NUMBER", static_cast<const char *>(SDL_PROP_RENDERER_CREATE_OUTPUT_COLORSPACE_NUMBER));
+addConstant(*this, "SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER", static_cast<const char *>(SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER));
+addConstant(*this, "SDL_PROP_RENDERER_CREATE_SURFACE_POINTER", static_cast<const char *>(SDL_PROP_RENDERER_CREATE_SURFACE_POINTER));
+addConstant(*this, "SDL_PROP_RENDERER_CREATE_VULKAN_DEVICE_POINTER", static_cast<const char *>(SDL_PROP_RENDERER_CREATE_VULKAN_DEVICE_POINTER));
+addConstant(*this, "SDL_PROP_RENDERER_CREATE_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER", static_cast<const char *>(SDL_PROP_RENDERER_CREATE_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER));
+addConstant(*this, "SDL_PROP_RENDERER_CREATE_VULKAN_INSTANCE_POINTER", static_cast<const char *>(SDL_PROP_RENDERER_CREATE_VULKAN_INSTANCE_POINTER));
+addConstant(*this, "SDL_PROP_RENDERER_CREATE_VULKAN_PHYSICAL_DEVICE_POINTER", static_cast<const char *>(SDL_PROP_RENDERER_CREATE_VULKAN_PHYSICAL_DEVICE_POINTER));
+addConstant(*this, "SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER", static_cast<const char *>(SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER));
+addConstant(*this, "SDL_PROP_RENDERER_CREATE_VULKAN_SURFACE_NUMBER", static_cast<const char *>(SDL_PROP_RENDERER_CREATE_VULKAN_SURFACE_NUMBER));
+addConstant(*this, "SDL_PROP_RENDERER_CREATE_WINDOW_POINTER", static_cast<const char *>(SDL_PROP_RENDERER_CREATE_WINDOW_POINTER));
+addConstant(*this, "SDL_PROP_RENDERER_D3D11_DEVICE_POINTER", static_cast<const char *>(SDL_PROP_RENDERER_D3D11_DEVICE_POINTER));
+addConstant(*this, "SDL_PROP_RENDERER_D3D11_SWAPCHAIN_POINTER", static_cast<const char *>(SDL_PROP_RENDERER_D3D11_SWAPCHAIN_POINTER));
+addConstant(*this, "SDL_PROP_RENDERER_D3D12_COMMAND_QUEUE_POINTER", static_cast<const char *>(SDL_PROP_RENDERER_D3D12_COMMAND_QUEUE_POINTER));
+addConstant(*this, "SDL_PROP_RENDERER_D3D12_DEVICE_POINTER", static_cast<const char *>(SDL_PROP_RENDERER_D3D12_DEVICE_POINTER));
+addConstant(*this, "SDL_PROP_RENDERER_D3D12_SWAPCHAIN_POINTER", static_cast<const char *>(SDL_PROP_RENDERER_D3D12_SWAPCHAIN_POINTER));
+addConstant(*this, "SDL_PROP_RENDERER_D3D9_DEVICE_POINTER", static_cast<const char *>(SDL_PROP_RENDERER_D3D9_DEVICE_POINTER));
+addConstant(*this, "SDL_PROP_RENDERER_GPU_DEVICE_POINTER", static_cast<const char *>(SDL_PROP_RENDERER_GPU_DEVICE_POINTER));
+addConstant(*this, "SDL_PROP_RENDERER_HDR_ENABLED_BOOLEAN", static_cast<const char *>(SDL_PROP_RENDERER_HDR_ENABLED_BOOLEAN));
+addConstant(*this, "SDL_PROP_RENDERER_HDR_HEADROOM_FLOAT", static_cast<const char *>(SDL_PROP_RENDERER_HDR_HEADROOM_FLOAT));
+addConstant(*this, "SDL_PROP_RENDERER_MAX_TEXTURE_SIZE_NUMBER", static_cast<const char *>(SDL_PROP_RENDERER_MAX_TEXTURE_SIZE_NUMBER));
+addConstant(*this, "SDL_PROP_RENDERER_NAME_STRING", static_cast<const char *>(SDL_PROP_RENDERER_NAME_STRING));
+addConstant(*this, "SDL_PROP_RENDERER_OUTPUT_COLORSPACE_NUMBER", static_cast<const char *>(SDL_PROP_RENDERER_OUTPUT_COLORSPACE_NUMBER));
+addConstant(*this, "SDL_PROP_RENDERER_SDR_WHITE_POINT_FLOAT", static_cast<const char *>(SDL_PROP_RENDERER_SDR_WHITE_POINT_FLOAT));
+addConstant(*this, "SDL_PROP_RENDERER_SURFACE_POINTER", static_cast<const char *>(SDL_PROP_RENDERER_SURFACE_POINTER));
+addConstant(*this, "SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER", static_cast<const char *>(SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER));
+addConstant(*this, "SDL_PROP_RENDERER_TEXTURE_WRAPPING_BOOLEAN", static_cast<const char *>(SDL_PROP_RENDERER_TEXTURE_WRAPPING_BOOLEAN));
+addConstant(*this, "SDL_PROP_RENDERER_VSYNC_NUMBER", static_cast<const char *>(SDL_PROP_RENDERER_VSYNC_NUMBER));
+addConstant(*this, "SDL_PROP_RENDERER_VULKAN_DEVICE_POINTER", static_cast<const char *>(SDL_PROP_RENDERER_VULKAN_DEVICE_POINTER));
+addConstant(*this, "SDL_PROP_RENDERER_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER", static_cast<const char *>(SDL_PROP_RENDERER_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER));
+addConstant(*this, "SDL_PROP_RENDERER_VULKAN_INSTANCE_POINTER", static_cast<const char *>(SDL_PROP_RENDERER_VULKAN_INSTANCE_POINTER));
+addConstant(*this, "SDL_PROP_RENDERER_VULKAN_PHYSICAL_DEVICE_POINTER", static_cast<const char *>(SDL_PROP_RENDERER_VULKAN_PHYSICAL_DEVICE_POINTER));
+addConstant(*this, "SDL_PROP_RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER", static_cast<const char *>(SDL_PROP_RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER));
+addConstant(*this, "SDL_PROP_RENDERER_VULKAN_SURFACE_NUMBER", static_cast<const char *>(SDL_PROP_RENDERER_VULKAN_SURFACE_NUMBER));
+addConstant(*this, "SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER", static_cast<const char *>(SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER));
+addConstant(*this, "SDL_PROP_RENDERER_WINDOW_POINTER", static_cast<const char *>(SDL_PROP_RENDERER_WINDOW_POINTER));
+addConstant(*this, "SDL_PROP_SURFACE_HDR_HEADROOM_FLOAT", static_cast<const char *>(SDL_PROP_SURFACE_HDR_HEADROOM_FLOAT));
+addConstant(*this, "SDL_PROP_SURFACE_HOTSPOT_X_NUMBER", static_cast<const char *>(SDL_PROP_SURFACE_HOTSPOT_X_NUMBER));
+addConstant(*this, "SDL_PROP_SURFACE_HOTSPOT_Y_NUMBER", static_cast<const char *>(SDL_PROP_SURFACE_HOTSPOT_Y_NUMBER));
+addConstant(*this, "SDL_PROP_SURFACE_ROTATION_FLOAT", static_cast<const char *>(SDL_PROP_SURFACE_ROTATION_FLOAT));
+addConstant(*this, "SDL_PROP_SURFACE_SDR_WHITE_POINT_FLOAT", static_cast<const char *>(SDL_PROP_SURFACE_SDR_WHITE_POINT_FLOAT));
+addConstant(*this, "SDL_PROP_SURFACE_TONEMAP_OPERATOR_STRING", static_cast<const char *>(SDL_PROP_SURFACE_TONEMAP_OPERATOR_STRING));
+addConstant(*this, "SDL_PROP_TEXTINPUT_ANDROID_INPUTTYPE_NUMBER", static_cast<const char *>(SDL_PROP_TEXTINPUT_ANDROID_INPUTTYPE_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTINPUT_AUTOCORRECT_BOOLEAN", static_cast<const char *>(SDL_PROP_TEXTINPUT_AUTOCORRECT_BOOLEAN));
+addConstant(*this, "SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER", static_cast<const char *>(SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTINPUT_MULTILINE_BOOLEAN", static_cast<const char *>(SDL_PROP_TEXTINPUT_MULTILINE_BOOLEAN));
+addConstant(*this, "SDL_PROP_TEXTINPUT_TYPE_NUMBER", static_cast<const char *>(SDL_PROP_TEXTINPUT_TYPE_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_ACCESS_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_ACCESS_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_COLORSPACE_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_COLORSPACE_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_ACCESS_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_ACCESS_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_COLORSPACE_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_COLORSPACE_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_POINTER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_POINTER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_U_POINTER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_U_POINTER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_V_POINTER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_V_POINTER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_POINTER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_POINTER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_U_POINTER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_U_POINTER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_V_POINTER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_V_POINTER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_FORMAT_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_FORMAT_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_POINTER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_POINTER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_UV_POINTER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_UV_POINTER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_U_POINTER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_U_POINTER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_V_POINTER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_V_POINTER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_HDR_HEADROOM_FLOAT", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_HDR_HEADROOM_FLOAT));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_HEIGHT_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_HEIGHT_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_METAL_PIXELBUFFER_POINTER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_METAL_PIXELBUFFER_POINTER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_UV_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_UV_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_U_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_U_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_V_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_V_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_UV_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_UV_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_U_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_U_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_V_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_V_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_PALETTE_POINTER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_PALETTE_POINTER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_VULKAN_LAYOUT_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_VULKAN_LAYOUT_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_CREATE_WIDTH_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_CREATE_WIDTH_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_D3D11_TEXTURE_POINTER", static_cast<const char *>(SDL_PROP_TEXTURE_D3D11_TEXTURE_POINTER));
+addConstant(*this, "SDL_PROP_TEXTURE_D3D11_TEXTURE_U_POINTER", static_cast<const char *>(SDL_PROP_TEXTURE_D3D11_TEXTURE_U_POINTER));
+addConstant(*this, "SDL_PROP_TEXTURE_D3D11_TEXTURE_V_POINTER", static_cast<const char *>(SDL_PROP_TEXTURE_D3D11_TEXTURE_V_POINTER));
+addConstant(*this, "SDL_PROP_TEXTURE_D3D12_TEXTURE_POINTER", static_cast<const char *>(SDL_PROP_TEXTURE_D3D12_TEXTURE_POINTER));
+addConstant(*this, "SDL_PROP_TEXTURE_D3D12_TEXTURE_U_POINTER", static_cast<const char *>(SDL_PROP_TEXTURE_D3D12_TEXTURE_U_POINTER));
+addConstant(*this, "SDL_PROP_TEXTURE_D3D12_TEXTURE_V_POINTER", static_cast<const char *>(SDL_PROP_TEXTURE_D3D12_TEXTURE_V_POINTER));
+addConstant(*this, "SDL_PROP_TEXTURE_FORMAT_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_FORMAT_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_GPU_TEXTURE_POINTER", static_cast<const char *>(SDL_PROP_TEXTURE_GPU_TEXTURE_POINTER));
+addConstant(*this, "SDL_PROP_TEXTURE_GPU_TEXTURE_UV_POINTER", static_cast<const char *>(SDL_PROP_TEXTURE_GPU_TEXTURE_UV_POINTER));
+addConstant(*this, "SDL_PROP_TEXTURE_GPU_TEXTURE_U_POINTER", static_cast<const char *>(SDL_PROP_TEXTURE_GPU_TEXTURE_U_POINTER));
+addConstant(*this, "SDL_PROP_TEXTURE_GPU_TEXTURE_V_POINTER", static_cast<const char *>(SDL_PROP_TEXTURE_GPU_TEXTURE_V_POINTER));
+addConstant(*this, "SDL_PROP_TEXTURE_HDR_HEADROOM_FLOAT", static_cast<const char *>(SDL_PROP_TEXTURE_HDR_HEADROOM_FLOAT));
+addConstant(*this, "SDL_PROP_TEXTURE_HEIGHT_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_HEIGHT_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_TARGET_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_TARGET_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_UV_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_UV_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_U_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_U_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_V_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_V_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_OPENGL_TEXTURE_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_OPENGL_TEXTURE_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_OPENGL_TEXTURE_TARGET_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_OPENGL_TEXTURE_TARGET_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_OPENGL_TEXTURE_UV_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_OPENGL_TEXTURE_UV_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_OPENGL_TEXTURE_U_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_OPENGL_TEXTURE_U_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_OPENGL_TEXTURE_V_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_OPENGL_TEXTURE_V_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_OPENGL_TEX_H_FLOAT", static_cast<const char *>(SDL_PROP_TEXTURE_OPENGL_TEX_H_FLOAT));
+addConstant(*this, "SDL_PROP_TEXTURE_OPENGL_TEX_W_FLOAT", static_cast<const char *>(SDL_PROP_TEXTURE_OPENGL_TEX_W_FLOAT));
+addConstant(*this, "SDL_PROP_TEXTURE_SDR_WHITE_POINT_FLOAT", static_cast<const char *>(SDL_PROP_TEXTURE_SDR_WHITE_POINT_FLOAT));
+addConstant(*this, "SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER));
+addConstant(*this, "SDL_PROP_TEXTURE_WIDTH_NUMBER", static_cast<const char *>(SDL_PROP_TEXTURE_WIDTH_NUMBER));
+addConstant(*this, "SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER", static_cast<const char *>(SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER));
+addConstant(*this, "SDL_PROP_THREAD_CREATE_NAME_STRING", static_cast<const char *>(SDL_PROP_THREAD_CREATE_NAME_STRING));
+addConstant(*this, "SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER", static_cast<const char *>(SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER));
+addConstant(*this, "SDL_PROP_THREAD_CREATE_USERDATA_POINTER", static_cast<const char *>(SDL_PROP_THREAD_CREATE_USERDATA_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_ANDROID_SURFACE_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_ANDROID_SURFACE_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_ANDROID_WINDOW_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_ANDROID_WINDOW_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_COCOA_METAL_VIEW_TAG_NUMBER", static_cast<const char *>(SDL_PROP_WINDOW_COCOA_METAL_VIEW_TAG_NUMBER));
+addConstant(*this, "SDL_PROP_WINDOW_COCOA_WINDOW_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_COCOA_WINDOW_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_ALWAYS_ON_TOP_BOOLEAN", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_ALWAYS_ON_TOP_BOOLEAN));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_BORDERLESS_BOOLEAN", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_BORDERLESS_BOOLEAN));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_COCOA_VIEW_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_COCOA_VIEW_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_COCOA_WINDOW_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_COCOA_WINDOW_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_CONSTRAIN_POPUP_BOOLEAN", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_CONSTRAIN_POPUP_BOOLEAN));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_CANVAS_ID_STRING", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_CANVAS_ID_STRING));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_EXTERNAL_GRAPHICS_CONTEXT_BOOLEAN", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_EXTERNAL_GRAPHICS_CONTEXT_BOOLEAN));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_FLAGS_NUMBER", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_FLAGS_NUMBER));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_FOCUSABLE_BOOLEAN", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_FOCUSABLE_BOOLEAN));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_FULLSCREEN_BOOLEAN", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_FULLSCREEN_BOOLEAN));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_HEIGHT_NUMBER", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_HEIGHT_NUMBER));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_HIDDEN_BOOLEAN", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_HIDDEN_BOOLEAN));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_HIGH_PIXEL_DENSITY_BOOLEAN", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_HIGH_PIXEL_DENSITY_BOOLEAN));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_MAXIMIZED_BOOLEAN", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_MAXIMIZED_BOOLEAN));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_MENU_BOOLEAN", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_MENU_BOOLEAN));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_METAL_BOOLEAN", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_METAL_BOOLEAN));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_MINIMIZED_BOOLEAN", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_MINIMIZED_BOOLEAN));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_MODAL_BOOLEAN", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_MODAL_BOOLEAN));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_MOUSE_GRABBED_BOOLEAN", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_MOUSE_GRABBED_BOOLEAN));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_OPENGL_BOOLEAN", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_OPENGL_BOOLEAN));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_PARENT_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_PARENT_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_RESIZABLE_BOOLEAN", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_RESIZABLE_BOOLEAN));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_TITLE_STRING", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_TITLE_STRING));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_TOOLTIP_BOOLEAN", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_TOOLTIP_BOOLEAN));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_TRANSPARENT_BOOLEAN", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_TRANSPARENT_BOOLEAN));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_UTILITY_BOOLEAN", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_UTILITY_BOOLEAN));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_VULKAN_BOOLEAN", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_VULKAN_BOOLEAN));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_WAYLAND_CREATE_EGL_WINDOW_BOOLEAN", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_WAYLAND_CREATE_EGL_WINDOW_BOOLEAN));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_WAYLAND_SURFACE_ROLE_CUSTOM_BOOLEAN", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_WAYLAND_SURFACE_ROLE_CUSTOM_BOOLEAN));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_WAYLAND_WL_SURFACE_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_WAYLAND_WL_SURFACE_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_WIDTH_NUMBER", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_WIDTH_NUMBER));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_WIN32_HWND_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_WIN32_HWND_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_WIN32_PIXEL_FORMAT_HWND_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_WIN32_PIXEL_FORMAT_HWND_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_WINDOWSCENE_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_WINDOWSCENE_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_X11_WINDOW_NUMBER", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_X11_WINDOW_NUMBER));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_X_NUMBER", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_X_NUMBER));
+addConstant(*this, "SDL_PROP_WINDOW_CREATE_Y_NUMBER", static_cast<const char *>(SDL_PROP_WINDOW_CREATE_Y_NUMBER));
+addConstant(*this, "SDL_PROP_WINDOW_EMSCRIPTEN_CANVAS_ID_STRING", static_cast<const char *>(SDL_PROP_WINDOW_EMSCRIPTEN_CANVAS_ID_STRING));
+addConstant(*this, "SDL_PROP_WINDOW_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING", static_cast<const char *>(SDL_PROP_WINDOW_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING));
+addConstant(*this, "SDL_PROP_WINDOW_HDR_ENABLED_BOOLEAN", static_cast<const char *>(SDL_PROP_WINDOW_HDR_ENABLED_BOOLEAN));
+addConstant(*this, "SDL_PROP_WINDOW_HDR_HEADROOM_FLOAT", static_cast<const char *>(SDL_PROP_WINDOW_HDR_HEADROOM_FLOAT));
+addConstant(*this, "SDL_PROP_WINDOW_KMSDRM_DEVICE_INDEX_NUMBER", static_cast<const char *>(SDL_PROP_WINDOW_KMSDRM_DEVICE_INDEX_NUMBER));
+addConstant(*this, "SDL_PROP_WINDOW_KMSDRM_DRM_FD_NUMBER", static_cast<const char *>(SDL_PROP_WINDOW_KMSDRM_DRM_FD_NUMBER));
+addConstant(*this, "SDL_PROP_WINDOW_KMSDRM_GBM_DEVICE_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_KMSDRM_GBM_DEVICE_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_OPENVR_OVERLAY_ID_NUMBER", static_cast<const char *>(SDL_PROP_WINDOW_OPENVR_OVERLAY_ID_NUMBER));
+addConstant(*this, "SDL_PROP_WINDOW_SDR_WHITE_LEVEL_FLOAT", static_cast<const char *>(SDL_PROP_WINDOW_SDR_WHITE_LEVEL_FLOAT));
+addConstant(*this, "SDL_PROP_WINDOW_SHAPE_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_SHAPE_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_UIKIT_METAL_VIEW_TAG_NUMBER", static_cast<const char *>(SDL_PROP_WINDOW_UIKIT_METAL_VIEW_TAG_NUMBER));
+addConstant(*this, "SDL_PROP_WINDOW_UIKIT_OPENGL_FRAMEBUFFER_NUMBER", static_cast<const char *>(SDL_PROP_WINDOW_UIKIT_OPENGL_FRAMEBUFFER_NUMBER));
+addConstant(*this, "SDL_PROP_WINDOW_UIKIT_OPENGL_RENDERBUFFER_NUMBER", static_cast<const char *>(SDL_PROP_WINDOW_UIKIT_OPENGL_RENDERBUFFER_NUMBER));
+addConstant(*this, "SDL_PROP_WINDOW_UIKIT_OPENGL_RESOLVE_FRAMEBUFFER_NUMBER", static_cast<const char *>(SDL_PROP_WINDOW_UIKIT_OPENGL_RESOLVE_FRAMEBUFFER_NUMBER));
+addConstant(*this, "SDL_PROP_WINDOW_UIKIT_WINDOW_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_UIKIT_WINDOW_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_VIVANTE_DISPLAY_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_VIVANTE_DISPLAY_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_VIVANTE_SURFACE_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_VIVANTE_SURFACE_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_VIVANTE_WINDOW_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_VIVANTE_WINDOW_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_WAYLAND_DISPLAY_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_WAYLAND_DISPLAY_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_WAYLAND_EGL_WINDOW_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_WAYLAND_EGL_WINDOW_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_WAYLAND_SURFACE_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_WAYLAND_SURFACE_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_WAYLAND_VIEWPORT_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_WAYLAND_VIEWPORT_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_WAYLAND_XDG_POPUP_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_WAYLAND_XDG_POPUP_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_WAYLAND_XDG_POSITIONER_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_WAYLAND_XDG_POSITIONER_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_WAYLAND_XDG_SURFACE_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_WAYLAND_XDG_SURFACE_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_EXPORT_HANDLE_STRING", static_cast<const char *>(SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_EXPORT_HANDLE_STRING));
+addConstant(*this, "SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_WIN32_HDC_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_WIN32_HDC_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_WIN32_HWND_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_WIN32_HWND_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_WIN32_INSTANCE_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_WIN32_INSTANCE_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_X11_DISPLAY_POINTER", static_cast<const char *>(SDL_PROP_WINDOW_X11_DISPLAY_POINTER));
+addConstant(*this, "SDL_PROP_WINDOW_X11_SCREEN_NUMBER", static_cast<const char *>(SDL_PROP_WINDOW_X11_SCREEN_NUMBER));
+addConstant(*this, "SDL_PROP_WINDOW_X11_WINDOW_NUMBER", static_cast<const char *>(SDL_PROP_WINDOW_X11_WINDOW_NUMBER));
 // from SDL3/SDL_stdinc.h:1427:34
 	makeExtern< void (*)(void *) , SDL_free , SimNode_ExtFuncCall >(lib,"SDL_free","SDL_free")
 		->args({"mem"})
@@ -2192,6 +2756,11 @@ makeExtern<decltype(&SDL_SetTLS), SDL_SetTLS, SimNode_ExtFuncCall>(lib,"SDL_SetT
 	makeExtern< bool (*)(struct SDL_AudioStream *,const void *,int) , SDL_PutAudioStreamData , SimNode_ExtFuncCall >(lib,"SDL_PutAudioStreamData","SDL_PutAudioStreamData")
 		->args({"stream","buf","len"})
 		->addToModule(*this, SideEffects::worstDefault);
+makeExtern<decltype(&SDL_PutAudioStreamDataNoCopy), SDL_PutAudioStreamDataNoCopy, SimNode_ExtFuncCall>(lib,"SDL_PutAudioStreamDataNoCopy","SDL_PutAudioStreamDataNoCopyAddress")->args({"stream","buf","len","callback","userdata"})->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_audio.h:1583:34
+	makeExtern< bool (*)(struct SDL_AudioStream *,const void *const *,int,int) , SDL_PutAudioStreamPlanarData , SimNode_ExtFuncCall >(lib,"SDL_PutAudioStreamPlanarData","SDL_PutAudioStreamPlanarData")
+		->args({"stream","channel_buffers","num_channels","num_samples"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_audio.h:1613:33
 	makeExtern< int (*)(struct SDL_AudioStream *,void *,int) , SDL_GetAudioStreamData , SimNode_ExtFuncCall >(lib,"SDL_GetAudioStreamData","SDL_GetAudioStreamData")
 		->args({"stream","buf","len"})
@@ -2444,6 +3013,14 @@ makeExtern<decltype(&SDL_SetAudioPostmixCallback), SDL_SetAudioPostmixCallback, 
 	makeExtern< void (*)(struct SDL_Surface *) , SDL_UnlockSurface , SimNode_ExtFuncCall >(lib,"SDL_UnlockSurface","SDL_UnlockSurface")
 		->args({"surface"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_surface.h:531:43
+	makeExtern< struct SDL_Surface * (*)(struct SDL_IOStream *,bool) , SDL_LoadSurface_IO , SimNode_ExtFuncCall >(lib,"SDL_LoadSurface_IO","SDL_LoadSurface_IO")
+		->args({"src","closeio"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_surface.h:550:43
+	makeExtern< struct SDL_Surface * (*)(const char *) , SDL_LoadSurface , SimNode_ExtFuncCall >(lib,"SDL_LoadSurface","SDL_LoadSurface")
+		->args({"file"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_surface.h:572:43
 	makeExtern< struct SDL_Surface * (*)(struct SDL_IOStream *,bool) , SDL_LoadBMP_IO , SimNode_ExtFuncCall >(lib,"SDL_LoadBMP_IO","SDL_LoadBMP_IO")
 		->args({"src","closeio"})
@@ -2458,6 +3035,22 @@ makeExtern<decltype(&SDL_SetAudioPostmixCallback), SDL_SetAudioPostmixCallback, 
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_surface.h:642:34
 	makeExtern< bool (*)(struct SDL_Surface *,const char *) , SDL_SaveBMP , SimNode_ExtFuncCall >(lib,"SDL_SaveBMP","SDL_SaveBMP")
+		->args({"surface","file"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_surface.h:668:43
+	makeExtern< struct SDL_Surface * (*)(struct SDL_IOStream *,bool) , SDL_LoadPNG_IO , SimNode_ExtFuncCall >(lib,"SDL_LoadPNG_IO","SDL_LoadPNG_IO")
+		->args({"src","closeio"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_surface.h:692:43
+	makeExtern< struct SDL_Surface * (*)(const char *) , SDL_LoadPNG , SimNode_ExtFuncCall >(lib,"SDL_LoadPNG","SDL_LoadPNG")
+		->args({"file"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_surface.h:712:34
+	makeExtern< bool (*)(struct SDL_Surface *,struct SDL_IOStream *,bool) , SDL_SavePNG_IO , SimNode_ExtFuncCall >(lib,"SDL_SavePNG_IO","SDL_SavePNG_IO")
+		->args({"surface","dst","closeio"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_surface.h:730:34
+	makeExtern< bool (*)(struct SDL_Surface *,const char *) , SDL_SavePNG , SimNode_ExtFuncCall >(lib,"SDL_SavePNG","SDL_SavePNG")
 		->args({"surface","file"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_surface.h:752:34
@@ -2515,6 +3108,10 @@ makeExtern<decltype(&SDL_SetAudioPostmixCallback), SDL_SetAudioPostmixCallback, 
 // from SDL3/SDL_surface.h:1019:34
 	makeExtern< bool (*)(struct SDL_Surface *,enum SDL_FlipMode) , SDL_FlipSurface , SimNode_ExtFuncCall >(lib,"SDL_FlipSurface","SDL_FlipSurface")
 		->args({"surface","flip"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_surface.h:1048:43
+	makeExtern< struct SDL_Surface * (*)(struct SDL_Surface *,float) , SDL_RotateSurface , SimNode_ExtFuncCall >(lib,"SDL_RotateSurface","SDL_RotateSurface")
+		->args({"surface","angle"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_surface.h:1069:43
 	makeExtern< struct SDL_Surface * (*)(struct SDL_Surface *) , SDL_DuplicateSurface , SimNode_ExtFuncCall >(lib,"SDL_DuplicateSurface","SDL_DuplicateSurface")
@@ -2709,6 +3306,9 @@ makeExtern<decltype(&SDL_SetClipboardData), SDL_SetClipboardData, SimNode_ExtFun
 // from SDL3/SDL_clipboard.h:323:37
 	makeExtern< char ** (*)(size_t *) , SDL_GetClipboardMimeTypes , SimNode_ExtFuncCall >(lib,"SDL_GetClipboardMimeTypes","SDL_GetClipboardMimeTypes")
 		->args({"num_mime_types"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_cpuinfo.h:366:33
+	makeExtern< int (*)() , SDL_GetSystemPageSize , SimNode_ExtFuncCall >(lib,"SDL_GetSystemPageSize","SDL_GetSystemPageSize")
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_video.h:563:33
 	makeExtern< int (*)() , SDL_GetNumVideoDrivers , SimNode_ExtFuncCall >(lib,"SDL_GetNumVideoDrivers","SDL_GetNumVideoDrivers")
@@ -2922,6 +3522,10 @@ makeExtern<decltype(&SDL_SetClipboardData), SDL_SetClipboardData, SimNode_ExtFun
 	makeExtern< bool (*)(struct SDL_Window *,bool) , SDL_SetWindowAlwaysOnTop , SimNode_ExtFuncCall >(lib,"SDL_SetWindowAlwaysOnTop","SDL_SetWindowAlwaysOnTop")
 		->args({"window","on_top"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2183:34
+	makeExtern< bool (*)(struct SDL_Window *,bool) , SDL_SetWindowFillDocument , SimNode_ExtFuncCall >(lib,"SDL_SetWindowFillDocument","SDL_SetWindowFillDocument")
+		->args({"window","fill"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_video.h:2199:34
 	makeExtern< bool (*)(struct SDL_Window *) , SDL_ShowWindow , SimNode_ExtFuncCall >(lib,"SDL_ShowWindow","SDL_ShowWindow")
 		->args({"window"})
@@ -3041,6 +3645,22 @@ makeExtern<decltype(&SDL_SetWindowHitTest), SDL_SetWindowHitTest, SimNode_ExtFun
 // from SDL3/SDL_video.h:2940:34
 	makeExtern< bool (*)(struct SDL_Window *,enum SDL_FlashOperation) , SDL_FlashWindow , SimNode_ExtFuncCall >(lib,"SDL_FlashWindow","SDL_FlashWindow")
 		->args({"window","operation"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2955:34
+	makeExtern< bool (*)(struct SDL_Window *,enum SDL_ProgressState) , SDL_SetWindowProgressState , SimNode_ExtFuncCall >(lib,"SDL_SetWindowProgressState","SDL_SetWindowProgressState")
+		->args({"window","state"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2968:47
+	makeExtern< enum SDL_ProgressState (*)(struct SDL_Window *) , SDL_GetWindowProgressState , SimNode_ExtFuncCall >(lib,"SDL_GetWindowProgressState","SDL_GetWindowProgressState")
+		->args({"window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2983:34
+	makeExtern< bool (*)(struct SDL_Window *,float) , SDL_SetWindowProgressValue , SimNode_ExtFuncCall >(lib,"SDL_SetWindowProgressValue","SDL_SetWindowProgressValue")
+		->args({"window","value"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_video.h:2996:35
+	makeExtern< float (*)(struct SDL_Window *) , SDL_GetWindowProgressValue , SimNode_ExtFuncCall >(lib,"SDL_GetWindowProgressValue","SDL_GetWindowProgressValue")
+		->args({"window"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_video.h:3018:34
 	makeExtern< void (*)(struct SDL_Window *) , SDL_DestroyWindow , SimNode_ExtFuncCall >(lib,"SDL_DestroyWindow","SDL_DestroyWindow")
@@ -3758,6 +4378,7 @@ makeExtern<decltype(&SDL_ShowFileDialogWithProperties), SDL_ShowFileDialogWithPr
 	makeExtern< bool (*)(float,float) , SDL_WarpMouseGlobal , SimNode_ExtFuncCall >(lib,"SDL_WarpMouseGlobal","SDL_WarpMouseGlobal")
 		->args({"x","y"})
 		->addToModule(*this, SideEffects::worstDefault);
+makeExtern<decltype(&SDL_SetRelativeMouseTransform), SDL_SetRelativeMouseTransform, SimNode_ExtFuncCall>(lib,"SDL_SetRelativeMouseTransform","SDL_SetRelativeMouseTransformAddress")->args({"callback","userdata"})->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_mouse.h:476:34
 	makeExtern< bool (*)(struct SDL_Window *,bool) , SDL_SetWindowRelativeMouseMode , SimNode_ExtFuncCall >(lib,"SDL_SetWindowRelativeMouseMode","SDL_SetWindowRelativeMouseMode")
 		->args({"window","enabled"})
@@ -3777,6 +4398,10 @@ makeExtern<decltype(&SDL_ShowFileDialogWithProperties), SDL_ShowFileDialogWithPr
 // from SDL3/SDL_mouse.h:622:42
 	makeExtern< struct SDL_Cursor * (*)(struct SDL_Surface *,int,int) , SDL_CreateColorCursor , SimNode_ExtFuncCall >(lib,"SDL_CreateColorCursor","SDL_CreateColorCursor")
 		->args({"surface","hot_x","hot_y"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_mouse.h:672:41
+	makeExtern< struct SDL_Cursor * (*)(struct SDL_CursorFrameInfo *,int,int,int) , SDL_CreateAnimatedCursor , SimNode_ExtFuncCall >(lib,"SDL_CreateAnimatedCursor","SDL_CreateAnimatedCursor")
+		->args({"frames","frame_count","hot_x","hot_y"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_mouse.h:690:42
 	makeExtern< struct SDL_Cursor * (*)(enum SDL_SystemCursor) , SDL_CreateSystemCursor , SimNode_ExtFuncCall >(lib,"SDL_CreateSystemCursor","SDL_CreateSystemCursor")
@@ -3820,6 +4445,10 @@ makeExtern<decltype(&SDL_ShowFileDialogWithProperties), SDL_ShowFileDialogWithPr
 // from SDL3/SDL_touch.h:176:43
 	makeExtern< struct SDL_Finger ** (*)(SDL_TouchID,int *) , SDL_GetTouchFingers , SimNode_ExtFuncCall >(lib,"SDL_GetTouchFingers","SDL_GetTouchFingers")
 		->args({"touchID","count"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_pen.h:189:47
+	makeExtern< enum SDL_PenDeviceType (*)(unsigned int) , SDL_GetPenDeviceType , SimNode_ExtFuncCall >(lib,"SDL_GetPenDeviceType","SDL_GetPenDeviceType")
+		->args({"instance_id"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_events.h:1101:34
 	makeExtern< void (*)() , SDL_PumpEvents , SimNode_ExtFuncCall >(lib,"SDL_PumpEvents","SDL_PumpEvents")
@@ -3880,6 +4509,10 @@ makeExtern<decltype(&SDL_FilterEvents), SDL_FilterEvents, SimNode_ExtFuncCall>(l
 // from SDL3/SDL_events.h:1606:42
 	makeExtern< struct SDL_Window * (*)(const union SDL_Event *) , SDL_GetWindowFromEvent , SimNode_ExtFuncCall >(lib,"SDL_GetWindowFromEvent","SDL_GetWindowFromEvent")
 		->args({"event"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_events.h:1638:33
+	makeExtern< int (*)(const union SDL_Event *,char *,int) , SDL_GetEventDescription , SimNode_ExtFuncCall >(lib,"SDL_GetEventDescription","SDL_GetEventDescription")
+		->args({"event","buf","buflen"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_filesystem.h:101:42
 	makeExtern< const char * (*)() , SDL_GetBasePath , SimNode_ExtFuncCall >(lib,"SDL_GetBasePath","SDL_GetBasePath")
@@ -4443,6 +5076,10 @@ makeExtern<decltype(&SDL_hid_open), SDL_hid_open, SimNode_ExtFuncCall>(lib,"SDL_
 	makeExtern< struct SDL_hid_device * (*)(const char *) , SDL_hid_open_path , SimNode_ExtFuncCall >(lib,"SDL_hid_open_path","SDL_hid_open_path")
 		->args({"path"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_hidapi.h:301:46
+	makeExtern< unsigned int (*)(struct SDL_hid_device *) , SDL_hid_get_properties , SimNode_ExtFuncCall >(lib,"SDL_hid_get_properties","SDL_hid_get_properties")
+		->args({"dev"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_hidapi.h:330:33
 	makeExtern< int (*)(struct SDL_hid_device *,const unsigned char *,size_t) , SDL_hid_write , SimNode_ExtFuncCall >(lib,"SDL_hid_write","SDL_hid_write")
 		->args({"dev","data","length"})
@@ -4635,6 +5272,14 @@ makeExtern<decltype(&SDL_LoadFunction), SDL_LoadFunction, SimNode_ExtFuncCall>(l
 	makeExtern< struct SDL_Renderer * (*)(unsigned int) , SDL_CreateRendererWithProperties , SimNode_ExtFuncCall >(lib,"SDL_CreateRendererWithProperties","SDL_CreateRendererWithProperties")
 		->args({"props"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:387:44
+	makeExtern< struct SDL_Renderer * (*)(struct SDL_GPUDevice *,struct SDL_Window *) , SDL_CreateGPURenderer , SimNode_ExtFuncCall >(lib,"SDL_CreateGPURenderer","SDL_CreateGPURenderer")
+		->args({"device","window"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:400:45
+	makeExtern< struct SDL_GPUDevice * (*)(struct SDL_Renderer *) , SDL_GetGPURendererDevice , SimNode_ExtFuncCall >(lib,"SDL_GetGPURendererDevice","SDL_GetGPURendererDevice")
+		->args({"renderer"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_render.h:421:44
 	makeExtern< struct SDL_Renderer * (*)(struct SDL_Surface *) , SDL_CreateSoftwareRenderer , SimNode_ExtFuncCall >(lib,"SDL_CreateSoftwareRenderer","SDL_CreateSoftwareRenderer")
 		->args({"surface"})
@@ -4686,6 +5331,14 @@ makeExtern<decltype(&SDL_LoadFunction), SDL_LoadFunction, SimNode_ExtFuncCall>(l
 // from SDL3/SDL_render.h:994:34
 	makeExtern< bool (*)(struct SDL_Texture *,float *,float *) , SDL_GetTextureSize , SimNode_ExtFuncCall >(lib,"SDL_GetTextureSize","SDL_GetTextureSize")
 		->args({"texture","w","h"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1016:34
+	makeExtern< bool (*)(struct SDL_Texture *,struct SDL_Palette *) , SDL_SetTexturePalette , SimNode_ExtFuncCall >(lib,"SDL_SetTexturePalette","SDL_SetTexturePalette")
+		->args({"texture","palette"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:1031:43
+	makeExtern< struct SDL_Palette * (*)(struct SDL_Texture *) , SDL_GetTexturePalette , SimNode_ExtFuncCall >(lib,"SDL_GetTexturePalette","SDL_GetTexturePalette")
+		->args({"texture"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_render.h:1060:34
 	makeExtern< bool (*)(struct SDL_Texture *,unsigned char,unsigned char,unsigned char) , SDL_SetTextureColorMod , SimNode_ExtFuncCall >(lib,"SDL_SetTextureColorMod","SDL_SetTextureColorMod")
@@ -4915,6 +5568,10 @@ makeExtern<decltype(&SDL_LoadFunction), SDL_LoadFunction, SimNode_ExtFuncCall>(l
 	makeExtern< bool (*)(struct SDL_Renderer *,struct SDL_Texture *,const struct SDL_FRect *,float,float,float,float,float,const struct SDL_FRect *) , SDL_RenderTexture9Grid , SimNode_ExtFuncCall >(lib,"SDL_RenderTexture9Grid","SDL_RenderTexture9Grid")
 		->args({"renderer","texture","srcrect","left_width","right_width","top_height","bottom_height","scale","dstrect"})
 		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2439:34
+	makeExtern< bool (*)(struct SDL_Renderer *,struct SDL_Texture *,const struct SDL_FRect *,float,float,float,float,float,const struct SDL_FRect *,float) , SDL_RenderTexture9GridTiled , SimNode_ExtFuncCall >(lib,"SDL_RenderTexture9GridTiled","SDL_RenderTexture9GridTiled")
+		->args({"renderer","texture","srcrect","left_width","right_width","top_height","bottom_height","scale","dstrect","tileScale"})
+		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_render.h:2464:34
 	makeExtern< bool (*)(struct SDL_Renderer *,struct SDL_Texture *,const struct SDL_Vertex *,int,const int *,int) , SDL_RenderGeometry , SimNode_ExtFuncCall >(lib,"SDL_RenderGeometry","SDL_RenderGeometry")
 		->args({"renderer","texture","vertices","num_vertices","indices","num_indices"})
@@ -4922,6 +5579,14 @@ makeExtern<decltype(&SDL_LoadFunction), SDL_LoadFunction, SimNode_ExtFuncCall>(l
 // from SDL3/SDL_render.h:2497:34
 	makeExtern< bool (*)(struct SDL_Renderer *,struct SDL_Texture *,const float *,int,const struct SDL_FColor *,int,const float *,int,int,const void *,int,int) , SDL_RenderGeometryRaw , SimNode_ExtFuncCall >(lib,"SDL_RenderGeometryRaw","SDL_RenderGeometryRaw")
 		->args({"renderer","texture","xy","xy_stride","color","color_stride","uv","uv_stride","num_vertices","indices","num_indices","size_indices"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2524:34
+	makeExtern< bool (*)(struct SDL_Renderer *,enum SDL_TextureAddressMode,enum SDL_TextureAddressMode) , SDL_SetRenderTextureAddressMode , SimNode_ExtFuncCall >(lib,"SDL_SetRenderTextureAddressMode","SDL_SetRenderTextureAddressMode")
+		->args({"renderer","u_mode","v_mode"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2545:34
+	makeExtern< bool (*)(struct SDL_Renderer *,enum SDL_TextureAddressMode *,enum SDL_TextureAddressMode *) , SDL_GetRenderTextureAddressMode , SimNode_ExtFuncCall >(lib,"SDL_GetRenderTextureAddressMode","SDL_GetRenderTextureAddressMode")
+		->args({"renderer","u_mode","v_mode"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_render.h:2572:43
 	makeExtern< struct SDL_Surface * (*)(struct SDL_Renderer *,const struct SDL_Rect *) , SDL_RenderReadPixels , SimNode_ExtFuncCall >(lib,"SDL_RenderReadPixels","SDL_RenderReadPixels")
@@ -4966,6 +5631,30 @@ makeExtern<decltype(&SDL_LoadFunction), SDL_LoadFunction, SimNode_ExtFuncCall>(l
 // from SDL3/SDL_render.h:2856:34
 	makeExtern< bool (*)(struct SDL_Renderer *,float,float,const char *) , SDL_RenderDebugText , SimNode_ExtFuncCall >(lib,"SDL_RenderDebugText","SDL_RenderDebugText")
 		->args({"renderer","x","y","str"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2902:34
+	makeExtern< bool (*)(struct SDL_Renderer *,enum SDL_ScaleMode) , SDL_SetDefaultTextureScaleMode , SimNode_ExtFuncCall >(lib,"SDL_SetDefaultTextureScaleMode","SDL_SetDefaultTextureScaleMode")
+		->args({"renderer","scale_mode"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2920:34
+	makeExtern< bool (*)(struct SDL_Renderer *,enum SDL_ScaleMode *) , SDL_GetDefaultTextureScaleMode , SimNode_ExtFuncCall >(lib,"SDL_GetDefaultTextureScaleMode","SDL_GetDefaultTextureScaleMode")
+		->args({"renderer","scale_mode"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2974:50
+	makeExtern< struct SDL_GPURenderState * (*)(struct SDL_Renderer *,const struct SDL_GPURenderStateCreateInfo *) , SDL_CreateGPURenderState , SimNode_ExtFuncCall >(lib,"SDL_CreateGPURenderState","SDL_CreateGPURenderState")
+		->args({"renderer","createinfo"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:2994:34
+	makeExtern< bool (*)(struct SDL_GPURenderState *,unsigned int,const void *,unsigned int) , SDL_SetGPURenderStateFragmentUniforms , SimNode_ExtFuncCall >(lib,"SDL_SetGPURenderStateFragmentUniforms","SDL_SetGPURenderStateFragmentUniforms")
+		->args({"state","slot_index","data","length"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:3012:34
+	makeExtern< bool (*)(struct SDL_Renderer *,struct SDL_GPURenderState *) , SDL_SetGPURenderState , SimNode_ExtFuncCall >(lib,"SDL_SetGPURenderState","SDL_SetGPURenderState")
+		->args({"renderer","state"})
+		->addToModule(*this, SideEffects::worstDefault);
+// from SDL3/SDL_render.h:3026:34
+	makeExtern< void (*)(struct SDL_GPURenderState *) , SDL_DestroyGPURenderState , SimNode_ExtFuncCall >(lib,"SDL_DestroyGPURenderState","SDL_DestroyGPURenderState")
+		->args({"state"})
 		->addToModule(*this, SideEffects::worstDefault);
 // from SDL3/SDL_storage.h:353:43
 	makeExtern< struct SDL_Storage * (*)(const char *,unsigned int) , SDL_OpenTitleStorage , SimNode_ExtFuncCall >(lib,"SDL_OpenTitleStorage","SDL_OpenTitleStorage")

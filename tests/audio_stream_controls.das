@@ -8,6 +8,41 @@ require math
 def main(smoke : bool) : int {
     let stereo=audio_spec(SDL_AUDIO_F32,2,48000)
     let mono=audio_spec(SDL_AUDIO_F32,1,48000)
+    // The returned array outlives its stream and is independent of later changes.
+    var copied <- with_audio_stream(stereo,stereo) $(stream : SDL_AudioStream?) : $Result<array<int>; SdlError> {
+        SDL_SetErrorText("stale")
+        var initial <- audio_stream_input_channel_map(stream) |> sdl_try
+        verify(is_none(initial))
+        set_audio_stream_input_channel_map(stream,array<int>(1,0)) |> sdl_try
+        set_audio_stream_output_channel_map(stream,array<int>(-1,0)) |> sdl_try
+        SDL_SetErrorText("stale")
+        var input <- audio_stream_input_channel_map(stream) |> sdl_try
+        var output <- audio_stream_output_channel_map(stream) |> sdl_try
+        verify(is_some(input) && is_some(output))
+        var input_values <- move_unwrap(input)
+        var output_values <- move_unwrap(output)
+        verify(output_values[0]==-1 && output_values[1]==0)
+        input_values[0]=-1
+        var again <- audio_stream_input_channel_map(stream) |> sdl_try
+        var again_values <- move_unwrap(again)
+        verify(again_values[0]==1 && again_values[1]==0)
+        reset_audio_stream_input_channel_map(stream,2) |> sdl_try
+        // Identity maps are normalized to the default by SDL.
+        set_audio_stream_output_channel_map(stream,array<int>(0,1)) |> sdl_try
+        var reset_input <- audio_stream_input_channel_map(stream) |> sdl_try
+        var reset_output <- audio_stream_output_channel_map(stream) |> sdl_try
+        verify(is_none(reset_input) && is_none(reset_output))
+        return <- move_ok(input_values,type<SdlError>)
+    }
+    verify(is_ok(copied))
+    var surviving <- move_unwrap(copied)
+    verify(surviving[0]==-1 && surviving[1]==0)
+    var failed_input <- audio_stream_input_channel_map(null)
+    var failed_output <- audio_stream_output_channel_map(null)
+    verify(is_err(failed_input) && is_err(failed_output))
+    SDL_ClearError()
+    verify(unwrap_err(failed_input).operation=="SDL_GetAudioStreamInputChannelMap")
+    verify(length(unwrap_err(failed_output).message)>0)
     let tested=with_audio_stream(stereo,stereo) $(stream) {
         let props=SDL_GetAudioStreamProperties(stream)
         verify(props!=0u && unwrap(audio_stream_properties(stream))==props)

@@ -104,6 +104,13 @@ class SdlParityGen : CppGenBind {
         fwrite(registrations,"addEnumeration(new Enumeration_{name}());\n")
     }
     def emit_constant(var c : CXCursor; name : string) {
+        // String macros are type-checked by C++; the snapshot header hash and
+        // runtime metadata parity cover their values, rather than integer evaluation.
+        if(constants[name]=="const char *") {
+            fwrite(registrations,"addConstant(*this, \"{name}\", static_cast<const char *>({name}));\n")
+            fwrite(contract,"K\t{name}\tconst char *\tnative-string-macro\n")
+            return
+        }
         let eval = clang_Cursor_Evaluate(c)
         if (eval == null) { panic("Cannot evaluate {name}") }
         if (constants[name]=="float" && clang_EvalResult_getKind(eval)==CXEvalResultKind.Float) {
@@ -146,7 +153,7 @@ class SdlParityGen : CppGenBind {
         let name=string(clang_getCursorSpelling(c))
         if(!key_exists(selected,name)) {return true}
         // Explicit native-address callback contracts; no script-function reinterpretation.
-        if(name=="SDL_SetClipboardData" || name=="SDL_SetWindowHitTest" || name=="SDL_SetEventFilter" || name=="SDL_GetEventFilter" || name=="SDL_AddEventWatch" || name=="SDL_RemoveEventWatch" || name=="SDL_FilterEvents" || name=="SDL_EnumerateDirectory" || name=="SDL_EnumerateStorageDirectory" || name=="SDL_SetAudioStreamGetCallback" || name=="SDL_SetAudioStreamPutCallback" || name=="SDL_OpenAudioDeviceStream" || name=="SDL_SetAudioPostmixCallback" || name=="SDL_CreateThreadRuntime" || name=="SDL_CreateThreadWithPropertiesRuntime" || name=="SDL_SetTLS" || name=="SDL_LoadFunction" || name=="SDL_SetWindowsMessageHook" || name=="SDL_SetX11EventHook" || name=="SDL_SetTrayEntryCallback" || name=="SDL_ShowOpenFileDialog" || name=="SDL_ShowSaveFileDialog" || name=="SDL_ShowOpenFolderDialog" || name=="SDL_ShowFileDialogWithProperties") {return false}
+        if(name=="SDL_SetClipboardData" || name=="SDL_SetWindowHitTest" || name=="SDL_SetEventFilter" || name=="SDL_GetEventFilter" || name=="SDL_AddEventWatch" || name=="SDL_RemoveEventWatch" || name=="SDL_FilterEvents" || name=="SDL_EnumerateDirectory" || name=="SDL_EnumerateStorageDirectory" || name=="SDL_SetAudioStreamGetCallback" || name=="SDL_SetAudioStreamPutCallback" || name=="SDL_OpenAudioDeviceStream" || name=="SDL_SetAudioPostmixCallback" || name=="SDL_PutAudioStreamDataNoCopy" || name=="SDL_SetRelativeMouseTransform" || name=="SDL_CreateThreadRuntime" || name=="SDL_CreateThreadWithPropertiesRuntime" || name=="SDL_SetTLS" || name=="SDL_LoadFunction" || name=="SDL_SetWindowsMessageHook" || name=="SDL_SetX11EventHook" || name=="SDL_SetTrayEntryCallback" || name=="SDL_ShowOpenFileDialog" || name=="SDL_ShowSaveFileDialog" || name=="SDL_ShowOpenFolderDialog" || name=="SDL_ShowFileDialogWithProperties") {return false}
         return AnyGenBind`skip_function(self, c)
     }
     def override skip_alias(var c : CXCursor) : bool { return true }
@@ -170,7 +177,7 @@ class SdlParityGen : CppGenBind {
             fwrite(signatures, "\t{string(clang_getCursorSpelling(arg))}")
         }
         fwrite(signatures, "\n")
-        if(name=="SDL_SetClipboardData" || name=="SDL_SetWindowHitTest" || name=="SDL_SetEventFilter" || name=="SDL_GetEventFilter" || name=="SDL_AddEventWatch" || name=="SDL_RemoveEventWatch" || name=="SDL_FilterEvents" || name=="SDL_EnumerateDirectory" || name=="SDL_EnumerateStorageDirectory" || name=="SDL_SetAudioStreamGetCallback" || name=="SDL_SetAudioStreamPutCallback" || name=="SDL_OpenAudioDeviceStream" || name=="SDL_SetAudioPostmixCallback" || name=="SDL_CreateThreadRuntime" || name=="SDL_CreateThreadWithPropertiesRuntime" || name=="SDL_SetTLS" || name=="SDL_LoadFunction" || name=="SDL_SetWindowsMessageHook" || name=="SDL_SetX11EventHook" || name=="SDL_SetTrayEntryCallback" || name=="SDL_ShowOpenFileDialog" || name=="SDL_ShowSaveFileDialog" || name=="SDL_ShowOpenFolderDialog" || name=="SDL_ShowFileDialogWithProperties") {
+        if(name=="SDL_SetClipboardData" || name=="SDL_SetWindowHitTest" || name=="SDL_SetEventFilter" || name=="SDL_GetEventFilter" || name=="SDL_AddEventWatch" || name=="SDL_RemoveEventWatch" || name=="SDL_FilterEvents" || name=="SDL_EnumerateDirectory" || name=="SDL_EnumerateStorageDirectory" || name=="SDL_SetAudioStreamGetCallback" || name=="SDL_SetAudioStreamPutCallback" || name=="SDL_OpenAudioDeviceStream" || name=="SDL_SetAudioPostmixCallback" || name=="SDL_PutAudioStreamDataNoCopy" || name=="SDL_SetRelativeMouseTransform" || name=="SDL_CreateThreadRuntime" || name=="SDL_CreateThreadWithPropertiesRuntime" || name=="SDL_SetTLS" || name=="SDL_LoadFunction" || name=="SDL_SetWindowsMessageHook" || name=="SDL_SetX11EventHook" || name=="SDL_SetTrayEntryCallback" || name=="SDL_ShowOpenFileDialog" || name=="SDL_ShowSaveFileDialog" || name=="SDL_ShowOpenFolderDialog" || name=="SDL_ShowFileDialogWithProperties") {
             fwrite(func_file,"makeExtern<decltype(&{name}), {name}, SimNode_ExtFuncCall>(lib,\"{name}\",\"{name}Address\")->args(\{")
             for(i in urange(clang_Cursor_getNumArguments(c))) {
                 if(i!=0u) {fwrite(func_file,",")}

@@ -3,10 +3,10 @@
   "sdl_release": "3.4.16",
   "llvm_sdk": "22.1.5",
   "inputs_sha256": {
-    "tools/run_clangbind_parity.py": "7dbc961c02c6dbdbb41747d3c446e02d642a86dc2c221143afc8c0b2a8bfb72d",
-    "tools/clangbind_parity.das": "93194f68fc7c7965a95112b4bb76cd6324ee286735ffc0e73790b3a04b45da1a",
-    "tools/bindings.json": "113e000bfb6fc3eea44d18dc2f686f48eb398fae546c9399c18e97fb35272f83",
-    "tools/api-policy.json": "14d62fc92d2e25044c71cd06dab65875dea6a529389c55334a5f1f0bcd6a091c"
+    "tools/run_clangbind_parity.py": "94af18919703c8c5ff554b087426fdd993cec62bc84eda3e3dca0193a7a3a723",
+    "tools/clangbind_parity.das": "0a4692c9474d4a7ad8c6fbfe1aed578d26d9cb9110f8b75af0975ea0a9889a73",
+    "tools/bindings.json": "f10ca6bb1556b5a033e26301cc24798fec78b2d41d3631d26d3bac5e48c20384",
+    "tools/api-policy.json": "1b8a45468a0a04795341a4af5eb5c51c1db9ee8ec555dc93227cb5fd1c1ccf0f"
   },
   "headers_sha256": {
     "SDL.h": "6985a5d648e45b9e71be852ab7bcece191d748c4c2fc273535f56e1c3f0bd62d",

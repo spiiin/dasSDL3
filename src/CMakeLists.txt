@@ -109,6 +109,7 @@ if(Python3_FOUND AND DASSDL3_CLANG_EXECUTABLE)
             add_test(NAME sdl3_api_inventory_contracts
                 COMMAND ${Python3_EXECUTABLE} -B ${CMAKE_SOURCE_DIR}/tests/test_api_inventory.py
                     --clang ${DASSDL3_CLANG_EXECUTABLE})
+            add_test(NAME sdl3_render_surface_34_coverage COMMAND ${Python3_EXECUTABLE} -B ${CMAKE_SOURCE_DIR}/tests/test_render_surface_34_coverage.py)
             add_test(NAME sdl3_p7_raw_coverage COMMAND ${Python3_EXECUTABLE} -B ${CMAKE_SOURCE_DIR}/tests/test_p7_raw_coverage.py)
             set_tests_properties(sdl3_api_inventory sdl3_api_inventory_contracts PROPERTIES TIMEOUT 60)
         endif()
@@ -454,4 +455,39 @@ endforeach()
 if(BUILD_TESTING)
     add_test(NAME sdl3_metaballs_field COMMAND dasSDL3_runner ${CMAKE_SOURCE_DIR}/examples/gpu/test_metaballs_field.das --smoke-test)
     set_tests_properties(sdl3_metaballs_field PROPERTIES TIMEOUT 30)
+endif()
+
+# SDL 3.4 Surface/Render additions. Shader binaries are immutable runtime assets.
+foreach(shader render_state.frag.spv render_state.frag.dxil)
+    configure_file(${CMAKE_SOURCE_DIR}/examples/assets/shaders/${shader}
+        ${CMAKE_BINARY_DIR}/bin/assets/shaders/${shader} COPYONLY)
+endforeach()
+if(BUILD_TESTING)
+    add_test(NAME sdl3_render_surface_34 COMMAND dasSDL3_runner ${CMAKE_SOURCE_DIR}/tests/render_surface_34.das --smoke-test)
+    set_tests_properties(sdl3_render_surface_34 PROPERTIES TIMEOUT 60 RESOURCE_LOCK render34_files)
+    foreach(driver vulkan direct3d12)
+        add_test(NAME sdl3_gpu_renderer_34_${driver} COMMAND dasSDL3_runner ${CMAKE_SOURCE_DIR}/tests/gpu_renderer_34.das --smoke-test)
+        add_test(NAME sdl3_gpu_renderer_34_example_${driver} COMMAND dasSDL3_runner ${CMAKE_SOURCE_DIR}/examples/86_gpu_renderer.das --smoke-test)
+        set_tests_properties(sdl3_gpu_renderer_34_${driver} sdl3_gpu_renderer_34_example_${driver} PROPERTIES
+            TIMEOUT 60 RESOURCE_LOCK sdl_gpu ENVIRONMENT "SDL_GPU_DRIVER=${driver};VK_LOADER_LAYERS_DISABLE=VK_LAYER_RENDERDOC_Capture"
+            FAIL_REGULAR_EXPRESSION "VUID-;Validation Error;D3D12 ERROR;D3D12 CORRUPTION")
+    endforeach()
+endif()
+
+if(BUILD_TESTING)
+    foreach(script tests/sdl34_remaining tests/sdl34_audio examples/87_window_progress)
+        string(REPLACE "/" "_" name "${script}")
+        add_test(NAME remaining34_${name} COMMAND dasSDL3_runner ${CMAKE_SOURCE_DIR}/${script}.das --smoke-test)
+        set_tests_properties(remaining34_${name} PROPERTIES TIMEOUT 60)
+    endforeach()
+    if(DASSDL3_ENABLE_GENERATORS)
+        add_test(NAME remaining34_coverage COMMAND ${Python3_EXECUTABLE} -B ${CMAKE_SOURCE_DIR}/tests/test_remaining34_coverage.py)
+    endif()
+endif()
+
+if(BUILD_TESTING)
+    foreach(script hotplug_events string_constants)
+        add_test(NAME sdl3_${script} COMMAND dasSDL3_runner ${CMAKE_SOURCE_DIR}/tests/${script}.das --smoke-test)
+        set_tests_properties(sdl3_${script} PROPERTIES TIMEOUT 30)
+    endforeach()
 endif()

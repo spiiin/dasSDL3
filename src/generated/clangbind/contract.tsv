@@ -270,6 +270,13 @@ E	SDL_FlashOperation	4	4
 V	SDL_FlashOperation	SDL_FLASH_CANCEL	FLASH_CANCEL	0
 V	SDL_FlashOperation	SDL_FLASH_BRIEFLY	FLASH_BRIEFLY	1
 V	SDL_FlashOperation	SDL_FLASH_UNTIL_FOCUSED	FLASH_UNTIL_FOCUSED	2
+E	SDL_ProgressState	4	4
+V	SDL_ProgressState	SDL_PROGRESS_STATE_INVALID	PROGRESS_STATE_INVALID	-1
+V	SDL_ProgressState	SDL_PROGRESS_STATE_NONE	PROGRESS_STATE_NONE	0
+V	SDL_ProgressState	SDL_PROGRESS_STATE_INDETERMINATE	PROGRESS_STATE_INDETERMINATE	1
+V	SDL_ProgressState	SDL_PROGRESS_STATE_NORMAL	PROGRESS_STATE_NORMAL	2
+V	SDL_ProgressState	SDL_PROGRESS_STATE_PAUSED	PROGRESS_STATE_PAUSED	3
+V	SDL_ProgressState	SDL_PROGRESS_STATE_ERROR	PROGRESS_STATE_ERROR	4
 E	SDL_HitTestResult	4	4
 V	SDL_HitTestResult	SDL_HITTEST_NORMAL	HITTEST_NORMAL	0
 V	SDL_HitTestResult	SDL_HITTEST_DRAGGABLE	HITTEST_DRAGGABLE	1
@@ -703,6 +710,9 @@ V	SDL_SystemCursor	SDL_SYSTEM_CURSOR_S_RESIZE	SYSTEM_CURSOR_S_RESIZE	17
 V	SDL_SystemCursor	SDL_SYSTEM_CURSOR_SW_RESIZE	SYSTEM_CURSOR_SW_RESIZE	18
 V	SDL_SystemCursor	SDL_SYSTEM_CURSOR_W_RESIZE	SYSTEM_CURSOR_W_RESIZE	19
 V	SDL_SystemCursor	SDL_SYSTEM_CURSOR_COUNT	SYSTEM_CURSOR_COUNT	20
+S	SDL_CursorFrameInfo	16	8
+F	SDL_CursorFrameInfo	surface	surface	0
+F	SDL_CursorFrameInfo	duration	duration	8
 E	SDL_TouchDeviceType	4	4
 V	SDL_TouchDeviceType	SDL_TOUCH_DEVICE_INVALID	TOUCH_DEVICE_INVALID	-1
 V	SDL_TouchDeviceType	SDL_TOUCH_DEVICE_DIRECT	TOUCH_DEVICE_DIRECT	0
@@ -722,6 +732,14 @@ V	SDL_PenAxis	SDL_PEN_AXIS_ROTATION	PEN_AXIS_ROTATION	4
 V	SDL_PenAxis	SDL_PEN_AXIS_SLIDER	PEN_AXIS_SLIDER	5
 V	SDL_PenAxis	SDL_PEN_AXIS_TANGENTIAL_PRESSURE	PEN_AXIS_TANGENTIAL_PRESSURE	6
 V	SDL_PenAxis	SDL_PEN_AXIS_COUNT	PEN_AXIS_COUNT	7
+E	SDL_PenDeviceType	4	4
+V	SDL_PenDeviceType	SDL_PEN_DEVICE_TYPE_INVALID	PEN_DEVICE_TYPE_INVALID	-1
+V	SDL_PenDeviceType	SDL_PEN_DEVICE_TYPE_UNKNOWN	PEN_DEVICE_TYPE_UNKNOWN	0
+V	SDL_PenDeviceType	SDL_PEN_DEVICE_TYPE_DIRECT	PEN_DEVICE_TYPE_DIRECT	1
+V	SDL_PenDeviceType	SDL_PEN_DEVICE_TYPE_INDIRECT	PEN_DEVICE_TYPE_INDIRECT	2
+S	SDL_KeyboardDeviceEvent	24	8
+F	SDL_KeyboardDeviceEvent	timestamp	timestamp	8
+F	SDL_KeyboardDeviceEvent	which	which	16
 S	SDL_KeyboardEvent	40	8
 F	SDL_KeyboardEvent	timestamp	timestamp	8
 F	SDL_KeyboardEvent	windowID	windowID	16
@@ -737,6 +755,9 @@ F	SDL_TextEditingCandidatesEvent	windowID	windowID	16
 F	SDL_TextEditingCandidatesEvent	num_candidates	num_candidates	32
 F	SDL_TextEditingCandidatesEvent	selected_candidate	selected_candidate	36
 F	SDL_TextEditingCandidatesEvent	horizontal	horizontal	40
+S	SDL_MouseDeviceEvent	24	8
+F	SDL_MouseDeviceEvent	timestamp	timestamp	8
+F	SDL_MouseDeviceEvent	which	which	16
 S	SDL_MouseMotionEvent	48	8
 F	SDL_MouseMotionEvent	timestamp	timestamp	8
 F	SDL_MouseMotionEvent	windowID	windowID	16
@@ -821,6 +842,13 @@ F	SDL_GamepadSensorEvent	which	which	16
 F	SDL_GamepadSensorEvent	sensor	sensor	20
 F	SDL_GamepadSensorEvent	data	data	24
 F	SDL_GamepadSensorEvent	sensor_timestamp	sensor_timestamp	40
+S	SDL_AudioDeviceEvent	24	8
+F	SDL_AudioDeviceEvent	timestamp	timestamp	8
+F	SDL_AudioDeviceEvent	which	which	16
+F	SDL_AudioDeviceEvent	recording	recording	20
+S	SDL_CameraDeviceEvent	24	8
+F	SDL_CameraDeviceEvent	timestamp	timestamp	8
+F	SDL_CameraDeviceEvent	which	which	16
 S	SDL_TouchFingerEvent	56	8
 F	SDL_TouchFingerEvent	timestamp	timestamp	8
 F	SDL_TouchFingerEvent	touchID	touchID	16
@@ -835,6 +863,7 @@ S	SDL_PenProximityEvent	32	8
 F	SDL_PenProximityEvent	timestamp	timestamp	8
 F	SDL_PenProximityEvent	windowID	windowID	16
 F	SDL_PenProximityEvent	which	which	20
+F	SDL_PenProximityEvent	pen_state	pen_state	24
 S	SDL_PenMotionEvent	40	8
 F	SDL_PenMotionEvent	timestamp	timestamp	8
 F	SDL_PenMotionEvent	windowID	windowID	16
@@ -1315,6 +1344,7 @@ S	SDL_GPUMultisampleState	12	4
 F	SDL_GPUMultisampleState	sample_count	sample_count	0
 F	SDL_GPUMultisampleState	sample_mask	sample_mask	4
 F	SDL_GPUMultisampleState	enable_mask	enable_mask	8
+F	SDL_GPUMultisampleState	enable_alpha_to_coverage	enable_alpha_to_coverage	9
 S	SDL_GPUDepthStencilState	44	4
 F	SDL_GPUDepthStencilState	compare_op	compare_op	0
 F	SDL_GPUDepthStencilState	back_stencil_state	back_stencil_state	4
@@ -1378,6 +1408,8 @@ F	SDL_GPUDepthStencilTargetInfo	stencil_load_op	stencil_load_op	20
 F	SDL_GPUDepthStencilTargetInfo	stencil_store_op	stencil_store_op	24
 F	SDL_GPUDepthStencilTargetInfo	cycle	cycle	28
 F	SDL_GPUDepthStencilTargetInfo	clear_stencil	clear_stencil	29
+F	SDL_GPUDepthStencilTargetInfo	mip_level	mip_level	30
+F	SDL_GPUDepthStencilTargetInfo	layer	layer	31
 S	SDL_GPUBlitInfo	96	8
 F	SDL_GPUBlitInfo	source	source	0
 F	SDL_GPUBlitInfo	destination	destination	32
@@ -1553,12 +1585,26 @@ E	SDL_TextureAccess	4	4
 V	SDL_TextureAccess	SDL_TEXTUREACCESS_STATIC	TEXTUREACCESS_STATIC	0
 V	SDL_TextureAccess	SDL_TEXTUREACCESS_STREAMING	TEXTUREACCESS_STREAMING	1
 V	SDL_TextureAccess	SDL_TEXTUREACCESS_TARGET	TEXTUREACCESS_TARGET	2
+E	SDL_TextureAddressMode	4	4
+V	SDL_TextureAddressMode	SDL_TEXTURE_ADDRESS_INVALID	TEXTURE_ADDRESS_INVALID	-1
+V	SDL_TextureAddressMode	SDL_TEXTURE_ADDRESS_AUTO	TEXTURE_ADDRESS_AUTO	0
+V	SDL_TextureAddressMode	SDL_TEXTURE_ADDRESS_CLAMP	TEXTURE_ADDRESS_CLAMP	1
+V	SDL_TextureAddressMode	SDL_TEXTURE_ADDRESS_WRAP	TEXTURE_ADDRESS_WRAP	2
 E	SDL_RendererLogicalPresentation	4	4
 V	SDL_RendererLogicalPresentation	SDL_LOGICAL_PRESENTATION_DISABLED	LOGICAL_PRESENTATION_DISABLED	0
 V	SDL_RendererLogicalPresentation	SDL_LOGICAL_PRESENTATION_STRETCH	LOGICAL_PRESENTATION_STRETCH	1
 V	SDL_RendererLogicalPresentation	SDL_LOGICAL_PRESENTATION_LETTERBOX	LOGICAL_PRESENTATION_LETTERBOX	2
 V	SDL_RendererLogicalPresentation	SDL_LOGICAL_PRESENTATION_OVERSCAN	LOGICAL_PRESENTATION_OVERSCAN	3
 V	SDL_RendererLogicalPresentation	SDL_LOGICAL_PRESENTATION_INTEGER_SCALE	LOGICAL_PRESENTATION_INTEGER_SCALE	4
+S	SDL_GPURenderStateCreateInfo	64	8
+F	SDL_GPURenderStateCreateInfo	fragment_shader	fragment_shader	0
+F	SDL_GPURenderStateCreateInfo	num_sampler_bindings	num_sampler_bindings	8
+F	SDL_GPURenderStateCreateInfo	sampler_bindings	sampler_bindings	16
+F	SDL_GPURenderStateCreateInfo	num_storage_textures	num_storage_textures	24
+F	SDL_GPURenderStateCreateInfo	storage_textures	storage_textures	32
+F	SDL_GPURenderStateCreateInfo	num_storage_buffers	num_storage_buffers	40
+F	SDL_GPURenderStateCreateInfo	storage_buffers	storage_buffers	48
+F	SDL_GPURenderStateCreateInfo	props	props	56
 S	SDL_StorageInterface	96	8
 F	SDL_StorageInterface	version	version	0
 E	SDL_Sandbox	4	4
@@ -2245,3 +2291,556 @@ K	SDL_TRAYENTRY_CHECKBOX	uint32_t	0x2
 K	SDL_TRAYENTRY_SUBMENU	uint32_t	0x4
 K	SDL_TRAYENTRY_DISABLED	uint32_t	0x80000000
 K	SDL_TRAYENTRY_CHECKED	uint32_t	0x40000000
+K	SDL_WINDOW_FILL_DOCUMENT	uint64_t	0x200000
+K	SDL_PROP_HIDAPI_LIBUSB_DEVICE_HANDLE_POINTER	const char *	native-string-macro
+K	SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED	const char *	native-string-macro
+K	SDL_HINT_ANDROID_AAUDIO_INPUT_PRESET	const char *	native-string-macro
+K	SDL_HINT_ANDROID_ALLOW_RECREATE_ACTIVITY	const char *	native-string-macro
+K	SDL_HINT_ANDROID_BLOCK_ON_PAUSE	const char *	native-string-macro
+K	SDL_HINT_ANDROID_LOW_LATENCY_AUDIO	const char *	native-string-macro
+K	SDL_HINT_ANDROID_TRAP_BACK_BUTTON	const char *	native-string-macro
+K	SDL_HINT_APPLE_TV_CONTROLLER_UI_EVENTS	const char *	native-string-macro
+K	SDL_HINT_APPLE_TV_REMOTE_ALLOW_ROTATION	const char *	native-string-macro
+K	SDL_HINT_APP_ID	const char *	native-string-macro
+K	SDL_HINT_APP_NAME	const char *	native-string-macro
+K	SDL_HINT_ASSERT	const char *	native-string-macro
+K	SDL_HINT_AUDIO_ALSA_DEFAULT_DEVICE	const char *	native-string-macro
+K	SDL_HINT_AUDIO_ALSA_DEFAULT_PLAYBACK_DEVICE	const char *	native-string-macro
+K	SDL_HINT_AUDIO_ALSA_DEFAULT_RECORDING_DEVICE	const char *	native-string-macro
+K	SDL_HINT_AUDIO_CATEGORY	const char *	native-string-macro
+K	SDL_HINT_AUDIO_CHANNELS	const char *	native-string-macro
+K	SDL_HINT_AUDIO_DEVICE_APP_ICON_NAME	const char *	native-string-macro
+K	SDL_HINT_AUDIO_DEVICE_RAW_STREAM	const char *	native-string-macro
+K	SDL_HINT_AUDIO_DEVICE_SAMPLE_FRAMES	const char *	native-string-macro
+K	SDL_HINT_AUDIO_DEVICE_STREAM_NAME	const char *	native-string-macro
+K	SDL_HINT_AUDIO_DEVICE_STREAM_ROLE	const char *	native-string-macro
+K	SDL_HINT_AUDIO_DISK_INPUT_FILE	const char *	native-string-macro
+K	SDL_HINT_AUDIO_DISK_OUTPUT_FILE	const char *	native-string-macro
+K	SDL_HINT_AUDIO_DISK_TIMESCALE	const char *	native-string-macro
+K	SDL_HINT_AUDIO_DRIVER	const char *	native-string-macro
+K	SDL_HINT_AUDIO_DUMMY_TIMESCALE	const char *	native-string-macro
+K	SDL_HINT_AUDIO_FORMAT	const char *	native-string-macro
+K	SDL_HINT_AUDIO_FREQUENCY	const char *	native-string-macro
+K	SDL_HINT_AUDIO_INCLUDE_MONITORS	const char *	native-string-macro
+K	SDL_HINT_AUTO_UPDATE_JOYSTICKS	const char *	native-string-macro
+K	SDL_HINT_AUTO_UPDATE_SENSORS	const char *	native-string-macro
+K	SDL_HINT_BMP_SAVE_LEGACY_FORMAT	const char *	native-string-macro
+K	SDL_HINT_CAMERA_DRIVER	const char *	native-string-macro
+K	SDL_HINT_CPU_FEATURE_MASK	const char *	native-string-macro
+K	SDL_HINT_DISPLAY_USABLE_BOUNDS	const char *	native-string-macro
+K	SDL_HINT_EGL_LIBRARY	const char *	native-string-macro
+K	SDL_HINT_EMSCRIPTEN_ASYNCIFY	const char *	native-string-macro
+K	SDL_HINT_EMSCRIPTEN_CANVAS_SELECTOR	const char *	native-string-macro
+K	SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT	const char *	native-string-macro
+K	SDL_HINT_ENABLE_SCREEN_KEYBOARD	const char *	native-string-macro
+K	SDL_HINT_ENABLE_STEAM_SCREEN_KEYBOARD	const char *	native-string-macro
+K	SDL_HINT_EVDEV_DEVICES	const char *	native-string-macro
+K	SDL_HINT_EVENT_LOGGING	const char *	native-string-macro
+K	SDL_HINT_FILE_DIALOG_DRIVER	const char *	native-string-macro
+K	SDL_HINT_FORCE_RAISEWINDOW	const char *	native-string-macro
+K	SDL_HINT_FRAMEBUFFER_ACCELERATION	const char *	native-string-macro
+K	SDL_HINT_GAMECONTROLLERCONFIG	const char *	native-string-macro
+K	SDL_HINT_GAMECONTROLLERCONFIG_FILE	const char *	native-string-macro
+K	SDL_HINT_GAMECONTROLLERTYPE	const char *	native-string-macro
+K	SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES	const char *	native-string-macro
+K	SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT	const char *	native-string-macro
+K	SDL_HINT_GAMECONTROLLER_SENSOR_FUSION	const char *	native-string-macro
+K	SDL_HINT_GDK_TEXTINPUT_DEFAULT_TEXT	const char *	native-string-macro
+K	SDL_HINT_GDK_TEXTINPUT_DESCRIPTION	const char *	native-string-macro
+K	SDL_HINT_GDK_TEXTINPUT_MAX_LENGTH	const char *	native-string-macro
+K	SDL_HINT_GDK_TEXTINPUT_SCOPE	const char *	native-string-macro
+K	SDL_HINT_GDK_TEXTINPUT_TITLE	const char *	native-string-macro
+K	SDL_HINT_GPU_DRIVER	const char *	native-string-macro
+K	SDL_HINT_HIDAPI_ENUMERATE_ONLY_CONTROLLERS	const char *	native-string-macro
+K	SDL_HINT_HIDAPI_IGNORE_DEVICES	const char *	native-string-macro
+K	SDL_HINT_HIDAPI_LIBUSB	const char *	native-string-macro
+K	SDL_HINT_HIDAPI_LIBUSB_GAMECUBE	const char *	native-string-macro
+K	SDL_HINT_HIDAPI_LIBUSB_WHITELIST	const char *	native-string-macro
+K	SDL_HINT_HIDAPI_UDEV	const char *	native-string-macro
+K	SDL_HINT_IME_IMPLEMENTED_UI	const char *	native-string-macro
+K	SDL_HINT_INVALID_PARAM_CHECKS	const char *	native-string-macro
+K	SDL_HINT_IOS_HIDE_HOME_INDICATOR	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_ARCADESTICK_DEVICES	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_ARCADESTICK_DEVICES_EXCLUDED	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_BLACKLIST_DEVICES	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_BLACKLIST_DEVICES_EXCLUDED	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_DEVICE	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_DIRECTINPUT	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_ENHANCED_REPORTS	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_FLIGHTSTICK_DEVICES	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_FLIGHTSTICK_DEVICES_EXCLUDED	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_GAMECUBE_DEVICES	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_GAMECUBE_DEVICES_EXCLUDED	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_GAMEINPUT	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_GAMEINPUT_RAW	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HAPTIC_AXES	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_8BITDO	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_COMBINE_JOY_CONS	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_FLYDIGI	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE_RUMBLE_BRAKE	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_GIP	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_GIP_RESET_FOR_METADATA	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_JOYCON_HOME_LED	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_JOY_CONS	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_LG4FF	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_LUNA	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_NINTENDO_CLASSIC	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_PS3	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_PS3_SIXAXIS_DRIVER	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_PS4	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_PS4_REPORT_INTERVAL	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_PS5	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_PS5_PLAYER_LED	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_SHIELD	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_SINPUT	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_STADIA	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_STEAM	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_STEAMDECK	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_STEAM_HOME_LED	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_STEAM_HORI	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_SWITCH	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_SWITCH2	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_SWITCH_HOME_LED	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_SWITCH_PLAYER_LED	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_VERTICAL_JOY_CONS	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_WII	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_WII_PLAYER_LED	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_XBOX	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_XBOX_360	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_PLAYER_LED	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_WIRELESS	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE_HOME_LED	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_HIDAPI_ZUIKI	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_IOKIT	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_LINUX_CLASSIC	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_LINUX_DEADZONES	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_LINUX_DIGITAL_HATS	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_LINUX_HAT_DEADZONES	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_MFI	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_RAWINPUT	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_RAWINPUT_CORRELATE_XINPUT	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_ROG_CHAKRAM	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_THREAD	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_THROTTLE_DEVICES	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_THROTTLE_DEVICES_EXCLUDED	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_WGI	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_WHEEL_DEVICES	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_WHEEL_DEVICES_EXCLUDED	const char *	native-string-macro
+K	SDL_HINT_JOYSTICK_ZERO_CENTERED_DEVICES	const char *	native-string-macro
+K	SDL_HINT_KEYCODE_OPTIONS	const char *	native-string-macro
+K	SDL_HINT_KMSDRM_ATOMIC	const char *	native-string-macro
+K	SDL_HINT_KMSDRM_DEVICE_INDEX	const char *	native-string-macro
+K	SDL_HINT_KMSDRM_REQUIRE_DRM_MASTER	const char *	native-string-macro
+K	SDL_HINT_LOGGING	const char *	native-string-macro
+K	SDL_HINT_MAC_BACKGROUND_APP	const char *	native-string-macro
+K	SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK	const char *	native-string-macro
+K	SDL_HINT_MAC_OPENGL_ASYNC_DISPATCH	const char *	native-string-macro
+K	SDL_HINT_MAC_OPTION_AS_ALT	const char *	native-string-macro
+K	SDL_HINT_MAC_PRESS_AND_HOLD	const char *	native-string-macro
+K	SDL_HINT_MAC_SCROLL_MOMENTUM	const char *	native-string-macro
+K	SDL_HINT_MAIN_CALLBACK_RATE	const char *	native-string-macro
+K	SDL_HINT_MOUSE_AUTO_CAPTURE	const char *	native-string-macro
+K	SDL_HINT_MOUSE_DEFAULT_SYSTEM_CURSOR	const char *	native-string-macro
+K	SDL_HINT_MOUSE_DOUBLE_CLICK_RADIUS	const char *	native-string-macro
+K	SDL_HINT_MOUSE_DOUBLE_CLICK_TIME	const char *	native-string-macro
+K	SDL_HINT_MOUSE_DPI_SCALE_CURSORS	const char *	native-string-macro
+K	SDL_HINT_MOUSE_EMULATE_WARP_WITH_RELATIVE	const char *	native-string-macro
+K	SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH	const char *	native-string-macro
+K	SDL_HINT_MOUSE_NORMAL_SPEED_SCALE	const char *	native-string-macro
+K	SDL_HINT_MOUSE_RELATIVE_CURSOR_VISIBLE	const char *	native-string-macro
+K	SDL_HINT_MOUSE_RELATIVE_MODE_CENTER	const char *	native-string-macro
+K	SDL_HINT_MOUSE_RELATIVE_SPEED_SCALE	const char *	native-string-macro
+K	SDL_HINT_MOUSE_RELATIVE_SYSTEM_SCALE	const char *	native-string-macro
+K	SDL_HINT_MOUSE_RELATIVE_WARP_MOTION	const char *	native-string-macro
+K	SDL_HINT_MOUSE_TOUCH_EVENTS	const char *	native-string-macro
+K	SDL_HINT_MUTE_CONSOLE_KEYBOARD	const char *	native-string-macro
+K	SDL_HINT_NO_SIGNAL_HANDLERS	const char *	native-string-macro
+K	SDL_HINT_OPENGL_ES_DRIVER	const char *	native-string-macro
+K	SDL_HINT_OPENGL_FORCE_SRGB_FRAMEBUFFER	const char *	native-string-macro
+K	SDL_HINT_OPENGL_LIBRARY	const char *	native-string-macro
+K	SDL_HINT_OPENVR_LIBRARY	const char *	native-string-macro
+K	SDL_HINT_ORIENTATIONS	const char *	native-string-macro
+K	SDL_HINT_PEN_MOUSE_EVENTS	const char *	native-string-macro
+K	SDL_HINT_PEN_TOUCH_EVENTS	const char *	native-string-macro
+K	SDL_HINT_POLL_SENTINEL	const char *	native-string-macro
+K	SDL_HINT_PREFERRED_LOCALES	const char *	native-string-macro
+K	SDL_HINT_PS2_GS_HEIGHT	const char *	native-string-macro
+K	SDL_HINT_PS2_GS_MODE	const char *	native-string-macro
+K	SDL_HINT_PS2_GS_PROGRESSIVE	const char *	native-string-macro
+K	SDL_HINT_PS2_GS_WIDTH	const char *	native-string-macro
+K	SDL_HINT_QUIT_ON_LAST_WINDOW_CLOSE	const char *	native-string-macro
+K	SDL_HINT_RENDER_DIRECT3D11_DEBUG	const char *	native-string-macro
+K	SDL_HINT_RENDER_DIRECT3D11_WARP	const char *	native-string-macro
+K	SDL_HINT_RENDER_DIRECT3D_THREADSAFE	const char *	native-string-macro
+K	SDL_HINT_RENDER_DRIVER	const char *	native-string-macro
+K	SDL_HINT_RENDER_GPU_DEBUG	const char *	native-string-macro
+K	SDL_HINT_RENDER_GPU_LOW_POWER	const char *	native-string-macro
+K	SDL_HINT_RENDER_LINE_METHOD	const char *	native-string-macro
+K	SDL_HINT_RENDER_METAL_PREFER_LOW_POWER_DEVICE	const char *	native-string-macro
+K	SDL_HINT_RENDER_VSYNC	const char *	native-string-macro
+K	SDL_HINT_RENDER_VULKAN_DEBUG	const char *	native-string-macro
+K	SDL_HINT_RETURN_KEY_HIDES_IME	const char *	native-string-macro
+K	SDL_HINT_ROG_GAMEPAD_MICE	const char *	native-string-macro
+K	SDL_HINT_ROG_GAMEPAD_MICE_EXCLUDED	const char *	native-string-macro
+K	SDL_HINT_RPI_VIDEO_LAYER	const char *	native-string-macro
+K	SDL_HINT_SCREENSAVER_INHIBIT_ACTIVITY_NAME	const char *	native-string-macro
+K	SDL_HINT_SHUTDOWN_DBUS_ON_QUIT	const char *	native-string-macro
+K	SDL_HINT_STORAGE_TITLE_DRIVER	const char *	native-string-macro
+K	SDL_HINT_STORAGE_USER_DRIVER	const char *	native-string-macro
+K	SDL_HINT_THREAD_FORCE_REALTIME_TIME_CRITICAL	const char *	native-string-macro
+K	SDL_HINT_THREAD_PRIORITY_POLICY	const char *	native-string-macro
+K	SDL_HINT_TIMER_RESOLUTION	const char *	native-string-macro
+K	SDL_HINT_TOUCH_MOUSE_EVENTS	const char *	native-string-macro
+K	SDL_HINT_TRACKPAD_IS_TOUCH_ONLY	const char *	native-string-macro
+K	SDL_HINT_TV_REMOTE_AS_JOYSTICK	const char *	native-string-macro
+K	SDL_HINT_VIDEO_ALLOW_SCREENSAVER	const char *	native-string-macro
+K	SDL_HINT_VIDEO_DISPLAY_PRIORITY	const char *	native-string-macro
+K	SDL_HINT_VIDEO_DOUBLE_BUFFER	const char *	native-string-macro
+K	SDL_HINT_VIDEO_DRIVER	const char *	native-string-macro
+K	SDL_HINT_VIDEO_DUMMY_SAVE_FRAMES	const char *	native-string-macro
+K	SDL_HINT_VIDEO_EGL_ALLOW_GETDISPLAY_FALLBACK	const char *	native-string-macro
+K	SDL_HINT_VIDEO_FORCE_EGL	const char *	native-string-macro
+K	SDL_HINT_VIDEO_MAC_FULLSCREEN_MENU_VISIBILITY	const char *	native-string-macro
+K	SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES	const char *	native-string-macro
+K	SDL_HINT_VIDEO_MATCH_EXCLUSIVE_MODE_ON_MOVE	const char *	native-string-macro
+K	SDL_HINT_VIDEO_METAL_AUTO_RESIZE_DRAWABLE	const char *	native-string-macro
+K	SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS	const char *	native-string-macro
+K	SDL_HINT_VIDEO_OFFSCREEN_SAVE_FRAMES	const char *	native-string-macro
+K	SDL_HINT_VIDEO_SYNC_WINDOW_OPERATIONS	const char *	native-string-macro
+K	SDL_HINT_VIDEO_WAYLAND_ALLOW_LIBDECOR	const char *	native-string-macro
+K	SDL_HINT_VIDEO_WAYLAND_MODE_EMULATION	const char *	native-string-macro
+K	SDL_HINT_VIDEO_WAYLAND_MODE_SCALING	const char *	native-string-macro
+K	SDL_HINT_VIDEO_WAYLAND_PREFER_LIBDECOR	const char *	native-string-macro
+K	SDL_HINT_VIDEO_WAYLAND_SCALE_TO_DISPLAY	const char *	native-string-macro
+K	SDL_HINT_VIDEO_WIN_D3DCOMPILER	const char *	native-string-macro
+K	SDL_HINT_VIDEO_X11_ENABLE_XSYNC_EXT	const char *	native-string-macro
+K	SDL_HINT_VIDEO_X11_EXTERNAL_WINDOW_INPUT	const char *	native-string-macro
+K	SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR	const char *	native-string-macro
+K	SDL_HINT_VIDEO_X11_NET_WM_PING	const char *	native-string-macro
+K	SDL_HINT_VIDEO_X11_NODIRECTCOLOR	const char *	native-string-macro
+K	SDL_HINT_VIDEO_X11_SCALING_FACTOR	const char *	native-string-macro
+K	SDL_HINT_VIDEO_X11_VISUALID	const char *	native-string-macro
+K	SDL_HINT_VIDEO_X11_WINDOW_VISUALID	const char *	native-string-macro
+K	SDL_HINT_VIDEO_X11_XRANDR	const char *	native-string-macro
+K	SDL_HINT_VITA_ENABLE_BACK_TOUCH	const char *	native-string-macro
+K	SDL_HINT_VITA_ENABLE_FRONT_TOUCH	const char *	native-string-macro
+K	SDL_HINT_VITA_MODULE_PATH	const char *	native-string-macro
+K	SDL_HINT_VITA_PVR_INIT	const char *	native-string-macro
+K	SDL_HINT_VITA_PVR_OPENGL	const char *	native-string-macro
+K	SDL_HINT_VITA_RESOLUTION	const char *	native-string-macro
+K	SDL_HINT_VITA_TOUCH_MOUSE_DEVICE	const char *	native-string-macro
+K	SDL_HINT_VULKAN_DISPLAY	const char *	native-string-macro
+K	SDL_HINT_VULKAN_LIBRARY	const char *	native-string-macro
+K	SDL_HINT_WAVE_CHUNK_LIMIT	const char *	native-string-macro
+K	SDL_HINT_WAVE_FACT_CHUNK	const char *	native-string-macro
+K	SDL_HINT_WAVE_RIFF_CHUNK_SIZE	const char *	native-string-macro
+K	SDL_HINT_WAVE_TRUNCATION	const char *	native-string-macro
+K	SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4	const char *	native-string-macro
+K	SDL_HINT_WINDOWS_ENABLE_MENU_MNEMONICS	const char *	native-string-macro
+K	SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP	const char *	native-string-macro
+K	SDL_HINT_WINDOWS_ERASE_BACKGROUND_MODE	const char *	native-string-macro
+K	SDL_HINT_WINDOWS_FORCE_SEMAPHORE_KERNEL	const char *	native-string-macro
+K	SDL_HINT_WINDOWS_GAMEINPUT	const char *	native-string-macro
+K	SDL_HINT_WINDOWS_INTRESOURCE_ICON	const char *	native-string-macro
+K	SDL_HINT_WINDOWS_INTRESOURCE_ICON_SMALL	const char *	native-string-macro
+K	SDL_HINT_WINDOWS_RAW_KEYBOARD	const char *	native-string-macro
+K	SDL_HINT_WINDOWS_RAW_KEYBOARD_EXCLUDE_HOTKEYS	const char *	native-string-macro
+K	SDL_HINT_WINDOWS_RAW_KEYBOARD_INPUTSINK	const char *	native-string-macro
+K	SDL_HINT_WINDOWS_USE_D3D9EX	const char *	native-string-macro
+K	SDL_HINT_WINDOW_ACTIVATE_WHEN_RAISED	const char *	native-string-macro
+K	SDL_HINT_WINDOW_ACTIVATE_WHEN_SHOWN	const char *	native-string-macro
+K	SDL_HINT_WINDOW_ALLOW_TOPMOST	const char *	native-string-macro
+K	SDL_HINT_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN	const char *	native-string-macro
+K	SDL_HINT_X11_FORCE_OVERRIDE_REDIRECT	const char *	native-string-macro
+K	SDL_HINT_X11_WINDOW_TYPE	const char *	native-string-macro
+K	SDL_HINT_X11_XCB_LIBRARY	const char *	native-string-macro
+K	SDL_HINT_XINPUT_ENABLED	const char *	native-string-macro
+K	SDL_PROP_APP_METADATA_COPYRIGHT_STRING	const char *	native-string-macro
+K	SDL_PROP_APP_METADATA_CREATOR_STRING	const char *	native-string-macro
+K	SDL_PROP_APP_METADATA_IDENTIFIER_STRING	const char *	native-string-macro
+K	SDL_PROP_APP_METADATA_NAME_STRING	const char *	native-string-macro
+K	SDL_PROP_APP_METADATA_TYPE_STRING	const char *	native-string-macro
+K	SDL_PROP_APP_METADATA_URL_STRING	const char *	native-string-macro
+K	SDL_PROP_APP_METADATA_VERSION_STRING	const char *	native-string-macro
+K	SDL_PROP_AUDIOSTREAM_AUTO_CLEANUP_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_DISPLAY_HDR_ENABLED_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_DISPLAY_KMSDRM_PANEL_ORIENTATION_NUMBER	const char *	native-string-macro
+K	SDL_PROP_DISPLAY_WAYLAND_WL_OUTPUT_POINTER	const char *	native-string-macro
+K	SDL_PROP_DISPLAY_WINDOWS_HMONITOR_POINTER	const char *	native-string-macro
+K	SDL_PROP_FILE_DIALOG_ACCEPT_STRING	const char *	native-string-macro
+K	SDL_PROP_FILE_DIALOG_CANCEL_STRING	const char *	native-string-macro
+K	SDL_PROP_FILE_DIALOG_FILTERS_POINTER	const char *	native-string-macro
+K	SDL_PROP_FILE_DIALOG_LOCATION_STRING	const char *	native-string-macro
+K	SDL_PROP_FILE_DIALOG_MANY_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_FILE_DIALOG_NFILTERS_NUMBER	const char *	native-string-macro
+K	SDL_PROP_FILE_DIALOG_TITLE_STRING	const char *	native-string-macro
+K	SDL_PROP_FILE_DIALOG_WINDOW_POINTER	const char *	native-string-macro
+K	SDL_PROP_GAMEPAD_CAP_MONO_LED_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_GAMEPAD_CAP_PLAYER_LED_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_GAMEPAD_CAP_RGB_LED_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_GAMEPAD_CAP_RUMBLE_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_GAMEPAD_CAP_TRIGGER_RUMBLE_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER	const char *	native-string-macro
+K	SDL_PROP_GPU_BUFFER_CREATE_NAME_STRING	const char *	native-string-macro
+K	SDL_PROP_GPU_COMPUTEPIPELINE_CREATE_NAME_STRING	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_CREATE_D3D12_AGILITY_SDK_PATH_STRING	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_CREATE_D3D12_AGILITY_SDK_VERSION_NUMBER	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_CREATE_D3D12_ALLOW_FEWER_RESOURCE_SLOTS_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_CREATE_FEATURE_ANISOTROPY_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_CREATE_FEATURE_CLIP_DISTANCE_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_CREATE_FEATURE_DEPTH_CLAMPING_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_CREATE_FEATURE_INDIRECT_DRAW_FIRST_INSTANCE_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_CREATE_METAL_ALLOW_MACFAMILY1_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_CREATE_VERBOSE_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_CREATE_VULKAN_OPTIONS_POINTER	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_CREATE_VULKAN_REQUIRE_HARDWARE_ACCELERATION_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_DRIVER_INFO_STRING	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_DRIVER_NAME_STRING	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_DRIVER_VERSION_STRING	const char *	native-string-macro
+K	SDL_PROP_GPU_DEVICE_NAME_STRING	const char *	native-string-macro
+K	SDL_PROP_GPU_GRAPHICSPIPELINE_CREATE_NAME_STRING	const char *	native-string-macro
+K	SDL_PROP_GPU_SAMPLER_CREATE_NAME_STRING	const char *	native-string-macro
+K	SDL_PROP_GPU_SHADER_CREATE_NAME_STRING	const char *	native-string-macro
+K	SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_A_FLOAT	const char *	native-string-macro
+K	SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_B_FLOAT	const char *	native-string-macro
+K	SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_DEPTH_FLOAT	const char *	native-string-macro
+K	SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_G_FLOAT	const char *	native-string-macro
+K	SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_R_FLOAT	const char *	native-string-macro
+K	SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_NUMBER	const char *	native-string-macro
+K	SDL_PROP_GPU_TEXTURE_CREATE_NAME_STRING	const char *	native-string-macro
+K	SDL_PROP_GPU_TRANSFERBUFFER_CREATE_NAME_STRING	const char *	native-string-macro
+K	SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER	const char *	native-string-macro
+K	SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER	const char *	native-string-macro
+K	SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER	const char *	native-string-macro
+K	SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER	const char *	native-string-macro
+K	SDL_PROP_IOSTREAM_MEMORY_FREE_FUNC_POINTER	const char *	native-string-macro
+K	SDL_PROP_IOSTREAM_MEMORY_POINTER	const char *	native-string-macro
+K	SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER	const char *	native-string-macro
+K	SDL_PROP_IOSTREAM_STDIO_FILE_POINTER	const char *	native-string-macro
+K	SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER	const char *	native-string-macro
+K	SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_JOYSTICK_CAP_PLAYER_LED_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_JOYSTICK_CAP_RGB_LED_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_NAME_STRING	const char *	native-string-macro
+K	SDL_PROP_PROCESS_BACKGROUND_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_PROCESS_CREATE_ARGS_POINTER	const char *	native-string-macro
+K	SDL_PROP_PROCESS_CREATE_BACKGROUND_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_PROCESS_CREATE_CMDLINE_STRING	const char *	native-string-macro
+K	SDL_PROP_PROCESS_CREATE_ENVIRONMENT_POINTER	const char *	native-string-macro
+K	SDL_PROP_PROCESS_CREATE_STDERR_NUMBER	const char *	native-string-macro
+K	SDL_PROP_PROCESS_CREATE_STDERR_POINTER	const char *	native-string-macro
+K	SDL_PROP_PROCESS_CREATE_STDERR_TO_STDOUT_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_PROCESS_CREATE_STDIN_NUMBER	const char *	native-string-macro
+K	SDL_PROP_PROCESS_CREATE_STDIN_POINTER	const char *	native-string-macro
+K	SDL_PROP_PROCESS_CREATE_STDOUT_NUMBER	const char *	native-string-macro
+K	SDL_PROP_PROCESS_CREATE_STDOUT_POINTER	const char *	native-string-macro
+K	SDL_PROP_PROCESS_CREATE_WORKING_DIRECTORY_STRING	const char *	native-string-macro
+K	SDL_PROP_PROCESS_PID_NUMBER	const char *	native-string-macro
+K	SDL_PROP_PROCESS_STDERR_POINTER	const char *	native-string-macro
+K	SDL_PROP_PROCESS_STDIN_POINTER	const char *	native-string-macro
+K	SDL_PROP_PROCESS_STDOUT_POINTER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_CREATE_GPU_DEVICE_POINTER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_CREATE_GPU_SHADERS_DXIL_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_RENDERER_CREATE_GPU_SHADERS_MSL_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_RENDERER_CREATE_GPU_SHADERS_SPIRV_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_RENDERER_CREATE_NAME_STRING	const char *	native-string-macro
+K	SDL_PROP_RENDERER_CREATE_OUTPUT_COLORSPACE_NUMBER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_CREATE_SURFACE_POINTER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_CREATE_VULKAN_DEVICE_POINTER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_CREATE_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_CREATE_VULKAN_INSTANCE_POINTER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_CREATE_VULKAN_PHYSICAL_DEVICE_POINTER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_CREATE_VULKAN_SURFACE_NUMBER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_CREATE_WINDOW_POINTER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_D3D11_DEVICE_POINTER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_D3D11_SWAPCHAIN_POINTER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_D3D12_COMMAND_QUEUE_POINTER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_D3D12_DEVICE_POINTER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_D3D12_SWAPCHAIN_POINTER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_D3D9_DEVICE_POINTER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_GPU_DEVICE_POINTER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_HDR_ENABLED_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_RENDERER_HDR_HEADROOM_FLOAT	const char *	native-string-macro
+K	SDL_PROP_RENDERER_MAX_TEXTURE_SIZE_NUMBER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_NAME_STRING	const char *	native-string-macro
+K	SDL_PROP_RENDERER_OUTPUT_COLORSPACE_NUMBER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_SDR_WHITE_POINT_FLOAT	const char *	native-string-macro
+K	SDL_PROP_RENDERER_SURFACE_POINTER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_TEXTURE_WRAPPING_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_RENDERER_VSYNC_NUMBER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_VULKAN_DEVICE_POINTER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_VULKAN_INSTANCE_POINTER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_VULKAN_PHYSICAL_DEVICE_POINTER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_VULKAN_SURFACE_NUMBER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER	const char *	native-string-macro
+K	SDL_PROP_RENDERER_WINDOW_POINTER	const char *	native-string-macro
+K	SDL_PROP_SURFACE_HDR_HEADROOM_FLOAT	const char *	native-string-macro
+K	SDL_PROP_SURFACE_HOTSPOT_X_NUMBER	const char *	native-string-macro
+K	SDL_PROP_SURFACE_HOTSPOT_Y_NUMBER	const char *	native-string-macro
+K	SDL_PROP_SURFACE_ROTATION_FLOAT	const char *	native-string-macro
+K	SDL_PROP_SURFACE_SDR_WHITE_POINT_FLOAT	const char *	native-string-macro
+K	SDL_PROP_SURFACE_TONEMAP_OPERATOR_STRING	const char *	native-string-macro
+K	SDL_PROP_TEXTINPUT_ANDROID_INPUTTYPE_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTINPUT_AUTOCORRECT_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTINPUT_MULTILINE_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_TEXTINPUT_TYPE_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_ACCESS_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_COLORSPACE_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_ACCESS_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_COLORSPACE_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_POINTER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_U_POINTER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_V_POINTER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_POINTER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_U_POINTER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_V_POINTER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_FORMAT_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_POINTER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_UV_POINTER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_U_POINTER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_V_POINTER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_HDR_HEADROOM_FLOAT	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_HEIGHT_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_METAL_PIXELBUFFER_POINTER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_UV_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_U_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_V_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_UV_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_U_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_V_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_PALETTE_POINTER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_VULKAN_LAYOUT_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_CREATE_WIDTH_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_D3D11_TEXTURE_POINTER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_D3D11_TEXTURE_U_POINTER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_D3D11_TEXTURE_V_POINTER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_D3D12_TEXTURE_POINTER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_D3D12_TEXTURE_U_POINTER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_D3D12_TEXTURE_V_POINTER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_FORMAT_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_GPU_TEXTURE_POINTER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_GPU_TEXTURE_UV_POINTER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_GPU_TEXTURE_U_POINTER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_GPU_TEXTURE_V_POINTER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_HDR_HEADROOM_FLOAT	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_HEIGHT_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_TARGET_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_UV_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_U_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_V_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_OPENGL_TEXTURE_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_OPENGL_TEXTURE_TARGET_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_OPENGL_TEXTURE_UV_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_OPENGL_TEXTURE_U_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_OPENGL_TEXTURE_V_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_OPENGL_TEX_H_FLOAT	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_OPENGL_TEX_W_FLOAT	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_SDR_WHITE_POINT_FLOAT	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER	const char *	native-string-macro
+K	SDL_PROP_TEXTURE_WIDTH_NUMBER	const char *	native-string-macro
+K	SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER	const char *	native-string-macro
+K	SDL_PROP_THREAD_CREATE_NAME_STRING	const char *	native-string-macro
+K	SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER	const char *	native-string-macro
+K	SDL_PROP_THREAD_CREATE_USERDATA_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_ANDROID_SURFACE_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_ANDROID_WINDOW_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_COCOA_METAL_VIEW_TAG_NUMBER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_COCOA_WINDOW_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_ALWAYS_ON_TOP_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_BORDERLESS_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_COCOA_VIEW_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_COCOA_WINDOW_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_CONSTRAIN_POPUP_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_CANVAS_ID_STRING	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_EXTERNAL_GRAPHICS_CONTEXT_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_FLAGS_NUMBER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_FOCUSABLE_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_FULLSCREEN_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_HEIGHT_NUMBER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_HIDDEN_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_HIGH_PIXEL_DENSITY_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_MAXIMIZED_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_MENU_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_METAL_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_MINIMIZED_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_MODAL_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_MOUSE_GRABBED_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_OPENGL_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_PARENT_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_RESIZABLE_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_TITLE_STRING	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_TOOLTIP_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_TRANSPARENT_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_UTILITY_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_VULKAN_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_WAYLAND_CREATE_EGL_WINDOW_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_WAYLAND_SURFACE_ROLE_CUSTOM_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_WAYLAND_WL_SURFACE_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_WIDTH_NUMBER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_WIN32_HWND_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_WIN32_PIXEL_FORMAT_HWND_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_WINDOWSCENE_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_X11_WINDOW_NUMBER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_X_NUMBER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_CREATE_Y_NUMBER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_EMSCRIPTEN_CANVAS_ID_STRING	const char *	native-string-macro
+K	SDL_PROP_WINDOW_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING	const char *	native-string-macro
+K	SDL_PROP_WINDOW_HDR_ENABLED_BOOLEAN	const char *	native-string-macro
+K	SDL_PROP_WINDOW_HDR_HEADROOM_FLOAT	const char *	native-string-macro
+K	SDL_PROP_WINDOW_KMSDRM_DEVICE_INDEX_NUMBER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_KMSDRM_DRM_FD_NUMBER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_KMSDRM_GBM_DEVICE_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_OPENVR_OVERLAY_ID_NUMBER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_SDR_WHITE_LEVEL_FLOAT	const char *	native-string-macro
+K	SDL_PROP_WINDOW_SHAPE_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_UIKIT_METAL_VIEW_TAG_NUMBER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_UIKIT_OPENGL_FRAMEBUFFER_NUMBER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_UIKIT_OPENGL_RENDERBUFFER_NUMBER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_UIKIT_OPENGL_RESOLVE_FRAMEBUFFER_NUMBER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_UIKIT_WINDOW_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_VIVANTE_DISPLAY_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_VIVANTE_SURFACE_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_VIVANTE_WINDOW_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_WAYLAND_DISPLAY_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_WAYLAND_EGL_WINDOW_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_WAYLAND_SURFACE_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_WAYLAND_VIEWPORT_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_WAYLAND_XDG_POPUP_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_WAYLAND_XDG_POSITIONER_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_WAYLAND_XDG_SURFACE_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_EXPORT_HANDLE_STRING	const char *	native-string-macro
+K	SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_WIN32_HDC_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_WIN32_HWND_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_WIN32_INSTANCE_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_X11_DISPLAY_POINTER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_X11_SCREEN_NUMBER	const char *	native-string-macro
+K	SDL_PROP_WINDOW_X11_WINDOW_NUMBER	const char *	native-string-macro

@@ -133,7 +133,7 @@ struct TouchFingerEvent {
 }
 struct PenProximityEvent {
     timestamp : uint64
-    window_id, which : uint
+    window_id, which, pen_state : uint
 }
 struct PenMotionEvent {
     timestamp : uint64
@@ -177,7 +177,37 @@ struct ClipboardEvent {
     owner : bool
     mime_types : array<string>
 }
+struct KeyboardDeviceEvent {
+    timestamp : uint64
+    which : uint
+}
+struct MouseDeviceEvent {
+    timestamp : uint64
+    which : uint
+}
+struct AudioDeviceEvent {
+    timestamp : uint64
+    which : uint
+    recording : bool
+}
+struct CameraDeviceEvent {
+    timestamp : uint64
+    which : uint
+}
+
 variant SdlEvent {
+    keyboard_added : KeyboardDeviceEvent
+    keyboard_removed : KeyboardDeviceEvent
+    mouse_added : MouseDeviceEvent
+    mouse_removed : MouseDeviceEvent
+    audio_device_added : AudioDeviceEvent
+    audio_device_removed : AudioDeviceEvent
+    audio_device_format_changed : AudioDeviceEvent
+    camera_device_added : CameraDeviceEvent
+    camera_device_removed : CameraDeviceEvent
+    camera_device_approved : CameraDeviceEvent
+    camera_device_denied : CameraDeviceEvent
+
     unknown : UnknownEvent
     text_editing_candidates : TextEditingCandidatesEvent
     clipboard_update : ClipboardEvent
@@ -238,6 +268,38 @@ variant SdlEvent {
 def public decode_event(event : SDL_Event) : SdlEvent {
     let kind = event.event_type
     let timestamp = SDL_EventTimestamp(event)
+    if (kind == SDL_EVENT_KEYBOARD_ADDED || kind == SDL_EVENT_KEYBOARD_REMOVED) {
+        var raw : SDL_KeyboardDeviceEvent
+        SDL_ReadKeyboardDeviceEvent(event,raw)
+        let value=KeyboardDeviceEvent(timestamp=timestamp,which=raw.which)
+        if(kind == SDL_EVENT_KEYBOARD_ADDED) {return <- SdlEvent(keyboard_added=value)}
+        if(kind == SDL_EVENT_KEYBOARD_REMOVED) {return <- SdlEvent(keyboard_removed=value)}
+    }
+    if (kind == SDL_EVENT_MOUSE_ADDED || kind == SDL_EVENT_MOUSE_REMOVED) {
+        var raw : SDL_MouseDeviceEvent
+        SDL_ReadMouseDeviceEvent(event,raw)
+        let value=MouseDeviceEvent(timestamp=timestamp,which=raw.which)
+        if(kind == SDL_EVENT_MOUSE_ADDED) {return <- SdlEvent(mouse_added=value)}
+        if(kind == SDL_EVENT_MOUSE_REMOVED) {return <- SdlEvent(mouse_removed=value)}
+    }
+    if (kind == SDL_EVENT_AUDIO_DEVICE_ADDED || kind == SDL_EVENT_AUDIO_DEVICE_REMOVED || kind == SDL_EVENT_AUDIO_DEVICE_FORMAT_CHANGED) {
+        var raw : SDL_AudioDeviceEvent
+        SDL_ReadAudioDeviceEvent(event,raw)
+        let value=AudioDeviceEvent(timestamp=timestamp,which=raw.which,recording=raw.recording)
+        if(kind == SDL_EVENT_AUDIO_DEVICE_ADDED) {return <- SdlEvent(audio_device_added=value)}
+        if(kind == SDL_EVENT_AUDIO_DEVICE_REMOVED) {return <- SdlEvent(audio_device_removed=value)}
+        if(kind == SDL_EVENT_AUDIO_DEVICE_FORMAT_CHANGED) {return <- SdlEvent(audio_device_format_changed=value)}
+    }
+    if (kind == SDL_EVENT_CAMERA_DEVICE_ADDED || kind == SDL_EVENT_CAMERA_DEVICE_REMOVED || kind == SDL_EVENT_CAMERA_DEVICE_APPROVED || kind == SDL_EVENT_CAMERA_DEVICE_DENIED) {
+        var raw : SDL_CameraDeviceEvent
+        SDL_ReadCameraDeviceEvent(event,raw)
+        let value=CameraDeviceEvent(timestamp=timestamp,which=raw.which)
+        if(kind == SDL_EVENT_CAMERA_DEVICE_ADDED) {return <- SdlEvent(camera_device_added=value)}
+        if(kind == SDL_EVENT_CAMERA_DEVICE_REMOVED) {return <- SdlEvent(camera_device_removed=value)}
+        if(kind == SDL_EVENT_CAMERA_DEVICE_APPROVED) {return <- SdlEvent(camera_device_approved=value)}
+        if(kind == SDL_EVENT_CAMERA_DEVICE_DENIED) {return <- SdlEvent(camera_device_denied=value)}
+    }
+
     if (kind == SDL_EVENT_QUIT) { return <- SdlEvent(quit=QuitEvent(timestamp=timestamp)) }
     if (kind == SDL_EVENT_KEY_DOWN || kind == SDL_EVENT_KEY_UP) {
         var key : SDL_KeyboardEvent
@@ -368,7 +430,7 @@ def public decode_event(event : SDL_Event) : SdlEvent {
     if (kind==SDL_EVENT_PEN_PROXIMITY_IN || kind==SDL_EVENT_PEN_PROXIMITY_OUT) {
         var v : SDL_PenProximityEvent
         SDL_ReadPenProximityEvent(event,v)
-        let value=PenProximityEvent(timestamp=timestamp,window_id=v.windowID,which=v.which)
+        let value=PenProximityEvent(timestamp=timestamp,window_id=v.windowID,which=v.which,pen_state=v.pen_state)
         if(kind==SDL_EVENT_PEN_PROXIMITY_IN) {return <- SdlEvent(pen_proximity_in=value)}
         return <- SdlEvent(pen_proximity_out=value)
     }

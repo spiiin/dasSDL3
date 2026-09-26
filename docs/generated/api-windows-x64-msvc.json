@@ -1453,7 +1453,7 @@
       "line": 167,
       "id": "enum:SDL_PenDeviceType",
       "category": "Pen",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1503,7 +1503,7 @@
       "line": 340,
       "id": "enum:SDL_ProgressState",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -1613,7 +1613,7 @@
       "line": 119,
       "id": "enum:SDL_TextureAddressMode",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9505,7 +9505,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PEN_DEVICE_TYPE_DIRECT",
       "category": "Pen",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9516,7 +9516,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PEN_DEVICE_TYPE_INDIRECT",
       "category": "Pen",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9527,7 +9527,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PEN_DEVICE_TYPE_INVALID",
       "category": "Pen",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -9538,7 +9538,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PEN_DEVICE_TYPE_UNKNOWN",
       "category": "Pen",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10605,7 +10605,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PROGRESS_STATE_ERROR",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10616,7 +10616,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PROGRESS_STATE_INDETERMINATE",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10627,7 +10627,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PROGRESS_STATE_INVALID",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10638,7 +10638,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PROGRESS_STATE_NONE",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10649,7 +10649,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PROGRESS_STATE_NORMAL",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -10660,7 +10660,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_PROGRESS_STATE_PAUSED",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -14070,7 +14070,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_TEXTURE_ADDRESS_AUTO",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -14081,7 +14081,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_TEXTURE_ADDRESS_CLAMP",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -14092,7 +14092,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_TEXTURE_ADDRESS_INVALID",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -14103,7 +14103,7 @@
       "c_type": "int",
       "id": "enumerator:SDL_TEXTURE_ADDRESS_WRAP",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -16952,8 +16952,14 @@
       ],
       "id": "function:SDL_CreateAnimatedCursor",
       "category": "Mouse",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
     },
     {
       "name": "SDL_CreateAsyncIOQueue",
@@ -17280,8 +17286,14 @@
       ],
       "id": "function:SDL_CreateGPURenderState",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
     },
     {
       "name": "SDL_CreateGPURenderer",
@@ -17302,8 +17314,14 @@
       ],
       "id": "function:SDL_CreateGPURenderer",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
     },
     {
       "name": "SDL_CreateGPUSampler",
@@ -18430,8 +18448,14 @@
       ],
       "id": "function:SDL_DestroyGPURenderState",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
     },
     {
       "name": "SDL_DestroyHapticEffect",
@@ -20818,8 +20842,8 @@
       "id": "function:SDL_GetAudioStreamInputChannelMap",
       "category": "Audio",
       "raw_status": "generated",
-      "boost_status": "pending",
-      "reason": "SDL 3.4.16 fixes default-map null handling. Raw custom and default maps tested; copied boost getter remains a follow-up.",
+      "boost_status": "partial",
+      "reason": "Copied Result<Option<array<int>>> getter: default None, custom owned array, null stream/allocation error Err. Clears stale SDL error before ambiguous native null.",
       "contract": "docs/audio-stream-controls.md",
       "tests": [
         "tests/audio_stream_controls.das"
@@ -20845,8 +20869,8 @@
       "id": "function:SDL_GetAudioStreamOutputChannelMap",
       "category": "Audio",
       "raw_status": "generated",
-      "boost_status": "pending",
-      "reason": "SDL 3.4.16 fixes default-map null handling. Raw custom and default maps tested; copied boost getter remains a follow-up.",
+      "boost_status": "partial",
+      "reason": "Copied Result<Option<array<int>>> getter: default None, custom owned array, null stream/allocation error Err. Clears stale SDL error before ambiguous native null.",
       "contract": "docs/audio-stream-controls.md",
       "tests": [
         "tests/audio_stream_controls.das"
@@ -21712,8 +21736,14 @@
       ],
       "id": "function:SDL_GetDefaultTextureScaleMode",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
     },
     {
       "name": "SDL_GetDesktopDisplayMode",
@@ -22065,8 +22095,14 @@
       ],
       "id": "function:SDL_GetEventDescription",
       "category": "Events",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
     },
     {
       "name": "SDL_GetEventFilter",
@@ -22225,8 +22261,14 @@
       ],
       "id": "function:SDL_GetGPURendererDevice",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
     },
     {
       "name": "SDL_GetGPUShaderFormats",
@@ -25377,8 +25419,14 @@
       ],
       "id": "function:SDL_GetPenDeviceType",
       "category": "Pen",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
     },
     {
       "name": "SDL_GetPerformanceCounter",
@@ -26639,8 +26687,14 @@
       ],
       "id": "function:SDL_GetRenderTextureAddressMode",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
     },
     {
       "name": "SDL_GetRenderVSync",
@@ -27590,8 +27644,14 @@
       "arguments": [],
       "id": "function:SDL_GetSystemPageSize",
       "category": "CPUInfo",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
     },
     {
       "name": "SDL_GetSystemRAM",
@@ -27844,8 +27904,14 @@
       ],
       "id": "function:SDL_GetTexturePalette",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
     },
     {
       "name": "SDL_GetTextureProperties",
@@ -28883,8 +28949,14 @@
       ],
       "id": "function:SDL_GetWindowProgressState",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
     },
     {
       "name": "SDL_GetWindowProgressValue",
@@ -28901,8 +28973,14 @@
       ],
       "id": "function:SDL_GetWindowProgressValue",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
     },
     {
       "name": "SDL_GetWindowProperties",
@@ -30525,8 +30603,14 @@
       ],
       "id": "function:SDL_LoadPNG",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
     },
     {
       "name": "SDL_LoadPNG_IO",
@@ -30547,8 +30631,14 @@
       ],
       "id": "function:SDL_LoadPNG_IO",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
     },
     {
       "name": "SDL_LoadSurface",
@@ -30565,8 +30655,14 @@
       ],
       "id": "function:SDL_LoadSurface",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
     },
     {
       "name": "SDL_LoadSurface_IO",
@@ -30587,8 +30683,14 @@
       ],
       "id": "function:SDL_LoadSurface_IO",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
     },
     {
       "name": "SDL_LoadWAV",
@@ -32595,8 +32697,14 @@
       ],
       "id": "function:SDL_PutAudioStreamDataNoCopy",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
     },
     {
       "name": "SDL_PutAudioStreamPlanarData",
@@ -32625,8 +32733,14 @@
       ],
       "id": "function:SDL_PutAudioStreamPlanarData",
       "category": "Audio",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
     },
     {
       "name": "SDL_QueryGPUFence",
@@ -34816,8 +34930,14 @@
       ],
       "id": "function:SDL_RenderTexture9GridTiled",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
     },
     {
       "name": "SDL_RenderTextureAffine",
@@ -35197,8 +35317,14 @@
       ],
       "id": "function:SDL_RotateSurface",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
     },
     {
       "name": "SDL_RumbleGamepad",
@@ -35574,8 +35700,14 @@
       ],
       "id": "function:SDL_SavePNG",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
     },
     {
       "name": "SDL_SavePNG_IO",
@@ -35600,8 +35732,14 @@
       ],
       "id": "function:SDL_SavePNG_IO",
       "category": "Surface",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
     },
     {
       "name": "SDL_ScaleSurface",
@@ -36397,8 +36535,14 @@
       ],
       "id": "function:SDL_SetDefaultTextureScaleMode",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
     },
     {
       "name": "SDL_SetEnvironmentVariable",
@@ -36665,8 +36809,14 @@
       ],
       "id": "function:SDL_SetGPURenderState",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
     },
     {
       "name": "SDL_SetGPURenderStateFragmentUniforms",
@@ -36695,8 +36845,14 @@
       ],
       "id": "function:SDL_SetGPURenderStateFragmentUniforms",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
     },
     {
       "name": "SDL_SetGPUScissor",
@@ -37722,8 +37878,14 @@
       ],
       "id": "function:SDL_SetRelativeMouseTransform",
       "category": "Mouse",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
     },
     {
       "name": "SDL_SetRenderClipRect",
@@ -37994,8 +38156,14 @@
       ],
       "id": "function:SDL_SetRenderTextureAddressMode",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
     },
     {
       "name": "SDL_SetRenderVSync",
@@ -38564,8 +38732,14 @@
       ],
       "id": "function:SDL_SetTexturePalette",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 native declaration with thin Result/ref/array/defer helpers. Native ownership and backend requirements remain; see package contract.",
+      "contract": "docs/render-surface-34.md",
+      "tests": [
+        "tests/render_surface_34.das",
+        "tests/gpu_renderer_34.das"
+      ]
     },
     {
       "name": "SDL_SetTextureScaleMode",
@@ -38864,8 +39038,14 @@
       ],
       "id": "function:SDL_SetWindowFillDocument",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
     },
     {
       "name": "SDL_SetWindowFocusable",
@@ -39282,8 +39462,14 @@
       ],
       "id": "function:SDL_SetWindowProgressState",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
     },
     {
       "name": "SDL_SetWindowProgressValue",
@@ -39304,8 +39490,14 @@
       ],
       "id": "function:SDL_SetWindowProgressValue",
       "category": "Video",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
     },
     {
       "name": "SDL_SetWindowRelativeMouseMode",
@@ -43638,8 +43830,14 @@
       ],
       "id": "function:SDL_hid_get_properties",
       "category": "HIDAPI",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "generated",
+      "boost_status": "partial",
+      "reason": "SDL 3.4 remaining additions; NoCopy and mouse transform retain native callbacks/data only. HID/pen hardware and visible platform effects need separate validation.",
+      "contract": "docs/sdl-34-remaining.md",
+      "tests": [
+        "tests/sdl34_remaining.das",
+        "tests/sdl34_audio.das"
+      ]
     },
     {
       "name": "SDL_hid_get_report_descriptor",
@@ -55125,7 +55323,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55150,7 +55348,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_ANDROID_AAUDIO_INPUT_PRESET",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55162,7 +55360,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_ANDROID_ALLOW_RECREATE_ACTIVITY",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55174,7 +55372,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_ANDROID_BLOCK_ON_PAUSE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55186,7 +55384,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_ANDROID_LOW_LATENCY_AUDIO",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55198,7 +55396,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_ANDROID_TRAP_BACK_BUTTON",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55210,7 +55408,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_APPLE_TV_CONTROLLER_UI_EVENTS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55222,7 +55420,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_APPLE_TV_REMOTE_ALLOW_ROTATION",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55234,7 +55432,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_APP_ID",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55246,7 +55444,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_APP_NAME",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55258,7 +55456,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_ASSERT",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55270,7 +55468,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_AUDIO_ALSA_DEFAULT_DEVICE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55282,7 +55480,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_AUDIO_ALSA_DEFAULT_PLAYBACK_DEVICE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55294,7 +55492,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_AUDIO_ALSA_DEFAULT_RECORDING_DEVICE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55306,7 +55504,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_AUDIO_CATEGORY",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55318,7 +55516,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_AUDIO_CHANNELS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55330,7 +55528,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_AUDIO_DEVICE_APP_ICON_NAME",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55342,7 +55540,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_AUDIO_DEVICE_RAW_STREAM",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55354,7 +55552,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_AUDIO_DEVICE_SAMPLE_FRAMES",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55366,7 +55564,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_AUDIO_DEVICE_STREAM_NAME",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55378,7 +55576,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_AUDIO_DEVICE_STREAM_ROLE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55390,7 +55588,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_AUDIO_DISK_INPUT_FILE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55402,7 +55600,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_AUDIO_DISK_OUTPUT_FILE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55414,7 +55612,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_AUDIO_DISK_TIMESCALE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55426,7 +55624,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_AUDIO_DRIVER",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55438,7 +55636,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_AUDIO_DUMMY_TIMESCALE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55450,7 +55648,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_AUDIO_FORMAT",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55462,7 +55660,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_AUDIO_FREQUENCY",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55474,7 +55672,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_AUDIO_INCLUDE_MONITORS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55486,7 +55684,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_AUTO_UPDATE_JOYSTICKS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55498,7 +55696,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_AUTO_UPDATE_SENSORS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55510,7 +55708,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_BMP_SAVE_LEGACY_FORMAT",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55522,7 +55720,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_CAMERA_DRIVER",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55534,7 +55732,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_CPU_FEATURE_MASK",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55559,7 +55757,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_DISPLAY_USABLE_BOUNDS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55571,7 +55769,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_EGL_LIBRARY",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55583,7 +55781,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_EMSCRIPTEN_ASYNCIFY",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55595,7 +55793,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_EMSCRIPTEN_CANVAS_SELECTOR",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55607,7 +55805,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55619,7 +55817,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_ENABLE_SCREEN_KEYBOARD",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55631,7 +55829,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_ENABLE_STEAM_SCREEN_KEYBOARD",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55643,7 +55841,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_EVDEV_DEVICES",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55655,7 +55853,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_EVENT_LOGGING",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55667,7 +55865,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_FILE_DIALOG_DRIVER",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55679,7 +55877,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_FORCE_RAISEWINDOW",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55691,7 +55889,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_FRAMEBUFFER_ACCELERATION",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55703,7 +55901,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_GAMECONTROLLERCONFIG",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55715,7 +55913,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_GAMECONTROLLERCONFIG_FILE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55727,7 +55925,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_GAMECONTROLLERTYPE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55739,7 +55937,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55751,7 +55949,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55763,7 +55961,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_GAMECONTROLLER_SENSOR_FUSION",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55788,7 +55986,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_GDK_TEXTINPUT_DEFAULT_TEXT",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55800,7 +55998,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_GDK_TEXTINPUT_DESCRIPTION",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55812,7 +56010,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_GDK_TEXTINPUT_MAX_LENGTH",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55824,7 +56022,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_GDK_TEXTINPUT_SCOPE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55836,7 +56034,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_GDK_TEXTINPUT_TITLE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55848,7 +56046,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_GPU_DRIVER",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55860,7 +56058,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_HIDAPI_ENUMERATE_ONLY_CONTROLLERS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55872,7 +56070,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_HIDAPI_IGNORE_DEVICES",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55884,7 +56082,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_HIDAPI_LIBUSB",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55896,7 +56094,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_HIDAPI_LIBUSB_GAMECUBE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55908,7 +56106,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_HIDAPI_LIBUSB_WHITELIST",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55920,7 +56118,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_HIDAPI_UDEV",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55932,7 +56130,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_IME_IMPLEMENTED_UI",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55944,7 +56142,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_INVALID_PARAM_CHECKS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55956,7 +56154,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_IOS_HIDE_HOME_INDICATOR",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55968,7 +56166,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55980,7 +56178,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_ARCADESTICK_DEVICES",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -55992,7 +56190,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_ARCADESTICK_DEVICES_EXCLUDED",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56004,7 +56202,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_BLACKLIST_DEVICES",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56016,7 +56214,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_BLACKLIST_DEVICES_EXCLUDED",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56028,7 +56226,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_DEVICE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56040,7 +56238,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_DIRECTINPUT",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56052,7 +56250,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_ENHANCED_REPORTS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56064,7 +56262,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_FLIGHTSTICK_DEVICES",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56076,7 +56274,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_FLIGHTSTICK_DEVICES_EXCLUDED",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56088,7 +56286,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_GAMECUBE_DEVICES",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56100,7 +56298,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_GAMECUBE_DEVICES_EXCLUDED",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56125,7 +56323,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_GAMEINPUT",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56137,7 +56335,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_GAMEINPUT_RAW",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56149,7 +56347,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HAPTIC_AXES",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56161,7 +56359,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56173,7 +56371,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_8BITDO",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56185,7 +56383,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_COMBINE_JOY_CONS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56197,7 +56395,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_FLYDIGI",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56209,7 +56407,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56221,7 +56419,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE_RUMBLE_BRAKE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56233,7 +56431,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_GIP",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56245,7 +56443,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_GIP_RESET_FOR_METADATA",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56257,7 +56455,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_JOYCON_HOME_LED",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56269,7 +56467,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_JOY_CONS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56281,7 +56479,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_LG4FF",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56293,7 +56491,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_LUNA",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56305,7 +56503,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_NINTENDO_CLASSIC",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56317,7 +56515,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_PS3",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56329,7 +56527,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_PS3_SIXAXIS_DRIVER",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56341,7 +56539,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_PS4",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56353,7 +56551,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_PS4_REPORT_INTERVAL",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56378,7 +56576,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_PS5",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56390,7 +56588,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_PS5_PLAYER_LED",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56415,7 +56613,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_SHIELD",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56427,7 +56625,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_SINPUT",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56439,7 +56637,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_STADIA",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56451,7 +56649,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_STEAM",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56463,7 +56661,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_STEAMDECK",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56475,7 +56673,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_STEAM_HOME_LED",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56487,7 +56685,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_STEAM_HORI",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56499,7 +56697,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_SWITCH",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56511,7 +56709,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_SWITCH2",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56523,7 +56721,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_SWITCH_HOME_LED",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56535,7 +56733,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_SWITCH_PLAYER_LED",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56547,7 +56745,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_VERTICAL_JOY_CONS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56559,7 +56757,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_WII",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56571,7 +56769,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_WII_PLAYER_LED",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56583,7 +56781,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_XBOX",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56595,7 +56793,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_XBOX_360",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56607,7 +56805,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_PLAYER_LED",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56619,7 +56817,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_WIRELESS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56631,7 +56829,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56643,7 +56841,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE_HOME_LED",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56655,7 +56853,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_HIDAPI_ZUIKI",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56667,7 +56865,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_IOKIT",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56679,7 +56877,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_LINUX_CLASSIC",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56691,7 +56889,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_LINUX_DEADZONES",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56703,7 +56901,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_LINUX_DIGITAL_HATS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56715,7 +56913,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_LINUX_HAT_DEADZONES",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56727,7 +56925,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_MFI",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56739,7 +56937,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_RAWINPUT",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56751,7 +56949,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_RAWINPUT_CORRELATE_XINPUT",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56763,7 +56961,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_ROG_CHAKRAM",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56775,7 +56973,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_THREAD",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56787,7 +56985,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_THROTTLE_DEVICES",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56799,7 +56997,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_THROTTLE_DEVICES_EXCLUDED",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56811,7 +57009,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_WGI",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56823,7 +57021,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_WHEEL_DEVICES",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56835,7 +57033,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_WHEEL_DEVICES_EXCLUDED",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56847,7 +57045,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_JOYSTICK_ZERO_CENTERED_DEVICES",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56859,7 +57057,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_KEYCODE_OPTIONS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56871,7 +57069,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_KMSDRM_ATOMIC",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56883,7 +57081,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_KMSDRM_DEVICE_INDEX",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56895,7 +57093,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_KMSDRM_REQUIRE_DRM_MASTER",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56959,7 +57157,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_LOGGING",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56971,7 +57169,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_MAC_BACKGROUND_APP",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56983,7 +57181,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -56995,7 +57193,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_MAC_OPENGL_ASYNC_DISPATCH",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57007,7 +57205,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_MAC_OPTION_AS_ALT",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57019,7 +57217,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_MAC_PRESS_AND_HOLD",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57031,7 +57229,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_MAC_SCROLL_MOMENTUM",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57043,7 +57241,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_MAIN_CALLBACK_RATE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57055,7 +57253,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_MOUSE_AUTO_CAPTURE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57067,7 +57265,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_MOUSE_DEFAULT_SYSTEM_CURSOR",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57079,7 +57277,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_MOUSE_DOUBLE_CLICK_RADIUS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57091,7 +57289,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_MOUSE_DOUBLE_CLICK_TIME",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57103,7 +57301,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_MOUSE_DPI_SCALE_CURSORS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57115,7 +57313,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_MOUSE_EMULATE_WARP_WITH_RELATIVE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57127,7 +57325,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57139,7 +57337,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_MOUSE_NORMAL_SPEED_SCALE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57151,7 +57349,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_MOUSE_RELATIVE_CURSOR_VISIBLE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57163,7 +57361,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_MOUSE_RELATIVE_MODE_CENTER",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57175,7 +57373,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_MOUSE_RELATIVE_SPEED_SCALE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57187,7 +57385,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_MOUSE_RELATIVE_SYSTEM_SCALE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57199,7 +57397,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_MOUSE_RELATIVE_WARP_MOTION",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57211,7 +57409,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_MOUSE_TOUCH_EVENTS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57223,7 +57421,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_MUTE_CONSOLE_KEYBOARD",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57235,7 +57433,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_NO_SIGNAL_HANDLERS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57247,7 +57445,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_OPENGL_ES_DRIVER",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57259,7 +57457,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_OPENGL_FORCE_SRGB_FRAMEBUFFER",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57271,7 +57469,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_OPENGL_LIBRARY",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57283,7 +57481,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_OPENVR_LIBRARY",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57295,7 +57493,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_ORIENTATIONS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57307,7 +57505,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_PEN_MOUSE_EVENTS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57319,7 +57517,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_PEN_TOUCH_EVENTS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57331,7 +57529,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_POLL_SENTINEL",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57343,7 +57541,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_PREFERRED_LOCALES",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57355,7 +57553,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_PS2_GS_HEIGHT",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57367,7 +57565,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_PS2_GS_MODE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57379,7 +57577,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_PS2_GS_PROGRESSIVE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57391,7 +57589,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_PS2_GS_WIDTH",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57403,7 +57601,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_QUIT_ON_LAST_WINDOW_CLOSE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57415,7 +57613,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_RENDER_DIRECT3D11_DEBUG",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57427,7 +57625,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_RENDER_DIRECT3D11_WARP",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57439,7 +57637,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_RENDER_DIRECT3D_THREADSAFE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57451,7 +57649,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_RENDER_DRIVER",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57463,7 +57661,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_RENDER_GPU_DEBUG",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57475,7 +57673,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_RENDER_GPU_LOW_POWER",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57487,7 +57685,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_RENDER_LINE_METHOD",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57499,7 +57697,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_RENDER_METAL_PREFER_LOW_POWER_DEVICE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57524,7 +57722,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_RENDER_VSYNC",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57536,7 +57734,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_RENDER_VULKAN_DEBUG",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57548,7 +57746,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_RETURN_KEY_HIDES_IME",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57560,7 +57758,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_ROG_GAMEPAD_MICE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57572,7 +57770,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_ROG_GAMEPAD_MICE_EXCLUDED",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57584,7 +57782,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_RPI_VIDEO_LAYER",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57596,7 +57794,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_SCREENSAVER_INHIBIT_ACTIVITY_NAME",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57608,7 +57806,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_SHUTDOWN_DBUS_ON_QUIT",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57620,7 +57818,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_STORAGE_TITLE_DRIVER",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57632,7 +57830,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_STORAGE_USER_DRIVER",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57644,7 +57842,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_THREAD_FORCE_REALTIME_TIME_CRITICAL",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57656,7 +57854,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_THREAD_PRIORITY_POLICY",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57668,7 +57866,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_TIMER_RESOLUTION",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57680,7 +57878,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_TOUCH_MOUSE_EVENTS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57692,7 +57890,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_TRACKPAD_IS_TOUCH_ONLY",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57704,7 +57902,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_TV_REMOTE_AS_JOYSTICK",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57716,7 +57914,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_ALLOW_SCREENSAVER",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57728,7 +57926,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_DISPLAY_PRIORITY",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57740,7 +57938,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_DOUBLE_BUFFER",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57752,7 +57950,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_DRIVER",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57764,7 +57962,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_DUMMY_SAVE_FRAMES",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57776,7 +57974,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_EGL_ALLOW_GETDISPLAY_FALLBACK",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57788,7 +57986,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_FORCE_EGL",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57800,7 +57998,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_MAC_FULLSCREEN_MENU_VISIBILITY",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57812,7 +58010,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57824,7 +58022,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_MATCH_EXCLUSIVE_MODE_ON_MOVE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57836,7 +58034,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_METAL_AUTO_RESIZE_DRAWABLE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57848,7 +58046,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57860,7 +58058,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_OFFSCREEN_SAVE_FRAMES",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57872,7 +58070,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_SYNC_WINDOW_OPERATIONS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57884,7 +58082,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_WAYLAND_ALLOW_LIBDECOR",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57896,7 +58094,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_WAYLAND_MODE_EMULATION",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57908,7 +58106,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_WAYLAND_MODE_SCALING",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57920,7 +58118,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_WAYLAND_PREFER_LIBDECOR",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57932,7 +58130,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_WAYLAND_SCALE_TO_DISPLAY",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57944,7 +58142,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_WIN_D3DCOMPILER",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57956,7 +58154,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_X11_ENABLE_XSYNC_EXT",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57968,7 +58166,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_X11_EXTERNAL_WINDOW_INPUT",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57980,7 +58178,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -57992,7 +58190,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_X11_NET_WM_PING",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58004,7 +58202,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_X11_NODIRECTCOLOR",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58016,7 +58214,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_X11_SCALING_FACTOR",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58028,7 +58226,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_X11_VISUALID",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58040,7 +58238,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_X11_WINDOW_VISUALID",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58052,7 +58250,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VIDEO_X11_XRANDR",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58064,7 +58262,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VITA_ENABLE_BACK_TOUCH",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58076,7 +58274,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VITA_ENABLE_FRONT_TOUCH",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58088,7 +58286,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VITA_MODULE_PATH",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58100,7 +58298,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VITA_PVR_INIT",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58112,7 +58310,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VITA_PVR_OPENGL",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58124,7 +58322,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VITA_RESOLUTION",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58136,7 +58334,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VITA_TOUCH_MOUSE_DEVICE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58148,7 +58346,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VULKAN_DISPLAY",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58160,7 +58358,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_VULKAN_LIBRARY",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58172,7 +58370,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_WAVE_CHUNK_LIMIT",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58184,7 +58382,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_WAVE_FACT_CHUNK",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58196,7 +58394,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_WAVE_RIFF_CHUNK_SIZE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58208,7 +58406,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_WAVE_TRUNCATION",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58220,7 +58418,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58232,7 +58430,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_WINDOWS_ENABLE_MENU_MNEMONICS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58244,7 +58442,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58256,7 +58454,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_WINDOWS_ERASE_BACKGROUND_MODE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58281,7 +58479,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_WINDOWS_FORCE_SEMAPHORE_KERNEL",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58293,7 +58491,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_WINDOWS_GAMEINPUT",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58305,7 +58503,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_WINDOWS_INTRESOURCE_ICON",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58317,7 +58515,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_WINDOWS_INTRESOURCE_ICON_SMALL",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58329,7 +58527,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_WINDOWS_RAW_KEYBOARD",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58341,7 +58539,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_WINDOWS_RAW_KEYBOARD_EXCLUDE_HOTKEYS",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58353,7 +58551,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_WINDOWS_RAW_KEYBOARD_INPUTSINK",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58365,7 +58563,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_WINDOWS_USE_D3D9EX",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58377,7 +58575,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_WINDOW_ACTIVATE_WHEN_RAISED",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58389,7 +58587,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_WINDOW_ACTIVATE_WHEN_SHOWN",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58401,7 +58599,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_WINDOW_ALLOW_TOPMOST",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58413,7 +58611,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58425,7 +58623,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_X11_FORCE_OVERRIDE_REDIRECT",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58437,7 +58635,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_X11_WINDOW_TYPE",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58449,7 +58647,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_X11_XCB_LIBRARY",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -58461,7 +58659,7 @@
       "function_like": false,
       "id": "macro:SDL_HINT_XINPUT_ENABLED",
       "category": "Hints",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61774,7 +61972,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_APP_METADATA_COPYRIGHT_STRING",
       "category": "Init",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61786,7 +61984,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_APP_METADATA_CREATOR_STRING",
       "category": "Init",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61798,7 +61996,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_APP_METADATA_IDENTIFIER_STRING",
       "category": "Init",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61810,7 +62008,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_APP_METADATA_NAME_STRING",
       "category": "Init",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61822,7 +62020,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_APP_METADATA_TYPE_STRING",
       "category": "Init",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61834,7 +62032,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_APP_METADATA_URL_STRING",
       "category": "Init",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61846,7 +62044,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_APP_METADATA_VERSION_STRING",
       "category": "Init",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61858,7 +62056,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_AUDIOSTREAM_AUTO_CLEANUP_BOOLEAN",
       "category": "Audio",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61870,7 +62068,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_DISPLAY_HDR_ENABLED_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61882,7 +62080,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_DISPLAY_KMSDRM_PANEL_ORIENTATION_NUMBER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61894,7 +62092,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_DISPLAY_WAYLAND_WL_OUTPUT_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61906,7 +62104,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_DISPLAY_WINDOWS_HMONITOR_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61918,7 +62116,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_FILE_DIALOG_ACCEPT_STRING",
       "category": "Dialog",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61930,7 +62128,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_FILE_DIALOG_CANCEL_STRING",
       "category": "Dialog",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61942,7 +62140,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_FILE_DIALOG_FILTERS_POINTER",
       "category": "Dialog",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61954,7 +62152,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_FILE_DIALOG_LOCATION_STRING",
       "category": "Dialog",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61966,7 +62164,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_FILE_DIALOG_MANY_BOOLEAN",
       "category": "Dialog",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61978,7 +62176,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_FILE_DIALOG_NFILTERS_NUMBER",
       "category": "Dialog",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -61990,7 +62188,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_FILE_DIALOG_TITLE_STRING",
       "category": "Dialog",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62002,7 +62200,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_FILE_DIALOG_WINDOW_POINTER",
       "category": "Dialog",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62014,7 +62212,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GAMEPAD_CAP_MONO_LED_BOOLEAN",
       "category": "Gamepad",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62026,7 +62224,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GAMEPAD_CAP_PLAYER_LED_BOOLEAN",
       "category": "Gamepad",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62038,7 +62236,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GAMEPAD_CAP_RGB_LED_BOOLEAN",
       "category": "Gamepad",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62050,7 +62248,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GAMEPAD_CAP_RUMBLE_BOOLEAN",
       "category": "Gamepad",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62062,7 +62260,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GAMEPAD_CAP_TRIGGER_RUMBLE_BOOLEAN",
       "category": "Gamepad",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62074,7 +62272,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62086,7 +62284,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_BUFFER_CREATE_NAME_STRING",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62098,7 +62296,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_COMPUTEPIPELINE_CREATE_NAME_STRING",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62110,7 +62308,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_CREATE_D3D12_AGILITY_SDK_PATH_STRING",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62122,7 +62320,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_CREATE_D3D12_AGILITY_SDK_VERSION_NUMBER",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62134,7 +62332,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_CREATE_D3D12_ALLOW_FEWER_RESOURCE_SLOTS_BOOLEAN",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62146,7 +62344,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62158,7 +62356,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOLEAN",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62170,7 +62368,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_CREATE_FEATURE_ANISOTROPY_BOOLEAN",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62182,7 +62380,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_CREATE_FEATURE_CLIP_DISTANCE_BOOLEAN",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62194,7 +62392,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_CREATE_FEATURE_DEPTH_CLAMPING_BOOLEAN",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62206,7 +62404,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_CREATE_FEATURE_INDIRECT_DRAW_FIRST_INSTANCE_BOOLEAN",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62218,7 +62416,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_CREATE_METAL_ALLOW_MACFAMILY1_BOOLEAN",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62230,7 +62428,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62242,7 +62440,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOLEAN",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62254,7 +62452,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOLEAN",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62266,7 +62464,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOLEAN",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62278,7 +62476,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOLEAN",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62290,7 +62488,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOLEAN",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62302,7 +62500,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOLEAN",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62314,7 +62512,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOLEAN",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62326,7 +62524,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_CREATE_VERBOSE_BOOLEAN",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62338,7 +62536,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_CREATE_VULKAN_OPTIONS_POINTER",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62350,7 +62548,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_CREATE_VULKAN_REQUIRE_HARDWARE_ACCELERATION_BOOLEAN",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62362,7 +62560,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_DRIVER_INFO_STRING",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62374,7 +62572,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_DRIVER_NAME_STRING",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62386,7 +62584,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_DRIVER_VERSION_STRING",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62398,7 +62596,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_DEVICE_NAME_STRING",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62410,7 +62608,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_GRAPHICSPIPELINE_CREATE_NAME_STRING",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62422,7 +62620,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_SAMPLER_CREATE_NAME_STRING",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62434,7 +62632,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_SHADER_CREATE_NAME_STRING",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62446,7 +62644,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_A_FLOAT",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62458,7 +62656,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_B_FLOAT",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62470,7 +62668,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_DEPTH_FLOAT",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62482,7 +62680,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_G_FLOAT",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62494,7 +62692,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_R_FLOAT",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62506,7 +62704,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_NUMBER",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62518,7 +62716,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_TEXTURE_CREATE_NAME_STRING",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62530,7 +62728,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_GPU_TRANSFERBUFFER_CREATE_NAME_STRING",
       "category": "GPU",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62542,7 +62740,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_HIDAPI_LIBUSB_DEVICE_HANDLE_POINTER",
       "category": "HIDAPI",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62626,7 +62824,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_IOSTREAM_MEMORY_FREE_FUNC_POINTER",
       "category": "IOStream",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62710,7 +62908,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN",
       "category": "Joystick",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62722,7 +62920,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_JOYSTICK_CAP_PLAYER_LED_BOOLEAN",
       "category": "Joystick",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62734,7 +62932,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_JOYSTICK_CAP_RGB_LED_BOOLEAN",
       "category": "Joystick",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62746,7 +62944,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN",
       "category": "Joystick",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62758,7 +62956,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN",
       "category": "Joystick",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62770,7 +62968,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_NAME_STRING",
       "category": "Properties",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62782,7 +62980,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_PROCESS_BACKGROUND_BOOLEAN",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62794,7 +62992,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_PROCESS_CREATE_ARGS_POINTER",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62806,7 +63004,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_PROCESS_CREATE_BACKGROUND_BOOLEAN",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62818,7 +63016,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_PROCESS_CREATE_CMDLINE_STRING",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62830,7 +63028,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_PROCESS_CREATE_ENVIRONMENT_POINTER",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62842,7 +63040,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_PROCESS_CREATE_STDERR_NUMBER",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62854,7 +63052,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_PROCESS_CREATE_STDERR_POINTER",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62866,7 +63064,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_PROCESS_CREATE_STDERR_TO_STDOUT_BOOLEAN",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62878,7 +63076,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_PROCESS_CREATE_STDIN_NUMBER",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62890,7 +63088,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_PROCESS_CREATE_STDIN_POINTER",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62902,7 +63100,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_PROCESS_CREATE_STDOUT_NUMBER",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62914,7 +63112,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_PROCESS_CREATE_STDOUT_POINTER",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62926,7 +63124,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_PROCESS_CREATE_WORKING_DIRECTORY_STRING",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62938,7 +63136,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_PROCESS_PID_NUMBER",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62950,7 +63148,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_PROCESS_STDERR_POINTER",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62962,7 +63160,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_PROCESS_STDIN_POINTER",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62974,7 +63172,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_PROCESS_STDOUT_POINTER",
       "category": "Process",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62986,7 +63184,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_CREATE_GPU_DEVICE_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -62998,7 +63196,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_CREATE_GPU_SHADERS_DXIL_BOOLEAN",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63010,7 +63208,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_CREATE_GPU_SHADERS_MSL_BOOLEAN",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63022,7 +63220,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_CREATE_GPU_SHADERS_SPIRV_BOOLEAN",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63034,7 +63232,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_CREATE_NAME_STRING",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63046,7 +63244,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_CREATE_OUTPUT_COLORSPACE_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63058,7 +63256,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63070,7 +63268,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_CREATE_SURFACE_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63082,7 +63280,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_CREATE_VULKAN_DEVICE_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63094,7 +63292,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_CREATE_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63106,7 +63304,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_CREATE_VULKAN_INSTANCE_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63118,7 +63316,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_CREATE_VULKAN_PHYSICAL_DEVICE_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63130,7 +63328,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63142,7 +63340,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_CREATE_VULKAN_SURFACE_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63154,7 +63352,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_CREATE_WINDOW_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63166,7 +63364,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_D3D11_DEVICE_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63178,7 +63376,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_D3D11_SWAPCHAIN_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63190,7 +63388,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_D3D12_COMMAND_QUEUE_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63202,7 +63400,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_D3D12_DEVICE_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63214,7 +63412,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_D3D12_SWAPCHAIN_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63226,7 +63424,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_D3D9_DEVICE_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63238,7 +63436,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_GPU_DEVICE_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63250,7 +63448,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_HDR_ENABLED_BOOLEAN",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63262,7 +63460,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_HDR_HEADROOM_FLOAT",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63274,7 +63472,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_MAX_TEXTURE_SIZE_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63286,7 +63484,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_NAME_STRING",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63298,7 +63496,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_OUTPUT_COLORSPACE_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63310,7 +63508,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_SDR_WHITE_POINT_FLOAT",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63322,7 +63520,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_SURFACE_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63334,7 +63532,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63346,7 +63544,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_TEXTURE_WRAPPING_BOOLEAN",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63358,7 +63556,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_VSYNC_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63370,7 +63568,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_VULKAN_DEVICE_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63382,7 +63580,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63394,7 +63592,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_VULKAN_INSTANCE_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63406,7 +63604,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_VULKAN_PHYSICAL_DEVICE_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63418,7 +63616,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63430,7 +63628,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_VULKAN_SURFACE_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63442,7 +63640,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63454,7 +63652,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_RENDERER_WINDOW_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63466,7 +63664,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_SURFACE_HDR_HEADROOM_FLOAT",
       "category": "Surface",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63478,7 +63676,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_SURFACE_HOTSPOT_X_NUMBER",
       "category": "Surface",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63490,7 +63688,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_SURFACE_HOTSPOT_Y_NUMBER",
       "category": "Surface",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63502,7 +63700,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_SURFACE_ROTATION_FLOAT",
       "category": "Surface",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63514,7 +63712,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_SURFACE_SDR_WHITE_POINT_FLOAT",
       "category": "Surface",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63526,7 +63724,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_SURFACE_TONEMAP_OPERATOR_STRING",
       "category": "Surface",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63538,7 +63736,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTINPUT_ANDROID_INPUTTYPE_NUMBER",
       "category": "Keyboard",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63550,7 +63748,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTINPUT_AUTOCORRECT_BOOLEAN",
       "category": "Keyboard",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63562,7 +63760,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER",
       "category": "Keyboard",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63574,7 +63772,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTINPUT_MULTILINE_BOOLEAN",
       "category": "Keyboard",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63586,7 +63784,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTINPUT_TYPE_NUMBER",
       "category": "Keyboard",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63598,7 +63796,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_ACCESS_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63610,7 +63808,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_COLORSPACE_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63622,7 +63820,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_ACCESS_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63634,7 +63832,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_COLORSPACE_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63646,7 +63844,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63658,7 +63856,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_U_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63670,7 +63868,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_V_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63682,7 +63880,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63694,7 +63892,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_U_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63706,7 +63904,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_V_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63718,7 +63916,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_FORMAT_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63730,7 +63928,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63742,7 +63940,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_UV_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63754,7 +63952,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_U_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63766,7 +63964,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_V_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63778,7 +63976,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_HDR_HEADROOM_FLOAT",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63790,7 +63988,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_HEIGHT_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63802,7 +64000,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_METAL_PIXELBUFFER_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63814,7 +64012,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63826,7 +64024,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_UV_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63838,7 +64036,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_U_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63850,7 +64048,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_V_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63862,7 +64060,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63874,7 +64072,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_UV_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63886,7 +64084,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_U_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63898,7 +64096,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_V_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63910,7 +64108,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_PALETTE_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63922,7 +64120,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63934,7 +64132,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_VULKAN_LAYOUT_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63946,7 +64144,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63958,7 +64156,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_CREATE_WIDTH_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63970,7 +64168,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_D3D11_TEXTURE_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63982,7 +64180,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_D3D11_TEXTURE_U_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -63994,7 +64192,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_D3D11_TEXTURE_V_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64006,7 +64204,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_D3D12_TEXTURE_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64018,7 +64216,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_D3D12_TEXTURE_U_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64030,7 +64228,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_D3D12_TEXTURE_V_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64042,7 +64240,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_FORMAT_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64054,7 +64252,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_GPU_TEXTURE_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64066,7 +64264,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_GPU_TEXTURE_UV_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64078,7 +64276,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_GPU_TEXTURE_U_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64090,7 +64288,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_GPU_TEXTURE_V_POINTER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64102,7 +64300,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_HDR_HEADROOM_FLOAT",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64114,7 +64312,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_HEIGHT_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64126,7 +64324,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64138,7 +64336,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_TARGET_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64150,7 +64348,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_UV_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64162,7 +64360,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_U_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64174,7 +64372,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_V_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64186,7 +64384,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_OPENGL_TEXTURE_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64198,7 +64396,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_OPENGL_TEXTURE_TARGET_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64210,7 +64408,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_OPENGL_TEXTURE_UV_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64222,7 +64420,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_OPENGL_TEXTURE_U_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64234,7 +64432,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_OPENGL_TEXTURE_V_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64246,7 +64444,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_OPENGL_TEX_H_FLOAT",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64258,7 +64456,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_OPENGL_TEX_W_FLOAT",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64270,7 +64468,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_SDR_WHITE_POINT_FLOAT",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64282,7 +64480,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64294,7 +64492,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_TEXTURE_WIDTH_NUMBER",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64306,7 +64504,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER",
       "category": "Thread",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64318,7 +64516,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_THREAD_CREATE_NAME_STRING",
       "category": "Thread",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64330,7 +64528,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER",
       "category": "Thread",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64342,7 +64540,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_THREAD_CREATE_USERDATA_POINTER",
       "category": "Thread",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64354,7 +64552,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_ANDROID_SURFACE_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64366,7 +64564,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_ANDROID_WINDOW_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64378,7 +64576,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_COCOA_METAL_VIEW_TAG_NUMBER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64390,7 +64588,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_COCOA_WINDOW_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64402,7 +64600,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_ALWAYS_ON_TOP_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64414,7 +64612,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_BORDERLESS_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64426,7 +64624,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_COCOA_VIEW_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64438,7 +64636,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_COCOA_WINDOW_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64450,7 +64648,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_CONSTRAIN_POPUP_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64462,7 +64660,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_CANVAS_ID_STRING",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64474,7 +64672,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64486,7 +64684,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_EXTERNAL_GRAPHICS_CONTEXT_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64498,7 +64696,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_FLAGS_NUMBER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64510,7 +64708,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_FOCUSABLE_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64522,7 +64720,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_FULLSCREEN_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64534,7 +64732,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_HEIGHT_NUMBER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64546,7 +64744,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_HIDDEN_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64558,7 +64756,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_HIGH_PIXEL_DENSITY_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64570,7 +64768,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_MAXIMIZED_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64582,7 +64780,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_MENU_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64594,7 +64792,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_METAL_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64606,7 +64804,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_MINIMIZED_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64618,7 +64816,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_MODAL_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64630,7 +64828,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_MOUSE_GRABBED_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64642,7 +64840,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_OPENGL_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64654,7 +64852,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_PARENT_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64666,7 +64864,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_RESIZABLE_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64678,7 +64876,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_TITLE_STRING",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64690,7 +64888,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_TOOLTIP_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64702,7 +64900,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_TRANSPARENT_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64714,7 +64912,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_UTILITY_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64726,7 +64924,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_VULKAN_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64738,7 +64936,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_WAYLAND_CREATE_EGL_WINDOW_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64750,7 +64948,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_WAYLAND_SURFACE_ROLE_CUSTOM_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64762,7 +64960,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_WAYLAND_WL_SURFACE_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64774,7 +64972,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_WIDTH_NUMBER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64786,7 +64984,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_WIN32_HWND_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64798,7 +64996,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_WIN32_PIXEL_FORMAT_HWND_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64810,7 +65008,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_WINDOWSCENE_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64822,7 +65020,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_X11_WINDOW_NUMBER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64834,7 +65032,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_X_NUMBER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64846,7 +65044,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_CREATE_Y_NUMBER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64858,7 +65056,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_EMSCRIPTEN_CANVAS_ID_STRING",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64870,7 +65068,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64882,7 +65080,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_HDR_ENABLED_BOOLEAN",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64894,7 +65092,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_HDR_HEADROOM_FLOAT",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64906,7 +65104,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_KMSDRM_DEVICE_INDEX_NUMBER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64918,7 +65116,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_KMSDRM_DRM_FD_NUMBER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64930,7 +65128,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_KMSDRM_GBM_DEVICE_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64942,7 +65140,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_OPENVR_OVERLAY_ID_NUMBER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64954,7 +65152,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_SDR_WHITE_LEVEL_FLOAT",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64966,7 +65164,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_SHAPE_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64978,7 +65176,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_UIKIT_METAL_VIEW_TAG_NUMBER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -64990,7 +65188,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_UIKIT_OPENGL_FRAMEBUFFER_NUMBER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -65002,7 +65200,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_UIKIT_OPENGL_RENDERBUFFER_NUMBER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -65014,7 +65212,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_UIKIT_OPENGL_RESOLVE_FRAMEBUFFER_NUMBER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -65026,7 +65224,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_UIKIT_WINDOW_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -65038,7 +65236,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_VIVANTE_DISPLAY_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -65050,7 +65248,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_VIVANTE_SURFACE_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -65062,7 +65260,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_VIVANTE_WINDOW_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -65074,7 +65272,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_WAYLAND_DISPLAY_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -65086,7 +65284,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_WAYLAND_EGL_WINDOW_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -65098,7 +65296,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_WAYLAND_SURFACE_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -65110,7 +65308,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_WAYLAND_VIEWPORT_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -65122,7 +65320,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_WAYLAND_XDG_POPUP_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -65134,7 +65332,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_WAYLAND_XDG_POSITIONER_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -65146,7 +65344,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_WAYLAND_XDG_SURFACE_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -65158,7 +65356,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_EXPORT_HANDLE_STRING",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -65170,7 +65368,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -65182,7 +65380,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_WIN32_HDC_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -65194,7 +65392,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_WIN32_HWND_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -65206,7 +65404,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_WIN32_INSTANCE_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -65218,7 +65416,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_X11_DISPLAY_POINTER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -65230,7 +65428,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_X11_SCREEN_NUMBER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -65242,7 +65440,7 @@
       "function_like": false,
       "id": "macro:SDL_PROP_WINDOW_X11_WINDOW_NUMBER",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -68034,7 +68232,7 @@
       "function_like": false,
       "id": "macro:SDL_WINDOW_FILL_DOCUMENT",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -69230,8 +69428,13 @@
       ],
       "id": "record:SDL_AudioDeviceEvent",
       "category": "Events",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "timestamp",
+        "which",
+        "recording"
+      ]
     },
     {
       "name": "SDL_AudioSpec",
@@ -69317,8 +69520,12 @@
       ],
       "id": "record:SDL_CameraDeviceEvent",
       "category": "Events",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "timestamp",
+        "which"
+      ]
     },
     {
       "name": "SDL_CameraSpec",
@@ -69516,8 +69723,12 @@
       ],
       "id": "record:SDL_CursorFrameInfo",
       "category": "Mouse",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "surface",
+        "duration"
+      ]
     },
     {
       "name": "SDL_DateTime",
@@ -70782,7 +70993,9 @@
         "stencil_load_op",
         "stencil_store_op",
         "cycle",
-        "clear_stencil"
+        "clear_stencil",
+        "mip_level",
+        "layer"
       ]
     },
     {
@@ -71081,7 +71294,8 @@
       "exposed_fields": [
         "sample_count",
         "sample_mask",
-        "enable_mask"
+        "enable_mask",
+        "enable_alpha_to_coverage"
       ]
     },
     {
@@ -71171,7 +71385,7 @@
       "fields": [],
       "id": "record:SDL_GPURenderState",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -71217,8 +71431,18 @@
       ],
       "id": "record:SDL_GPURenderStateCreateInfo",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "fragment_shader",
+        "num_sampler_bindings",
+        "sampler_bindings",
+        "num_storage_textures",
+        "storage_textures",
+        "num_storage_buffers",
+        "storage_buffers",
+        "props"
+      ]
     },
     {
       "name": "SDL_GPUSampler",
@@ -73312,8 +73536,12 @@
       ],
       "id": "record:SDL_KeyboardDeviceEvent",
       "category": "Events",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "timestamp",
+        "which"
+      ]
     },
     {
       "name": "SDL_KeyboardEvent",
@@ -73616,8 +73844,12 @@
       ],
       "id": "record:SDL_MouseDeviceEvent",
       "category": "Events",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "timestamp",
+        "which"
+      ]
     },
     {
       "name": "SDL_MouseMotionEvent",
@@ -74062,7 +74294,8 @@
       "exposed_fields": [
         "timestamp",
         "windowID",
-        "which"
+        "which",
+        "pen_state"
       ]
     },
     {
@@ -75577,8 +75810,13 @@
       "callback": false,
       "id": "typedef:SDL_AudioDeviceEvent",
       "category": "Events",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "timestamp",
+        "which",
+        "recording"
+      ]
     },
     {
       "name": "SDL_AudioDeviceID",
@@ -75738,8 +75976,12 @@
       "callback": false,
       "id": "typedef:SDL_CameraDeviceEvent",
       "category": "Events",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "timestamp",
+        "which"
+      ]
     },
     {
       "name": "SDL_CameraID",
@@ -76009,8 +76251,12 @@
       "callback": false,
       "id": "typedef:SDL_CursorFrameInfo",
       "category": "Mouse",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "surface",
+        "duration"
+      ]
     },
     {
       "name": "SDL_DUMMY_ENUM",
@@ -76951,7 +77197,9 @@
         "stencil_load_op",
         "stencil_store_op",
         "cycle",
-        "clear_stencil"
+        "clear_stencil",
+        "mip_level",
+        "layer"
       ]
     },
     {
@@ -77159,7 +77407,8 @@
       "exposed_fields": [
         "sample_count",
         "sample_mask",
-        "enable_mask"
+        "enable_mask",
+        "enable_alpha_to_coverage"
       ]
     },
     {
@@ -77229,7 +77478,7 @@
       "callback": false,
       "id": "typedef:SDL_GPURenderState",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "opaque",
       "boost_status": "unreviewed"
     },
     {
@@ -77241,8 +77490,18 @@
       "callback": false,
       "id": "typedef:SDL_GPURenderStateCreateInfo",
       "category": "Render",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "fragment_shader",
+        "num_sampler_bindings",
+        "sampler_bindings",
+        "num_storage_textures",
+        "storage_textures",
+        "num_storage_buffers",
+        "storage_buffers",
+        "props"
+      ]
     },
     {
       "name": "SDL_GPUSampleCount",
@@ -78542,8 +78801,12 @@
       "callback": false,
       "id": "typedef:SDL_KeyboardDeviceEvent",
       "category": "Events",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "timestamp",
+        "which"
+      ]
     },
     {
       "name": "SDL_KeyboardEvent",
@@ -78818,8 +79081,12 @@
       "callback": false,
       "id": "typedef:SDL_MouseDeviceEvent",
       "category": "Events",
-      "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "raw_status": "partial",
+      "boost_status": "unreviewed",
+      "exposed_fields": [
+        "timestamp",
+        "which"
+      ]
     },
     {
       "name": "SDL_MouseID",
@@ -79058,7 +79325,7 @@
       "callback": false,
       "id": "typedef:SDL_PenDeviceType",
       "category": "Pen",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -79119,7 +79386,8 @@
       "exposed_fields": [
         "timestamp",
         "windowID",
-        "which"
+        "which",
+        "pen_state"
       ]
     },
     {
@@ -79270,7 +79538,7 @@
       "callback": false,
       "id": "typedef:SDL_ProgressState",
       "category": "Video",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {
@@ -79688,7 +79956,7 @@
       "callback": false,
       "id": "typedef:SDL_TextureAddressMode",
       "category": "Render",
-      "raw_status": "pending",
+      "raw_status": "generated",
       "boost_status": "unreviewed"
     },
     {

@@ -2288,6 +2288,55 @@ addIEx("PENDING","SDL_CAMERA_PERMISSION_STATE_PENDING",int64_t(SDL_CAMERA_PERMIS
 static_assert(int64_t(SDL_CAMERA_PERMISSION_STATE_APPROVED) == 1LL);
 addIEx("APPROVED","SDL_CAMERA_PERMISSION_STATE_APPROVED",int64_t(SDL_CAMERA_PERMISSION_STATE_APPROVED),das::LineInfo());
 } };
+DAS_BIND_ENUM_CAST(SDL_TextureAddressMode);
+DAS_BASE_BIND_ENUM_GEN(SDL_TextureAddressMode,SDL_TextureAddressMode);
+static_assert(sizeof(SDL_TextureAddressMode) == 4);
+class Enumeration_SDL_TextureAddressMode : public das::Enumeration {
+public: Enumeration_SDL_TextureAddressMode() : das::Enumeration("SDL_TextureAddressMode") {
+external=true; cppName="SDL_TextureAddressMode"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_TextureAddressMode>::type>::type;
+static_assert(int64_t(SDL_TEXTURE_ADDRESS_INVALID) == -1LL);
+addIEx("TEXTURE_ADDRESS_INVALID","SDL_TEXTURE_ADDRESS_INVALID",int64_t(SDL_TEXTURE_ADDRESS_INVALID),das::LineInfo());
+static_assert(int64_t(SDL_TEXTURE_ADDRESS_AUTO) == 0LL);
+addIEx("TEXTURE_ADDRESS_AUTO","SDL_TEXTURE_ADDRESS_AUTO",int64_t(SDL_TEXTURE_ADDRESS_AUTO),das::LineInfo());
+static_assert(int64_t(SDL_TEXTURE_ADDRESS_CLAMP) == 1LL);
+addIEx("TEXTURE_ADDRESS_CLAMP","SDL_TEXTURE_ADDRESS_CLAMP",int64_t(SDL_TEXTURE_ADDRESS_CLAMP),das::LineInfo());
+static_assert(int64_t(SDL_TEXTURE_ADDRESS_WRAP) == 2LL);
+addIEx("TEXTURE_ADDRESS_WRAP","SDL_TEXTURE_ADDRESS_WRAP",int64_t(SDL_TEXTURE_ADDRESS_WRAP),das::LineInfo());
+} };
+DAS_BIND_ENUM_CAST(SDL_ProgressState);
+DAS_BASE_BIND_ENUM_GEN(SDL_ProgressState,SDL_ProgressState);
+static_assert(sizeof(SDL_ProgressState) == 4);
+class Enumeration_SDL_ProgressState : public das::Enumeration {
+public: Enumeration_SDL_ProgressState() : das::Enumeration("SDL_ProgressState") {
+external=true; cppName="SDL_ProgressState"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_ProgressState>::type>::type;
+static_assert(int64_t(SDL_PROGRESS_STATE_INVALID) == -1LL);
+addIEx("PROGRESS_STATE_INVALID","SDL_PROGRESS_STATE_INVALID",int64_t(SDL_PROGRESS_STATE_INVALID),das::LineInfo());
+static_assert(int64_t(SDL_PROGRESS_STATE_NONE) == 0LL);
+addIEx("PROGRESS_STATE_NONE","SDL_PROGRESS_STATE_NONE",int64_t(SDL_PROGRESS_STATE_NONE),das::LineInfo());
+static_assert(int64_t(SDL_PROGRESS_STATE_INDETERMINATE) == 1LL);
+addIEx("PROGRESS_STATE_INDETERMINATE","SDL_PROGRESS_STATE_INDETERMINATE",int64_t(SDL_PROGRESS_STATE_INDETERMINATE),das::LineInfo());
+static_assert(int64_t(SDL_PROGRESS_STATE_NORMAL) == 2LL);
+addIEx("PROGRESS_STATE_NORMAL","SDL_PROGRESS_STATE_NORMAL",int64_t(SDL_PROGRESS_STATE_NORMAL),das::LineInfo());
+static_assert(int64_t(SDL_PROGRESS_STATE_PAUSED) == 3LL);
+addIEx("PROGRESS_STATE_PAUSED","SDL_PROGRESS_STATE_PAUSED",int64_t(SDL_PROGRESS_STATE_PAUSED),das::LineInfo());
+static_assert(int64_t(SDL_PROGRESS_STATE_ERROR) == 4LL);
+addIEx("PROGRESS_STATE_ERROR","SDL_PROGRESS_STATE_ERROR",int64_t(SDL_PROGRESS_STATE_ERROR),das::LineInfo());
+} };
+DAS_BIND_ENUM_CAST(SDL_PenDeviceType);
+DAS_BASE_BIND_ENUM_GEN(SDL_PenDeviceType,SDL_PenDeviceType);
+static_assert(sizeof(SDL_PenDeviceType) == 4);
+class Enumeration_SDL_PenDeviceType : public das::Enumeration {
+public: Enumeration_SDL_PenDeviceType() : das::Enumeration("SDL_PenDeviceType") {
+external=true; cppName="SDL_PenDeviceType"; baseType=(das::Type)das::ToBasicType<das::underlying_type<SDL_PenDeviceType>::type>::type;
+static_assert(int64_t(SDL_PEN_DEVICE_TYPE_INVALID) == -1LL);
+addIEx("PEN_DEVICE_TYPE_INVALID","SDL_PEN_DEVICE_TYPE_INVALID",int64_t(SDL_PEN_DEVICE_TYPE_INVALID),das::LineInfo());
+static_assert(int64_t(SDL_PEN_DEVICE_TYPE_UNKNOWN) == 0LL);
+addIEx("PEN_DEVICE_TYPE_UNKNOWN","SDL_PEN_DEVICE_TYPE_UNKNOWN",int64_t(SDL_PEN_DEVICE_TYPE_UNKNOWN),das::LineInfo());
+static_assert(int64_t(SDL_PEN_DEVICE_TYPE_DIRECT) == 1LL);
+addIEx("PEN_DEVICE_TYPE_DIRECT","SDL_PEN_DEVICE_TYPE_DIRECT",int64_t(SDL_PEN_DEVICE_TYPE_DIRECT),das::LineInfo());
+static_assert(int64_t(SDL_PEN_DEVICE_TYPE_INDIRECT) == 2LL);
+addIEx("PEN_DEVICE_TYPE_INDIRECT","SDL_PEN_DEVICE_TYPE_INDIRECT",int64_t(SDL_PEN_DEVICE_TYPE_INDIRECT),das::LineInfo());
+} };
 MAKE_TYPE_FACTORY(SDL_Window, SDL_Window);
 MAKE_TYPE_FACTORY(SDL_Renderer, SDL_Renderer);
 MAKE_TYPE_FACTORY(SDL_Surface, SDL_Surface);
@@ -2330,6 +2379,7 @@ MAKE_TYPE_FACTORY(SDL_SharedObject, SDL_SharedObject);
 MAKE_TYPE_FACTORY(SDL_Tray, SDL_Tray);
 MAKE_TYPE_FACTORY(SDL_TrayMenu, SDL_TrayMenu);
 MAKE_TYPE_FACTORY(SDL_TrayEntry, SDL_TrayEntry);
+MAKE_TYPE_FACTORY(SDL_GPURenderState, SDL_GPURenderState);
 MAKE_TYPE_FACTORY(SDL_GPUViewport, SDL_GPUViewport);
 MAKE_TYPE_FACTORY(SDL_GPUIndirectDrawCommand, SDL_GPUIndirectDrawCommand);
 MAKE_TYPE_FACTORY(SDL_GPUIndexedIndirectDrawCommand, SDL_GPUIndexedIndirectDrawCommand);
@@ -2426,6 +2476,12 @@ MAKE_TYPE_FACTORY(SDL_InitState, SDL_InitState);
 MAKE_TYPE_FACTORY(SDL_AtomicU32, SDL_AtomicU32);
 MAKE_TYPE_FACTORY(SDL_Locale, SDL_Locale);
 MAKE_TYPE_FACTORY(SDL_DialogFileFilter, SDL_DialogFileFilter);
+MAKE_TYPE_FACTORY(SDL_GPURenderStateCreateInfo, SDL_GPURenderStateCreateInfo);
+MAKE_TYPE_FACTORY(SDL_CursorFrameInfo, SDL_CursorFrameInfo);
+MAKE_TYPE_FACTORY(SDL_KeyboardDeviceEvent, SDL_KeyboardDeviceEvent);
+MAKE_TYPE_FACTORY(SDL_MouseDeviceEvent, SDL_MouseDeviceEvent);
+MAKE_TYPE_FACTORY(SDL_AudioDeviceEvent, SDL_AudioDeviceEvent);
+MAKE_TYPE_FACTORY(SDL_CameraDeviceEvent, SDL_CameraDeviceEvent);
 namespace das {
 struct SDL_GPUViewportAnnotation : ManagedStructureAnnotation<SDL_GPUViewport, false> {
     SDL_GPUViewportAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_GPUViewport", lib) {
@@ -2514,6 +2570,7 @@ struct SDL_GPUMultisampleStateAnnotation : ManagedStructureAnnotation<SDL_GPUMul
         addField<DAS_BIND_MANAGED_FIELD(sample_count)>("sample_count", "sample_count");
         addField<DAS_BIND_MANAGED_FIELD(sample_mask)>("sample_mask", "sample_mask");
         addField<DAS_BIND_MANAGED_FIELD(enable_mask)>("enable_mask", "enable_mask");
+        addField<DAS_BIND_MANAGED_FIELD(enable_alpha_to_coverage)>("enable_alpha_to_coverage", "enable_alpha_to_coverage");
     }
 };
 struct SDL_FPointAnnotation : ManagedStructureAnnotation<SDL_FPoint, false> {
@@ -2817,6 +2874,8 @@ struct SDL_GPUDepthStencilTargetInfoAnnotation : ManagedStructureAnnotation<SDL_
         addField<DAS_BIND_MANAGED_FIELD(stencil_store_op)>("stencil_store_op", "stencil_store_op");
         addField<DAS_BIND_MANAGED_FIELD(cycle)>("cycle", "cycle");
         addField<DAS_BIND_MANAGED_FIELD(clear_stencil)>("clear_stencil", "clear_stencil");
+        addField<DAS_BIND_MANAGED_FIELD(mip_level)>("mip_level", "mip_level");
+        addField<DAS_BIND_MANAGED_FIELD(layer)>("layer", "layer");
     }
 };
 struct SDL_GPUBlitInfoAnnotation : ManagedStructureAnnotation<SDL_GPUBlitInfo, false> {
@@ -3202,6 +3261,7 @@ struct SDL_PenProximityEventAnnotation : ManagedStructureAnnotation<SDL_PenProxi
         addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
         addField<DAS_BIND_MANAGED_FIELD(windowID)>("windowID", "windowID");
         addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
+        addField<DAS_BIND_MANAGED_FIELD(pen_state)>("pen_state", "pen_state");
     }
 };
 struct SDL_PenMotionEventAnnotation : ManagedStructureAnnotation<SDL_PenMotionEvent, false> {
@@ -3342,6 +3402,49 @@ struct SDL_DialogFileFilterAnnotation : ManagedStructureAnnotation<SDL_DialogFil
     SDL_DialogFileFilterAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_DialogFileFilter", lib) {
         addField<DAS_BIND_MANAGED_FIELD(name)>("name", "name");
         addField<DAS_BIND_MANAGED_FIELD(pattern)>("pattern", "pattern");
+    }
+};
+struct SDL_GPURenderStateCreateInfoAnnotation : ManagedStructureAnnotation<SDL_GPURenderStateCreateInfo, false> {
+    SDL_GPURenderStateCreateInfoAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_GPURenderStateCreateInfo", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(fragment_shader)>("fragment_shader", "fragment_shader");
+        addField<DAS_BIND_MANAGED_FIELD(num_sampler_bindings)>("num_sampler_bindings", "num_sampler_bindings");
+        addField<DAS_BIND_MANAGED_FIELD(sampler_bindings)>("sampler_bindings", "sampler_bindings");
+        addField<DAS_BIND_MANAGED_FIELD(num_storage_textures)>("num_storage_textures", "num_storage_textures");
+        addField<DAS_BIND_MANAGED_FIELD(storage_textures)>("storage_textures", "storage_textures");
+        addField<DAS_BIND_MANAGED_FIELD(num_storage_buffers)>("num_storage_buffers", "num_storage_buffers");
+        addField<DAS_BIND_MANAGED_FIELD(storage_buffers)>("storage_buffers", "storage_buffers");
+        addField<DAS_BIND_MANAGED_FIELD(props)>("props", "props");
+    }
+};
+struct SDL_CursorFrameInfoAnnotation : ManagedStructureAnnotation<SDL_CursorFrameInfo, false> {
+    SDL_CursorFrameInfoAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_CursorFrameInfo", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(surface)>("surface", "surface");
+        addField<DAS_BIND_MANAGED_FIELD(duration)>("duration", "duration");
+    }
+};
+struct SDL_KeyboardDeviceEventAnnotation : ManagedStructureAnnotation<SDL_KeyboardDeviceEvent, false> {
+    SDL_KeyboardDeviceEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_KeyboardDeviceEvent", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+        addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
+    }
+};
+struct SDL_MouseDeviceEventAnnotation : ManagedStructureAnnotation<SDL_MouseDeviceEvent, false> {
+    SDL_MouseDeviceEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_MouseDeviceEvent", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+        addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
+    }
+};
+struct SDL_AudioDeviceEventAnnotation : ManagedStructureAnnotation<SDL_AudioDeviceEvent, false> {
+    SDL_AudioDeviceEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_AudioDeviceEvent", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+        addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
+        addField<DAS_BIND_MANAGED_FIELD(recording)>("recording", "recording");
+    }
+};
+struct SDL_CameraDeviceEventAnnotation : ManagedStructureAnnotation<SDL_CameraDeviceEvent, false> {
+    SDL_CameraDeviceEventAnnotation(ModuleLibrary & lib) : ManagedStructureAnnotation("SDL_CameraDeviceEvent", lib) {
+        addField<DAS_BIND_MANAGED_FIELD(timestamp)>("timestamp", "timestamp");
+        addField<DAS_BIND_MANAGED_FIELD(which)>("which", "which");
     }
 };
 } // namespace das

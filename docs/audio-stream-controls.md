@@ -33,10 +33,19 @@ They cannot change the channel count.
 
 SDL 3.4.16 fixes the old 3.2.18 default-map crash: SDL_ChannelMapDup now checks
 for a null source. Tests cover both custom allocated maps and default NULL maps
-with no error. Copied boost getters remain a follow-up API addition; the old
-upstream crash no longer blocks them. A copied getter must distinguish a normal
-default map from allocation failure. No private struct-layout access or shadow
-registry is needed.
+with no error. `audio_stream_input_channel_map` and
+`audio_stream_output_channel_map` now return `Result<Option<array<int>>, SdlError>`:
+None means the default order, Some owns an independent copy, and Err reports a
+null stream or failed native allocation. Identity maps are normalized to None by
+SDL. The copy survives resetting/changing/destroying the stream.
+
+The native API uses NULL for both default and allocation failure. These adapters
+clear the thread's old SDL error immediately before the getter, then inspect a
+fresh error only when it returns NULL. This relies on the pinned SDL_malloc
+setting OutOfMemory on failure. No parsing of error text, private layout access,
+shadow registry or extra stream lock is used. The getter itself copies under its
+stream lock. The call may clear an earlier SDL error; callers must already have
+captured their prior failures. Arbitrary dangling pointers remain invalid.
 
 Setters require exactly the current side's channel count. Empty arrays do not
 mean reset. Use `reset_audio_stream_input_channel_map(stream,channels)` or its
