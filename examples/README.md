@@ -194,6 +194,12 @@ cubes, dynamic vertex upload, depth and lighting. See [usage and API findings](g
 [gpu/03_mesh.das](gpu/03_mesh.das) ports bgfx mesh: Stanford bunny, static vertex/index
 buffers, shader deformation, lighting and rendering at the current window resolution.
 
+[gpu/04_instancing.das](gpu/04_instancing.das): an animated cube grid with instance
+matrices/colors and a one-draw versus many-draw comparison.
+[gpu/05_bump.das](gpu/05_bump.das): fieldstone normal mapping and four moving lights.
+[gpu/06_hdr.das](gpu/06_hdr.das): Uffizi/bunny, FP16 rendering, luminance reduction,
+bloom and tone mapping. Usage, controls and test details: [GPU examples](gpu/README.md).
+
 88. [System info](88_system_info.das): platform, revision and copied GUID text; noninteractive.
 
 89. [GL context](89_gl_context.das): hidden OpenGL window, context attributes and deferred cleanup.

@@ -1,12 +1,13 @@
 # GPU application examples
 
 Numbered scripts are interactive entry points. Their rendering implementation is
-in adjacent `metaballs_app.das`, `raymarch_app.das` and `mesh_app.das` modules.
+in adjacent `metaballs_app.das`, `raymarch_app.das`, `mesh_app.das`,
+`cubes_app.das` (instancing/bump) and `hdr_app.das` modules.
 They contain no smoke mode, pixel readback or capture output. The unused bool in
 `main` is only the current runner entry-point convention.
 
 GPU regression harnesses live in `tests/bgfx_metaballs.das`, `tests/bgfx_raymarch.das`
-and `tests/bgfx_mesh.das`; they import the application rendering functions and own
+and the other `tests/bgfx_*.das` entry points; they import the application rendering functions and own
 the deterministic loops, readback/fences, captures and pixel assertions. CTest
 runs these harnesses, not the interactive entry points. Tests set up their own
 resources; mesh tests also exercise offscreen output and automatic resize.
@@ -238,3 +239,117 @@ passes Direct3D 12 after copying the new runtime assets; no consumer rebuild was
 needed. DXC rebuild comparison, spirv-val and deterministic OBJ conversion pass.
 At time 1.2 the offscreen image has 29,774 foreground pixels on both tested GPU
 backends. Keyboard controls are implemented but not automated; Metal is untested.
+
+## 04_instancing — bgfx 05-instancing
+
+[04_instancing.das](04_instancing.das) ports the
+[upstream example](https://github.com/bkaradzic/bgfx/tree/7e3060ccb97959dcda3f091b96d82515197028e0/examples/05-instancing).
+The default 11x11 grid uses one indexed draw, with a real per-instance vertex
+buffer: four float4 matrix columns and a float4 tint (80-byte stride). CPU code
+updates the same animated XY rotations, positions and colors as bgfx. SDL upload
+and destination buffers are cycled each frame; there is no wait-idle per frame.
+
+I toggles between one instanced draw and one draw per cube using first_instance.
+Up/Down adjust the grid from 1x1 to 32x32; the camera remains at z=-35. Space pauses,
+R resets time, Escape closes. The title shows cube and draw counts. Rendering and
+depth storage use the current swapchain size.
+
+The shared cube has 24 vertices instead of bgfx's eight, because bump needs face
+normals/UVs/tangents. Position colors still match the original eight corner colors.
+Float4 vertex colors replace packed UNORM bytes. Persistent cycled buffers replace
+bgfx's transient allocator. The comparison path uses the same instance data for
+both modes so it isolates draw submission; ImGui/statistics menus are omitted.
+
+## 05_bump — bgfx 06-bump
+
+[05_bump.das](05_bump.das) ports the
+[upstream example](https://github.com/bkaradzic/bgfx/tree/7e3060ccb97959dcda3f091b96d82515197028e0/examples/06-bump).
+Nine rotating cubes use the original fieldstone color/normal textures, four animated
+colored point lights, radius/inner-radius attenuation, tangent-space normal
+reconstruction, linear-light shading and gamma output. Face tangents are analytic
+for the axis-aligned UV-mapped cube rather than computed by bgfx calcTangents.
+
+N toggles normal mapping, I toggles instancing, Space pauses, R resets and Escape
+closes. All nine cubes fit one instanced draw instead of the original three row
+draws. Light positions are evaluated from time in the fragment shader; their
+formulas/colors/radii are preserved. Textures use the original 512x512 TGA data
+converted offline to RGBA8, with linear filtering and one mip level, rather than
+the runtime compressed DDS/mip chain. No image decoding dependency is needed.
+
+## 06_hdr — bgfx 09-hdr
+
+[06_hdr.das](06_hdr.das) ports the
+[upstream example](https://github.com/bkaradzic/bgfx/tree/7e3060ccb97959dcda3f091b96d82515197028e0/examples/09-hdr).
+The Uffizi cubemap surrounds the reflective/color-modulated Stanford bunny.
+The camera orbits the bunny. The pass sequence is explicit SDL commands:
+
+1. Skybox and depth-tested bunny into a full-resolution RGBA16F target.
+2. Luminance at 128x128, then reductions to 64x64, 16x16, 4x4 and 1x1.
+3. Half-resolution bright extraction using middle gray, white point and threshold.
+4. Nine-tap vertical bloom filtering into an eighth-resolution texture.
+5. Horizontal bloom filtering combined with luminance-scaled Reinhard tone mapping
+   and gamma output to the swapchain.
+
+Up/Down change middle gray; Left/Right change bloom threshold; W/S change white
+point; B toggles bloom; Space pauses; R resets; Escape closes. Scene/depth and
+relative-size postprocess targets are recreated on window resize. The fixed
+luminance pyramid stays 128->64->16->4->1.
+
+RGBA16F replaces RGBE8/RE8 packing. This preserves values above 1 without encoding
+helpers, and avoids interpolating packed exponents. The 512x512x6 cubemap is
+unpacked offline from the original KTX RGBA16F payload; source hashes are pinned.
+Tiny negative source radiance values are clamped to zero. Fullscreen passes use
+a vertex-ID triangle instead of a transient screen quad. Single-sample rendering
+is used; the original ImGui, MSAA/VRS selectors and CPU luminance-readback UI are
+omitted. There is no GPU readback or test mode in the application modules.
+
+### Run and rebuild 04–06
+
+From the repository root:
+
+```powershell
+.\build\ninja\bin\dasSDL3_runner.exe .\examples\gpu\04_instancing.das
+.\build\ninja\bin\dasSDL3_runner.exe .\examples\gpu\05_bump.das
+.\build\ninja\bin\dasSDL3_runner.exe .\examples\gpu\06_hdr.das
+```
+
+Use `SDL_GPU_DRIVER=vulkan` or `direct3d12`. Shipped DXIL/SPIR-V and texture bytes
+are copied by CMake. No shader compiler, bgfx runtime or network is needed to run.
+`tools/build_bgfx_next_shaders.py --check` verifies shaders with DXC/spirv-val.
+`tools/build_bgfx_next_assets.py --check` downloads the pinned sources and verifies
+conversion; `--source-dir` uses an offline directory containing the two TGAs and
+uffizi.ktx instead. Provenance: `shaders/bgfx-next-upstream.json` and
+`textures/manifest.json`; code license: LICENSE-bgfx.txt. The bunny's separate
+model terms remain in [models/README.md](models/README.md).
+
+### Tests and API findings
+
+`tests/bgfx_instancing.das` and `tests/bgfx_bump.das` call the same resource setup
+and draw functions as the apps. They check visible coverage, animated images,
+byte-identical instanced/individual output, and the effect of disabling normal
+mapping. `tests/bgfx_hdr.das` checks finite nonnegative FP16 scene data with values
+above 1, positive 1x1 luminance, bloom/exposure effects, animation and target resize.
+Readback/fences live only in `tests/bgfx_capture.das`. Set `DASSDL3_BGFX_CAPTURE` to
+an existing writable directory to retain raw test images: RGBA8 for final output,
+RGBA16F for HDR intermediate buffers. Frames 0–3 are 640x480; HDR frame 4 is 800x600.
+
+No public wrapper changes were necessary. Native array adapters support instance
+streams, indexed draws, samplers and cubemap face uploads; builders cover shaders,
+textures and pipeline state. `bgfx_support.das` contains only example-local SDL
+helpers. Resource structs in the apps are scoped bookkeeping, not public owning
+handles or a rendering framework. HDR records its passes directly without a graph
+or command-plan layer. Ordinary error returns clean up partial allocations.
+
+Remaining convenience gaps: upload setup and dynamic multi-target cleanup still
+need explicit code; shader ABI/vertex layout must match manually. Small arrays of
+float uniforms are supported for the vertex stage. These ports pass the needed
+fragment parameters through flat varyings, so a fragment float-array overload
+would be convenient but is not required for correctness. Shader/resource choices
+remain visible, and no unsafe script pointers are used.
+
+Local verification (Windows, 2026-09-26): all six main-runner tests and all 18
+baseline/CppGenBind/strict-AOT tests passed across Vulkan and Direct3D 12.
+All three interactive apps opened, rendered, resized and closed successfully on
+both drivers. The existing no-LLVM consumer also passed the three Direct3D 12
+tests. Official das-fmt verification and both asset/shader reproducibility checks
+passed. Metal and other operating systems have not been validated here.

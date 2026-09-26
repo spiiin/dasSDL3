@@ -235,7 +235,7 @@ list(APPEND AOT_SCRIPTS tests/event_queue examples/68_event_queue tests/event_ca
 list(APPEND AOT_SCRIPTS tests/pixels examples/05_streaming_texture examples/06_render_target)
 list(APPEND AOT_SCRIPTS tests/geometry examples/07_geometry)
 list(APPEND AOT_SCRIPTS tests/gpu)
-list(APPEND AOT_SCRIPTS tests/bgfx_mesh_data tests/bgfx_metaballs_field tests/gpu_raw tests/gpu_native_adapters tests/gpu_native_array_operations examples/48_gpu_native_graphics examples/49_gpu_native_compute examples/50_gpu_native_transfer tests/bgfx_metaballs tests/bgfx_raymarch tests/bgfx_mesh tests/gpu_float_upload)
+list(APPEND AOT_SCRIPTS tests/bgfx_mesh_data tests/bgfx_metaballs_field tests/gpu_raw tests/gpu_native_adapters tests/gpu_native_array_operations examples/48_gpu_native_graphics examples/49_gpu_native_compute examples/50_gpu_native_transfer tests/bgfx_metaballs tests/bgfx_raymarch tests/bgfx_mesh tests/bgfx_instancing tests/bgfx_bump tests/bgfx_hdr tests/gpu_float_upload)
 list(APPEND AOT_SCRIPTS tests/gpu_native_fences examples/47_gpu_native_fences)
 list(APPEND AOT_SCRIPTS tests/gpu_astc_layout tests/gpu_astc examples/40_gpu_astc_blocks)
 list(APPEND AOT_SCRIPTS tests/gpu_vertex_buffers tests/gpu_recording examples/46_gpu_texture_uniform_bindings)
@@ -261,7 +261,7 @@ list(APPEND AOT_MODULES dassdl3/sdl3_audio_stream_controls dassdl3/sdl3_audio_fi
 list(APPEND AOT_MODULES dassdl3/sdl3_asyncio_boost dassdl3/sdl3_audio_devices_boost)
 list(APPEND AOT_MODULES dassdl3/sdl3_camera_boost dassdl3/sdl3_synchronization dassdl3/sdl3_thread_atomic dassdl3/sdl3_process_loadso dassdl3/sdl3_platform_services)
 list(APPEND AOT_MODULES dassdl3/sdl3_pixel_views examples/gpu/metaballs_field examples/gpu/metaballs_tables examples/gpu/mesh_data
-    examples/gpu/metaballs_app examples/gpu/raymarch_app examples/gpu/mesh_app)
+    examples/gpu/metaballs_app examples/gpu/raymarch_app examples/gpu/mesh_app examples/gpu/bgfx_support examples/gpu/cube_data examples/gpu/cubes_app examples/gpu/hdr_app tests/bgfx_capture tests/bgfx_cubes_checks)
 list(APPEND AOT_MODULES dassdl3/sdl3_render_surface_34_boost)
 list(APPEND AOT_SCRIPTS tests/render_surface_34 tests/gpu_renderer_34 examples/86_gpu_renderer)
 list(APPEND AOT_SCRIPTS tests/sdl34_remaining tests/sdl34_audio examples/87_window_progress)
@@ -361,6 +361,13 @@ foreach(script IN LISTS AOT_SCRIPTS AOT_MODULES)
     endif()
     if(bgfx_dependency)
         list(APPEND bgfx_dependency "${ROOT}/dassdl3/sdl3_scope.das" "${ROOT}/dassdl3/sdl3_try.das"
+            "${ROOT}/dassdl3/sdl3_iostream_boost.das" "${ROOT}/dassdl3/sdl3_events.das")
+    endif()
+    if(script MATCHES "bgfx_instancing|bgfx_bump|bgfx_hdr|bgfx_support|cube_data|cubes_app|hdr_app|bgfx_capture|bgfx_cubes_checks")
+        list(APPEND bgfx_dependency "${ROOT}/examples/gpu/bgfx_support.das" "${ROOT}/examples/gpu/cube_data.das"
+            "${ROOT}/examples/gpu/cubes_app.das" "${ROOT}/examples/gpu/hdr_app.das" "${ROOT}/examples/gpu/mesh_data.das"
+            "${ROOT}/tests/bgfx_capture.das" "${ROOT}/tests/bgfx_cubes_checks.das"
+            "${ROOT}/dassdl3/sdl3_scope.das" "${ROOT}/dassdl3/sdl3_try.das"
             "${ROOT}/dassdl3/sdl3_iostream_boost.das" "${ROOT}/dassdl3/sdl3_events.das")
     endif()
     set(mesh_dependency)
@@ -534,7 +541,7 @@ foreach(driver vulkan direct3d12)
     endforeach()
 endforeach()
 foreach(driver vulkan direct3d12)
-    foreach(script tests/gpu_native_adapters tests/gpu_native_array_operations examples/48_gpu_native_graphics examples/49_gpu_native_compute examples/50_gpu_native_transfer tests/bgfx_metaballs tests/bgfx_raymarch tests/bgfx_mesh tests/gpu_float_upload)
+    foreach(script tests/gpu_native_adapters tests/gpu_native_array_operations examples/48_gpu_native_graphics examples/49_gpu_native_compute examples/50_gpu_native_transfer tests/bgfx_metaballs tests/bgfx_raymarch tests/bgfx_mesh tests/bgfx_instancing tests/bgfx_bump tests/bgfx_hdr tests/gpu_float_upload)
         string(REPLACE "/" "_" name "${script}")
         foreach(backend baseline cppgenbind parity_aot)
             if(backend STREQUAL "parity_aot")
@@ -1007,4 +1014,12 @@ foreach(runner baseline_runner cppgenbind_runner parity_aot_runner)
         add_test(NAME mesh_data_${runner} COMMAND ${runner} ${ROOT}/tests/bgfx_mesh_data.das --smoke-test)
     endif()
     set_tests_properties(mesh_data_${runner} PROPERTIES TIMEOUT 30)
+endforeach()
+
+# Offline bgfx application assets: no shader compiler/download in consumer builds.
+foreach(shader bgfx_bump.frag.dxil bgfx_bump.frag.spv bgfx_bump.vert.dxil bgfx_bump.vert.spv bgfx_hdr_avg.frag.dxil bgfx_hdr_avg.frag.spv bgfx_hdr_blur.frag.dxil bgfx_hdr_blur.frag.spv bgfx_hdr_bright.frag.dxil bgfx_hdr_bright.frag.spv bgfx_hdr_lum.frag.dxil bgfx_hdr_lum.frag.spv bgfx_hdr_quad.vert.dxil bgfx_hdr_quad.vert.spv bgfx_hdr_scene.frag.dxil bgfx_hdr_scene.frag.spv bgfx_hdr_scene.vert.dxil bgfx_hdr_scene.vert.spv bgfx_hdr_sky.frag.dxil bgfx_hdr_sky.frag.spv bgfx_hdr_tone.frag.dxil bgfx_hdr_tone.frag.spv bgfx_instancing.frag.dxil bgfx_instancing.frag.spv bgfx_instancing.vert.dxil bgfx_instancing.vert.spv)
+    configure_file("${ROOT}/examples/gpu/shaders/${shader}" "${CMAKE_CURRENT_BINARY_DIR}/assets/shaders/${shader}" COPYONLY)
+endforeach()
+foreach(texture fieldstone-n.rgba8 fieldstone-rgba.rgba8 uffizi.rgba16f)
+    configure_file("${ROOT}/examples/gpu/textures/${texture}" "${CMAKE_CURRENT_BINARY_DIR}/assets/bgfx/${texture}" COPYONLY)
 endforeach()
