@@ -1,0 +1,23 @@
+{
+  "fieldstone-n.rgba8": {
+    "source": "https://raw.githubusercontent.com/bkaradzic/bgfx/7e3060ccb97959dcda3f091b96d82515197028e0/examples/06-bump/fieldstone-n.tga",
+    "source_sha256": "ec14b58cfca90a0ad61ba39a0cb3b0e33053c27dbf739f17099f992915239976",
+    "sha256": "20daaf6930172eb12e46379e28cd0678f5781720af78441cc1b35abb4474effc",
+    "width": 512,
+    "height": 512
+  },
+  "fieldstone-rgba.rgba8": {
+    "source": "https://raw.githubusercontent.com/bkaradzic/bgfx/7e3060ccb97959dcda3f091b96d82515197028e0/examples/06-bump/fieldstone-rgba.tga",
+    "source_sha256": "294ece0321ba500339160877f11216acd27703971c871341ce34dc44e65c217f",
+    "sha256": "f658051f4f4e6e3827f9c1eabd21ecafbb4c14b2841db3d6230accbd5655951f",
+    "width": 512,
+    "height": 512
+  },
+  "uffizi.rgba16f": {
+    "source": "https://raw.githubusercontent.com/bkaradzic/bgfx/7e3060ccb97959dcda3f091b96d82515197028e0/examples/runtime/textures/uffizi.ktx",
+    "source_sha256": "f0a7e3a636632c199f1000165e5a316727c7f1958f0732bfc9d7b28f35f5e615",
+    "sha256": "7d6c4daea7e07904f47fc71d0eefc9c4ba113ce5ff681222ec975e61a38b2ad9",
+    "width": 512,
+    "height": 512
+  }
+}

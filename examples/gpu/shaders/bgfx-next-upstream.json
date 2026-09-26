@@ -1,0 +1,32 @@
+{
+  "commit": "7e3060ccb97959dcda3f091b96d82515197028e0",
+  "license": "BSD-2-Clause: ../LICENSE-bgfx.txt",
+  "reference_sha256": {
+    "05-instancing/fs_instancing.sc": "d587ccb3f09808377d713114e34cd86f87b00a3ee4d50e621b38be0d5a60cf9b",
+    "05-instancing/instancing.cpp": "1379df6fabfffb6da9e865ceab8ce275f18c4dd367cd787fbb56ec6e60201a53",
+    "05-instancing/varying.def.sc": "667872de7fab7b70d7c557a8577350426d434a1df2299d42c808fbb378f91426",
+    "05-instancing/vs_instancing.sc": "f8a3fc6cb5fc3b9504e99d8444171410ee376cdcd83987d9aeaf5fc429ac2987",
+    "06-bump/bump.cpp": "86a9fb4f97d56f554f71a4226d06a78b193ab50d921b1ebc736226a46d3af35f",
+    "06-bump/fs_bump.sc": "3464f3098299c970e32fe1c71b224c539b560fb880467f3729362d55ea13985b",
+    "06-bump/varying.def.sc": "1ce97b1f0dcd81b492b310730460ad551fce98bc095efd780963ce84657b7b43",
+    "06-bump/vs_bump.sc": "998817caf12fffaa683038890ce3e1f89d453a5bda1cfa285ac4482ad0bdfb97",
+    "06-bump/vs_bump_instanced.sc": "436ba4ec27682570f886cd19b9a55e75e88466245c92fcd3fa5ef06bb47947a0",
+    "09-hdr/common.sh": "831bfab8726b9b3b94c9560e440f6bde94c5fbb4da6a876c0f9c870e05f2dee0",
+    "09-hdr/fs_hdr_blur.sc": "9dc94d08c27a8baf86c7a0234be9e21982c2f9bc7a66d148d403cca69adf9758",
+    "09-hdr/fs_hdr_bright.sc": "447868ef53c03e955c047699f01cc0fcfee22b4c702b0de4f120b2052899223b",
+    "09-hdr/fs_hdr_lum.sc": "f1e6c417eb3016562313d581757bbaa40afeac5d7db9b43893cf060417b9bc48",
+    "09-hdr/fs_hdr_lumavg.sc": "a289316337539b446fb01548666041907876e8541eab381fc1e07018e48d362e",
+    "09-hdr/fs_hdr_mesh.sc": "42c929560c8995b0acea7f2830bb8b16b2e645f0e21c765c91dc992ffaf94394",
+    "09-hdr/fs_hdr_skybox.sc": "92bd9f634ec09e79480b0eab7e4f363518598449499c43b6bb581331ac7e433e",
+    "09-hdr/fs_hdr_tonemap.sc": "a472e9d493a0240c1c0e003bfd5092fd2efb08b0a2fae8ab369733ebc1b29c0a",
+    "09-hdr/hdr.cpp": "54ca4273b77e9c6bf8acd8a743771131effd6a2545368be20d2b4e445caac8fa",
+    "09-hdr/varying.def.sc": "6c40433cb2fbeab46890039aa21fbdbf570f91b024c1c9d7fb32ea6d831d6141",
+    "09-hdr/vs_hdr_blur.sc": "a76f10d9d5ade8ab8fde62e59f6bb0c9d3cbaed8b89e3e020db516a4c9ae826f",
+    "09-hdr/vs_hdr_bright.sc": "12fa65b96d7c647a75ee1294f4adfa6587446a477f0eb56dd785a9db9f0c5703",
+    "09-hdr/vs_hdr_lum.sc": "12fa65b96d7c647a75ee1294f4adfa6587446a477f0eb56dd785a9db9f0c5703",
+    "09-hdr/vs_hdr_lumavg.sc": "12fa65b96d7c647a75ee1294f4adfa6587446a477f0eb56dd785a9db9f0c5703",
+    "09-hdr/vs_hdr_mesh.sc": "580f0feec4025145cf218eee373922a84f80396482cab1163bbcfde2da509986",
+    "09-hdr/vs_hdr_skybox.sc": "12fa65b96d7c647a75ee1294f4adfa6587446a477f0eb56dd785a9db9f0c5703",
+    "09-hdr/vs_hdr_tonemap.sc": "0b4ec33d1f2f938c48a17924628a98aef75c671b9cf1f085b5917aecfdc20e9a"
+  }
+}
