@@ -14,8 +14,8 @@ def main : int {
         print("Expected SDL include directory and LLVM SDK root\n")
         return 2
     }
-    let inc = cmd[length(cmd)-2]
-    let sdk = cmd[length(cmd)-1]
+    let inc = cmd[length(cmd) - 2]
+    let sdk = cmd[length(cmd) - 1]
     let args <- array<string>("-xc-header", "-std=c11", "--target=x86_64-pc-windows-msvc",
         "-Wno-pragma-pack", "-I{inc}", "-resource-dir={sdk}/lib/clang/22")
     print("libclang: {string(clang_getClangVersion())}\n")

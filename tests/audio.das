@@ -78,7 +78,7 @@ def main(smoke : bool) : int {
                     let scope_ok_6 = with_audio_stream(src, src) $(stream : SDL_AudioStream?) {
                         verify(SDLTestWatchAudio(stream))
                         if (mode == 1) { return sdl_ok() }
-                        if (mode == 2) { caught = !is_ok(set_title(null,"expected SDL failure")); return sdl_ok() }
+                        if (mode == 2) { caught = !is_ok(set_title(null, "expected SDL failure")); return sdl_ok() }
                         if (mode == 3) {
                             let scope_ok_7 = with_audio_stream(dst, dst) $(wrong : SDL_AudioStream?) { caught = !(is_ok(wrong |> queue_wav(wav)))
                                 return sdl_ok()

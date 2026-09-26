@@ -32,8 +32,8 @@ def main(smoke : bool) : int {
     var frames = 0
     let result = sdl_scope() {
         with_sdl() |> sdl_use
-        var settings = window_options("dasSDL3 boost - Escape to exit",int2(800,600))
-        settings |> window_flags(SDL_WINDOW_HIDDEN,smoke)
+        var settings = window_options("dasSDL3 boost - Escape to exit", int2(800, 600))
+        settings |> window_flags(SDL_WINDOW_HIDDEN, smoke)
         let window : SDL_Window? = with_window(settings) |> sdl_use
         let renderer : SDL_Renderer? = window |> with_renderer() |> sdl_use
         return render_loop(renderer, smoke, frames)

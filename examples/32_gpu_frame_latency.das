@@ -4,7 +4,7 @@ require dassdl3/sdl3_gpu_swapchain_boost
 
 def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : SdlStatus {
     return sdl_scope() {
-        let window : SDL_Window? = with_window("SDL GPU swapchain",320,240,0ul) |> sdl_use
+        let window : SDL_Window? = with_window("SDL GPU swapchain", 320, 240, 0ul) |> sdl_use
         device |> with_gpu_window(window) |> sdl_use
         for (count in 1u .. 4u) {
             device |> gpu_frames_in_flight(count) |> sdl_try
@@ -24,13 +24,13 @@ def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : SdlStatus {
 def main(smoke : bool) : int {
     let result = sdl_scope() {
         with_sdl() |> sdl_use
-        let device : SDL_GPUDevice? = with_gpu_device(GPU_SHADER_FORMATS,true,"") |> sdl_use
+        let device : SDL_GPUDevice? = with_gpu_device(GPU_SHADER_FORMATS, true, "") |> sdl_use
         return run_gpu_example(device, smoke)
     }
     if (is_err(result)) {
         let error = unwrap_err(result)
         print("{error.operation}: {error.message}\n")
-        return smoke && error.operation=="with_gpu_device" ? 77 : 1
+        return smoke && error.operation == "with_gpu_device" ? 77 : 1
     }
     return 0
 }

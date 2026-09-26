@@ -7,25 +7,25 @@ var window_id = 0u
 
 def exercise(mode : int) {
     let initialized = with_sdl() {
-        let opened = with_window("deferred SDL cleanup",64,64,SDL_WINDOW_HIDDEN) $(window : SDL_Window?) {
+        let opened = with_window("deferred SDL cleanup", 64, 64, SDL_WINDOW_HIDDEN) $(window : SDL_Window?) {
             window_id = SDL_GetWindowID(window)
             if (mode == 3) {
-                verify(is_err(create_renderer(window,"dasSDL3-nonexistent-driver")))
+                verify(is_err(create_renderer(window, "dasSDL3-nonexistent-driver")))
                 verify(SDL_GetError() != "")
                 return sdl_ok()
             }
             let rendered = window |> with_renderer() $(renderer : SDL_Renderer?) {
                 verify(is_ok(renderer |> clear()))
-                verify(is_ok(renderer |> fill_rect(SDL_MakeFRect(1.0,2.0,10.0,12.0))))
+                verify(is_ok(renderer |> fill_rect(SDL_MakeFRect(1.0, 2.0, 10.0, 12.0))))
                 verify(is_ok(renderer |> present()))
                 if (mode == 1) { return sdl_ok() }
                 if (mode == 2) {
-                    verify(!is_ok(set_title(null,"invalid window")))
+                    verify(!is_ok(set_title(null, "invalid window")))
                     verify(SDL_GetError() != "")
                     return sdl_ok()
                 }
                 if (mode == 4) {
-                    verify(!(is_ok(renderer |> set_color(uint4(256u,0u,0u,255u)))))
+                    verify(!(is_ok(renderer |> set_color(uint4(256u, 0u, 0u, 255u)))))
                     verify(SDL_GetError() != "")
                 }
 
@@ -52,7 +52,7 @@ def direct_ownership() : bool {
     if (!is_ok(sdl_init())) { return false }
     {
         defer() { SDL_Quit() }
-        let window = move_unwrap(create_window("direct defer",64,64,SDL_WINDOW_HIDDEN))
+        let window = move_unwrap(create_window("direct defer", 64, 64, SDL_WINDOW_HIDDEN))
         if (window == null) { return false }
         {
             defer() { destroy_window(window) }
@@ -61,7 +61,7 @@ def direct_ownership() : bool {
             if (renderer == null) { return false }
             {
                 defer() { destroy_renderer(renderer) }
-                return is_ok(set_title(null,"expected failure"))
+                return is_ok(set_title(null, "expected failure"))
             }
         }
     }
@@ -86,7 +86,7 @@ def main(smoke : bool) : int {
     } |> is_ok;
     verify(!loaded && !invoked && SDL_GetError() != "")
     let initialized = with_sdl() {
-        var event = SDL_MakeKeyEvent(SDL_EVENT_KEY_DOWN,SDLK_ESCAPE)
+        var event = SDL_MakeKeyEvent(SDL_EVENT_KEY_DOWN, SDLK_ESCAPE)
         verify(push_event(event))
         var received = SDL_MakeEvent()
         var found = false

@@ -19,7 +19,7 @@ def main(smoke : bool) : int {
                         let scope_ok_3 = with_bmp(path) $(surface : SDL_Surface?) {
                             verify(SDLTestWatchSurface(surface))
                             if (mode == 1) { return sdl_ok() }
-                            if (mode == 2) { caught = !is_ok(set_title(null,"expected SDL failure")); return sdl_ok() }
+                            if (mode == 2) { caught = !is_ok(set_title(null, "expected SDL failure")); return sdl_ok() }
                             if (mode == 3) { caught = is_err(create_texture(null, surface)); return sdl_ok() }
                             var texture = move_unwrap(create_texture(renderer, surface))
                             destroy_texture(texture)
@@ -42,7 +42,7 @@ def main(smoke : bool) : int {
                         let scope_ok_4 = renderer |> with_texture(path) $(texture : SDL_Texture?) {
                             verify(SDLTestWatchTexture(texture))
                             var query_result_1 : float2
-                            verify(is_ok(texture_size(texture,query_result_1)))
+                            verify(is_ok(texture_size(texture, query_result_1)))
                             let size = query_result_1
                             verify(size.x == 128.0 && size.y == 128.0)
                             is_ok(renderer |> clear())
@@ -58,7 +58,7 @@ def main(smoke : bool) : int {
                             verify(SDLTestCheckCorner(renderer), "source crop pixel mismatch")
                             is_ok(renderer |> present())
                             if (mode == 1) { return sdl_ok() }
-                            if (mode == 2) { caught = !is_ok(set_title(null,"expected SDL failure")); return sdl_ok() }
+                            if (mode == 2) { caught = !is_ok(set_title(null, "expected SDL failure")); return sdl_ok() }
 
                             return sdl_ok()
                         } |> is_ok

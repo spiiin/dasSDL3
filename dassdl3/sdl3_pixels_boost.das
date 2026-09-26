@@ -9,11 +9,11 @@ def public rgba8_buffer_size(width, height, pitch : int) {
     let size = SDL_RGBA8BufferSize(width, height, pitch)
     let value = size
     if (value < 0) { return err(sdl_error("rgba8_buffer_size"), type<int>) }
-    return ok(value,type<SdlError>)
+    return ok(value, type<SdlError>)
 }
 
 def private with_rgba8_texture(renderer : SDL_Renderer?; width, height : int; target : bool;
-                              blk : block<(texture : SDL_Texture?) : $Result<auto(TT); SdlError> >) {
+                               blk : block<(texture : SDL_Texture?) : $Result<auto(TT); SdlError> >) {
     var scope_result : $Result<TT; SdlError>
 
     let texture = SDL_CreateRGBA8Texture(renderer, width, height, target)
@@ -27,12 +27,12 @@ def private with_rgba8_texture(renderer : SDL_Renderer?; width, height : int; ta
 }
 
 def public with_streaming_texture(renderer : SDL_Renderer?; width, height : int;
-                                 blk : block<(texture : SDL_Texture?) : $Result<auto(TT); SdlError> >) {
+                                  blk : block<(texture : SDL_Texture?) : $Result<auto(TT); SdlError> >) {
     return <- with_rgba8_texture(renderer, width, height, false, blk)
 }
 
 def public with_target_texture(renderer : SDL_Renderer?; width, height : int;
-                              blk : block<(texture : SDL_Texture?) : $Result<auto(TT); SdlError> >) {
+                               blk : block<(texture : SDL_Texture?) : $Result<auto(TT); SdlError> >) {
     return <- with_rgba8_texture(renderer, width, height, true, blk)
 }
 
@@ -48,9 +48,9 @@ def public with_render_target(renderer : SDL_Renderer?; texture : SDL_Texture?;
     var scope_result : $Result<TT; SdlError>
 
     let previous = SDL_GetRenderTarget(renderer)
-    if (!SDL_SetRenderTarget(renderer, texture)) { return err(sdl_error("with_render_target"),type<TT>) }
+    if (!SDL_SetRenderTarget(renderer, texture)) { return err(sdl_error("with_render_target"), type<TT>) }
     {
-        defer() { if (!SDL_SetRenderTarget(renderer,previous) && is_ok(scope_result)) { scope_result <- err(sdl_error("SDL_SetRenderTarget"),type<TT>) } }
+        defer() { if (!SDL_SetRenderTarget(renderer, previous) && is_ok(scope_result)) { scope_result <- err(sdl_error("SDL_SetRenderTarget"), type<TT>) } }
         static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk() } else { scope_result <- blk() }
     }
 
@@ -85,8 +85,8 @@ def public copy_surface_rgba8(surface : SDL_Surface?; var bytes : array<uint8>; 
 
 def public surface_size(surface : SDL_Surface?) {
     var size : int2
-    let status = surface_size(surface,size)
-    if (is_err(status)) { return err(unwrap_err(status),type<int2>) }
+    let status = surface_size(surface, size)
+    if (is_err(status)) { return err(unwrap_err(status), type<int2>) }
     var value = size
-    return <- move_ok(value,type<SdlError>)
+    return <- move_ok(value, type<SdlError>)
 }

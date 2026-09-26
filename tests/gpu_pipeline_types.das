@@ -36,7 +36,7 @@ def main(smoke : bool) : int {
         value.props = 2147483666u
         verify(SDLTest_check_GPUSamplerCreateInfo(value))
         var copies : array<SDL_GPUSamplerCreateInfo>
-        push(copies,value)
+        push(copies, value)
         verify(SDLTest_check_GPUSamplerCreateInfo(copies[0]))
         SDLTest_fill_GPUSamplerCreateInfo(copies[0])
         verify(SDLTest_check_GPUSamplerCreateInfo(value)) // Independent value copy, including nested state.
@@ -54,7 +54,7 @@ def main(smoke : bool) : int {
         value.compare_op = SDL_GPUCompareOp.COMPAREOP_NEVER
         verify(SDLTest_check_GPUStencilOpState(value))
         var copies : array<SDL_GPUStencilOpState>
-        push(copies,value)
+        push(copies, value)
         verify(SDLTest_check_GPUStencilOpState(copies[0]))
         SDLTest_fill_GPUStencilOpState(copies[0])
         verify(SDLTest_check_GPUStencilOpState(value)) // Independent value copy, including nested state.
@@ -82,7 +82,7 @@ def main(smoke : bool) : int {
         value.enable_color_write_mask = true
         verify(SDLTest_check_GPUColorTargetBlendState(value))
         var copies : array<SDL_GPUColorTargetBlendState>
-        push(copies,value)
+        push(copies, value)
         verify(SDLTest_check_GPUColorTargetBlendState(copies[0]))
         SDLTest_fill_GPUColorTargetBlendState(copies[0])
         verify(SDLTest_check_GPUColorTargetBlendState(value)) // Independent value copy, including nested state.
@@ -98,7 +98,7 @@ def main(smoke : bool) : int {
         value.props = 2147483655u
         verify(SDLTest_check_GPUTransferBufferCreateInfo(value))
         var copies : array<SDL_GPUTransferBufferCreateInfo>
-        push(copies,value)
+        push(copies, value)
         verify(SDLTest_check_GPUTransferBufferCreateInfo(copies[0]))
         SDLTest_fill_GPUTransferBufferCreateInfo(copies[0])
         verify(SDLTest_check_GPUTransferBufferCreateInfo(value)) // Independent value copy, including nested state.
@@ -136,7 +136,7 @@ def main(smoke : bool) : int {
         value.enable_stencil_test = false
         verify(SDLTest_check_GPUDepthStencilState(value))
         var copies : array<SDL_GPUDepthStencilState>
-        push(copies,value)
+        push(copies, value)
         verify(SDLTest_check_GPUDepthStencilState(copies[0]))
         SDLTest_fill_GPUDepthStencilState(copies[0])
         verify(SDLTest_check_GPUDepthStencilState(value)) // Independent value copy, including nested state.
@@ -166,7 +166,7 @@ def main(smoke : bool) : int {
         value.blend_state.enable_color_write_mask = false
         verify(SDLTest_check_GPUColorTargetDescription(value))
         var copies : array<SDL_GPUColorTargetDescription>
-        push(copies,value)
+        push(copies, value)
         verify(SDLTest_check_GPUColorTargetDescription(copies[0]))
         SDLTest_fill_GPUColorTargetDescription(copies[0])
         verify(SDLTest_check_GPUColorTargetDescription(value)) // Independent value copy, including nested state.

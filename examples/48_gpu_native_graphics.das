@@ -4,45 +4,45 @@ require dassdl3/sdl3_gpu_native_boost
 require daslib/defer
 
 def draw_frames(device : SDL_GPUDevice?; window : SDL_Window?; smoke : bool) : SdlStatus {
-    let spirv=(SDL_GetGPUShaderFormats(device)&SDL_GPU_SHADERFORMAT_SPIRV)!=0u
-    let ext=spirv ? "spv" : "dxil"
-    let base="{SDL_GetBasePath()}assets/shaders/triangle"
+    let spirv = (SDL_GetGPUShaderFormats(device) & SDL_GPU_SHADERFORMAT_SPIRV) != 0u
+    let ext = spirv ? "spv" : "dxil"
+    let base = "{SDL_GetBasePath()}assets/shaders/triangle"
     var shader = gpu_shader("{base}.vert.{ext}",
-        spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL,SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
+        spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL, SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
     var vertex = device |> load_native_gpu_shader(shader) |> sdl_try
     {
-        defer() { SDL_ReleaseGPUShader(device,vertex) }
-        shader.info.stage=SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT
-        shader.path="{base}.frag.{ext}"
+        defer() { SDL_ReleaseGPUShader(device, vertex) }
+        shader.info.stage = SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT
+        shader.path = "{base}.frag.{ext}"
         var fragment = device |> load_native_gpu_shader(shader) |> sdl_try
         {
-            defer() { SDL_ReleaseGPUShader(device,fragment) }
+            defer() { SDL_ReleaseGPUShader(device, fragment) }
             return render_pipeline(device, window, vertex, fragment, smoke)
         }
     }
 }
 
 def render_loop(device : SDL_GPUDevice?; window : SDL_Window?; pipeline : SDL_GPUGraphicsPipeline?; smoke : bool) : SdlStatus {
-    var frame=0
-    while (frame<(smoke ? 3 : 180)) {
-        with_native_gpu_swapchain(device,window) $(command : SDL_GPUCommandBuffer?; var texture : SDL_GPUTexture?; width,height : uint) {
+    var frame = 0
+    while (frame < (smoke ? 3 : 180)) {
+        with_native_gpu_swapchain(device, window) $(command : SDL_GPUCommandBuffer?; var texture : SDL_GPUTexture?; width, height : uint) {
             var targets <- array(SDL_GPUColorTargetInfo(
                 texture = texture,
                 load_op = SDL_GPULoadOp.LOADOP_CLEAR,
                 store_op = SDL_GPUStoreOp.STOREOP_STORE,
-                clear_color = SDL_FColor(r=0.05, b=0.15, a=1.0)
+                clear_color = SDL_FColor(r = 0.05, b = 0.15, a = 1.0)
             ))
             return sdl_scope() {
-                var render_pass : SDL_GPURenderPass?& = with_native_gpu_render_pass(command,targets) |> sdl_use
-                SDL_BindGPUGraphicsPipeline(render_pass,pipeline)
-                SDL_DrawGPUPrimitives(render_pass,3u,1u,0u,0u)
+                var render_pass : SDL_GPURenderPass?& = with_native_gpu_render_pass(command, targets) |> sdl_use
+                SDL_BindGPUGraphicsPipeline(render_pass, pipeline)
+                SDL_DrawGPUPrimitives(render_pass, 3u, 1u, 0u, 0u)
 
                 return sdl_ok()
             }
         } |> sdl_try
         SDL_PumpEvents(); SDL_Delay(16u); frame++
     }
-    return sdl_status(SDL_WaitForGPUIdle(device),"SDL_WaitForGPUIdle")
+    return sdl_status(SDL_WaitForGPUIdle(device), "SDL_WaitForGPUIdle")
 }
 
 def render_pipeline(device : SDL_GPUDevice?; window : SDL_Window?; var vertex, fragment : SDL_GPUShader?; smoke : bool) : SdlStatus {
@@ -51,27 +51,27 @@ def render_pipeline(device : SDL_GPUDevice?; window : SDL_Window?; var vertex, f
         fragment_shader = fragment,
         primitive_type = SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST
     )
-    info.rasterizer_state.enable_depth_clip=true
+    info.rasterizer_state.enable_depth_clip = true
     var buffers : array<SDL_GPUVertexBufferDescription>
     var attributes : array<SDL_GPUVertexAttribute>
     var colors <- array(SDL_GPUColorTargetDescription(
-        format = SDL_GetGPUSwapchainTextureFormat(device,window)
+        format = SDL_GetGPUSwapchainTextureFormat(device, window)
     ))
-    let pipeline = device |> create_native_gpu_graphics_pipeline(info,buffers,attributes,colors) |> sdl_try
+    let pipeline = device |> create_native_gpu_graphics_pipeline(info, buffers, attributes, colors) |> sdl_try
     {
-        defer() { SDL_ReleaseGPUGraphicsPipeline(device,pipeline) }
+        defer() { SDL_ReleaseGPUGraphicsPipeline(device, pipeline) }
         return render_loop(device, window, pipeline, smoke)
     }
 }
 
 [export]
 def main(smoke : bool) : int {
-    let initialized=sdl_scope() {
+    let initialized = sdl_scope() {
         with_sdl() |> sdl_use
-        let window : SDL_Window? = with_window("Native SDL GPU triangle",640,480,0ul) |> sdl_use
-        let device : SDL_GPUDevice? = with_native_gpu_device(GPU_SHADER_FORMATS,true,"") |> sdl_use
-        if (!SDL_ClaimWindowForGPUDevice(device,window)) {return err(sdl_error("48_gpu_native_graphics"),type<SdlUnit>)}
-        { defer() { SDL_ReleaseWindowFromGPUDevice(device,window) }; return draw_frames(device,window,smoke) }
+        let window : SDL_Window? = with_window("Native SDL GPU triangle", 640, 480, 0ul) |> sdl_use
+        let device : SDL_GPUDevice? = with_native_gpu_device(GPU_SHADER_FORMATS, true, "") |> sdl_use
+        if (!SDL_ClaimWindowForGPUDevice(device, window)) {return err(sdl_error("48_gpu_native_graphics"), type<SdlUnit>)}
+        { defer() { SDL_ReleaseWindowFromGPUDevice(device, window) }; return draw_frames(device, window, smoke) }
 
         return sdl_ok()
     }

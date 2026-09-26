@@ -45,7 +45,7 @@ def main(smoke : bool) : int {
     var frames = 0
     let result = sdl_scope() {
         with_sdl() |> sdl_use
-        let window : SDL_Window? = with_window("Geometry: vertices + indices - Escape to exit",640,480,smoke ? SDL_WINDOW_HIDDEN : 0ul) |> sdl_use
+        let window : SDL_Window? = with_window("Geometry: vertices + indices - Escape to exit", 640, 480, smoke ? SDL_WINDOW_HIDDEN : 0ul) |> sdl_use
         let renderer : SDL_Renderer? = window |> with_renderer() |> sdl_use
         let texture : SDL_Texture? = renderer |> with_texture("{SDL_GetBasePath()}assets/checker.bmp") |> sdl_use
         return render_geometry(window, renderer, texture, smoke, frames)

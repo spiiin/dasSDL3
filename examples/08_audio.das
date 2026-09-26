@@ -13,8 +13,8 @@ def play_audio(wav : SDL_Wav?; stream : SDL_AudioStream?) : SdlStatus {
     while (true) {
         let pending = queued_audio(stream) |> sdl_try
         let available = available_audio(stream) |> sdl_try
-        if (pending==0 && available==0) {break}
-        if (SDL_GetTicks() - start > 5000ul) { return err(SdlError(operation="audio playback",message="Playback timed out"),type<SdlUnit>) }
+        if (pending == 0 && available == 0) {break}
+        if (SDL_GetTicks() - start > 5000ul) { return err(SdlError(operation = "audio playback", message = "Playback timed out"), type<SdlUnit>) }
         SDL_Delay(10u)
     }
     // Queue-empty is not a hardware playback-complete signal.

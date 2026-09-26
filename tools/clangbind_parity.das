@@ -77,47 +77,47 @@ class SdlParityGen : CppGenBind {
         fwrite(registrations, "addAnnotation(new {name}Annotation(lib));\n")
     }
     def emit_enum(var c : CXCursor; name : string) {
-        if (key_exists(emitted,name)) { return }
+        if (key_exists(emitted, name)) { return }
         emitted[name] = true
         var tp = clang_getCursorType(c)
         let size = clang_Type_getSizeOf(tp)
         let alignment = clang_Type_getAlignOf(tp)
         if (size != 4l) { panic("Unsupported enum width {name}") }
-        fwrite(contract,"E\t{name}\t{size}\t{alignment}\n")
-        fwrite(types,"static_assert(sizeof({name}) == {size} && alignof({name}) == {alignment});\nclass Enumeration_{name} : public das::Enumeration \{\npublic: Enumeration_{name}() : das::Enumeration(\"{name}\") \{\nexternal=true; cppName=\"{name}\"; baseType=(das::Type)das::ToBasicType<das::underlying_type<{name}>::type>::type;\n")
+        fwrite(contract, "E\t{name}\t{size}\t{alignment}\n")
+        fwrite(types, "static_assert(sizeof({name}) == {size} && alignof({name}) == {alignment});\nclass Enumeration_{name} : public das::Enumeration \{\npublic: Enumeration_{name}() : das::Enumeration(\"{name}\") \{\nexternal=true; cppName=\"{name}\"; baseType=(das::Type)das::ToBasicType<das::underlying_type<{name}>::type>::type;\n")
         let integer_type = clang_getCanonicalType(clang_getEnumDeclIntegerType(c))
         let unsigned_enum = integer_type.kind == CXTypeKind.UInt || integer_type.kind == CXTypeKind.ULong || integer_type.kind == CXTypeKind.ULongLong
         clang_visitChildren(c) $(var member, parent) {
             if (clang_getCursorKind(member) == CXCursorKind.EnumConstantDecl) {
                 let mn = string(clang_getCursorSpelling(member))
-                if (!key_exists(enum_values,"{name}.{mn}")) { panic("Enum members differ from policy: {name}.{mn}") }
+                if (!key_exists(enum_values, "{name}.{mn}")) { panic("Enum members differ from policy: {name}.{mn}") }
                 let alias = enum_values["{name}.{mn}"]
                 if (unsigned_enum && clang_getEnumConstantDeclUnsignedValue(member) > 2147483647ul) { panic("Enum value outside supported int32 range: {name}.{mn}") }
                 let value = clang_getEnumConstantDeclValue(member)
                 if (value < -2147483648l || value > 2147483647l) { panic("Enum value outside supported int32 range: {name}.{mn}") }
-                fwrite(types,"static_assert(int64_t({mn}) == {value}LL);\naddIEx(\"{alias}\",\"{mn}\",int64_t({mn}),das::LineInfo());\n")
-                fwrite(contract,"V\t{name}\t{mn}\t{alias}\t{value}\n")
+                fwrite(types, "static_assert(int64_t({mn}) == {value}LL);\naddIEx(\"{alias}\",\"{mn}\",int64_t({mn}),das::LineInfo());\n")
+                fwrite(contract, "V\t{name}\t{mn}\t{alias}\t{value}\n")
             }
             return CXChildVisitResult.Continue
         }
-        fwrite(types,"\} \};\n")
-        fwrite(registrations,"addEnumeration(new Enumeration_{name}());\n")
+        fwrite(types, "\} \};\n")
+        fwrite(registrations, "addEnumeration(new Enumeration_{name}());\n")
     }
     def emit_constant(var c : CXCursor; name : string) {
         // String macros are type-checked by C++; the snapshot header hash and
         // runtime metadata parity cover their values, rather than integer evaluation.
-        if(constants[name]=="const char *") {
-            fwrite(registrations,"addConstant(*this, \"{name}\", static_cast<const char *>({name}));\n")
-            fwrite(contract,"K\t{name}\tconst char *\tnative-string-macro\n")
+        if (constants[name] == "const char *") {
+            fwrite(registrations, "addConstant(*this, \"{name}\", static_cast<const char *>({name}));\n")
+            fwrite(contract, "K\t{name}\tconst char *\tnative-string-macro\n")
             return
         }
         let eval = clang_Cursor_Evaluate(c)
         if (eval == null) { panic("Cannot evaluate {name}") }
-        if (constants[name]=="float" && clang_EvalResult_getKind(eval)==CXEvalResultKind.Float) {
-            let value="{clang_EvalResult_getAsDouble(eval)}"
+        if (constants[name] == "float" && clang_EvalResult_getKind(eval) == CXEvalResultKind.Float) {
+            let value = "{clang_EvalResult_getAsDouble(eval)}"
             clang_EvalResult_dispose(eval)
-            fwrite(registrations,"static_assert(static_cast<float>({name}) == static_cast<float>({value}));\naddConstant(*this, \"{name}\", static_cast<float>({value}));\n")
-            fwrite(contract,"K\t{name}\tfloat\t{value}\n")
+            fwrite(registrations, "static_assert(static_cast<float>({name}) == static_cast<float>({value}));\naddConstant(*this, \"{name}\", static_cast<float>({value}));\n")
+            fwrite(contract, "K\t{name}\tfloat\t{value}\n")
             return
         }
         if (clang_EvalResult_getKind(eval) != CXEvalResultKind.Int) {
@@ -138,8 +138,8 @@ class SdlParityGen : CppGenBind {
             let name = string(clang_getCursorSpelling(c))
             if (kind == CXCursorKind.FunctionDecl && !skip_function(c)) {
                 parse_FunctionDecl(c)
-            } elif (kind == CXCursorKind.EnumDecl && key_exists(enums,name) && clang_isCursorDefinition(c) != 0u) {
-                emit_enum(c,name)
+            } elif (kind == CXCursorKind.EnumDecl && key_exists(enums, name) && clang_isCursorDefinition(c) != 0u) {
+                emit_enum(c, name)
             } elif (kind == CXCursorKind.StructDecl || kind == CXCursorKind.UnionDecl) {
                 if (key_exists(opaque, name)) { emitted[name] = true }
                 if (key_exists(records, name) && clang_isCursorDefinition(c) != 0u) { emit_record(c, name) }
@@ -150,10 +150,10 @@ class SdlParityGen : CppGenBind {
         }
     }
     def override skip_function(var c : CXCursor) : bool {
-        let name=string(clang_getCursorSpelling(c))
-        if(!key_exists(selected,name)) {return true}
+        let name = string(clang_getCursorSpelling(c))
+        if (!key_exists(selected, name)) {return true}
         // Explicit native-address callback contracts; no script-function reinterpretation.
-        if(name=="SDL_SetClipboardData" || name=="SDL_SetWindowHitTest" || name=="SDL_SetEventFilter" || name=="SDL_GetEventFilter" || name=="SDL_AddEventWatch" || name=="SDL_RemoveEventWatch" || name=="SDL_FilterEvents" || name=="SDL_EnumerateDirectory" || name=="SDL_EnumerateStorageDirectory" || name=="SDL_SetAudioStreamGetCallback" || name=="SDL_SetAudioStreamPutCallback" || name=="SDL_OpenAudioDeviceStream" || name=="SDL_SetAudioPostmixCallback" || name=="SDL_PutAudioStreamDataNoCopy" || name=="SDL_SetRelativeMouseTransform" || name=="SDL_CreateThreadRuntime" || name=="SDL_CreateThreadWithPropertiesRuntime" || name=="SDL_SetTLS" || name=="SDL_Vulkan_GetVkGetInstanceProcAddr" || name=="SDL_GL_GetProcAddress" || name=="SDL_EGL_GetProcAddress" || name=="SDL_EGL_SetAttributeCallbacks" || name=="SDL_LoadFunction" || name=="SDL_AddHintCallback" || name=="SDL_RemoveHintCallback" || name=="SDL_AddTimer" || name=="SDL_AddTimerNS" || name=="SDL_GetDefaultLogOutputFunction" || name=="SDL_GetLogOutputFunction" || name=="SDL_SetLogOutputFunction" || name=="SDL_RunOnMainThread" || name=="SDL_SetPointerPropertyWithCleanup" || name=="SDL_SetWindowsMessageHook" || name=="SDL_SetX11EventHook" || name=="SDL_SetTrayEntryCallback" || name=="SDL_ShowOpenFileDialog" || name=="SDL_ShowSaveFileDialog" || name=="SDL_ShowOpenFolderDialog" || name=="SDL_ShowFileDialogWithProperties") {return false}
+        if (name == "SDL_SetClipboardData" || name == "SDL_SetWindowHitTest" || name == "SDL_SetEventFilter" || name == "SDL_GetEventFilter" || name == "SDL_AddEventWatch" || name == "SDL_RemoveEventWatch" || name == "SDL_FilterEvents" || name == "SDL_EnumerateDirectory" || name == "SDL_EnumerateStorageDirectory" || name == "SDL_SetAudioStreamGetCallback" || name == "SDL_SetAudioStreamPutCallback" || name == "SDL_OpenAudioDeviceStream" || name == "SDL_SetAudioPostmixCallback" || name == "SDL_PutAudioStreamDataNoCopy" || name == "SDL_SetRelativeMouseTransform" || name == "SDL_CreateThreadRuntime" || name == "SDL_CreateThreadWithPropertiesRuntime" || name == "SDL_SetTLS" || name == "SDL_Vulkan_GetVkGetInstanceProcAddr" || name == "SDL_GL_GetProcAddress" || name == "SDL_EGL_GetProcAddress" || name == "SDL_EGL_SetAttributeCallbacks" || name == "SDL_LoadFunction" || name == "SDL_AddHintCallback" || name == "SDL_RemoveHintCallback" || name == "SDL_AddTimer" || name == "SDL_AddTimerNS" || name == "SDL_GetDefaultLogOutputFunction" || name == "SDL_GetLogOutputFunction" || name == "SDL_SetLogOutputFunction" || name == "SDL_RunOnMainThread" || name == "SDL_SetPointerPropertyWithCleanup" || name == "SDL_SetWindowsMessageHook" || name == "SDL_SetX11EventHook" || name == "SDL_SetTrayEntryCallback" || name == "SDL_ShowOpenFileDialog" || name == "SDL_ShowSaveFileDialog" || name == "SDL_ShowOpenFolderDialog" || name == "SDL_ShowFileDialogWithProperties") {return false}
         return AnyGenBind`skip_function(self, c)
     }
     def override skip_alias(var c : CXCursor) : bool { return true }
@@ -177,31 +177,31 @@ class SdlParityGen : CppGenBind {
             fwrite(signatures, "\t{string(clang_getCursorSpelling(arg))}")
         }
         fwrite(signatures, "\n")
-        if(name=="SDL_SetClipboardData" || name=="SDL_SetWindowHitTest" || name=="SDL_SetEventFilter" || name=="SDL_GetEventFilter" || name=="SDL_AddEventWatch" || name=="SDL_RemoveEventWatch" || name=="SDL_FilterEvents" || name=="SDL_EnumerateDirectory" || name=="SDL_EnumerateStorageDirectory" || name=="SDL_SetAudioStreamGetCallback" || name=="SDL_SetAudioStreamPutCallback" || name=="SDL_OpenAudioDeviceStream" || name=="SDL_SetAudioPostmixCallback" || name=="SDL_PutAudioStreamDataNoCopy" || name=="SDL_SetRelativeMouseTransform" || name=="SDL_CreateThreadRuntime" || name=="SDL_CreateThreadWithPropertiesRuntime" || name=="SDL_SetTLS" || name=="SDL_Vulkan_GetVkGetInstanceProcAddr" || name=="SDL_GL_GetProcAddress" || name=="SDL_EGL_GetProcAddress" || name=="SDL_EGL_SetAttributeCallbacks" || name=="SDL_LoadFunction" || name=="SDL_AddHintCallback" || name=="SDL_RemoveHintCallback" || name=="SDL_AddTimer" || name=="SDL_AddTimerNS" || name=="SDL_GetDefaultLogOutputFunction" || name=="SDL_GetLogOutputFunction" || name=="SDL_SetLogOutputFunction" || name=="SDL_RunOnMainThread" || name=="SDL_SetPointerPropertyWithCleanup" || name=="SDL_SetWindowsMessageHook" || name=="SDL_SetX11EventHook" || name=="SDL_SetTrayEntryCallback" || name=="SDL_ShowOpenFileDialog" || name=="SDL_ShowSaveFileDialog" || name=="SDL_ShowOpenFolderDialog" || name=="SDL_ShowFileDialogWithProperties") {
-            fwrite(func_file,"makeExtern<decltype(&{name}), {name}, SimNode_ExtFuncCall>(lib,\"{name}\",\"{name}Address\")->args(\{")
-            for(i in urange(clang_Cursor_getNumArguments(c))) {
-                if(i!=0u) {fwrite(func_file,",")}
-                var arg=clang_Cursor_getArgument(c,i)
-                fwrite(func_file,"\"{string(clang_getCursorSpelling(arg))}\"")
+        if (name == "SDL_SetClipboardData" || name == "SDL_SetWindowHitTest" || name == "SDL_SetEventFilter" || name == "SDL_GetEventFilter" || name == "SDL_AddEventWatch" || name == "SDL_RemoveEventWatch" || name == "SDL_FilterEvents" || name == "SDL_EnumerateDirectory" || name == "SDL_EnumerateStorageDirectory" || name == "SDL_SetAudioStreamGetCallback" || name == "SDL_SetAudioStreamPutCallback" || name == "SDL_OpenAudioDeviceStream" || name == "SDL_SetAudioPostmixCallback" || name == "SDL_PutAudioStreamDataNoCopy" || name == "SDL_SetRelativeMouseTransform" || name == "SDL_CreateThreadRuntime" || name == "SDL_CreateThreadWithPropertiesRuntime" || name == "SDL_SetTLS" || name == "SDL_Vulkan_GetVkGetInstanceProcAddr" || name == "SDL_GL_GetProcAddress" || name == "SDL_EGL_GetProcAddress" || name == "SDL_EGL_SetAttributeCallbacks" || name == "SDL_LoadFunction" || name == "SDL_AddHintCallback" || name == "SDL_RemoveHintCallback" || name == "SDL_AddTimer" || name == "SDL_AddTimerNS" || name == "SDL_GetDefaultLogOutputFunction" || name == "SDL_GetLogOutputFunction" || name == "SDL_SetLogOutputFunction" || name == "SDL_RunOnMainThread" || name == "SDL_SetPointerPropertyWithCleanup" || name == "SDL_SetWindowsMessageHook" || name == "SDL_SetX11EventHook" || name == "SDL_SetTrayEntryCallback" || name == "SDL_ShowOpenFileDialog" || name == "SDL_ShowSaveFileDialog" || name == "SDL_ShowOpenFolderDialog" || name == "SDL_ShowFileDialogWithProperties") {
+            fwrite(func_file, "makeExtern<decltype(&{name}), {name}, SimNode_ExtFuncCall>(lib,\"{name}\",\"{name}Address\")->args(\{")
+            for (i in urange(clang_Cursor_getNumArguments(c))) {
+                if (i != 0u) {fwrite(func_file, ",")}
+                var arg = clang_Cursor_getArgument(c, i)
+                fwrite(func_file, "\"{string(clang_getCursorSpelling(arg))}\"")
             }
-            fwrite(func_file,"\})->addToModule(*this, SideEffects::worstDefault);\n")
+            fwrite(func_file, "\})->addToModule(*this, SideEffects::worstDefault);\n")
             return
         }
         // The C AST canonicalizes wchar_t to unsigned short; MSVC C++ keeps it distinct.
-        if (name=="SDL_hid_open" || name=="SDL_hid_get_manufacturer_string" || name=="SDL_hid_get_product_string" || name=="SDL_hid_get_serial_number_string" || name=="SDL_hid_get_indexed_string") {
-            fwrite(func_file,"makeExtern<decltype(&{name}), {name}, SimNode_ExtFuncCall>(lib,\"{name}\",\"{name}Wide\")->args(\{")
-            for(i in urange(clang_Cursor_getNumArguments(c))) {
-                if(i!=0u) {fwrite(func_file,",")}
-                var arg=clang_Cursor_getArgument(c,i)
-                fwrite(func_file,"\"{string(clang_getCursorSpelling(arg))}\"")
+        if (name == "SDL_hid_open" || name == "SDL_hid_get_manufacturer_string" || name == "SDL_hid_get_product_string" || name == "SDL_hid_get_serial_number_string" || name == "SDL_hid_get_indexed_string") {
+            fwrite(func_file, "makeExtern<decltype(&{name}), {name}, SimNode_ExtFuncCall>(lib,\"{name}\",\"{name}Wide\")->args(\{")
+            for (i in urange(clang_Cursor_getNumArguments(c))) {
+                if (i != 0u) {fwrite(func_file, ",")}
+                var arg = clang_Cursor_getArgument(c, i)
+                fwrite(func_file, "\"{string(clang_getCursorSpelling(arg))}\"")
             }
-            fwrite(func_file,"\})->addToModule(*this, SideEffects::worstDefault);\n")
+            fwrite(func_file, "\})->addToModule(*this, SideEffects::worstDefault);\n")
             return
         }
         CppGenBind`parse_FunctionDecl(self, c)
     }
     def finish {
-        for (name in keys(enums)) { if (!key_exists(emitted,name)) { panic("Missing enum {name}") } }
+        for (name in keys(enums)) { if (!key_exists(emitted, name)) { panic("Missing enum {name}") } }
         for (name in keys(opaque)) { if (!key_exists(emitted, name)) { panic("Missing opaque type {name}") } }
         fclose(func_file); fclose(signatures); fclose(types); fclose(registrations); fclose(contract)
     }
@@ -211,7 +211,7 @@ class SdlParityGen : CppGenBind {
 def main : int {
     let args <- get_command_line_arguments()
     if (length(args) < 6) { return 2 }
-    var gen = new SdlParityGen(args[length(args)-5], args[length(args)-4], args[length(args)-3], args[length(args)-2], args[length(args)-1])
+    var gen = new SdlParityGen(args[length(args) - 5], args[length(args) - 4], args[length(args) - 3], args[length(args) - 2], args[length(args) - 1])
     AnyGenBind`generate(*gen)
     gen->finish()
     unsafe { delete gen }

@@ -28,7 +28,7 @@ def main(smoke : bool) : int {
                         verify(scope_ok_3)
                         verify(SDL_TextInputActive(window))
                         if (mode == 1) { return sdl_ok() }
-                        if (mode == 2) { caught = !is_ok(set_title(null,"expected SDL failure")); return sdl_ok() }
+                        if (mode == 2) { caught = !is_ok(set_title(null, "expected SDL failure")); return sdl_ok() }
 
                         return sdl_ok()
                     } |> is_ok
@@ -48,7 +48,7 @@ def main(smoke : bool) : int {
             verify(SDL_StopTextInput(window))
             let scope_ok_5 = with_text_input(window) {
                 var caught = false
-                { with_text_input(window) { caught = !is_ok(set_title(null,"expected SDL failure")); return sdl_ok()
+                { with_text_input(window) { caught = !is_ok(set_title(null, "expected SDL failure")); return sdl_ok()
                 } |> is_ok }
                 verify(caught && SDL_TextInputActive(window), "inner return stopped outer input")
                 verify(SDL_GetWindowID(window) == id, "nested return corrupted window")

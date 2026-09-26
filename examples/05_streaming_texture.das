@@ -21,9 +21,9 @@ def render_streaming(window : SDL_Window?; renderer : SDL_Renderer?; texture : S
             let y = pixel / 150
             let i = pixel * 4
             pixels[i] = uint8(0)
-            pixels[i+1] = uint8(y >= band && y < band + 15 ? 255 : 0)
-            pixels[i+2] = uint8(0)
-            pixels[i+3] = uint8(255)
+            pixels[i + 1] = uint8(y >= band && y < band + 15 ? 255 : 0)
+            pixels[i + 2] = uint8(0)
+            pixels[i + 3] = uint8(255)
         }
         texture |> upload_rgba8(pixels, 600) |> sdl_try
         renderer |> clear(uint4(66u, 66u, 66u, 255u)) |> sdl_try
@@ -42,7 +42,7 @@ def main(smoke : bool) : int {
     var frames = 0
     let result = sdl_scope() {
         with_sdl() |> sdl_use
-        let window : SDL_Window? = with_window("Streaming RGBA - Escape to exit",640,480,smoke ? SDL_WINDOW_HIDDEN : 0ul) |> sdl_use
+        let window : SDL_Window? = with_window("Streaming RGBA - Escape to exit", 640, 480, smoke ? SDL_WINDOW_HIDDEN : 0ul) |> sdl_use
         let renderer : SDL_Renderer? = window |> with_renderer() |> sdl_use
         let texture : SDL_Texture? = renderer |> with_streaming_texture(150, 150) |> sdl_use
         return render_streaming(window, renderer, texture, smoke, frames)

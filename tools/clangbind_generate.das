@@ -55,7 +55,7 @@ class SdlProbeGen : CppGenBind {
 def main : int {
     let args <- get_command_line_arguments()
     if (length(args) < 4) { return 2 }
-    var gen = new SdlProbeGen(args[length(args)-3], args[length(args)-2], args[length(args)-1])
+    var gen = new SdlProbeGen(args[length(args) - 3], args[length(args) - 2], args[length(args) - 1])
     gen->generate()
     gen->closeAllFiles()
     unsafe { delete gen }

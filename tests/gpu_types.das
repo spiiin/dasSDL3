@@ -20,7 +20,7 @@ def main(smoke : bool) : int {
         value.max_depth = 23.5
         verify(SDLTest_check_GPUViewport(value))
         var copies : array<SDL_GPUViewport>
-        push(copies,value)
+        push(copies, value)
         verify(SDLTest_check_GPUViewport(copies[0]))
     }
     {
@@ -36,7 +36,7 @@ def main(smoke : bool) : int {
         value.first_instance = 2147483653u
         verify(SDLTest_check_GPUIndirectDrawCommand(value))
         var copies : array<SDL_GPUIndirectDrawCommand>
-        push(copies,value)
+        push(copies, value)
         verify(SDLTest_check_GPUIndirectDrawCommand(copies[0]))
     }
     {
@@ -54,7 +54,7 @@ def main(smoke : bool) : int {
         value.first_instance = 2147483653u
         verify(SDLTest_check_GPUIndexedIndirectDrawCommand(value))
         var copies : array<SDL_GPUIndexedIndirectDrawCommand>
-        push(copies,value)
+        push(copies, value)
         verify(SDLTest_check_GPUIndexedIndirectDrawCommand(copies[0]))
     }
     {
@@ -68,7 +68,7 @@ def main(smoke : bool) : int {
         value.groupcount_z = 2147483653u
         verify(SDLTest_check_GPUIndirectDispatchCommand(value))
         var copies : array<SDL_GPUIndirectDispatchCommand>
-        push(copies,value)
+        push(copies, value)
         verify(SDLTest_check_GPUIndirectDispatchCommand(copies[0]))
     }
     {
@@ -82,7 +82,7 @@ def main(smoke : bool) : int {
         value.props = 2147483653u
         verify(SDLTest_check_GPUBufferCreateInfo(value))
         var copies : array<SDL_GPUBufferCreateInfo>
-        push(copies,value)
+        push(copies, value)
         verify(SDLTest_check_GPUBufferCreateInfo(copies[0]))
     }
     {
@@ -108,7 +108,7 @@ def main(smoke : bool) : int {
         value.props = 2147483653u
         verify(SDLTest_check_GPUTextureCreateInfo(value))
         var copies : array<SDL_GPUTextureCreateInfo>
-        push(copies,value)
+        push(copies, value)
         verify(SDLTest_check_GPUTextureCreateInfo(copies[0]))
     }
     {
@@ -124,7 +124,7 @@ def main(smoke : bool) : int {
         value.instance_step_rate = 2147483653u
         verify(SDLTest_check_GPUVertexBufferDescription(value))
         var copies : array<SDL_GPUVertexBufferDescription>
-        push(copies,value)
+        push(copies, value)
         verify(SDLTest_check_GPUVertexBufferDescription(copies[0]))
     }
     {
@@ -140,7 +140,7 @@ def main(smoke : bool) : int {
         value.offset = 2147483653u
         verify(SDLTest_check_GPUVertexAttribute(value))
         var copies : array<SDL_GPUVertexAttribute>
-        push(copies,value)
+        push(copies, value)
         verify(SDLTest_check_GPUVertexAttribute(copies[0]))
     }
     {
@@ -164,7 +164,7 @@ def main(smoke : bool) : int {
         value.enable_depth_clip = true
         verify(SDLTest_check_GPURasterizerState(value))
         var copies : array<SDL_GPURasterizerState>
-        push(copies,value)
+        push(copies, value)
         verify(SDLTest_check_GPURasterizerState(copies[0]))
     }
     {
@@ -178,7 +178,7 @@ def main(smoke : bool) : int {
         value.enable_mask = true
         verify(SDLTest_check_GPUMultisampleState(value))
         var copies : array<SDL_GPUMultisampleState>
-        push(copies,value)
+        push(copies, value)
         verify(SDLTest_check_GPUMultisampleState(copies[0]))
     }
     verify(SDLTest_echo_SDL_GPUTextureType(SDL_GPUTextureType.TEXTURETYPE_2D) == SDL_GPUTextureType.TEXTURETYPE_2D)

@@ -3,17 +3,17 @@ require dassdl3/sdl3_init_boost
 require dassdl3/sdl3_scope
 
 def alias_value(fail : bool) : $SdlResult<int> {
-    if (fail) { return err(SdlError(operation="alias",message="failed"),type<int>) }
-    return ok(42,type<SdlError>)
+    if (fail) { return err(SdlError(operation = "alias", message = "failed"), type<int>) }
+    return ok(42, type<SdlError>)
 }
 def alias_status(fail : bool) : SdlStatus {
     let value = alias_value(fail) |> sdl_try
     verify(value == 42)
     return sdl_ok()
 }
-def alias_array : $SdlResult<array<int>> {
-    var values <- array(7,9)
-    return <- move_ok(values,type<SdlError>)
+def alias_array : $SdlResult < array<int>> {
+    var values <- array(7, 9)
+    return <- move_ok(values, type<SdlError>)
 }
 
 [export]
@@ -42,7 +42,7 @@ def main(smoke : bool) : int {
     verify(length(extracted) == 1 && extracted[0] == 7)
     let string_result = ok("owned script string", type<SdlError>)
     verify(is_ok(string_result) && unwrap(string_result) == "owned script string")
-    let nested_error = err(SdlError(operation="test", message="nested error"), type<$Option<int> >)
+    let nested_error = err(SdlError(operation = "test", message = "nested error"), type<$Option<int> >)
     verify(is_err(nested_error) && unwrap_err(nested_error).message == "nested error")
     let failed = texture_size(null)
     verify(is_err(failed))

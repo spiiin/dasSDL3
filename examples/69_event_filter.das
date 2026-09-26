@@ -8,8 +8,8 @@ def main(smoke : bool) : int {
         with_sdl() |> sdl_use
         let first = register_events(1) |> sdl_try
         for (code in 0 .. 6) {
-            var event = SDL_MakeUserEvent(first,0u,code)
-            if (!push_event(event)) { return err(sdl_error("SDL_PushEvent"),type<SdlUnit>) }
+            var event = SDL_MakeUserEvent(first, 0u, code)
+            if (!push_event(event)) { return err(sdl_error("SDL_PushEvent"), type<SdlUnit>) }
         }
         // This block visits only the current queue; it is not retained.
         filter_events() $(var event : SDL_Event) {
@@ -17,7 +17,7 @@ def main(smoke : bool) : int {
             if (decoded is user) { return (decoded as user).code % 2 == 0 }
             return true
         } |> sdl_try
-        let events <- take_events(16,first,first) |> sdl_try
+        let events <- take_events(16, first, first) |> sdl_try
         verify(length(events) == 3)
         for (event in events) { print("Kept user event {(event as user).code}\n") }
         return sdl_ok()

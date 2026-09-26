@@ -45,7 +45,7 @@ def main(smoke : bool) : int {
         return render_textures(renderer, texture, smoke, frames)
     }
     if (is_err(result)) {
-        let error=unwrap_err(result)
+        let error = unwrap_err(result)
         print("{error.operation}: {error.message}\n")
         return 1
     }

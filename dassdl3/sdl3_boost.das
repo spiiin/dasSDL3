@@ -12,13 +12,13 @@ def public create_window(title : string; width, height : int;
     var window = SDL_CreateWindow(title, width, height, flags)
     var value = window
     if (value == null) { return err(sdl_error("create_window"), type<SDL_Window?>) }
-    return <- move_ok(value,type<SdlError>)
+    return <- move_ok(value, type<SdlError>)
 }
 def public create_renderer(window : SDL_Window?; driver : string = "") {
     var renderer = SDL_CreateRenderer(window, driver)
     var value = renderer
     if (value == null) { return err(sdl_error("create_renderer"), type<SDL_Renderer?>) }
-    return <- move_ok(value,type<SdlError>)
+    return <- move_ok(value, type<SdlError>)
 }
 def public destroy_renderer(renderer : SDL_Renderer?) {
     if (renderer != null) { SDL_DestroyRenderer(renderer) }
@@ -41,14 +41,14 @@ def public should_close(event : SDL_Event) : bool {
 def public set_color(renderer : SDL_Renderer?; rgba : uint4) {
     if (rgba.x > 255u || rgba.y > 255u || rgba.z > 255u || rgba.w > 255u) {
         SDL_SetErrorMessage("set_color: components must be in 0..255")
-        return err(sdl_error("set_color"),type<SdlUnit>)
+        return err(sdl_error("set_color"), type<SdlUnit>)
     }
-    return sdl_status(SDL_SetRenderDrawColor(renderer,rgba.x,rgba.y,rgba.z,rgba.w),"SDL_SetRenderDrawColor")
+    return sdl_status(SDL_SetRenderDrawColor(renderer, rgba.x, rgba.y, rgba.z, rgba.w), "SDL_SetRenderDrawColor")
 }
-def public clear(renderer : SDL_Renderer?; rgba : uint4 = uint4(24u,28u,40u,255u)) {
-    var color = set_color(renderer,rgba)
+def public clear(renderer : SDL_Renderer?; rgba : uint4 = uint4(24u, 28u, 40u, 255u)) {
+    var color = set_color(renderer, rgba)
     if (is_err(color)) { return <- color }
-    return sdl_status(SDL_RenderClear(renderer),"SDL_RenderClear")
+    return sdl_status(SDL_RenderClear(renderer), "SDL_RenderClear")
 }
 def public fill_rect(renderer : SDL_Renderer?; rect : SDL_FRect) {
     return sdl_status(SDL_RenderFillRectRef(renderer, rect), "fill_rect")
@@ -105,7 +105,7 @@ def public load_bmp(path : string) {
     var surface = SDL_LoadBMP(path)
     var value = surface
     if (value == null) { return err(sdl_error("load_bmp"), type<SDL_Surface?>) }
-    return <- move_ok(value,type<SdlError>)
+    return <- move_ok(value, type<SdlError>)
 }
 
 def public destroy_surface(surface : SDL_Surface?) {
@@ -121,7 +121,7 @@ def public create_texture(renderer : SDL_Renderer?; surface : SDL_Surface?) {
     var texture = SDL_CreateTextureFromSurface(renderer, surface)
     var value = texture
     if (value == null) { return err(sdl_error("create_texture"), type<SDL_Texture?>) }
-    return <- move_ok(value,type<SdlError>)
+    return <- move_ok(value, type<SdlError>)
 }
 
 def public texture_size(texture : SDL_Texture?; var size : float2&) {
@@ -161,13 +161,13 @@ def public with_bmp(path : string; blk : block<(surface : SDL_Surface?) : $Resul
 
 // Release the temporary CPU surface before returning the owned GPU texture.
 def public load_texture(renderer : SDL_Renderer?; path : string) {
-    let surface=SDL_LoadBMP(path)
-    if (surface==null) {return err(sdl_error("SDL_LoadBMP"),type<SDL_Texture?>)}
+    let surface = SDL_LoadBMP(path)
+    if (surface == null) {return err(sdl_error("SDL_LoadBMP"), type<SDL_Texture?>)}
     {
         defer(){SDL_DestroySurface(surface)}
-        var texture=SDL_CreateTextureFromSurface(renderer,surface)
-        if(texture==null){return err(sdl_error("SDL_CreateTextureFromSurface"),type<SDL_Texture?>)}
-        return <- move_ok(texture,type<SdlError>)
+        var texture = SDL_CreateTextureFromSurface(renderer, surface)
+        if (texture == null){return err(sdl_error("SDL_CreateTextureFromSurface"), type<SDL_Texture?>)}
+        return <- move_ok(texture, type<SdlError>)
     }
 }
 
@@ -175,8 +175,8 @@ def public with_texture(renderer : SDL_Renderer?; path : string;
                         blk : block<(texture : SDL_Texture?) : $Result<auto(TT); SdlError> >) {
     var scope_result : $Result<TT; SdlError>
 
-    var created <- load_texture(renderer,path)
-    if (is_err(created)) { return err(unwrap_err(created),type<TT>) }
+    var created <- load_texture(renderer, path)
+    if (is_err(created)) { return err(unwrap_err(created), type<TT>) }
     var texture = move_unwrap(created)
     {
         defer() { SDL_DestroyTexture(texture) }
@@ -241,9 +241,9 @@ def public with_text_input(window : SDL_Window?; blk : block<() : $Result<auto(T
     var scope_result : $Result<TT; SdlError>
 
     let owned = !SDL_TextInputActive(window)
-    if (owned && !SDL_StartTextInput(window)) { return err(sdl_error("with_text_input"),type<TT>) }
+    if (owned && !SDL_StartTextInput(window)) { return err(sdl_error("with_text_input"), type<TT>) }
     {
-        defer() { if (owned) { if (!SDL_StopTextInput(window) && is_ok(scope_result)) { scope_result <- err(sdl_error("SDL_StopTextInput"),type<TT>) } } }
+        defer() { if (owned) { if (!SDL_StopTextInput(window) && is_ok(scope_result)) { scope_result <- err(sdl_error("SDL_StopTextInput"), type<TT>) } } }
         static_if (typeinfo can_copy(type<$Result<TT; SdlError> >)) { scope_result = blk() } else { scope_result <- blk() }
     }
 
@@ -256,15 +256,15 @@ def public with_text_input(window : SDL_Window?; blk : block<() : $Result<auto(T
 
 def public texture_size(texture : SDL_Texture?) {
     var size : float2
-    let status = texture_size(texture,size)
-    if (is_err(status)) { return err(unwrap_err(status),type<float2>) }
+    let status = texture_size(texture, size)
+    if (is_err(status)) { return err(unwrap_err(status), type<float2>) }
     var value = size
-    return <- move_ok(value,type<SdlError>)
+    return <- move_ok(value, type<SdlError>)
 }
 
 def public key_event(event : SDL_Event) {
     var key : SDL_KeyboardEvent
-    let status = key_event(event,key)
+    let status = key_event(event, key)
     if (is_none(status)) { return none(type<SDL_KeyboardEvent>) }
     var value = key
     return <- move_some(value)
@@ -272,7 +272,7 @@ def public key_event(event : SDL_Event) {
 
 def public mouse_motion_event(event : SDL_Event) {
     var motion : SDL_MouseMotionEvent
-    let status = mouse_motion_event(event,motion)
+    let status = mouse_motion_event(event, motion)
     if (is_none(status)) { return none(type<SDL_MouseMotionEvent>) }
     var value = motion
     return <- move_some(value)
@@ -280,7 +280,7 @@ def public mouse_motion_event(event : SDL_Event) {
 
 def public mouse_button_event(event : SDL_Event) {
     var button : SDL_MouseButtonEvent
-    let status = mouse_button_event(event,button)
+    let status = mouse_button_event(event, button)
     if (is_none(status)) { return none(type<SDL_MouseButtonEvent>) }
     var value = button
     return <- move_some(value)
@@ -288,7 +288,7 @@ def public mouse_button_event(event : SDL_Event) {
 
 def public mouse_wheel_event(event : SDL_Event) {
     var wheel : SDL_MouseWheelEvent
-    let status = mouse_wheel_event(event,wheel)
+    let status = mouse_wheel_event(event, wheel)
     if (is_none(status)) { return none(type<SDL_MouseWheelEvent>) }
     var value = wheel
     return <- move_some(value)
@@ -296,7 +296,7 @@ def public mouse_wheel_event(event : SDL_Event) {
 
 def public text_input_event(event : SDL_Event) {
     var text : string
-    let status = text_input_event(event,text)
+    let status = text_input_event(event, text)
     if (is_none(status)) { return none(type<string>) }
     var value = text
     return <- move_some(value)
@@ -306,15 +306,15 @@ def public text_editing_event(event : SDL_Event) {
     var text : string
     var start : int
     var length : int
-    let status = text_editing_event(event,text,start,length)
-    if (is_none(status)) { return none(type<tuple<text:string; start:int; length:int>>) }
-    var value = (text=text,start=start,length=length)
+    let status = text_editing_event(event, text, start, length)
+    if (is_none(status)) { return none(type<tuple<text : string; start : int; length : int>>) }
+    var value = (text = text, start = start, length = length)
     return <- move_some(value)
 }
 
 struct MouseState { position : float2; buttons : uint }
 def public mouse_state() : MouseState {
     var position : float2
-    let buttons=mouse_state(position)
-    return MouseState(position=position,buttons=buttons)
+    let buttons = mouse_state(position)
+    return MouseState(position = position, buttons = buttons)
 }

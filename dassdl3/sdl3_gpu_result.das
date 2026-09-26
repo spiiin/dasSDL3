@@ -17,7 +17,7 @@ def private is_invalid_gpu_handle(handle : GpuRenderPassHandle) : bool { return 
 
 def public checked_handle_result(handle : auto(T); operation : string) {
     if (is_invalid_gpu_handle(handle)) {
-        return err(sdl_error(operation),type<T -const>)
+        return err(sdl_error(operation), type<T -const>)
     }
-    return ok(handle,type<SdlError>)
+    return ok(handle, type<SdlError>)
 }

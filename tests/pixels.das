@@ -41,9 +41,9 @@ def main(smoke : bool) : int {
                                                 let y = pixel / 3
                                                 let i = y * 16 + x * 4
                                                 bytes[i] = uint8(10 + x * 50)
-                                                bytes[i+1] = uint8(20 + y * 60)
-                                                bytes[i+2] = uint8(30)
-                                                bytes[i+3] = uint8(255)
+                                                bytes[i + 1] = uint8(20 + y * 60)
+                                                bytes[i + 2] = uint8(30)
+                                                bytes[i + 3] = uint8(255)
                                             }
                                             verify(!SDL_UploadRGBA8(streaming, bytes, 11))
                                             verify(!SDL_UploadRGBA8(streaming, bytes, 17))
@@ -61,7 +61,7 @@ def main(smoke : bool) : int {
                                         let scope_ok_8 = renderer |> with_read_pixels() $(surface : SDL_Surface?) {
                                             verify(SDLTestWatchSurface(surface))
                                             var query_result_1 : int2
-                                            verify(is_ok(surface_size(surface,query_result_1)))
+                                            verify(is_ok(surface_size(surface, query_result_1)))
                                             verify(query_result_1 == int2(3, 2))
                                             var short_copy : array<uint8>
                                             short_copy |> resize(1)
@@ -70,7 +70,7 @@ def main(smoke : bool) : int {
                                             verify(short_copy[0] == uint8(99))
                                             is_ok(surface |> copy_surface_rgba8(copy, 20))
                                             if (mode == 1) { return sdl_ok() }
-                                            if (mode == 2) { caught = !is_ok(set_title(null,"expected SDL failure")); return sdl_ok() }
+                                            if (mode == 2) { caught = !is_ok(set_title(null, "expected SDL failure")); return sdl_ok() }
 
                                             return sdl_ok()
                                         } |> is_ok
@@ -98,8 +98,8 @@ def main(smoke : bool) : int {
                                 let y = pixel / 3
                                 let i = y * 20 + x * 4
                                 verify(copy[i] == uint8(10 + x * 50))
-                                verify(copy[i+1] == uint8(20 + y * 60))
-                                verify(copy[i+2] == uint8(30) && copy[i+3] == uint8(255))
+                                verify(copy[i + 1] == uint8(20 + y * 60))
+                                verify(copy[i + 2] == uint8(30) && copy[i + 3] == uint8(255))
                             }
                             for (i in 12 .. 20) { verify(copy[i] == uint8(201), "padding overwritten") }
                             var called = false

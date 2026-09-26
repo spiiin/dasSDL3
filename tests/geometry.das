@@ -7,7 +7,7 @@ require daslib/strings_boost
 def read_geometry_image(renderer : SDL_Renderer?; var bytes : array<uint8>) {
     let scope_ok_0 = renderer |> with_read_pixels() $(surface : SDL_Surface?) {
         var query_result_1 : int2
-        verify(is_ok(surface_size(surface,query_result_1)))
+        verify(is_ok(surface_size(surface, query_result_1)))
         let size = query_result_1
         bytes |> resize(unwrap_or(rgba8_buffer_size(size.x, size.y, size.x * 4), -1))
         is_ok(surface |> copy_surface_rgba8(bytes, size.x * 4))
@@ -18,7 +18,7 @@ def read_geometry_image(renderer : SDL_Renderer?; var bytes : array<uint8>) {
 }
 def pixel(bytes : array<uint8>; x, y : int) : uint4 {
     let i = (y * 64 + x) * 4
-    return uint4(uint(bytes[i]), uint(bytes[i+1]), uint(bytes[i+2]), uint(bytes[i+3]))
+    return uint4(uint(bytes[i]), uint(bytes[i + 1]), uint(bytes[i + 2]), uint(bytes[i + 3]))
 }
 
 [export]
@@ -103,8 +103,8 @@ caught = !operation_ok }
                             var texels : array<uint8>
                             texels |> resize(16)
                             for (i in 0 .. 4) {
-                                texels[i*4] = uint8(31); texels[i*4+1] = uint8(95)
-                                texels[i*4+2] = uint8(191); texels[i*4+3] = uint8(255)
+                                texels[i * 4] = uint8(31); texels[i * 4 + 1] = uint8(95)
+                                texels[i * 4 + 2] = uint8(191); texels[i * 4 + 3] = uint8(255)
                                 vertices[i].color.r = 1.0; vertices[i].color.g = 1.0
                                 vertices[i].color.b = 1.0; vertices[i].color.a = 1.0
                             }

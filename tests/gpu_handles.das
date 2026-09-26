@@ -5,9 +5,9 @@ require daslib/defer
 
 def propagate(fail : bool; var released : bool&) : $Result<GpuBufferHandle; SdlError> {
     defer() { released = true }
-    let source = fail ? err(SdlError(operation="handle",message="expected"),type<GpuBufferHandle>) : ok(GpuBufferHandle(0xfedcba9876543210ul),type<SdlError>)
+    let source = fail ? err(SdlError(operation = "handle", message = "expected"), type<GpuBufferHandle>) : ok(GpuBufferHandle(0xfedcba9876543210ul), type<SdlError>)
     let value = source |> sdl_try
-    return ok(SDLTestGPUHandleEcho(value),type<SdlError>)
+    return ok(SDLTestGPUHandleEcho(value), type<SdlError>)
 }
 
 [export]
@@ -26,20 +26,20 @@ def main(smoke : bool) : int {
     verify(*GpuPipelineHandle(bits) == bits)
     verify(*GpuCommandBufferHandle(bits) == bits)
     verify(*GpuRenderPassHandle(bits) == bits)
-    var buffers <- array<GpuBufferHandle>(buffer,empty)
+    var buffers <- array<GpuBufferHandle>(buffer, empty)
     verify(SDLTestGPUHandleEcho(buffers[0]) == buffer && *buffers[1] == 0ul)
     var released = false
-    let success = propagate(false,released)
+    let success = propagate(false, released)
     verify(released && is_ok(success) && unwrap(success) == buffer)
     released = false
-    let failure = propagate(true,released)
+    let failure = propagate(true, released)
     verify(released && is_err(failure) && unwrap_err(failure).message == "expected")
     let optional = some(buffer)
     verify(is_some(optional) && unwrap(optional) == buffer)
-    let nested = ok(optional,type<SdlError>)
+    let nested = ok(optional, type<SdlError>)
     verify(unwrap(unwrap(nested)) == buffer)
     // Nominal typing is not ownership: a fabricated ID still fails native validation.
-    verify(is_err(gpu_poll_readback(null,GpuReadbackHandle(bits))))
+    verify(is_err(gpu_poll_readback(null, GpuReadbackHandle(bits))))
     print("Distinct GPU handles: uint64 ABI, arrays, Result/Option, sdl_try and defer PASS\n")
     return 0
 }

@@ -5,11 +5,11 @@ require daslib/match
 
 def run(window : SDL_Window?; smoke : bool) {
     let custom_type = register_events(1) |> sdl_try
-    var initial = SDL_MakeUserEvent(custom_type,SDL_GetWindowID(window),42)
+    var initial = SDL_MakeUserEvent(custom_type, SDL_GetWindowID(window), 42)
     if (!push_event(initial)) {
-        return err(SdlError(operation="push_event",message="Initial event was not accepted"),type<SdlUnit>)
+        return err(SdlError(operation = "push_event", message = "Initial event was not accepted"), type<SdlUnit>)
     }
-    var preview <- peek_events(8,custom_type,custom_type) |> sdl_try
+    var preview <- peek_events(8, custom_type, custom_type) |> sdl_try
     print("Queued custom events: {length(preview)} (peek does not remove them)\n")
     var running = true
     var waits = 0
@@ -40,8 +40,8 @@ def run(window : SDL_Window?; smoke : bool) {
 def main(smoke : bool) : int {
     let result = sdl_scope() {
         with_sdl() |> sdl_use
-        let window : SDL_Window? = with_window("SDL event queue - Escape to exit",640,480,smoke ? SDL_WINDOW_HIDDEN : 0ul) |> sdl_use
-        return run(window,smoke)
+        let window : SDL_Window? = with_window("SDL event queue - Escape to exit", 640, 480, smoke ? SDL_WINDOW_HIDDEN : 0ul) |> sdl_use
+        return run(window, smoke)
     }
     if (is_err(result)) { let error = unwrap_err(result); print("{error.operation}: {error.message}\n"); return 1 }
     return 0

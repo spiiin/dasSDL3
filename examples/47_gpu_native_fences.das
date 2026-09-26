@@ -11,10 +11,10 @@ def submit_and_wait(device : SDL_GPUDevice?) : SdlStatus {
         // An empty command buffer is sufficient to demonstrate the synchronization API.
         var fence = native_gpu_submit_fence(command) |> sdl_try // Consumes command even on Err.
         {
-            defer() { SDL_ReleaseGPUFence(device,fence) }
+            defer() { SDL_ReleaseGPUFence(device, fence) }
             var fences <- array(fence)
-            if (!SDL_WaitForGPUFencesArray(device,true,fences)) { return err(sdl_error("submit_and_wait"),type<SdlUnit>) }
-            if (!SDL_QueryGPUFence(device,fence)) { return err(sdl_error("submit_and_wait"),type<SdlUnit>) }
+            if (!SDL_WaitForGPUFencesArray(device, true, fences)) { return err(sdl_error("submit_and_wait"), type<SdlUnit>) }
+            if (!SDL_QueryGPUFence(device, fence)) { return err(sdl_error("submit_and_wait"), type<SdlUnit>) }
             print("Native SDL fence signaled: {SDL_GetGPUDeviceDriver(device)}\n")
             return sdl_ok()
         }
@@ -25,16 +25,16 @@ def submit_and_wait(device : SDL_GPUDevice?) : SdlStatus {
 def main(smoke : bool) : int {
     let result = sdl_scope() {
         with_sdl() |> sdl_use
-        let device = create_native_gpu_device(GPU_SHADER_FORMATS,true) |> sdl_try
+        let device = create_native_gpu_device(GPU_SHADER_FORMATS, true) |> sdl_try
         {
             defer(){SDL_DestroyGPUDevice(device)}
             return submit_and_wait(device)
         }
     }
     if (is_err(result)) {
-        let error=unwrap_err(result)
+        let error = unwrap_err(result)
         print("{error.operation}: {error.message}\n")
-        return smoke && error.operation=="SDL_CreateGPUDeviceDefault" ? 77 : 1
+        return smoke && error.operation == "SDL_CreateGPUDeviceDefault" ? 77 : 1
     }
     return 0
 }

@@ -55,7 +55,7 @@ def main(smoke : bool) : int {
     var frames = 0
     let result = sdl_scope() {
         with_sdl() |> sdl_use
-        let window : SDL_Window? = with_window("Render target + readback - Escape to exit",640,480,smoke ? SDL_WINDOW_HIDDEN : 0ul) |> sdl_use
+        let window : SDL_Window? = with_window("Render target + readback - Escape to exit", 640, 480, smoke ? SDL_WINDOW_HIDDEN : 0ul) |> sdl_use
         let renderer : SDL_Renderer? = window |> with_renderer() |> sdl_use
         let target : SDL_Texture? = renderer |> with_target_texture(128, 128) |> sdl_use
         return render_target_example(window, renderer, target, smoke, frames)

@@ -60,13 +60,13 @@ class SdlTryVisitor : AstVisitor {
             if (target != null && target is ExprCall && is_sdl_try_function((target as ExprCall).func)) {
                 let call = target as ExprCall
                 let tmp = make_unique_private_name("__sdl_try", call.at)
-                if (empty(returns) || !is_sdl_result(returns[length(returns)-1]) || in_finally != 0) {
+                if (empty(returns) || !is_sdl_result(returns[length(returns) - 1]) || in_finally != 0) {
                     macro_sticky_error(compiling_program(), call.at, "sdl_try requires an enclosing Result-returning function or block")
                     var copy = stmt
                     expanded |> emplace(copy)
                     continue
                 }
-                let rt = returns[length(returns)-1]
+                let rt = returns[length(returns) - 1]
                 let output = rt.argTypes[1]
                 var prefix = qmacro_block() {
                     var $i(tmp) <- $e(call.arguments[0])
