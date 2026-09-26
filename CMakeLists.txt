@@ -171,3 +171,8 @@ if(DASSDL3_WITH_SHADERCROSS)
     include(cmake/ShaderCross.cmake)
 endif()
 add_subdirectory(src)
+
+option(DASSDL3_INSTALL_SDK "Install the core Windows x64 Release SDK" OFF)
+if(DASSDL3_INSTALL_SDK)
+    include(cmake/InstallSDK.cmake)
+endif()

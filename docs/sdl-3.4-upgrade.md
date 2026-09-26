@@ -43,7 +43,7 @@ upgrade does not automatically delete defensive adapters or promise fixes.
 
 ## Coverage
 
-Current Windows inventory: **998 generated, 14 adapted, 251 pending / 1263**.
+Current Windows inventory: **998 generated, 13 adapted, 252 pending / 1263**.
 All 37 function additions identified in this Windows upgrade are now connected:
 four in the migration, twenty in [Render/Surface](render-surface-34.md), and thirteen
 in [the remaining SDL 3.4 package](sdl-34-remaining.md). This does not mean full SDL

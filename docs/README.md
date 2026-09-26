@@ -130,3 +130,7 @@ Early-return syntax: [`sdl_try` macro and example](sdl-try.md).
 - [Remaining SDL 3.4 additions](sdl-34-remaining.md): progress/cursor/event diagnostics, planar audio and native no-copy/mouse callbacks.
 
 - [Script accessibility: string constants, channel maps, owned device events](script-accessibility.md).
+
+- [Installed core SDK and standalone interpreter/AOT consumer](sdk.md).
+
+- [Stdinc: classification and script priorities](stdinc-policy.md).

@@ -1,7 +1,7 @@
 # Покрытие SDL3
 
-Baseline: SDL 3.4.16, Windows x64/MSVC. Generated: 998; adapted: 14;
-pending: 251 of 1263 functions. GPU: 95 generated / 0 adapted / 0 pending.
+Baseline: SDL 3.4.16, Windows x64/MSVC. Generated: 998; adapted: 13;
+pending: 252 of 1263 functions. GPU: 95 generated / 0 adapted / 0 pending.
 See [upgrade and new API queue](sdl-3.4-upgrade.md).
 `adapted` means a documented partial adapter, not full raw API coverage.
 See [API boundary](gpu-api-boundary.md) and the generated header census.
@@ -48,7 +48,8 @@ Render 101 raw + 1 fixed-text adapter. [Контракты и проверки](
 
 Следующая очередь и критерии готовности: [план](full-binding-roadmap.md).
 Pending не означает обязательную реализацию всех libc/SIMD/va_list функций:
-169 записей Stdinc ещё требуют явной классификации, а не молчаливого исключения.
+Все 169 записей Stdinc [классифицированы](stdinc-policy.md); raw pending сохранён,
+но большинство из них не входит в обязательный script-backlog.
 
 SDL 3.4 оставшиеся 13 дополнений подключены; [контракты и границы](sdl-34-remaining.md).
 

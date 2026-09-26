@@ -22,9 +22,11 @@ if(DASSDL3_BINDING_BACKEND STREQUAL "clangbind")
         DASSDL3_REGISTRATION_INCLUDE="generated/clangbind/sdl3_functions.inc")
 endif()
 target_include_directories(dasSDL3 PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_SOURCE_DIR}/third_party/daScript/include
-    ${CMAKE_SOURCE_DIR}/third_party/daScript/3rdparty/fmt/include)
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/third_party/daScript/include>
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/third_party/daScript/3rdparty/fmt/include>
+    $<INSTALL_INTERFACE:include/dasSDL3>
+    $<INSTALL_INTERFACE:include>)
 target_link_libraries(dasSDL3 PUBLIC libDaScript SDL3::SDL3)
 target_compile_features(dasSDL3 PUBLIC cxx_std_17)
 if(DASSDL3_WITH_IMGUI OR DASSDL3_WITH_IMAGE OR DASSDL3_WITH_TTF OR DASSDL3_WITH_NET OR DASSDL3_WITH_MIXER OR DASSDL3_WITH_SOUND OR DASSDL3_WITH_SHADERCROSS)

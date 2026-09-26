@@ -1,0 +1,23 @@
+# Explicit shared MODULES prevent silently relying on interpreter fallback.
+function(dassdl3_add_aot target)
+    cmake_parse_arguments(AOT "" "" "SCRIPTS;MODULES;DEPENDS" ${ARGN})
+    if(NOT TARGET ${target} OR AOT_UNPARSED_ARGUMENTS OR NOT AOT_SCRIPTS)
+        message(FATAL_ERROR "dassdl3_add_aot(target SCRIPTS ... [MODULES ...] [DEPENDS ...])")
+    endif()
+    file(GLOB_RECURSE sdk_scripts CONFIGURE_DEPENDS "${dasSDL3_DATA_DIR}/*.das")
+    set(inputs ${AOT_SCRIPTS})
+    foreach(module IN LISTS AOT_MODULES)
+        list(APPEND inputs "${dasSDL3_DATA_DIR}/${module}.das")
+    endforeach()
+    foreach(input IN LISTS inputs)
+        get_filename_component(input "${input}" ABSOLUTE BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+        string(SHA256 key "${input}")
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/${target}-${key}.aot.cpp")
+        add_custom_command(OUTPUT "${output}"
+            COMMAND dasSDL3::aot "${input}" "${output}" "${dasSDL3_DATA_DIR}"
+            DEPENDS "${input}" dasSDL3::aot ${sdk_scripts} ${AOT_DEPENDS} VERBATIM)
+        target_sources(${target} PRIVATE "${output}")
+    endforeach()
+    target_link_libraries(${target} PRIVATE dasSDL3::dasSDL3)
+    target_compile_options(${target} PRIVATE /bigobj)
+endfunction()

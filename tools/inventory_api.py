@@ -150,13 +150,18 @@ def annotate(symbols, spec, policy, categories):
             item["raw_status"] = "partial"
             item["exposed_fields"] = spec["structs"][name]
         override = policy["symbols"].get(key, {})
-        allowed = {"raw_status", "boost_status", "reason", "adapter", "tests", "contract"}
+        allowed = {"raw_status", "boost_status", "reason", "adapter", "tests", "contract", "script_disposition"}
         if set(override) - allowed:
             raise RuntimeError(f"Unknown policy fields for {key}: {set(override) - allowed}")
         if override.get("raw_status") not in (None, "adapted", "pending", "excluded"):
             raise RuntimeError(f"Policy cannot claim generated coverage: {key}")
         if override.get("raw_status") in ("adapted", "excluded") and not override.get("reason"):
             raise RuntimeError(f"Policy requires reason: {key}")
+        if "script_disposition" in override:
+            if override["script_disposition"] not in {"stdlib", "native_interop", "host_only", "deferred", "c_abi_only"}:
+                raise RuntimeError(f"Unknown script disposition: {key}")
+            if kind != "function" or not override.get("reason") or not override.get("contract"):
+                raise RuntimeError(f"Script disposition requires a function, reason and contract: {key}")
         item.update(override)
     unknown = set(policy["symbols"]) - seen
     if unknown:
@@ -211,11 +216,20 @@ def report(data):
     generated = sum(s["raw_status"] == "generated" for s in functions)
     lines = ["# SDL API inventory (generated)", "", f"SDL {data['sdl_version']}; profile `{data['profile']}`.",
              "", data["scope"], "", f"Generated functions: **{generated}/{len(functions)}** active non-excluded functions.",
+             f"Adapted functions: **{sum(s['raw_status'] == 'adapted' for s in functions)}**; pending functions: **{sum(s['raw_status'] == 'pending' for s in functions)}**.",
              "Adapted coverage and boost coverage are not inferred from function names.", "",
              "| Category | Functions | Generated | Adapted | Pending |", "| --- | ---: | ---: | ---: | ---: |"]
     for category in sorted({s["category"] for s in functions}):
         group = [s for s in functions if s["category"] == category]
         lines.append(f"| {category} | {len(group)} | {sum(s['raw_status'] == 'generated' for s in group)} | {sum(s['raw_status'] == 'adapted' for s in group)} | {sum(s['raw_status'] == 'pending' for s in group)} |")
+    reviewed = [s for s in functions if "script_disposition" in s]
+    if reviewed:
+        lines += ["", "## Script priority decisions", "",
+                  "These decisions do not change raw coverage or remove declarations from its denominator.", "",
+                  "| Disposition | Functions |", "| --- | ---: |"]
+        lines += [f"| {kind} | {count} |" for kind, count in sorted(Counter(s["script_disposition"] for s in reviewed).items())]
+        lines += ["", "| Function | Disposition | Contract |", "| --- | --- | --- |"]
+        lines += [f"| `{s['name']}` | {s['script_disposition']} | [{Path(s['contract']).stem}](../{Path(s['contract']).name}) |" for s in reviewed]
     lines += ["", "Declaration counts (including explicitly excluded scaffolding):", ""]
     lines += [f"- {kind}: {count}" for kind, count in sorted(Counter(s["kind"] for s in symbols).items())]
     lines += ["", "Unobserved, non-excluded headers (must be reviewed, not silently ignored):", ""]

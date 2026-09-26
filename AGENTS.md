@@ -324,7 +324,7 @@ with_gpu_render_state clears selection before destroy and does not restore a pre
 state. PNG IO boost overloads borrow streams (closeio=false). Shadercross is left
 unchanged. Example 86 uses shipped SPIR-V/DXIL, no runtime compiler dependency.
 
-Remaining SDL 3.4 additions are connected: 998 generated / 14 adapted / 251 pending;
+Remaining SDL 3.4 additions are connected: 998 generated / 13 adapted / 252 pending;
 all 37 functions added by the Windows upgrade have bindings. See docs/sdl-34-remaining.md.
 Planar byte/F32 arrays are copied under stream lock with validated format/counts;
 NoCopy is native retained storage/callback only (never script arrays or Context).
@@ -346,3 +346,20 @@ clear stale SDL errors before native NULL/default/OOM disambiguation. SDL_malloc
 sets OOM in the pinned source. Device-map ambiguity remains a separate contract.
 Four previously omitted SDL 3.4 fields are exposed (depth mip/layer, multisample
 alpha-to-coverage, pen proximity flags); field access is not GPU feature testing.
+
+Installed SDK: docs/sdk.md, cmake/InstallSDK.cmake, examples/sdk-consumer. Opt-in
+DASSDL3_INSTALL_SDK requires Windows x64 MSVC single-config Release, testing and
+companions OFF, ClangBind/LLVM disabled. Install component dasSDL3SDK bundles
+static dependencies, headers and script data. No source/build paths in exports.
+Production AOT uses src/sdl3_aot.h and tools/sdk/aot.cpp, never test fixtures.
+Explicit MODULES in dassdl3_add_aot must include transitive shared modules;
+strict host disables fallback. AOT still needs source scripts and daslib at runtime.
+Keep consumer relocation and negative no-AOT/configuration checks. Do not overlap
+SDK production build with developer builds; restore developer configuration after.
+
+Stdinc decisions: docs/stdinc-policy.md. All 169 pending functions have explicit
+script_disposition in api-policy.json: 122 stdlib, 15 native_interop, 6 host_only,
+16 deferred, 10 c_abi_only. Decisions are priorities, NOT semantic equivalence or
+raw coverage. Keep raw pending and the denominator unchanged. SDL_free remains
+bound; never conflate daScript array/string storage with SDL-owned allocations.
+Header upgrades must review new entries; no automatic prefix-wide exclusions.

@@ -1,7 +1,7 @@
 # Script accessibility audit (SDL 3.4.16, Windows x64)
 
 This package leaves raw function signatures and resource ownership unchanged.
-The census is still 998 generated + 14 adapted / 1263 functions; constants and
+The census is still 998 generated + 13 adapted / 1263 functions; constants and
 record fields are not counted as additional functions.
 
 ## String constants

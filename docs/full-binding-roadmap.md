@@ -21,13 +21,15 @@ Shadercross оставляем в текущем состоянии. Приор�
    пропущенных поля SDL 3.4, copied stream channel maps и 11 owned device event tags.
    [Аудит и ограничения](script-accessibility.md). Остаток: display/render/pinch
    payloads, специализированные native callback fields и физические устройства.
-3. **Внешний consumer:** минимальный проект вне дерева репозитория, ресурсы .das/DLL,
-   документированный interpreter/AOT build. Существующий no-LLVM source consumer
-   не подменяет install/export SDK и пользовательскую AOT-интеграцию.
-4. **Согласованные исключения:** классифицировать 169 pending Stdinc функций;
-   не переносить автоматически libc/math/memory аналоги стандартной библиотеки.
-   C va_list не нужен обычному script API; fixed-text адаптеры сохраняются.
-   Пока исключения не обоснованы в policy, inventory продолжает показывать pending.
+3. **Installed core SDK подключён:** CMake install/export, статические SDL/daScript,
+   `.das` ресурсы, публичный AOT tool/header и отдельный consumer.
+   [Сборка и ограничения](sdk.md): Windows x64/MSVC Release; другие профили,
+   companion libraries и DLL ABI пока не заявлены.
+4. **Stdinc классифицирован:** 122 stdlib, 15 native interop, 6 host-only,
+   16 deferred и 10 C-ABI-only. [Решения и обоснования](stdinc-policy.md).
+   Все 169 записей сохраняют raw pending; это не обязательный backlog и не
+   основание уменьшать знаменатель покрытия. SDL_Environment — первый кандидат
+   при появлении сценария конфигурации окружения; allocator callbacks — native host.
 5. **Платформы и специализированные API:** GL/EGL, Vulkan/Metal interop, native
    callbacks и CPU/SIMD добавлять по конкретным сценариям. Linux/macOS/web требуют
    собственных build/ABI/runtime проверок; Windows-пакет не заявляет их готовность.

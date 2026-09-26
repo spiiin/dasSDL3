@@ -117,6 +117,51 @@ int unrelated_function(void);
                 with self.assertRaises(RuntimeError):
                     inventory.annotate(copy.deepcopy(data["symbols"]), self.spec, self.policy, categories)
 
+    def test_script_disposition_validation_and_coverage(self):
+        data = self.generate()
+        categories = {h["header"]: h["category"] for h in data["headers"]}
+        decision = {"script_disposition": "stdlib", "reason": "Language alternative",
+                    "contract": "docs/stdinc-policy.md"}
+        before = {s["id"]: s["raw_status"] for s in data["symbols"]}
+        self.policy["symbols"] = {"function:SDL_Second": decision}
+        reviewed = inventory.annotate(copy.deepcopy(data["symbols"]), self.spec, self.policy, categories)
+        self.assertEqual(before, {s["id"]: s["raw_status"] for s in reviewed})
+        text = inventory.report({**data, "symbols": reviewed})
+        self.assertIn("| stdlib | 1 |", text)
+        for invalid in ({**decision, "script_disposition": "typo"},
+                        {k: v for k, v in decision.items() if k != "reason"},
+                        {k: v for k, v in decision.items() if k != "contract"}):
+            self.policy["symbols"] = {"function:SDL_Second": invalid}
+            with self.assertRaises(RuntimeError):
+                inventory.annotate(copy.deepcopy(data["symbols"]), self.spec, self.policy, categories)
+        self.policy["symbols"] = {"macro:SDL_HIGH_BIT": decision}
+        with self.assertRaises(RuntimeError):
+            inventory.annotate(copy.deepcopy(data["symbols"]), self.spec, self.policy, categories)
+
+    def test_pinned_stdinc_review_is_complete(self):
+        data = json.loads((ROOT / "docs/generated/api-windows-x64-msvc.json").read_text(encoding="utf-8"))
+        policy = json.loads((ROOT / "tools/api-policy.json").read_text(encoding="utf-8"))
+        pending = [s for s in data["symbols"] if s["kind"] == "function"
+                   and s["category"] == "Stdinc" and s["raw_status"] == "pending"]
+        self.assertEqual(len(pending), 169)
+        spec = json.loads((ROOT / "tools/bindings.json").read_text(encoding="utf-8"))
+        without_review = copy.deepcopy(policy)
+        for symbol in pending:
+            del without_review["symbols"][symbol["id"]]
+        categories = {h["header"]: h["category"] for h in data["headers"]}
+        before = inventory.annotate(copy.deepcopy(data["symbols"]), spec, without_review, categories)
+        self.assertEqual({s["id"]: s["raw_status"] for s in data["symbols"]},
+                         {s["id"]: s["raw_status"] for s in before})
+        for symbol in pending:
+            decision = policy["symbols"][symbol["id"]]
+            self.assertIn(decision["script_disposition"],
+                          {"stdlib", "native_interop", "host_only", "deferred", "c_abi_only"})
+            self.assertEqual(decision["raw_status"], "pending")
+            self.assertTrue(decision["reason"])
+            self.assertTrue((ROOT / decision["contract"]).is_file())
+        free = next(s for s in data["symbols"] if s["id"] == "function:SDL_free")
+        self.assertEqual(free["raw_status"], "generated")
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

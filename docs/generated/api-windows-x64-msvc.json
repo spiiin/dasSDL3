@@ -17132,7 +17132,10 @@
       "id": "function:SDL_CreateEnvironment",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "deferred",
+      "reason": "Useful SDL-specific facility, but not required by current examples. Add a thin typed/copy/ownership adapter when a concrete environment, encoding, hash or diagnostics scenario needs it.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_CreateGPUBuffer",
@@ -18407,7 +18410,10 @@
       "id": "function:SDL_DestroyEnvironment",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "deferred",
+      "reason": "Useful SDL-specific facility, but not required by current examples. Add a thin typed/copy/ownership adapter when a concrete environment, encoding, hash or diagnostics scenario needs it.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_DestroyGPUDevice",
@@ -22017,7 +22023,10 @@
       "id": "function:SDL_GetEnvironment",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "deferred",
+      "reason": "Useful SDL-specific facility, but not required by current examples. Add a thin typed/copy/ownership adapter when a concrete environment, encoding, hash or diagnostics scenario needs it.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_GetEnvironmentVariable",
@@ -22039,7 +22048,10 @@
       "id": "function:SDL_GetEnvironmentVariable",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "deferred",
+      "reason": "Useful SDL-specific facility, but not required by current examples. Add a thin typed/copy/ownership adapter when a concrete environment, encoding, hash or diagnostics scenario needs it.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_GetEnvironmentVariables",
@@ -22057,7 +22069,10 @@
       "id": "function:SDL_GetEnvironmentVariables",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "deferred",
+      "reason": "Useful SDL-specific facility, but not required by current examples. Add a thin typed/copy/ownership adapter when a concrete environment, encoding, hash or diagnostics scenario needs it.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_GetError",
@@ -24904,7 +24919,10 @@
       "id": "function:SDL_GetMemoryFunctions",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "host_only",
+      "reason": "Native host configuration/unsafe process environment. No retained script callback bridge or automatic global allocator replacement; expose only for a reviewed native-host scenario.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_GetMice",
@@ -25049,7 +25067,10 @@
       "id": "function:SDL_GetNumAllocations",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "deferred",
+      "reason": "Useful SDL-specific facility, but not required by current examples. Add a thin typed/copy/ownership adapter when a concrete environment, encoding, hash or diagnostics scenario needs it.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_GetNumAudioDrivers",
@@ -25375,7 +25396,10 @@
       "id": "function:SDL_GetOriginalMemoryFunctions",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "host_only",
+      "reason": "Native host configuration/unsafe process environment. No retained script callback bridge or automatic global allocator replacement; expose only for a reviewed native-host scenario.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_GetPathInfo",
@@ -36572,7 +36596,10 @@
       "id": "function:SDL_SetEnvironmentVariable",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "deferred",
+      "reason": "Useful SDL-specific facility, but not required by current examples. Add a thin typed/copy/ownership adapter when a concrete environment, encoding, hash or diagnostics scenario needs it.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_SetError",
@@ -37686,7 +37713,10 @@
       "id": "function:SDL_SetMemoryFunctions",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "host_only",
+      "reason": "Native host configuration/unsafe process environment. No retained script callback bridge or automatic global allocator replacement; expose only for a reviewed native-host scenario.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_SetModState",
@@ -40187,7 +40217,10 @@
       "id": "function:SDL_StepBackUTF8",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_StepUTF8",
@@ -40209,7 +40242,10 @@
       "id": "function:SDL_StepUTF8",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_StopHapticEffect",
@@ -40816,7 +40852,10 @@
       "id": "function:SDL_UCS4ToUTF8",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_UnbindAudioStream",
@@ -41126,7 +41165,10 @@
       "id": "function:SDL_UnsetEnvironmentVariable",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "deferred",
+      "reason": "Useful SDL-specific facility, but not required by current examples. Add a thin typed/copy/ownership adapter when a concrete environment, encoding, hash or diagnostics scenario needs it.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_UpdateGamepads",
@@ -42781,7 +42823,10 @@
       "id": "function:SDL_abs",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_acos",
@@ -42799,7 +42844,10 @@
       "id": "function:SDL_acos",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_acosf",
@@ -42817,7 +42865,10 @@
       "id": "function:SDL_acosf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_aligned_alloc",
@@ -42839,7 +42890,10 @@
       "id": "function:SDL_aligned_alloc",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "native_interop",
+      "reason": "Deferred until a native memory/ownership scenario needs this exact SDL operation. daScript arrays/strings are not SDL allocations; never transfer them to SDL_free or retain their storage implicitly.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_aligned_free",
@@ -42857,7 +42911,10 @@
       "id": "function:SDL_aligned_free",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "native_interop",
+      "reason": "Deferred until a native memory/ownership scenario needs this exact SDL operation. daScript arrays/strings are not SDL allocations; never transfer them to SDL_free or retain their storage implicitly.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_asin",
@@ -42875,7 +42932,10 @@
       "id": "function:SDL_asin",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_asinf",
@@ -42893,7 +42953,10 @@
       "id": "function:SDL_asinf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_asprintf",
@@ -42915,7 +42978,10 @@
       "id": "function:SDL_asprintf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "c_abi_only",
+      "reason": "Outside the ordinary script API: C variadic/va_list formatting or compiler-specific overflow entry point. Use language formatting/parsing or the public checked-size API; preserve existing fixed-text adapters elsewhere.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_atan",
@@ -42933,7 +42999,10 @@
       "id": "function:SDL_atan",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_atan2",
@@ -42955,7 +43024,10 @@
       "id": "function:SDL_atan2",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_atan2f",
@@ -42977,7 +43049,10 @@
       "id": "function:SDL_atan2f",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_atanf",
@@ -42995,7 +43070,10 @@
       "id": "function:SDL_atanf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_atof",
@@ -43013,7 +43091,10 @@
       "id": "function:SDL_atof",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_atoi",
@@ -43031,7 +43112,10 @@
       "id": "function:SDL_atoi",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_bsearch",
@@ -43065,7 +43149,10 @@
       "id": "function:SDL_bsearch",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_bsearch_r",
@@ -43103,7 +43190,10 @@
       "id": "function:SDL_bsearch_r",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_calloc",
@@ -43125,7 +43215,10 @@
       "id": "function:SDL_calloc",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "native_interop",
+      "reason": "Deferred until a native memory/ownership scenario needs this exact SDL operation. daScript arrays/strings are not SDL allocations; never transfer them to SDL_free or retain their storage implicitly.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_ceil",
@@ -43143,7 +43236,10 @@
       "id": "function:SDL_ceil",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_ceilf",
@@ -43161,7 +43257,10 @@
       "id": "function:SDL_ceilf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_copysign",
@@ -43183,7 +43282,10 @@
       "id": "function:SDL_copysign",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_copysignf",
@@ -43205,7 +43307,10 @@
       "id": "function:SDL_copysignf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_cos",
@@ -43223,7 +43328,10 @@
       "id": "function:SDL_cos",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_cosf",
@@ -43241,7 +43349,10 @@
       "id": "function:SDL_cosf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_crc16",
@@ -43267,7 +43378,10 @@
       "id": "function:SDL_crc16",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "deferred",
+      "reason": "Useful SDL-specific facility, but not required by current examples. Add a thin typed/copy/ownership adapter when a concrete environment, encoding, hash or diagnostics scenario needs it.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_crc32",
@@ -43293,7 +43407,10 @@
       "id": "function:SDL_crc32",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "deferred",
+      "reason": "Useful SDL-specific facility, but not required by current examples. Add a thin typed/copy/ownership adapter when a concrete environment, encoding, hash or diagnostics scenario needs it.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_exp",
@@ -43311,7 +43428,10 @@
       "id": "function:SDL_exp",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_expf",
@@ -43329,7 +43449,10 @@
       "id": "function:SDL_expf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_fabs",
@@ -43347,7 +43470,10 @@
       "id": "function:SDL_fabs",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_fabsf",
@@ -43365,7 +43491,10 @@
       "id": "function:SDL_fabsf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_floor",
@@ -43383,7 +43512,10 @@
       "id": "function:SDL_floor",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_floorf",
@@ -43401,7 +43533,10 @@
       "id": "function:SDL_floorf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_fmod",
@@ -43423,7 +43558,10 @@
       "id": "function:SDL_fmod",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_fmodf",
@@ -43445,7 +43583,10 @@
       "id": "function:SDL_fmodf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_free",
@@ -43481,7 +43622,10 @@
       "id": "function:SDL_getenv",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "deferred",
+      "reason": "Useful SDL-specific facility, but not required by current examples. Add a thin typed/copy/ownership adapter when a concrete environment, encoding, hash or diagnostics scenario needs it.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_getenv_unsafe",
@@ -43499,7 +43643,10 @@
       "id": "function:SDL_getenv_unsafe",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "host_only",
+      "reason": "Native host configuration/unsafe process environment. No retained script callback bridge or automatic global allocator replacement; expose only for a reviewed native-host scenario.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_hid_ble_scan",
@@ -44160,7 +44307,10 @@
       "id": "function:SDL_iconv",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "deferred",
+      "reason": "Useful SDL-specific facility, but not required by current examples. Add a thin typed/copy/ownership adapter when a concrete environment, encoding, hash or diagnostics scenario needs it.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_iconv_close",
@@ -44178,7 +44328,10 @@
       "id": "function:SDL_iconv_close",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "deferred",
+      "reason": "Useful SDL-specific facility, but not required by current examples. Add a thin typed/copy/ownership adapter when a concrete environment, encoding, hash or diagnostics scenario needs it.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_iconv_open",
@@ -44200,7 +44353,10 @@
       "id": "function:SDL_iconv_open",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "deferred",
+      "reason": "Useful SDL-specific facility, but not required by current examples. Add a thin typed/copy/ownership adapter when a concrete environment, encoding, hash or diagnostics scenario needs it.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_iconv_string",
@@ -44230,7 +44386,10 @@
       "id": "function:SDL_iconv_string",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "deferred",
+      "reason": "Useful SDL-specific facility, but not required by current examples. Add a thin typed/copy/ownership adapter when a concrete environment, encoding, hash or diagnostics scenario needs it.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_isalnum",
@@ -44248,7 +44407,10 @@
       "id": "function:SDL_isalnum",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_isalpha",
@@ -44266,7 +44428,10 @@
       "id": "function:SDL_isalpha",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_isblank",
@@ -44284,7 +44449,10 @@
       "id": "function:SDL_isblank",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_iscntrl",
@@ -44302,7 +44470,10 @@
       "id": "function:SDL_iscntrl",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_isdigit",
@@ -44320,7 +44491,10 @@
       "id": "function:SDL_isdigit",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_isgraph",
@@ -44338,7 +44512,10 @@
       "id": "function:SDL_isgraph",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_isinf",
@@ -44356,7 +44533,10 @@
       "id": "function:SDL_isinf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_isinff",
@@ -44374,7 +44554,10 @@
       "id": "function:SDL_isinff",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_islower",
@@ -44392,7 +44575,10 @@
       "id": "function:SDL_islower",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_isnan",
@@ -44410,7 +44596,10 @@
       "id": "function:SDL_isnan",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_isnanf",
@@ -44428,7 +44617,10 @@
       "id": "function:SDL_isnanf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_isprint",
@@ -44446,7 +44638,10 @@
       "id": "function:SDL_isprint",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_ispunct",
@@ -44464,7 +44659,10 @@
       "id": "function:SDL_ispunct",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_isspace",
@@ -44482,7 +44680,10 @@
       "id": "function:SDL_isspace",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_isupper",
@@ -44500,7 +44701,10 @@
       "id": "function:SDL_isupper",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_isxdigit",
@@ -44518,7 +44722,10 @@
       "id": "function:SDL_isxdigit",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_itoa",
@@ -44544,7 +44751,10 @@
       "id": "function:SDL_itoa",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_lltoa",
@@ -44570,7 +44780,10 @@
       "id": "function:SDL_lltoa",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_log",
@@ -44588,7 +44801,10 @@
       "id": "function:SDL_log",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_log10",
@@ -44606,7 +44822,10 @@
       "id": "function:SDL_log10",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_log10f",
@@ -44624,7 +44843,10 @@
       "id": "function:SDL_log10f",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_logf",
@@ -44642,7 +44864,10 @@
       "id": "function:SDL_logf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_lround",
@@ -44660,7 +44885,10 @@
       "id": "function:SDL_lround",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_lroundf",
@@ -44678,7 +44906,10 @@
       "id": "function:SDL_lroundf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_ltoa",
@@ -44704,7 +44935,10 @@
       "id": "function:SDL_ltoa",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_main",
@@ -44744,7 +44978,10 @@
       "id": "function:SDL_malloc",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "native_interop",
+      "reason": "Deferred until a native memory/ownership scenario needs this exact SDL operation. daScript arrays/strings are not SDL allocations; never transfer them to SDL_free or retain their storage implicitly.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_memcmp",
@@ -44770,7 +45007,10 @@
       "id": "function:SDL_memcmp",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "native_interop",
+      "reason": "Deferred until a native memory/ownership scenario needs this exact SDL operation. daScript arrays/strings are not SDL allocations; never transfer them to SDL_free or retain their storage implicitly.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_memcpy",
@@ -44796,7 +45036,10 @@
       "id": "function:SDL_memcpy",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "native_interop",
+      "reason": "Deferred until a native memory/ownership scenario needs this exact SDL operation. daScript arrays/strings are not SDL allocations; never transfer them to SDL_free or retain their storage implicitly.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_memmove",
@@ -44822,7 +45065,10 @@
       "id": "function:SDL_memmove",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "native_interop",
+      "reason": "Deferred until a native memory/ownership scenario needs this exact SDL operation. daScript arrays/strings are not SDL allocations; never transfer them to SDL_free or retain their storage implicitly.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_memset",
@@ -44848,7 +45094,10 @@
       "id": "function:SDL_memset",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "native_interop",
+      "reason": "Deferred until a native memory/ownership scenario needs this exact SDL operation. daScript arrays/strings are not SDL allocations; never transfer them to SDL_free or retain their storage implicitly.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_memset4",
@@ -44874,7 +45123,10 @@
       "id": "function:SDL_memset4",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "native_interop",
+      "reason": "Deferred until a native memory/ownership scenario needs this exact SDL operation. daScript arrays/strings are not SDL allocations; never transfer them to SDL_free or retain their storage implicitly.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_modf",
@@ -44896,7 +45148,10 @@
       "id": "function:SDL_modf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_modff",
@@ -44918,7 +45173,10 @@
       "id": "function:SDL_modff",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_murmur3_32",
@@ -44944,7 +45202,10 @@
       "id": "function:SDL_murmur3_32",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "deferred",
+      "reason": "Useful SDL-specific facility, but not required by current examples. Add a thin typed/copy/ownership adapter when a concrete environment, encoding, hash or diagnostics scenario needs it.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_pow",
@@ -44966,7 +45227,10 @@
       "id": "function:SDL_pow",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_powf",
@@ -44988,7 +45252,10 @@
       "id": "function:SDL_powf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_qsort",
@@ -45018,7 +45285,10 @@
       "id": "function:SDL_qsort",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_qsort_r",
@@ -45052,7 +45322,10 @@
       "id": "function:SDL_qsort_r",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_rand",
@@ -45070,7 +45343,10 @@
       "id": "function:SDL_rand",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_rand_bits",
@@ -45083,7 +45359,10 @@
       "id": "function:SDL_rand_bits",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_rand_bits_r",
@@ -45101,7 +45380,10 @@
       "id": "function:SDL_rand_bits_r",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_rand_r",
@@ -45123,7 +45405,10 @@
       "id": "function:SDL_rand_r",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_randf",
@@ -45136,7 +45421,10 @@
       "id": "function:SDL_randf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_randf_r",
@@ -45154,7 +45442,10 @@
       "id": "function:SDL_randf_r",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_realloc",
@@ -45176,7 +45467,10 @@
       "id": "function:SDL_realloc",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "native_interop",
+      "reason": "Deferred until a native memory/ownership scenario needs this exact SDL operation. daScript arrays/strings are not SDL allocations; never transfer them to SDL_free or retain their storage implicitly.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_round",
@@ -45194,7 +45488,10 @@
       "id": "function:SDL_round",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_roundf",
@@ -45212,7 +45509,10 @@
       "id": "function:SDL_roundf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_scalbn",
@@ -45234,7 +45534,10 @@
       "id": "function:SDL_scalbn",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_scalbnf",
@@ -45256,7 +45559,10 @@
       "id": "function:SDL_scalbnf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_setenv_unsafe",
@@ -45282,7 +45588,10 @@
       "id": "function:SDL_setenv_unsafe",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "host_only",
+      "reason": "Native host configuration/unsafe process environment. No retained script callback bridge or automatic global allocator replacement; expose only for a reviewed native-host scenario.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_sin",
@@ -45300,7 +45609,10 @@
       "id": "function:SDL_sin",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_sinf",
@@ -45318,7 +45630,10 @@
       "id": "function:SDL_sinf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_size_add_check_overflow",
@@ -45344,7 +45659,10 @@
       "id": "function:SDL_size_add_check_overflow",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "native_interop",
+      "reason": "Deferred until a native memory/ownership scenario needs this exact SDL operation. daScript arrays/strings are not SDL allocations; never transfer them to SDL_free or retain their storage implicitly.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_size_add_check_overflow_builtin",
@@ -45370,7 +45688,10 @@
       "id": "function:SDL_size_add_check_overflow_builtin",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "c_abi_only",
+      "reason": "Outside the ordinary script API: C variadic/va_list formatting or compiler-specific overflow entry point. Use language formatting/parsing or the public checked-size API; preserve existing fixed-text adapters elsewhere.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_size_mul_check_overflow",
@@ -45396,7 +45717,10 @@
       "id": "function:SDL_size_mul_check_overflow",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "native_interop",
+      "reason": "Deferred until a native memory/ownership scenario needs this exact SDL operation. daScript arrays/strings are not SDL allocations; never transfer them to SDL_free or retain their storage implicitly.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_size_mul_check_overflow_builtin",
@@ -45422,7 +45746,10 @@
       "id": "function:SDL_size_mul_check_overflow_builtin",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "c_abi_only",
+      "reason": "Outside the ordinary script API: C variadic/va_list formatting or compiler-specific overflow entry point. Use language formatting/parsing or the public checked-size API; preserve existing fixed-text adapters elsewhere.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_snprintf",
@@ -45448,7 +45775,10 @@
       "id": "function:SDL_snprintf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "c_abi_only",
+      "reason": "Outside the ordinary script API: C variadic/va_list formatting or compiler-specific overflow entry point. Use language formatting/parsing or the public checked-size API; preserve existing fixed-text adapters elsewhere.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_sqrt",
@@ -45466,7 +45796,10 @@
       "id": "function:SDL_sqrt",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_sqrtf",
@@ -45484,7 +45817,10 @@
       "id": "function:SDL_sqrtf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_srand",
@@ -45502,7 +45838,10 @@
       "id": "function:SDL_srand",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_sscanf",
@@ -45524,7 +45863,10 @@
       "id": "function:SDL_sscanf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "c_abi_only",
+      "reason": "Outside the ordinary script API: C variadic/va_list formatting or compiler-specific overflow entry point. Use language formatting/parsing or the public checked-size API; preserve existing fixed-text adapters elsewhere.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strcasecmp",
@@ -45546,7 +45888,10 @@
       "id": "function:SDL_strcasecmp",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strcasestr",
@@ -45568,7 +45913,10 @@
       "id": "function:SDL_strcasestr",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strchr",
@@ -45590,7 +45938,10 @@
       "id": "function:SDL_strchr",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strcmp",
@@ -45612,7 +45963,10 @@
       "id": "function:SDL_strcmp",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strdup",
@@ -45630,7 +45984,10 @@
       "id": "function:SDL_strdup",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "native_interop",
+      "reason": "Deferred until a native memory/ownership scenario needs this exact SDL operation. daScript arrays/strings are not SDL allocations; never transfer them to SDL_free or retain their storage implicitly.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strlcat",
@@ -45656,7 +46013,10 @@
       "id": "function:SDL_strlcat",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strlcpy",
@@ -45682,7 +46042,10 @@
       "id": "function:SDL_strlcpy",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strlen",
@@ -45700,7 +46063,10 @@
       "id": "function:SDL_strlen",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strlwr",
@@ -45718,7 +46084,10 @@
       "id": "function:SDL_strlwr",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strncasecmp",
@@ -45744,7 +46113,10 @@
       "id": "function:SDL_strncasecmp",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strncmp",
@@ -45770,7 +46142,10 @@
       "id": "function:SDL_strncmp",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strndup",
@@ -45792,7 +46167,10 @@
       "id": "function:SDL_strndup",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "native_interop",
+      "reason": "Deferred until a native memory/ownership scenario needs this exact SDL operation. daScript arrays/strings are not SDL allocations; never transfer them to SDL_free or retain their storage implicitly.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strnlen",
@@ -45814,7 +46192,10 @@
       "id": "function:SDL_strnlen",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strnstr",
@@ -45840,7 +46221,10 @@
       "id": "function:SDL_strnstr",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strpbrk",
@@ -45862,7 +46246,10 @@
       "id": "function:SDL_strpbrk",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strrchr",
@@ -45884,7 +46271,10 @@
       "id": "function:SDL_strrchr",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strrev",
@@ -45902,7 +46292,10 @@
       "id": "function:SDL_strrev",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strstr",
@@ -45924,7 +46317,10 @@
       "id": "function:SDL_strstr",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strtod",
@@ -45946,7 +46342,10 @@
       "id": "function:SDL_strtod",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strtok_r",
@@ -45972,7 +46371,10 @@
       "id": "function:SDL_strtok_r",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strtol",
@@ -45998,7 +46400,10 @@
       "id": "function:SDL_strtol",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strtoll",
@@ -46024,7 +46429,10 @@
       "id": "function:SDL_strtoll",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strtoul",
@@ -46050,7 +46458,10 @@
       "id": "function:SDL_strtoul",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strtoull",
@@ -46076,7 +46487,10 @@
       "id": "function:SDL_strtoull",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_strupr",
@@ -46094,7 +46508,10 @@
       "id": "function:SDL_strupr",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_swprintf",
@@ -46120,7 +46537,10 @@
       "id": "function:SDL_swprintf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "c_abi_only",
+      "reason": "Outside the ordinary script API: C variadic/va_list formatting or compiler-specific overflow entry point. Use language formatting/parsing or the public checked-size API; preserve existing fixed-text adapters elsewhere.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_tan",
@@ -46138,7 +46558,10 @@
       "id": "function:SDL_tan",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_tanf",
@@ -46156,7 +46579,10 @@
       "id": "function:SDL_tanf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_tolower",
@@ -46174,7 +46600,10 @@
       "id": "function:SDL_tolower",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_toupper",
@@ -46192,7 +46621,10 @@
       "id": "function:SDL_toupper",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_trunc",
@@ -46210,7 +46642,10 @@
       "id": "function:SDL_trunc",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_truncf",
@@ -46228,7 +46663,10 @@
       "id": "function:SDL_truncf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_uitoa",
@@ -46254,7 +46692,10 @@
       "id": "function:SDL_uitoa",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_ulltoa",
@@ -46280,7 +46721,10 @@
       "id": "function:SDL_ulltoa",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_ultoa",
@@ -46306,7 +46750,10 @@
       "id": "function:SDL_ultoa",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_unsetenv_unsafe",
@@ -46324,7 +46771,10 @@
       "id": "function:SDL_unsetenv_unsafe",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "host_only",
+      "reason": "Native host configuration/unsafe process environment. No retained script callback bridge or automatic global allocator replacement; expose only for a reviewed native-host scenario.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_utf8strlcpy",
@@ -46350,7 +46800,10 @@
       "id": "function:SDL_utf8strlcpy",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_utf8strlen",
@@ -46368,7 +46821,10 @@
       "id": "function:SDL_utf8strlen",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_utf8strnlen",
@@ -46390,7 +46846,10 @@
       "id": "function:SDL_utf8strnlen",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_vasprintf",
@@ -46416,7 +46875,10 @@
       "id": "function:SDL_vasprintf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "c_abi_only",
+      "reason": "Outside the ordinary script API: C variadic/va_list formatting or compiler-specific overflow entry point. Use language formatting/parsing or the public checked-size API; preserve existing fixed-text adapters elsewhere.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_vsnprintf",
@@ -46446,7 +46908,10 @@
       "id": "function:SDL_vsnprintf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "c_abi_only",
+      "reason": "Outside the ordinary script API: C variadic/va_list formatting or compiler-specific overflow entry point. Use language formatting/parsing or the public checked-size API; preserve existing fixed-text adapters elsewhere.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_vsscanf",
@@ -46472,7 +46937,10 @@
       "id": "function:SDL_vsscanf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "c_abi_only",
+      "reason": "Outside the ordinary script API: C variadic/va_list formatting or compiler-specific overflow entry point. Use language formatting/parsing or the public checked-size API; preserve existing fixed-text adapters elsewhere.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_vswprintf",
@@ -46502,7 +46970,10 @@
       "id": "function:SDL_vswprintf",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "c_abi_only",
+      "reason": "Outside the ordinary script API: C variadic/va_list formatting or compiler-specific overflow entry point. Use language formatting/parsing or the public checked-size API; preserve existing fixed-text adapters elsewhere.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_wcscasecmp",
@@ -46524,7 +46995,10 @@
       "id": "function:SDL_wcscasecmp",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_wcscmp",
@@ -46546,7 +47020,10 @@
       "id": "function:SDL_wcscmp",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_wcsdup",
@@ -46564,7 +47041,10 @@
       "id": "function:SDL_wcsdup",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "native_interop",
+      "reason": "Deferred until a native memory/ownership scenario needs this exact SDL operation. daScript arrays/strings are not SDL allocations; never transfer them to SDL_free or retain their storage implicitly.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_wcslcat",
@@ -46590,7 +47070,10 @@
       "id": "function:SDL_wcslcat",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_wcslcpy",
@@ -46616,7 +47099,10 @@
       "id": "function:SDL_wcslcpy",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_wcslen",
@@ -46634,7 +47120,10 @@
       "id": "function:SDL_wcslen",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_wcsncasecmp",
@@ -46660,7 +47149,10 @@
       "id": "function:SDL_wcsncasecmp",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_wcsncmp",
@@ -46686,7 +47178,10 @@
       "id": "function:SDL_wcsncmp",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_wcsnlen",
@@ -46708,7 +47203,10 @@
       "id": "function:SDL_wcsnlen",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_wcsnstr",
@@ -46734,7 +47232,10 @@
       "id": "function:SDL_wcsnstr",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_wcsstr",
@@ -46756,7 +47257,10 @@
       "id": "function:SDL_wcsstr",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "SDL_wcstol",
@@ -46782,7 +47286,10 @@
       "id": "function:SDL_wcstol",
       "category": "Stdinc",
       "raw_status": "pending",
-      "boost_status": "unreviewed"
+      "boost_status": "pending",
+      "script_disposition": "stdlib",
+      "reason": "Prefer daScript math/string/array algorithms, utf8_utils or random for ordinary script work. This is capability overlap, not a promise of identical C parsing, rounding, Unicode or random-sequence semantics; exact SDL semantics may justify a later raw binding.",
+      "contract": "docs/stdinc-policy.md"
     },
     {
       "name": "KMOD_ALT",
