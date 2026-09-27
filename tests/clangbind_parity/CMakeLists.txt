@@ -52,25 +52,37 @@ if(DASSDL3_TEST_IMGUI)
     add_library(imgui_test_dependencies INTERFACE)
     target_compile_definitions(imgui_test_dependencies INTERFACE DASSDL3_WITH_IMGUI=1
         IMGUI_DISABLE_OBSOLETE_FUNCTIONS=1 IMGUI_ENABLE_FREETYPE=1 IMGUI_USE_WCHAR32=1)
-    target_include_directories(imgui_test_dependencies INTERFACE "${_imgui}/imgui" "${_imgui}/src")
+    target_include_directories(imgui_test_dependencies INTERFACE "${_imgui}/imgui" "${_imgui}/src" "${DAS}/modules/dasLiveHost/src")
     target_link_libraries(imgui_test_dependencies INTERFACE
         "${MAIN_BUILD}/src/libraries/dasSDL3_imgui.lib"
         "${DAS}/lib/libDasModuleImgui.lib" "${DAS}/lib/libDasModuleClipboard.lib"
+        "${DAS}/lib/libDasModuleLiveHost.lib"
         "${DAS}/lib/freetype.lib")
     target_link_libraries(parity_aot_tool PRIVATE imgui_test_dependencies)
     foreach(backend baseline cppgenbind)
         target_link_libraries(${backend}_runner PRIVATE imgui_test_dependencies)
-        foreach(script examples/libraries/01_imgui tests/imgui_lifetimes)
+        foreach(script examples/libraries/01_imgui tests/imgui_lifetimes tests/imgui_widgets examples/lifecycle/02_imgui_widgets)
             string(REPLACE "/" "_" test_name "${script}")
             add_test(NAME ${backend}_${test_name} COMMAND ${backend}_runner "${ROOT}/${script}.das" --smoke-test)
             set_tests_properties(${backend}_${test_name} PROPERTIES ENVIRONMENT "SDL_RENDER_DRIVER=software" TIMEOUT 60)
         endforeach()
     endforeach()
-    file(GLOB _imgui_boost_dependencies "${ROOT}/dassdl3/*.das")
+    file(GLOB_RECURSE _imgui_boost_dependencies CONFIGURE_DEPENDS "${ROOT}/dassdl3/*.das"
+        "${DAS}/modules/dasImgui/widgets/*.das" "${DAS}/modules/dasLiveHost/live/*.das" "${DAS}/daslib/*.das")
     set(_imgui_aot_sources)
     foreach(script examples/libraries/01_imgui tests/imgui_lifetimes
             dassdl3/sdl3_imgui dassdl3/sdl3_result dassdl3/sdl3_boost
-            dassdl3/sdl3_init_boost dassdl3/sdl3_pixels_boost)
+            dassdl3/sdl3_init_boost dassdl3/sdl3_pixels_boost
+            tests/imgui_widgets examples/lifecycle/02_imgui_widgets dassdl3/sdl3_imgui_widgets
+            third_party/daScript/modules/dasImgui/widgets/imgui_boost_runtime
+            third_party/daScript/modules/dasImgui/widgets/imgui_widgets_builtin
+            third_party/daScript/modules/dasImgui/widgets/imgui_containers_builtin
+            third_party/daScript/modules/dasImgui/widgets/imgui_theme_daslang
+            third_party/daScript/modules/dasLiveHost/live/live_commands
+            third_party/daScript/modules/dasLiveHost/live/live_vars
+            third_party/daScript/daslib/json third_party/daScript/daslib/json_boost
+            third_party/daScript/daslib/archive third_party/daScript/daslib/coroutines
+            third_party/daScript/daslib/async_boost)
         string(REPLACE "/" "_" name "${script}")
         set(output "${CMAKE_CURRENT_BINARY_DIR}/imgui_${name}.aot.cpp")
         add_custom_command(OUTPUT "${output}"
@@ -80,7 +92,8 @@ if(DASSDL3_TEST_IMGUI)
     endforeach()
     add_executable(imgui_aot_runner aot_runner.cpp ${_imgui_aot_sources})
     target_link_libraries(imgui_aot_runner PRIVATE cppgenbind_module imgui_test_dependencies)
-    foreach(script examples/libraries/01_imgui tests/imgui_lifetimes)
+    target_compile_options(imgui_aot_runner PRIVATE /FI${ROOT}/src/libraries/imgui_aot_compat.h)
+    foreach(script examples/libraries/01_imgui tests/imgui_lifetimes tests/imgui_widgets examples/lifecycle/02_imgui_widgets)
         string(REPLACE "/" "_" test_name "${script}")
         add_test(NAME aot_${test_name} COMMAND imgui_aot_runner "${ROOT}/${script}.das")
         set_tests_properties(aot_${test_name} PROPERTIES ENVIRONMENT "SDL_RENDER_DRIVER=software" TIMEOUT 60)
@@ -249,6 +262,8 @@ list(APPEND AOT_SCRIPTS tests/gpu_volume examples/39_gpu_volume_transfers)
 list(APPEND AOT_SCRIPTS tests/gpu_pipeline_types examples/38_gpu_pipeline_descriptors)
 list(APPEND AOT_SCRIPTS tests/gpu_types tests/gpu_typed_queries examples/37_gpu_descriptors tests/gpu_image examples/33_gpu_color_targets examples/34_gpu_mipmaps examples/35_gpu_scaled_blit tests/gpu_swapchain examples/30_gpu_swapchain_capabilities examples/31_gpu_present_modes examples/32_gpu_frame_latency tests/gpu_texture_types tests/gpu_utilities examples/26_gpu_bc_blocks examples/27_gpu_cube_faces examples/28_gpu_driver_discovery examples/29_gpu_resource_names tests/gpu_formats examples/25_gpu_formats tests/gpu_texture_transfer examples/24_gpu_texture_transfers tests/gpu_transfer examples/23_gpu_copy_readback)
 list(APPEND AOT_SCRIPTS tests/pixel_views tests/compound_returns)
+list(APPEND AOT_SCRIPTS tests/lifecycle_gc examples/lifecycle/01_square)
+
 set(AOT_MODULES dassdl3/sdl3_result dassdl3/sdl3_rect_clipboard_boost dassdl3/sdl3_surface_pixels_boost dassdl3/sdl3_surface_state_boost dassdl3/sdl3_renderer_final_boost dassdl3/sdl3_renderer_operations_boost dassdl3/sdl3_renderer_yuv_blend_boost dassdl3/sdl3_texture_transfer_boost dassdl3/sdl3_texture_state_boost dassdl3/sdl3_renderer_presentation_boost dassdl3/sdl3_renderer_state_boost dassdl3/sdl3_renderer_primitives_boost dassdl3/sdl3_window_io_boost dassdl3/sdl3_window_boost dassdl3/sdl3_video_boost dassdl3/sdl3_diagnostics_boost dassdl3/sdl3_init_boost dassdl3/sdl3_properties_boost dassdl3/sdl3_gpu_native_boost dassdl3/sdl3_boost dassdl3/sdl3_audio_boost dassdl3/sdl3_pixels_boost)
 list(APPEND AOT_MODULES dassdl3/sdl3_geometry_boost)
 list(APPEND AOT_MODULES dassdl3/sdl3_gpu_boost)
@@ -1028,3 +1043,5 @@ endforeach()
 foreach(texture fieldstone-n.rgba8 fieldstone-rgba.rgba8 uffizi.rgba16f)
     configure_file("${ROOT}/examples/gpu/textures/${texture}" "${CMAKE_CURRENT_BINARY_DIR}/assets/bgfx/${texture}" COPYONLY)
 endforeach()
+
+include("${CMAKE_CURRENT_SOURCE_DIR}/shader_dsl.cmake")

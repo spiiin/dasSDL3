@@ -11,6 +11,7 @@
 - Owned event variants, copied text payloads and lazy `poll_events()` iteration.
 - Copied query results and temporary scoped pixel views, including surface planes and row pitch.
 - Interpreter and strict AOT execution, generated bindings and an installable core CMake SDK.
+- [Shader DSL](docs/shader-dsl.md) using daScript's existing SPIR-V compiler, with optional shadercross translation to D3D12.
 - Optional ImGui, SDL_image, SDL_ttf, SDL_net, SDL_mixer, SDL_sound and SDL_shadercross integrations.
 - Web examples built with Emscripten: SDL Renderer, audio and the existing daScript OpenGL module.
 

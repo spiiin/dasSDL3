@@ -1,4 +1,5 @@
 #include "daScript/daScript.h"
+#include "script_lifecycle.h"
 #include "daScript/misc/sysos.h"
 #include <SDL3/SDL.h>
 #define SDL_MAIN_HANDLED
@@ -30,6 +31,7 @@ DECLARE_MODULE(Module_sdl3_image);
 DECLARE_MODULE(Module_dasIMGUI);
 DECLARE_MODULE(Module_Clipboard);
 DECLARE_MODULE(Module_imgui_sdl3);
+DECLARE_MODULE(Module_LiveHost);
 #endif
 
 static int run_script(const char * path, bool smoke) {
@@ -38,6 +40,10 @@ static int run_script(const char * path, bool smoke) {
     ModuleGroup modules;
     auto access = make_smart<FsFileAccess>();
     access->addFsRoot("dassdl3", DASSDL3_MODULE_ROOT);
+#ifdef DASSDL3_WITH_IMGUI
+    access->addFsRoot("imgui", std::string(DASSDL3_DAS_ROOT) + "/modules/dasImgui/widgets");
+    access->addFsRoot("live", std::string(DASSDL3_DAS_ROOT) + "/modules/dasLiveHost/live");
+#endif
     auto program = compileDaScript(path, access, out, modules);
     auto print_errors = [&] {
         for (const auto & err : program->errors)
@@ -46,6 +52,7 @@ static int run_script(const char * path, bool smoke) {
     if (program->failed()) { print_errors(); return 1; }
     Context context(program->getContextStackSize());
     if (!program->simulate(context, out)) { print_errors(); return 1; }
+    if (auto code = dassdl3_host::run_lifecycle(context, modules, *program->getThisModule(), out, smoke)) return *code;
     auto entry = context.findFunction("main");
     if (!entry || !verifyCall<int32_t, bool>(entry->debugInfo, modules)) {
         out << "Expected [export] def main(smoke : bool) : int\n";
@@ -110,6 +117,7 @@ int main(int argc, char ** argv) {
     NEED_MODULE(Module_Clipboard);
     NEED_MODULE(Module_dasIMGUI);
     NEED_MODULE(Module_imgui_sdl3);
+    NEED_MODULE(Module_LiveHost);
 #endif
     das::Module::Initialize();
     int status = run_script(argv[1], smoke);

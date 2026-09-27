@@ -173,3 +173,16 @@ The existing 15 Renderer/audio/lifecycle scenarios also passed in both Edge and
 Firefox after these changes. Fault injection for target cleanup and invalid
 geometry indices was made whitespace-independent, with explicit assertions that
 the probes were inserted, so formatting examples does not silently skip tests.
+
+## Shared lifecycle page
+
+`09_lifecycle.html` runs the same `examples/lifecycle/01_square.das` as desktop.
+It exports init/update/shutdown and optional exit_code; app_event handles browser
+input because SDL's callback loop consumes events before polling. Legacy app_*
+pages keep working. See [the lifecycle contract](../docs/lifecycle-and-live.md).
+Run `tests/web/test_lifecycle.py --browser edge` (or firefox) with the same Python
+environment and local server as the other browser tests.
+
+The shared square also has a [standalone wasm32 AOT build](standalone/README.md):
+no runtime compiler or interpreter fallback, host-side GC and separate browser
+checks. The general example runner above retains its interpreter workflow.

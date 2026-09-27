@@ -1,0 +1,8 @@
+file(READ "${MAP_FILE}" symbols)
+if(symbols MATCHES "compileDaScript|das2?_yyparse|register_Module_|Context::evalWithCatch|SimNode_Block|liblibDaScript\\.a")
+    message(FATAL_ERROR "Standalone unexpectedly links compiler/module registrations: ${MAP_FILE}")
+endif()
+if(NOT symbols MATCHES "das::Context::")
+    message(FATAL_ERROR "Unexpected/empty link map: ${MAP_FILE}")
+endif()
+message(STATUS "Standalone link checked: runtime only, no compiler or module factories")

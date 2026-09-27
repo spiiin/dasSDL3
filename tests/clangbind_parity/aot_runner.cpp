@@ -1,4 +1,5 @@
 #include "daScript/daScript.h"
+#include "../../src/script_lifecycle.h"
 #include <SDL3/SDL.h>
 #define SDL_MAIN_HANDLED
 #include <SDL3/SDL_main.h>
@@ -25,12 +26,17 @@ DECLARE_MODULE(Module_sdl3_image);
 DECLARE_MODULE(Module_Clipboard);
 DECLARE_MODULE(Module_dasIMGUI);
 DECLARE_MODULE(Module_imgui_sdl3);
+DECLARE_MODULE(Module_LiveHost);
 #endif
 using namespace das;
 static int run(const char *path) {
     TextPrinter out; ModuleGroup modules;
     auto access = make_smart<FsFileAccess>();
     access->addFsRoot("dassdl3", DASSDL3_MODULE_ROOT);
+#ifdef DASSDL3_WITH_IMGUI
+    access->addFsRoot("imgui", std::string(DASSDL3_DAS_ROOT) + "/modules/dasImgui/widgets");
+    access->addFsRoot("live", std::string(DASSDL3_DAS_ROOT) + "/modules/dasLiveHost/live");
+#endif
     CodeOfPolicies policy;
     policy.aot = true; policy.fail_on_no_aot = true; policy.tune_frozen = true;
     auto program = compileDaScript(path, access, out, modules, policy);
@@ -38,6 +44,7 @@ static int run(const char *path) {
     if (program->failed()) { errors(); return 1; }
     Context context(program->getContextStackSize());
     if (!program->simulate(context,out)) { errors(); return 2; }
+    if (auto code = dassdl3_host::run_lifecycle(context, modules, *program->getThisModule(), out, true, true)) return *code;
     auto fn = context.findFunction("main");
     if (!fn || !fn->aot || !verifyCall<int32_t,bool>(fn->debugInfo,modules)) return 3;
     out << "main AOT=yes; fallback disabled\n";
@@ -72,6 +79,7 @@ int main(int argc,char **argv) {
     NEED_MODULE(Module_Clipboard);
     NEED_MODULE(Module_dasIMGUI);
     NEED_MODULE(Module_imgui_sdl3);
+    NEED_MODULE(Module_LiveHost);
 #endif
     Module::Initialize();
     int result = run(argv[1]); SDL_Quit(); Module::Shutdown(); return result;

@@ -24,6 +24,7 @@ if(DASSDL3_WITH_IMGUI)
     set(DAS_IMGUI_DISABLED OFF)
     set(DAS_GLFW_DISABLED OFF)
     set(DAS_CLIPBOARD_DISABLED OFF)
+    set(DAS_LIVE_HOST_DISABLED OFF) # Backend-independent v2 widget runtime.
 endif()
 add_subdirectory(third_party/daScript EXCLUDE_FROM_ALL)
 if(MSVC)

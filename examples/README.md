@@ -221,3 +221,25 @@ retain their logical rows. Example 43 demonstrates the style.
 
 The formatter preserves these argument breaks and indentation; it does not
 choose this layout automatically. After editing, run formatting and `--verify`.
+
+## Lifecycle pilot
+
+[lifecycle/01_square.das](lifecycle/01_square.das) exports init/update/shutdown
+and lets desktop/Web hosts drive frames and conditional GC. The browser page
+`09_lifecycle.html` packages this same source. Existing numbered
+examples keep their main entry points. See [contract and next stages](../docs/lifecycle-and-live.md).
+
+[lifecycle/02_imgui_widgets.das](lifecycle/02_imgui_widgets.das) runs upstream
+v2 widgets with SDLRenderer3 and explicit lifecycle ownership. Desktop ImGui
+profile only; see [integration audit](../docs/imgui-widgets-and-live.md).
+
+## Shader DSL
+
+[gpu_dsl](gpu_dsl/README.md) contains shaders written directly in daScript:
+[triangle](gpu_dsl/01_triangle.das) and [texture sampling](gpu_dsl/02_texture.das).
+
+## Native live pilot
+
+[live/01_widgets.das](live/01_widgets.das) runs SDL widgets in the upstream
+daslang-live host with preserved native resources and JSON-RPC commands.
+See [build, run and reload checks](live/README.md).

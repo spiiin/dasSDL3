@@ -65,3 +65,10 @@ foreach(folder dag_noise vecmath fast_float)
     install(FILES "third_party/daScript/include/${folder}/LICENSE" DESTINATION "share/dasSDL3/licenses/${folder}" COMPONENT dasSDL3SDK)
 endforeach()
 install(FILES third_party/daScript/src/misc/LUAU.LICENSE DESTINATION share/dasSDL3/licenses COMPONENT dasSDL3SDK)
+
+# Pure daScript shader compiler; no Vulkan SDK or native compiler library.
+install(DIRECTORY third_party/daScript/modules/dasSpirv/spirv/
+    DESTINATION share/dasSDL3/dascript/modules/dasSpirv/spirv COMPONENT dasSDL3SDK
+    FILES_MATCHING PATTERN "*.das")
+install(FILES third_party/daScript/modules/dasSpirv/.das_module
+    DESTINATION share/dasSDL3/dascript/modules/dasSpirv COMPONENT dasSDL3SDK)

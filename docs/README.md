@@ -18,6 +18,7 @@ error and platform limitations.
 - [`sdl_try`: early return for SDL Results](sdl-try.md)
 - [`sdl_scope` and `sdl_use`: linear scoped acquisition](sdl-scope.md)
 - [Boost API ergonomics](api-ergonomics.md)
+- [Lifecycle, GC and live integration](lifecycle-and-live.md)
 - [Аудит контрактов boost-слоя](boost-contract-audit.md)
 - [SDL binding boundary](gpu-api-boundary.md)
 
@@ -126,3 +127,7 @@ error and platform limitations.
 - [SDL_mixer](sdl-mixer.md)
 - [SDL_sound](sdl-sound.md)
 - [SDL_shadercross](sdl-shadercross.md)
+
+- [Shader DSL](shader-dsl.md): existing daScript SPIR-V compiler, SDL resource layout and scoped shader creation.
+
+- [dasImgui v2 and SDL live integration](imgui-widgets-and-live.md).

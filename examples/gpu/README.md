@@ -353,3 +353,5 @@ All three interactive apps opened, rendered, resized and closed successfully on
 both drivers. The existing no-LLVM consumer also passed the three Direct3D 12
 tests. Official das-fmt verification and both asset/shader reproducibility checks
 passed. Metal and other operating systems have not been validated here.
+
+Shader DSL examples are in [gpu_dsl](../gpu_dsl/README.md).

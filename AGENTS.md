@@ -45,11 +45,17 @@ belong in examples; no public mesh/material/scene/batching or rendering plans.
 - Prefer named initialization, returned query values, receiver-first pipes and
   gen2 trailing blocks. Retain mutable buffers for in-place operations.
 - Examples use sdl_try and explicitly typed sdl_use bindings inside sdl_scope.
-  Report errors once in main; keep 01_results as the explicit Result comparison.
+  Report errors once at the application boundary (main or lifecycle callback);
+  keep 01_results as the explicit Result comparison.
   Do not weaken pointer checks to remove unsafe syntax. Respect macro placement
   restrictions in [sdl_try](docs/sdl-try.md) and [sdl_scope](docs/sdl-scope.md).
 - See [errors](docs/error-handling.md), [ergonomics](docs/api-ergonomics.md),
   [events](docs/event-variants.md) and subsystem contracts in [docs](docs/README.md).
+
+- Shared desktop/Web lifecycle entry points and host GC are documented in
+  [lifecycle/live](docs/lifecycle-and-live.md). Do not confuse bool/int update
+  continuation signals with SDL_AppResult. Web also retains the legacy app_*
+  protocol; SDL callback events need app_event, not only script polling.
 
 ## GPU and memory
 
@@ -88,3 +94,8 @@ belong in examples; no public mesh/material/scene/batching or rendering plans.
 - Keep example numbers stable; library examples live in examples/libraries.
 - Physical devices, Metal, other OS profiles and browsers require their own evidence.
   Dummy/virtual tests and Windows builds do not establish that support.
+
+Shader DSL: reuse upstream dasSpirv annotations; see [contract](docs/shader-dsl.md).
+Keep reflection validation and explicit SDL resource sets. No new shader parser,
+renderer objects or automatic raw-struct-as-std140 uploads. Direct SPIR-V remains
+independent of shadercross; native translation is opt-in.

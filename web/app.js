@@ -1,5 +1,6 @@
 "use strict";
 const examples={
+  "09_lifecycle":["09 · Lifecycle", "The same init/update/shutdown script on desktop and Web. Escape exits."],
   "01_hello":["01 · Hello","daScript and SDL3 inside WebAssembly. This example exits after printing its message."],
   "02_square":["02 · Moving square","Animation advances one browser frame at a time."],
   "03_input":["03 · Keyboard & mouse","Click the canvas, then press a key to move the square. Mouse clicks are logged."],
@@ -14,6 +15,7 @@ const examples={
 const leaf=location.pathname.split('/').pop().replace(/\.html$/,'');
 const key=(location.pathname.includes('/opengl/')?'opengl/':'')+leaf;
 const selected=examples[key];
+const scriptPath="/examples/"+(key==="09_lifecycle" ? "lifecycle/01_square" : key)+".das";
 const $=id=>document.getElementById(id);
 let runtime, running=false, ended=false, restartAfterStop=false;
 let sourceUrl;
@@ -25,7 +27,7 @@ if(!selected){failed('Unknown example');}else{
     onSessionEnd(code){running=false;ended=true;$('status').textContent=code?'Failed':'Stopped';$('stop').disabled=true;$('restart').disabled=false;if(restartAfterStop)location.reload();}
   }).then(module=>{
     runtime=module;
-    const text=module.FS.readFile('/examples/'+key+'.das',{encoding:'utf8'});
+    const text=module.FS.readFile(scriptPath,{encoding:'utf8'});
     $('code').textContent=text;sourceUrl=URL.createObjectURL(new Blob([text],{type:'text/plain'}));$('source').href=sourceUrl;$('source').download=key+'.das';
     $('status').textContent='Ready';$('start').disabled=false;
   }).catch(failed);
@@ -33,7 +35,7 @@ if(!selected){failed('Unknown example');}else{
 $('start').onclick=()=>{
   if(!runtime || running || ended)return;
   running=true;$('start').disabled=true;$('stop').disabled=false;$('restart').disabled=false;$('status').textContent='Running';$('canvas').focus();
-  try{runtime.callMain(['/examples/'+key+'.das']);}catch(error){if(error!=='unwind')failed(error);}
+  try{runtime.callMain([scriptPath]);}catch(error){if(error!=='unwind')failed(error);}
 };
 $('stop').onclick=()=>{if(running){$('status').textContent='Stopping…';runtime._web_stop();}};
 $('restart').onclick=()=>{if(running){restartAfterStop=true;runtime._web_stop();}else{location.reload();}};

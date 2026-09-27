@@ -1,0 +1,8 @@
+options gen2
+require daslib/fio
+[export]
+def initialize(project_path : string) {
+    register_dynamic_module("{project_path}/dasSDL3_live_module.shared_module", "Module_dasSDL3")
+    register_dynamic_module("{project_path}/dasSDL3_live_module.shared_module", "Module_imgui_sdl3")
+    register_dynamic_module("{project_path}/dasSDL3_live_module.shared_module", "Module_sdl3_live_demo")
+@_paths@}

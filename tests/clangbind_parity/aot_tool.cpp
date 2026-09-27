@@ -24,6 +24,7 @@ DECLARE_MODULE(Module_sdl3_image);
 DECLARE_MODULE(Module_Clipboard);
 DECLARE_MODULE(Module_dasIMGUI);
 DECLARE_MODULE(Module_imgui_sdl3);
+DECLARE_MODULE(Module_LiveHost);
 #endif
 using namespace das;
 
@@ -31,9 +32,17 @@ static int generate(const char *input, const char *output) {
     TextPrinter log;
     auto access = make_smart<FsFileAccess>();
     access->addFsRoot("dassdl3", DASSDL3_MODULE_ROOT);
+#ifdef DASSDL3_WITH_IMGUI
+    access->addFsRoot("imgui", std::string(DASSDL3_DAS_ROOT) + "/modules/dasImgui/widgets");
+    access->addFsRoot("live", std::string(DASSDL3_DAS_ROOT) + "/modules/dasLiveHost/live");
+#endif
     ModuleGroup scriptModules, compilerModules;
     CodeOfPolicies policy;
     policy.aot_module = true;
+#ifdef DASSDL3_WITH_IMGUI
+    // Live macro modules use ast_typedecl when generated as standalone inputs.
+    policy.rtti = true;
+#endif
     policy.tune_frozen = true;
     policy.fail_on_lack_of_aot_export = true;
     auto script = compileDaScript(input, access, log, scriptModules, policy);
@@ -45,7 +54,14 @@ static int generate(const char *input, const char *output) {
         }
     }
     Context scriptContext(script->getContextStackSize()), compilerContext(compiler->getContextStackSize());
-    if (!script->simulate(scriptContext, log) || !compiler->simulate(compilerContext, log)) return 2;
+    if (!script->simulate(scriptContext, log) || !compiler->simulate(compilerContext, log)) {
+        for (auto program : {script, compiler}) {
+            for (auto &e : program->errors) log << reportError(e.at, e.what, e.extra, e.fixme, e.cerr);
+        }
+        if (auto ex = scriptContext.getException()) log << ex << "\n";
+        if (auto ex = compilerContext.getException()) log << ex << "\n";
+        return 2;
+    }
     auto entry = compilerContext.findFunction("run_aot");
     if (!entry) return 3;
     vec4f args[] = {cast<Program *>::from(script.get()), cast<Context *>::from(&scriptContext), cast<CodeOfPolicies *>::from(&policy)};
@@ -95,6 +111,7 @@ int main(int argc, char **argv) {
     NEED_MODULE(Module_Clipboard);
     NEED_MODULE(Module_dasIMGUI);
     NEED_MODULE(Module_imgui_sdl3);
+    NEED_MODULE(Module_LiveHost);
 #endif
     Module::Initialize();
     int result = generate(argv[1], argv[2]);

@@ -997,3 +997,5 @@ public:
 };
 }
 REGISTER_MODULE_IN_NAMESPACE(Module_dasSDL3, das);
+
+namespace das { REGISTER_DYN_MODULE(Module_dasSDL3, Module_dasSDL3); }

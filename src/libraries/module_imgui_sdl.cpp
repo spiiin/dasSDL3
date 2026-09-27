@@ -42,3 +42,5 @@ public:
 };
 }
 REGISTER_MODULE_IN_NAMESPACE(Module_imgui_sdl3, das);
+
+namespace das { REGISTER_DYN_MODULE(Module_imgui_sdl3, Module_imgui_sdl3); }

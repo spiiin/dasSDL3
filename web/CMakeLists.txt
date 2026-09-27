@@ -60,13 +60,14 @@ target_link_options(dassdl3_web PRIVATE
     "SHELL:--exclude-file */_llvm_aot_generated/*"
     "SHELL:--preload-file ${ROOT}/dassdl3@/dassdl3"
     "SHELL:--preload-file ${ROOT}/examples/web@/examples"
+    "SHELL:--preload-file ${ROOT}/examples/lifecycle@/examples/lifecycle"
     "SHELL:--preload-file ${ROOT}/examples/assets/checker.bmp@/assets/checker.bmp")
-file(GLOB_RECURSE WEB_SCRIPTS CONFIGURE_DEPENDS "${ROOT}/examples/web/*.das")
+file(GLOB_RECURSE WEB_SCRIPTS CONFIGURE_DEPENDS "${ROOT}/examples/web/*.das" "${ROOT}/examples/lifecycle/*.das")
 set_property(TARGET dassdl3_web APPEND PROPERTY LINK_DEPENDS ${WEB_SCRIPTS})
 foreach(page index.html app.js style.css)
     configure_file("${CMAKE_CURRENT_SOURCE_DIR}/${page}" "${CMAKE_BINARY_DIR}/site/${page}" COPYONLY)
 endforeach()
-foreach(example 01_hello 02_square 03_input 04_textures 05_streaming 06_target 07_geometry 08_audio)
+foreach(example 01_hello 02_square 03_input 04_textures 05_streaming 06_target 07_geometry 08_audio 09_lifecycle)
     configure_file("${CMAKE_CURRENT_SOURCE_DIR}/example.html" "${CMAKE_BINARY_DIR}/site/${example}.html" COPYONLY)
 endforeach()
 

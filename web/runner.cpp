@@ -5,6 +5,7 @@
 #include <SDL3/SDL_main.h>
 #include <emscripten.h>
 #include <memory>
+#include "script_lifecycle.h"
 MAKE_TYPE_FACTORY(SDL_Event, SDL_Event);
 DECLARE_MODULE(Module_dasSDL3);
 DECLARE_MODULE(Module_dasOpenGL);
@@ -17,10 +18,12 @@ struct Session {
     ProgramPtr program;
     std::unique_ptr<Context> context;
     SimFunction * init=nullptr,*frame=nullptr,*event=nullptr,*quit=nullptr;
+    std::unique_ptr<dassdl3_host::Lifecycle> lifecycle;
     bool initialized=false;
 };
 bool stopRequested=false;
 SDL_AppResult invoke(Session & s,SimFunction * fn,vec4f * args=nullptr) {
+    s.context->restart();
     auto value=s.context->evalWithCatch(fn,args);
     if(const char * error=s.context->getException()) {
         s.output << "Script exception: " << error << "\n";return SDL_APP_FAILURE;
@@ -47,6 +50,19 @@ SDL_AppResult SDL_AppInit(void ** appstate,int argc,char ** argv) {
     }
     s->context=std::make_unique<Context>(s->program->getContextStackSize());
     if(!s->program->simulate(*s->context,s->output))return SDL_APP_FAILURE;
+    if (!dassdl3_host::entry_functions(*s->context,*s->program->getThisModule(),"update").empty()) {
+        s->lifecycle=std::make_unique<dassdl3_host::Lifecycle>(*s->context,s->modules,*s->program->getThisModule(),s->output);
+        const auto events=dassdl3_host::entry_functions(*s->context,*s->program->getThisModule(),"app_event");
+        if (!events.empty()) {
+            if (events.size()!=1 || !verifyCall<int32_t, const SDL_Event &>(events[0]->debugInfo,s->modules)) {
+                s->output << "Invalid Web lifecycle app_event\n";return SDL_APP_FAILURE;
+            }
+            s->event=events[0];
+        }
+        if (!s->lifecycle->valid) return SDL_APP_FAILURE;
+        s->initialized=true;
+        return s->lifecycle->start() ? SDL_APP_CONTINUE : SDL_APP_FAILURE;
+    }
     s->init=s->context->findFunction("app_init");s->frame=s->context->findFunction("app_frame");
     s->event=s->context->findFunction("app_event");s->quit=s->context->findFunction("app_quit");
     if(!s->init || !s->frame || !s->event || !s->quit ||
@@ -61,17 +77,26 @@ SDL_AppResult SDL_AppInit(void ** appstate,int argc,char ** argv) {
 }
 SDL_AppResult SDL_AppIterate(void * state) {
     if(stopRequested)return SDL_APP_SUCCESS;
-    auto & s=*static_cast<Session *>(state);return invoke(s,s.frame);
+    auto & s=*static_cast<Session *>(state);
+    if (s.lifecycle) return s.lifecycle->tick() ? SDL_APP_CONTINUE : SDL_APP_SUCCESS;
+    const auto result=invoke(s,s.frame);
+    if (result==SDL_APP_CONTINUE && !s.context->runWithCatchAndClear([&] { s.context->collectHeapIfMostlyFree(); })) {
+        s.output << "Web garbage collection failed\n";return SDL_APP_FAILURE;
+    }
+    return result;
 }
 SDL_AppResult SDL_AppEvent(void * state,SDL_Event * event) {
     auto & s=*static_cast<Session *>(state);
+    if (!s.event) return event->type==SDL_EVENT_QUIT ? SDL_APP_SUCCESS : SDL_APP_CONTINUE;
     vec4f args[]={cast<const SDL_Event *>::from(event)};
     return invoke(s,s.event,args);
 }
 void SDL_AppQuit(void * state,SDL_AppResult result) {
     auto * s=static_cast<Session *>(state);
     if(s) {
-        if(s->initialized) {
+        if(s->initialized && s->lifecycle) {
+            if (s->lifecycle->finish()!=0) result=SDL_APP_FAILURE;
+        } else if(s->initialized) {
             s->context->restart();s->context->evalWithCatch(s->quit,nullptr);
             if(const char * e=s->context->getException()) {s->output << "Cleanup exception: " << e << "\n";result=SDL_APP_FAILURE;}
         }
