@@ -47,3 +47,9 @@ if(BUILD_TESTING AND Python3_EXECUTABLE)
         "${CMAKE_SOURCE_DIR}/tests/test_shader_dsl_resources.py" --runner $<TARGET_FILE:dasSDL3_runner> ${_dsl_validator})
     set_tests_properties(shader_dsl_resources_compiler PROPERTIES TIMEOUT 120)
 endif()
+
+if(BUILD_TESTING AND Python3_EXECUTABLE)
+    add_test(NAME shader_dsl_gpu_examples_compiler COMMAND "${Python3_EXECUTABLE}"
+        "${CMAKE_SOURCE_DIR}/tests/test_gpu_examples_dsl.py" --runner $<TARGET_FILE:dasSDL3_runner> ${_dsl_validator})
+    set_tests_properties(shader_dsl_gpu_examples_compiler PROPERTIES TIMEOUT 180)
+endif()

@@ -1,4 +1,6 @@
 options gen2
+require ../examples/gpu/shaders/metaballs_shaders.das public
+require ../examples/gpu/shader_support.das public
 // GPU regression harness; rendering functions come from the interactive example.
 require ../examples/gpu/metaballs_app.das as demo
 // Port of bgfx examples/02-metaballs; BSD-2-Clause (LICENSE-bgfx.txt).
@@ -106,13 +108,9 @@ def resources(device : SDL_GPUDevice?; window : SDL_Window?; var vertex, fragmen
 }
 
 def run(device : SDL_GPUDevice?; window : SDL_Window?; smoke : bool) {
-    let spirv = (SDL_GetGPUShaderFormats(device) & SDL_GPU_SHADERFORMAT_SPIRV) != 0u
-    let format = spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL
-    let ext = spirv ? "spv" : "dxil"
-    let base = "{SDL_GetBasePath()}assets/shaders/metaballs"
     return sdl_scope() {
-        var vertex : SDL_GPUShader? = device |> with_native_gpu_shader_file(SDL_GPUShaderCreateInfo(format = format, stage = SDL_GPUShaderStage.SHADERSTAGE_VERTEX, num_uniform_buffers = 1u), "{base}.vert.{ext}", "main") |> sdl_use
-        var fragment : SDL_GPUShader? = device |> with_native_gpu_shader_file(SDL_GPUShaderCreateInfo(format = format, stage = SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT), "{base}.frag.{ext}", "main") |> sdl_use
+        var vertex : SDL_GPUShader? = device |> with_example_shader(metaballs_vertex, metaballs_vertex_reflect) |> sdl_use
+        var fragment : SDL_GPUShader? = device |> with_example_shader(metaballs_fragment, metaballs_fragment_reflect) |> sdl_use
         return resources(device, window, vertex, fragment, smoke)
     }
 }
@@ -122,7 +120,7 @@ def main(smoke : bool) : int {
     let result = sdl_scope() {
         with_sdl(SDL_INIT_VIDEO) |> sdl_use
         let window : SDL_Window? = with_window(WindowOptions(title = "Metaballs", size = int2(960, 720), flags = SDL_WINDOW_RESIZABLE)) |> sdl_use
-        let device : SDL_GPUDevice? = with_native_gpu_device(GPU_SHADER_FORMATS, true, "") |> sdl_use
+        let device : SDL_GPUDevice? = with_native_gpu_device(example_shader_formats(), true, "") |> sdl_use
         sdl_status(SDL_ClaimWindowForGPUDevice(device, window), "SDL_ClaimWindowForGPUDevice") |> sdl_try
         {
             defer() { SDL_ReleaseWindowFromGPUDevice(device, window) }

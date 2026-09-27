@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import queue
 import socket
+import shutil
 import subprocess
 import tempfile
 import threading
@@ -15,13 +16,14 @@ parser.add_argument("--host", required=True)
 parser.add_argument("--module", required=True)
 args = parser.parse_args()
 root = Path(__file__).resolve().parents[1]
-source = (root / "examples/live/01_widgets.das").read_text()
+source = (root / "examples/live/01_widgets.das").read_text().replace("require live/live_watch_boost\n", "")
 with socket.socket() as sock:
     sock.bind(("127.0.0.1", 0))
     port = sock.getsockname()[1]
 with tempfile.TemporaryDirectory(prefix="dassdl3-live-") as folder:
     script = Path(folder) / "main.das"
     script.write_text(source)
+    shutil.copyfile(root / "examples/live/frame_recovery.das", Path(folder) / "frame_recovery.das")
     env = dict(os.environ, SDL_RENDER_DRIVER="software")
     process = subprocess.Popen([args.host, "-dasroot", str(root / "third_party/daScript"),
         "-load_module", args.module, "-no-module-cache", str(script), "--live-port", str(port)],
@@ -76,13 +78,13 @@ with tempfile.TemporaryDirectory(prefix="dassdl3-live-") as folder:
         assert ready["acquisitions"] == 1, ready
         snapshot = call("imgui_snapshot")
         assert "MAIN/INCREMENT" in json.dumps(snapshot) and "MAIN/SPEED" in json.dumps(snapshot), snapshot
-        assert call("demo_increment") == 1
+        assert call("demo_increment") == ready["edits"] + 1
         call("imgui_force_set", {"target": "MAIN/SPEED", "value": 0.75})
         print("startup / widget telemetry / command transport PASS", flush=True)
         script.write_text(source.replace("revision = 1", "revision = 2"))
         call("reload")
         state = until("demo_state", lambda s: s["revision"] == 2 and s["ticks"] > ready["ticks"])
-        assert state["edits"] == 1 and state["acquisitions"] == 1, state
+        assert state["edits"] == ready["edits"] + 1 and state["acquisitions"] == 1, state
         assert state["speed"] == 0.75, state
         print("reload: script changed, widget/app state and native resources preserved PASS", flush=True)
         script.write_text(source + "\nthis is deliberately invalid syntax !!!\n")
@@ -94,7 +96,7 @@ with tempfile.TemporaryDirectory(prefix="dassdl3-live-") as folder:
         script.write_text(source.replace("revision = 1", "revision = 3"))
         call("reload")
         state = until("demo_state", lambda s: s["revision"] == 3)
-        assert state["edits"] == 1 and state["acquisitions"] == 1, state
+        assert state["edits"] == ready["edits"] + 1 and state["acquisitions"] == 1, state
         until("status", lambda s: not s["has_error"] and not s["paused"])
         print("recovery after failed reload PASS", flush=True)
         call("set_user_control", {"enabled": False})
@@ -104,7 +106,7 @@ with tempfile.TemporaryDirectory(prefix="dassdl3-live-") as folder:
         assert call("demo_state")["clicks"] == 1
         print("post-reload synthetic click: one action, no duplicate hook PASS", flush=True)
         call("reload_full")
-        state = until("demo_state", lambda s: s["edits"] == 0)
+        state = until("demo_state", lambda s: s["edits"] == ready["edits"])
         assert state["acquisitions"] == 1, state
         print("full reload: app defaults reset, native resources retained PASS", flush=True)
         script.write_text(source + "\ninvalid_final_reload !!!\n")

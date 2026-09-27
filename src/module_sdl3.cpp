@@ -987,11 +987,22 @@ public:
         addExtern<DAS_BIND_FUN(SDL_MakeKeyEvent), SimNode_ExtFuncCallAndCopyOrMove>(
             *this, lib, "SDL_MakeKeyEvent", SideEffects::none, "SDL_MakeKeyEvent")->args({"type", "key"});
         // Match the BGFX binder's promotion of small C integer arguments.
+        // Standalone/JIT resolves externs by mangled name, so keep the registry
+        // and module fingerprint consistent with the promoted public signature.
+        cumulativeHash = 0;
         for (auto & fn : functions.each()) {
+            const auto oldName = fn->getMangledName();
             for (auto & arg : fn->arguments) {
                 if (arg->type->isSimpleType(Type::tUInt8) || arg->type->isSimpleType(Type::tUInt16))
                     arg->type->baseType = Type::tUInt;
             }
+            const auto newName = fn->getMangledName();
+            if (oldName != newName) {
+                DAS_VERIFY(!functions.find(newName));
+                DAS_VERIFY(functions.refresh_key(hash64z(oldName.c_str()), hash64z(newName.c_str())));
+            }
+            if (fn->builtIn)
+                cumulativeHash = wyhash(newName.c_str(), newName.size(), cumulativeHash);
         }
     }
 };

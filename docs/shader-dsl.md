@@ -254,6 +254,8 @@ AOT dependencies. Access-aware factories additionally use sdl3_shader_resources,
 sdl3_shader_storage_spirv and the upstream spirv_dis/spirv_builder/spirv_grammar
 runtime modules. See [SDK](sdk.md).
 
-Next: more demanding application examples and Metal validation.
+The six [GPU application examples](../examples/gpu/README.md) now use the DSL,
+including raymarch depth output, normal mapping, cubemap sampling and HDR postprocessing.
+Next: Metal validation and additional resource-heavy applications.
 Reuse dasSpirv, shader_block_layout and the existing GLSL/MSL emitters; do not
 build a second shader parser or a scene/material layer.

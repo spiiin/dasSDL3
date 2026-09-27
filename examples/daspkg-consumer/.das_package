@@ -1,0 +1,13 @@
+options gen2
+require daslib/daspkg
+
+[export]
+def package() {
+    package_name("sdl3_package_demo")
+}
+
+[export]
+def release() {
+    release_name("sdl3_package_demo")
+    release_main("main.das")
+}

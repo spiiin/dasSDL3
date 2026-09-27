@@ -1,0 +1,11 @@
+--- a/modules/dasImgui/widgets/imgui_visual_aids.das
++++ b/modules/dasImgui/widgets/imgui_visual_aids.das
+@@ -8,7 +8,7 @@
+ 
+ require imgui public
+ require imgui/imgui_boost_runtime public
+-require imgui/imgui_live
++require imgui/imgui_live_core
+ require live/live_commands
+ require live_host
+ require daslib/json public

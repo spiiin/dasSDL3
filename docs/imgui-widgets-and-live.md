@@ -81,17 +81,84 @@ was acquired once and released exactly once. Example formatting is verified.
 The upstream stdio reader-agent still reports one leaked Channel/JobStatus and
 Feature at exit; see the pilot README. This is not a zero-leak transport claim.
 
-The pilot uses the upstream stdio transport; no HTTP server or MCP endpoint has
-been added. The dynamic host interprets new scripts. Existing strict AOT widget
+Example 02 adds a loopback HTTP agent and the unmodified upstream MCP server;
+see the pilot README for its separate build and launcher. End-to-end MCP checks
+passed discovery, widget commands, batch isolation, reload, diagnostics and
+recovery, with exactly-once SDL cleanup and no reported transport handle leaks. The dynamic host interprets new scripts. Existing strict AOT widget
 checks apply to the non-reloading host, not to this pilot.
 
 ## Remaining live integration
 
-- Connect the upstream MCP adapter and, if needed, HTTP transport to the SDL
-  pilot; verify actual MCP discovery, commands and diagnostics end to end.
-- Add automatic file-watching/recording workflows. The current example has an
-  explicit Reload button and accepts the reload JSON-RPC command.
+- Add recording workflows; automatic file watching is now connected (see below).
 - Exercise runtime exceptions, reset, resource-configuration changes and
   cross-platform behavior beyond the tested compile-failure recovery path.
 - Decide whether the application-specific native owner should remain a demo or
   become a documented reusable host pattern. It is not part of public SDL API.
+
+
+## Runtime-fault verification
+
+The HTTP/MCP regression also injects a panic into temporary script copies:
+`init` after native acquisition during reload, and `update` before starting an
+ImGui frame. Both faults pause execution and expose the original marker through
+`live_error`; ordinary commands are rejected. Repair and reload resume advancing
+ticks and widget snapshots without acquiring another SDL bundle. Final shutdown
+releases that bundle exactly once, with no reported transport handle leaks.
+
+Initial-launch init failure, shutdown failure and native crashes remain outside
+these checks. Open-frame recovery is described below. Persistent values
+are not guaranteed after runtime faults: the upstream host may clear its live
+store on exception. The test checks resumed execution and resource ownership,
+not transactional rollback of application state. Dependency sources are unchanged.
+
+
+## Interrupted ImGui frames
+
+Both live examples track whether NewFrame has started and Render has completed.
+Their shutdown callback discards an unfinished frame before reload or final close,
+using the application-local `examples/live/frame_recovery.das` helper. EndFrame
+invokes the pinned ImGui recovery for unmatched window/ID/style stacks. Recoverable
+asserts are disabled only during this teardown, logging stays enabled, and all
+four recovery settings are restored afterwards. No failed frame is presented.
+
+Recovery is best-effort, not arbitrary native-crash handling or rollback of script
+state. Normal frame assertions remain enabled according to the original settings.
+The public SDL/ImGui boost layer and dependency sources are unchanged.
+
+
+## Automatic file watching
+
+Both SDL live examples now import the upstream `live/live_watch_boost` agent.
+Saving watched scripts requests reload even while the application is paused.
+Manual reload remains available. See the live README for stat-polling limits,
+import-graph changes requiring restart, and the separate `sdl3_live_watch` test.
+
+
+## GUI scenario and framebuffer evidence
+
+`sdl3_live_gui` now combines real MCP actions and automatic reload with SDL
+framebuffer capture before present. It verifies slider pixel changes, identical
+slider pixels after reload, updated label pixels/telemetry, preserved state and
+exactly-once cleanup. See examples/live/README.md for commands and PNG artifacts.
+The capture helper is test-only; continuous recording and upstream playwright
+integration are not yet claimed.
+
+
+## Upstream playwright on SDL
+
+The application-level driver examples/live/playwright_widgets.das now uses the
+unmodified upstream ImguiApp transport and mouse drag/click/reload helpers against
+SDL. The sdl3_live_playwright test checks actual dragged slider pixels and state
+preservation. Continuous recording still needs the upstream recording protocol
+and an SDL capture integration; a successful driver is not an APNG recording claim.
+
+
+## SDL streaming recording
+
+Example 03 now implements the upstream record_start/status/stop contract using
+SDL readback and the unmodified dasStbImage APNG writer. record_widgets.das runs
+actual upstream with_recording_app in attach mode on its fixed port 9090.
+The test validates APNG frames/CRC/timing, drag/click, bounded capture, reload
+finalization and native cleanup. See examples/live/README.md for commands and
+limitations. Basic software cursor capture is supported; the GLFW-dependent
+visual-aids module, trails and narration overlays remain separate work.

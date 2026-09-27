@@ -1,4 +1,5 @@
 options gen2
+require ./shaders/cube_shaders.das as shaders
 module cubes_app shared public
 // bgfx 05-instancing / 06-bump; BSD-2-Clause (LICENSE-bgfx.txt).
 require bgfx_support public
@@ -65,8 +66,7 @@ def with_resources(device : SDL_GPUDevice?; format : SDL_GPUTextureFormat; bump 
     for (i in 0u .. (bump ? 4u : 5u)) {
         push(attributes, SDL_GPUVertexAttribute(location = first + i, buffer_slot = 1u, format = SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT4, offset = i * 16u))
     }
-    let name = bump ? "bgfx_bump" : "bgfx_instancing"
-    var graphics = pipeline(device, name, name, format, true, bump ? 2u : 0u, layouts, attributes) |> sdl_try
+    var graphics = pipeline(device, bump ? shaders::bump_vertex : shaders::instancing_vertex, bump ? shaders::bump_vertex_reflect : shaders::instancing_vertex_reflect, bump ? shaders::bump_fragment : shaders::instancing_fragment, bump ? shaders::bump_fragment_reflect : shaders::instancing_fragment_reflect, format, true, layouts, attributes) |> sdl_try
     r.graphics = graphics
     if (bump) {
         var tex = texture(device, 512u, 512u, SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM, SDL_GPU_TEXTUREUSAGE_SAMPLER) |> sdl_try

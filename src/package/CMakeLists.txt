@@ -1,0 +1,150 @@
+cmake_minimum_required(VERSION 3.24)
+project(dasSDL3Package LANGUAGES C CXX)
+if(NOT WIN32 OR NOT MSVC OR NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
+    message(FATAL_ERROR "Package pilot requires Windows x64 MSVC")
+endif()
+if(NOT CMAKE_BUILD_TYPE STREQUAL "Release" OR CMAKE_CONFIGURATION_TYPES)
+    message(FATAL_ERROR "Use single-config Ninja Release and the matching daScript DLL SDK")
+endif()
+set(CMAKE_CXX_STANDARD 17)
+set_property(GLOBAL PROPERTY JOB_POOLS package_compile=6 package_link=1)
+set(CMAKE_JOB_POOL_COMPILE package_compile)
+set(CMAKE_JOB_POOL_LINK package_link)
+set(CMAKE_MSVC_RUNTIME_LIBRARY MultiThreadedDLL)
+set(DASLANG_DIR "" CACHE PATH "Matching built daScript DLL SDK")
+foreach(required include/daScript/daScript.h lib/libDaScriptDyn.lib lib/libDaScriptDyn_runtime.lib)
+    if(NOT EXISTS "${DASLANG_DIR}/${required}")
+        message(FATAL_ERROR "Missing ${DASLANG_DIR}/${required}")
+    endif()
+endforeach()
+set(DASSDL3_SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/.." CACHE PATH "Binding sources")
+set(DASSDL3_PACKAGE_OUTPUT "${CMAKE_BINARY_DIR}/module" CACHE PATH "Module destination")
+if(DEFINED DASSDL3_SDK_FINGERPRINT)
+    file(STRINGS "${DASSDL3_SDK_FINGERPRINT}" _sdk_files)
+    foreach(entry IN LISTS _sdk_files)
+        string(SUBSTRING "${entry}" 0 64 expected)
+        string(SUBSTRING "${entry}" 65 -1 relative)
+        if(NOT EXISTS "${DASLANG_DIR}/${relative}")
+            message(FATAL_ERROR "SDK fingerprint: missing ${relative}")
+        endif()
+        file(SHA256 "${DASLANG_DIR}/${relative}" actual)
+        if(NOT actual STREQUAL expected)
+            message(FATAL_ERROR "SDK fingerprint mismatch: ${relative}. Use the SDK used to stage this package.")
+        endif()
+    endforeach()
+endif()
+# Reuse an explicit SDL install, or fetch the pinned source for the source package.
+option(DASSDL3_PACKAGE_FETCH_SDL "Fetch pinned SDL when no SDL3_DIR is supplied" OFF)
+if(DASSDL3_PACKAGE_FETCH_SDL AND NOT SDL3_DIR AND NOT DEFINED ENV{SDL3_DIR})
+    include(FetchContent)
+    set(SDL_SHARED OFF CACHE BOOL "" FORCE)
+    set(SDL_STATIC ON CACHE BOOL "" FORCE)
+    set(SDL_TEST_LIBRARY OFF CACHE BOOL "" FORCE)
+    set(SDL_TESTS OFF CACHE BOOL "" FORCE)
+    FetchContent_Declare(SDL3 GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
+        GIT_TAG release-3.4.16 GIT_SHALLOW TRUE)
+    FetchContent_MakeAvailable(SDL3)
+else()
+    find_package(SDL3 3.4.16 EXACT CONFIG REQUIRED COMPONENTS SDL3-static)
+endif()
+add_library(dasSDL3_package SHARED "${DASSDL3_SOURCE_DIR}/module_sdl3.cpp")
+target_include_directories(dasSDL3_package PRIVATE "${DASSDL3_SOURCE_DIR}" "${DASLANG_DIR}/include" "${DASLANG_DIR}/3rdparty/fmt/include")
+target_compile_definitions(dasSDL3_package PRIVATE DAS_ENABLE_DLL=1 DAS_MOD_EXPORTS
+    DAS_ENABLE_EXCEPTIONS=1 DAS_FUSION=2 DAS_NO_ASSERTIONS
+    DASSDL3_TYPES_INCLUDE="generated/clangbind/sdl3_types.inc"
+    DASSDL3_REGISTRATION_INCLUDE="generated/clangbind/sdl3_functions.inc")
+target_compile_options(dasSDL3_package PRIVATE /bigobj /arch:AVX2 /wd4251 /wd4275)
+target_link_libraries(dasSDL3_package PRIVATE SDL3::SDL3-static
+    "${DASLANG_DIR}/lib/libDaScriptDyn.lib" "${DASLANG_DIR}/lib/libDaScriptDyn_runtime.lib")
+set_target_properties(dasSDL3_package PROPERTIES PREFIX "" SUFFIX ".shared_module"
+    OUTPUT_NAME dasSDL3 RUNTIME_OUTPUT_DIRECTORY "${DASSDL3_PACKAGE_OUTPUT}")
+
+
+# GUI variant uses the same SDL instance as the core binding.
+option(DASSDL3_PACKAGE_IMGUI "Include SDL platform/renderer backend for SDK dasImgui" OFF)
+if(DASSDL3_PACKAGE_IMGUI)
+    set(_imgui "${DASLANG_DIR}/modules/dasImgui")
+    foreach(required lib/dasModuleImgui.lib modules/dasImgui/dasModuleImgui.shared_module
+            modules/dasImgui/imgui/imgui.h)
+        if(NOT EXISTS "${DASLANG_DIR}/${required}")
+            message(FATAL_ERROR "GUI profile needs a built SDK dasImgui: missing ${required}")
+        endif()
+    endforeach()
+    target_sources(dasSDL3_package PRIVATE "${DASSDL3_SOURCE_DIR}/libraries/module_imgui_sdl.cpp"
+        "${_imgui}/imgui/backends/imgui_impl_sdl3.cpp"
+        "${_imgui}/imgui/backends/imgui_impl_sdlrenderer3.cpp")
+    target_include_directories(dasSDL3_package PRIVATE "${DASSDL3_SOURCE_DIR}/libraries"
+        "${_imgui}/imgui" "${_imgui}/src")
+    target_compile_definitions(dasSDL3_package PRIVATE "IMGUI_API=__declspec(dllimport)"
+        "IMGUI_IMPL_API=" IMGUI_DISABLE_OBSOLETE_FUNCTIONS=1 IMGUI_ENABLE_FREETYPE=1 IMGUI_USE_WCHAR32=1)
+    target_link_libraries(dasSDL3_package PRIVATE "${DASLANG_DIR}/lib/dasModuleImgui.lib")
+endif()
+
+# Optional helper for this repository's minimal SDK: daspkg itself imports PUGIXML.
+option(DASSDL3_DASPKG_CLI_SUPPORT "Build upstream PUGIXML separately for daspkg CLI" OFF)
+if(DASSDL3_DASPKG_CLI_SUPPORT)
+    set(_pugi "${DASLANG_DIR}/modules/dasPUGIXML")
+    add_library(daspkg_pugixml SHARED "${_pugi}/src/dasPUGIXML.cpp" "${_pugi}/pugixml/pugixml.cpp")
+    target_include_directories(daspkg_pugixml PRIVATE "${DASLANG_DIR}/include"
+        "${DASLANG_DIR}/3rdparty/fmt/include" "${_pugi}/pugixml")
+    target_compile_definitions(daspkg_pugixml PRIVATE DAS_ENABLE_DLL=1 DAS_MOD_EXPORTS
+        DAS_ENABLE_EXCEPTIONS=1 DAS_FUSION=2 DAS_NO_ASSERTIONS)
+    target_compile_options(daspkg_pugixml PRIVATE /bigobj /arch:AVX2 /wd4251 /wd4275)
+    target_link_libraries(daspkg_pugixml PRIVATE "${DASLANG_DIR}/lib/libDaScriptDyn.lib"
+        "${DASLANG_DIR}/lib/libDaScriptDyn_runtime.lib")
+    set_target_properties(daspkg_pugixml PROPERTIES PREFIX "" SUFFIX ".shared_module"
+        OUTPUT_NAME dasModulePUGIXML RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/cli")
+    file(COPY "${_pugi}/.das_module" "${_pugi}/daslib" DESTINATION "${CMAKE_BINARY_DIR}/cli")
+    set(_cli_args --cli-module "${CMAKE_BINARY_DIR}/cli")
+endif()
+
+include(CTest)
+if(BUILD_TESTING)
+    find_package(Python3 REQUIRED COMPONENTS Interpreter)
+    add_test(NAME sdl3_daspkg_consumer COMMAND "${Python3_EXECUTABLE}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/../../tests/test_daspkg.py"
+        --module $<TARGET_FILE:dasSDL3_package> --das-root "${DASLANG_DIR}" ${_cli_args})
+    set_tests_properties(sdl3_daspkg_consumer PROPERTIES TIMEOUT 240 RUN_SERIAL TRUE)
+    add_test(NAME sdl3_daspkg_source COMMAND "${Python3_EXECUTABLE}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/../../tests/test_daspkg.py"
+        --module $<TARGET_FILE:dasSDL3_package> --das-root "${DASLANG_DIR}"
+        --source --sdl-dir "${SDL3_DIR}" ${_cli_args})
+    set_tests_properties(sdl3_daspkg_source PROPERTIES TIMEOUT 900 RUN_SERIAL TRUE)
+    if(DASSDL3_PACKAGE_IMGUI)
+        foreach(mode binary source)
+            set(_source_arg)
+            if(mode STREQUAL "source")
+                set(_source_arg --source --sdl-dir "${SDL3_DIR}")
+            endif()
+            add_test(NAME sdl3_daspkg_imgui_${mode} COMMAND "${Python3_EXECUTABLE}"
+                "${CMAKE_CURRENT_SOURCE_DIR}/../../tests/test_daspkg.py"
+                --module $<TARGET_FILE:dasSDL3_package> --das-root "${DASLANG_DIR}"
+                --imgui ${_source_arg} ${_cli_args})
+            set_tests_properties(sdl3_daspkg_imgui_${mode} PROPERTIES TIMEOUT 900 RUN_SERIAL TRUE)
+        endforeach()
+    endif()
+    option(DASSDL3_DASPKG_NETWORK_TESTS "Enable cold SDL download/install test" OFF)
+    if(DASSDL3_DASPKG_NETWORK_TESTS)
+        add_test(NAME sdl3_daspkg_source_fetch COMMAND "${Python3_EXECUTABLE}"
+            "${CMAKE_CURRENT_SOURCE_DIR}/../../tests/test_daspkg.py"
+            --module $<TARGET_FILE:dasSDL3_package> --das-root "${DASLANG_DIR}"
+            --fetch-sdl ${_cli_args})
+        set_tests_properties(sdl3_daspkg_source_fetch PROPERTIES TIMEOUT 900
+            RUN_SERIAL TRUE LABELS "network")
+    endif()
+    set(DASSDL3_RELEASE_LLVM_DIR "" CACHE PATH "Optional pinned LLVM tools for release test")
+    if(DASSDL3_RELEASE_LLVM_DIR)
+        add_test(NAME sdl3_daspkg_release COMMAND "${Python3_EXECUTABLE}"
+            "${CMAKE_CURRENT_SOURCE_DIR}/../../tests/test_daspkg.py"
+            --module $<TARGET_FILE:dasSDL3_package> --das-root "${DASLANG_DIR}"
+            --release --llvm-dir "${DASSDL3_RELEASE_LLVM_DIR}" ${_cli_args})
+        set_tests_properties(sdl3_daspkg_release PROPERTIES TIMEOUT 300 RUN_SERIAL TRUE)
+        if(DASSDL3_PACKAGE_IMGUI)
+            add_test(NAME sdl3_daspkg_imgui_release COMMAND "${Python3_EXECUTABLE}"
+                "${CMAKE_CURRENT_SOURCE_DIR}/../../tests/test_daspkg.py"
+                --module $<TARGET_FILE:dasSDL3_package> --das-root "${DASLANG_DIR}"
+                --imgui --release --llvm-dir "${DASSDL3_RELEASE_LLVM_DIR}" ${_cli_args})
+            set_tests_properties(sdl3_daspkg_imgui_release PROPERTIES TIMEOUT 300 RUN_SERIAL TRUE)
+        endif()
+    endif()
+endif()

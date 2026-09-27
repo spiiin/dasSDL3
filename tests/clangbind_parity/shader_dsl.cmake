@@ -18,19 +18,65 @@ set(_dsl_scripts tests/shader_dsl_resources tests/shader_dsl_storage tests/shade
 if(DASSDL3_TEST_SHADERCROSS)
     list(APPEND _dsl_scripts tests/shader_dsl_resource_gpu_cross tests/shader_dsl_compute_cross tests/shader_dsl_uniform_gpu_cross tests/shader_dsl_texture_cross tests/shader_dsl_cross dassdl3/sdl3_shader_dsl_cross dassdl3/sdl3_shadercross_boost)
 endif()
+list(APPEND _dsl_scripts
+    examples/gpu/shader_support
+    examples/gpu/shaders/metaballs_shaders
+    examples/gpu/shaders/raymarch_shaders
+    examples/gpu/shaders/bunny_shaders
+    examples/gpu/shaders/cube_shaders
+    examples/gpu/shaders/hdr_shaders
+    examples/gpu/metaballs_app
+    examples/gpu/raymarch_app
+    examples/gpu/mesh_app
+    examples/gpu/bgfx_support
+    examples/gpu/cube_data
+    examples/gpu/cubes_app
+    examples/gpu/hdr_app
+    examples/gpu/metaballs_field
+    examples/gpu/metaballs_tables
+    examples/gpu/mesh_data
+    tests/bgfx_metaballs
+    tests/bgfx_raymarch
+    tests/bgfx_mesh
+    tests/bgfx_instancing
+    tests/bgfx_bump
+    tests/bgfx_hdr
+    tests/bgfx_capture
+    tests/bgfx_cubes_checks
+    dassdl3/sdl3_window_boost
+    dassdl3/sdl3_events
+    dassdl3/sdl3_iostream_boost
+    dassdl3/sdl3_init_boost
+    dassdl3/sdl3_gpu_pipeline_boost
+    dassdl3/sdl3_gpu_sampler_boost)
+file(GLOB_RECURSE _dsl_gpu_deps "${ROOT}/examples/gpu/*.das" "${ROOT}/tests/bgfx*.das")
+list(APPEND _dsl_scripts
+    third_party/daScript/daslib/math_bits third_party/daScript/daslib/math_boost
+    examples/gpu/port_geometry examples/gpu/lod_app examples/gpu/stencil_support
+    examples/gpu/stencil_scene_support examples/gpu/shaders/stencil_scene_shaders examples/gpu/stencil_app examples/gpu/shadowvolumes_geometry examples/gpu/shadowvolumes_app
+    examples/gpu/shaders/lod_shaders examples/gpu/shaders/stencil_shaders
+    tests/bgfx_lod tests/bgfx_stencil tests/bgfx_shadowvolumes tests/bgfx_shadowvolumes_scene
+    examples/gpu/shadowvolumes_scene examples/gpu/shadowvolumes_topology tests/benchmark_shadowvolumes)
+if(DASSDL3_TEST_TTF)
+    list(APPEND _dsl_scripts examples/gpu/fontsdf_app examples/gpu/shaders/fontsdf_shaders
+        tests/bgfx_fontsdf dassdl3/sdl3_ttf_boost)
+endif()
 set(_dsl_outputs)
 foreach(script IN LISTS _dsl_scripts)
     string(REPLACE "/" "_" name "${script}")
     set(output "${CMAKE_CURRENT_BINARY_DIR}/dsl_${name}.aot.cpp")
     add_custom_command(OUTPUT "${output}"
         COMMAND parity_aot_tool "${ROOT}/${script}.das" "${output}"
-        DEPENDS parity_aot_tool ${_dsl_boost_deps} ${_dsl_spirv_deps} ${_dsl_example_deps} ${_dsl_test_deps}
+        DEPENDS parity_aot_tool ${_dsl_gpu_deps} ${_dsl_boost_deps} ${_dsl_spirv_deps} ${_dsl_example_deps} ${_dsl_test_deps}
             "${ROOT}/tests/shader_dsl_pixels.das" "${ROOT}/examples/gpu_dsl/dsl_shaders.das" "${ROOT}/${script}.das"
         VERBATIM)
     list(APPEND _dsl_outputs "${output}")
 endforeach()
 add_executable(shader_dsl_aot_runner aot_runner.cpp ${_dsl_outputs})
 target_link_libraries(shader_dsl_aot_runner PRIVATE cppgenbind_module)
+if(DASSDL3_TEST_TTF)
+    target_link_libraries(shader_dsl_aot_runner PRIVATE ttf_test_dependencies)
+endif()
 foreach(backend baseline cppgenbind shader_dsl_aot)
     set(args --smoke-test)
     if(backend STREQUAL "shader_dsl_aot")

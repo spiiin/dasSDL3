@@ -38,7 +38,7 @@ def check(device : SDL_GPUDevice?; bump : bool) : SdlStatus {
 def run(bump : bool) : int {
     let result = sdl_scope() {
         with_sdl(SDL_INIT_VIDEO) |> sdl_use
-        let device : SDL_GPUDevice? = with_native_gpu_device(GPU_SHADER_FORMATS, true, "") |> sdl_use
+        let device : SDL_GPUDevice? = with_native_gpu_device(example_shader_formats(), true, "") |> sdl_use
         return check(device, bump)
     }
     if (is_err(result)) { let error = unwrap_err(result); print("{error.operation}: {error.message}\n"); return 1 }

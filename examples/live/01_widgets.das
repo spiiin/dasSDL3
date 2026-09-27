@@ -1,6 +1,7 @@
 options gen2
 options gc
 options persistent_heap
+require ./frame_recovery.das
 require dassdl3/sdl3_imgui_widgets
 require dassdl3/sdl3_boost
 require dassdl3/sdl3_try
@@ -10,6 +11,7 @@ require imgui/imgui_live_core
 require daslib/json_boost
 require live/live_commands
 require live/live_api_stdio
+require live/live_watch_boost
 require live/live_vars
 require live_host
 
@@ -18,6 +20,7 @@ require live_host
 var @live edits = 33
 var @live ticks = 0
 var failed = false
+var frame_started = false
 
 [live_command(description = "SDL example state and native acquisition count")]
 def demo_state(input : JsonValue?) : JsonValue? {
@@ -44,10 +47,11 @@ def init() {
 def frame() : SdlStatus {
     let renderer = demo_renderer()
     imgui_widgets_new_frame()
+    frame_started = true
     SetNextWindowPos(ImVec2(20.0, 20.0), ImGuiCond.FirstUseEver, ImVec2(0.0, 0.0))
     SetNextWindowSize(ImVec2(520.0, 320.0), ImGuiCond.FirstUseEver)
     window(MAIN, (text = "SDL live widgets", closable = false, flags = ImGuiWindowFlags.None)) {
-        text("Edit this script, then request reload through the live transport.")
+        text("Save this script to reload automatically; Reload also works.")
         button(INCREMENT.PUBLIC, (text = "Increment"))
         slider_float(SPEED.PUBLIC, (text = "Speed", init = 0.5, bounds = (0.0, 1.0)))
         button(RELOAD, (text = "Reload script"))
@@ -56,6 +60,7 @@ def frame() : SdlStatus {
     }
     renderer |> clear() |> sdl_try
     imgui_widgets_render(renderer)
+    frame_started = false
     renderer |> present() |> sdl_try
     return sdl_ok()
 }
@@ -81,5 +86,9 @@ def update() {
 
 [export]
 def shutdown() {
+    if (frame_started) {
+        discard_interrupted_frame()
+        frame_started = false
+    }
     if (!is_reload()) { demo_close() }
 }

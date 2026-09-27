@@ -1,4 +1,6 @@
 options gen2
+require ./shaders/metaballs_shaders.das public
+require shader_support public
 module metaballs_app shared public
 // Port of bgfx examples/02-metaballs; BSD-2-Clause (LICENSE-bgfx.txt).
 require dassdl3/sdl3_scope
@@ -143,13 +145,9 @@ def resources(device : SDL_GPUDevice?; window : SDL_Window?; var vertex, fragmen
 }
 
 def run(device : SDL_GPUDevice?; window : SDL_Window?) {
-    let spirv = (SDL_GetGPUShaderFormats(device) & SDL_GPU_SHADERFORMAT_SPIRV) != 0u
-    let format = spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL
-    let ext = spirv ? "spv" : "dxil"
-    let base = "{SDL_GetBasePath()}assets/shaders/metaballs"
     return sdl_scope() {
-        var vertex : SDL_GPUShader? = device |> with_native_gpu_shader_file(SDL_GPUShaderCreateInfo(format = format, stage = SDL_GPUShaderStage.SHADERSTAGE_VERTEX, num_uniform_buffers = 1u), "{base}.vert.{ext}", "main") |> sdl_use
-        var fragment : SDL_GPUShader? = device |> with_native_gpu_shader_file(SDL_GPUShaderCreateInfo(format = format, stage = SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT), "{base}.frag.{ext}", "main") |> sdl_use
+        var vertex : SDL_GPUShader? = device |> with_example_shader(metaballs_vertex, metaballs_vertex_reflect) |> sdl_use
+        var fragment : SDL_GPUShader? = device |> with_example_shader(metaballs_fragment, metaballs_fragment_reflect) |> sdl_use
         return resources(device, window, vertex, fragment)
     }
 }

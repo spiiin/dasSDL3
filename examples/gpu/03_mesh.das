@@ -11,7 +11,7 @@ def main(unused : bool) : int {
         with_sdl(SDL_INIT_VIDEO) |> sdl_use
         let settings = window_options("bgfx mesh | Space: pause | R: reset | Esc: exit", int2(960, 540))
         let window : SDL_Window? = with_window(settings) |> sdl_use
-        let device : SDL_GPUDevice? = with_native_gpu_device(GPU_SHADER_FORMATS, true, "") |> sdl_use
+        let device : SDL_GPUDevice? = with_native_gpu_device(example_shader_formats(), true, "") |> sdl_use
         sdl_status(SDL_ClaimWindowForGPUDevice(device, window), "SDL_ClaimWindowForGPUDevice") |> sdl_try
         {
             defer() { SDL_ReleaseWindowFromGPUDevice(device, window) }

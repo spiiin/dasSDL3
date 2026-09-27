@@ -188,6 +188,9 @@ Web: [сборка и запуск HTML-галереи](../web/README.md), ис�
 
 ## GPU application ports
 
+All ten ports use daScript shader DSL. Vulkan uses the core runner; D3D12 uses
+the libraries runner with shadercross. See [backend commands](gpu/README.md#shader-dsl-and-backends).
+
 [gpu/01_metaballs.das](gpu/01_metaballs.das) ports bgfx metaballs with CPU marching
 cubes, dynamic vertex upload, depth and lighting. See [usage and API findings](gpu/README.md).
 
@@ -243,3 +246,6 @@ profile only; see [integration audit](../docs/imgui-widgets-and-live.md).
 [live/01_widgets.das](live/01_widgets.das) runs SDL widgets in the upstream
 daslang-live host with preserved native resources and JSON-RPC commands.
 See [build, run and reload checks](live/README.md).
+
+GPU examples 07–10 adapt bgfx 11-fontsdf, 12-lod, 13-stencil and 14-shadowvolumes.
+SDF requires the SDL_ttf libraries runner. See [GPU controls and requirements](gpu/README.md#07–10--bgfx-11–14).

@@ -44,6 +44,12 @@ int main() {
     for (auto &variable : module->globals.each())
         rows.push_back("CONST\t" + variable->name + "\t" + variable->type->getMangledName() + "\t" + variable->init->describe());
     for (auto &fn : module->functions.each()) {
+        // Extern startup in standalone/JIT uses this lookup, not overload inference.
+        if (module->findFunction(fn->getMangledName()) != fn) {
+            std::cerr << "Stale function index: " << fn->getMangledName() << '\n';
+            das::Module::Shutdown();
+            return 2;
+        }
         std::ostringstream row;
         row << fn->name << '\t' << fn->result->getMangledName()
             << '\t' << fn->sideEffectFlags << '\t' << fn->unsafeOperation;

@@ -1,0 +1,7 @@
+options gen2
+require daslib/fio
+[export]
+def initialize(project_path : string) {
+    register_dynamic_module("{project_path}/dasModuleHV.shared_module", "Module_HV")
+    register_native_path("dashv", "dashv_boost", "@DAS@/modules/dasHV/dashv/dashv_boost.das")
+}

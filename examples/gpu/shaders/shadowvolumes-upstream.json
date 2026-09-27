@@ -1,0 +1,8 @@
+{
+  "commit": "7e3060ccb97959dcda3f091b96d82515197028e0",
+  "license": "BSD-2-Clause: ../LICENSE-bgfx.txt",
+  "reference_sha256": {
+    "14-shadowvolumes/shadowvolumes.cpp": "33b7589baa695f366fb14b500755cbb69cf311e8ee6d90954c7619bdc7ac4ffa",
+    "14-shadowvolumes/fs_shadowvolume_texture_lighting.sc": "887759f9d06a3851266e00a5854278d04a0cff9b1cbe6e4502cd212b1bb2b370"
+  }
+}

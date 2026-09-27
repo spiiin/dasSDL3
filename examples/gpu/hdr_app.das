@@ -1,4 +1,5 @@
 options gen2
+require ./shaders/hdr_shaders.das as shaders
 module hdr_app shared public
 // bgfx 09-hdr; BSD-2-Clause (LICENSE-bgfx.txt). FP16 replaces packed RGBE8.
 require bgfx_support public
@@ -89,22 +90,22 @@ def with_resources(device : SDL_GPUDevice?; output_format : SDL_GPUTextureFormat
     if (r.sampler == null) { return err(sdl_error("SDL_CreateGPUSampler"), type<SdlUnit>) }
     let fp16 = SDL_GPUTextureFormat.TEXTUREFORMAT_R16G16B16A16_FLOAT
     var empty_buffers : array<SDL_GPUVertexBufferDescription>; var empty_attributes : array<SDL_GPUVertexAttribute>
-    var graphics = pipeline(device, "bgfx_hdr_quad", "bgfx_hdr_sky", fp16, false, 1u, empty_buffers, empty_attributes) |> sdl_try
+    var graphics = pipeline(device, shaders::hdr_sky_vertex, shaders::hdr_sky_vertex_reflect, shaders::hdr_sky_fragment, shaders::hdr_sky_fragment_reflect, fp16, false, empty_buffers, empty_attributes) |> sdl_try
     r.sky = graphics
-    graphics = pipeline(device, "bgfx_hdr_quad", "bgfx_hdr_lum", fp16, false, 1u, empty_buffers, empty_attributes) |> sdl_try
+    graphics = pipeline(device, shaders::hdr_filter_vertex, shaders::hdr_filter_vertex_reflect, shaders::hdr_lum_fragment, shaders::hdr_lum_fragment_reflect, fp16, false, empty_buffers, empty_attributes) |> sdl_try
     r.lum = graphics
-    graphics = pipeline(device, "bgfx_hdr_quad", "bgfx_hdr_avg", fp16, false, 1u, empty_buffers, empty_attributes) |> sdl_try
+    graphics = pipeline(device, shaders::hdr_filter_vertex, shaders::hdr_filter_vertex_reflect, shaders::hdr_avg_fragment, shaders::hdr_avg_fragment_reflect, fp16, false, empty_buffers, empty_attributes) |> sdl_try
     r.average = graphics
-    graphics = pipeline(device, "bgfx_hdr_quad", "bgfx_hdr_bright", fp16, false, 2u, empty_buffers, empty_attributes) |> sdl_try
+    graphics = pipeline(device, shaders::hdr_tone_vertex, shaders::hdr_tone_vertex_reflect, shaders::hdr_bright_fragment, shaders::hdr_bright_fragment_reflect, fp16, false, empty_buffers, empty_attributes) |> sdl_try
     r.bright = graphics
-    graphics = pipeline(device, "bgfx_hdr_quad", "bgfx_hdr_blur", fp16, false, 1u, empty_buffers, empty_attributes) |> sdl_try
+    graphics = pipeline(device, shaders::hdr_filter_vertex, shaders::hdr_filter_vertex_reflect, shaders::hdr_blur_fragment, shaders::hdr_blur_fragment_reflect, fp16, false, empty_buffers, empty_attributes) |> sdl_try
     r.blur = graphics
-    graphics = pipeline(device, "bgfx_hdr_quad", "bgfx_hdr_tone", output_format, false, 3u, empty_buffers, empty_attributes) |> sdl_try
+    graphics = pipeline(device, shaders::hdr_tone_vertex, shaders::hdr_tone_vertex_reflect, shaders::hdr_tone_fragment, shaders::hdr_tone_fragment_reflect, output_format, false, empty_buffers, empty_attributes) |> sdl_try
     r.tonemap = graphics
     let buffers <- array(SDL_GPUVertexBufferDescription(pitch = 24u))
     let attributes <- array(SDL_GPUVertexAttribute(location = 0u, format = SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT3),
         SDL_GPUVertexAttribute(location = 1u, format = SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT3, offset = 12u))
-    graphics = pipeline(device, "bgfx_hdr_scene", "bgfx_hdr_scene", fp16, true, 1u, buffers, attributes, true) |> sdl_try
+    graphics = pipeline(device, shaders::hdr_scene_vertex, shaders::hdr_scene_vertex_reflect, shaders::hdr_scene_fragment, shaders::hdr_scene_fragment_reflect, fp16, true, buffers, attributes, true) |> sdl_try
     r.scene = graphics
     return body(r)
 }

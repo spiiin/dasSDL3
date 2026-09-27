@@ -26,3 +26,11 @@ compressed mesh chunks, materials or bounding volumes. `mesh_data.das` validates
 the header, counts, payload length, finite vertex values and every index before
 upload. This format is intended only for the bundled asset, not untrusted files
 of arbitrary size: file loading itself occurs before the decoder's count limits.
+
+The closed low-poly bunny in `../assets/bunny_decimated.msh` is another version
+of the same Stanford model, from bgfx's `bunny_decimated.obj` at the same commit;
+the attribution and model terms above also apply to it. Its source/output hashes
+are in `../assets/manifest.json`. Rebuild it with `tools/build_bgfx_11_14_assets.py`.
+The accompanying `.adj` file caches the opposite triangle for each edge; conversion
+rejects open/nonmanifold meshes after welding equal positions. The shadow-volume
+example uses this closed mesh rather than treating the original open bunny as closed.

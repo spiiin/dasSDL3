@@ -17,7 +17,7 @@ record-field gaps are closed; see [record access](record-field-accessibility.md)
   external consumer tests.
 - Examples that expose missing SDL contracts. [Shader DSL](shader-dsl.md) supports graphics, texture sampling, std140 packing and
   compute/graphics storage resources with explicit access metadata and std430 packing.
-  More demanding shader examples and Metal validation remain.
+  The six GPU application examples use DSL shaders; Metal validation remains.
 
 Additional Stdinc wrappers require a concrete script use case. Generated declarations
 alone do not imply runtime or hardware validation.

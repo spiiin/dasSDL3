@@ -167,7 +167,7 @@ regression fixtures cover both legacy main and lifecycle programs with imports.
 - Official daScript formatter verification and record-field audit passed.
 
 The new ImGui example is desktop-only. The native live host and reload protocol
-now have a separate tested pilot, described below; HTTP/MCP integration remains a next stage.
+now have a separate tested pilot, described below; HTTP/MCP verification is recorded below.
 
 ## Native live integration
 
@@ -176,12 +176,82 @@ See [SDL live pilot](../examples/live/README.md) for build/run commands and
 ownership is in the example harness, outside reloadable script memory. Seven
 stages passed: startup/telemetry, incremental reload, failed compilation,
 recovery, synthetic click, full reload and final cleanup after failed compilation.
-No daScript dependency source was patched. HTTP/MCP, automatic file watching,
+No daScript dependency source was patched. Automatic file watching,
 Web live support and runtime-fault recovery are not claimed by these checks.
 
 The final main-build CTest run passed all six ImGui/live tests. The existing
 non-reloading ImGui suite also passed its 12 reference/CppGenBind/strict-AOT
 checks again. The pinned upstream stdio agent reports one Channel/JobStatus and
 Feature leak at process exit; SDL resource cleanup is verified independently.
-The upstream MCP adapter uses HTTP, so its next prerequisite is live_api/dasHV,
-not merely the already-tested stdio command transport.
+The separate HTTP profile now builds pinned libhv and unmodified dasHV without
+TLS. Example 02 binds exclusively to loopback and uses upstream command dispatch.
+The real upstream MCP server passed initialization, discovery, snapshot, widget
+mutation, synthetic click, batch isolation, reload with retained state, compile
+error diagnostics/503, recovery and final shutdown. SDL resources were acquired
+and released once; no transport handle leaks were reported on this HTTP path.
+See the live README for build, launch and `sdl3_live_mcp` CTest commands.
+Client registration, recording, runtime-fault recovery and Web live remain open.
+
+
+## Runtime-fault verification
+
+The HTTP/MCP regression also injects a panic into temporary script copies:
+`init` after native acquisition during reload, and `update` before starting an
+ImGui frame. Both faults pause execution and expose the original marker through
+`live_error`; ordinary commands are rejected. Repair and reload resume advancing
+ticks and widget snapshots without acquiring another SDL bundle. Final shutdown
+releases that bundle exactly once, with no reported transport handle leaks.
+
+Initial-launch init failure, shutdown failure and native crashes remain outside
+these checks. Open-frame recovery is described below. Persistent values
+are not guaranteed after runtime faults: the upstream host may clear its live
+store on exception. The test checks resumed execution and resource ownership,
+not transactional rollback of application state. Dependency sources are unchanged.
+
+
+## Interrupted ImGui frames
+
+Both live examples track whether NewFrame has started and Render has completed.
+Their shutdown callback discards an unfinished frame before reload or final close,
+using the application-local `examples/live/frame_recovery.das` helper. EndFrame
+invokes the pinned ImGui recovery for unmatched window/ID/style stacks. Recoverable
+asserts are disabled only during this teardown, logging stays enabled, and all
+four recovery settings are restored afterwards. No failed frame is presented.
+
+Recovery is best-effort, not arbitrary native-crash handling or rollback of script
+state. Normal frame assertions remain enabled according to the original settings.
+The public SDL/ImGui boost layer and dependency sources are unchanged.
+
+
+## Automatic file watching
+
+Both SDL live examples now import the upstream `live/live_watch_boost` agent.
+Saving watched scripts requests reload even while the application is paused.
+Manual reload remains available. See the live README for stat-polling limits,
+import-graph changes requiring restart, and the separate `sdl3_live_watch` test.
+
+## Local daspkg pilot (2026-09-27)
+
+The core binding now has a separate DLL build and a local binary package profile.
+The real upstream daspkg install/check, ordinary interpreter consumer and relocated
+consumer pass. See [commands and remaining distribution work](daspkg.md).
+Companion/live packages, source installation and public distribution remain separate.
+
+The local source-package profile now uses upstream cmake_build() against the
+consumer SDK, with an exact reference SDK fingerprint checked before compilation.
+Source install, deliberate fingerprint rejection and relocated consumer are tested;
+public GitHub/index distribution and broader ABI acceptance remain pending.
+
+The standalone daspkg release pilot now builds an EXE and ships only its SDL module
+and daScript runtime DLLs. Relocated execution with a clean environment and rejection
+of missing distribution dependencies pass. See [release profile](daspkg.md#standalone-release-windows).
+LLVM is a build-time requirement for this path; clean-machine and Web validation remain separate.
+
+The SDL + dasImgui package variant now passes binary/source daspkg installation,
+GUI pixel verification and relocated execution. It shares one SDL instance with
+the core and depends on the built SDK dasImgui module; widgets-v2/live packaging
+and standalone GUI dependency shipping remain separate checks.
+
+Standalone GUI release now passes pixel verification and missing-dependency tests
+with unavailable build-time ImGui paths. The release manifest explicitly ships
+ImGui's native Clipboard dependency; see the GUI release section in daspkg.md.

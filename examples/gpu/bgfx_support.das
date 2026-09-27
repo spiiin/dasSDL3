@@ -1,6 +1,7 @@
 options gen2
 module bgfx_support shared public
 // Small application-local SDL operations shared by the bgfx ports.
+require shader_support public
 require dassdl3/sdl3_scope public
 require dassdl3/sdl3_gpu_native_boost public
 require dassdl3/sdl3_gpu_pipeline_boost public
@@ -15,19 +16,11 @@ def texture(device : SDL_GPUDevice?; width, height : uint; format : SDL_GPUTextu
     return <- move_ok(result, type<SdlError>)
 }
 
-def pipeline(device : SDL_GPUDevice?; vertex_name, fragment_name : string; format : SDL_GPUTextureFormat;
-             depth : bool; sampler_count : uint; buffers : array<SDL_GPUVertexBufferDescription>; attributes : array<SDL_GPUVertexAttribute>; cull : bool = false) {
-    let spirv = (SDL_GetGPUShaderFormats(device) & SDL_GPU_SHADERFORMAT_SPIRV) != 0u
-    let shader_format = spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL
-    let extension = spirv ? "spv" : "dxil"
-    let path = "{SDL_GetBasePath()}assets/shaders/"
-    var vs = (gpu_shader("{path}{vertex_name}.vert.{extension}", shader_format, SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
-        |> uniform_buffers(1u))
-    var fs = (gpu_shader("{path}{fragment_name}.frag.{extension}", shader_format, SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT)
-        |> samplers(sampler_count))
+def pipeline(device : SDL_GPUDevice?; vertex_words, vertex_reflection, fragment_words, fragment_reflection : array<uint>; format : SDL_GPUTextureFormat;
+             depth : bool; buffers : array<SDL_GPUVertexBufferDescription>; attributes : array<SDL_GPUVertexAttribute>; cull : bool = false) {
     return sdl_scope() {
-        var vertex : SDL_GPUShader? = device |> with_native_gpu_shader_file(vs) |> sdl_use
-        var fragment : SDL_GPUShader? = device |> with_native_gpu_shader_file(fs) |> sdl_use
+        var vertex : SDL_GPUShader? = device |> with_example_shader(vertex_words, vertex_reflection) |> sdl_use
+        var fragment : SDL_GPUShader? = device |> with_example_shader(fragment_words, fragment_reflection) |> sdl_use
         var info = (SDL_GPUGraphicsPipelineCreateInfo(vertex_shader = vertex, fragment_shader = fragment)
             |> topology(SDL_GPUPrimitiveType.PRIMITIVETYPE_TRIANGLELIST)
             |> rasterizer(SDL_GPURasterizerState(enable_depth_clip = true)))

@@ -1,0 +1,11 @@
+{
+  "commit": "7e3060ccb97959dcda3f091b96d82515197028e0",
+  "license": "BSD-2-Clause: ../LICENSE-bgfx.txt",
+  "reference_sha256": {
+    "13-stencil/stencil.cpp": "6f930f667dfce9d426dea7949a8f67f91abc3247f94265847644084009f9fd38",
+    "13-stencil/fs_stencil_texture_lighting.sc": "7b19ce2f1b277d62eb27c053a323a1260312b4e3243835134f367b9d3e287713",
+    "13-stencil/fs_stencil_color_lighting.sc": "61b5bfe3b07104b55c51666f17adde3257663578daa257abcbe7e80332163a32",
+    "13-stencil/fs_stencil_color_texture.sc": "b33dd39db1bc3f1b076ba98e5a621dbccaf1ac70e16a68e0d55c94784c809884",
+    "13-stencil/vs_stencil_texture_lighting.sc": "43ed15ecca1c0e17bc8a2266a8ad463670b8b8f6516056c3d0f319fd4ef47965"
+  }
+}

@@ -1,0 +1,45 @@
+--- a/modules/dasImgui/widgets/imgui_playwright.das
++++ b/modules/dasImgui/widgets/imgui_playwright.das
+@@ -1557,9 +1557,25 @@
+                               feature_root : string;
+                               asset_root : string;
+                               body : block<(app : ImguiApp) : void>) {
++    //! Backward-compatible default-port overload.
++    with_recording_app(feature_path, output_apng_basename, max_seconds, fps,
++                       extra_module_roots, feature_root, asset_root, DEFAULT_LIVE_PORT, body)
++}
++
++def public with_recording_app(feature_path : string; // nolint:STYLE038
++                              output_apng_basename : string;
++                              max_seconds : int;
++                              fps : int;
++                              extra_module_roots : array<string>;
++                              feature_root : string;
++                              asset_root : string;
++                              port : int;
++                              body : block<(app : ImguiApp) : void>) {
+     //! Run a recording session against ``feature_path``: **attach** to a daslang-live already serving the
+     //! live-API port (dev workflow: iterate live, flip the recorder on), else **spawn** one at logical 1x
+     //! (``--imgui-content-scale=1.0`` + ``--no-hdpi-framebuffer`` keep APNGs encoder-friendly on retina). Attach mode leaves the host running and owns whatever feature is loaded.
++
++    if (port < 1 || port > 65535) panic("live port must be in 1..65535")
+ 
+     // Relative feature_path resolves under feature_root; the APNG lands under asset_root. The 5-arg delegate defaults both to dasImgui.
+     var app_path = feature_path
+@@ -1575,7 +1591,7 @@
+     // extend it by the total added narration time when armed.
+     let eff_max_seconds = g_vo_active ? max_seconds + int(g_vo_extra_s) + 5 : max_seconds
+ 
+-    let base_url = "http://127.0.0.1:{DEFAULT_LIVE_PORT}"
++    let base_url = "http://127.0.0.1:{port}"
+     var app = ImguiApp(base_url = base_url,
+                        feature_path = app_path,
+                        transport <- live_api_transport(base_url))
+@@ -1624,6 +1640,7 @@
+         argv |> push("-load_module")
+         argv |> push(extra_root)
+     }
++    argv |> push("--live-port={port}")
+     argv |> push(app_path)
+     argv |> push("--")
+     argv |> push("--imgui-content-scale=1.0")

@@ -1,0 +1,16 @@
+options gen2
+require daslib/daspkg
+
+[export]
+def package() {
+    package_name("sdl3_imgui_demo")
+}
+
+[export]
+def release() {
+    release_name("sdl3_imgui_demo")
+    release_main("main.das")
+    // Native DLL import of SDK dasImgui; not a script-level require.
+    // Beside the EXE so Windows can resolve it while loading the ImGui module.
+    release_include_from("modules/dasClipboard/dasModuleClipboard.shared_module")
+}

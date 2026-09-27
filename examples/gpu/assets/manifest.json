@@ -1,0 +1,98 @@
+{
+  "bgfx_commit": "7e3060ccb97959dcda3f091b96d82515197028e0",
+  "files": {
+    "tree1b_lod0_1.msh": {
+      "source": "examples/assets/meshes/tree1b_lod0_1.obj",
+      "source_sha256": "43ebd61ff19efbdb7f341ae504dd2b0191198bda7a7b35f226d65be858fbc74b",
+      "sha256": "22ec3d51b4618a45f92bbaf59144a0f7e5d294e433b74b6e220598288c305508"
+    },
+    "tree1b_lod0_2.msh": {
+      "source": "examples/assets/meshes/tree1b_lod0_2.obj",
+      "source_sha256": "2ab81863d0fa324b41d1fc2ec557bfb0b3f07635ff70e7f54b1b5cf132754da9",
+      "sha256": "2a303cfb273d88db79f8c3c54d54f815e9198e8dd0847d4a96e546f07396b0e9"
+    },
+    "tree1b_lod1_1.msh": {
+      "source": "examples/assets/meshes/tree1b_lod1_1.obj",
+      "source_sha256": "6d2e03f0e160d1180188bd7caa628e2bfcbba524e65529b49f6e86619979f1d7",
+      "sha256": "db31ac45864abc3e9c9ba7c60ece53cd453351cbc2f302dcf6058cb634c9ab07"
+    },
+    "tree1b_lod1_2.msh": {
+      "source": "examples/assets/meshes/tree1b_lod1_2.obj",
+      "source_sha256": "fa1506ba3c0c1923d65779892574de683fba32f3f65dc83cc96e6217388ec907",
+      "sha256": "140e8291c5c03f0430980ffa844ce8d2387936f86d1f766d5773e26c85aaeaf0"
+    },
+    "tree1b_lod2_1.msh": {
+      "source": "examples/assets/meshes/tree1b_lod2_1.obj",
+      "source_sha256": "c565aaf6737f31d90f3575ab1d8d54ab2b4cb592178b0d639a3a6a1c187eb2d1",
+      "sha256": "3312675e2306633ab7cb864fcf553946cecb20f15256dae313ce1259aab4d892"
+    },
+    "tree1b_lod2_2.msh": {
+      "source": "examples/assets/meshes/tree1b_lod2_2.obj",
+      "source_sha256": "0520604d4d6fd572a4a3ce3a927dc829a6228657e6432c4fc1efcc18becb3d87",
+      "sha256": "e110efa13aed306ccb6a7aa15f2b97ba93466c8939e3ce1c93a7409b336ee25f"
+    },
+    "column.msh": {
+      "source": "examples/assets/meshes/column.obj",
+      "source_sha256": "aacb36ab76aef94846790c98f8b26c8046699f21fb636d8394e9085dd258bcb8",
+      "sha256": "d037e90cd9fac2836e46b6bcf0308705895a9df8a9e0294de27e401f02a18c28"
+    },
+    "column.adj": {
+      "source": "examples/assets/meshes/column.obj",
+      "source_sha256": "aacb36ab76aef94846790c98f8b26c8046699f21fb636d8394e9085dd258bcb8",
+      "sha256": "b4d9208fb6f4bd0d4cb68497f8325276626fff3f3488aac1faa49eb8d138b931"
+    },
+    "platform.msh": {
+      "source": "examples/assets/meshes/platform.obj",
+      "source_sha256": "32cf59ad2721659d5327cd83b22dd2ce190b948ab7b17f076784f4294d796ce1",
+      "sha256": "ee868fdc4d6e0a4871dc0a4f98d5402604bcc67c73ab63e0c1f4b48adafa73c8"
+    },
+    "platform.adj": {
+      "source": "examples/assets/meshes/platform.obj",
+      "source_sha256": "32cf59ad2721659d5327cd83b22dd2ce190b948ab7b17f076784f4294d796ce1",
+      "sha256": "c7bc00dd4c5159450c5aa83d44035f5c986d02172706fbe26269cabfca6c1e5d"
+    },
+    "bunny_decimated.msh": {
+      "source": "examples/assets/meshes/bunny_decimated.obj",
+      "source_sha256": "3f87d7ef0b64b046b8d432ebdf2397e039548629d8a7094aa29f9e53fb377fdd",
+      "sha256": "db4895117a761a69f3cb6991f28c6fa6ed1fd22547601052b801cc73f015fdd9"
+    },
+    "bunny_decimated.adj": {
+      "source": "examples/assets/meshes/bunny_decimated.obj",
+      "source_sha256": "3f87d7ef0b64b046b8d432ebdf2397e039548629d8a7094aa29f9e53fb377fdd",
+      "sha256": "57eae0bee145d727d874a339da1139ec34f0695e37219509d80f5db8f51be08d"
+    },
+    "leafs1.rgba8": {
+      "source": "examples/runtime/textures/leafs1.dds",
+      "source_sha256": "a1ba0806902f72d8111c640305f74fdf6b58caf79238e89fa723a08e5918e324",
+      "sha256": "8178fd561e64dbcb2dc32fa66ab74350dada9f0e5899a4718b6a5e072bd41d96",
+      "width": 1024,
+      "height": 1024
+    },
+    "bark1.rgba8": {
+      "source": "examples/runtime/textures/bark1.dds",
+      "source_sha256": "095ae8d3d0a6c6fb5baa2d988fa1b37d5c593259969b31962ed0dac89d895bc4",
+      "sha256": "8d9a84193040539c44a7c5d9c421db6d56e33fc23f9ca41d1f5acbdd7596cf9c",
+      "width": 512,
+      "height": 512
+    },
+    "figure-rgba.rgba8": {
+      "source": "examples/runtime/textures/figure-rgba.dds",
+      "source_sha256": "359f00c086e9de0ba688d0d3a90846a7b7382d11f30aa5ce85a3b5050cf346d7",
+      "sha256": "8dfdda4c759d4fecb67deadb62cabf4c5d18506e96859955fe6c31124c314828",
+      "width": 512,
+      "height": 512
+    },
+    "flare.rgba8": {
+      "source": "examples/runtime/textures/flare.dds",
+      "source_sha256": "9052e01971a4746e53861d6f765685f79ea0eb9c744a90f63946c5e506722956",
+      "sha256": "ce73d53f36468abb0cef932deeeef64ac02cdd633ad69b3efc956c7b65848cba",
+      "width": 512,
+      "height": 512
+    },
+    "special_elite.ttf": {
+      "source": "examples/runtime/font/special_elite.ttf",
+      "source_sha256": "9ebacf4e85df65a89db88a3ec38576969490f418890fc6478fb00c2fcbdb4f4c",
+      "sha256": "9ebacf4e85df65a89db88a3ec38576969490f418890fc6478fb00c2fcbdb4f4c"
+    }
+  }
+}

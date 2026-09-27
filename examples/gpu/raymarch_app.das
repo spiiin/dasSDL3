@@ -1,4 +1,6 @@
 options gen2
+require ./shaders/raymarch_shaders.das public
+require shader_support public
 module raymarch_app shared public
 // Port of bgfx examples/03-raymarch; BSD-2-Clause (LICENSE-bgfx.txt).
 require dassdl3/sdl3_scope
@@ -112,16 +114,9 @@ def resources(device : SDL_GPUDevice?; window : SDL_Window?; var vertex, fragmen
 }
 
 def run(device : SDL_GPUDevice?; window : SDL_Window?) {
-    let spirv = (SDL_GetGPUShaderFormats(device) & SDL_GPU_SHADERFORMAT_SPIRV) != 0u
-    let format = spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL
-    let ext = spirv ? "spv" : "dxil"
-    let base = "{SDL_GetBasePath()}assets/shaders/raymarch"
-    var vs = (gpu_shader("{base}.vert.{ext}", format, SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
-        |> uniform_buffers(1u))
-    let fs = gpu_shader("{base}.frag.{ext}", format, SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT)
     return sdl_scope() {
-        var vertex : SDL_GPUShader? = device |> with_native_gpu_shader_file(vs) |> sdl_use
-        var fragment : SDL_GPUShader? = device |> with_native_gpu_shader_file(fs) |> sdl_use
+        var vertex : SDL_GPUShader? = device |> with_example_shader(raymarch_vertex, raymarch_vertex_reflect) |> sdl_use
+        var fragment : SDL_GPUShader? = device |> with_example_shader(raymarch_fragment, raymarch_fragment_reflect) |> sdl_use
         return resources(device, window, vertex, fragment)
     }
 }
