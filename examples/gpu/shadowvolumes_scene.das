@@ -25,6 +25,14 @@ struct Instance {
     textured : bool
 }
 struct Resources {
+    model_uniforms : array<array<uint8>>
+    volume_uniforms : array<uint8>
+    static_volume : SDL_GPUBuffer?
+    local_origins, local_normals : array<float4>
+    local_ranges : array<VolumeRange>
+    inverse_models : array<float4x4>
+    orientations : array<float>
+    index_ranges : array<uint2>
     face_origins, face_normals : array<float4>
     volume_ranges : array<VolumeRange>
     compact_vertices : array<float>
@@ -48,6 +56,10 @@ struct Resources {
     depth_format : SDL_GPUTextureFormat
 }
 def release(device : SDL_GPUDevice?; var r : Resources) {
+    for (bytes in r.model_uniforms) { delete bytes }
+    delete r.model_uniforms; delete r.volume_uniforms
+    if (r.static_volume != null) { SDL_ReleaseGPUBuffer(device, r.static_volume) }
+    delete r.local_origins; delete r.local_normals; delete r.local_ranges; delete r.inverse_models; delete r.orientations; delete r.index_ranges
     delete r.face_origins; delete r.face_normals; delete r.volume_ranges
     delete r.compact_vertices; delete r.volume_indices
     if (r.index_buffer != null) { SDL_ReleaseGPUBuffer(device, r.index_buffer) }
@@ -73,6 +85,21 @@ def with_resources(device : SDL_GPUDevice?; format : SDL_GPUTextureFormat; body 
     for (mesh in r.meshes) {
         var buffer = upload_geometry(device, mesh.geometry) |> sdl_try; push(r.buffers, buffer)
     }
+    // Immutable local positions and face planes are shared by all instances.
+    var inscope local_vertices : array<float>
+    for (mesh in r.meshes) {
+        let span = prepare_volume(local_vertices, r.local_origins, r.local_normals, mesh, identity_matrix(), r.volume_points)
+        push(r.local_ranges, span)
+    }
+    let bytes = uint(length(local_vertices)) * 4u
+    var static_volume = create_native_gpu_buffer(device, SDL_GPUBufferCreateInfo(usage = SDL_GPU_BUFFERUSAGE_VERTEX, size = bytes)) |> sdl_try
+    r.static_volume = static_volume
+    sdl_scope() {
+        var transfer : SDL_GPUTransferBuffer? = device |> with_native_gpu_transfer_buffer(SDL_GPUTransferBufferCreateInfo(usage = SDL_GPUTransferBufferUsage.TRANSFERBUFFERUSAGE_UPLOAD, size = bytes)) |> sdl_use
+        var command : SDL_GPUCommandBuffer?& = with_native_gpu_commands(device) |> sdl_use
+        upload_floats(device, command, r.static_volume, transfer, bytes, local_vertices) |> sdl_try
+        return native_gpu_submit(command)
+    } |> sdl_try
     var floor <- plane_geometry(100.0)
     for (i in 0 .. length(floor.vertices) / 8) {
         floor.vertices[i * 8 + 6] = floor.vertices[i * 8] / 8.0; floor.vertices[i * 8 + 7] = floor.vertices[i * 8 + 2] / 8.0
@@ -228,6 +255,7 @@ def draw_indexed_volume(command : SDL_GPUCommandBuffer?; pass_ : SDL_GPURenderPa
     if (length(r.volume_indices) == 0) { return sdl_ok() }
     push_gpu_dsl_vertex_uniform(command, 0u, extrusion::VolumeTransform(view_projection = vp, light_distance = float4(light, 180.0))) |> sdl_try
     SDL_BindGPUGraphicsPipeline(pass_, pipeline)
+    push_gpu_dsl_vertex_uniform(command, 1u, extrusion::VolumeModel(model = identity_matrix())) |> sdl_try
     let bindings <- array(SDL_GPUBufferBinding(buffer = r.volume))
     sdl_status(SDL_BindGPUVertexBuffersArray(pass_, 0u, bindings), "compact volume vertices") |> sdl_try
     SDL_BindGPUIndexBufferRef(pass_, SDL_GPUBufferBinding(buffer = r.index_buffer), SDL_GPUIndexElementSize.INDEXELEMENTSIZE_32BIT)
@@ -235,7 +263,24 @@ def draw_indexed_volume(command : SDL_GPUCommandBuffer?; pass_ : SDL_GPURenderPa
     return sdl_ok()
 }
 
-def draw(device : SDL_GPUDevice?; command : SDL_GPUCommandBuffer?; var r : Resources; var color, depth : SDL_GPUTexture?; width, height : uint; time : float; settings : Settings; reference_volume : bool = false; cache_volume : bool = true) : SdlStatus {
+def draw_local_volume(command : SDL_GPUCommandBuffer?; pass_ : SDL_GPURenderPass?; var r : Resources; pipeline : SDL_GPUGraphicsPipeline?; vp : float4x4; light : float3; objects : array<Instance>) : SdlStatus {
+    if (length(r.volume_indices) == 0) { return sdl_ok() }
+    pack_gpu_dsl_uniform(extrusion::VolumeTransform(view_projection = vp, light_distance = float4(light, 180.0)), r.volume_uniforms)
+    sdl_status(SDL_PushGPUVertexUniformDataArray(command, 0u, r.volume_uniforms), "volume pass uniforms") |> sdl_try
+    SDL_BindGPUGraphicsPipeline(pass_, pipeline)
+    let bindings <- array(SDL_GPUBufferBinding(buffer = r.static_volume))
+    sdl_status(SDL_BindGPUVertexBuffersArray(pass_, 0u, bindings), "local volume vertices") |> sdl_try
+    SDL_BindGPUIndexBufferRef(pass_, SDL_GPUBufferBinding(buffer = r.index_buffer), SDL_GPUIndexElementSize.INDEXELEMENTSIZE_32BIT)
+    for (i in 0 .. length(objects)) {
+        let span = r.index_ranges[i]
+        if (span.y == 0u) { continue }
+        sdl_status(SDL_PushGPUVertexUniformDataArray(command, 1u, r.model_uniforms[i]), "volume model uniforms") |> sdl_try
+        SDL_DrawGPUIndexedPrimitives(pass_, span.y, 1u, span.x, 0, 0u)
+    }
+    return sdl_ok()
+}
+
+def draw(device : SDL_GPUDevice?; command : SDL_GPUCommandBuffer?; var r : Resources; var color, depth : SDL_GPUTexture?; width, height : uint; time : float; settings : Settings; reference_volume : bool = false; cache_volume : bool = true; local_volume : bool = true) : SdlStatus {
     let eye = settings.inside ? float3(0.0, 8.0, -12.0) : float3(3.0, 20.0, -58.0)
     let at = settings.inside ? float3(0.0, 12.0, 0.0) : float3(0.0, 5.0, 0.0)
     var projection : float4x4
@@ -245,7 +290,16 @@ def draw(device : SDL_GPUDevice?; command : SDL_GPUCommandBuffer?; var r : Resou
     let vp = projection * look_at_lh(eye, at, float3(0.0, 1.0, 0.0))
     let objects <- instances(time, settings)
     let light = scene_lights(time, eye, settings)
-    if (!reference_volume && cache_volume && (settings.shadows || settings.debug)) {
+    if (!reference_volume && local_volume && (settings.shadows || settings.debug)) {
+        resize(r.inverse_models, length(objects)); resize(r.orientations, length(objects)); resize(r.index_ranges, length(objects)); resize(r.model_uniforms, length(objects))
+        for (object_index in 0 .. length(objects)) {
+            pack_gpu_dsl_uniform(extrusion::VolumeModel(model = objects[object_index].model), r.model_uniforms[object_index])
+            r.inverse_models[object_index] = inverse(objects[object_index].model)
+            r.orientations[object_index] = volume_orientation(objects[object_index].model)
+        }
+    }
+
+    if (!reference_volume && !local_volume && cache_volume && (settings.shadows || settings.debug)) {
         resize(r.compact_vertices, 0); resize(r.face_origins, 0); resize(r.face_normals, 0)
         resize(r.volume_ranges, length(objects))
         for (object_index in 0 .. length(objects)) {
@@ -270,7 +324,15 @@ def draw(device : SDL_GPUDevice?; command : SDL_GPUCommandBuffer?; var r : Resou
                 for (obj in objects) { append_volume_reused(r.volume_vertices, r.meshes[obj.mesh], obj.model, light.positions[i].xyz, settings.silhouette, 180.0, r.volume_points, r.volume_far_points, r.volume_lit) }
                 upload_volume(device, command, r, r.volume_vertices) |> sdl_try
             } else {
-                if (cache_volume) {
+                if (local_volume) {
+                    for (j in 0 .. length(objects)) {
+                        let mesh = objects[j].mesh
+                        let start = uint(length(r.volume_indices) / 4)
+                        let local_light = r.inverse_models[j] * float4(light.positions[i].xyz, 1.0)
+                        append_prepared_volume(r.volume_indices, r.meshes[mesh], r.local_ranges[mesh], r.local_origins, r.local_normals, (local_light / local_light.w).xyz, settings.silhouette, r.volume_lit, r.orientations[j])
+                        r.index_ranges[j] = uint2(start, uint(length(r.volume_indices) / 4) - start)
+                    }
+                } elif (cache_volume) {
                     for (object_index in 0 .. length(objects)) {
                         append_prepared_volume(r.volume_indices, r.meshes[objects[object_index].mesh], r.volume_ranges[object_index], r.face_origins, r.face_normals, light.positions[i].xyz, settings.silhouette, r.volume_lit)
                     }
@@ -286,12 +348,14 @@ def draw(device : SDL_GPUDevice?; command : SDL_GPUCommandBuffer?; var r : Resou
             SDL_SetGPUStencilReference(pass_, 0u)
             if (settings.shadows) {
                 if (reference_volume) { draw_volume(command, pass_, r, settings.zfail ? r.zfail : r.zpass, vp, uint(length(r.volume_vertices) / 8)) |> sdl_try }
+                elif (local_volume) { draw_local_volume(command, pass_, r, settings.zfail ? r.indexed_zfail : r.indexed_zpass, vp, light.positions[i].xyz, objects) |> sdl_try }
                 else { draw_indexed_volume(command, pass_, r, settings.zfail ? r.indexed_zfail : r.indexed_zpass, vp, light.positions[i].xyz) |> sdl_try }
             }
             var single = light; single.controls = float4(0.0, 1.0, float(i), 1.0)
             draw_scene(command, pass_, r, r.lit, objects, vp, single, settings) |> sdl_try
             if (settings.debug) {
                 if (reference_volume) { draw_volume(command, pass_, r, r.debug, vp, uint(length(r.volume_vertices) / 8)) |> sdl_try }
+                elif (local_volume) { draw_local_volume(command, pass_, r, r.indexed_debug, vp, light.positions[i].xyz, objects) |> sdl_try }
                 else { draw_indexed_volume(command, pass_, r, r.indexed_debug, vp, light.positions[i].xyz) |> sdl_try }
             }
             return sdl_ok()

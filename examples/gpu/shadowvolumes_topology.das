@@ -221,12 +221,12 @@ def prepare_volume(var vertices : array<float>; var origins, normals : array<flo
     return VolumeRange(vertex_base = base, face_start = face_start, face_count = face_count)
 }
 
-def append_prepared_volume(var out : array<uint8>; mesh : ClosedMesh; span : VolumeRange; origins, normals : array<float4>; light : float3; silhouette : bool; var lit : array<bool>) {
+def append_prepared_volume(var out : array<uint8>; mesh : ClosedMesh; span : VolumeRange; origins, normals : array<float4>; light : float3; silhouette : bool; var lit : array<bool>; orientation : float = 1.0) {
     let base = span.vertex_base
     resize(lit, span.face_count)
     for (i in 0 .. span.face_count) {
         let face = span.face_start + i
-        lit[i] = dot(normals[face].xzyw, (float4(light, 1.0) - origins[face]).xzyw) > 0.0
+        lit[i] = dot(normals[face].xzyw, (float4(light, 1.0) - origins[face]).xzyw) * orientation > 0.0
     }
     // Count once, then resize once per object instead of pushing each scalar.
     var triangles = 0
@@ -250,4 +250,11 @@ def append_prepared_volume(var out : array<uint8>; mesh : ClosedMesh; span : Vol
             write_volume_indices(out, cursor, base + v * 2u, base + u * 2u + 1u, base + v * 2u + 1u)
         }
     }
+}
+
+// Sign of the affine transform determinant: reflected instances reverse winding.
+def volume_orientation(model : float4x4) : float {
+    let a = model[0]; let b = model[1]; let c = model[2]
+    let normal = float4(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x, 0.0)
+    return dot(normal, c) < 0.0 ? -1.0 : 1.0
 }

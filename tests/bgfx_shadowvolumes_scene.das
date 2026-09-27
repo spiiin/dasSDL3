@@ -20,6 +20,34 @@ def check_scene(device : SDL_GPUDevice?) : SdlStatus {
         for (c in 0 .. 3) { verify(fast[i * 8 + c] == old.vertices[i * 8 + c], "Fast volume differs from CPU reference") }
     }
     return demo::with_resources(device, SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM) $(var r) {
+        // Local classification must account for nonuniform scale and reversed winding.
+        var world_vertices : array<float>
+        var world_origins, world_normals, work_points : array<float4>
+        for (scale in fixed_array(float3(0.6, 2.0, 3.0), float3(-0.6, 2.0, 3.0), float3(0.6, -2.0, -3.0))) {
+            let transform = geo::model_matrix(float3(3.0, -7.0, 2.0), scale, 0.37)
+            let inv = inverse(transform)
+            let orientation = demo::volume_orientation(transform)
+            verify(orientation == (scale.x * scale.y * scale.z < 0.0 ? -1.0 : 1.0), "Winding sign")
+            for (mesh_index in 0 .. length(r.meshes)) {
+                resize(world_vertices, 0); resize(world_origins, 0); resize(world_normals, 0)
+                let span = demo::prepare_volume(world_vertices, world_origins, world_normals, r.meshes[mesh_index], transform, work_points)
+                let local_span = r.local_ranges[mesh_index]
+                for (light in fixed_array(float4(8.0, 13.0, -9.0, 1.0), float4(-5.0, 2.0, 7.0, 1.0), float4(3.0, -7.0, 2.0, 1.0))) {
+                    let transformed = inv * light
+                    let local_light = transformed / transformed.w
+                    for (face in 0 .. span.face_count) {
+                        let local_face = local_span.face_start + face
+                        let direction = light - world_origins[face]
+                        let world_side = dot(world_normals[face].xzyw, direction.xzyw)
+                        let local_side = dot(r.local_normals[local_face].xzyw, (local_light - r.local_origins[local_face]).xzyw) * orientation
+                        // Only near-coplanar roundoff may change a classification.
+                        if ((world_side > 0.0) != (local_side > 0.0)) {
+                            verify(abs(world_side) <= 1.e-5 * length(world_normals[face]) * length(direction), "Local classification reverses a noncoplanar face")
+                        }
+                    }
+                }
+            }
+        }
         // Reuse the same work arrays across meshes, phases, lights and both algorithms.
         var cached_vertices : array<float>
         var cached_indices : array<uint8>
@@ -106,17 +134,30 @@ def check_scene(device : SDL_GPUDevice?) : SdlStatus {
                 if (frame == 12) { settings.specular = false }
                 sdl_scope() {
                     var command : SDL_GPUCommandBuffer?& = with_native_gpu_commands(device) |> sdl_use
-                    demo::draw(device, command, r, color, depth, WIDTH, HEIGHT, frame == 7 ? 1.0 : 0.0, settings) |> sdl_try
+                    demo::draw(device, command, r, color, depth, WIDTH, HEIGHT, frame == 7 ? 1.0 : 0.0, settings, false, true, false) |> sdl_try
                     return native_gpu_submit(command)
                 } |> sdl_try
                 let bytes <- read_image(device, color, WIDTH, HEIGHT, "shadow-scene-{frame}") |> sdl_try
                 sdl_scope() {
                     var command : SDL_GPUCommandBuffer?& = with_native_gpu_commands(device) |> sdl_use
-                    demo::draw(device, command, r, color, depth, WIDTH, HEIGHT, frame == 7 ? 1.0 : 0.0, settings, false, false) |> sdl_try
+                    demo::draw(device, command, r, color, depth, WIDTH, HEIGHT, frame == 7 ? 1.0 : 0.0, settings, false, false, false) |> sdl_try
                     return native_gpu_submit(command)
                 } |> sdl_try
                 let uncached <- read_image(device, color, WIDTH, HEIGHT, "shadow-scene-uncached-{frame}") |> sdl_try
                 for (k in 0 .. length(bytes)) { verify(bytes[k] == uncached[k], "Frame cache changes rendered pixels") }
+                sdl_scope() {
+                    var command : SDL_GPUCommandBuffer?& = with_native_gpu_commands(device) |> sdl_use
+                    demo::draw(device, command, r, color, depth, WIDTH, HEIGHT, frame == 7 ? 1.0 : 0.0, settings) |> sdl_try
+                    return native_gpu_submit(command)
+                } |> sdl_try
+                let local_bytes <- read_image(device, color, WIDTH, HEIGHT, "shadow-scene-local-{frame}") |> sdl_try
+                var local_changed = 0
+                for (pixel in 0 .. int(WIDTH * HEIGHT)) {
+                    let p = pixel * 4
+                    if (abs(int(bytes[p]) - int(local_bytes[p])) > 2 || abs(int(bytes[p + 1]) - int(local_bytes[p + 1])) > 2 || abs(int(bytes[p + 2]) - int(local_bytes[p + 2])) > 2) { local_changed++ }
+                }
+                print("Local volume frame {frame}: {local_changed} changed pixels.\n")
+                verify(local_changed < 100, "Local volume changes rendered shadows")
                 // Compare the new GPU extrusion against the previous CPU volume renderer.
                 sdl_scope() {
                     var command : SDL_GPUCommandBuffer?& = with_native_gpu_commands(device) |> sdl_use

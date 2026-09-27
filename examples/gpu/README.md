@@ -444,15 +444,21 @@ floor. It uses the original closed `bunny_decimated`, column and platform meshes
 figure/fieldstone textures, animated colored lights, specular highlights and fog.
 One to five lights each get their own stencil clear, closed-volume draw and
 additive lighting pass. Cached adjacency makes silhouette construction linear;
-face-prism construction remains available for comparison. Reused CPU arrays prepare world positions and anchored face planes once per frame,
-then classify faces and emit uint32 indices per light. Compact position/extrusion-flag
-vertices are uploaded once per frame; only the index buffer changes between lights.
-`shaders/shadowvolume_shaders.das` extrudes the far vertices on the GPU; normals
-and UVs are not uploaded for volumes. Tests expand every index against the original
-CPU triangle stream and compare GPU/CPU rendered images, including debug volumes.
-Vertex and index uploads grow on demand, each with a 64 MiB limit, and cycle buffers
-as needed. Tests require byte-exact index and pixel parity with the uncached indexed
-path. Both reference paths remain available to tests and benchmark comparisons.
+face-prism construction remains available for comparison. Local positions and
+anchored face planes are prepared once when each mesh is loaded. Instances share
+one immutable volume vertex buffer. Each frame computes inverse model matrices;
+per-light CPU work transforms the light to model space, classifies faces and
+emits uint32 indices. Reflected transforms account for reversed winding.
+`shaders/shadowvolume_shaders.das` transforms positions and extrudes far vertices
+on the GPU, retaining the 180-unit world-space extrusion under nonuniform scale.
+Only indices are uploaded each frame (64 MiB limit, cycled between lights).
+Pass and model uniforms use separate slots; packed model matrices are reused
+across lights within the frame.
+
+Tests retain the original CPU geometry oracle and exact cached/uncached world-space
+comparisons. Model-space rendering is compared against these reference images;
+classification checks cover nonuniform and negative scales. Reference rendering
+paths remain available to tests and benchmark comparisons.
 
 Tab switches scenes; L cycles lights; P changes their orbit; M switches bunny/cube;
 Z selects depth-fail/depth-pass; E switches silhouette/face prisms; C changes camera;
