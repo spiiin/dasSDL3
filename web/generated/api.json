@@ -421,5 +421,12 @@
     "arguments": [
       "context"
     ]
+  },
+  "SDL_SetTextureScaleMode": {
+    "signature": "bool (SDL_Texture *, SDL_ScaleMode)",
+    "arguments": [
+      "texture",
+      "scaleMode"
+    ]
   }
 }

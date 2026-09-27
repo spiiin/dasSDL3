@@ -1,19 +1,13 @@
-#include "daScript/daScript.h"
-#include "daScript/ast/ast_handle.h"
-#include "sdl3_adapters.h"
-#include "sdl3_input.h"
-#include "sdl3_diagnostics.h"
-#include "sdl3_texture_load.h"
-#include "sdl3_pixels.h"
-#include "sdl3_geometry.h"
-#include "sdl3_audio.h"
-#include "sdl3_video.h"
-#include "generated/sdl3_types.inc"
+#include "sdl3_web_aot.h"
 static_assert(sizeof(void*)==4, "Web profile requires wasm32");
 static_assert(SDL_VERSION==3004016, "Revalidate Web profile on SDL update");
 namespace das {
 class Module_dasSDL3 : public Module {
 public:
+    ModuleAotType aotRequire(TextWriter & tw) const override {
+        tw << "#include \"sdl3_web_aot.h\"\n";
+        return ModuleAotType::cpp;
+    }
     Module_dasSDL3() : Module("sdl3") {
         ModuleLibrary lib(this);
         lib.addBuiltInModule();

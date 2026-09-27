@@ -1,0 +1,12 @@
+#pragma once
+#include "daScript/daScript.h"
+#include "daScript/ast/ast_handle.h"
+#include "sdl3_adapters.h"
+#include "sdl3_input.h"
+#include "sdl3_diagnostics.h"
+#include "sdl3_texture_load.h"
+#include "sdl3_pixels.h"
+#include "sdl3_geometry.h"
+#include "sdl3_audio.h"
+#include "sdl3_video.h"
+#include "generated/sdl3_types.inc"

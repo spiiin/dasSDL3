@@ -1,5 +1,6 @@
 """Browser tests for the generated static site. pip install playwright pillow first."""
 import argparse
+import re
 from pathlib import Path
 from io import BytesIO
 from PIL import Image
@@ -91,11 +92,13 @@ with sync_playwright() as pw:
         source=page.evaluate('(path)=>runtime.FS.readFile(path,{encoding:"utf8"})',path)
         if fault=='compile': source='this is not valid daScript'
         elif fault=='init': source=source.replace('/assets/checker.bmp','/assets/missing.bmp')
-        elif fault=='target': source=source.replace('    destroy_texture(texture);texture=null','    print("Target restored: {SDL_GetRenderTarget(renderer)==null}\\n")\n    destroy_texture(texture);texture=null').replace('return sdl_ok()\n    } |> sdl_try','return err(SdlError(operation="target probe",message="expected"),type<SdlUnit>)\n    } |> sdl_try')
+        elif fault=='target': source=re.sub(r'destroy_texture\(texture\);\s*texture\s*=\s*null', lambda m: 'print("Target restored: {SDL_GetRenderTarget(renderer)==null}\\n")\n    '+m[0], source, count=1).replace('return sdl_ok()\n    } |> sdl_try','return err(SdlError(operation="target probe",message="expected"),type<SdlUnit>)\n    } |> sdl_try')
         elif fault=='streaming': source=source.replace('    texture |> upload_rgba8','    pixels |> resize(1)\n    texture |> upload_rgba8')
-        elif fault=='geometry': source=source.replace('array<int>(0,1,2)','array<int>(0,1,9)')
+        elif fault=='geometry': source=re.sub(r'array<int>\(0,\s*1,\s*2\)', 'array<int>(0,1,9)', source, count=1)
         elif fault=='audio': source=source.replace('stream |> resume_audio() |> sdl_try','return err(SdlError(operation="audio probe",message="expected"),type<SdlUnit>)')
         else: source=source.replace('def draw_frame() : $Result<SdlUnit; SdlError> {','def draw_frame() : $Result<SdlUnit; SdlError> {\n    if(frames==2) {return err(SdlError(operation="frame probe",message="expected"),type<SdlUnit>)}')
+        if fault=='target': assert 'Target restored:' in source, 'Target cleanup probe was not injected'
+        if fault=='geometry': assert 'array<int>(0,1,9)' in source, 'Invalid index was not injected'
         page.evaluate('([path,source])=>runtime.FS.writeFile(path,source)',[path,source])
         page.locator('#start').click()
         page.wait_for_function("document.querySelector('#status').textContent==='Failed'",timeout=30000)

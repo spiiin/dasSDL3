@@ -70,7 +70,8 @@ page, so it creates a new WASM instance. It does not re-enter a shut-down runtim
 
 No SDL_GPU WebGPU backend exists in pinned SDL. These pages use SDL Renderer
 through WebGL; they are not ports of the native GPU examples. Browser
-filesystem persistence, full event variants, AOT and workers are future work.
+filesystem persistence, full event variants and workers are future work. The example
+runner remains interpreted; AOT consumers can use the wasm32 header described below.
 
 ## SDL 3.4.16 validation (2026-09-26)
 
@@ -95,7 +96,7 @@ All four new scripts also compile with the native interpreter (no native I/O).
 Firefox required an unsandboxed test launch on the development machine.
 Safari/WebKit, physical speaker output, Web GPU and Web AOT remain unvalidated.
 
-Current SDL policy: 65 generated raw functions, 7 opaque types, 11 records, five enums
+Current SDL policy: 66 generated raw functions, 7 opaque types, 11 records, seven enums
 and 412 constants. The upstream daScript OpenGL module is linked separately; its
 GL declarations do not count as SDL coverage. Necessary ref/copy adapters reuse the desktop headers.
 This is a bootstrap subset, not a complete Web declaration census.
@@ -130,7 +131,7 @@ or allow sound for this site. The page must not claim audible playback merely
 because SDL accepted the queue. Tests inspect actual nonzero Web Audio output;
 physical speakers remain a manual check. Recording/microphone access is not used.
 
-Full platform inventory/CppGenBind, AOT and remaining subsystems stay on the roadmap.
+Full platform inventory/CppGenBind, a standalone AOT example build workflow and remaining subsystems stay on the roadmap.
 
 ## OpenGL examples
 
@@ -147,3 +148,28 @@ paths. The existing 15 SDL scenarios per browser are the regression suite.
 build/web-tests/Scripts/python tests/web/test_opengl.py --browser edge --url http://localhost:8080
 build/web-tests/Scripts/python tests/web/test_opengl.py --browser firefox --url http://localhost:8080
 ```
+
+## wasm32 AOT consumers (2026-09-27)
+
+`module_web.cpp` now implements `aotRequire`, with the same adapters and generated
+wasm32 types exposed by `sdl3_web_aot.h`. Consumers must generate their AOT C++ in
+a wasm32 daScript runtime (for example under Node), then link that generated code
+with this module. Windows x64 AOT output must not be reused as wasm32 output.
+The existing example runner remains an interpreter; native Windows bindings and
+SDK configuration are unchanged.
+
+The Web policy also includes `SDL_Scancode` and `SDL_SetTextureScaleMode` with the
+complete SDL 3.4.16 `SDL_ScaleMode` enum. Generated snapshots remain target-specific.
+No NES algorithms or application state were added to the binding.
+
+The adjacent dasNES consumer validates strict wasm32 AOT without interpreter
+fallback in Edge and Firefox: eight NTSC ROMs, Renderer pixels, ~60 FPS, keyboard,
+nonzero PCM in Web Audio output, pause/resume, Stop/Restart and invalid ROM paths.
+Its generator includes every imported runtime boost module. See dasNES/web for
+the callback frontend and build example. Physical speaker output and Safari are
+not established by those browser checks.
+
+The existing 15 Renderer/audio/lifecycle scenarios also passed in both Edge and
+Firefox after these changes. Fault injection for target cleanup and invalid
+geometry indices was made whitespace-independent, with explicit assertions that
+the probes were inserted, so formatting examples does not silently skip tests.

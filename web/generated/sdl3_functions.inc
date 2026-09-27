@@ -4,6 +4,8 @@ addEnumeration(new Enumeration_SDL_PixelFormat());
 addEnumeration(new Enumeration_SDL_TextureAccess());
 addEnumeration(new Enumeration_SDL_AudioFormat());
 addEnumeration(new Enumeration_SDL_GLAttr());
+addEnumeration(new Enumeration_SDL_ScaleMode());
+addEnumeration(new Enumeration_SDL_Scancode());
 addAnnotation(new DummyTypeAnnotation("SDL_Window", "SDL_Window", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Renderer", "SDL_Renderer", 1, 1));
 addAnnotation(new DummyTypeAnnotation("SDL_Texture", "SDL_Texture", 1, 1));
@@ -564,3 +566,5 @@ addExtern<DAS_BIND_FUN(SDL_GL_GetSwapInterval)>(*this, lib, "SDL_GL_GetSwapInter
 addExtern<DAS_BIND_FUN(SDL_GL_SwapWindow)>(*this, lib, "SDL_GL_SwapWindow", SideEffects::worstDefault, "SDL_GL_SwapWindow")->args({"window"});
 // bool (SDL_GLContext)
 addExtern<DAS_BIND_FUN(SDL_GL_DestroyContext)>(*this, lib, "SDL_GL_DestroyContext", SideEffects::worstDefault, "SDL_GL_DestroyContext")->args({"context"});
+// bool (SDL_Texture *, SDL_ScaleMode)
+addExtern<DAS_BIND_FUN(SDL_SetTextureScaleMode)>(*this, lib, "SDL_SetTextureScaleMode", SideEffects::worstDefault, "SDL_SetTextureScaleMode")->args({"texture", "scaleMode"});
