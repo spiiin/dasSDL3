@@ -54,9 +54,9 @@ list(APPEND _dsl_scripts
     third_party/daScript/daslib/math_bits third_party/daScript/daslib/math_boost
     examples/gpu/port_geometry examples/gpu/lod_app examples/gpu/stencil_support
     examples/gpu/stencil_scene_support examples/gpu/shaders/stencil_scene_shaders examples/gpu/stencil_app examples/gpu/shadowvolumes_geometry examples/gpu/shadowvolumes_app
-    examples/gpu/shaders/lod_shaders examples/gpu/shaders/stencil_shaders
+    examples/gpu/shaders/lod_shaders examples/gpu/shaders/stencil_shaders examples/gpu/shaders/shadowvolume_shaders
     tests/bgfx_lod tests/bgfx_stencil tests/bgfx_shadowvolumes tests/bgfx_shadowvolumes_scene
-    examples/gpu/shadowvolumes_scene examples/gpu/shadowvolumes_topology tests/benchmark_shadowvolumes)
+    examples/gpu/shadowvolumes_scene examples/gpu/shadowvolumes_topology tests/benchmark_shadowvolumes tests/profile_shadowvolumes tests/benchmark_volume_cpu)
 if(DASSDL3_TEST_TTF)
     list(APPEND _dsl_scripts examples/gpu/fontsdf_app examples/gpu/shaders/fontsdf_shaders
         tests/bgfx_fontsdf dassdl3/sdl3_ttf_boost)
