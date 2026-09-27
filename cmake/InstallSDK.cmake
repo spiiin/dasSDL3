@@ -48,7 +48,7 @@ install(DIRECTORY third_party/daScript/daslib/ DESTINATION share/dasSDL3/dascrip
 configure_package_config_file(cmake/dasSDL3Config.cmake.in "${CMAKE_BINARY_DIR}/dasSDL3Config.cmake"
     INSTALL_DESTINATION lib/cmake/dasSDL3)
 write_basic_package_version_file("${CMAKE_BINARY_DIR}/dasSDL3ConfigVersion.cmake"
-    VERSION 0.1.0 COMPATIBILITY SameMinorVersion)
+    VERSION "${PROJECT_VERSION}" COMPATIBILITY SameMinorVersion)
 install(FILES "${CMAKE_BINARY_DIR}/dasSDL3Config.cmake" "${CMAKE_BINARY_DIR}/dasSDL3ConfigVersion.cmake"
     cmake/dasSDL3AOT.cmake DESTINATION lib/cmake/dasSDL3 COMPONENT dasSDL3SDK)
 install(DIRECTORY examples/sdk-consumer/ DESTINATION share/dasSDL3/examples/sdk-consumer COMPONENT dasSDL3SDK)
@@ -72,3 +72,7 @@ install(DIRECTORY third_party/daScript/modules/dasSpirv/spirv/
     FILES_MATCHING PATTERN "*.das")
 install(FILES third_party/daScript/modules/dasSpirv/.das_module
     DESTINATION share/dasSDL3/dascript/modules/dasSpirv COMPONENT dasSDL3SDK)
+
+# Curated notices also cover bundled SDL components and project code.
+install(FILES LICENSE VERSION DESTINATION share/dasSDL3 COMPONENT dasSDL3SDK)
+install(DIRECTORY licenses/ DESTINATION share/dasSDL3/licenses COMPONENT dasSDL3SDK)

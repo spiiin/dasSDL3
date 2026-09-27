@@ -1,0 +1,778 @@
+[
+  {
+    "file": "daScript/LICENSE.txt",
+    "source": "LICENSE",
+    "component": "daScript",
+    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "excerpt": false,
+    "sha256": "53544c0da5a9d429f691b4e2d072d93af87ee0b1cd93d30afe0e6147100e070b"
+  },
+  {
+    "file": "daScript/THIRD_PARTY_NOTICES.md",
+    "source": "THIRD_PARTY_NOTICES.md",
+    "component": "daScript",
+    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "excerpt": false,
+    "sha256": "efa2321d09e60bd5834f8adcafa82508f67f78047185f9bea7ae893cc5b8ac49"
+  },
+  {
+    "file": "daScript/fmt.txt",
+    "source": "3rdparty/fmt/LICENSE",
+    "component": "daScript",
+    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "excerpt": false,
+    "sha256": "07580f2a3b35709ce703d523f447b242f6dfec7582a8c0df102c7fa2849375f8"
+  },
+  {
+    "file": "daScript/uriparser.txt",
+    "source": "3rdparty/uriparser/COPYING",
+    "component": "daScript",
+    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "excerpt": false,
+    "sha256": "287f09e6546a9610f949f89e8fb937cacfeabd7bfaa8c8a0c18312193bf04ad3"
+  },
+  {
+    "file": "daScript/dag_noise.txt",
+    "source": "include/dag_noise/LICENSE",
+    "component": "daScript",
+    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "excerpt": false,
+    "sha256": "0abfaebf41a086092b3c56a4d7f321de8a36c179d9e250f9e829b94910c3a82f"
+  },
+  {
+    "file": "daScript/vecmath.txt",
+    "source": "include/vecmath/LICENSE",
+    "component": "daScript",
+    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "excerpt": false,
+    "sha256": "0abfaebf41a086092b3c56a4d7f321de8a36c179d9e250f9e829b94910c3a82f"
+  },
+  {
+    "file": "daScript/fast_float.txt",
+    "source": "include/fast_float/LICENSE",
+    "component": "daScript",
+    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "excerpt": false,
+    "sha256": "87eecc70872516c4a455de9de103e7c51cb1086e613b504d6c1d8146029482c5"
+  },
+  {
+    "file": "daScript/Luau.txt",
+    "source": "src/misc/LUAU.LICENSE",
+    "component": "daScript",
+    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "excerpt": false,
+    "sha256": "a5a694b1b004b7c66aaf810f570a9c72cbda32e9e83ad38629f74f877c300d45"
+  },
+  {
+    "file": "daScript/wyhash.txt",
+    "source": "include/daScript/misc/wyhash.h",
+    "component": "daScript",
+    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "excerpt": true,
+    "sha256": "ff4645ac92873e9107821bfcb48a643c23cb446df18d19541fb0477c689408e1"
+  },
+  {
+    "file": "SDL/LICENSE.txt",
+    "source": "LICENSE.txt",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": false,
+    "sha256": "1c040b8271b37e5076359f8fd54240e371114112924d2df81ef87c7d6a1dfdfd"
+  },
+  {
+    "file": "SDL/HIDAPI-license-choice.txt",
+    "source": "src/hidapi/LICENSE.txt",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": false,
+    "sha256": "7d3b087c34f35d4d538e3bcddd1ff8f66e92f9ef336881999482800ddf840913"
+  },
+  {
+    "file": "SDL/HIDAPI-BSD.txt",
+    "source": "src/hidapi/LICENSE-bsd.txt",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": false,
+    "sha256": "30eb1bef29b46f8ba7ab8b416035dbd93cb034a45481dd97815b944284582cd2"
+  },
+  {
+    "file": "SDL/yuv2rgb.txt",
+    "source": "src/video/yuv2rgb/LICENSE",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": false,
+    "sha256": "f7d74004cc75778cae46c5f0139f244d67c07ef64cf51937e8272352197dcb18"
+  },
+  {
+    "file": "SDL/stb_image.txt",
+    "source": "src/video/stb_image.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "0459bce8ce9b9b045d20d9c48192226d302f0cce81b151ba71189b2a10c8a8fc"
+  },
+  {
+    "file": "SDL/libm-e_atan2.c.txt",
+    "source": "src/libm/e_atan2.c",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "565eff8b979411888b4fc163ba49daf7ad9beba47ee485942f032edcefd17948"
+  },
+  {
+    "file": "SDL/libm-e_exp.c.txt",
+    "source": "src/libm/e_exp.c",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "565eff8b979411888b4fc163ba49daf7ad9beba47ee485942f032edcefd17948"
+  },
+  {
+    "file": "SDL/libm-e_fmod.c.txt",
+    "source": "src/libm/e_fmod.c",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "565eff8b979411888b4fc163ba49daf7ad9beba47ee485942f032edcefd17948"
+  },
+  {
+    "file": "SDL/libm-e_log.c.txt",
+    "source": "src/libm/e_log.c",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "565eff8b979411888b4fc163ba49daf7ad9beba47ee485942f032edcefd17948"
+  },
+  {
+    "file": "SDL/libm-e_log10.c.txt",
+    "source": "src/libm/e_log10.c",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "565eff8b979411888b4fc163ba49daf7ad9beba47ee485942f032edcefd17948"
+  },
+  {
+    "file": "SDL/libm-e_pow.c.txt",
+    "source": "src/libm/e_pow.c",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "565eff8b979411888b4fc163ba49daf7ad9beba47ee485942f032edcefd17948"
+  },
+  {
+    "file": "SDL/libm-e_rem_pio2.c.txt",
+    "source": "src/libm/e_rem_pio2.c",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "565eff8b979411888b4fc163ba49daf7ad9beba47ee485942f032edcefd17948"
+  },
+  {
+    "file": "SDL/libm-e_sqrt.c.txt",
+    "source": "src/libm/e_sqrt.c",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "565eff8b979411888b4fc163ba49daf7ad9beba47ee485942f032edcefd17948"
+  },
+  {
+    "file": "SDL/libm-k_cos.c.txt",
+    "source": "src/libm/k_cos.c",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "565eff8b979411888b4fc163ba49daf7ad9beba47ee485942f032edcefd17948"
+  },
+  {
+    "file": "SDL/libm-k_rem_pio2.c.txt",
+    "source": "src/libm/k_rem_pio2.c",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "565eff8b979411888b4fc163ba49daf7ad9beba47ee485942f032edcefd17948"
+  },
+  {
+    "file": "SDL/libm-k_sin.c.txt",
+    "source": "src/libm/k_sin.c",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "565eff8b979411888b4fc163ba49daf7ad9beba47ee485942f032edcefd17948"
+  },
+  {
+    "file": "SDL/libm-k_tan.c.txt",
+    "source": "src/libm/k_tan.c",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "565eff8b979411888b4fc163ba49daf7ad9beba47ee485942f032edcefd17948"
+  },
+  {
+    "file": "SDL/libm-math_libm.h.txt",
+    "source": "src/libm/math_libm.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "9ffcfd798ec40121bd85b12780a83b4638b7bd4e382d554aa243e870d352bdf5"
+  },
+  {
+    "file": "SDL/libm-math_private.h.txt",
+    "source": "src/libm/math_private.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "565eff8b979411888b4fc163ba49daf7ad9beba47ee485942f032edcefd17948"
+  },
+  {
+    "file": "SDL/libm-s_atan.c.txt",
+    "source": "src/libm/s_atan.c",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "565eff8b979411888b4fc163ba49daf7ad9beba47ee485942f032edcefd17948"
+  },
+  {
+    "file": "SDL/libm-s_copysign.c.txt",
+    "source": "src/libm/s_copysign.c",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "565eff8b979411888b4fc163ba49daf7ad9beba47ee485942f032edcefd17948"
+  },
+  {
+    "file": "SDL/libm-s_cos.c.txt",
+    "source": "src/libm/s_cos.c",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "565eff8b979411888b4fc163ba49daf7ad9beba47ee485942f032edcefd17948"
+  },
+  {
+    "file": "SDL/libm-s_fabs.c.txt",
+    "source": "src/libm/s_fabs.c",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "565eff8b979411888b4fc163ba49daf7ad9beba47ee485942f032edcefd17948"
+  },
+  {
+    "file": "SDL/libm-s_floor.c.txt",
+    "source": "src/libm/s_floor.c",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "565eff8b979411888b4fc163ba49daf7ad9beba47ee485942f032edcefd17948"
+  },
+  {
+    "file": "SDL/libm-s_isnan.c.txt",
+    "source": "src/libm/s_isnan.c",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "565eff8b979411888b4fc163ba49daf7ad9beba47ee485942f032edcefd17948"
+  },
+  {
+    "file": "SDL/libm-s_modf.c.txt",
+    "source": "src/libm/s_modf.c",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "565eff8b979411888b4fc163ba49daf7ad9beba47ee485942f032edcefd17948"
+  },
+  {
+    "file": "SDL/libm-s_scalbn.c.txt",
+    "source": "src/libm/s_scalbn.c",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "565eff8b979411888b4fc163ba49daf7ad9beba47ee485942f032edcefd17948"
+  },
+  {
+    "file": "SDL/libm-s_sin.c.txt",
+    "source": "src/libm/s_sin.c",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "565eff8b979411888b4fc163ba49daf7ad9beba47ee485942f032edcefd17948"
+  },
+  {
+    "file": "SDL/libm-s_tan.c.txt",
+    "source": "src/libm/s_tan.c",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "565eff8b979411888b4fc163ba49daf7ad9beba47ee485942f032edcefd17948"
+  },
+  {
+    "file": "SDL/khronos-egl.h.txt",
+    "source": "src/video/khronos/EGL/egl.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6c3496f5aa0b62e19f5c34a86bf84174473c6cf991176af62f36b4a034bc7211"
+  },
+  {
+    "file": "SDL/khronos-eglext.h.txt",
+    "source": "src/video/khronos/EGL/eglext.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6c3496f5aa0b62e19f5c34a86bf84174473c6cf991176af62f36b4a034bc7211"
+  },
+  {
+    "file": "SDL/khronos-eglplatform.h.txt",
+    "source": "src/video/khronos/EGL/eglplatform.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "f2c9d0f0439ff7ed39eeb730f319d85fcbbf7637436e3aeacc433d09facf4098"
+  },
+  {
+    "file": "SDL/khronos-gl2.h.txt",
+    "source": "src/video/khronos/GLES2/gl2.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "aee9de4b6913a6a11cb7ec685adda5018d971893d490f64b7dc357ddb20e0acc"
+  },
+  {
+    "file": "SDL/khronos-gl2ext.h.txt",
+    "source": "src/video/khronos/GLES2/gl2ext.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "aee9de4b6913a6a11cb7ec685adda5018d971893d490f64b7dc357ddb20e0acc"
+  },
+  {
+    "file": "SDL/khronos-gl2platform.h.txt",
+    "source": "src/video/khronos/GLES2/gl2platform.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "a7f96466f9d19975ad134f2fe638eabcd75fe48f707189fc09670c55527943da"
+  },
+  {
+    "file": "SDL/khronos-gl3.h.txt",
+    "source": "src/video/khronos/GLES3/gl3.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "aee9de4b6913a6a11cb7ec685adda5018d971893d490f64b7dc357ddb20e0acc"
+  },
+  {
+    "file": "SDL/khronos-gl31.h.txt",
+    "source": "src/video/khronos/GLES3/gl31.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "aee9de4b6913a6a11cb7ec685adda5018d971893d490f64b7dc357ddb20e0acc"
+  },
+  {
+    "file": "SDL/khronos-gl32.h.txt",
+    "source": "src/video/khronos/GLES3/gl32.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "aee9de4b6913a6a11cb7ec685adda5018d971893d490f64b7dc357ddb20e0acc"
+  },
+  {
+    "file": "SDL/khronos-gl3platform.h.txt",
+    "source": "src/video/khronos/GLES3/gl3platform.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "a7f96466f9d19975ad134f2fe638eabcd75fe48f707189fc09670c55527943da"
+  },
+  {
+    "file": "SDL/khronos-khrplatform.h.txt",
+    "source": "src/video/khronos/KHR/khrplatform.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "438187dca092de4032c1a16524aa4c34c71a0f985a71251a675aad54e77ed561"
+  },
+  {
+    "file": "SDL/khronos-vulkan_video_codec_av1std.h.txt",
+    "source": "src/video/khronos/vk_video/vulkan_video_codec_av1std.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_video_codec_av1std_decode.h.txt",
+    "source": "src/video/khronos/vk_video/vulkan_video_codec_av1std_decode.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_video_codec_h264std.h.txt",
+    "source": "src/video/khronos/vk_video/vulkan_video_codec_h264std.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_video_codec_h264std_decode.h.txt",
+    "source": "src/video/khronos/vk_video/vulkan_video_codec_h264std_decode.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_video_codec_h264std_encode.h.txt",
+    "source": "src/video/khronos/vk_video/vulkan_video_codec_h264std_encode.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_video_codec_h265std.h.txt",
+    "source": "src/video/khronos/vk_video/vulkan_video_codec_h265std.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_video_codec_h265std_decode.h.txt",
+    "source": "src/video/khronos/vk_video/vulkan_video_codec_h265std_decode.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_video_codec_h265std_encode.h.txt",
+    "source": "src/video/khronos/vk_video/vulkan_video_codec_h265std_encode.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_video_codecs_common.h.txt",
+    "source": "src/video/khronos/vk_video/vulkan_video_codecs_common.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vk_icd.h.txt",
+    "source": "src/video/khronos/vulkan/vk_icd.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "5d60dd32acea93dd5c96c8c56dfceba5e40f2d00b280d0835ae40791747979ca"
+  },
+  {
+    "file": "SDL/khronos-vk_layer.h.txt",
+    "source": "src/video/khronos/vulkan/vk_layer.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "5d60dd32acea93dd5c96c8c56dfceba5e40f2d00b280d0835ae40791747979ca"
+  },
+  {
+    "file": "SDL/khronos-vk_platform.h.txt",
+    "source": "src/video/khronos/vulkan/vk_platform.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "dd6f4e6cfae0e633e86c5fe2b8c5459019c7b806f83a7b238dadbebf884d1cef"
+  },
+  {
+    "file": "SDL/khronos-vulkan.h.txt",
+    "source": "src/video/khronos/vulkan/vulkan.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_android.h.txt",
+    "source": "src/video/khronos/vulkan/vulkan_android.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_beta.h.txt",
+    "source": "src/video/khronos/vulkan/vulkan_beta.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_core.h.txt",
+    "source": "src/video/khronos/vulkan/vulkan_core.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_directfb.h.txt",
+    "source": "src/video/khronos/vulkan/vulkan_directfb.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_fuchsia.h.txt",
+    "source": "src/video/khronos/vulkan/vulkan_fuchsia.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_ggp.h.txt",
+    "source": "src/video/khronos/vulkan/vulkan_ggp.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_ios.h.txt",
+    "source": "src/video/khronos/vulkan/vulkan_ios.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_macos.h.txt",
+    "source": "src/video/khronos/vulkan/vulkan_macos.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_metal.h.txt",
+    "source": "src/video/khronos/vulkan/vulkan_metal.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_screen.h.txt",
+    "source": "src/video/khronos/vulkan/vulkan_screen.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_vi.h.txt",
+    "source": "src/video/khronos/vulkan/vulkan_vi.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_wayland.h.txt",
+    "source": "src/video/khronos/vulkan/vulkan_wayland.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_win32.h.txt",
+    "source": "src/video/khronos/vulkan/vulkan_win32.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_xcb.h.txt",
+    "source": "src/video/khronos/vulkan/vulkan_xcb.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_xlib.h.txt",
+    "source": "src/video/khronos/vulkan/vulkan_xlib.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "SDL/khronos-vulkan_xlib_xrandr.h.txt",
+    "source": "src/video/khronos/vulkan/vulkan_xlib_xrandr.h",
+    "component": "SDL",
+    "version": "3.4.16",
+    "excerpt": true,
+    "sha256": "6a83c64d3193a9392ea48517d81a86a005e74a401db53fef1c4387d138bebbd2"
+  },
+  {
+    "file": "ImGui/LICENSE.txt",
+    "source": "modules/dasImgui/imgui/LICENSE.txt",
+    "component": "ImGui",
+    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "excerpt": false,
+    "sha256": "173506a2d6f7fb67990d257fb2507f188690eca39060c39469ae7bef43aae2a3"
+  },
+  {
+    "file": "Clipboard/LICENSE.txt",
+    "source": "modules/dasClipboard/3rdparty/clip/LICENSE.txt",
+    "component": "Clipboard",
+    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "excerpt": false,
+    "sha256": "b4b43b52d7fd0fd9b12266d089dd72b31d9c6682ea95801a26c9da96bd2615cf"
+  },
+  {
+    "file": "FreeType/LICENSE.txt",
+    "source": "LICENSE.TXT",
+    "component": "FreeType",
+    "version": "2.14.3",
+    "excerpt": false,
+    "sha256": "bd36c8b474855fa294c2ec5c184544478ef3720aad37d65a6296a4f264fd2d3b"
+  },
+  {
+    "file": "FreeType/FTL.txt",
+    "source": "docs/FTL.TXT",
+    "component": "FreeType",
+    "version": "2.14.3",
+    "excerpt": false,
+    "sha256": "5a5ee54c5001bbad1cdc1a57cc3dd4c42199b2da09d39c7ee41fab002d02967f"
+  },
+  {
+    "file": "FreeType/BDF.txt",
+    "source": "src/bdf/README",
+    "component": "FreeType",
+    "version": "2.14.3",
+    "excerpt": false,
+    "sha256": "7984455e7e5a9faba3797c8bf095fbe10cc846316b7320aff8c58402e22b82fe"
+  },
+  {
+    "file": "FreeType/PCF.txt",
+    "source": "src/pcf/README",
+    "component": "FreeType",
+    "version": "2.14.3",
+    "excerpt": false,
+    "sha256": "18d9782898d9eac04476e2f744678137b2a889689ed3e923e052fc396a86f86b"
+  },
+  {
+    "file": "FreeType/zlib.txt",
+    "source": "src/gzip/zlib.h",
+    "component": "FreeType",
+    "version": "2.14.3",
+    "excerpt": true,
+    "sha256": "02421fcfbfb1d656ef0b6ff4cd3c39f2946f08c3219fa42db482add7ce1f53ea"
+  },
+  {
+    "file": "FreeType/fthash.txt",
+    "source": "src/base/fthash.c",
+    "component": "FreeType",
+    "version": "2.14.3",
+    "excerpt": true,
+    "sha256": "5285d96f6aa3188193d5fbefd8710ed6a46af185e0a43817c17acee5f4b1ab3d"
+  },
+  {
+    "file": "FreeType/HarfBuzz-ft.txt",
+    "source": "src/autofit/ft-hb-ft.c",
+    "component": "FreeType",
+    "version": "2.14.3",
+    "excerpt": true,
+    "sha256": "9eb9395c70e884f61081775892fae5949ad7762461bea5753dc5478b0c080302"
+  },
+  {
+    "file": "FreeType/HarfBuzz-decls.txt",
+    "source": "src/autofit/ft-hb-decls.h",
+    "component": "FreeType",
+    "version": "2.14.3",
+    "excerpt": true,
+    "sha256": "9eb9395c70e884f61081775892fae5949ad7762461bea5753dc5478b0c080302"
+  },
+  {
+    "file": "FreeType/HarfBuzz-types.txt",
+    "source": "src/autofit/ft-hb-types.h",
+    "component": "FreeType",
+    "version": "2.14.3",
+    "excerpt": true,
+    "sha256": "9eb9395c70e884f61081775892fae5949ad7762461bea5753dc5478b0c080302"
+  },
+  {
+    "file": "FreeType/HarfBuzz-scripts.txt",
+    "source": "src/autofit/hb-script-list.h",
+    "component": "FreeType",
+    "version": "2.14.3",
+    "excerpt": true,
+    "sha256": "260cfd522bf354ed9c2666777db248c0608e8c7a4110c672f16100aca98c772d"
+  },
+  {
+    "file": "ImGui/imstb_truetype.h.txt",
+    "source": "modules/dasImgui/imgui/imstb_truetype.h",
+    "component": "ImGui",
+    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "excerpt": true,
+    "sha256": "0459bce8ce9b9b045d20d9c48192226d302f0cce81b151ba71189b2a10c8a8fc"
+  },
+  {
+    "file": "ImGui/imstb_textedit.h.txt",
+    "source": "modules/dasImgui/imgui/imstb_textedit.h",
+    "component": "ImGui",
+    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "excerpt": true,
+    "sha256": "0459bce8ce9b9b045d20d9c48192226d302f0cce81b151ba71189b2a10c8a8fc"
+  },
+  {
+    "file": "ImGui/imstb_rectpack.h.txt",
+    "source": "modules/dasImgui/imgui/imstb_rectpack.h",
+    "component": "ImGui",
+    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "excerpt": true,
+    "sha256": "0459bce8ce9b9b045d20d9c48192226d302f0cce81b151ba71189b2a10c8a8fc"
+  },
+  {
+    "file": "ImGui/default-fonts.txt",
+    "source": "modules/dasImgui/imgui/imgui_draw.cpp (copyright lines) + imgui/LICENSE.txt (MIT terms)",
+    "component": "ImGui",
+    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "excerpt": true,
+    "sha256": "706e6fc570ecf438b090f9a0a1e138abbeef97c131f2d8ae93304db0be5c1762"
+  },
+  {
+    "file": "SDL/Apache-2.0.txt",
+    "source": "modules/dasLLAMA/LICENSE.APACHE-2.0",
+    "component": "Apache-2.0 license text for SDL bundled Vulkan headers (not a dasLLAMA dependency)",
+    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "excerpt": false,
+    "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+  },
+  {
+    "file": "ImGui/MD4C.txt",
+    "source": "MD4C.LICENSE",
+    "component": "dasImgui dependencies",
+    "version": "official SDK v0.6.4",
+    "excerpt": false,
+    "sha256": "6ece222dc9d0ca9c922cd508bf8328263d43a181cf11b173ee689a664d02edfb"
+  },
+  {
+    "file": "ImGui/THIRD_PARTY_NOTICES.md",
+    "source": "DASIMGUI_THIRD_PARTY_NOTICES.md",
+    "component": "dasImgui dependencies",
+    "version": "official SDK v0.6.4",
+    "excerpt": false,
+    "sha256": "c71b3f6db3521e72c62e1d81e2508e30708931e17d7f2cd7c5dd4f3387e29893"
+  }
+]

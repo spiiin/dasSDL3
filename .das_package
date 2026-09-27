@@ -1,0 +1,44 @@
+options gen2
+require daslib/daspkg
+require daslib/fio
+
+[export]
+def package() {
+    package_name("dasSDL3")
+    package_author("spiiin")
+    package_source("github.com/spiiin/dasSDL3")
+    package_description("SDL3 bindings for daslang: Windows x64 core and ImGui profiles")
+    package_license("MIT")
+    package_min_sdk("0.6.4")
+    package_tag("sdl3")
+    package_tag("graphics")
+    package_tag("imgui")
+}
+
+[export]
+def resolve(sdk_version, version : string) {
+    if (empty(version) || version == "latest") {
+        download_branch("main")
+    } else {
+        download_tag("v{version}")
+    }
+}
+
+[export]
+def dependencies(version : string) {
+    if (get_env_variable("DASSDL3_PACKAGE_PROFILE") == "imgui") {
+        require_package("dasImgui")
+    }
+}
+
+[export]
+def build() {
+    cmake_build()
+}
+
+[export]
+def release() {
+    release_include("LICENSE")
+    release_include("VERSION")
+    release_include("licenses/**")
+}

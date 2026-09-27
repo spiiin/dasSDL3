@@ -1,12 +1,16 @@
 """Install and relocate binary/source core packages through upstream daspkg."""
 import argparse
 import ctypes
+import hashlib
+import json
+import re
 import os
 from pathlib import Path
 import shutil
 import subprocess
 import sys
 import tempfile
+import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -21,7 +25,10 @@ def main():
     parser.add_argument("--release", action="store_true")
     parser.add_argument("--llvm-dir", type=Path)
     parser.add_argument("--imgui", action="store_true")
+    parser.add_argument("--repository", action="store_true", help="Clean HEAD export plus pending package entry files")
     args = parser.parse_args()
+    if args.repository:
+        args.source = True
     if args.fetch_sdl:
         if args.sdl_dir:
             parser.error("--fetch-sdl cannot use --sdl-dir")
@@ -37,6 +44,8 @@ def main():
         for key in list(env):
             if key.upper().startswith(("SDL3_", "FETCHCONTENT_")) or key.upper() == "CMAKE_PREFIX_PATH":
                 del env[key]
+    if args.repository:
+        env["DASSDL3_PACKAGE_PROFILE"] = "imgui" if args.imgui else "core"
     if args.source:
         env["CMAKE_GENERATOR"] = "Ninja"
         env["CMAKE_BUILD_PARALLEL_LEVEL"] = "6"
@@ -61,14 +70,44 @@ def main():
             raise RuntimeError(f"{name} failed ({result.returncode}):\n{result.stdout}")
         return result.stdout
 
+    def verify_licenses(directory):
+        for relative in ["LICENSE", "VERSION", *[
+                p.relative_to(ROOT).as_posix()
+                for p in (ROOT / "licenses").rglob("*") if p.is_file()]]:
+            path = directory / relative
+            if not path.is_file() or path.read_bytes() != (ROOT / relative).read_bytes():
+                raise RuntimeError(f"Missing or altered distribution notice: {path}")
+        for entry in json.loads((directory / "licenses/manifest.json").read_text(encoding="utf-8")):
+            data = (directory / "licenses" / entry["file"]).read_bytes()
+            if hashlib.sha256(data).hexdigest() != entry["sha256"]:
+                raise RuntimeError(f"License snapshot hash mismatch: {entry['file']}")
+
     stage_mode = ["--source", "--sdk", str(das)] if args.source else ["--module", str(args.module.resolve())]
     if args.imgui:
         stage_mode += ["--with-imgui"]
         if not args.source:
             stage_mode += ["--sdk", str(das)]
-    run("stage", [sys.executable, str(ROOT / "tools/stage_daspkg.py"),
-                  *stage_mode, "--output", str(package)], ROOT)
-    if args.source:
+    if args.repository:
+        archive = work / "repository.zip"
+        run("archive", ["git", "--no-optional-locks", "-c", f"safe.directory={ROOT.as_posix()}",
+                        "-C", str(ROOT), "archive", "--format=zip", f"--output={archive}", "HEAD"], ROOT)
+        package.mkdir(parents=True)
+        with zipfile.ZipFile(archive) as source_zip:
+            source_zip.extractall(package)
+        # No commit is made to the user's checkout. Overlay exactly the proposed entry files.
+        for name in (".das_package", "CMakeLists.txt", ".gitignore", ".gitattributes", "LICENSE", "VERSION"):
+            shutil.copy2(ROOT / name, package / name)
+        shutil.copytree(ROOT / "licenses", package / "licenses", dirs_exist_ok=True)
+        shutil.copytree(ROOT / "src/package", package / "src/package", dirs_exist_ok=True)
+        if (package / "third_party/daScript/bin/daslang.exe").exists():
+            raise RuntimeError("Repository fixture unexpectedly contains a built SDK")
+        if list(package.rglob("*.shared_module")):
+            raise RuntimeError("Repository fixture unexpectedly contains a native module")
+    else:
+        run("stage", [sys.executable, str(ROOT / "tools/stage_daspkg.py"),
+                      *stage_mode, "--output", str(package)], ROOT)
+    verify_licenses(package)
+    if args.source and not args.repository:
         if list(package.rglob("*.shared_module")):
             raise RuntimeError("Source staging unexpectedly contains a prebuilt module")
         # Deliberately change the expected fingerprint. Configure must reject it before build/fetch.
@@ -90,6 +129,14 @@ def main():
         cli += ["-load_module", str(args.cli_module.resolve())]
     cli += [str(das / "utils/daspkg/main.das"), "--"]
     run("install", cli + ["install", str(package), "--root", str(consumer)], consumer)
+    verify_licenses(consumer / "modules/dasSDL3")
+    if args.repository:
+        installed = consumer / "modules/dasSDL3"
+        descriptor = installed / ".das_module"
+        descriptor.rename(installed / ".das_module.test-original")
+        run("rebuild-descriptor", ["cmake", "--build", str(installed / "_build"), "--parallel", "6"], consumer)
+        if not descriptor.is_file():
+            raise RuntimeError("Incremental build did not restore the module descriptor")
     if args.fetch_sdl:
         native_build = consumer / "modules/dasSDL3/_build"
         checkout = native_build / "_deps/sdl3-src"
@@ -103,6 +150,17 @@ def main():
         if head != tag or origin != "https://github.com/libsdl-org/SDL.git":
             raise RuntimeError(f"Unexpected SDL source: {origin} {head} (tag {tag})")
         print(f"Cold SDL fetch/build verified: release-3.4.16 {head}", flush=True)
+    descriptor_text = (consumer / "modules/dasSDL3/.das_module").read_text(encoding="utf-8")
+    imports = sorted(re.findall(r'register_native_path\("dassdl3", "([^"]+)"', descriptor_text))
+    if not imports:
+        raise RuntimeError("Package descriptor registered no boost modules")
+    (consumer / "all_imports.das").write_text(
+        "options gen2\n" + "".join(f"require dassdl3/{name}\n" for name in imports)
+        + '\n[export]\ndef main { print("All package imports compiled.\\n") }\n',
+        encoding="utf-8")
+    import_output = run("all-imports", [exe, "-dasroot", str(das), "all_imports.das"], consumer)
+    if "All package imports compiled." not in import_output:
+        raise RuntimeError(f"Package import check failed: {import_output}")
     run_args = ["--", "--smoke"] if args.imgui else []
     run("check", cli + ["check", "--root", str(consumer)], consumer)
     output = run("consumer", [exe, "-dasroot", str(das), "main.das", *run_args], consumer)
@@ -137,6 +195,7 @@ def main():
         portable = Path(tempfile.mkdtemp(prefix="dasSDL3 release "))
         bundle = portable / "app"
         shutil.copytree(release, bundle)
+        verify_licenses(bundle / "modules/dasSDL3")
         required = [bundle_name + ".exe", "libDaScriptDyn.dll",
                     "libDaScriptDyn_runtime.dll", "modules/dasSDL3/dasSDL3.shared_module"]
         if args.imgui:

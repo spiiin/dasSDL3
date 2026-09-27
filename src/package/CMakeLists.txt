@@ -20,18 +20,41 @@ endforeach()
 set(DASSDL3_SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/.." CACHE PATH "Binding sources")
 set(DASSDL3_PACKAGE_OUTPUT "${CMAKE_BINARY_DIR}/module" CACHE PATH "Module destination")
 if(DEFINED DASSDL3_SDK_FINGERPRINT)
-    file(STRINGS "${DASSDL3_SDK_FINGERPRINT}" _sdk_files)
-    foreach(entry IN LISTS _sdk_files)
-        string(SUBSTRING "${entry}" 0 64 expected)
-        string(SUBSTRING "${entry}" 65 -1 relative)
-        if(NOT EXISTS "${DASLANG_DIR}/${relative}")
-            message(FATAL_ERROR "SDK fingerprint: missing ${relative}")
+    # A candidate must match in full; never mix files from different SDKs.
+    set(_sdk_match FALSE)
+    set(_sdk_failures "")
+    foreach(candidate IN LISTS DASSDL3_SDK_FINGERPRINT)
+        file(STRINGS "${candidate}" _sdk_files)
+        if(NOT _sdk_files)
+            message(FATAL_ERROR "Empty SDK fingerprint: ${candidate}")
         endif()
-        file(SHA256 "${DASLANG_DIR}/${relative}" actual)
-        if(NOT actual STREQUAL expected)
-            message(FATAL_ERROR "SDK fingerprint mismatch: ${relative}. Use the SDK used to stage this package.")
+        set(_candidate_match TRUE)
+        foreach(entry IN LISTS _sdk_files)
+            string(SUBSTRING "${entry}" 0 64 expected)
+            string(SUBSTRING "${entry}" 65 -1 relative)
+            if(NOT EXISTS "${DASLANG_DIR}/${relative}")
+                set(_candidate_match FALSE)
+                set(_reason "missing ${relative}")
+                break()
+            endif()
+            file(SHA256 "${DASLANG_DIR}/${relative}" actual)
+            if(NOT actual STREQUAL expected)
+                set(_candidate_match FALSE)
+                set(_reason "changed ${relative}")
+                break()
+            endif()
+        endforeach()
+        get_filename_component(_candidate_name "${candidate}" NAME)
+        if(_candidate_match)
+            set(_sdk_match TRUE)
+            message(STATUS "Validated SDK snapshot: ${_candidate_name}")
+            break()
         endif()
+        string(APPEND _sdk_failures "\n  ${_candidate_name}: ${_reason}")
     endforeach()
+    if(NOT _sdk_match)
+        message(FATAL_ERROR "SDK fingerprint mismatch. No validated snapshot matched:${_sdk_failures}\nSee docs/daspkg.md for supported SDKs.")
+    endif()
 endif()
 # Reuse an explicit SDL install, or fetch the pinned source for the source package.
 option(DASSDL3_PACKAGE_FETCH_SDL "Fetch pinned SDL when no SDL3_DIR is supplied" OFF)
@@ -64,20 +87,51 @@ set_target_properties(dasSDL3_package PROPERTIES PREFIX "" SUFFIX ".shared_modul
 option(DASSDL3_PACKAGE_IMGUI "Include SDL platform/renderer backend for SDK dasImgui" OFF)
 if(DASSDL3_PACKAGE_IMGUI)
     set(_imgui "${DASLANG_DIR}/modules/dasImgui")
-    foreach(required lib/dasModuleImgui.lib modules/dasImgui/dasModuleImgui.shared_module
-            modules/dasImgui/imgui/imgui.h)
-        if(NOT EXISTS "${DASLANG_DIR}/${required}")
+    set(_imgui_source "${_imgui}/imgui")
+    set(_imgui_library "${DASLANG_DIR}/lib/dasModuleImgui.lib")
+    if(NOT EXISTS "${_imgui_source}/imgui.h")
+        # Authenticate the official GUI binaries before fetching release sources.
+        set(_official_gui_files
+            modules/dasImgui/dasModuleImgui.lib
+            modules/dasImgui/dasModuleImgui.shared_module
+            modules/dasClipboard/dasModuleClipboard.shared_module)
+        set(_official_gui_hashes 7e4cb5be34e850d0d8991d63608b99f81d1a4891290323c758e878462883cf7d
+            e68da3cad4cb766f9766142084433fa2d8f918e5e2543418dae6508618e9f51f
+            0ebe61e4f8c6530e2994bec4316060e13db50cfa8b3c9caf262098c68b8b2ab3)
+        foreach(index RANGE 0 2)
+            list(GET _official_gui_files ${index} relative)
+            list(GET _official_gui_hashes ${index} expected)
+            if(NOT EXISTS "${DASLANG_DIR}/${relative}")
+                message(FATAL_ERROR "Official GUI SDK missing ${relative}")
+            endif()
+            file(SHA256 "${DASLANG_DIR}/${relative}" actual)
+            if(NOT actual STREQUAL expected)
+                message(FATAL_ERROR "Official GUI SDK fingerprint mismatch: ${relative}")
+            endif()
+        endforeach()
+        include(FetchContent)
+        FetchContent_Declare(dassdl3_imgui
+            URL https://github.com/ocornut/imgui/archive/refs/tags/v1.92.6-docking.tar.gz
+            URL_HASH SHA256=5e84cdaa6a6041586a0d11a3071b749734a0439d66fdbdad37ae5b27e37d396c
+            DOWNLOAD_EXTRACT_TIMESTAMP TRUE)
+        FetchContent_MakeAvailable(dassdl3_imgui)
+        set(_imgui_source "${dassdl3_imgui_SOURCE_DIR}")
+        set(_imgui_library "${_imgui}/dasModuleImgui.lib")
+    endif()
+    foreach(required "${_imgui_library}" "${_imgui}/dasModuleImgui.shared_module"
+            "${_imgui_source}/imgui.h")
+        if(NOT EXISTS "${required}")
             message(FATAL_ERROR "GUI profile needs a built SDK dasImgui: missing ${required}")
         endif()
     endforeach()
     target_sources(dasSDL3_package PRIVATE "${DASSDL3_SOURCE_DIR}/libraries/module_imgui_sdl.cpp"
-        "${_imgui}/imgui/backends/imgui_impl_sdl3.cpp"
-        "${_imgui}/imgui/backends/imgui_impl_sdlrenderer3.cpp")
+        "${_imgui_source}/backends/imgui_impl_sdl3.cpp"
+        "${_imgui_source}/backends/imgui_impl_sdlrenderer3.cpp")
     target_include_directories(dasSDL3_package PRIVATE "${DASSDL3_SOURCE_DIR}/libraries"
-        "${_imgui}/imgui" "${_imgui}/src")
+        "${_imgui_source}")
     target_compile_definitions(dasSDL3_package PRIVATE "IMGUI_API=__declspec(dllimport)"
         "IMGUI_IMPL_API=" IMGUI_DISABLE_OBSOLETE_FUNCTIONS=1 IMGUI_ENABLE_FREETYPE=1 IMGUI_USE_WCHAR32=1)
-    target_link_libraries(dasSDL3_package PRIVATE "${DASLANG_DIR}/lib/dasModuleImgui.lib")
+    target_link_libraries(dasSDL3_package PRIVATE "${_imgui_library}")
 endif()
 
 # Optional helper for this repository's minimal SDK: daspkg itself imports PUGIXML.
@@ -101,6 +155,10 @@ endif()
 include(CTest)
 if(BUILD_TESTING)
     find_package(Python3 REQUIRED COMPONENTS Interpreter)
+    add_test(NAME sdl3_daspkg_manifest COMMAND "${Python3_EXECUTABLE}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/../../tests/test_daspkg_manifest.py"
+        --das-root "${DASLANG_DIR}")
+    set_tests_properties(sdl3_daspkg_manifest PROPERTIES TIMEOUT 120)
     add_test(NAME sdl3_daspkg_consumer COMMAND "${Python3_EXECUTABLE}"
         "${CMAKE_CURRENT_SOURCE_DIR}/../../tests/test_daspkg.py"
         --module $<TARGET_FILE:dasSDL3_package> --das-root "${DASLANG_DIR}" ${_cli_args})
@@ -110,6 +168,17 @@ if(BUILD_TESTING)
         --module $<TARGET_FILE:dasSDL3_package> --das-root "${DASLANG_DIR}"
         --source --sdl-dir "${SDL3_DIR}" ${_cli_args})
     set_tests_properties(sdl3_daspkg_source PROPERTIES TIMEOUT 900 RUN_SERIAL TRUE)
+    foreach(profile core imgui)
+        set(_profile_arg)
+        if(profile STREQUAL "imgui")
+            set(_profile_arg --imgui)
+        endif()
+        add_test(NAME sdl3_daspkg_repository_${profile} COMMAND "${Python3_EXECUTABLE}"
+            "${CMAKE_CURRENT_SOURCE_DIR}/../../tests/test_daspkg.py"
+            --module $<TARGET_FILE:dasSDL3_package> --das-root "${DASLANG_DIR}"
+            --repository --sdl-dir "${SDL3_DIR}" ${_profile_arg} ${_cli_args})
+        set_tests_properties(sdl3_daspkg_repository_${profile} PROPERTIES TIMEOUT 900 RUN_SERIAL TRUE)
+    endforeach()
     if(DASSDL3_PACKAGE_IMGUI)
         foreach(mode binary source)
             set(_source_arg)

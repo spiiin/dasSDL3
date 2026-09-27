@@ -3,3 +3,8 @@
 /logs/
 __pycache__/
 /.jitted_scripts/
+
+# daspkg repository build outputs
+/_build/
+/.das_module
+/dasSDL3.shared_module

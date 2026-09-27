@@ -1,0 +1,47 @@
+# Repository install entry point; requires no initialized third_party submodules.
+set(BUILD_TESTING OFF CACHE BOOL "" FORCE)
+set(_profile "$ENV{DASSDL3_PACKAGE_PROFILE}")
+if(_profile STREQUAL "")
+    set(_profile core)
+endif()
+if(NOT _profile MATCHES "^(core|imgui)$")
+    message(FATAL_ERROR "DASSDL3_PACKAGE_PROFILE must be core or imgui")
+endif()
+set(DASSDL3_SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/.." CACHE PATH "" FORCE)
+set(DASSDL3_PACKAGE_OUTPUT "${CMAKE_SOURCE_DIR}" CACHE PATH "" FORCE)
+set(DASSDL3_SDK_FINGERPRINT "${CMAKE_CURRENT_LIST_DIR}/profiles/${_profile}.sha256")
+list(APPEND DASSDL3_SDK_FINGERPRINT
+    "${CMAKE_CURRENT_LIST_DIR}/profiles/${_profile}-official-0.6.4.sha256")
+set(DASSDL3_PACKAGE_FETCH_SDL ON CACHE BOOL "")
+set(DASSDL3_PACKAGE_IMGUI OFF CACHE BOOL "" FORCE)
+if(_profile STREQUAL "imgui")
+    set(DASSDL3_PACKAGE_IMGUI ON CACHE BOOL "" FORCE)
+endif()
+include("${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt")
+
+file(GLOB _scripts CONFIGURE_DEPENDS "${CMAKE_SOURCE_DIR}/dassdl3/*.das")
+set(_exclude sdl3_image_boost sdl3_imgui sdl3_imgui_widgets sdl3_mixer_boost
+    sdl3_net_boost sdl3_sound_boost sdl3_ttf_boost)
+if(DASSDL3_PACKAGE_IMGUI)
+    list(REMOVE_ITEM _exclude sdl3_imgui)
+endif()
+set(_registration "options gen2\nrequire daslib/fio\n\n[export]\ndef initialize(project_path : string) {\n")
+string(APPEND _registration "    register_dynamic_module(\"{project_path}/dasSDL3.shared_module\", \"Module_dasSDL3\")\n")
+if(DASSDL3_PACKAGE_IMGUI)
+    string(APPEND _registration "    register_dynamic_module(\"{project_path}/dasSDL3.shared_module\", \"Module_imgui_sdl3\")\n")
+endif()
+foreach(script IN LISTS _scripts)
+    get_filename_component(name "${script}" NAME_WE)
+    if(name IN_LIST _exclude OR name MATCHES "^sdl3_shader")
+        continue()
+    endif()
+    string(APPEND _registration "    register_native_path(\"dassdl3\", \"${name}\", \"{project_path}/dassdl3/${name}.das\")\n")
+endforeach()
+string(APPEND _registration "}\n")
+# Only publish the descriptor after successful linking, not after configure failure.
+file(WRITE "${CMAKE_BINARY_DIR}/package.das_module" "${_registration}")
+add_custom_target(dasSDL3_package_descriptor ALL
+    DEPENDS dasSDL3_package
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+    "${CMAKE_BINARY_DIR}/package.das_module" "${CMAKE_SOURCE_DIR}/.das_module")
+message(STATUS "dasSDL3 repository package: ${_profile}; consumer SDK: ${DASLANG_DIR}")

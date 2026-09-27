@@ -14,7 +14,7 @@ def main():
     root = Path(__file__).resolve().parents[1]
     shaders = root / "examples/gpu/shaders"
     modules = sorted(shaders.glob("*_shaders.das"))
-    assert len(modules) == 9
+    assert len(modules) == 10
     names = []
     with tempfile.TemporaryDirectory(prefix="gpu-example-dsl-") as directory:
         folder = Path(directory)
@@ -24,7 +24,7 @@ def main():
             (folder / module.name).write_text(source, encoding="utf-8")
             imports.append(f"require {module.stem}")
             names.extend(re.findall(r'(?:vertex|fragment)_shader\(name\s*=\s*"([^"\n]+)"', source))
-        assert len(names) == 29 and len(set(names)) == len(names)
+        assert len(names) == 31 and len(set(names)) == len(names)
         calls = []
         for name in names:
             calls.append(f'save("{folder.as_posix()}/{name}.spv", {name}, {name}_reflect)')

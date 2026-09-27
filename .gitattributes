@@ -1,0 +1,2 @@
+# Preserve upstream notice bytes and manifest SHA-256 across Windows checkouts.
+/licenses/** -text

@@ -255,3 +255,40 @@ and standalone GUI dependency shipping remain separate checks.
 Standalone GUI release now passes pixel verification and missing-dependency tests
 with unavailable build-time ImGui paths. The release manifest explicitly ships
 ImGui's native Clipboard dependency; see the GUI release section in daspkg.md.
+
+The repository daspkg entry is prepared: root manifest, consumer-SDK CMake route,
+core/imgui profiles and fixed SDK fingerprints. Both profiles install and run from
+a clean HEAD export with pending packaging changes overlaid, without initialized
+submodules. A live GitHub URL install awaits publication of these files; no commit,
+push, tag or index registration was performed.
+
+The core/ImGui distribution now declares MIT for original dasSDL3 code and ships
+the pinned dependency notices in binary/source packages and standalone releases.
+License checks are part of the real daspkg install/release tests. Optional live
+and companion distributions still need their own feature-specific notice inventory.
+
+A portable Windows verification ZIP can now be staged from both standalone
+profiles. Its PowerShell runner needs no SDK/Python, validates file hashes,
+executes core/GUI smoke checks with a bounded timeout and writes a JSON report.
+Local ZIP extraction/execution and corrupted-notice rejection pass. On 2026-09-28
+the user also reported successful core/GUI verification on a separate Windows
+host: both exit codes were zero, no timeout, hashes/pixels/cleanup passed.
+The console transcript is the evidence; the remote JSON/logs and host software
+inventory have not been inspected. A pristine-VM check remains distinct.
+See daspkg.md for the recorded result and transfer/run instructions.
+
+Official Windows SDK v0.6.4 core has now passed native compilation, all core
+boost imports, package install/check/relocation and standalone dependency checks.
+Repository source installation accepts its independent fixed fingerprint as
+well as the local reference SDK. GUI now obtains the exact native ImGui source archive pinned by the SDK release,
+while keeping the SDK binary and its ABI settings unchanged.
+See daspkg.md and src/package/profiles/official-0.6.4.json for provenance/scope.
+
+Official SDK 0.6.4 GUI now passes source/repository installation, all 64 imports,
+pixel readback, relocation and standalone missing-dependency checks. The previous
+local GUI source profile also passes. A separate portable verification ZIP is
+prepared for the official-SDK core/GUI pair; the user explicitly skipped its repeated external-machine run.
+
+Release 0.1.0 is prepared locally: version file, full daspkg metadata, draft notes
+and publication handoff. Metadata/hooks are exercised through the upstream SDK
+runner without side effects. Publication remains a separate authorized action.

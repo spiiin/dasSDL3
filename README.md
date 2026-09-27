@@ -174,3 +174,9 @@ ctest --test-dir build/ninja --output-on-failure
 ```
 
 Some tests require graphics drivers, devices or optional dependencies. Generator freshness and parity checks require the separately documented developer toolchain; the default build does not enable them.
+
+## License
+
+Original dasSDL3 code is [MIT licensed](LICENSE). Dependencies, adapted examples
+and assets retain their own licenses; see [distribution notices](licenses/README.md).
+The core/ImGui packages and standalone releases include these notices.

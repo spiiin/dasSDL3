@@ -40,6 +40,9 @@ def main():
                 parser.error(f"Core profile is incomplete: {script.name} requires {dependency}")
     output.mkdir(parents=True, exist_ok=True)
     (output / "dassdl3").mkdir()
+    shutil.copy2(ROOT / "LICENSE", output / "LICENSE")
+    shutil.copy2(ROOT / "VERSION", output / "VERSION")
+    shutil.copytree(ROOT / "licenses", output / "licenses")
     if source:
         shutil.copy2(source, output / "dasSDL3.shared_module")
     else:
@@ -52,8 +55,10 @@ def main():
         if args.with_imgui:
             sdk_files += sorted(p for p in (sdk / "modules/dasImgui/imgui").rglob("*")
                                 if p.is_file() and p.suffix in {".h", ".cpp"})
-            sdk_files += [sdk / "lib/dasModuleImgui.lib",
-                          sdk / "modules/dasImgui/dasModuleImgui.shared_module"]
+            sdk_files += [sdk / ("lib/dasModuleImgui.lib" if (sdk / "lib/dasModuleImgui.lib").is_file()
+                                else "modules/dasImgui/dasModuleImgui.lib"),
+                          sdk / "modules/dasImgui/dasModuleImgui.shared_module",
+                          sdk / "modules/dasClipboard/dasModuleClipboard.shared_module"]
         for path in sdk_files:
             if not path.is_file():
                 parser.error(f"Missing SDK input: {path}")
@@ -100,14 +105,20 @@ def main():
         'options gen2\nrequire daslib/daspkg\n\n[export]\ndef package() {\n'
         '    package_name("dasSDL3")\n'
         '    package_description("SDL3 core bindings: local Windows x64 Release DLL pilot")\n'
+        '    package_license("MIT")\n'
         '    package_tag("sdl3")\n}\n\n[export]\ndef build() {\n    ' + ('cmake_build()' if args.source else 'no_build()') + '\n}\n',
         encoding="utf-8")
+    with (output / ".das_package").open("a", encoding="utf-8") as manifest:
+        manifest.write('\n[export]\ndef release() {\n    release_include("LICENSE")\n    release_include("VERSION")\n    release_include("licenses/**")\n}\n')
     if args.with_imgui:
         with (output / ".das_package").open("a", encoding="utf-8") as manifest:
             manifest.write('\n[export]\ndef dependencies(version : string) {\n    require_package("dasImgui")\n}\n')
     (output / "profile.json").write_text(json.dumps({
+        "version": (ROOT / "VERSION").read_text(encoding="utf-8").strip(),
         "profile": "windows-x64-msvc-release-md-avx2",
-        "sdl": "3.4.16", "dascript": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+        "sdl": "3.4.16", "binding_reference_revision": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+        "sdk_runtime_sha256": hashlib.sha256(
+            (args.sdk / "bin/libDaScriptDyn.dll").read_bytes()).hexdigest() if args.sdk else None,
         "module_sha256": hashlib.sha256(source.read_bytes()).hexdigest() if source else None,
         "kind": "source" if args.source else "binary",
         "features": ["core", "imgui"] if args.with_imgui else ["core"],
