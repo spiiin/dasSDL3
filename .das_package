@@ -13,6 +13,7 @@ def package() {
     package_tag("sdl3")
     package_tag("graphics")
     package_tag("imgui")
+    package_platform("windows")
 }
 
 [export]
