@@ -133,6 +133,11 @@ public:
         auto hidChar = makeType<SDL_HidChar>(lib);
         hidChar->alias = "SDL_HidChar";
         addAlias(hidChar);
+#if defined(SDL_PLATFORM_WIN32) || defined(SDL_PLATFORM_WINGDK)
+        addConstant(*this, "SDL_HAS_DXGI_QUERY", true);
+#else
+        addConstant(*this, "SDL_HAS_DXGI_QUERY", false);
+#endif
 #if defined(SDL_PLATFORM_WINDOWS)
         addConstant(*this, "DASSDL3_WINDOWS", true);
 #else
@@ -303,7 +308,7 @@ public:
         addExtern<DAS_BIND_FUN(SDL_CreateTrayText)>(*this,lib,"SDL_CreateTrayText",SideEffects::worstDefault,"SDL_CreateTrayText");
         addExtern<DAS_BIND_FUN(SDL_MakeDialogFileFilter),SimNode_ExtFuncCallAndCopyOrMove>(*this,lib,"SDL_MakeDialogFileFilter",SideEffects::none,"SDL_MakeDialogFileFilter");
         addExtern<DAS_BIND_FUN(SDL_GetPowerInfoRef)>(*this,lib,"SDL_GetPowerInfoRef",SideEffects::worstDefault,"SDL_GetPowerInfoRef");
-#if defined(SDL_PLATFORM_WINDOWS)
+#if defined(SDL_PLATFORM_WINDOWS) || defined(__APPLE__)
         addExtern<DAS_BIND_FUN(SDL_GetDXGIOutputInfoRef)>(*this,lib,"SDL_GetDXGIOutputInfoRef",SideEffects::worstDefault,"SDL_GetDXGIOutputInfoRef");
 #endif
         addExtern<DAS_BIND_FUN(SDL_GetPreferredLocalesCopy)>(*this,lib,"SDL_GetPreferredLocalesCopy",SideEffects::worstDefault,"SDL_GetPreferredLocalesCopy");

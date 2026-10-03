@@ -90,16 +90,17 @@ def append_volume_reused(var out : array<float>; mesh : ClosedMesh; model : floa
         // Avoid a cross-module script call for every input vertex.
         let world = model * float4(mesh.geometry.vertices[offset], mesh.geometry.vertices[offset + 1], mesh.geometry.vertices[offset + 2], 1.0)
         let p = world / world.w
-        // xzy preserves the SSE4 dot3 accumulation order used by the reference.
-        let direction = p - float4(light, 1.0)
-        points[i] = p; far_points[i] = p + normalize(direction.xzyw).xzyw * distance
+        // Use the same three-lane arithmetic as the independent CPU reference.
+        // A four-lane swizzle depends on the host SIMD reduction order.
+        let far = p.xyz + normalize(p.xyz - light) * distance
+        points[i] = p; far_points[i] = float4(far, 1.0)
     }
     resize(lit, length(mesh.geometry.indices) / 3)
     for (i in 0 .. length(lit)) {
         let a = points[mesh.geometry.indices[i * 3]]; let b = points[mesh.geometry.indices[i * 3 + 1]]; let c = points[mesh.geometry.indices[i * 3 + 2]]
         let u = b - a; let v = c - a
         let normal = float4(u.y * v.z - u.z * v.y, u.z * v.x - u.x * v.z, u.x * v.y - u.y * v.x, 0.0)
-        lit[i] = dot(normal.xzyw, (float4(light, 1.0) - a).xzyw) > 0.0
+        lit[i] = dot(normal.xyz, light - a.xyz) > 0.0
     }
     // Count once, then resize once per object instead of pushing each scalar.
     var triangles = 0
@@ -158,7 +159,7 @@ def append_volume_indexed(var vertices : array<float>; var out : array<uint8>; m
         let a = points[mesh.geometry.indices[i * 3]]; let b = points[mesh.geometry.indices[i * 3 + 1]]; let c = points[mesh.geometry.indices[i * 3 + 2]]
         let u = b - a; let v = c - a
         let normal = float4(u.y * v.z - u.z * v.y, u.z * v.x - u.x * v.z, u.x * v.y - u.y * v.x, 0.0)
-        lit[i] = dot(normal.xzyw, (float4(light, 1.0) - a).xzyw) > 0.0
+        lit[i] = dot(normal.xyz, light - a.xyz) > 0.0
     }
     // Count once, then resize once per object instead of pushing each scalar.
     var triangles = 0
@@ -226,7 +227,7 @@ def append_prepared_volume(var out : array<uint8>; mesh : ClosedMesh; span : Vol
     resize(lit, span.face_count)
     for (i in 0 .. span.face_count) {
         let face = span.face_start + i
-        lit[i] = dot(normals[face].xzyw, (float4(light, 1.0) - origins[face]).xzyw) * orientation > 0.0
+        lit[i] = dot(normals[face].xyz, light - origins[face].xyz) * orientation > 0.0
     }
     // Count once, then resize once per object instead of pushing each scalar.
     var triangles = 0

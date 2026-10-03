@@ -76,7 +76,10 @@ C AST canonicalizes wchar_t to unsigned short, while MSVC C++ distinguishes it.
 Small AOT-only pointer casts bridge uint16 storage. Metadata strings are converted
 to UTF-8 and copied immediately, including surrogate pairs; absent strings become
 empty strings. SDL_HidWideString is the explicit conversion helper. No cross-OS
-wchar_t ABI guarantee is claimed.
+wchar_t ABI guarantee is claimed for those Windows snapshots. The native macOS
+profile uses `SDL_HidChar` (`int`/UTF-32) buffers and explicit interpreter/AOT
+bridges; Windows uses the same alias for `uint16`/UTF-16. Use the alias for
+portable scripts. Metadata copying converts the native representation to UTF-8.
 
 `hid_read`, `hid_read_timeout`, `hid_write`, feature/input reports and descriptor
 helpers take byte arrays and return Result<int>, preserving the native count.

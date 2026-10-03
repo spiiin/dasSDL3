@@ -1,4 +1,5 @@
 options gen2
+require gpu/file_shader_support
 require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_recording_boost
 require daslib/defer
@@ -19,12 +20,12 @@ def render_triangle(device : SDL_GPUDevice?) : SdlStatus {
         if (*fragment != 0ul) { SDL_ReleaseGPUCheckedShader(device, fragment) }
         if (*vertex != 0ul) { SDL_ReleaseGPUCheckedShader(device, vertex) }
     }
-    let spirv = (SDL_GetGPUShaderFormats(device) & SDL_GPU_SHADERFORMAT_SPIRV) != 0u
-    let format = spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL
-    let extension = spirv ? "spv" : "dxil"
+    let backend = file_shader_backend(device)
+    let format = backend.format
+    let extension = backend.extension
     let base = "{SDL_GetBasePath()}assets/shaders/triangle"
-    vertex = device |> load_gpu_shader("{base}.vert.{extension}", gpu_shader_info(format, SDL_GPUShaderStage.SHADERSTAGE_VERTEX), "main") |> sdl_try
-    fragment = device |> load_gpu_shader("{base}.frag.{extension}", gpu_shader_info(format, SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT), "main") |> sdl_try
+    vertex = device |> load_gpu_shader("{base}.vert.{extension}", gpu_shader_info(format, SDL_GPUShaderStage.SHADERSTAGE_VERTEX), backend.entry) |> sdl_try
+    fragment = device |> load_gpu_shader("{base}.frag.{extension}", gpu_shader_info(format, SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT), backend.entry) |> sdl_try
     var buffers : array<SDL_GPUVertexBufferDescription>
     var attributes : array<SDL_GPUVertexAttribute>
     var colors <- array(gpu_color_target(SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM))

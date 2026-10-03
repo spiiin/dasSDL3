@@ -1,0 +1,34 @@
+name: macOS arm64
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: macos-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  headless:
+    runs-on: macos-15
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build tools
+        run: brew install cmake ninja
+      - name: Verify native core, companions, strict AOT and relocated SDK
+        run: bash tools/verify_macos_ci.sh
+      - name: Upload diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-arm64-logs
+          path: |
+            build/macos-ci/logs/
+            build/macos-ci/**/Testing/Temporary/LastTest.log
+          if-no-files-found: ignore

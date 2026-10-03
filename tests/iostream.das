@@ -59,6 +59,15 @@ def main(smoke : bool) : int {
             let data = SDL_LoadFile_IO(file, addr(size), true)
             verify(data != null && size == 8ul)
             SDL_free(data)
+            let optional_size = SDL_LoadFile(path, null)
+            verify(optional_size != null); SDL_free(optional_size)
+            let no_size_io = SDL_IOFromFile(path, "rb")
+            let optional_io_size = SDL_LoadFile_IO(no_size_io, null, true)
+            verify(optional_io_size != null); SDL_free(optional_io_size)
+            size = 123ul
+            verify(SDL_LoadFile("{path}.missing", addr(size)) == null && size == 0ul)
+            size = 123ul
+            verify(SDL_LoadFile_IO(null, addr(size), false) == null && size == 0ul)
             let target = SDL_IOFromFile(path, "wb")
             verify(SDL_SaveFile_IO(target, addr(bytes[0]), 8ul, true))
         }

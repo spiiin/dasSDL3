@@ -3,7 +3,7 @@
 // Pinned Windows SDL dereferences a documented nullable tooltip.
 inline SDL_Tray * SDL_CreateTrayText(SDL_Surface * icon,const char * tooltip) {return SDL_CreateTray(icon,tooltip?tooltip:"");}
 inline SDL_DialogFileFilter SDL_MakeDialogFileFilter(const char * name,const char * pattern) {return {name,pattern};}
-#if defined(SDL_PLATFORM_WINDOWS)
+#ifdef SDL_PLATFORM_WINDOWS
 inline void SDL_SetWindowsMessageHookAddress(void * callback,void * userdata) {SDL_SetWindowsMessageHook(reinterpret_cast<SDL_WindowsMessageHook>(callback),userdata);}
 #endif
 inline void SDL_SetX11EventHookAddress(void * callback,void * userdata) {SDL_SetX11EventHook(reinterpret_cast<SDL_X11EventHook>(callback),userdata);}
@@ -13,9 +13,13 @@ inline void SDL_ShowSaveFileDialogAddress(void * callback,void * userdata,SDL_Wi
 inline void SDL_ShowOpenFolderDialogAddress(void * callback,void * userdata,SDL_Window * window,const char * location,bool many) {SDL_ShowOpenFolderDialog(reinterpret_cast<SDL_DialogFileCallback>(callback),userdata,window,location,many);}
 inline void SDL_ShowFileDialogWithPropertiesAddress(SDL_FileDialogType type,void * callback,void * userdata,uint32_t props) {SDL_ShowFileDialogWithProperties(type,reinterpret_cast<SDL_DialogFileCallback>(callback),userdata,props);}
 inline SDL_PowerState SDL_GetPowerInfoRef(int & seconds,int & percent) {return SDL_GetPowerInfo(&seconds,&percent);}
-#if defined(SDL_PLATFORM_WINDOWS)
-inline bool SDL_GetDXGIOutputInfoRef(uint32_t display,int & adapter,int & output) {return SDL_GetDXGIOutputInfo(display,&adapter,&output);}
+inline bool SDL_GetDXGIOutputInfoRef(uint32_t display,int & adapter,int & output) {
+#if defined(SDL_PLATFORM_WIN32) || defined(SDL_PLATFORM_WINGDK)
+    return SDL_GetDXGIOutputInfo(display,&adapter,&output);
+#else
+    return SDL_SetError("DXGI output information is available only on Windows");
 #endif
+}
 inline bool SDL_GetPreferredLocalesCopy(das::TArray<SDL_Locale> & out,das::Context * ctx,das::LineInfoArg * at) {
     das::builtin_array_resize(out,0,sizeof(SDL_Locale),ctx,at);int count=0;
     std::unique_ptr<SDL_Locale *,decltype(&SDL_free)> owned(SDL_GetPreferredLocales(&count),SDL_free);

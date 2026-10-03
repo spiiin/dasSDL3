@@ -25,7 +25,7 @@ The Windows inventory records **1,062 generated functions and 13 adapted functio
 
 The record audit classifies **840 fields across 122 complete records**, with no remaining `pending` or `partial` field-access entries. Some fields deliberately remain native-only or SDL-internal; classification does not imply unrestricted script access.
 
-The Windows validation workflow covers interpreter execution, both binding generators, strict AOT and a separate installed-SDK consumer. Linux has the narrower regression profile described below. This is not a claim of complete SDL coverage or validation on every platform/device. See [coverage](docs/api-coverage.md), [remaining API decisions](docs/remaining-api-policy.md) and [record access](docs/record-field-accessibility.md).
+The Windows validation workflow covers interpreter execution, both binding generators, strict AOT and a separate installed-SDK consumer. Native macOS has interpreter/strict AOT, Metal, companion libraries, installed SDK, daspkg, standalone and live checks; Linux has the narrower regression profile described below. This is not a claim of complete SDL coverage or validation on every platform/device. See [coverage](docs/api-coverage.md), [remaining API decisions](docs/remaining-api-policy.md) and [record access](docs/record-field-accessibility.md).
 
 ## Platform support
 
@@ -38,33 +38,38 @@ coverage does not by itself establish dasSDL3 support on those platforms.
 | Linux x86-64 / GCC 13.3, Ubuntu 24.04 in WSL2 with WSLg | Core source-build profile validated | Minimal runner build without binding generators; 15 `linux-core` checks including interpreter, native-width HID Unicode, strict AOT and rejection of missing AOT code. The 2D square and Vulkan Shader DSL triangle smoke tests passed in this environment. See [Linux setup](docs/linux.md). |
 | Other Linux distributions, native desktop installations, other CPU architectures / compilers | Not yet validated | The WSL2 result does not establish native-driver, device, performance or distribution compatibility. |
 | Web / Emscripten 5.0.3, wasm32 | Experimental profile | Selected SDL Renderer, audio and daScript OpenGL examples. Single-threaded interpreter; no desktop API parity or SDL GPU/WebGPU backend. See [Web guide](web/README.md). |
-| macOS / Metal, iOS, Android and other targets | Not yet validated | No tested dasSDL3 build/runtime profile is claimed. |
+| macOS arm64 / Apple Clang 17, macOS 15.3.1 | Native profile validated | Cocoa/Metal, interpreter and strict AOT, companion libraries, installed SDK, core/ImGui daspkg, relocatable standalone apps and live reload/MCP/APNG. See [macOS](docs/macos.md). Intel Mac and MoltenVK are not validated. |
+| iOS, Android and other targets | Not yet validated | No tested dasSDL3 build/runtime profile is claimed. |
 
-Linux uses separate committed bindings. The core daspkg profile supports an ELF SDK on Ubuntu 24.04 x86_64.
-The installed C++/AOT SDK remains Windows-only; optional Linux integrations are not
+Linux uses separate committed bindings; its core daspkg profile supports an ELF SDK on Ubuntu 24.04 x86_64.
+The installed SDK supports Windows and macOS; optional Linux integrations are not
 covered by the core test result. Windows-only raw DXGI, Direct3D9 and message-hook
 functions are absent from Linux bindings. Use `SDL_HidChar` for native HID wide
-buffers (`uint16` on Windows, `int32` on Linux); copied metadata remains UTF-8.
+buffers (`uint16` on Windows, `int32` on Linux/macOS); copied metadata remains UTF-8.
 
 Platform support also depends on how the project is consumed:
 
-| Delivery path | Windows x64 | Linux |
-| --- | --- | --- |
-| Core runner from source | Primary profile | Validated WSL2 core profile above |
-| Installed C++/AOT SDK | Windows-only profile | Not supported yet |
-| daspkg repository package | Core / ImGui with matching Windows SDK | Core with matching Linux SDK; ImGui and standalone release unvalidated |
+| Delivery path | Windows x64 | macOS arm64 | Linux |
+| --- | --- | --- | --- |
+| Core runner from source | Primary profile | Native Cocoa/Metal validated | Validated WSL2 core profile above |
+| Installed C++/AOT SDK | Validated | Local AppleClang SDK validated | Not supported yet |
+| daspkg repository package (`core` / `imgui`) | Matching MSVC DLL SDK required | Matching local dynamic SDK validated | Core with matching Linux SDK; ImGui and standalone release unvalidated |
 
 **daspkg SDK:** use the pinned daScript revision `ebac0ffe46ab30de6c9536f4b0af7a33ede45902`
-and a matching validated dynamic SDK fingerprint. The repository declares
-`windows` and `linux`; staged packages declare their target OS. Older SDKs are not supported; `0.6.4` alone is not a sufficient
+and a matching validated dynamic SDK fingerprint. The repository declares `windows`,
+`darwin` and `linux`; staged manifests declare the selected native platform. Older SDKs
+are not supported; `0.6.4` alone is not a sufficient
 ABI or client-version identifier. See [package platform readiness](docs/daspkg.md#platform-readiness).
-The exact supported DLL SDK is available as a [separate download](https://github.com/spiiin/dasSDL3/releases/tag/sdk-ebac0ffe-windows-x64-r1).
+Native Mac packages use the matching locally built dynamic SDK and fingerprint.
+The exact supported Windows DLL SDK is available as a [separate download](https://github.com/spiiin/dasSDL3/releases/tag/sdk-ebac0ffe-windows-x64-r1).
 
 The focused Linux checks are not the full CTest suite. WSLg/Vulkan smoke success
 does not establish GPU performance, hardware acceleration, physical HID device
 behavior, or validation-layer coverage on other systems.
 
 ## Getting started
+
+For native macOS setup and platform differences, see [macOS](docs/macos.md).
 
 Requirements: Git, CMake 3.24+, Ninja, Visual Studio 2022 C++ tools and Windows SDK. Tested with MSVC 19.38. The first build downloads dependencies.
 
@@ -88,7 +93,7 @@ For Ubuntu 24.04 / WSL2, see [Linux setup and tests](docs/linux.md).
 The core runner uses committed Linux bindings and native-width HID strings.
 Build with `-DBUILD_TESTING=OFF` for a minimal consumer, or use the documented
 `linux-core` test label for interpreter and strict AOT regression checks.
-The installed SDK profile remains Windows-only.
+The installed SDK supports Windows and macOS; Linux SDK delivery is not ported.
 
 ## Script API
 

@@ -1,6 +1,6 @@
 # Native live pilot: the unmodified upstream host plus dynamically loaded SDL.
-if(NOT WIN32 OR NOT MSVC OR NOT DASSDL3_WITH_IMGUI)
-    message(FATAL_ERROR "Live pilot requires Windows/MSVC and DASSDL3_WITH_IMGUI=ON")
+if(NOT DASSDL3_WITH_IMGUI OR NOT (APPLE OR (WIN32 AND MSVC)))
+    message(FATAL_ERROR "Live pilot requires macOS or Windows/MSVC and DASSDL3_WITH_IMGUI=ON")
 endif()
 set(_das ${PROJECT_SOURCE_DIR}/third_party/daScript)
 set(_imgui ${_das}/modules/dasImgui)
@@ -10,7 +10,12 @@ target_link_libraries(dasSDL3_live PRIVATE libDaScriptDyn)
 target_include_directories(dasSDL3_live PRIVATE ${CMAKE_BINARY_DIR}/third_party/daScript/include
     ${_das}/include ${_das}/3rdparty/fmt/include)
 target_compile_definitions(dasSDL3_live PRIVATE DAS_ENABLE_EXCEPTIONS=1)
-target_compile_options(dasSDL3_live PRIVATE /arch:AVX2)
+if(MSVC)
+    target_compile_options(dasSDL3_live PRIVATE /arch:AVX2)
+elseif(APPLE)
+    target_compile_options(dasSDL3_live PRIVATE -fno-rtti)
+    target_link_libraries(dasSDL3_live PRIVATE "-framework Foundation")
+endif()
 set_target_properties(dasSDL3_live PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${_live_output})
 add_library(dasSDL3_live_module SHARED ../module_sdl3.cpp ../libraries/module_imgui_sdl.cpp
     ${PROJECT_SOURCE_DIR}/examples/live/host.cpp
@@ -19,16 +24,25 @@ add_library(dasSDL3_live_module SHARED ../module_sdl3.cpp ../libraries/module_im
 target_link_libraries(dasSDL3_live_module PRIVATE libDaScriptDyn SDL3::SDL3 dasModuleImgui)
 target_include_directories(dasSDL3_live_module PRIVATE .. ../libraries ${_imgui}/imgui ${_imgui}/src
     ${_das}/include ${_das}/3rdparty/fmt/include)
-target_compile_definitions(dasSDL3_live_module PRIVATE DAS_MOD_EXPORTS DAS_ENABLE_EXCEPTIONS=1
-    "IMGUI_API=__declspec(dllimport)" "IMGUI_IMPL_API=")
-target_compile_options(dasSDL3_live_module PRIVATE /bigobj /arch:AVX2)
-if(DASSDL3_BINDING_BACKEND STREQUAL "clangbind")
+target_compile_definitions(dasSDL3_live_module PRIVATE DAS_MOD_EXPORTS DAS_ENABLE_EXCEPTIONS=1 "IMGUI_IMPL_API=")
+if(MSVC)
+    target_compile_definitions(dasSDL3_live_module PRIVATE "IMGUI_API=__declspec(dllimport)")
+    target_compile_options(dasSDL3_live_module PRIVATE /bigobj /arch:AVX2)
+elseif(APPLE)
+    target_compile_options(dasSDL3_live_module PRIVATE -fno-rtti)
+endif()
+if(APPLE)
+    target_compile_definitions(dasSDL3_live_module PRIVATE
+        DASSDL3_TYPES_INCLUDE="generated/macos/sdl3_types.inc"
+        DASSDL3_REGISTRATION_INCLUDE="generated/macos/sdl3_functions.inc")
+elseif(DASSDL3_BINDING_BACKEND STREQUAL "clangbind")
     target_compile_definitions(dasSDL3_live_module PRIVATE
         DASSDL3_TYPES_INCLUDE="generated/clangbind/sdl3_types.inc"
         DASSDL3_REGISTRATION_INCLUDE="generated/clangbind/sdl3_functions.inc")
 endif()
 set_target_properties(dasSDL3_live_module PROPERTIES PREFIX "" SUFFIX ".shared_module"
-    RUNTIME_OUTPUT_DIRECTORY ${_live_output}/module)
+    RUNTIME_OUTPUT_DIRECTORY ${_live_output}/module
+    LIBRARY_OUTPUT_DIRECTORY ${_live_output}/module)
 add_dependencies(dasSDL3_live dasSDL3_live_module dasModuleLiveHost)
 add_custom_command(TARGET dasSDL3_live POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:libDaScriptDyn> $<TARGET_FILE:libDaScriptDyn_runtime> ${_live_output})

@@ -8,12 +8,14 @@ reference and official v0.6.4 bundle, are no longer supported. Upstream still
 reports `0.6.4`, so `package_min_sdk("0.6.4")` is only a version floor; exact
 binary compatibility is checked by the SDK fingerprints.
 
-The root manifest declares `windows` and `linux`. Staged binary/source manifests
-declare their target OS. Linux supports core only; CMake rejects the ImGui profile.
-The metadata regression checks the root and staged platform lists.
+The repository manifest declares `windows`, `darwin` and `linux`.
+Linux supports core only; CMake rejects its ImGui profile. Staged binary/source
+manifests declare the selected platform; the metadata regression checks these
+lists for both core and ImGui. Native Mac packages require the matching locally
+built dynamic SDK and fingerprint; see [Mac setup](macos.md).
 There is no fallback for clients without platform metadata.
 
-Validation on 2026-10-03 with this revision: root and staged binary/source
+Windows validation on 2026-10-03 with this revision: root and staged binary/source
 metadata for both profiles; core and ImGui native builds, actual daspkg
 install/check, all included imports, source and repository installs,
 relocation, rendering/resource cleanup and standalone releases with missing
@@ -35,9 +37,9 @@ explicitly uses SDL's dummy video driver.
 
 | Package path | Platforms | Requirements |
 | --- | --- | --- |
-| Repository core / ImGui | `windows` | MSVC x64, Release, `/MD`, AVX2, exact SDK fingerprint |
+| Repository core / ImGui | `windows`, `darwin` | Matching native SDK fingerprint; MSVC x64 Release `/MD` AVX2 or native AppleClang Release |
 | Repository core | `linux` | Ubuntu 24.04 x86_64, GCC 13.3, Release, exact SDK fingerprint |
-| Staged binary / source | Target OS only | Matching dynamic SDK; source staging records its fingerprint |
+| Staged binary / source | Selected `windows`, `darwin` or `linux` | Matching native dynamic SDK; source staging records its fingerprint |
 
 Linux core checks cover actual binary/source/repository installation, all 63
 boost imports, rendering with the dummy driver, package and SDK relocation,
@@ -89,9 +91,7 @@ Runtime system libraries (glibc/libstdc++ and SDL platform dependencies) are not
 Repository installs require the exact reference SDK described in
 `src/package/profiles/reference-sdk-linux.json`; rebuilding the same source is
 not guaranteed to reproduce its binary hashes. Download the [Linux reference SDK](https://github.com/spiiin/dasSDL3/releases/tag/sdk-ebac0ffe-linux-x86_64-r1)
-and verify its archive checksum against the JSON descriptor. Until this PR is
-merged, install from a local checkout of `linux-daspkg`; the remote `main` package
-does not yet include Linux support. Use local source staging for your own SDK builds. `stage_reference_sdk.py` creates `tar.gz`, preserving
+and verify its archive checksum against the JSON descriptor. Linux core support is available on `main`. Use local source staging for your own SDK builds. `stage_reference_sdk.py` creates `tar.gz`, preserving
 permissions and symlinks, and verifies the committed Linux fingerprint first.
 
 ## Existing Windows package workflow
@@ -598,3 +598,19 @@ See [draft release notes](releases/0.1.0.md) and the
 [publication handoff](releases/publishing.md). VERSION defines the release number;
 daspkg resolves explicit @0.1.0 through the future v0.1.0 tag. No tag or index
 entry has been created. Manifest validation runs without publishing anything.
+
+## Native macOS packages
+
+Core and ImGui packages use native AppleClang Release builds, Mac ABI bindings
+and dylib/shared-module linkage. Source staging uses `--platform macos`;
+repository installs require `DASSDL3_PACKAGE_SDK_FINGERPRINT` and the matching
+`DASSDL3_PACKAGE_PROFILE=core` or `imgui`. Windows fingerprints and the
+Windows reference SDK download do not apply to native Mac binaries.
+
+The earlier Mac package, live and standalone validations used the previous
+35bf260 SDK. After merging the ebac0ffe SDK update, native core/ImGui modules were rebuilt.
+All seven headless package checks passed: metadata (root and staged platforms),
+binary/source consumers, repository core/ImGui installs, SDK fingerprint
+rejection and relocation. Prior standalone bundles remain artifacts of their
+original SDK revision; native GPU/live/standalone execution must be rerun
+separately for ebac0ffe. See [Mac setup](macos.md).

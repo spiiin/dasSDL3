@@ -1,6 +1,9 @@
 #include "daScript/daScript.h"
 #include <fstream>
 #include <iostream>
+#ifdef DASSDL3_AOT_IMGUI_COROUTINE_SCOPE
+#include <regex>
+#endif
 DECLARE_MODULE(Module_dasSDL3);
 #ifdef DASSDL3_WITH_MIXER
 DECLARE_MODULE(Module_sdl3_mixer);
@@ -80,6 +83,29 @@ static int generate(const char *input, const char *output) {
         log << "AOT try/recover emission changed; review pinned workaround\n";
         return 8;
     }
+#ifdef DASSDL3_AOT_IMGUI_COROUTINE_SCOPE
+    // Pinned emitter loses the unsafe block around a temporary GetIO reference
+    // in click_at_coro. Restore that lexical scope, so resume gotos cannot cross
+    // the pointer initialization. Its initializer and use stay at the same point.
+    if (std::string(input).find("/dasImgui/widgets/imgui_boost_runtime.das") != std::string::npos) {
+        const std::regex scope(R"((    ImGuiIO \* (__io_[A-Za-z0-9_]+) = &[^;\n]*ImGui::GetIO[^;\n]*;\n)(    [^\n]*MouseClickedTime[^\n]*;\n))");
+        std::smatch match;
+        if (!std::regex_search(generated, match, scope)) {
+            log << "Pinned ImGui coroutine emission changed; review scope workaround\n";
+            return 9;
+        }
+        const std::string variable = match[2];
+        size_t references = 0;
+        for (size_t at = 0; (at = generated.find(variable, at)) != std::string::npos; at += variable.size())
+            ++references;
+        if (references != 2) {
+            log << "ImGui temporary escapes expected scope; review workaround\n";
+            return 9;
+        }
+        generated.replace(size_t(match.position()), size_t(match.length()),
+            "    {\n" + match[1].str() + match[3].str() + "    }\n");
+    }
+#endif
     std::ofstream file(output, std::ios::binary);
     file << generated;
     return file ? 0 : 6;

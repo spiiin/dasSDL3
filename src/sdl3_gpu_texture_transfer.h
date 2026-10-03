@@ -11,11 +11,14 @@ struct SDL_GPUTransferTexture {
 };
 inline std::unordered_map<uint64_t,SDL_GPUTransferTexture> SDL_GPUTransferTextures;
 struct SDL_GPUTextureFootprint { uint32_t rowBytes, rowPitch, size, rows, pixelsPerRow; };
-inline bool SDL_GPUTextureFootprintBlocks(uint32_t width,uint32_t height,uint32_t bytesPerTexel,uint32_t blockWidth,uint32_t blockHeight,SDL_GPUTextureFootprint & out) {
+inline bool SDL_GPUTextureFootprintBlocks(uint32_t width,uint32_t height,uint32_t bytesPerTexel,uint32_t blockWidth,uint32_t blockHeight,SDL_GPUTextureFootprint & out,SDL_GPUDevice * device=nullptr) {
     if (!width || !height || width>8192 || height>8192 || !bytesPerTexel || !blockWidth || !blockHeight)
         return SDL_SetError("GPU texture: dimensions must be 1..8192");
     const uint64_t row=uint64_t((width+blockWidth-1)/blockWidth)*bytesPerTexel;
-    const uint64_t pitch=(row+255)&~uint64_t(255); // D3D12-compatible staging row alignment.
+    // Pinned SDL Metal upload uses region width/height, ignoring staging stride.
+    // Use tight rows/slices for Metal; keep D3D12-compatible staging elsewhere.
+    const bool tight=device && SDL_strcmp(SDL_GetGPUDeviceDriver(device),"metal")==0;
+    const uint64_t pitch=tight ? row : (row+255)&~uint64_t(255);
     const uint32_t rows=(height+blockHeight-1)/blockHeight;
     const uint64_t size=pitch*rows;
     if (size>SDL_GPUDataLimit) return SDL_SetError("GPU texture: staging footprint exceeds 64 MiB");
@@ -36,7 +39,7 @@ inline bool SDL_GPUTextureSubregion(const SDL_GPUTransferTexture & texture,das::
         (rect.z%texture.blockWidth && rect.x+rect.z!=width) ||
         (rect.w%texture.blockHeight && rect.y+rect.w!=height))
         return SDL_SetError("GPU texture: block-aligned region or mip edge required");
-    return SDL_GPUTextureFootprintBlocks(rect.z,rect.w,texture.bytesPerTexel,texture.blockWidth,texture.blockHeight,footprint);
+    return SDL_GPUTextureFootprintBlocks(rect.z,rect.w,texture.bytesPerTexel,texture.blockWidth,texture.blockHeight,footprint,texture.device);
 }
 // D3D12 CopyTextureRegion boxes use physical block-aligned mip extents.
 // Vulkan requires logical edge extents instead. Validate logical bounds first.
@@ -91,7 +94,7 @@ inline uint64_t SDL_CreateGPUTransferTextureWithUsage(SDL_GPUDevice * device,uin
         SDL_SetError("GPU texture: invalid type/layers/cube dimensions or base dimensions not block-aligned"); return 0;
     }
     SDL_GPUTextureFootprint base{};
-    if (!SDL_GPUTextureFootprintBlocks(width,height,bytesPerTexel,blockWidth,blockHeight,base)) return 0;
+    if (!SDL_GPUTextureFootprintBlocks(width,height,bytesPerTexel,blockWidth,blockHeight,base,device)) return 0;
     uint32_t maxLevels=1; for (auto n=std::max(width,height);n>1;n>>=1) ++maxLevels;
     if (!layers || layers>256 || !levels || levels>maxLevels) {
         SDL_SetError("GPU texture: invalid array layers or mip count"); return 0;
@@ -99,7 +102,7 @@ inline uint64_t SDL_CreateGPUTransferTextureWithUsage(SDL_GPUDevice * device,uin
     uint64_t total=0;
     for (uint32_t mip=0;mip<levels;++mip) {
         SDL_GPUTextureFootprint f{};
-        if (!SDL_GPUTextureFootprintBlocks(SDL_GPUTextureLevelSize(width,mip),SDL_GPUTextureLevelSize(height,mip),bytesPerTexel,blockWidth,blockHeight,f)) return 0;
+        if (!SDL_GPUTextureFootprintBlocks(SDL_GPUTextureLevelSize(width,mip),SDL_GPUTextureLevelSize(height,mip),bytesPerTexel,blockWidth,blockHeight,f,device)) return 0;
         total+=uint64_t(f.size)*layers;
     }
     if (total>SDL_GPUDataLimit) { SDL_SetError("GPU texture: complete mip/array footprint exceeds 64 MiB"); return 0; }
@@ -119,7 +122,7 @@ inline uint64_t SDL_CreateGPUTransferTextureWithUsage(SDL_GPUDevice * device,uin
     // One private zero-filled staging buffer can initialize every subresource.
     for (uint32_t layer=0;layer<layers;++layer) for (uint32_t mip=0;mip<levels;++mip) {
         const uint32_t w=SDL_GPUTextureLevelSize(width,mip), h=SDL_GPUTextureLevelSize(height,mip);
-        SDL_GPUTextureFootprint f{}; SDL_GPUTextureFootprintBlocks(w,h,bytesPerTexel,blockWidth,blockHeight,f);
+        SDL_GPUTextureFootprint f{}; SDL_GPUTextureFootprintBlocks(w,h,bytesPerTexel,blockWidth,blockHeight,f,device);
         SDL_GPUTextureTransferInfo from{}; from.transfer_buffer=build.transfer; from.pixels_per_row=f.pixelsPerRow; from.rows_per_layer=0;
         auto to=SDL_GPUTextureMakeRegion(build.texture,{mip,layer},SDL_GPUTextureNativeRect(device,blockWidth,blockHeight,{0,0,w,h}));
         SDL_UploadToGPUTexture(pass,&from,&to,false);

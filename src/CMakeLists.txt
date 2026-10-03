@@ -10,11 +10,20 @@ endif()
 if(DASSDL3_BINDING_BACKEND STREQUAL "clangbind" AND NOT _binding_default STREQUAL "clangbind")
     message(FATAL_ERROR "CppGenBind snapshots currently support only MSVC Windows x64")
 endif()
-if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND DASSDL3_BINDING_BACKEND STREQUAL "python")
-    set(_python_snapshot_dir "${CMAKE_CURRENT_SOURCE_DIR}/generated/linux")
-    set(_python_platform_args --platform linux --output "${_python_snapshot_dir}")
-endif()
 message(STATUS "dasSDL3 binding backend: ${DASSDL3_BINDING_BACKEND} (saved snapshots)")
+option(DASSDL3_ENABLE_GENERATORS "Enable developer binding generation and freshness checks" OFF)
+if(BUILD_TESTING OR DASSDL3_ENABLE_GENERATORS)
+    find_package(Python3 REQUIRED COMPONENTS Interpreter)
+endif()
+set(_python_snapshot "${CMAKE_CURRENT_SOURCE_DIR}/generated")
+set(_python_profile windows)
+if(APPLE)
+    set(_python_snapshot "${CMAKE_CURRENT_SOURCE_DIR}/generated/macos")
+    set(_python_profile macos)
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    set(_python_snapshot "${CMAKE_CURRENT_SOURCE_DIR}/generated/linux")
+    set(_python_profile linux)
+endif()
 add_library(dasSDL3 STATIC module_sdl3.cpp)
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     # daScript is built without C++ RTTI on Linux; consumers must match.
@@ -31,6 +40,15 @@ if(DASSDL3_BINDING_BACKEND STREQUAL "clangbind")
     target_compile_definitions(dasSDL3 PRIVATE
         DASSDL3_TYPES_INCLUDE="generated/clangbind/sdl3_types.inc"
         DASSDL3_REGISTRATION_INCLUDE="generated/clangbind/sdl3_functions.inc")
+elseif(APPLE)
+    set(_macos_aot_header "sdl3_aot.h")
+    if(BUILD_TESTING)
+        set(_macos_aot_header "../tests/macos_aot.h")
+    endif()
+    target_compile_definitions(dasSDL3 PRIVATE
+        DASSDL3_AOT_HEADER="${_macos_aot_header}"
+        DASSDL3_TYPES_INCLUDE="generated/macos/sdl3_types.inc"
+        DASSDL3_REGISTRATION_INCLUDE="generated/macos/sdl3_functions.inc")
 endif()
 target_include_directories(dasSDL3 PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
@@ -40,6 +58,10 @@ target_include_directories(dasSDL3 PUBLIC
     $<INSTALL_INTERFACE:include>)
 target_link_libraries(dasSDL3 PUBLIC libDaScript SDL3::SDL3)
 target_compile_features(dasSDL3 PUBLIC cxx_std_17)
+if(APPLE)
+    # The pinned daScript runtime is built without C++ RTTI.
+    target_compile_options(dasSDL3 PUBLIC -fno-rtti)
+endif()
 if(DASSDL3_WITH_IMGUI OR DASSDL3_WITH_IMAGE OR DASSDL3_WITH_TTF OR DASSDL3_WITH_NET OR DASSDL3_WITH_MIXER OR DASSDL3_WITH_SOUND OR DASSDL3_WITH_SHADERCROSS)
     add_subdirectory(libraries)
 endif()
@@ -73,12 +95,17 @@ foreach(shader native.comp.spv native.comp.dxil attachments.vert.spv attachments
     configure_file(${CMAKE_SOURCE_DIR}/examples/assets/shaders/${shader}
         ${CMAKE_BINARY_DIR}/bin/assets/shaders/${shader} COPYONLY)
 endforeach()
+foreach(shader triangle.vert.msl triangle.frag.msl attachments.vert.msl attachments.frag.msl
+        bindings.vert.msl bindings.frag.msl vertex_color.vert.msl vertex_color.frag.msl
+        mesh.vert.msl mesh.frag.msl native.comp.msl render_state.frag.msl)
+    configure_file(${CMAKE_SOURCE_DIR}/examples/assets/shaders/${shader}
+        ${CMAKE_BINARY_DIR}/bin/assets/shaders/${shader} COPYONLY)
+endforeach()
 configure_file(${CMAKE_SOURCE_DIR}/examples/assets/checker.bmp
     ${CMAKE_BINARY_DIR}/bin/assets/checker.bmp COPYONLY)
 configure_file(${CMAKE_SOURCE_DIR}/examples/assets/tone.wav
     ${CMAKE_BINARY_DIR}/bin/assets/tone.wav COPYONLY)
 
-option(DASSDL3_ENABLE_GENERATORS "Enable developer binding generation and freshness checks" OFF)
 if(DASSDL3_ENABLE_GENERATORS)
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
 if(BUILD_TESTING)
@@ -104,13 +131,14 @@ if(Python3_FOUND AND DASSDL3_CLANG_EXECUTABLE)
     if(DASSDL3_BINDING_BACKEND STREQUAL "python")
     add_custom_target(generate_bindings
         COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tools/generate_bindings.py
-            --clang ${DASSDL3_CLANG_EXECUTABLE} --sdl-include ${sdl3_SOURCE_DIR}/include ${_python_platform_args}
+            --clang ${DASSDL3_CLANG_EXECUTABLE} --sdl-include ${sdl3_SOURCE_DIR}/include
+            --profile ${_python_profile} --output ${_python_snapshot}
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         COMMENT "Generating SDL3 bindings from Clang AST")
     if(BUILD_TESTING)
         add_test(NAME bindings_up_to_date
             COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tools/generate_bindings.py
-                --clang ${DASSDL3_CLANG_EXECUTABLE} --sdl-include ${sdl3_SOURCE_DIR}/include ${_python_platform_args} --check)
+                --clang ${DASSDL3_CLANG_EXECUTABLE} --sdl-include ${sdl3_SOURCE_DIR}/include --profile ${_python_profile} --output ${_python_snapshot} --check)
     endif()
     endif()
     if(BUILD_TESTING)
@@ -405,9 +433,12 @@ if(BUILD_TESTING)
     set_tests_properties(sdl3_result sdl3_results_example PROPERTIES ENVIRONMENT "SDL_VIDEODRIVER=dummy" TIMEOUT 30)
     add_test(NAME sdl3_rect_clipboard COMMAND dasSDL3_runner ${CMAKE_SOURCE_DIR}/tests/rect_clipboard.das --smoke-test)
     add_test(NAME sdl3_callback_lifetimes COMMAND dasSDL3_runner ${CMAKE_SOURCE_DIR}/tests/callback_lifetimes.das --smoke-test)
-    add_test(NAME sdl3_window_hittest COMMAND dasSDL3_runner ${CMAKE_SOURCE_DIR}/tests/window_hittest.das --smoke-test)
+    # The native hit-test probe sends Windows WM_NCHITTEST messages.
+    if(WIN32)
+        add_test(NAME sdl3_window_hittest COMMAND dasSDL3_runner ${CMAKE_SOURCE_DIR}/tests/window_hittest.das --smoke-test)
+        set_tests_properties(sdl3_window_hittest PROPERTIES TIMEOUT 30)
+    endif()
     set_tests_properties(sdl3_rect_clipboard sdl3_callback_lifetimes PROPERTIES ENVIRONMENT "SDL_VIDEODRIVER=dummy" TIMEOUT 30)
-    set_tests_properties(sdl3_window_hittest PROPERTIES TIMEOUT 30)
     add_test(NAME sdl3_surface_pixels COMMAND dasSDL3_runner ${CMAKE_SOURCE_DIR}/tests/surface_pixels.das --smoke-test)
     add_test(NAME sdl3_surface_pixels_example COMMAND dasSDL3_runner ${CMAKE_SOURCE_DIR}/examples/66_surface_pixels.das --smoke-test)
     set_tests_properties(sdl3_surface_pixels sdl3_surface_pixels_example PROPERTIES TIMEOUT 30)
@@ -600,6 +631,10 @@ foreach(asset IN LISTS _bgfx_next_assets)
     get_filename_component(name "${asset}" NAME)
     configure_file("${asset}" "${CMAKE_BINARY_DIR}/bin/assets/bgfx/${name}" COPYONLY)
 endforeach()
+
+if(APPLE AND BUILD_TESTING)
+    include("${CMAKE_SOURCE_DIR}/cmake/MacOSTests.cmake")
+endif()
 
 if(BUILD_TESTING AND CMAKE_SYSTEM_NAME STREQUAL "Linux")
     add_subdirectory("${CMAKE_SOURCE_DIR}/tests/linux" "${CMAKE_BINARY_DIR}/tests/linux")

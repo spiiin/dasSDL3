@@ -125,11 +125,14 @@ def with_resources(device : SDL_GPUDevice?; format : SDL_GPUTextureFormat; body 
     } |> sdl_try
     r.sampler = SDL_CreateGPUSamplerRef(device, gpu_sampler_info(SDL_GPUFilter.FILTER_LINEAR, SDL_GPUSamplerAddressMode.SAMPLERADDRESSMODE_REPEAT))
     if (r.sampler == null) { return err(sdl_error("SDL_CreateGPUSampler"), type<SdlUnit>) }
+    // Move coincident volume caps toward the camera on Metal, including debug
+    // overlays, so CPU/GPU projection roundoff cannot create self-shadowing.
+    let volume_bias = (SDL_GetGPUShaderFormats(device) & SDL_GPU_SHADERFORMAT_MSL) != 0u ? -16.0 : 0.0
     var state = SDL_GPUDepthStencilState(enable_depth_test = true, enable_depth_write = true, compare_op = SDL_GPUCompareOp.COMPAREOP_LESS)
     var p = rich_pipeline(device, format, r.depth_format, state) |> sdl_try; r.ambient = p
     state.enable_depth_write = false; state.compare_op = SDL_GPUCompareOp.COMPAREOP_LESS_OR_EQUAL
     p = rich_pipeline(device, format, r.depth_format, state, 4) |> sdl_try; r.flare = p
-    p = scene_pipeline(device, format, r.depth_format, state, 1) |> sdl_try; r.debug = p
+    p = scene_pipeline(device, format, r.depth_format, state, 1, true, volume_bias) |> sdl_try; r.debug = p
     p = indexed_volume_pipeline(device, format, r.depth_format, state, 1) |> sdl_try; r.indexed_debug = p
     state.enable_stencil_test = true; state.compare_mask = 255u8; state.write_mask = 0u8
     state.front_stencil_state = keep_stencil(SDL_GPUCompareOp.COMPAREOP_EQUAL); state.back_stencil_state = state.front_stencil_state
@@ -138,20 +141,21 @@ def with_resources(device : SDL_GPUDevice?; format : SDL_GPUTextureFormat; body 
     state.front_stencil_state = keep_stencil(); state.back_stencil_state = keep_stencil()
     state.front_stencil_state.pass_op = SDL_GPUStencilOp.STENCILOP_INCREMENT_AND_WRAP
     state.back_stencil_state.pass_op = SDL_GPUStencilOp.STENCILOP_DECREMENT_AND_WRAP
-    p = scene_pipeline(device, format, r.depth_format, state, 0, false) |> sdl_try; r.zpass = p
+    p = scene_pipeline(device, format, r.depth_format, state, 0, false, volume_bias) |> sdl_try; r.zpass = p
     p = indexed_volume_pipeline(device, format, r.depth_format, state, 0, false) |> sdl_try; r.indexed_zpass = p
     state.front_stencil_state = keep_stencil(); state.back_stencil_state = keep_stencil()
     state.front_stencil_state.depth_fail_op = SDL_GPUStencilOp.STENCILOP_DECREMENT_AND_WRAP
     state.back_stencil_state.depth_fail_op = SDL_GPUStencilOp.STENCILOP_INCREMENT_AND_WRAP
-    p = scene_pipeline(device, format, r.depth_format, state, 0, false) |> sdl_try; r.zfail = p
+    p = scene_pipeline(device, format, r.depth_format, state, 0, false, volume_bias) |> sdl_try; r.zfail = p
     p = indexed_volume_pipeline(device, format, r.depth_format, state, 0, false) |> sdl_try; r.indexed_zfail = p
     return body(r)
 }
 def indexed_volume_pipeline(device : SDL_GPUDevice?; format, depth_format : SDL_GPUTextureFormat; state : SDL_GPUDepthStencilState; blend : int = 0; write_color : bool = true) {
+    let volume_bias = (SDL_GetGPUShaderFormats(device) & SDL_GPU_SHADERFORMAT_MSL) != 0u ? -16.0 : 0.0
     return sdl_scope() {
         var vs : SDL_GPUShader? = device |> with_example_shader(extrusion::volume_vertex, extrusion::volume_vertex_reflect) |> sdl_use
         var fs : SDL_GPUShader? = device |> with_example_shader(extrusion::volume_fragment, extrusion::volume_fragment_reflect) |> sdl_use
-        let info = SDL_GPUGraphicsPipelineCreateInfo(vertex_shader = vs, fragment_shader = fs, rasterizer_state = SDL_GPURasterizerState(enable_depth_clip = true, cull_mode = SDL_GPUCullMode.CULLMODE_NONE), depth_stencil_state = state, target_info = SDL_GPUGraphicsPipelineTargetInfo(has_depth_stencil_target = true, depth_stencil_format = depth_format))
+        let info = SDL_GPUGraphicsPipelineCreateInfo(vertex_shader = vs, fragment_shader = fs, rasterizer_state = SDL_GPURasterizerState(enable_depth_clip = true, cull_mode = SDL_GPUCullMode.CULLMODE_NONE, enable_depth_bias = volume_bias != 0.0, depth_bias_constant_factor = volume_bias), depth_stencil_state = state, target_info = SDL_GPUGraphicsPipelineTargetInfo(has_depth_stencil_target = true, depth_stencil_format = depth_format))
         let layout <- array(SDL_GPUVertexBufferDescription(pitch = 16u))
         let attrs <- array(SDL_GPUVertexAttribute(format = SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT4))
         var blending = SDL_GPUColorTargetBlendState(color_blend_op = SDL_GPUBlendOp.BLENDOP_ADD, alpha_blend_op = SDL_GPUBlendOp.BLENDOP_ADD, enable_color_write_mask = !write_color, color_write_mask = 0u8)

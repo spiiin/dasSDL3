@@ -1,16 +1,17 @@
 options gen2
+require gpu/file_shader_support
 require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_pipeline_boost
 
 // Independent pipeline creation; direct command recording is shown in example 44.
 
 def run_gpu_example(device : SDL_GPUDevice?; smoke : bool) : SdlStatus {
-    let spirv = (SDL_GetGPUShaderFormats(device) & SDL_GPU_SHADERFORMAT_SPIRV) != 0u
-    let format = spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL
-    let extension = spirv ? "spv" : "dxil"
+    let backend = file_shader_backend(device)
+    let format = backend.format
+    let extension = backend.extension
     let base = "{SDL_GetBasePath()}assets/shaders/triangle"
-    let vi = gpu_shader("{base}.vert.{extension}", format, SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
-    let fi = gpu_shader("{base}.frag.{extension}", format, SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT)
+    let vi = gpu_shader("{base}.vert.{extension}", format, SDL_GPUShaderStage.SHADERSTAGE_VERTEX) |> entrypoint(backend.entry)
+    let fi = gpu_shader("{base}.frag.{extension}", format, SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT) |> entrypoint(backend.entry)
     return sdl_scope() {
         let vertex : GpuShaderHandle = device |> with_gpu_shader_file(vi) |> sdl_use
         let fragment : GpuShaderHandle = device |> with_gpu_shader_file(fi) |> sdl_use

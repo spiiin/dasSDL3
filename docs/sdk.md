@@ -1,6 +1,7 @@
 # Installed core SDK
 
-Windows x64, MSVC, Ninja single-config Release, /MD only. Core SDL 3.4.16 and
+Native macOS AppleClang (one arm64 or x86_64 architecture), or Windows x64
+MSVC /MD; Ninja single-config Release. Core SDL 3.4.16 and
 pinned daScript are static; companion libraries are not part of this profile.
 The SDK contains C++ libraries/headers, daScript modules, standard library,
 licenses, CMake targets and a native AOT generator. No LLVM/Python is needed by
@@ -32,7 +33,10 @@ AOT output is linked directly, avoiding discarded static registration objects.
 The installed tool takes input.das output.cpp SDK_DATA_DIR. Pinned catch-order
 lowering matches the existing parity compiler; no SDL wrapper catches errors.
 
-Debug, DLL ABI, other compilers/platforms and installed companion libraries
+Mac setup and tested relocation commands are in [macOS](macos.md).
+The binary SDK enforces the same architecture at consumer configure time.
+
+Debug, DLL ABI, other compilers and installed companion libraries
 remain separate work. Use the matching MSVC runtime; Windows system DLLs and
 the Microsoft VC runtime remain platform prerequisites.
 

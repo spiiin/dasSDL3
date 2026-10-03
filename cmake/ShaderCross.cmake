@@ -1,5 +1,9 @@
 # Pin both the library and its upstream SPIRV-Cross submodule. No DXC source build.
-option(DASSDL3_SHADERCROSS_DXC "Enable HLSL/DXIL using the DXC runtime SDK" ON)
+set(_dxc_default ON)
+if(APPLE)
+    set(_dxc_default OFF)
+endif()
+option(DASSDL3_SHADERCROSS_DXC "Enable HLSL/DXIL using the DXC runtime SDK" ${_dxc_default})
 set(DASSDL3_DXC_ROOT "" CACHE PATH "DXC SDK root (inc, lib/<arch>, bin/<arch>)")
 foreach(feature CLI ENABLE_TESTS SHARED)
     set(SPIRV_CROSS_${feature} OFF CACHE BOOL "Pinned shadercross dependency profile" FORCE)

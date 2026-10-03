@@ -5,6 +5,7 @@ require daslib/ast
 require daslib/ast_boost
 require daslib/templates_boost
 require daslib/shader_block_layout
+require daslib/math_boost
 
 [macro_function]
 def private storage_shape(st : Structure?; var errors : array<string>) : bool {

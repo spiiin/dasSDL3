@@ -16,11 +16,19 @@ PORT = 9090  # Pinned upstream with_recording_app; no dependency patches here.
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, help="New/empty output directory (default: build/recordings/<timestamp>)")
+    live_build = "build/macos-live" if sys.platform == "darwin" else "build/ninja"
+    http_build = "build/macos-live-http" if sys.platform == "darwin" else "build/live-http"
+    executable_suffix = "" if sys.platform == "darwin" else ".exe"
+    parser.add_argument("--host", type=Path, default=ROOT / live_build / ("live/dasSDL3_live" + executable_suffix))
+    parser.add_argument("--daslang", type=Path, default=ROOT / "third_party/daScript/bin" / ("daslang" + executable_suffix))
+    parser.add_argument("--module", type=Path, default=ROOT / live_build / "live/module")
+    parser.add_argument("--http-module", type=Path, default=ROOT / http_build / "dasHV")
+    parser.add_argument("--stb-module", type=Path, default=ROOT / http_build / "dasStbImage")
     args = parser.parse_args()
     das = ROOT / "third_party/daScript"
-    host = ROOT / "build/ninja/live/dasSDL3_live.exe"
-    interpreter = das / "bin/daslang.exe"
-    modules = [ROOT / "build/ninja/live/module", ROOT / "build/live-http/dasHV", ROOT / "build/live-http/dasStbImage"]
+    host = args.host.resolve()
+    interpreter = args.daslang.resolve()
+    modules = [args.module.resolve(), args.http_module.resolve(), args.stb_module.resolve()]
     required = [host, interpreter, modules[0]/"dasSDL3_live_module.shared_module",
                 modules[1]/"dasModuleHV.shared_module", modules[2]/"dasModuleStbImage.shared_module"]
     missing = [str(p) for p in required if not p.is_file()]
@@ -29,6 +37,10 @@ def main():
                     "\nBuild the native live host and live-http targets first; see examples/live/README.md.\n")
     try:
         with socket.socket() as probe:
+            # macOS keeps recently closed connections in TIME_WAIT. The HTTP
+            # server also reuses addresses; still reject an active listener.
+            if sys.platform == "darwin":
+                probe.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             probe.bind(("127.0.0.1", PORT))
     except OSError:
         parser.exit(1, "Port 9090 is occupied or unavailable. Close the app using it and retry. No existing process was stopped.\n")
@@ -59,9 +71,14 @@ def main():
                 if time.monotonic()>deadline: raise RuntimeError("SDL startup timeout. See app.log.")
                 time.sleep(.1)
             # Do not attach to an unrelated listener if another app raced our launch.
-            listeners = subprocess.check_output(["netstat","-ano","-p","tcp"],text=True)
-            own = any(len(p:=line.split())>=5 and p[1]==f"127.0.0.1:{PORT}" and p[3]=="LISTENING"
-                      and p[-1]==str(app.pid) for line in listeners.splitlines())
+            if sys.platform == "darwin":
+                listeners = subprocess.check_output(
+                    ["/usr/sbin/lsof", "-nP", "-a", "-p", str(app.pid), "-iTCP", "-sTCP:LISTEN", "-Fn"], text=True)
+                own = f"n127.0.0.1:{PORT}" in listeners.splitlines()
+            else:
+                listeners = subprocess.check_output(["netstat","-ano","-p","tcp"],text=True)
+                own = any(len(p:=line.split())>=5 and p[1]==f"127.0.0.1:{PORT}" and p[3]=="LISTENING"
+                          and p[-1]==str(app.pid) for line in listeners.splitlines())
             if not own: raise RuntimeError("Started host does not own the expected loopback listener. See app.log.")
             ready = True
             while True:
