@@ -2,37 +2,36 @@
 
 ## Platform readiness
 
-The repository manifest currently declares only `package_platform("windows")`.
-This is intentionally narrower than support for the standalone source runner.
-Do not add `linux` until the daspkg dynamic-module path is ported and tested.
+The supported daScript client/source revision is
+`ebac0ffe46ab30de6c9536f4b0af7a33ede45902`. Older SDKs, including the previous
+reference and official v0.6.4 bundle, are no longer supported. Upstream still
+reports `0.6.4`, so `package_min_sdk("0.6.4")` is only a version floor; exact
+binary compatibility is checked by the SDK fingerprints.
 
-| Package profile / path | Platform declaration | Current constraints |
+Root and staged binary/source manifests all declare `package_platform("windows")`.
+The metadata regression checks the exact platform list for both core and ImGui.
+There is no fallback for clients without platform metadata.
+
+Validation on 2026-10-03 with this revision: root and staged binary/source
+metadata for both profiles; core and ImGui native builds, actual daspkg
+install/check, all included imports, source and repository installs,
+relocation, rendering/resource cleanup and standalone releases with missing
+dependency rejection. The core SDK mismatch negative test also passes.
+The Windows runner passes 19 focused interpreter/API/lifecycle checks;
+Linux passes all 15 `linux-core` interpreter/native/strict-AOT checks.
+This is not a full Windows generator/parity or hardware test run.
+
+`.github/workflows/native.yml` runs the focused Windows tests plus core package
+metadata/install/source/relocation checks and the Linux core suite. CI stages
+against its own built SDK; exact reference binary fingerprints are checked
+by the local repository-install tests. GitHub-hosted execution remains to be
+verified after pushing the workflow.
+
+| Package path | Platforms | Requirements |
 | --- | --- | --- |
-| Repository `core` | `windows` | MSVC x64, single-config Release, `/MD`, AVX2, a matching DLL SDK fingerprint |
-| Repository `imgui` | `windows` | The core constraints plus the matching Windows ImGui/Clipboard SDK modules |
-| Locally staged binary/source package | No `package_platform` call emitted by `tools/stage_daspkg.py` | The actual staged artifacts/build remain Windows-only; metadata is not yet consistent with the repository manifest |
-| Linux package | Not declared or validated | Only the standalone core source build is currently ported |
-
-There is a manifest compatibility blocker: `package_platform` is not present
-in `daslib/daspkg.das` at the pinned daScript revision
-`35bf260c0d8a79b94c64005bd3d2435adcf7e261`. Compiling the current root manifest
-against that revision reports `error[30341]: no matching functions or generics:
-package_platform(string const)`. The current `package_min_sdk("0.6.4")`
-declaration alone does not establish availability of that metadata API.
-The SDK validation records below must not be treated as verification of this
-newer manifest call.
-
-Before publishing a repository package:
-
-1. Establish a daspkg client version that supports platform metadata and a
-   compatible, fingerprint-validated consumer DLL SDK. Verify the official
-   v0.6.4 SDK separately; its manifest compatibility was not rechecked here.
-2. Decide how older clients are supported without silently discarding platform
-   restrictions. Keep the platform declaration until that policy is resolved.
-3. Make staged and repository platform metadata consistent with that client
-   policy, and test the declared platform list for both `core` and `imgui`.
-4. Run the actual daspkg repository install, relocate and release consumer
-   checks with the selected client/SDK combination.
+| Repository core / ImGui | `windows` | MSVC x64, single-config Release, `/MD`, AVX2, exact SDK fingerprint |
+| Staged binary / source | `windows` | Matching Windows DLL SDK; source staging records its fingerprint |
+| Linux | Not supported | The Linux source runner is a separate build profile |
 
 A Linux daspkg port additionally needs ELF/shared-library SDK linkage instead
 of Windows `.lib` files, PIC and matching ABI/build flags, Linux binding
@@ -51,11 +50,8 @@ The interpreter discovers .das_module in the consumer's modules/dasSDL3;
 scripts use ordinary require dassdl3/..., without an SDL-specific host or
 -load_module flag.
 
-Supported/tested: Windows x64, MSVC Release, /MD, AVX2. Core supports the official
-Windows v0.6.4 SDK and the local DLL SDK at commit
-35bf260c0d8a79b94c64005bd3d2435adcf7e261. Both core and GUI now also support the official Windows v0.6.4 SDK.
-Source builds select an exact validated SDK snapshot; DLLs are built separately
-for each SDK. See the official SDK section below.
+Supported SDK: the reference DLL build of daScript `ebac0ffe46ab30de6c9536f4b0af7a33ede45902`.
+The checked-in core and ImGui fingerprints identify complete SDK builds.
 Do not load it into an unrelated SDK binary: matching source revision alone
 does not guarantee DLL ABI/configuration compatibility. The SDL DLL is not needed;
 the interpreter still needs its own daScript DLLs and VC runtime.
@@ -119,8 +115,8 @@ of core dassdl3/ imports.
 
 ## Before public distribution
 
-- Broaden SDK coverage only after validating each additional build. Official
-  Windows v0.6.4 core and the local reference core/GUI are accepted now; official GUI is also supported.
+- Broaden SDK coverage only after validating each additional build. Older
+  reference and official SDK profiles are not accepted.
 - Define companion-library and live/widgets-v2 profiles separately, with their
   feature-specific dependency notices. Core and ordinary ImGui are covered below.
 - Separate Windows execution now passes (user-reported core/GUI verification).
@@ -303,8 +299,7 @@ python tools/stage_daspkg.py --source --with-imgui --sdk third_party/daScript --
 
 The source fingerprint additionally covers upstream ImGui C++ headers/sources,
 the SDK ImGui module and import library. The package copies our SDL adapter
-sources and obtains unchanged ImGui backends from the matching local SDK, or
-from the pinned upstream archive for the official SDK.
+sources and obtains unchanged ImGui backends from the matching built SDK.
 Its CMake flags match the pinned SDK's wchar32/FreeType configuration.
 
 Install and run the binary version:
@@ -395,7 +390,7 @@ The manifest then declares the SDK dasImgui dependency, and CMake builds the
 combined SDL + ImGui module. Use the matching built SDK; the minimal SDK's daspkg
 CLI still needs the PUGIXML -load_module helper described above. Keep the profile
 environment setting for subsequent package rebuilds; an unset value means core.
-Only core/imgui are accepted by CMake; the official SDK supports both profiles.
+Only core/imgui are accepted by CMake; both require the pinned built SDK.
 
 The upstream package manager supplies DASLANG_DIR. That routes root CMake to
 src/package/repository.cmake before any bundled daScript configuration. Package
@@ -404,9 +399,7 @@ existing developer build stays unchanged. SDL is fetched unless SDL3_DIR selects
 an existing exact-version static build.
 
 The repository ships fixed fingerprints under src/package/profiles/: core.sha256
-and imgui.sha256 for the local reference SDK, plus core-official-0.6.4.sha256 and imgui-official-0.6.4.sha256
-for the official Windows SDK. Each profile must match one complete candidate, not a
-per-file mixture. These hashes are not derived from the SDK being installed
+and imgui.sha256 for the reference SDK. Each profile must match in full. These hashes are not derived from the SDK being installed
 against. Arbitrary releases/rebuilds remain rejected. ImGui's native
 headers/sources/import library/module are covered in its local profile.
 
@@ -455,6 +448,9 @@ The static SDK install also includes the project LICENSE and curated notice set
 under share/dasSDL3; this packaging change does not reconfigure the developer SDK.
 
 ## Verification on a separate Windows host
+
+The recorded 2026-09-28 results below used the previous SDK. They do not
+validate the updated SDK; the portable verification workflow remains available.
 
 Prepare a portable kit from the two generated release directories:
 
@@ -512,77 +508,6 @@ were generated on that host but have not been inspected here. The transcript
 does not establish the installed SDK/tooling inventory, exact Windows/VC runtime
 versions, or a pristine VM. Interactive input and hardware rendering were not
 part of this dummy-driver run.
-
-## Official Windows SDK 0.6.4 (core and GUI)
-
-The official v0.6.4 Windows x86_64 bundle is now an accepted **source-build**
-SDK for core and GUI. Download provenance and the exact archive SHA-256 are saved in
-src/package/profiles/official-0.6.4.json. Tested on 2026-09-28 without modifying
-the SDK or the pinned development dependency.
-
-~~~powershell
-curl.exe --fail --location --output sdk.zip https://github.com/GaijinEntertainment/daScript/releases/download/v0.6.4/daslang-bundle-windows-x86_64.zip
-if ((Get-FileHash sdk.zip -Algorithm SHA256).Hash.ToLower() -ne "00409af672f0bc2aa6650bb4d1312f6505412c6ed8a309ad2ad4929b867f0d97") { throw "SDK hash mismatch" }
-Expand-Archive sdk.zip -DestinationPath official-sdk
-~~~
-
-Use the extracted daslang_bundle as the SDK root. It already supplies the
-package CLI and PUGIXML; the local pilot's CLI helper is unnecessary.
-From a VS x64 developer shell, choose a new consumer directory:
-
-~~~powershell
-$env:CMAKE_GENERATOR = "Ninja"
-$env:DASSDL3_PACKAGE_PROFILE = "core"
-C:/path/to/official-sdk/daslang_bundle/bin/daslang.exe C:/path/to/official-sdk/daslang_bundle/utils/daspkg/main.das -- install C:/src/dasSDL3 --root C:/my-consumer
-~~~
-
-After publication the source argument can be github.com/spiiin/dasSDL3.
-This does not authorize loading the old local-SDK DLL into the official SDK:
-installation builds a new module against the selected SDK's headers/import
-libraries. Runtime replacement after installation requires reinstalling the module.
-
-Validation covers native compilation, real package install/check, every core
-boost import, rendering/resource cleanup, relocation and standalone release,
-including missing-DLL rejection. Runtime notices in this SDK match the existing
-daScript notice set (text comparison). Hardware/API-wide runtime coverage and
-a separate-machine test of this new SDK build are not implied.
-
-### GUI with the official SDK
-
-Set DASSDL3_PACKAGE_PROFILE to imgui before running the same repository install.
-The official SDK supplies the ImGui import library in modules/dasImgui rather
-than lib/, and omits native headers/backend sources. CMake authenticates the
-official ImGui/Clipboard files and fetches ImGui v1.92.6-docking with SHA-256
-5e84cdaa6a6041586a0d11a3071b749734a0439d66fdbdad37ae5b27e37d396c.
-These are the exact version/hash in the SDK release CMakeLists, at daScript commit
-313df4bad9e9e50f5d3aaa56d5f1e50dec728238. Provenance is recorded in
-src/package/profiles/official-0.6.4.json.
-
-The first source build requires network access for this small archive even when
-SDL3_DIR points to an existing SDL build. SDK files remain unchanged. Only our
-adapter and the SDL3/SDLRenderer3 backends are compiled, with the release's
-wchar32/FreeType/obsolete-function settings. Upstream adds an ImVector::data()
-method for its binding generator; our adapter does not use that method and
-needs no dependency patch or layout change.
-
-The official GUI fingerprint covers core plus the native ImGui import library,
-ImGui module and Clipboard module. An unrecognized binary fails before the
-ImGui download. Binary and source staging support both SDK layouts.
-Runtime distribution still includes Clipboard, the ImGui and SDL modules, and
-the two daScript runtime DLLs. MD4C notices are now included because the SDK
-ImGui module statically links it.
-
-Official GUI validation passed: binary release, source package, clean repository
-export install, all 64 boost imports, GUI pixels, cleanup and relocation. Missing
-native dependencies and mismatched source-SDK fingerprints are rejected. The
-previous local-SDK GUI source test also passes.
-
-The new build/windows-official-064-verification.zip contains both standalone
-applications built against the official SDK plus the portable verify.ps1 runner.
-Local extracted-ZIP verification passes for both. The earlier user-reported
-second-machine result covered the local-SDK kit, not this new build. The user
-chose to skip the repeated second-machine run of this ZIP. It is not a
-blocking publication requirement; do not report it as performed.
 
 ## Prepared release 0.1.0
 

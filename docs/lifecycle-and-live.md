@@ -277,17 +277,11 @@ The console transcript is the evidence; the remote JSON/logs and host software
 inventory have not been inspected. A pristine-VM check remains distinct.
 See daspkg.md for the recorded result and transfer/run instructions.
 
-Official Windows SDK v0.6.4 core has now passed native compilation, all core
-boost imports, package install/check/relocation and standalone dependency checks.
-Repository source installation accepts its independent fixed fingerprint as
-well as the local reference SDK. GUI now obtains the exact native ImGui source archive pinned by the SDK release,
-while keeping the SDK binary and its ABI settings unchanged.
-See daspkg.md and src/package/profiles/official-0.6.4.json for provenance/scope.
-
-Official SDK 0.6.4 GUI now passes source/repository installation, all 64 imports,
-pixel readback, relocation and standalone missing-dependency checks. The previous
-local GUI source profile also passes. A separate portable verification ZIP is
-prepared for the official-SDK core/GUI pair; the user explicitly skipped its repeated external-machine run.
+The package SDK was updated on 2026-10-03 to daScript
+ebac0ffe46ab30de6c9536f4b0af7a33ede45902. Older reference and official v0.6.4
+SDKs are no longer accepted. See [daspkg validation](daspkg.md#platform-readiness)
+for the supported SDK, current core/GUI checks and exact fingerprints. Historical
+separate-machine results above do not validate this new SDK on that machine.
 
 Release 0.1.0 is prepared locally: version file, full daspkg metadata, draft notes
 and publication handoff. Metadata/hooks are exercised through the upstream SDK

@@ -89,35 +89,6 @@ if(DASSDL3_PACKAGE_IMGUI)
     set(_imgui "${DASLANG_DIR}/modules/dasImgui")
     set(_imgui_source "${_imgui}/imgui")
     set(_imgui_library "${DASLANG_DIR}/lib/dasModuleImgui.lib")
-    if(NOT EXISTS "${_imgui_source}/imgui.h")
-        # Authenticate the official GUI binaries before fetching release sources.
-        set(_official_gui_files
-            modules/dasImgui/dasModuleImgui.lib
-            modules/dasImgui/dasModuleImgui.shared_module
-            modules/dasClipboard/dasModuleClipboard.shared_module)
-        set(_official_gui_hashes 7e4cb5be34e850d0d8991d63608b99f81d1a4891290323c758e878462883cf7d
-            e68da3cad4cb766f9766142084433fa2d8f918e5e2543418dae6508618e9f51f
-            0ebe61e4f8c6530e2994bec4316060e13db50cfa8b3c9caf262098c68b8b2ab3)
-        foreach(index RANGE 0 2)
-            list(GET _official_gui_files ${index} relative)
-            list(GET _official_gui_hashes ${index} expected)
-            if(NOT EXISTS "${DASLANG_DIR}/${relative}")
-                message(FATAL_ERROR "Official GUI SDK missing ${relative}")
-            endif()
-            file(SHA256 "${DASLANG_DIR}/${relative}" actual)
-            if(NOT actual STREQUAL expected)
-                message(FATAL_ERROR "Official GUI SDK fingerprint mismatch: ${relative}")
-            endif()
-        endforeach()
-        include(FetchContent)
-        FetchContent_Declare(dassdl3_imgui
-            URL https://github.com/ocornut/imgui/archive/refs/tags/v1.92.6-docking.tar.gz
-            URL_HASH SHA256=5e84cdaa6a6041586a0d11a3071b749734a0439d66fdbdad37ae5b27e37d396c
-            DOWNLOAD_EXTRACT_TIMESTAMP TRUE)
-        FetchContent_MakeAvailable(dassdl3_imgui)
-        set(_imgui_source "${dassdl3_imgui_SOURCE_DIR}")
-        set(_imgui_library "${_imgui}/dasModuleImgui.lib")
-    endif()
     foreach(required "${_imgui_library}" "${_imgui}/dasModuleImgui.shared_module"
             "${_imgui_source}/imgui.h")
         if(NOT EXISTS "${required}")

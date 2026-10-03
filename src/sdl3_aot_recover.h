@@ -2,7 +2,7 @@
 #include "daScript/daScript.h"
 
 namespace das {
-// Pinned daScript 35bf260: das_try_recover invokes catch_block before updating
+// Pinned daScript ebac0ffe4 (also affected in 35bf260): das_try_recover invokes catch_block before updating
 // last_exception and clearing exception. Match interpreter ordering instead.
 // runWithCatch restores the stack/ABI on failure. A panic in recover propagates
 // directly to the outer handler, never back into this try block.
