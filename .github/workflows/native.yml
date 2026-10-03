@@ -55,7 +55,7 @@ jobs:
 
   linux:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
         with:
@@ -71,12 +71,24 @@ jobs:
             libpipewire-0.3-dev libudev-dev libdbus-1-dev libibus-1.0-dev
       - name: Build interpreter and strict AOT
         run: |
-          cmake -S . -B build/linux -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON
+          cmake -S . -B build/linux -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DDAS_ENABLE_PIC=ON -DDAS_PUGIXML_DISABLED=OFF
           cmake --build build/linux --target dasSDL3_runner linux_aot_runner linux_missing_aot linux_allocator_test --parallel 6
       - name: Linux core regressions
         run: ctest --test-dir build/linux -L linux-core --output-on-failure
+      - name: Install Linux dynamic SDK
+        run: python3 tools/prepare_linux_daspkg_sdk.py --build build/linux --output build/linux-sdk
+      - name: Build Linux package
+        run: |
+          cmake -S src/package -B build/linux-package -G Ninja -DCMAKE_BUILD_TYPE=Release -DDASLANG_DIR="$PWD/build/linux-sdk" -DSDL3_DIR="$PWD/build/linux/_deps/sdl3-build"
+          cmake --build build/linux-package --parallel 6
+      - name: Linux package metadata, binary and source installation
+        run: ctest --test-dir build/linux-package --output-on-failure -R '^sdl3_daspkg_(manifest|consumer|source)$'
+      - name: Linux SDK relocation and ELF audit
+        run: python3 tests/test_linux_daspkg_sdk.py --sdk build/linux-sdk --module build/linux-package/module/dasSDL3.shared_module
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: linux-test-logs
-          path: build/linux/Testing/Temporary/*.log
+          path: |
+            build/**/Testing/Temporary/*.log
+            build/daspkg */**/*.log

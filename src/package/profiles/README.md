@@ -23,3 +23,8 @@ This is not a claim of general daScript ABI stability.
 To update a profile, stage a candidate, validate actual package installation,
 interpreter execution, relocation and standalone release, then review its
 `sdk.sha256`. Build binary packages separately for the accepted SDK.
+
+`linux-x86_64-core.sha256` describes the Ubuntu 24.04 / GCC 13.3 ELF core SDK.
+`reference-sdk-linux.json` records the published archive URL and checksum. Linux ImGui and standalone release are outside this profile.
+Use local source staging for independently built SDKs, which deliberately do not
+match the committed binary hashes. See docs/daspkg.md for build and validation steps.

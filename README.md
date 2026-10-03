@@ -40,8 +40,8 @@ coverage does not by itself establish dasSDL3 support on those platforms.
 | Web / Emscripten 5.0.3, wasm32 | Experimental profile | Selected SDL Renderer, audio and daScript OpenGL examples. Single-threaded interpreter; no desktop API parity or SDL GPU/WebGPU backend. See [Web guide](web/README.md). |
 | macOS / Metal, iOS, Android and other targets | Not yet validated | No tested dasSDL3 build/runtime profile is claimed. |
 
-Linux currently uses separate committed bindings and a source checkout.
-The installed SDK remains Windows-only; optional Linux integrations are not
+Linux uses separate committed bindings. The core daspkg profile supports an ELF SDK on Ubuntu 24.04 x86_64.
+The installed C++/AOT SDK remains Windows-only; optional Linux integrations are not
 covered by the core test result. Windows-only raw DXGI, Direct3D9 and message-hook
 functions are absent from Linux bindings. Use `SDL_HidChar` for native HID wide
 buffers (`uint16` on Windows, `int32` on Linux); copied metadata remains UTF-8.
@@ -52,11 +52,11 @@ Platform support also depends on how the project is consumed:
 | --- | --- | --- |
 | Core runner from source | Primary profile | Validated WSL2 core profile above |
 | Installed C++/AOT SDK | Windows-only profile | Not supported yet |
-| daspkg repository package (`core` / `imgui`) | Declares `windows`; package build requires MSVC and a matching DLL SDK | Not supported; the source-runner port does not port the package build |
+| daspkg repository package | Core / ImGui with matching Windows SDK | Core with matching Linux SDK; ImGui and standalone release unvalidated |
 
 **daspkg SDK:** use the pinned daScript revision `ebac0ffe46ab30de6c9536f4b0af7a33ede45902`
-and a matching validated DLL SDK fingerprint. Root and staged manifests declare
-only `windows`. Older SDKs are not supported; `0.6.4` alone is not a sufficient
+and a matching validated dynamic SDK fingerprint. The repository declares
+`windows` and `linux`; staged packages declare their target OS. Older SDKs are not supported; `0.6.4` alone is not a sufficient
 ABI or client-version identifier. See [package platform readiness](docs/daspkg.md#platform-readiness).
 The exact supported DLL SDK is available as a [separate download](https://github.com/spiiin/dasSDL3/releases/tag/sdk-ebac0ffe-windows-x64-r1).
 

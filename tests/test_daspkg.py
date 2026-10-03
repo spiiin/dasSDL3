@@ -60,7 +60,7 @@ def main():
                 parser.error(f"Missing release tool: {llvm / tool}")
         env["DAS_DLL_PATH"] = str(llvm)
         env["PATH"] = str(llvm) + os.pathsep + env.get("PATH", "")
-    exe = str(das / "bin" / "daslang.exe")
+    exe = str(das / "bin" / ("daslang.exe" if os.name == "nt" else "daslang"))
 
     def run(name, command, cwd):
         result = subprocess.run(command, cwd=cwd, env=env, text=True,
@@ -140,7 +140,7 @@ def main():
     if args.fetch_sdl:
         native_build = consumer / "modules/dasSDL3/_build"
         checkout = native_build / "_deps/sdl3-src"
-        static_lib = native_build / "_deps/sdl3-build/SDL3-static.lib"
+        static_lib = native_build / ("_deps/sdl3-build/SDL3-static.lib" if os.name == "nt" else "_deps/sdl3-build/libSDL3.a")
         if not (checkout / ".git").exists() or not static_lib.is_file():
             raise RuntimeError("Cold install did not create its own SDL checkout and static library")
         git = ["git", "-c", f"safe.directory={checkout.as_posix()}", "-C", str(checkout)]

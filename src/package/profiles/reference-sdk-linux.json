@@ -1,0 +1,14 @@
+{
+  "dascript_revision": "ebac0ffe46ab30de6c9536f4b0af7a33ede45902",
+  "platform": "linux-x86_64",
+  "distribution": "Ubuntu 24.04",
+  "compiler": "GCC 13.3.0",
+  "archive": "dasSDL3-sdk-ebac0ffe-linux-x86_64-r1.tar.gz",
+  "sha256": "6c7398d4717b6192a002fb29228f99bd48aab604b157fbc2e1f5b6dd0a4d2068",
+  "size": 38296044,
+  "archive_root": "dasSDL3-sdk-ebac0ffe-linux-x86_64-r1",
+  "profiles": [
+    "core"
+  ],
+  "url": "https://github.com/spiiin/dasSDL3/releases/download/sdk-ebac0ffe-linux-x86_64-r1/dasSDL3-sdk-ebac0ffe-linux-x86_64-r1.tar.gz"
+}
