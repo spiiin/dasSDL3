@@ -19,8 +19,12 @@ def walk(node):
         yield from walk(child)
 
 
-def generate(clang, include, spec_path=None, clang_args=()):
+def generate(clang, include, spec_path=None, clang_args=(), profile="windows"):
     spec = json.loads((spec_path or ROOT / "tools/bindings.json").read_text())
+    if profile == "macos":
+        # SDL_system.h declares these operations only on Windows.
+        windows_only = {"SDL_SetWindowsMessageHook", "SDL_GetDirect3D9AdapterIndex", "SDL_GetDXGIOutputInfo"}
+        spec["functions"] = [name for name in spec["functions"] if name not in windows_only]
     command = [clang, "-x", "c", "-std=c11", "-fsyntax-only", "-Wno-pragma-pack",
                "-I", str(include), "-Xclang", "-ast-dump=json",
                "-"] + list(clang_args)
@@ -121,7 +125,10 @@ def generate(clang, include, spec_path=None, clang_args=()):
         cpp_name = name + "Address" if name in ('SDL_SetClipboardData', 'SDL_SetWindowHitTest', 'SDL_SetEventFilter', 'SDL_GetEventFilter', 'SDL_AddEventWatch', 'SDL_RemoveEventWatch', 'SDL_FilterEvents', 'SDL_EnumerateDirectory', 'SDL_EnumerateStorageDirectory', 'SDL_SetAudioStreamGetCallback', 'SDL_SetAudioStreamPutCallback', 'SDL_OpenAudioDeviceStream', 'SDL_SetAudioPostmixCallback', 'SDL_PutAudioStreamDataNoCopy', 'SDL_SetRelativeMouseTransform', 'SDL_CreateThreadRuntime', 'SDL_CreateThreadWithPropertiesRuntime', 'SDL_SetTLS', 'SDL_Vulkan_GetVkGetInstanceProcAddr', 'SDL_GL_GetProcAddress', 'SDL_EGL_GetProcAddress', 'SDL_EGL_SetAttributeCallbacks', 'SDL_LoadFunction', 'SDL_AddHintCallback', 'SDL_RemoveHintCallback', 'SDL_AddTimer', 'SDL_AddTimerNS', 'SDL_GetDefaultLogOutputFunction', 'SDL_GetLogOutputFunction', 'SDL_SetLogOutputFunction', 'SDL_RunOnMainThread', 'SDL_SetPointerPropertyWithCleanup', 'SDL_SetWindowsMessageHook', 'SDL_SetX11EventHook', 'SDL_SetTrayEntryCallback', 'SDL_ShowOpenFileDialog', 'SDL_ShowSaveFileDialog', 'SDL_ShowOpenFolderDialog', 'SDL_ShowFileDialogWithProperties') else name
         if name in ('SDL_hid_open', 'SDL_hid_get_manufacturer_string', 'SDL_hid_get_product_string', 'SDL_hid_get_serial_number_string', 'SDL_hid_get_indexed_string'): cpp_name = name + "Wide"
         node = ", SimNode_ExtFuncCallAndCopyOrMove" if signature.split("(", 1)[0].strip() in spec["structs"] else ""
-        registrations.append(f'// {signature}\naddExtern<DAS_BIND_FUN({name}){node}>(*this, lib, "{name}", '
+        # The pinned daScript maps wchar_t to uint16 even on Apple. Bind the
+        # explicit native-width storage bridge for both interpreter and AOT.
+        bind_name = cpp_name if profile == "macos" and cpp_name == name + "Wide" else name
+        registrations.append(f'// {signature}\naddExtern<DAS_BIND_FUN({bind_name}){node}>(*this, lib, "{name}", '
                              f'SideEffects::worstDefault, "{cpp_name}")')
         if argnames:
             registrations.append("->args({" + ", ".join(json.dumps(a) for a in argnames) + "})")
@@ -138,9 +145,10 @@ def main():
     parser.add_argument("--spec", type=Path)
     parser.add_argument("--output", type=Path, default=ROOT / "src/generated")
     parser.add_argument("--clang-arg", action="append", default=[])
+    parser.add_argument("--profile", choices=("windows", "macos"), default="windows")
     args = parser.parse_args()
     output = args.output
-    files = generate(args.clang, args.sdl_include.resolve(), args.spec, args.clang_arg)
+    files = generate(args.clang, args.sdl_include.resolve(), args.spec, args.clang_arg, args.profile)
     if args.check:
         stale = [name for name, text in files.items()
                  if not (output / name).exists() or (output / name).read_text(encoding="utf-8") != text]

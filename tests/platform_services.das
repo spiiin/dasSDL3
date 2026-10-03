@@ -18,22 +18,24 @@ def system_queries {
     verify(is_ok(copied)); var locales <- move_unwrap(copied)
     SDL_ResetHint("SDL_PREFERRED_LOCALES")
     verify(length(locales) == 2 && locales[0].language == "en" && locales[0].country == "US" && locales[1].language == "fr")
-    var adapter = 0; var output = 0
-    verify(SDL_GetDirect3D9AdapterIndex(0u) == -1)
-    verify(!SDL_GetDXGIOutputInfo(0u, safe_addr(adapter), safe_addr(output)))
-    var bad <- dxgi_output(0u); verify(is_err(bad))
-    let display = SDL_GetPrimaryDisplay()
-    verify(display != 0u)
-    let dx9 = SDL_GetDirect3D9AdapterIndex(display)
-    let dxgi = SDL_GetDXGIOutputInfo(display, safe_addr(adapter), safe_addr(output))
-    if (dxgi) {verify(adapter >= 0 && output >= 0)}
-    if (dx9 < 0) {verify(SDL_GetError() != "")}
-    SDL_SetWindowsMessageHook(SDLTestPlatformCallback(0), null)
-    SDL_PumpEvents()
-    verify(SDLTestPlatformPost())
-    SDL_PumpEvents()
-    SDL_SetWindowsMessageHook(null, null)
-    verify(SDLTestPlatformCount(0) == 1)
+    static_if (SDL_HAS_DXGI_QUERY) {
+        var adapter = 0; var output = 0
+        verify(SDL_GetDirect3D9AdapterIndex(0u) == -1)
+        verify(!SDL_GetDXGIOutputInfo(0u, safe_addr(adapter), safe_addr(output)))
+        var bad <- dxgi_output(0u); verify(is_err(bad))
+        let display = SDL_GetPrimaryDisplay()
+        verify(display != 0u)
+        let dx9 = SDL_GetDirect3D9AdapterIndex(display)
+        let dxgi = SDL_GetDXGIOutputInfo(display, safe_addr(adapter), safe_addr(output))
+        if (dxgi) {verify(adapter >= 0 && output >= 0)}
+        if (dx9 < 0) {verify(SDL_GetError() != "")}
+        SDL_SetWindowsMessageHook(SDLTestPlatformCallback(0), null)
+        SDL_PumpEvents()
+        verify(SDLTestPlatformPost())
+        SDL_PumpEvents()
+        SDL_SetWindowsMessageHook(null, null)
+        verify(SDLTestPlatformCount(0) == 1)
+    }
     SDL_SetX11EventHook(null, null)// Compiled Windows stub, not positive X11 validation.
     verify(SDL_AddEventWatch(SDLTestPlatformCallback(3), null))
     SDL_OnApplicationDidReceiveMemoryWarning()

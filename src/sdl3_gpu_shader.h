@@ -11,8 +11,9 @@ struct SDL_GPUOwnedShader {
 };
 inline std::unordered_map<uint64_t,SDL_GPUOwnedShader> SDL_GPUOwnedShaders;
 inline bool SDL_GPUValidateShaderInfo(const SDL_GPUShaderCreateInfo & info,const char * entrypoint) {
-    if (info.format!=SDL_GPU_SHADERFORMAT_SPIRV && info.format!=SDL_GPU_SHADERFORMAT_DXIL)
-        return SDL_SetError("GPU shader: exactly one SPIR-V or DXIL format required");
+    if (info.format!=SDL_GPU_SHADERFORMAT_SPIRV && info.format!=SDL_GPU_SHADERFORMAT_DXIL &&
+        info.format!=SDL_GPU_SHADERFORMAT_MSL && info.format!=SDL_GPU_SHADERFORMAT_METALLIB)
+        return SDL_SetError("GPU shader: exactly one SPIR-V, DXIL, MSL or Metallib format required");
     if (info.stage!=SDL_GPU_SHADERSTAGE_VERTEX && info.stage!=SDL_GPU_SHADERSTAGE_FRAGMENT)
         return SDL_SetError("GPU shader: vertex or fragment stage required");
     // Pinned SDL_sysgpu.h MAX_*_PER_STAGE, not reflection of supplied bytecode.
@@ -31,8 +32,13 @@ inline bool SDL_GPUValidateShaderBytes(const uint8_t * bytes,uint64_t size,uint3
     if (!bytes || size<4 || size>SDL_GPUShaderByteLimit) return SDL_SetError("GPU shader: bytecode size must be 4..16777216");
     const uint8_t spirv[]={3,2,35,7};
     if ((format==SDL_GPU_SHADERFORMAT_SPIRV && (size<20 || size%4 || std::memcmp(bytes,spirv,4))) ||
-        (format==SDL_GPU_SHADERFORMAT_DXIL && (size<32 || std::memcmp(bytes,"DXBC",4))))
+        (format==SDL_GPU_SHADERFORMAT_DXIL && (size<32 || std::memcmp(bytes,"DXBC",4))) ||
+        (format==SDL_GPU_SHADERFORMAT_METALLIB && (size<16 || std::memcmp(bytes,"MTLB",4))))
         return SDL_SetError("GPU shader: invalid bytecode header/size");
+    if (format==SDL_GPU_SHADERFORMAT_MSL) {
+        auto zero=static_cast<const uint8_t *>(std::memchr(bytes,0,size_t(size)));
+        if (zero && zero!=bytes+size-1) return SDL_SetError("GPU shader: embedded NUL in MSL source");
+    }
     return true;
 }
 inline SDL_GPUShaderCreateInfo SDL_GPUShaderValueInfo(const SDL_GPUShaderCreateInfo & in) {
@@ -63,7 +69,9 @@ inline uint64_t SDL_CreateGPUCheckedShader(SDL_GPUDevice * device,const das::TAr
         const SDL_GPUShaderCreateInfo & info,const char * entrypoint) {
     if (!SDL_GPUCheckedShaderDevice(device,info,entrypoint) ||
         !SDL_GPUValidateShaderBytes(reinterpret_cast<const uint8_t *>(bytes.data),bytes.size,info.format)) return 0;
-    std::vector<uint32_t> code((bytes.size+3)/4); std::memcpy(code.data(),bytes.data,bytes.size);
+    // Metal consumes a C string. A zero-initialized spare word guarantees a
+    // terminator even when the caller's source size is a multiple of four.
+    std::vector<uint32_t> code((bytes.size+3)/4+(info.format==SDL_GPU_SHADERFORMAT_MSL)); std::memcpy(code.data(),bytes.data,bytes.size);
     return SDL_GPUCreateOwnedShader(device,code.data(),uint32_t(bytes.size),info,entrypoint);
 }
 inline uint64_t SDL_LoadGPUCheckedShader(SDL_GPUDevice * device,const char * path,
@@ -74,7 +82,7 @@ inline uint64_t SDL_LoadGPUCheckedShader(SDL_GPUDevice * device,const char * pat
     if (!stream) return 0;
     const auto length=SDL_GetIOSize(stream.get());
     if (length<4 || length>SDL_GPUShaderByteLimit) { SDL_SetError("GPU shader: file size must be 4..16777216"); return 0; }
-    std::vector<uint32_t> code((size_t(length)+3)/4);
+    std::vector<uint32_t> code((size_t(length)+3)/4+(info.format==SDL_GPU_SHADERFORMAT_MSL));
     if (SDL_ReadIO(stream.get(),code.data(),size_t(length))!=size_t(length)) {
         SDL_SetError("GPU shader: incomplete read"); return 0;
     }

@@ -3,7 +3,7 @@ require dassdl3/sdl3_common_boost
 require daslib/safe_addr
 [export]
 def main(smoke : bool) : int {
-    verify(SDL_GetPlatform() == "Windows" && platform_name() == "Windows")
+    verify(length(SDL_GetPlatform()) > 0 && platform_name() == SDL_GetPlatform())
     verify(length(SDL_GetRevision()) > 0 && sdl_revision() == SDL_GetRevision())
     let text = "00112233445566778899aabbccddeeff"
     var guid = SDL_StringToGUID("00112233445566778899AABBCCDDEEFF")

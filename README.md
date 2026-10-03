@@ -29,6 +29,8 @@ Tests cover interpreter, both binding generators, strict AOT and a separate inst
 
 ## Getting started
 
+For native macOS setup and platform differences, see [macOS](docs/macos.md).
+
 Requirements: Git, CMake 3.24+, Ninja, Visual Studio 2022 C++ tools and Windows SDK. Tested with MSVC 19.38. The first build downloads dependencies.
 
 From a **VS 2022 x64 developer shell**:

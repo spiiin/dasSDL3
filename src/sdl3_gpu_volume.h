@@ -11,11 +11,11 @@ struct SDL_GPUVolume {
 };
 inline std::unordered_map<uint64_t,SDL_GPUVolume> SDL_GPUVolumes;
 struct SDL_GPUVolumeFootprint { uint32_t rowBytes, rowPitch, slicePitch, size, rows; };
-inline bool SDL_GPUVolumeFootprintFor(das::uint3 size,uint32_t texelBytes,SDL_GPUVolumeFootprint & out) {
+inline bool SDL_GPUVolumeFootprintFor(das::uint3 size,uint32_t texelBytes,SDL_GPUVolumeFootprint & out,SDL_GPUDevice * device=nullptr) {
     if (!size.x || !size.y || !size.z || size.x>2048 || size.y>2048 || size.z>2048)
         return SDL_SetError("GPU volume: dimensions must be 1..2048");
     SDL_GPUTextureFootprint row{};
-    if (!SDL_GPUTextureFootprintColor(size.x,size.y,texelBytes,1,row)) return false;
+    if (!SDL_GPUTextureFootprintBlocks(size.x,size.y,texelBytes,1,1,row,device)) return false;
     const uint64_t total=uint64_t(row.size)*size.z;
     if (total>SDL_GPUDataLimit) return SDL_SetError("GPU volume: staging footprint exceeds 64 MiB");
     out={row.rowBytes,row.rowPitch,row.size,uint32_t(total),size.y*size.z}; return true;
@@ -29,7 +29,7 @@ inline bool SDL_GPUVolumeRegion(const SDL_GPUVolume & entry,uint32_t mip,das::ui
     if (origin.x>extent.x || origin.y>extent.y || origin.z>extent.z ||
         size.x>extent.x-origin.x || size.y>extent.y-origin.y || size.z>extent.z-origin.z)
         return SDL_SetError("GPU volume: region out of bounds");
-    return SDL_GPUVolumeFootprintFor(size,entry.texelBytes,out);
+    return SDL_GPUVolumeFootprintFor(size,entry.texelBytes,out,entry.device);
 }
 inline bool SDL_GPUVolumeFull(const SDL_GPUVolume & entry,uint32_t mip,das::uint3 origin,das::uint3 size) {
     const auto extent=SDL_GPUVolumeMipSize(entry,mip);
@@ -43,13 +43,13 @@ inline SDL_GPUTextureRegion SDL_GPUVolumeNativeRegion(SDL_GPUTexture * texture,u
 inline uint64_t SDL_CreateGPUVolume(SDL_GPUDevice * device,das::uint3 size,uint32_t levels,uint32_t format) {
     if (!SDL_GPUTransferDevice(device) || !SDL_GPUTransferIDAvailable()) return 0;
     const auto texelBytes=SDL_GPUTransferColorBytes(format); if (!texelBytes) return 0;
-    SDL_GPUVolumeFootprint base{}; if (!SDL_GPUVolumeFootprintFor(size,texelBytes,base)) return 0;
+    SDL_GPUVolumeFootprint base{}; if (!SDL_GPUVolumeFootprintFor(size,texelBytes,base,device)) return 0;
     uint32_t maxLevels=1; for (auto n=std::max({size.x,size.y,size.z});n>1;n>>=1) ++maxLevels;
     if (!levels || levels>maxLevels) { SDL_SetError("GPU volume: invalid mip count"); return 0; }
     SDL_GPUVolume entry{device,nullptr,size,levels,format,texelBytes,std::vector<bool>(levels,true)};
     uint64_t total=0;
     for (uint32_t mip=0;mip<levels;++mip) {
-        SDL_GPUVolumeFootprint f{}; if (!SDL_GPUVolumeFootprintFor(SDL_GPUVolumeMipSize(entry,mip),texelBytes,f)) return 0;
+        SDL_GPUVolumeFootprint f{}; if (!SDL_GPUVolumeFootprintFor(SDL_GPUVolumeMipSize(entry,mip),texelBytes,f,device)) return 0;
         total+=f.size;
     }
     if (total>SDL_GPUDataLimit) { SDL_SetError("GPU volume: complete mip footprint exceeds 64 MiB"); return 0; }
@@ -64,7 +64,7 @@ inline uint64_t SDL_CreateGPUVolume(SDL_GPUDevice * device,das::uint3 size,uint3
     auto * pass=build.begin(); if (!pass) return 0;
     for (uint32_t mip=0;mip<levels;++mip) {
         const auto extent=SDL_GPUVolumeMipSize(entry,mip);
-        SDL_GPUVolumeFootprint f{}; SDL_GPUVolumeFootprintFor(extent,texelBytes,f);
+        SDL_GPUVolumeFootprint f{}; SDL_GPUVolumeFootprintFor(extent,texelBytes,f,device);
         SDL_GPUTextureTransferInfo from{}; from.transfer_buffer=build.transfer;
         from.pixels_per_row=f.rowPitch/texelBytes; from.rows_per_layer=extent.y;
         const auto to=SDL_GPUVolumeNativeRegion(build.texture,mip,{0,0,0},extent);

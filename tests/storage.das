@@ -91,7 +91,10 @@ def main(smoke : bool) : int {
         verify(is_err(write_storage_file(title, "forbidden", bytes)))
         verify(SDL_CloseStorage(title))
         var no_app : string
-        verify(SDL_OpenUserStorage("", no_app, 0u) == null)
+        let user = SDL_OpenUserStorage("", no_app, 0u)
+        // Cocoa's preference path accepts an empty app name in pinned SDL.
+        if (SDL_GetPlatform() == "macOS") {verify(user != null && SDL_CloseStorage(user))}
+        else {verify(user == null)}
         var iface = interface()
         let custom = SDL_OpenStorage(safe_addr(iface), SDLTestStorageReset(root, false))
         verify(custom != null)
@@ -117,7 +120,8 @@ def main(smoke : bool) : int {
         verify(is_ok(moved) && length(unwrap(moved)) == 0)
         var called = false
         let skipped = with_user_storage("", no_app, 0u) $(store : SDL_Storage?) {called = true; return sdl_ok()}
-        verify(is_err(skipped) && !called)
+        if (SDL_GetPlatform() == "macOS") {verify(is_ok(skipped) && called)}
+        else {verify(is_err(skipped) && !called)}
     }
     print("Storage: file/title/custom APIs, copied arrays, native callbacks and cleanup passed.\n")
     return 0

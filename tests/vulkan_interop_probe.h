@@ -2,18 +2,32 @@
 #include <vulkan/vulkan_core.h>
 #include <SDL3/SDL.h>
 #include <vector>
-#include <malloc.h>
+#include <unordered_map>
+#include <mutex>
+#include <cstring>
 #include <atomic>
 namespace sdl3_vk_test {
 inline std::atomic<int> allocations{0};
+inline std::mutex allocation_mutex;
+inline std::unordered_map<void *,size_t> allocation_sizes;
 inline void * VKAPI_PTR allocate(void *,size_t size,size_t alignment,VkSystemAllocationScope) {
-    void * p=_aligned_malloc(size,alignment);if(p) ++allocations;return p;
+    void * p=SDL_aligned_alloc(alignment,size);
+    if(p) {std::lock_guard<std::mutex> lock(allocation_mutex);allocation_sizes[p]=size;++allocations;}
+    return p;
 }
-inline void VKAPI_PTR release(void *,void * p) {if(p) {--allocations;_aligned_free(p);}}
+inline void VKAPI_PTR release(void *,void * p) {
+    if(p) {std::lock_guard<std::mutex> lock(allocation_mutex);allocation_sizes.erase(p);--allocations;SDL_aligned_free(p);}
+}
 inline void * VKAPI_PTR resize(void *,void * p,size_t size,size_t alignment,VkSystemAllocationScope scope) {
     if(!size) {release(nullptr,p);return nullptr;}
     if(!p) return allocate(nullptr,size,alignment,scope);
-    return _aligned_realloc(p,size,alignment);
+    size_t old_size;
+    {std::lock_guard<std::mutex> lock(allocation_mutex);old_size=allocation_sizes.at(p);}
+    auto replacement=allocate(nullptr,size,alignment,scope);
+    if(!replacement) return nullptr;
+    std::memcpy(replacement,p,std::min(size,old_size));
+    release(nullptr,p);
+    return replacement;
 }
 inline const VkAllocationCallbacks * allocator() {
     static const VkAllocationCallbacks callbacks{nullptr,allocate,resize,release,nullptr,nullptr};return &callbacks;

@@ -18,9 +18,13 @@ def main(smoke : bool) : int {
         let cwd = SDL_GetCurrentDirectory()
         verify(length(cwd) > 0)
         SDL_free(reinterpret<void?>(cwd))
-        verify(length(SDL_GetPrefPath("", no_app)) == 0)
+        let pref = SDL_GetPrefPath("", no_app)
+        if (SDL_GetPlatform() == "macOS") {verify(length(pref) > 0)}
+        else {verify(length(pref) == 0)}
+        SDL_free(reinterpret<void?>(pref))
     }
-    verify(is_err(pref_path("", no_app)))
+    // Pinned Cocoa accepts an empty application name; Windows rejects it.
+    verify(is_ok(pref_path("", no_app)) == (SDL_GetPlatform() == "macOS"))
     let home = SDL_GetUserFolder(SDL_Folder.FOLDER_HOME)
     let copied_home = user_folder(SDL_Folder.FOLDER_HOME)
     if (length(home) > 0) { verify(is_ok(copied_home) && unwrap(copied_home) == home) }

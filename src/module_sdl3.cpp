@@ -128,6 +128,14 @@ public:
     Module_dasSDL3() : Module("sdl3") {
         ModuleLibrary lib(this);
         lib.addBuiltInModule();
+        auto hidChar = makeType<SDL_HidChar>(lib);
+        hidChar->alias = "SDL_HidChar";
+        addAlias(hidChar);
+#if defined(SDL_PLATFORM_WIN32) || defined(SDL_PLATFORM_WINGDK)
+        addConstant(*this, "SDL_HAS_DXGI_QUERY", true);
+#else
+        addConstant(*this, "SDL_HAS_DXGI_QUERY", false);
+#endif
         #include "generated/gpu_handle_registration.inc"
         #ifdef DASSDL3_REGISTRATION_INCLUDE
         #include DASSDL3_REGISTRATION_INCLUDE
