@@ -19,7 +19,7 @@ The public API follows SDL objects and operations. Application rendering algorit
 
 ## Status
 
-The primary validated target is **Windows x64 / MSVC**. Dependencies are pinned to **SDL 3.4.16** and daScript commit `35bf260c0d8a79b94c64005bd3d2435adcf7e261`.
+The primary validated target is **Windows x64 / MSVC**. Dependencies are pinned to **SDL 3.4.16** and daScript commit `ebac0ffe46ab30de6c9536f4b0af7a33ede45902`.
 
 The Windows inventory records **1,062 generated functions and 13 adapted functions out of 1,263**. The remaining 188 have explicit decisions: 169 Stdinc functions and 19 host, standard-library, C ABI or deferred operations. They are not counted as implemented. All 95 active Windows SDL GPU function declarations are generated.
 
@@ -54,11 +54,11 @@ Platform support also depends on how the project is consumed:
 | Installed C++/AOT SDK | Windows-only profile | Not supported yet |
 | daspkg repository package (`core` / `imgui`) | Declares `windows`; package build requires MSVC and a matching DLL SDK | Not supported; the source-runner port does not port the package build |
 
-**daspkg release preparation:** the current root manifest uses
-`package_platform`, which is absent from the pinned daScript revision's
-`daslib/daspkg`. Manifest compilation with that revision fails. A compatible
-daspkg client/SDK profile must be established before claiming the repository
-package is ready for installation. See [package platform readiness](docs/daspkg.md#platform-readiness).
+**daspkg SDK:** use the pinned daScript revision `ebac0ffe46ab30de6c9536f4b0af7a33ede45902`
+and a matching validated DLL SDK fingerprint. Root and staged manifests declare
+only `windows`. Older SDKs are not supported; `0.6.4` alone is not a sufficient
+ABI or client-version identifier. See [package platform readiness](docs/daspkg.md#platform-readiness).
+The exact supported DLL SDK is available as a [separate download](https://github.com/spiiin/dasSDL3/releases/tag/sdk-ebac0ffe-windows-x64-r1).
 
 The focused Linux checks are not the full CTest suite. WSLg/Vulkan smoke success
 does not establish GPU performance, hardware acceleration, physical HID device

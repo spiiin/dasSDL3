@@ -3,7 +3,7 @@
     "file": "daScript/LICENSE.txt",
     "source": "LICENSE",
     "component": "daScript",
-    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "version": "ebac0ffe46ab30de6c9536f4b0af7a33ede45902",
     "excerpt": false,
     "sha256": "53544c0da5a9d429f691b4e2d072d93af87ee0b1cd93d30afe0e6147100e070b"
   },
@@ -11,15 +11,15 @@
     "file": "daScript/THIRD_PARTY_NOTICES.md",
     "source": "THIRD_PARTY_NOTICES.md",
     "component": "daScript",
-    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "version": "ebac0ffe46ab30de6c9536f4b0af7a33ede45902",
     "excerpt": false,
-    "sha256": "efa2321d09e60bd5834f8adcafa82508f67f78047185f9bea7ae893cc5b8ac49"
+    "sha256": "5dead65f14d487898e1428712d2913af6497372d6b888cc7fd3c69306a4e12b8"
   },
   {
     "file": "daScript/fmt.txt",
     "source": "3rdparty/fmt/LICENSE",
     "component": "daScript",
-    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "version": "ebac0ffe46ab30de6c9536f4b0af7a33ede45902",
     "excerpt": false,
     "sha256": "07580f2a3b35709ce703d523f447b242f6dfec7582a8c0df102c7fa2849375f8"
   },
@@ -27,7 +27,7 @@
     "file": "daScript/uriparser.txt",
     "source": "3rdparty/uriparser/COPYING",
     "component": "daScript",
-    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "version": "ebac0ffe46ab30de6c9536f4b0af7a33ede45902",
     "excerpt": false,
     "sha256": "287f09e6546a9610f949f89e8fb937cacfeabd7bfaa8c8a0c18312193bf04ad3"
   },
@@ -35,7 +35,7 @@
     "file": "daScript/dag_noise.txt",
     "source": "include/dag_noise/LICENSE",
     "component": "daScript",
-    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "version": "ebac0ffe46ab30de6c9536f4b0af7a33ede45902",
     "excerpt": false,
     "sha256": "0abfaebf41a086092b3c56a4d7f321de8a36c179d9e250f9e829b94910c3a82f"
   },
@@ -43,7 +43,7 @@
     "file": "daScript/vecmath.txt",
     "source": "include/vecmath/LICENSE",
     "component": "daScript",
-    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "version": "ebac0ffe46ab30de6c9536f4b0af7a33ede45902",
     "excerpt": false,
     "sha256": "0abfaebf41a086092b3c56a4d7f321de8a36c179d9e250f9e829b94910c3a82f"
   },
@@ -51,7 +51,7 @@
     "file": "daScript/fast_float.txt",
     "source": "include/fast_float/LICENSE",
     "component": "daScript",
-    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "version": "ebac0ffe46ab30de6c9536f4b0af7a33ede45902",
     "excerpt": false,
     "sha256": "87eecc70872516c4a455de9de103e7c51cb1086e613b504d6c1d8146029482c5"
   },
@@ -59,7 +59,7 @@
     "file": "daScript/Luau.txt",
     "source": "src/misc/LUAU.LICENSE",
     "component": "daScript",
-    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "version": "ebac0ffe46ab30de6c9536f4b0af7a33ede45902",
     "excerpt": false,
     "sha256": "a5a694b1b004b7c66aaf810f570a9c72cbda32e9e83ad38629f74f877c300d45"
   },
@@ -67,7 +67,7 @@
     "file": "daScript/wyhash.txt",
     "source": "include/daScript/misc/wyhash.h",
     "component": "daScript",
-    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "version": "ebac0ffe46ab30de6c9536f4b0af7a33ede45902",
     "excerpt": true,
     "sha256": "ff4645ac92873e9107821bfcb48a643c23cb446df18d19541fb0477c689408e1"
   },
@@ -627,7 +627,7 @@
     "file": "ImGui/LICENSE.txt",
     "source": "modules/dasImgui/imgui/LICENSE.txt",
     "component": "ImGui",
-    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "version": "ebac0ffe46ab30de6c9536f4b0af7a33ede45902",
     "excerpt": false,
     "sha256": "173506a2d6f7fb67990d257fb2507f188690eca39060c39469ae7bef43aae2a3"
   },
@@ -635,7 +635,7 @@
     "file": "Clipboard/LICENSE.txt",
     "source": "modules/dasClipboard/3rdparty/clip/LICENSE.txt",
     "component": "Clipboard",
-    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "version": "ebac0ffe46ab30de6c9536f4b0af7a33ede45902",
     "excerpt": false,
     "sha256": "b4b43b52d7fd0fd9b12266d089dd72b31d9c6682ea95801a26c9da96bd2615cf"
   },
@@ -723,7 +723,7 @@
     "file": "ImGui/imstb_truetype.h.txt",
     "source": "modules/dasImgui/imgui/imstb_truetype.h",
     "component": "ImGui",
-    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "version": "ebac0ffe46ab30de6c9536f4b0af7a33ede45902",
     "excerpt": true,
     "sha256": "0459bce8ce9b9b045d20d9c48192226d302f0cce81b151ba71189b2a10c8a8fc"
   },
@@ -731,7 +731,7 @@
     "file": "ImGui/imstb_textedit.h.txt",
     "source": "modules/dasImgui/imgui/imstb_textedit.h",
     "component": "ImGui",
-    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "version": "ebac0ffe46ab30de6c9536f4b0af7a33ede45902",
     "excerpt": true,
     "sha256": "0459bce8ce9b9b045d20d9c48192226d302f0cce81b151ba71189b2a10c8a8fc"
   },
@@ -739,7 +739,7 @@
     "file": "ImGui/imstb_rectpack.h.txt",
     "source": "modules/dasImgui/imgui/imstb_rectpack.h",
     "component": "ImGui",
-    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "version": "ebac0ffe46ab30de6c9536f4b0af7a33ede45902",
     "excerpt": true,
     "sha256": "0459bce8ce9b9b045d20d9c48192226d302f0cce81b151ba71189b2a10c8a8fc"
   },
@@ -747,7 +747,7 @@
     "file": "ImGui/default-fonts.txt",
     "source": "modules/dasImgui/imgui/imgui_draw.cpp (copyright lines) + imgui/LICENSE.txt (MIT terms)",
     "component": "ImGui",
-    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "version": "ebac0ffe46ab30de6c9536f4b0af7a33ede45902",
     "excerpt": true,
     "sha256": "706e6fc570ecf438b090f9a0a1e138abbeef97c131f2d8ae93304db0be5c1762"
   },
@@ -755,7 +755,7 @@
     "file": "SDL/Apache-2.0.txt",
     "source": "modules/dasLLAMA/LICENSE.APACHE-2.0",
     "component": "Apache-2.0 license text for SDL bundled Vulkan headers (not a dasLLAMA dependency)",
-    "version": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+    "version": "ebac0ffe46ab30de6c9536f4b0af7a33ede45902",
     "excerpt": false,
     "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
   },
