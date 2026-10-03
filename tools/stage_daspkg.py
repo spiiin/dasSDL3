@@ -67,9 +67,9 @@ def main():
                 parser.error(f"Missing SDK input: {path}")
         if not (sdk / "include/daScript/daScript.h").is_file():
             parser.error("Missing daScript headers")
-        (output / "sdk.sha256").write_text("".join(
+        (output / "sdk.sha256").write_bytes("".join(
             f"{hashlib.sha256(p.read_bytes()).hexdigest()} {p.relative_to(sdk).as_posix()}\n"
-            for p in sdk_files), encoding="utf-8", newline="\n")
+            for p in sdk_files).encode("utf-8"))
         (output / "src").mkdir()
         for path in (ROOT / "src").glob("*.h"):
             shutil.copy2(path, output / "src" / path.name)

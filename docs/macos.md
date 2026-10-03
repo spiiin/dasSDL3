@@ -352,3 +352,8 @@ Mac snapshot freshness and the record audit. API-boundary and lifecycle
 regressions also passed. Explicit math_boost imports repair the relocated
 round_up helper used by shader storage/uniform packing. Native Cocoa/Metal
 results above remain evidence from the prior SDK until separately rerun.
+
+Native dynamic SDK and core/ImGui package modules were also rebuilt. All seven
+headless package tests passed, including platform metadata, source/repository
+installation, fingerprint rejection, rendering/cleanup and relocation. Staging
+writes UTF-8/LF fingerprint bytes directly so system Python 3.9 also works.

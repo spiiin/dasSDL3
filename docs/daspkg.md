@@ -561,6 +561,9 @@ repository installs require `DASSDL3_PACKAGE_SDK_FINGERPRINT` and the matching
 Windows reference SDK download do not apply to native Mac binaries.
 
 The earlier Mac package, live and standalone validations used the previous
-35bf260 SDK. After merging the ebac0ffe SDK update, Mac profiles require
-rebuilding and revalidation against the new native SDK; prior binaries remain
-artifacts of their original SDK revision. See [Mac setup](macos.md).
+35bf260 SDK. After merging the ebac0ffe SDK update, native core/ImGui modules were rebuilt.
+All seven headless package checks passed: metadata (root and staged platforms),
+binary/source consumers, repository core/ImGui installs, SDK fingerprint
+rejection and relocation. Prior standalone bundles remain artifacts of their
+original SDK revision; native GPU/live/standalone execution must be rerun
+separately for ebac0ffe. See [Mac setup](macos.md).
