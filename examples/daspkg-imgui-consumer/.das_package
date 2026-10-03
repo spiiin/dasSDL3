@@ -12,5 +12,10 @@ def release() {
     release_main("main.das")
     // Native DLL import of SDK dasImgui; not a script-level require.
     // Beside the EXE so Windows can resolve it while loading the ImGui module.
-    release_include_from("modules/dasClipboard/dasModuleClipboard.shared_module")
+    if (get_platform_name() == "darwin") {
+        // Native dependency shipping also normalizes Mach-O rpaths and signing.
+        release_shared_module("dasClipboard")
+    } else {
+        release_include_from("modules/dasClipboard/dasModuleClipboard.shared_module")
+    }
 }

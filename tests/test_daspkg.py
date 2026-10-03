@@ -23,6 +23,8 @@ def main():
     parser.add_argument("--fetch-sdl", action="store_true", help="Cold network install; no prebuilt SDL")
     parser.add_argument("--sdl-dir", type=Path)
     parser.add_argument("--release", action="store_true")
+    parser.add_argument("--skip-missing-dependencies", action="store_true",
+                        help="Skip deliberate loader failures (macOS may display crash dialogs)")
     parser.add_argument("--llvm-dir", type=Path)
     parser.add_argument("--imgui", action="store_true")
     parser.add_argument("--repository", action="store_true", help="Clean HEAD export plus pending package entry files")
@@ -59,9 +61,9 @@ def main():
             env["SDL3_DIR"] = str(args.sdl_dir.resolve())
     if args.release:
         if not args.llvm_dir:
-            parser.error("--release requires --llvm-dir with LLVM.dll and lld-link.exe")
+            parser.error("--release requires --llvm-dir with the matching native LLVM runtime")
         llvm = args.llvm_dir.resolve()
-        for tool in ("LLVM.dll", "lld-link.exe"):
+        for tool in (("LLVM.dll", "lld-link.exe") if os.name == "nt" else ("LLVM.dll",)):
             if not (llvm / tool).is_file():
                 parser.error(f"Missing release tool: {llvm / tool}")
         env["DAS_DLL_PATH"] = str(llvm)
@@ -198,33 +200,63 @@ def main():
         raise RuntimeError(f"Missing relocated receipt: {output}")
     if args.release:
         bundle_name = "sdl3_imgui_demo" if args.imgui else "sdl3_package_demo"
-        release = work / "out" / bundle_name
+        release = work / "out" / (bundle_name + ".app" if sys.platform == "darwin" else bundle_name)
+        if sys.platform == "darwin":
+            run("sign-bundle", [sys.executable, str(ROOT / "tools/sign_macos_bundle.py"), str(release)], work)
         # Only the generated distribution is copied, outside the repository.
         portable = Path(tempfile.mkdtemp(prefix="dasSDL3 release "))
-        bundle = portable / "app"
-        shutil.copytree(release, bundle)
-        verify_licenses(bundle / "modules/dasSDL3")
-        required = [bundle_name + ".exe", "libDaScriptDyn.dll",
-                    "libDaScriptDyn_runtime.dll", "modules/dasSDL3/dasSDL3.shared_module"]
+        bundle = portable / ("app.app" if sys.platform == "darwin" else "app")
+        shutil.copytree(release, bundle, symlinks=True)
+        bundle_contents = bundle
+        if sys.platform == "darwin":
+            import plistlib
+            info = plistlib.loads((bundle / "Contents/Info.plist").read_bytes())
+            if info['CFBundleExecutable'] != bundle_name:
+                raise RuntimeError('Incorrect .app executable declaration')
+            bundle = bundle / "Contents/MacOS"
+        verify_licenses((bundle_contents / "Contents/Resources" if sys.platform == "darwin" else bundle)
+                        / "modules/dasSDL3")
+        required = ([bundle_name, "liblibDaScriptDyn.dylib", "liblibDaScriptDyn_runtime.dylib"]
+                    if sys.platform == "darwin" else [bundle_name + ".exe", "libDaScriptDyn.dll", "libDaScriptDyn_runtime.dll"])
+        required += ["modules/dasSDL3/dasSDL3.shared_module"]
         if args.imgui:
             required += ["modules/dasImgui/dasModuleImgui.shared_module",
-                         "dasModuleClipboard.shared_module"]
+                         ("modules/dasClipboard/dasModuleClipboard.shared_module" if sys.platform == "darwin"
+                          else "dasModuleClipboard.shared_module")]
         for item in required:
             if not (bundle / item).is_file():
                 raise RuntimeError(f"Release omitted {item}")
+        if sys.platform == "darwin":
+            # The source SDK stays installed: the bundle must not use its paths.
+            natives = [bundle / bundle_name, *bundle.rglob('*.dylib'), *bundle.rglob('*.shared_module')]
+            for native in natives:
+                commands = subprocess.check_output(['otool', '-l', str(native)], text=True)
+                for rpath in re.findall(r'cmd LC_RPATH\s+cmdsize \d+\s+path (.*?) \(offset', commands):
+                    if not rpath.startswith(('@loader_path', '@executable_path', '@rpath')):
+                        raise RuntimeError(f'External bundle rpath: {native}: {rpath}')
+                dependencies = subprocess.check_output(['otool', '-L', str(native)], text=True)
+                for dependency in dependencies.splitlines()[1:]:
+                    name = dependency.strip().split(' (compatibility')[0]
+                    if not name.startswith(('@', '/usr/lib/', '/System/Library/')):
+                        raise RuntimeError(f'External bundle dependency: {native}: {name}')
+            subprocess.run(['codesign', '--verify', '--deep', '--strict', str(bundle_contents)], check=True)
         if list(bundle.rglob("*.das")) or (bundle / "LLVM.dll").exists():
             raise RuntimeError("Unexpected script sources or LLVM runtime in distribution")
         # No SDK, LLVM or compiler search paths are inherited by the application.
         clean = {k: v for k, v in os.environ.items()
                  if k.upper() in {"SYSTEMROOT", "WINDIR", "TEMP", "TMP", "USERPROFILE",
                                   "APPDATA", "LOCALAPPDATA", "COMSPEC"}}
-        clean["PATH"] = str(Path(os.environ["SystemRoot"]) / "System32")
+        if os.name == "nt":
+            clean["PATH"] = str(Path(os.environ["SystemRoot"]) / "System32")
+        else:
+            clean = {k: v for k, v in os.environ.items() if k in {"HOME", "TMPDIR", "LANG"}}
+            clean["PATH"] = "/usr/bin:/bin:/usr/sbin:/sbin"
         clean["SDL_VIDEODRIVER"] = "dummy"
         clean["SDL_AUDIODRIVER"] = "dummy"
         cwd = portable / "empty cwd"
         cwd.mkdir()
         # Suppress Windows missing-DLL dialog in negative cases; inherited by children.
-        old_mode = ctypes.windll.kernel32.SetErrorMode(0x0001 | 0x8000)
+        old_mode = ctypes.windll.kernel32.SetErrorMode(0x0001 | 0x8000) if os.name == "nt" else None
         try:
             def portable_run(label):
                 result = subprocess.run([str(bundle / required[0]), *(["--smoke"] if args.imgui else [])], cwd=cwd, env=clean,
@@ -236,7 +268,7 @@ def main():
             if result.returncode or receipt not in result.stdout or (args.imgui and "bright pixels verified." not in result.stdout):
                 raise RuntimeError(f"Standalone failed ({result.returncode}): {result.stdout}")
             # The SDK still exists on this host: prove it cannot silently replace omitted DLLs.
-            for index, item in enumerate(required[1:]):
+            for index, item in enumerate([] if args.skip_missing_dependencies else required[1:]):
                 original = bundle / item
                 hidden = original.with_name(original.name + ".test-hidden")
                 original.rename(hidden)
@@ -247,8 +279,10 @@ def main():
                 finally:
                     hidden.rename(original)
         finally:
-            ctypes.windll.kernel32.SetErrorMode(old_mode)
-        print(f"Standalone and missing-dependency checks passed: {bundle}")
+            if old_mode is not None:
+                ctypes.windll.kernel32.SetErrorMode(old_mode)
+        print(f"Standalone checks passed: {bundle}; missing-dependency checks "
+              + ("skipped" if args.skip_missing_dependencies else "passed"))
     print(f"PASS: daspkg install/check + consumer + relocation; logs: {work}")
 
 if __name__ == "__main__":

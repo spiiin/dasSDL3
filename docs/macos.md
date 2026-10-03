@@ -157,4 +157,40 @@ Direct repository installs on Mac require `DASSDL3_PACKAGE_SDK_FINGERPRINT`
 to name that package's `sdk.sha256` and `DASSDL3_PACKAGE_PROFILE=core` or `imgui`.
 Use a fingerprint staged with `--with-imgui` for the ImGui profile. The Windows
 official SDK snapshots are preserved; an official Mac SDK archive has not been
-validated. Standalone daspkg release packaging is a separate workflow.
+validated. Standalone daspkg release packaging is described below.
+
+
+## Standalone .app bundles
+
+Standalone compilation needs the matching LLVM runtime from the pinned SDK.
+This is a separate build configuration; regular runners and installed consumers
+remain LLVM-free. The pinned SDK fetches its matching LLVM runtime during this
+configuration. Enable PUGIXML for daspkg's Info.plist writer.
+
+```sh
+cmake -S . -B build/macos-release -G Ninja -DCMAKE_BUILD_TYPE=Release \
+  -DBUILD_TESTING=OFF -DDAS_LLVM_DISABLED=OFF -DDAS_PUGIXML_DISABLED=OFF \
+  -DDASSDL3_WITH_IMGUI=ON
+cmake --build build/macos-release --target daslang --parallel 6
+# The pinned SDK's download step places LLVM.dll in the top-level lib directory.
+export DAS_DLL_PATH="$PWD/lib"
+third_party/daScript/bin/daslang third_party/daScript/utils/daspkg/main.das -- \
+  release --root /path/to/installed/consumer --out "$PWD/build/release-out"
+python3 tools/sign_macos_bundle.py build/release-out/sdl3_imgui_demo.app
+```
+
+The finalizer resolves native imports between nested modules using bundle-relative
+`@loader_path` paths, moves license/version notices and the release manifest into
+`Contents/Resources`, then seals the completed bundle with an ad-hoc signature.
+The native executable and shared libraries remain in `Contents/MacOS`.
+The ImGui release hook forces the SDK's `dasClipboard` shared module so daspkg
+ships it under `modules/dasClipboard` and normalizes its Mach-O rpaths.
+Windows retains its existing native DLL layout.
+
+`tests/test_daspkg.py --release --llvm-dir lib` additionally checks `.app` metadata,
+all native dependency/rpath entries, strict signatures after relocation, and
+standalone execution with SDK/compiler search paths removed. Use
+`--skip-missing-dependencies` during local runs to avoid the macOS crash dialogs
+caused by deliberately hiding required libraries. The default retains those
+negative isolation checks. Ad-hoc signing is for local execution; public
+Mac distribution needs its own signing and notarization workflow.

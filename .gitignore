@@ -3,6 +3,7 @@
 /logs/
 __pycache__/
 /.jitted_scripts/
+/lib/LLVM.dll
 
 # daspkg repository build outputs
 /_build/
