@@ -26,6 +26,13 @@ if(DASSDL3_WITH_SHADERCROSS)
         set_tests_properties(macos_metal_dsl_example_${script} PROPERTIES
             ENVIRONMENT "SDL_GPU_DRIVER=metal" TIMEOUT 90 RUN_SERIAL TRUE)
     endforeach()
+    foreach(script metaballs raymarch mesh instancing bump hdr fontsdf lod stencil
+            shadowvolumes shadowvolumes_scene)
+        add_test(NAME macos_metal_bgfx_${script} COMMAND dasSDL3_libraries_runner
+            "${CMAKE_SOURCE_DIR}/tests/bgfx_${script}.das" --smoke-test)
+        set_tests_properties(macos_metal_bgfx_${script} PROPERTIES
+            ENVIRONMENT "SDL_GPU_DRIVER=metal" TIMEOUT 120 RUN_SERIAL TRUE)
+    endforeach()
 endif()
 
 add_executable(dasSDL3_macos_aot_tool "${CMAKE_SOURCE_DIR}/tests/clangbind_parity/aot_tool.cpp")

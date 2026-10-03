@@ -178,6 +178,25 @@ Eight saved-MSL GPU examples and five shadercross CPU pixel/byte tests passed
 on native Metal. All four DSL examples also passed after exposing the optional
 shadercross import to generic callers.
 
+All eleven advanced harnesses passed on native Metal, with the final three
+stencil/shadow tests rerun after the fixes. The bgfx group covers metaballs, raymarch, mesh/resize,
+instancing, normal mapping, HDR, SDF text, LOD, stencil and shadow volumes:
+
+```sh
+ctest --test-dir build/macos-libraries -R '^macos_metal_bgfx_' --output-on-failure
+```
+
+The reused CPU shadow-volume paths use the same three-lane normalization and
+dot products as their independent reference, preserving exact geometry parity
+on ARM and SSE. Metal stencil/debug volume passes use a negative depth bias
+of 16 units to prevent coincident caps from producing self-shadowing through
+CPU/GPU projection roundoff. Other backends retain their existing bias.
+The translucent debug-overlay comparison on Metal additionally checks a
+one-pixel neighbourhood in both directions, retaining the two-channel-value
+colour tolerance and the 100-unmatched-sample budget. All ordinary shadow frames
+retain the original per-pixel oracle, alongside cache equality, topology,
+classification and scene-feature checks.
+
 ## Standalone .app bundles
 
 Standalone compilation needs the matching LLVM runtime from the pinned SDK.
