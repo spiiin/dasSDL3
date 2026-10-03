@@ -24,7 +24,12 @@ To update a profile, stage a candidate, validate actual package installation,
 interpreter execution, relocation and standalone release, then review its
 `sdk.sha256`. Build binary packages separately for the accepted SDK.
 
-These committed reference hashes are Windows-only. Native Mac repository
-packages use a staged fingerprint supplied through
+Committed reference hashes are platform-specific.
+`linux-x86_64-core.sha256` describes the Ubuntu 24.04 / GCC 13.3 ELF core SDK;
+`reference-sdk-linux.json` records its published archive URL and checksum. Linux
+ImGui and standalone release are outside this profile. Independently built SDKs
+use local source staging because their binary hashes may differ.
+
+Native Mac repository packages use a staged fingerprint supplied through
 `DASSDL3_PACKAGE_SDK_FINGERPRINT`, against the same pinned source revision.
 The Windows SDK archive cannot be used for native Mac package linkage.

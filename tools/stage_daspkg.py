@@ -3,6 +3,7 @@ import argparse
 import hashlib
 import json
 import re
+import sys
 from pathlib import Path
 import shutil
 
@@ -21,8 +22,13 @@ def main():
     parser.add_argument("--output", type=Path, required=True,
                         help="New or empty directory, normally ending in dasSDL3")
     parser.add_argument("--with-imgui", action="store_true", help="Combined SDL + SDK dasImgui profile")
-    parser.add_argument("--platform", choices=("windows", "macos"), default="windows")
+    parser.add_argument("--platform", choices=("windows", "macos", "linux"),
+                        default="windows" if sys.platform == "win32" else "macos" if sys.platform == "darwin" else "linux")
     args = parser.parse_args()
+    if args.platform == "linux" and args.with_imgui:
+        parser.error("Linux currently supports only core")
+    runtime = {"windows": "bin/libDaScriptDyn.dll", "macos": "lib/liblibDaScriptDyn_runtime.dylib",
+               "linux": "lib/liblibDaScriptDyn.so"}[args.platform]
     source = args.module.resolve() if args.module else None
     if (args.source or args.with_imgui) and not args.sdk:
         parser.error("--source and --with-imgui require --sdk")
@@ -50,9 +56,12 @@ def main():
         sdk = args.sdk.resolve()
         sdk_files = sorted(p for folder in ("include", "3rdparty/fmt/include")
                            for p in (sdk / folder).rglob("*") if p.is_file())
-        native_files = ("lib/liblibDaScriptDyn.dylib", "lib/liblibDaScriptDyn_runtime.dylib") if args.platform == "macos" else (
-            "lib/libDaScriptDyn.lib", "lib/libDaScriptDyn_runtime.lib",
-            "bin/libDaScriptDyn.dll", "bin/libDaScriptDyn_runtime.dll")
+        native_files = {
+            "windows": ("lib/libDaScriptDyn.lib", "lib/libDaScriptDyn_runtime.lib",
+                        "bin/libDaScriptDyn.dll", "bin/libDaScriptDyn_runtime.dll"),
+            "macos": ("lib/liblibDaScriptDyn.dylib", "lib/liblibDaScriptDyn_runtime.dylib"),
+            "linux": ("lib/liblibDaScriptDyn.so", "lib/liblibDaScriptDyn_runtime.so"),
+        }[args.platform]
         sdk_files += [sdk / name for name in native_files]
         if args.with_imgui:
             sdk_files += sorted(p for p in (sdk / "modules/dasImgui/imgui").rglob("*")
@@ -110,7 +119,7 @@ def main():
         f'    package_description("SDL3 core bindings: local {args.platform} Release package")\n'
         '    package_license("MIT")\n'
         '    package_min_sdk("0.6.4")\n'
-        f'    package_platform("{"darwin" if args.platform == "macos" else "windows"}")\n'
+        f'    package_platform("{"darwin" if args.platform == "macos" else args.platform}")\n'
         '    package_tag("sdl3")\n}\n\n[export]\ndef build() {\n    ' + ('cmake_build()' if args.source else 'no_build()') + '\n}\n',
         encoding="utf-8")
     with (output / ".das_package").open("a", encoding="utf-8") as manifest:
@@ -120,10 +129,11 @@ def main():
             manifest.write('\n[export]\ndef dependencies(version : string) {\n    require_package("dasImgui")\n}\n')
     (output / "profile.json").write_text(json.dumps({
         "version": (ROOT / "VERSION").read_text(encoding="utf-8").strip(),
-        "profile": "macos-appleclang-release" if args.platform == "macos" else "windows-x64-msvc-release-md-avx2",
+        "profile": {"macos": "macos-appleclang-release", "windows": "windows-x64-msvc-release-md-avx2",
+                    "linux": "linux-x86_64-release"}[args.platform],
         "sdl": "3.4.16", "binding_reference_revision": "ebac0ffe46ab30de6c9536f4b0af7a33ede45902",
         "sdk_runtime_sha256": hashlib.sha256(
-            (args.sdk / ("lib/liblibDaScriptDyn_runtime.dylib" if args.platform == "macos" else "bin/libDaScriptDyn.dll")).read_bytes()).hexdigest() if args.sdk else None,
+            (args.sdk / runtime).read_bytes()).hexdigest() if args.sdk else None,
         "module_sha256": hashlib.sha256(source.read_bytes()).hexdigest() if source else None,
         "kind": "source" if args.source else "binary",
         "features": ["core", "imgui"] if args.with_imgui else ["core"],

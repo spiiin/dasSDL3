@@ -41,7 +41,7 @@ coverage does not by itself establish dasSDL3 support on those platforms.
 | macOS arm64 / Apple Clang 17, macOS 15.3.1 | Native profile validated | Cocoa/Metal, interpreter and strict AOT, companion libraries, installed SDK, core/ImGui daspkg, relocatable standalone apps and live reload/MCP/APNG. See [macOS](docs/macos.md). Intel Mac and MoltenVK are not validated. |
 | iOS, Android and other targets | Not yet validated | No tested dasSDL3 build/runtime profile is claimed. |
 
-Linux currently uses separate committed bindings and a source checkout.
+Linux uses separate committed bindings; its core daspkg profile supports an ELF SDK on Ubuntu 24.04 x86_64.
 The installed SDK supports Windows and macOS; optional Linux integrations are not
 covered by the core test result. Windows-only raw DXGI, Direct3D9 and message-hook
 functions are absent from Linux bindings. Use `SDL_HidChar` for native HID wide
@@ -53,11 +53,11 @@ Platform support also depends on how the project is consumed:
 | --- | --- | --- | --- |
 | Core runner from source | Primary profile | Native Cocoa/Metal validated | Validated WSL2 core profile above |
 | Installed C++/AOT SDK | Validated | Local AppleClang SDK validated | Not supported yet |
-| daspkg repository package (`core` / `imgui`) | Matching MSVC DLL SDK required | Matching local dynamic SDK validated | Not supported; the source-runner port does not port the package build |
+| daspkg repository package (`core` / `imgui`) | Matching MSVC DLL SDK required | Matching local dynamic SDK validated | Core with matching Linux SDK; ImGui and standalone release unvalidated |
 
 **daspkg SDK:** use the pinned daScript revision `ebac0ffe46ab30de6c9536f4b0af7a33ede45902`
-and a matching validated DLL SDK fingerprint. The repository declares `windows`
-and `darwin`; staged manifests declare the selected native platform. Older SDKs
+and a matching validated dynamic SDK fingerprint. The repository declares `windows`,
+`darwin` and `linux`; staged manifests declare the selected native platform. Older SDKs
 are not supported; `0.6.4` alone is not a sufficient
 ABI or client-version identifier. See [package platform readiness](docs/daspkg.md#platform-readiness).
 Native Mac packages use the matching locally built dynamic SDK and fingerprint.

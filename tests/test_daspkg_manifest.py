@@ -35,7 +35,7 @@ def main {
     verify(meta.pkg_name == "dasSDL3" && meta.author == "spiiin")
     verify(meta.source == "github.com/spiiin/dasSDL3")
     verify(meta.license == "MIT" && meta.min_sdk == "0.6.4")
-    verify(length(meta.platforms) == 2 && meta.platforms[0] == "windows" && meta.platforms[1] == "darwin")
+    verify(length(meta.platforms) == 3 && meta.platforms[0] == "windows" && meta.platforms[1] == "darwin" && meta.platforms[2] == "linux")
     verify(!empty(meta.description) && length(meta.tags) == 3)
     for (version in ["", "latest", PACKAGE_VERSION, NEXT_VERSION]) {
         var resolution : ResolveResult
@@ -82,6 +82,8 @@ def main {
     placeholder.write_bytes(b"metadata fixture, not a loadable module")
     for profile, mode in (("core", "binary"), ("imgui", "binary"),
                           ("core", "source"), ("imgui", "source")):
+        if profile == "imgui" and sys.platform.startswith("linux"):
+            continue
         # A source ImGui fixture needs the built optional SDK module; binary
         # metadata remains testable with the minimal core SDK used by CI.
         if profile == "imgui" and mode == "source" and not (sdk / (
@@ -111,7 +113,7 @@ def main {
 }
 '''.replace("MANIFEST", json.dumps((staged / ".das_package").as_posix())).replace(
             "SOURCE_BUILD", "true" if mode == "source" else "false").replace(
-            "EXPECTED_PLATFORM", json.dumps("darwin" if sys.platform == "darwin" else "windows"))
+            "EXPECTED_PLATFORM", json.dumps("darwin" if sys.platform == "darwin" else "windows" if os.name == "nt" else "linux"))
         staged_script = work / f"verify-staged-{profile}-{mode}.das"
         staged_script.write_text(check, encoding="utf-8")
         result = subprocess.run([str(sdk / "bin" / ("daslang.exe" if os.name == "nt" else "daslang")), "-dasroot", str(sdk), str(staged_script)],
