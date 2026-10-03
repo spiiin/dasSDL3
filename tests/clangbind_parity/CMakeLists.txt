@@ -25,6 +25,7 @@ add_library(dasSDL3_process_library SHARED "${ROOT}/tests/process_library.cpp")
 add_compile_definitions(DASSDL3_PROCESS_CHILD="$<TARGET_FILE:dasSDL3_process_child>" DASSDL3_PROCESS_LIBRARY="$<TARGET_FILE:dasSDL3_process_library>")
 foreach(backend baseline cppgenbind)
     add_library(${backend}_module STATIC "${ROOT}/src/module_sdl3.cpp")
+    add_dependencies(${backend}_module dasSDL3_process_child dasSDL3_process_library)
     target_include_directories(${backend}_module PUBLIC "${ROOT}/src" "${GEN}" "${DAS}/include" "${DAS}/3rdparty/fmt/include" "${SDL_INCLUDE}")
     target_compile_definitions(${backend}_module PUBLIC DAS_ENABLE_EXCEPTIONS=1 DAS_FUSION=2 DAS_NO_ASSERTIONS
         DASSDL3_TESTING=1 DASSDL3_DAS_ROOT="${DAS}" DASSDL3_MODULE_ROOT="${ROOT}/dassdl3")

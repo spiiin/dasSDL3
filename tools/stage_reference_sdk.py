@@ -33,6 +33,11 @@ def main():
     # Native ImGui headers/backends are already included by its fingerprint.
     files.update(p.relative_to(sdk).as_posix() for p in (sdk / "modules").rglob("*")
                  if p.is_file() and (p.suffix in {".das", ".shared_module"} or p.name == ".das_module"))
+    # This SDK also carries upstream CLI/native modules (including PUGIXML),
+    # whose notices are broader than the SDL package's curated runtime set.
+    files.update(p.relative_to(sdk).as_posix() for p in sdk.rglob("*")
+                 if p.is_file() and (any(word in p.name.lower() for word in ("license", "licence", "copying", "notice"))
+                                     or "licenses" in p.parts))
     required = sdk / "modules/dasPUGIXML/dasModulePUGIXML.shared_module"
     if not required.is_file():
         parser.error("SDK must include the built PUGIXML module for daspkg")

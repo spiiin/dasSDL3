@@ -4,6 +4,10 @@ The supported client/source revision is daScript
 `ebac0ffe46ab30de6c9536f4b0af7a33ede45902` (upstream version `0.6.4`).
 Older reference and official SDKs are no longer accepted.
 
+Download the exact build from the [reference SDK release](https://github.com/spiiin/dasSDL3/releases/tag/sdk-ebac0ffe-windows-x64-r1).
+`reference-sdk.json` records its URL, archive checksum and layout. Consumers
+can obtain the accepted binaries without reproducing the maintainer's build.
+
 `core.sha256` and `imgui.sha256` describe the Windows x64 MSVC 19.38 Release
 `/MD` AVX2 reference build, configured with `DASSDL3_WITH_IMGUI=ON`.
 The core profile does not ship ImGui; both profiles use the same runtime SDK.

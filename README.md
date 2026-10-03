@@ -58,6 +58,7 @@ Platform support also depends on how the project is consumed:
 and a matching validated DLL SDK fingerprint. Root and staged manifests declare
 only `windows`. Older SDKs are not supported; `0.6.4` alone is not a sufficient
 ABI or client-version identifier. See [package platform readiness](docs/daspkg.md#platform-readiness).
+The exact supported DLL SDK is available as a [separate download](https://github.com/spiiin/dasSDL3/releases/tag/sdk-ebac0ffe-windows-x64-r1).
 
 The focused Linux checks are not the full CTest suite. WSLg/Vulkan smoke success
 does not establish GPU performance, hardware acceleration, physical HID device

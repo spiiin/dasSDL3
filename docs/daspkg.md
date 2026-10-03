@@ -19,13 +19,18 @@ relocation, rendering/resource cleanup and standalone releases with missing
 dependency rejection. The core SDK mismatch negative test also passes.
 The Windows runner passes 19 focused interpreter/API/lifecycle checks;
 Linux passes all 15 `linux-core` interpreter/native/strict-AOT checks.
-This is not a full Windows generator/parity or hardware test run.
+Both Windows generators pass deterministic freshness checks. Fifty focused
+baseline/CppGenBind/strict-AOT tests pass, including native metadata parity,
+generation errors and missing-AOT rejection. The relocated installed C++ SDK
+also passes interpreter, strict AOT and missing-AOT checks with LLVM/Clang/Python
+package discovery disabled. These are not hardware/API-wide runtime tests.
 
 `.github/workflows/native.yml` runs the focused Windows tests plus core package
 metadata/install/source/relocation checks and the Linux core suite. CI stages
 against its own built SDK; exact reference binary fingerprints are checked
-by the local repository-install tests. GitHub-hosted execution remains to be
-verified after pushing the workflow.
+by the local repository-install tests. The initial hosted Linux run exposed
+an implicit display requirement in the software-renderer test; that test now
+explicitly uses SDL's dummy video driver.
 
 | Package path | Platforms | Requirements |
 | --- | --- | --- |
@@ -40,6 +45,35 @@ and relocation checks. ImGui needs its own Linux profile validation. Removing
 the Windows CMake guard or adding `package_platform("linux")` is not sufficient.
 
 ## Existing Windows package workflow
+
+### Download the supported SDK
+
+Use the [reference SDK archive](https://github.com/spiiin/dasSDL3/releases/tag/sdk-ebac0ffe-windows-x64-r1).
+It contains the exact runtime DLLs/import libraries/headers accepted by both
+repository fingerprints, plus daslang, scripts and PUGIXML for the package CLI.
+It is a focused SDK distribution, separate from the dasSDL3 release.
+
+```powershell
+curl.exe --fail --location --output sdk.zip https://github.com/spiiin/dasSDL3/releases/download/sdk-ebac0ffe-windows-x64-r1/dasSDL3-sdk-ebac0ffe-windows-x64-r1.zip
+if ($LASTEXITCODE) { throw "SDK download failed" }
+if ((Get-FileHash sdk.zip -Algorithm SHA256).Hash.ToLower() -ne "a268a7607f2879cc6edf77246e726dde6f08e45bad36ee59ae7925cef40389e5") { throw "SDK hash mismatch" }
+Expand-Archive sdk.zip -DestinationPath reference-sdk
+```
+
+The SDK root is `reference-sdk/dasSDL3-sdk-ebac0ffe-windows-x64-r1`.
+Run its `bin/daslang.exe utils/daspkg/main.das -- ...` from that root;
+this archive needs no extra `-load_module` CLI helper. Install source packages
+from a VS x64 developer shell with CMake and Ninja on PATH. Keep the archive's
+directory layout intact. Its per-file `SDK-SHA256.json` also covers the included
+notices. The archive URL, checksum and source revision are recorded in
+`src/package/profiles/reference-sdk.json`.
+
+Maintainers can stage another accepted build with
+`python tools/stage_reference_sdk.py --sdk <built-sdk> --output <new-directory>`.
+Staging verifies both checked-in fingerprints before copying any files.
+The input must also provide the built PUGIXML module in its standard SDK path.
+
+### Local builds
 
 Local binary/source staging remains available. A root .das_package and a
 consumer-SDK CMake entry point are now prepared for direct repository installs.
