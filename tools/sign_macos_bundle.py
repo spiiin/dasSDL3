@@ -15,7 +15,7 @@ def main():
     bundle = args.bundle.resolve()
     if sys.platform != "darwin" or not (bundle / "Contents/Info.plist").is_file():
         parser.error("Expected a completed macOS .app on macOS")
-    # Notices are resources, not nested code. Leaving text in Contents/MacOS
+    # Assets and notices are resources. Leaving text in Contents/MacOS
     # makes deep signing attach signatures via xattrs that ordinary copies lose.
     code = bundle / "Contents/MacOS"
     resources = bundle / "Contents/Resources"
@@ -39,7 +39,7 @@ def main():
                 relative = os.path.relpath(target, native.parent)
                 subprocess.run(["install_name_tool", "-change", dependency,
                                 "@loader_path/" + relative, str(native)], check=True)
-    for relative in [".daspkg_release.manifest", "modules/dasSDL3/LICENSE",
+    for relative in ["assets", ".daspkg_release.manifest", "modules/dasSDL3/LICENSE",
                      "modules/dasSDL3/VERSION", "modules/dasSDL3/licenses"]:
         source = code / relative
         if source.exists():

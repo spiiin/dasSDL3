@@ -227,7 +227,8 @@ python3 tools/sign_macos_bundle.py build/release-out/sdl3_imgui_demo.app
 ```
 
 The finalizer resolves native imports between nested modules using bundle-relative
-`@loader_path` paths, moves license/version notices and the release manifest into
+`@loader_path` paths, moves application assets, license/version notices and
+the release manifest into
 `Contents/Resources`, then seals the completed bundle with an ad-hoc signature.
 The native executable and shared libraries remain in `Contents/MacOS`.
 The ImGui release hook forces the SDK's `dasClipboard` shared module so daspkg
@@ -246,6 +247,13 @@ Mac distribution needs its own signing and notarization workflow.
 Core and ImGui standalone apps passed relocation, native dependency/rpath audits,
 and strict bundle signature verification. They also ran through native Cocoa;
 the ImGui bundle verified 2926 bright pixels before releasing its resources.
+
+The [standalone GPU consumer](../examples/daspkg-gpu-consumer/README.md) reuses
+examples 46 and 86: texture/sampler/uniform/readback pixel checks followed by
+an animated custom-fragment GPU Renderer window. Its relocated `.app` passed
+native Cocoa/Metal execution from an empty working directory without SDK/LLVM
+search paths. Saved MSL files are in `Contents/Resources/assets`, matching
+SDL_GetBasePath on Cocoa, and remain signed correctly after copying.
 
 ## Live reload, HTTP/MCP and recording
 
@@ -310,3 +318,22 @@ This includes five shadercross pixel/byte contracts, all four DSL examples and
 eleven application harnesses, with interpreter fallback disabled. The existing
 oracles remain unchanged. After updating the shared runner, 13 companion and
 three restored core headless AOT regression checks also passed.
+
+## macOS CI
+
+`.github/workflows/macos.yml` runs `tools/verify_macos_ci.sh` on the native arm64
+`macos-15` GitHub-hosted runner ([runner reference](https://docs.github.com/en/actions/reference/runners/github-hosted-runners)).
+It uses the pinned daScript submodule and SDL/dependency sources, builds core
+and companion/Shader DSL strict AOT sequentially, checks saved bindings and
+record policies, then installs and relocates a no-LLVM SDK consumer.
+The script restores the core developer configuration even on failure.
+
+Only headless execution and AOT linking are in hosted CI; native Cocoa/Metal
+checks and standalone GPU execution require a GUI session. Logs are uploaded
+on failure or success. The workflow can run on pushes, pull requests or manual
+dispatch after publication; it has not been run on GitHub from this local branch.
+
+The complete CI script passed locally using existing build caches: three core
+headless checks, thirteen companion checks, twenty-seven DSL link/CPU/negative
+checks, binding freshness, record audit and all three relocated SDK consumer
+checks. Workflow YAML and shell syntax were also checked.
