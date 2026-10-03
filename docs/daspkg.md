@@ -1,5 +1,47 @@
 # Local daspkg core pilot
 
+## Platform readiness
+
+The repository manifest currently declares only `package_platform("windows")`.
+This is intentionally narrower than support for the standalone source runner.
+Do not add `linux` until the daspkg dynamic-module path is ported and tested.
+
+| Package profile / path | Platform declaration | Current constraints |
+| --- | --- | --- |
+| Repository `core` | `windows` | MSVC x64, single-config Release, `/MD`, AVX2, a matching DLL SDK fingerprint |
+| Repository `imgui` | `windows` | The core constraints plus the matching Windows ImGui/Clipboard SDK modules |
+| Locally staged binary/source package | No `package_platform` call emitted by `tools/stage_daspkg.py` | The actual staged artifacts/build remain Windows-only; metadata is not yet consistent with the repository manifest |
+| Linux package | Not declared or validated | Only the standalone core source build is currently ported |
+
+There is a manifest compatibility blocker: `package_platform` is not present
+in `daslib/daspkg.das` at the pinned daScript revision
+`35bf260c0d8a79b94c64005bd3d2435adcf7e261`. Compiling the current root manifest
+against that revision reports `error[30341]: no matching functions or generics:
+package_platform(string const)`. The current `package_min_sdk("0.6.4")`
+declaration alone does not establish availability of that metadata API.
+The SDK validation records below must not be treated as verification of this
+newer manifest call.
+
+Before publishing a repository package:
+
+1. Establish a daspkg client version that supports platform metadata and a
+   compatible, fingerprint-validated consumer DLL SDK. Verify the official
+   v0.6.4 SDK separately; its manifest compatibility was not rechecked here.
+2. Decide how older clients are supported without silently discarding platform
+   restrictions. Keep the platform declaration until that policy is resolved.
+3. Make staged and repository platform metadata consistent with that client
+   policy, and test the declared platform list for both `core` and `imgui`.
+4. Run the actual daspkg repository install, relocate and release consumer
+   checks with the selected client/SDK combination.
+
+A Linux daspkg port additionally needs ELF/shared-library SDK linkage instead
+of Windows `.lib` files, PIC and matching ABI/build flags, Linux binding
+snapshots in the package target, Linux SDK fingerprints, module output/loading
+and relocation checks. ImGui needs its own Linux profile validation. Removing
+the Windows CMake guard or adding `package_platform("linux")` is not sufficient.
+
+## Existing Windows package workflow
+
 Local binary/source staging remains available. A root .das_package and a
 consumer-SDK CMake entry point are now prepared for direct repository installs.
 These changes have not been published; a GitHub URL install cannot use them until

@@ -22,7 +22,11 @@ def public preferred_locales() {
 }
 def public dxgi_output(display : uint) {
     var adapter = 0; var output = 0
-    if (!SDL_GetDXGIOutputInfoRef(display, adapter, output)) {return err(sdl_error("SDL_GetDXGIOutputInfo"), type<int2>)}
+    static_if (DASSDL3_WINDOWS) {
+        if (!SDL_GetDXGIOutputInfoRef(display, adapter, output)) {return err(sdl_error("SDL_GetDXGIOutputInfo"), type<int2>)}
+    } else {
+        return err(SdlError(operation = "SDL_GetDXGIOutputInfo", message = "DXGI is only available on Windows"), type<int2>)
+    }
     return ok(int2(adapter, output), type<SdlError>)
 }
 def public create_tray(icon : SDL_Surface?; tooltip : string) {

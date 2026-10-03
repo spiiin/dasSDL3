@@ -44,7 +44,7 @@ def raw_queries() {
         verify(SDL_hid_init() == 0)
         SDL_hid_device_change_count()
         let list = SDL_hid_enumerate(0u, 0u); SDL_hid_free_enumeration(list)
-        var serial : uint16[2]; serial[0] = uint16(0xffff)
+        var serial : SDL_HidChar[2]; serial[0] = SDL_HidChar(0xffff)
         let device = SDL_hid_open(65535u, 65535u, addr(serial[0]))
         if (device != null) {SDL_hid_close(device)}
         verify(SDL_hid_open_path("dasSDL3://no-such-hid-device") == null)
@@ -57,7 +57,7 @@ def raw_queries() {
         verify(SDL_hid_get_feature_report(null, addr(bytes[0]), 8ul) == -1)
         verify(SDL_hid_get_input_report(null, addr(bytes[0]), 8ul) == -1)
         verify(SDL_hid_close(null) == -1)
-        var wide : uint16[32]
+        var wide : SDL_HidChar[32]
         verify(SDL_hid_get_manufacturer_string(null, addr(wide[0]), 32ul) == -1)
         verify(SDL_hid_get_product_string(null, addr(wide[0]), 32ul) == -1)
         verify(SDL_hid_get_serial_number_string(null, addr(wide[0]), 32ul) == -1)
