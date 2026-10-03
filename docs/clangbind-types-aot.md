@@ -59,3 +59,15 @@ backend и в строгом AOT. Это только тестовый AOT compa
 Список тестов задаётся CMake, текущие результаты —
 [gpu raw tests](gpu-raw-tests.md). Не использовать числа
 первоначального 50-function эксперимента как текущее покрытие.
+
+## Apple Clang и ImGui coroutine
+
+Mac companion AOT добавляет локальное восстановление области временного
+`ImGuiIO *` в pinned `click_at_coro` из `imgui_boost_runtime.das`.
+C++ emitter теряет `unsafe` scope и помещает resume-label после инициализации
+указателя, что Clang отклоняет. Генератор восстанавливает только блок вокруг
+GetIO и следующего присваивания MouseClickedTime; порядок вызовов не меняется.
+Преобразование включено лишь в Mac companion tool, требует ровно две ссылки
+на временную переменную и отклоняет изменённый output. Никакие исходники
+зависимостей или generated C++ не редактируются вручную. `imgui_widgets.das`
+проверяет queued click, прохождение yield/resume и завершение coroutine.

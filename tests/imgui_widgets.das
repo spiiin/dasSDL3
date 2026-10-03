@@ -62,6 +62,18 @@ def run_test(renderer : SDL_Renderer?) : SdlStatus {
     imgui_widgets_render(renderer)
     verify(VALUE.value == 0.75)
     renderer |> present() |> sdl_try
+    // Exercise the upstream yielding click coroutine, including resume after
+    // the scoped GetIO reference (a pinned C++ emitter issue on Apple Clang).
+    let clicked = live_dispatch_command("\{\"name\":\"imgui_click\",\"args\":\{\"target\":\"TEST/CLICK\"\}\}")
+    verify(find(clicked, "error") < 0)
+    for (frame in 0 .. 24) {
+        imgui_widgets_new_frame()
+        draw_widgets()
+        renderer |> clear() |> sdl_try
+        imgui_widgets_render(renderer)
+        renderer |> present() |> sdl_try
+    }
+    verify(CLICK.click_count == 2 && synth_coroutines_active() == 0)
     set_user_control_enabled(true)
     print("Widgets: synth click, snapshot and force_set PASS\n")
     return sdl_ok()

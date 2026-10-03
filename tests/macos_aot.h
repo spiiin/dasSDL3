@@ -5,3 +5,4 @@
 #include "filesystem_probe.h"
 #include "gpu_native_fences_probe.h"
 #include "gpu_volume_probe.h"
+#include "iostream_probe.h"

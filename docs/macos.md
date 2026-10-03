@@ -33,6 +33,10 @@ remain in the source tree, as in the Windows development runner.
   `int`/UTF-32 on macOS. HID buffer counts are characters, not bytes. The Mac
   interpreter and AOT use explicit bridges because the pinned daScript maps
   C++ `wchar_t` to `uint16` even on Apple. Copied HID metadata remains UTF-8.
+- The Mac AOT names for `SDL_LoadFile` and `SDL_LoadFile_IO` use explicit
+  `size_t`/script-`uint64` output storage bridges. Their C++ pointer types differ
+  even though both have eight-byte storage. Raw interpreter signatures, optional
+  output pointers and failure sizes are preserved.
 - The binding and its C++ consumers use `-fno-rtti` to match the pinned runtime.
 - Vulkan needs a separately installed loader/MoltenVK. Native Metal works through
   SDL GPU; SPIR-V/DXIL shader assets do not become Metal shaders automatically.
@@ -261,3 +265,20 @@ The pinned stdio agent still reports the existing Channel/JobStatus/Feature leak
 SDL resources are released exactly once. HTTP transport reports no handle leaks.
 The optional recording-port and visual-aids tests modify only disposable test
 copies of upstream scripts, as on Windows; normal recording uses the pinned SDK.
+
+## Companion strict AOT
+
+`dasSDL3_macos_libraries_aot_tool` and `dasSDL3_macos_libraries_aot_runner` match
+the enabled companion profile. Shared boost imports are discovered and included
+in generation; source/import changes invalidate that source list and emitted code.
+Run the `macos-libraries-aot` CTest label as described in [the library guide](../examples/libraries/README.md#native-mac-strict-aot).
+The default shadercross example uses the committed SPIR-V fixture without DXC,
+and still performs reflection/MSL translation; DXIL is requested only when supported.
+
+Native verification on Apple Silicon/macOS 15.3.1 passed all 14 checks with
+interpreter fallback disabled, including Metal SDL_ttf GPU text and ImGui
+click coroutine yield/resume. Audio tests used the dummy driver; network tests
+used loopback. The three affected interpreter checks also passed. The installed
+no-LLVM SDK consumer passed interpreter, strict AOT and missing-AOT rejection
+both before and after copying the SDK to a new prefix. Saved binding generation
+and the 122-record/840-field policy audit remained current.

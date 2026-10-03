@@ -2945,9 +2945,9 @@ addExtern<DAS_BIND_FUN(SDL_WriteIO)>(*this, lib, "SDL_WriteIO", SideEffects::wor
 // bool (SDL_IOStream *)
 addExtern<DAS_BIND_FUN(SDL_FlushIO)>(*this, lib, "SDL_FlushIO", SideEffects::worstDefault, "SDL_FlushIO")->args({"context"});
 // void *(SDL_IOStream *, size_t *, bool)
-addExtern<DAS_BIND_FUN(SDL_LoadFile_IO)>(*this, lib, "SDL_LoadFile_IO", SideEffects::worstDefault, "SDL_LoadFile_IO")->args({"src", "datasize", "closeio"});
+addExtern<DAS_BIND_FUN(SDL_LoadFile_IO)>(*this, lib, "SDL_LoadFile_IO", SideEffects::worstDefault, "SDL_LoadFile_IOSize64")->args({"src", "datasize", "closeio"});
 // void *(const char *, size_t *)
-addExtern<DAS_BIND_FUN(SDL_LoadFile)>(*this, lib, "SDL_LoadFile", SideEffects::worstDefault, "SDL_LoadFile")->args({"file", "datasize"});
+addExtern<DAS_BIND_FUN(SDL_LoadFile)>(*this, lib, "SDL_LoadFile", SideEffects::worstDefault, "SDL_LoadFileSize64")->args({"file", "datasize"});
 // bool (SDL_IOStream *, const void *, size_t, bool)
 addExtern<DAS_BIND_FUN(SDL_SaveFile_IO)>(*this, lib, "SDL_SaveFile_IO", SideEffects::worstDefault, "SDL_SaveFile_IO")->args({"src", "data", "datasize", "closeio"});
 // bool (const char *, const void *, size_t)
