@@ -8,3 +8,6 @@ __pycache__/
 /_build/
 /.das_module
 /dasSDL3.shared_module
+
+# libhv runtime logs
+libhv.*.log
