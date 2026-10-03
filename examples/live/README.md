@@ -1,9 +1,53 @@
 # SDL widgets in daslang-live
 
-This Windows/MSVC pilot builds the unmodified upstream daslang-live source as
-`dasSDL3_live.exe` and loads the SDL/ImGui bindings dynamically. It is separate
+This macOS and Windows/MSVC pilot builds the unmodified upstream daslang-live source
+as `dasSDL3_live` (`dasSDL3_live.exe` on Windows) and loads the SDL/ImGui bindings dynamically. It is separate
 from the ordinary desktop and Web lifecycle hosts.
 
+
+## macOS build and run
+
+From the repository root, with Apple Command Line Tools, CMake, Ninja and Python 3:
+
+```sh
+cmake -S . -B build/macos-live -G Ninja -DCMAKE_BUILD_TYPE=Release \
+  -DDASSDL3_WITH_IMGUI=ON -DDASSDL3_WITH_LIVE=ON
+cmake --build build/macos-live --target dasSDL3_live daslang --parallel 6
+cmake -S src/live/http -B build/macos-live-http -G Ninja -DCMAKE_BUILD_TYPE=Release
+cmake --build build/macos-live-http --parallel 6
+./build/macos-live/live/dasSDL3_live -dasroot third_party/daScript \
+  -load_module build/macos-live/live/module -load_module build/macos-live-http/dasHV \
+  -no-module-cache examples/live/02_widgets_http.das --live-port 9090
+```
+
+Run from a normal Terminal in a GUI login session. The host links Foundation for
+upstream NoAppNap and loads native `.shared_module` libraries with the saved Mac
+binding snapshot. The dynamic daScript SDK and modules must come from the same
+build profile. Configure/build SDK profiles sequentially: the pinned SDK writes
+shared configuration, libraries and executables into its source tree.
+
+For one-command APNG recording, close the demo on port 9090 and run:
+
+```sh
+python3 tools/record_live.py
+python3 tools/record_live.py --output "build/my recording"
+```
+
+The Python launcher selects Mac build paths and verifies the owning process's
+loopback listener with macOS `lsof`. Custom builds can pass `--host`, `--module`,
+`--http-module`, `--stb-module` and `--daslang`. No extra Python packages are needed.
+
+```sh
+ctest --test-dir build/macos-live -R '^sdl3_live_widgets$' --output-on-failure
+ctest --test-dir build/macos-live-http -R '^sdl3_live_' --output-on-failure
+```
+
+These checks cover stdio reload, HTTP/MCP commands, file watching, error recovery,
+GUI pixel changes, the upstream playwright driver and APNG finalization. The
+`recording_port` and `visual_aids` checks use disposable copies with the proposed
+upstream changes described below; normal recording uses the pinned SDK unchanged.
+`SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy` permits headless checks, but does not
+verify native Cocoa rendering. Audio is not part of this live pilot.
 
 ## One-command recording (Windows)
 

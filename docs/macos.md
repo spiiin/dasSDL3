@@ -236,3 +236,22 @@ Mac distribution needs its own signing and notarization workflow.
 Core and ImGui standalone apps passed relocation, native dependency/rpath audits,
 and strict bundle signature verification. They also ran through native Cocoa;
 the ImGui bundle verified 2926 bright pixels before releasing its resources.
+
+## Live reload, HTTP/MCP and recording
+
+The native live profile builds the pinned upstream host with Foundation and loads
+SDL/ImGui, HTTP and STB as matching Mac `.shared_module` libraries. Build/run
+commands and one-command APNG recording are in [the live guide](../examples/live/README.md#macos-build-and-run).
+The ordinary development runner's lifecycle contract remains separate.
+
+Headless Mac checks passed stdio state preservation/full reset, HTTP/MCP tool
+discovery and commands, file watching, compile/runtime recovery, GUI pixel changes,
+playwright scenarios and APNG frame-count/finalization checks. The launcher also
+recorded 54 frames and verified exactly-once SDL cleanup. All eight CTest cases also passed through native Cocoa in a GUI login session.
+The one-command launcher was checked headlessly, including immediate repeated
+recording and rejection of an active listener on port 9090. Its Mac port probe
+permits TCP TIME_WAIT from a previous recording.
+The pinned stdio agent still reports the existing Channel/JobStatus/Feature leak;
+SDL resources are released exactly once. HTTP transport reports no handle leaks.
+The optional recording-port and visual-aids tests modify only disposable test
+copies of upstream scripts, as on Windows; normal recording uses the pinned SDK.
