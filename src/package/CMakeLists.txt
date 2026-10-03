@@ -1,7 +1,13 @@
 cmake_minimum_required(VERSION 3.24)
 project(dasSDL3Package LANGUAGES C CXX)
-if(NOT WIN32 OR NOT MSVC OR NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
-    message(FATAL_ERROR "Package pilot requires Windows x64 MSVC")
+if(APPLE AND CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang" AND CMAKE_SIZEOF_VOID_P EQUAL 8)
+    set(_das_compiler_library lib/liblibDaScriptDyn.dylib)
+    set(_das_runtime_library lib/liblibDaScriptDyn_runtime.dylib)
+elseif(WIN32 AND MSVC AND CMAKE_SIZEOF_VOID_P EQUAL 8)
+    set(_das_compiler_library lib/libDaScriptDyn.lib)
+    set(_das_runtime_library lib/libDaScriptDyn_runtime.lib)
+else()
+    message(FATAL_ERROR "Package requires macOS AppleClang or Windows x64 MSVC")
 endif()
 if(NOT CMAKE_BUILD_TYPE STREQUAL "Release" OR CMAKE_CONFIGURATION_TYPES)
     message(FATAL_ERROR "Use single-config Ninja Release and the matching daScript DLL SDK")
@@ -12,7 +18,7 @@ set(CMAKE_JOB_POOL_COMPILE package_compile)
 set(CMAKE_JOB_POOL_LINK package_link)
 set(CMAKE_MSVC_RUNTIME_LIBRARY MultiThreadedDLL)
 set(DASLANG_DIR "" CACHE PATH "Matching built daScript DLL SDK")
-foreach(required include/daScript/daScript.h lib/libDaScriptDyn.lib lib/libDaScriptDyn_runtime.lib)
+foreach(required include/daScript/daScript.h ${_das_compiler_library} ${_das_runtime_library})
     if(NOT EXISTS "${DASLANG_DIR}/${required}")
         message(FATAL_ERROR "Missing ${DASLANG_DIR}/${required}")
     endif()
@@ -72,15 +78,23 @@ else()
 endif()
 add_library(dasSDL3_package SHARED "${DASSDL3_SOURCE_DIR}/module_sdl3.cpp")
 target_include_directories(dasSDL3_package PRIVATE "${DASSDL3_SOURCE_DIR}" "${DASLANG_DIR}/include" "${DASLANG_DIR}/3rdparty/fmt/include")
-target_compile_definitions(dasSDL3_package PRIVATE DAS_ENABLE_DLL=1 DAS_MOD_EXPORTS
-    DAS_ENABLE_EXCEPTIONS=1 DAS_FUSION=2 DAS_NO_ASSERTIONS
-    DASSDL3_TYPES_INCLUDE="generated/clangbind/sdl3_types.inc"
-    DASSDL3_REGISTRATION_INCLUDE="generated/clangbind/sdl3_functions.inc")
-target_compile_options(dasSDL3_package PRIVATE /bigobj /arch:AVX2 /wd4251 /wd4275)
+target_compile_definitions(dasSDL3_package PRIVATE DAS_ENABLE_DLL=1 DAS_MOD_EXPORTS DAS_FUSION=2 DAS_NO_ASSERTIONS)
+if(APPLE)
+    target_compile_definitions(dasSDL3_package PRIVATE
+        DASSDL3_TYPES_INCLUDE="generated/macos/sdl3_types.inc"
+        DASSDL3_REGISTRATION_INCLUDE="generated/macos/sdl3_functions.inc")
+    target_compile_options(dasSDL3_package PRIVATE -fno-rtti)
+else()
+    target_compile_definitions(dasSDL3_package PRIVATE DAS_ENABLE_EXCEPTIONS=1
+        DASSDL3_TYPES_INCLUDE="generated/clangbind/sdl3_types.inc"
+        DASSDL3_REGISTRATION_INCLUDE="generated/clangbind/sdl3_functions.inc")
+    target_compile_options(dasSDL3_package PRIVATE /bigobj /arch:AVX2 /wd4251 /wd4275)
+endif()
 target_link_libraries(dasSDL3_package PRIVATE SDL3::SDL3-static
-    "${DASLANG_DIR}/lib/libDaScriptDyn.lib" "${DASLANG_DIR}/lib/libDaScriptDyn_runtime.lib")
+    "${DASLANG_DIR}/${_das_compiler_library}" "${DASLANG_DIR}/${_das_runtime_library}")
 set_target_properties(dasSDL3_package PROPERTIES PREFIX "" SUFFIX ".shared_module"
-    OUTPUT_NAME dasSDL3 RUNTIME_OUTPUT_DIRECTORY "${DASSDL3_PACKAGE_OUTPUT}")
+    OUTPUT_NAME dasSDL3 RUNTIME_OUTPUT_DIRECTORY "${DASSDL3_PACKAGE_OUTPUT}"
+    LIBRARY_OUTPUT_DIRECTORY "${DASSDL3_PACKAGE_OUTPUT}")
 
 
 # GUI variant uses the same SDL instance as the core binding.
@@ -89,6 +103,9 @@ if(DASSDL3_PACKAGE_IMGUI)
     set(_imgui "${DASLANG_DIR}/modules/dasImgui")
     set(_imgui_source "${_imgui}/imgui")
     set(_imgui_library "${DASLANG_DIR}/lib/dasModuleImgui.lib")
+    if(APPLE)
+        set(_imgui_library "${_imgui}/dasModuleImgui.shared_module")
+    endif()
     if(NOT EXISTS "${_imgui_source}/imgui.h")
         # Authenticate the official GUI binaries before fetching release sources.
         set(_official_gui_files
@@ -129,7 +146,10 @@ if(DASSDL3_PACKAGE_IMGUI)
         "${_imgui_source}/backends/imgui_impl_sdlrenderer3.cpp")
     target_include_directories(dasSDL3_package PRIVATE "${DASSDL3_SOURCE_DIR}/libraries"
         "${_imgui_source}")
-    target_compile_definitions(dasSDL3_package PRIVATE "IMGUI_API=__declspec(dllimport)"
+    if(WIN32)
+        target_compile_definitions(dasSDL3_package PRIVATE "IMGUI_API=__declspec(dllimport)")
+    endif()
+    target_compile_definitions(dasSDL3_package PRIVATE
         "IMGUI_IMPL_API=" IMGUI_DISABLE_OBSOLETE_FUNCTIONS=1 IMGUI_ENABLE_FREETYPE=1 IMGUI_USE_WCHAR32=1)
     target_link_libraries(dasSDL3_package PRIVATE "${_imgui_library}")
 endif()
@@ -141,13 +161,18 @@ if(DASSDL3_DASPKG_CLI_SUPPORT)
     add_library(daspkg_pugixml SHARED "${_pugi}/src/dasPUGIXML.cpp" "${_pugi}/pugixml/pugixml.cpp")
     target_include_directories(daspkg_pugixml PRIVATE "${DASLANG_DIR}/include"
         "${DASLANG_DIR}/3rdparty/fmt/include" "${_pugi}/pugixml")
-    target_compile_definitions(daspkg_pugixml PRIVATE DAS_ENABLE_DLL=1 DAS_MOD_EXPORTS
-        DAS_ENABLE_EXCEPTIONS=1 DAS_FUSION=2 DAS_NO_ASSERTIONS)
-    target_compile_options(daspkg_pugixml PRIVATE /bigobj /arch:AVX2 /wd4251 /wd4275)
-    target_link_libraries(daspkg_pugixml PRIVATE "${DASLANG_DIR}/lib/libDaScriptDyn.lib"
-        "${DASLANG_DIR}/lib/libDaScriptDyn_runtime.lib")
+    target_compile_definitions(daspkg_pugixml PRIVATE DAS_ENABLE_DLL=1 DAS_MOD_EXPORTS DAS_FUSION=2 DAS_NO_ASSERTIONS)
+    if(APPLE)
+        target_compile_options(daspkg_pugixml PRIVATE -fno-rtti)
+    else()
+        target_compile_definitions(daspkg_pugixml PRIVATE DAS_ENABLE_EXCEPTIONS=1)
+        target_compile_options(daspkg_pugixml PRIVATE /bigobj /arch:AVX2 /wd4251 /wd4275)
+    endif()
+    target_link_libraries(daspkg_pugixml PRIVATE "${DASLANG_DIR}/${_das_compiler_library}"
+        "${DASLANG_DIR}/${_das_runtime_library}")
     set_target_properties(daspkg_pugixml PROPERTIES PREFIX "" SUFFIX ".shared_module"
-        OUTPUT_NAME dasModulePUGIXML RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/cli")
+        OUTPUT_NAME dasModulePUGIXML RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/cli"
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/cli")
     file(COPY "${_pugi}/.das_module" "${_pugi}/daslib" DESTINATION "${CMAKE_BINARY_DIR}/cli")
     set(_cli_args --cli-module "${CMAKE_BINARY_DIR}/cli")
 endif()

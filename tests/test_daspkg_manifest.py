@@ -62,7 +62,7 @@ def main {
     script = work / "verify.das"
     script.write_text(source, encoding="utf-8")
     for profile in ("core", "imgui"):
-        result = subprocess.run([str(sdk / "bin/daslang.exe"), "-dasroot", str(sdk), str(script)],
+        result = subprocess.run([str(sdk / "bin" / ("daslang.exe" if os.name == "nt" else "daslang")), "-dasroot", str(sdk), str(script)],
                                 cwd=work, env=dict(os.environ, DASSDL3_PACKAGE_PROFILE=profile),
                                 capture_output=True, text=True, timeout=60)
         (work / f"{profile}.log").write_text(result.stdout + result.stderr, encoding="utf-8")

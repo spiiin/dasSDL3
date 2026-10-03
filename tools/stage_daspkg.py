@@ -1,4 +1,4 @@
-"""Stage a local Windows core binary or source package for a reference DLL SDK."""
+"""Stage a local core binary or source package for a matching native SDK."""
 import argparse
 import hashlib
 import json
@@ -17,10 +17,11 @@ def main():
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--module", type=Path)
     mode.add_argument("--source", action="store_true")
-    parser.add_argument("--sdk", type=Path, help="Reference DLL SDK required by --source")
+    parser.add_argument("--sdk", type=Path, help="Matching dynamic SDK required by --source")
     parser.add_argument("--output", type=Path, required=True,
                         help="New or empty directory, normally ending in dasSDL3")
     parser.add_argument("--with-imgui", action="store_true", help="Combined SDL + SDK dasImgui profile")
+    parser.add_argument("--platform", choices=("windows", "macos"), default="windows")
     args = parser.parse_args()
     source = args.module.resolve() if args.module else None
     if (args.source or args.with_imgui) and not args.sdk:
@@ -49,16 +50,18 @@ def main():
         sdk = args.sdk.resolve()
         sdk_files = sorted(p for folder in ("include", "3rdparty/fmt/include")
                            for p in (sdk / folder).rglob("*") if p.is_file())
-        sdk_files += [sdk / name for name in (
+        native_files = ("lib/liblibDaScriptDyn.dylib", "lib/liblibDaScriptDyn_runtime.dylib") if args.platform == "macos" else (
             "lib/libDaScriptDyn.lib", "lib/libDaScriptDyn_runtime.lib",
-            "bin/libDaScriptDyn.dll", "bin/libDaScriptDyn_runtime.dll")]
+            "bin/libDaScriptDyn.dll", "bin/libDaScriptDyn_runtime.dll")
+        sdk_files += [sdk / name for name in native_files]
         if args.with_imgui:
             sdk_files += sorted(p for p in (sdk / "modules/dasImgui/imgui").rglob("*")
                                 if p.is_file() and p.suffix in {".h", ".cpp"})
-            sdk_files += [sdk / ("lib/dasModuleImgui.lib" if (sdk / "lib/dasModuleImgui.lib").is_file()
-                                else "modules/dasImgui/dasModuleImgui.lib"),
-                          sdk / "modules/dasImgui/dasModuleImgui.shared_module",
+            sdk_files += [sdk / "modules/dasImgui/dasModuleImgui.shared_module",
                           sdk / "modules/dasClipboard/dasModuleClipboard.shared_module"]
+            if args.platform == "windows":
+                sdk_files += [sdk / ("lib/dasModuleImgui.lib" if (sdk / "lib/dasModuleImgui.lib").is_file()
+                                    else "modules/dasImgui/dasModuleImgui.lib")]
         for path in sdk_files:
             if not path.is_file():
                 parser.error(f"Missing SDK input: {path}")
@@ -104,7 +107,7 @@ def main():
     (output / ".das_package").write_text(
         'options gen2\nrequire daslib/daspkg\n\n[export]\ndef package() {\n'
         '    package_name("dasSDL3")\n'
-        '    package_description("SDL3 core bindings: local Windows x64 Release DLL pilot")\n'
+        f'    package_description("SDL3 core bindings: local {args.platform} Release package")\n'
         '    package_license("MIT")\n'
         '    package_tag("sdl3")\n}\n\n[export]\ndef build() {\n    ' + ('cmake_build()' if args.source else 'no_build()') + '\n}\n',
         encoding="utf-8")
@@ -115,15 +118,15 @@ def main():
             manifest.write('\n[export]\ndef dependencies(version : string) {\n    require_package("dasImgui")\n}\n')
     (output / "profile.json").write_text(json.dumps({
         "version": (ROOT / "VERSION").read_text(encoding="utf-8").strip(),
-        "profile": "windows-x64-msvc-release-md-avx2",
+        "profile": "macos-appleclang-release" if args.platform == "macos" else "windows-x64-msvc-release-md-avx2",
         "sdl": "3.4.16", "binding_reference_revision": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
         "sdk_runtime_sha256": hashlib.sha256(
-            (args.sdk / "bin/libDaScriptDyn.dll").read_bytes()).hexdigest() if args.sdk else None,
+            (args.sdk / ("lib/liblibDaScriptDyn_runtime.dylib" if args.platform == "macos" else "bin/libDaScriptDyn.dll")).read_bytes()).hexdigest() if args.sdk else None,
         "module_sha256": hashlib.sha256(source.read_bytes()).hexdigest() if source else None,
         "kind": "source" if args.source else "binary",
         "features": ["core", "imgui"] if args.with_imgui else ["core"],
         "modules": [s.stem for s in scripts],
-        "distribution": "local pilot; requires matching daScript DLL ABI",
+        "distribution": "local pilot; requires matching native daScript ABI",
     }, indent=2) + "\n", encoding="utf-8")
     print(f"Staged {len(scripts)} boost modules: {output}")
 

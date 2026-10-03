@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.24)
 file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/VERSION" DASSDL3_VERSION LIMIT_COUNT 1)
 project(dasSDL3 VERSION "${DASSDL3_VERSION}" LANGUAGES C CXX)
+if(APPLE AND NOT CMAKE_OSX_DEPLOYMENT_TARGET)
+    # Set one baseline before dependencies; SDL otherwise sets it too late.
+    set(CMAKE_OSX_DEPLOYMENT_TARGET "11.0" CACHE STRING "Minimum macOS version" FORCE)
+endif()
 
 # daspkg supplies the consumer SDK; do not configure our developer SDK/submodule.
 if(DEFINED DASLANG_DIR)
@@ -180,7 +184,7 @@ if(DASSDL3_WITH_SHADERCROSS)
 endif()
 add_subdirectory(src)
 
-option(DASSDL3_INSTALL_SDK "Install the core Windows x64 Release SDK" OFF)
+option(DASSDL3_INSTALL_SDK "Install the core native Release SDK" OFF)
 if(DASSDL3_INSTALL_SDK)
     include(cmake/InstallSDK.cmake)
 endif()

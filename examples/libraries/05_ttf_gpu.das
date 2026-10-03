@@ -188,8 +188,10 @@ def resources(device : SDL_GPUDevice?; window : SDL_Window?; font : TTF_Font?; t
 
 def run(device : SDL_GPUDevice?; window : SDL_Window?; smoke : bool) {
     let spirv = (SDL_GetGPUShaderFormats(device) & SDL_GPU_SHADERFORMAT_SPIRV) != 0u
-    let format = spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL
-    let ext = spirv ? "spv" : "dxil"
+    let metal = (SDL_GetGPUShaderFormats(device) & SDL_GPU_SHADERFORMAT_MSL) != 0u
+    let format = spirv ? SDL_GPU_SHADERFORMAT_SPIRV : metal ? SDL_GPU_SHADERFORMAT_MSL : SDL_GPU_SHADERFORMAT_DXIL
+    let ext = spirv ? "spv" : metal ? "msl" : "dxil"
+    let entry = metal && !spirv ? "main0" : "main"
     let base = "{SDL_GetBasePath()}assets/libraries/shaders/ttf"
     return sdl_scope() {
         let font : TTF_Font? = with_font("{SDL_GetBasePath()}assets/libraries/Amiri-Regular.ttf", 48.0) |> sdl_use
@@ -198,11 +200,11 @@ def run(device : SDL_GPUDevice?; window : SDL_Window?; smoke : bool) {
         var vertex : SDL_GPUShader? = device |> with_native_gpu_shader_file(SDL_GPUShaderCreateInfo(
             format = format,
             stage = SDL_GPUShaderStage.SHADERSTAGE_VERTEX,
-            num_uniform_buffers = 1u), "{base}.vert.{ext}", "main") |> sdl_use
+            num_uniform_buffers = 1u), "{base}.vert.{ext}", entry) |> sdl_use
         var fragment : SDL_GPUShader? = device |> with_native_gpu_shader_file(SDL_GPUShaderCreateInfo(
             format = format,
             stage = SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT,
-            num_samplers = 1u), "{base}.frag.{ext}", "main") |> sdl_use
+            num_samplers = 1u), "{base}.frag.{ext}", entry) |> sdl_use
         return resources(device, window, font, text, vertex, fragment, smoke)
     }
 }

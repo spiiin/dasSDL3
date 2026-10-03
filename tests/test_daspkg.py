@@ -46,6 +46,12 @@ def main():
                 del env[key]
     if args.repository:
         env["DASSDL3_PACKAGE_PROFILE"] = "imgui" if args.imgui else "core"
+        if sys.platform == "darwin":
+            snapshot = work / "sdk snapshot"
+            subprocess.run([sys.executable, str(ROOT / "tools/stage_daspkg.py"),
+                            "--source", "--platform", "macos", "--sdk", str(das),
+                            "--output", str(snapshot), *(["--with-imgui"] if args.imgui else [])], check=True)
+            env["DASSDL3_PACKAGE_SDK_FINGERPRINT"] = str(snapshot / "sdk.sha256")
     if args.source:
         env["CMAKE_GENERATOR"] = "Ninja"
         env["CMAKE_BUILD_PARALLEL_LEVEL"] = "6"
@@ -60,7 +66,7 @@ def main():
                 parser.error(f"Missing release tool: {llvm / tool}")
         env["DAS_DLL_PATH"] = str(llvm)
         env["PATH"] = str(llvm) + os.pathsep + env.get("PATH", "")
-    exe = str(das / "bin" / "daslang.exe")
+    exe = str(das / "bin" / ("daslang.exe" if os.name == "nt" else "daslang"))
 
     def run(name, command, cwd):
         result = subprocess.run(command, cwd=cwd, env=env, text=True,
@@ -83,6 +89,8 @@ def main():
                 raise RuntimeError(f"License snapshot hash mismatch: {entry['file']}")
 
     stage_mode = ["--source", "--sdk", str(das)] if args.source else ["--module", str(args.module.resolve())]
+    if sys.platform == "darwin":
+        stage_mode += ["--platform", "macos"]
     if args.imgui:
         stage_mode += ["--with-imgui"]
         if not args.source:

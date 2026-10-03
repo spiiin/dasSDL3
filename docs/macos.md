@@ -37,8 +37,8 @@ remain in the source tree, as in the Windows development runner.
 - Vulkan needs a separately installed loader/MoltenVK. Native Metal works through
   SDL GPU; SPIR-V/DXIL shader assets do not become Metal shaders automatically.
   Shader-based examples need MSL/Metallib assets or optional shader translation.
-- The installed SDK and daspkg package profiles still have their documented
-  Windows restrictions. This native checkout profile does not change them.
+- The installed core SDK supports native AppleClang and enforces one matching
+  architecture. Dynamic daspkg modules require their own matching SDK fingerprint.
 
 ## Development checks
 
@@ -73,3 +73,88 @@ MSL source is copied to owned storage with a guaranteed terminator before the
 native call; embedded NULs are rejected. The Mac triangle fixtures use `main0`.
 Pinned SDL Metal uploads use tight native rows/slices, so the checked transfer
 helpers pack those separately from the 256-byte rows used on other drivers.
+
+## Companion libraries
+
+SDL_image, SDL_ttf, SDL_net, SDL_mixer, SDL_sound, ImGui and shadercross build
+with the same pinned sources. Shadercross defaults to DXC disabled on Mac;
+SPIR-V reflection and MSL/HLSL translation remain available. HLSL compilation
+and DXIL need a separately supplied compatible DXC SDK.
+
+```sh
+cmake -S . -B build/macos-libraries -G Ninja -DCMAKE_BUILD_TYPE=Release \
+  -DDASSDL3_WITH_IMAGE=ON -DDASSDL3_WITH_TTF=ON -DDASSDL3_WITH_NET=ON \
+  -DDASSDL3_WITH_MIXER=ON -DDASSDL3_WITH_SOUND=ON -DDASSDL3_WITH_IMGUI=ON \
+  -DDASSDL3_WITH_SHADERCROSS=ON
+cmake --build build/macos-libraries --target dasSDL3_libraries_runner --parallel 6
+./build/macos-libraries/bin/dasSDL3_libraries_runner examples/libraries/05_ttf_gpu.das
+```
+
+The TTF GPU example chooses saved MSL fixtures on Metal, with `main0` entrypoints.
+They are generated from the saved SPIR-V by the pinned shadercross CLI:
+
+```sh
+python3 tools/generate_macos_shaders.py
+python3 tools/generate_macos_shaders.py --check
+```
+
+Native verification on Apple Silicon/macOS 15.3.1 passed 24 companion tests,
+including ImGui input/widgets/lifetimes, TTF GPU draw data and CPU pixel oracles,
+image IO, text shaping, loopback networking and dummy-driver audio decoding/mixing.
+Dummy audio proves the memory/decoder contracts, not physical audio output.
+
+## Installed C++ / AOT SDK
+
+```sh
+cmake -S . -B build/macos-sdk-build -G Ninja -DCMAKE_BUILD_TYPE=Release \
+  -DBUILD_TESTING=OFF -DDAS_TOOLS_DISABLED=ON -DDASSDL3_INSTALL_SDK=ON
+cmake --build build/macos-sdk-build --target dasSDL3_aot --parallel 6
+cmake --install build/macos-sdk-build --prefix "$PWD/build/macos-sdk" --component dasSDL3SDK
+cmake -S build/macos-sdk/share/dasSDL3/examples/sdk-consumer -B build/sdk-example \
+  -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$PWD/build/macos-sdk"
+cmake --build build/sdk-example --parallel 6
+SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy ctest --test-dir build/sdk-example --output-on-failure
+```
+
+Interpreter, strict AOT and rejection of missing AOT registrations passed after
+moving the installed prefix. Consumers need no LLVM/Python or source checkout.
+The scripts/standard library remain runtime resources, as described in [SDK](sdk.md).
+Only the arm64 SDK has been executed here; the x86_64 profile needs its own machine.
+
+## Dynamic daspkg core / ImGui profiles
+
+Use the matching dynamic SDK built from the pinned submodule, not the installed
+static SDK above. Core needs `daslang`; ImGui also needs the SDK's dynamic
+ImGui/Clipboard modules. Build SDK configurations sequentially because upstream
+outputs share the submodule's `lib`, `bin` and module directories.
+
+```sh
+cmake --build build/macos-libraries --target daslang --parallel 6
+cmake -S src/package -B build/macos-package -G Ninja -DCMAKE_BUILD_TYPE=Release \
+  -DDASLANG_DIR="$PWD/third_party/daScript" \
+  -DSDL3_DIR="$PWD/build/macos-libraries/_deps/sdl3-build" \
+  -DDASSDL3_DASPKG_CLI_SUPPORT=ON -DDASSDL3_PACKAGE_IMGUI=ON
+cmake --build build/macos-package --parallel 6
+ctest --test-dir build/macos-package -R '^sdl3_daspkg_(manifest|consumer|source|repository_core|repository_imgui|imgui_binary|imgui_source)$' \
+  --output-on-failure
+```
+
+The tests run the real upstream installer, compile all package imports, verify
+rendered pixels and cleanup, then move the source package and consumer directory.
+Source staging fingerprints headers and native dylibs and tests rejection of an
+altered fingerprint before compilation. Package output paths use `.shared_module`
+for both platforms; the Mac ImGui backend links the matching SDK module directly.
+
+For binary staging, pass `--platform macos` to `tools/stage_daspkg.py`.
+For a local source package and its SDK fingerprint:
+
+```sh
+python3 tools/stage_daspkg.py --source --platform macos \
+  --sdk "$PWD/third_party/daScript" --with-imgui --output build/packages/dasSDL3
+```
+
+Direct repository installs on Mac require `DASSDL3_PACKAGE_SDK_FINGERPRINT`
+to name that package's `sdk.sha256` and `DASSDL3_PACKAGE_PROFILE=core` or `imgui`.
+Use a fingerprint staged with `--with-imgui` for the ImGui profile. The Windows
+official SDK snapshots are preserved; an official Mac SDK archive has not been
+validated. Standalone daspkg release packaging is a separate workflow.

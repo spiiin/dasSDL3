@@ -7,13 +7,12 @@ def package() {
     package_name("dasSDL3")
     package_author("spiiin")
     package_source("github.com/spiiin/dasSDL3")
-    package_description("SDL3 bindings for daslang: Windows x64 core and ImGui profiles")
+    package_description("SDL3 bindings for daslang: native macOS and Windows profiles")
     package_license("MIT")
     package_min_sdk("0.6.4")
     package_tag("sdl3")
     package_tag("graphics")
     package_tag("imgui")
-    package_platform("windows")
 }
 
 [export]

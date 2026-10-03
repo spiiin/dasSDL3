@@ -9,7 +9,9 @@ The interpreter discovers .das_module in the consumer's modules/dasSDL3;
 scripts use ordinary require dassdl3/..., without an SDL-specific host or
 -load_module flag.
 
-Supported/tested: Windows x64, MSVC Release, /MD, AVX2. Core supports the official
+Supported/tested: native macOS arm64 AppleClang Release with the local pinned
+dynamic SDK, and Windows x64 MSVC Release /MD AVX2. Mac setup is in [macOS](macos.md).
+Windows core supports the official
 Windows v0.6.4 SDK and the local DLL SDK at commit
 35bf260c0d8a79b94c64005bd3d2435adcf7e261. Both core and GUI now also support the official Windows v0.6.4 SDK.
 Source builds select an exact validated SDK snapshot; DLLs are built separately

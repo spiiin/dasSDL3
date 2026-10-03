@@ -17,7 +17,8 @@ inline SDL_GPUShader * SDL_CreateGPUShaderBytes(SDL_GPUDevice * device,
     if (info.format==SDL_GPU_SHADERFORMAT_SPIRV && (bytes.size<20 || bytes.size%4)) {
         SDL_SetError("GPU shader: SPIR-V byte count must be word aligned and include its header"); return nullptr;
     }
-    std::vector<uint32_t> aligned((size_t(bytes.size)+3)/4);
+    // SDL Metal reads MSL as a C string, including for exactly word-sized input.
+    std::vector<uint32_t> aligned((size_t(bytes.size)+3)/4+(info.format==SDL_GPU_SHADERFORMAT_MSL));
     std::memcpy(aligned.data(),bytes.data,size_t(bytes.size));
     auto native=info; native.code=reinterpret_cast<const uint8_t *>(aligned.data());
     native.code_size=size_t(bytes.size); native.entrypoint=entrypoint;
@@ -31,7 +32,7 @@ inline SDL_GPUComputePipeline * SDL_CreateGPUComputePipelineBytes(SDL_GPUDevice 
     if (info.format==SDL_GPU_SHADERFORMAT_SPIRV && (bytes.size<20 || bytes.size%4)) {
         SDL_SetError("GPU compute: SPIR-V byte count must be word aligned and include its header"); return nullptr;
     }
-    std::vector<uint32_t> aligned((size_t(bytes.size)+3)/4);
+    std::vector<uint32_t> aligned((size_t(bytes.size)+3)/4+(info.format==SDL_GPU_SHADERFORMAT_MSL));
     std::memcpy(aligned.data(),bytes.data,size_t(bytes.size));
     auto native=info; native.code=reinterpret_cast<const uint8_t *>(aligned.data());
     native.code_size=size_t(bytes.size); native.entrypoint=entrypoint;
