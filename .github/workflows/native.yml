@@ -12,6 +12,8 @@ jobs:
   windows:
     runs-on: windows-2022
     timeout-minutes: 60
+    env:
+      DASSDL3_CORE_TESTS: '^sdl3_(lifecycle_contracts|lifecycle_gc|lifecycle_square|event_callback_types|gpu_api_boundary|fluent_builder_errors|gpu_type_errors|fluent_builders|gpu_pipeline_types|gpu_types|pixel_view_escape|compound_returns|peripherals|filesystem|platform_services|scope|properties|events|process_loadso)$'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -26,10 +28,13 @@ jobs:
         run: |
           cmake -S . -B build/native -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          $inventory = ctest --test-dir build/native --show-only=json-v1 -R $env:DASSDL3_CORE_TESTS | ConvertFrom-Json
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          if ($inventory.tests.Count -ne 19) { throw "Expected all 19 core tests to be registered" }
           cmake --build build/native --target dasSDL3_runner daslang libDaScriptDyn --parallel 6
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
       - name: Interpreter and API contracts
-        run: ctest --test-dir build/native --output-on-failure -R '^sdl3_(lifecycle_contracts|lifecycle_gc|lifecycle_square|event_callback_types|gpu_api_boundary|fluent_builder_errors|gpu_type_errors|fluent_builders|gpu_pipeline_types|gpu_types|pixel_view_escape|compound_returns|peripherals|filesystem|platform_services|scope|properties|events|process_loadso)$'
+        run: ctest --test-dir build/native --output-on-failure -R $env:DASSDL3_CORE_TESTS
       - name: Build package and CLI helper
         run: |
           cmake -S src/package -B build/package -G Ninja -DCMAKE_BUILD_TYPE=Release "-DDASLANG_DIR=$pwd/third_party/daScript" "-DSDL3_DIR=$pwd/build/native/_deps/sdl3-build" -DDASSDL3_DASPKG_CLI_SUPPORT=ON
