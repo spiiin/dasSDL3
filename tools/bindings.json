@@ -4272,5 +4272,12 @@
     "SDL.h",
     "SDL_vulkan.h",
     "SDL_metal.h"
-  ]
+  ],
+  "platform_functions": {
+    "windows": [
+      "SDL_GetDXGIOutputInfo",
+      "SDL_GetDirect3D9AdapterIndex",
+      "SDL_SetWindowsMessageHook"
+    ]
+  }
 }

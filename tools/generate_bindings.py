@@ -19,8 +19,11 @@ def walk(node):
         yield from walk(child)
 
 
-def generate(clang, include, spec_path=None, clang_args=()):
+def generate(clang, include, spec_path=None, clang_args=(), platform="windows"):
     spec = json.loads((spec_path or ROOT / "tools/bindings.json").read_text())
+    if platform == "linux":
+        excluded = set(spec.get("platform_functions", {}).get("windows", []))
+        spec["functions"] = [name for name in spec["functions"] if name not in excluded]
     command = [clang, "-x", "c", "-std=c11", "-fsyntax-only", "-Wno-pragma-pack",
                "-I", str(include), "-Xclang", "-ast-dump=json",
                "-"] + list(clang_args)
@@ -134,13 +137,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--clang", default="clang")
     parser.add_argument("--sdl-include", required=True, type=Path)
+    parser.add_argument("--platform", choices=("windows", "linux"), default="windows")
     parser.add_argument("--check", action="store_true", help="Fail if committed output differs")
     parser.add_argument("--spec", type=Path)
-    parser.add_argument("--output", type=Path, default=ROOT / "src/generated")
+    parser.add_argument("--output", type=Path)
     parser.add_argument("--clang-arg", action="append", default=[])
     args = parser.parse_args()
-    output = args.output
-    files = generate(args.clang, args.sdl_include.resolve(), args.spec, args.clang_arg)
+    output = args.output or ROOT / ("src/generated/linux" if args.platform == "linux" else "src/generated")
+    files = generate(args.clang, args.sdl_include.resolve(), args.spec, args.clang_arg, args.platform)
     if args.check:
         stale = [name for name, text in files.items()
                  if not (output / name).exists() or (output / name).read_text(encoding="utf-8") != text]

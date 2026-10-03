@@ -45,6 +45,14 @@ For an existing checkout, run `git submodule update --init --recursive` first. C
 
 SDL and daScript are linked statically; no SDL3.dll is needed. The development runner uses script modules and the standard library from the source checkout. For applications outside the repository, use the [installed SDK](docs/sdk.md).
 
+## Linux
+
+For Ubuntu 24.04 / WSL2, see [Linux setup and tests](docs/linux.md).
+The core runner uses committed Linux bindings and native-width HID strings.
+Build with `-DBUILD_TESTING=OFF` for a minimal consumer, or use the documented
+`linux-core` test label for interpreter and strict AOT regression checks.
+The installed SDK profile remains Windows-only.
+
 ## Script API
 
 Save this example as `hello.das` in the repository root, then run `./build/ninja/bin/dasSDL3_runner.exe hello.das`. Escape or close exits.

@@ -1,6 +1,16 @@
 #pragma once
 #include "sdl3_video.h"
 #include <cwchar>
+#include <type_traits>
+// Match the native C wchar_t representation used by HID, including AOT storage.
+using SDL_HidChar = std::conditional_t<sizeof(wchar_t) == 2, uint16_t, int32_t>;
+static_assert(sizeof(SDL_HidChar) == sizeof(wchar_t));
+#if defined(__linux__)
+namespace das {
+template<> struct ToBasicType<wchar_t> { enum { type = Type::tInt }; };
+}
+static_assert(sizeof(wchar_t) == 4 && std::is_signed_v<wchar_t>);
+#endif
 
 // Native pointer lifetimes and SDL thread rules apply. These helpers do not retain script storage.
 inline bool SDL_GetTouchDevicesCopy(das::TArray<uint64_t> & out,das::Context * ctx,das::LineInfoArg * at) {
@@ -34,8 +44,7 @@ inline bool SDL_HapticEffectSupportedRef(SDL_Haptic * h,const SDL_HapticEffect &
 inline int SDL_CreateHapticEffectRef(SDL_Haptic * h,const SDL_HapticEffect & e) {return SDL_CreateHapticEffect(h,&e);}
 inline bool SDL_UpdateHapticEffectRef(SDL_Haptic * h,int id,const SDL_HapticEffect & e) {return SDL_UpdateHapticEffect(h,id,&e);}
 inline SDL_hid_device_info * SDL_HidNext(SDL_hid_device_info * info) {return info?info->next:nullptr;}
-inline char * SDL_HidWideString(const uint16_t * text,das::Context * ctx,das::LineInfoArg * at) {
-    static_assert(sizeof(wchar_t)==sizeof(uint16_t),"Windows UTF-16 contract");
+inline char * SDL_HidWideString(const SDL_HidChar * text,das::Context * ctx,das::LineInfoArg * at) {
     if(!text)return sdl3_init_hints::copy("",ctx,at);
     auto * wide=reinterpret_cast<const wchar_t *>(text);
     char * utf8=SDL_iconv_string("UTF-8","WCHAR_T",reinterpret_cast<const char *>(wide),(std::wcslen(wide)+1)*sizeof(wchar_t));
@@ -46,7 +55,7 @@ inline char * SDL_HidInfoString(SDL_hid_device_info * info,int field,das::Contex
     if(!info)return sdl3_init_hints::copy("",ctx,at);
     if(field==0)return sdl3_init_hints::copy(info->path?info->path:"",ctx,at);
     auto * text=field==1?info->serial_number:field==2?info->manufacturer_string:info->product_string;
-    return SDL_HidWideString(reinterpret_cast<const uint16_t *>(text),ctx,at);
+    return SDL_HidWideString(reinterpret_cast<const SDL_HidChar *>(text),ctx,at);
 }
 inline SDL_HapticEffect SDL_MakeHapticConstantEffect(const SDL_HapticConstant & value) { SDL_HapticEffect out{};out.constant=value;out.type=SDL_HAPTIC_CONSTANT;return out;}
 inline SDL_HapticEffect SDL_MakeHapticPeriodicEffect(const SDL_HapticPeriodic & value) { SDL_HapticEffect out{};out.periodic=value;return out;}
@@ -63,11 +72,11 @@ inline int SDL_hid_get_report_descriptorArray(SDL_hid_device * d,das::TArray<uin
 inline int SDL_hid_read_timeoutArray(SDL_hid_device * d,das::TArray<uint8_t> & data,int ms) {if(data.size==0 || data.size>INT_MAX){SDL_SetError("HID buffer must contain 1..INT_MAX bytes");return -1;}return SDL_hid_read_timeout(d,reinterpret_cast<unsigned char *>(data.data),data.size,ms);}
 
 // AOT storage bridge only: the exported raw functions retain their native signatures.
-inline SDL_hid_device * SDL_hid_openWide(uint16_t vendor,uint16_t product,const uint16_t * serial) {return SDL_hid_open(vendor,product,reinterpret_cast<const wchar_t *>(serial));}
-inline int SDL_hid_get_manufacturer_stringWide(SDL_hid_device * d,uint16_t * text,size_t count) {return SDL_hid_get_manufacturer_string(d,reinterpret_cast<wchar_t *>(text),count);}
-inline int SDL_hid_get_product_stringWide(SDL_hid_device * d,uint16_t * text,size_t count) {return SDL_hid_get_product_string(d,reinterpret_cast<wchar_t *>(text),count);}
-inline int SDL_hid_get_serial_number_stringWide(SDL_hid_device * d,uint16_t * text,size_t count) {return SDL_hid_get_serial_number_string(d,reinterpret_cast<wchar_t *>(text),count);}
-inline int SDL_hid_get_indexed_stringWide(SDL_hid_device * d,int index,uint16_t * text,size_t count) {return SDL_hid_get_indexed_string(d,index,reinterpret_cast<wchar_t *>(text),count);}
+inline SDL_hid_device * SDL_hid_openWide(uint16_t vendor,uint16_t product,const SDL_HidChar * serial) {return SDL_hid_open(vendor,product,reinterpret_cast<const wchar_t *>(serial));}
+inline int SDL_hid_get_manufacturer_stringWide(SDL_hid_device * d,SDL_HidChar * text,size_t count) {return SDL_hid_get_manufacturer_string(d,reinterpret_cast<wchar_t *>(text),count);}
+inline int SDL_hid_get_product_stringWide(SDL_hid_device * d,SDL_HidChar * text,size_t count) {return SDL_hid_get_product_string(d,reinterpret_cast<wchar_t *>(text),count);}
+inline int SDL_hid_get_serial_number_stringWide(SDL_hid_device * d,SDL_HidChar * text,size_t count) {return SDL_hid_get_serial_number_string(d,reinterpret_cast<wchar_t *>(text),count);}
+inline int SDL_hid_get_indexed_stringWide(SDL_hid_device * d,int index,SDL_HidChar * text,size_t count) {return SDL_hid_get_indexed_string(d,index,reinterpret_cast<wchar_t *>(text),count);}
 inline bool SDL_HidInfoCopy(SDL_hid_device_info * source,SDL_hid_device_info & out) {out={};if(!source)return false;out=*source;return true;}
 inline bool SDL_GetTouchDeviceNameCopy(uint64_t device,char *& out,das::Context * ctx,das::LineInfoArg * at) {auto * text=SDL_GetTouchDeviceName(device);out=sdl3_init_hints::copy(text,ctx,at);return text!=nullptr;}
 inline bool SDL_GetSensorNameCopy(SDL_Sensor * device,char *& out,das::Context * ctx,das::LineInfoArg * at) {auto * text=SDL_GetSensorName(device);out=sdl3_init_hints::copy(text,ctx,at);return text!=nullptr;}

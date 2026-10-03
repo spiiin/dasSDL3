@@ -14,13 +14,17 @@ def main(smoke : bool) : int {
     let base = base_path() |> unwrap
     verify(length(base) > 0)
     var no_app : string
+    var pref_available = false
     unsafe {
         let cwd = SDL_GetCurrentDirectory()
         verify(length(cwd) > 0)
         SDL_free(reinterpret<void?>(cwd))
-        verify(length(SDL_GetPrefPath("", no_app)) == 0)
+        // Empty application names are accepted by some SDL platform backends.
+        let pref = SDL_GetPrefPath("", no_app)
+        pref_available = length(pref) > 0
+        SDL_free(reinterpret<void?>(pref))
     }
-    verify(is_err(pref_path("", no_app)))
+    verify(is_ok(pref_path("", no_app)) == pref_available)
     let home = SDL_GetUserFolder(SDL_Folder.FOLDER_HOME)
     let copied_home = user_folder(SDL_Folder.FOLDER_HOME)
     if (length(home) > 0) { verify(is_ok(copied_home) && unwrap(copied_home) == home) }

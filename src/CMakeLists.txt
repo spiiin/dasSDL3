@@ -10,8 +10,19 @@ endif()
 if(DASSDL3_BINDING_BACKEND STREQUAL "clangbind" AND NOT _binding_default STREQUAL "clangbind")
     message(FATAL_ERROR "CppGenBind snapshots currently support only MSVC Windows x64")
 endif()
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND DASSDL3_BINDING_BACKEND STREQUAL "python")
+    set(_python_snapshot_dir "${CMAKE_CURRENT_SOURCE_DIR}/generated/linux")
+    set(_python_platform_args --platform linux --output "${_python_snapshot_dir}")
+endif()
 message(STATUS "dasSDL3 binding backend: ${DASSDL3_BINDING_BACKEND} (saved snapshots)")
 add_library(dasSDL3 STATIC module_sdl3.cpp)
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    # daScript is built without C++ RTTI on Linux; consumers must match.
+    target_compile_options(dasSDL3 PUBLIC $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>)
+    target_compile_definitions(dasSDL3 PRIVATE
+        DASSDL3_TYPES_INCLUDE="generated/linux/sdl3_types.inc"
+        DASSDL3_REGISTRATION_INCLUDE="generated/linux/sdl3_functions.inc")
+endif()
 if(MSVC)
     # Generated registrations exceed the standard COFF section limit.
     target_compile_options(dasSDL3 PRIVATE /bigobj)
@@ -93,13 +104,13 @@ if(Python3_FOUND AND DASSDL3_CLANG_EXECUTABLE)
     if(DASSDL3_BINDING_BACKEND STREQUAL "python")
     add_custom_target(generate_bindings
         COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tools/generate_bindings.py
-            --clang ${DASSDL3_CLANG_EXECUTABLE} --sdl-include ${sdl3_SOURCE_DIR}/include
+            --clang ${DASSDL3_CLANG_EXECUTABLE} --sdl-include ${sdl3_SOURCE_DIR}/include ${_python_platform_args}
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         COMMENT "Generating SDL3 bindings from Clang AST")
     if(BUILD_TESTING)
         add_test(NAME bindings_up_to_date
             COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tools/generate_bindings.py
-                --clang ${DASSDL3_CLANG_EXECUTABLE} --sdl-include ${sdl3_SOURCE_DIR}/include --check)
+                --clang ${DASSDL3_CLANG_EXECUTABLE} --sdl-include ${sdl3_SOURCE_DIR}/include ${_python_platform_args} --check)
     endif()
     endif()
     if(BUILD_TESTING)
@@ -119,6 +130,9 @@ if(Python3_FOUND AND DASSDL3_CLANG_EXECUTABLE)
 endif()
 endif()
 if(BUILD_TESTING)
+    if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+        find_package(Python3 REQUIRED COMPONENTS Interpreter)
+    endif()
     target_compile_definitions(dasSDL3 PRIVATE DASSDL3_TESTING=1)
     add_executable(dasSDL3_process_child ../tests/process_child.cpp)
     add_library(dasSDL3_process_library SHARED ../tests/process_library.cpp)
@@ -587,3 +601,11 @@ foreach(asset IN LISTS _bgfx_next_assets)
     get_filename_component(name "${asset}" NAME)
     configure_file("${asset}" "${CMAKE_BINARY_DIR}/bin/assets/bgfx/${name}" COPYONLY)
 endforeach()
+
+if(BUILD_TESTING AND CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    add_subdirectory("${CMAKE_SOURCE_DIR}/tests/linux" "${CMAKE_BINARY_DIR}/tests/linux")
+    set_tests_properties(sdl3_boost_result_contracts sdl3_scope sdl3_events
+        sdl3_filesystem sdl3_peripherals sdl3_peripheral_events
+        sdl3_renderer_primitives sdl3_init_hints sdl3_properties sdl3_process_loadso
+        PROPERTIES LABELS linux-core)
+endif()
