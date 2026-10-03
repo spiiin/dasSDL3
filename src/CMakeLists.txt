@@ -85,6 +85,12 @@ foreach(shader native.comp.spv native.comp.dxil attachments.vert.spv attachments
     configure_file(${CMAKE_SOURCE_DIR}/examples/assets/shaders/${shader}
         ${CMAKE_BINARY_DIR}/bin/assets/shaders/${shader} COPYONLY)
 endforeach()
+foreach(shader triangle.vert.msl triangle.frag.msl attachments.vert.msl attachments.frag.msl
+        bindings.vert.msl bindings.frag.msl vertex_color.vert.msl vertex_color.frag.msl
+        mesh.vert.msl mesh.frag.msl native.comp.msl render_state.frag.msl)
+    configure_file(${CMAKE_SOURCE_DIR}/examples/assets/shaders/${shader}
+        ${CMAKE_BINARY_DIR}/bin/assets/shaders/${shader} COPYONLY)
+endforeach()
 configure_file(${CMAKE_SOURCE_DIR}/examples/assets/checker.bmp
     ${CMAKE_BINARY_DIR}/bin/assets/checker.bmp COPYONLY)
 configure_file(${CMAKE_SOURCE_DIR}/examples/assets/tone.wav

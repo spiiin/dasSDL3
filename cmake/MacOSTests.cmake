@@ -10,6 +10,24 @@ set_tests_properties(macos_metal_msl PROPERTIES
     ENVIRONMENT "SDL_GPU_DRIVER=metal" TIMEOUT 90 RUN_SERIAL TRUE WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 
 # Reuse the strict generator/runner, with the native library and saved Mac ABI.
+foreach(script 42_gpu_shaders 43_gpu_graphics_pipeline 44_gpu_render_pass
+        45_gpu_vertex_index_buffers 46_gpu_texture_uniform_bindings
+        48_gpu_native_graphics 49_gpu_native_compute 86_gpu_renderer)
+    add_test(NAME macos_metal_example_${script} COMMAND dasSDL3_runner
+        "${CMAKE_SOURCE_DIR}/examples/${script}.das" --smoke-test)
+    set_tests_properties(macos_metal_example_${script} PROPERTIES
+        ENVIRONMENT "SDL_GPU_DRIVER=metal" TIMEOUT 90 RUN_SERIAL TRUE)
+endforeach()
+
+if(DASSDL3_WITH_SHADERCROSS)
+    foreach(script 01_triangle 02_texture 03_uniforms 04_compute)
+        add_test(NAME macos_metal_dsl_example_${script} COMMAND dasSDL3_libraries_runner
+            "${CMAKE_SOURCE_DIR}/examples/gpu_dsl/${script}.das" --smoke-test)
+        set_tests_properties(macos_metal_dsl_example_${script} PROPERTIES
+            ENVIRONMENT "SDL_GPU_DRIVER=metal" TIMEOUT 90 RUN_SERIAL TRUE)
+    endforeach()
+endif()
+
 add_executable(dasSDL3_macos_aot_tool "${CMAKE_SOURCE_DIR}/tests/clangbind_parity/aot_tool.cpp")
 target_link_libraries(dasSDL3_macos_aot_tool PRIVATE dasSDL3)
 target_compile_definitions(dasSDL3_macos_aot_tool PRIVATE

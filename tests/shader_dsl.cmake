@@ -24,7 +24,12 @@ if(BUILD_TESTING)
     endif()
 endif()
 
-if(BUILD_TESTING AND Python3_EXECUTABLE AND EXISTS "${CMAKE_SOURCE_DIR}/third_party/daScript/bin/daslang.exe")
+if(WIN32)
+    set(_dsl_daslang "${CMAKE_SOURCE_DIR}/third_party/daScript/bin/daslang.exe")
+else()
+    set(_dsl_daslang "${CMAKE_SOURCE_DIR}/third_party/daScript/bin/daslang")
+endif()
+if(BUILD_TESTING AND Python3_EXECUTABLE AND EXISTS "${_dsl_daslang}")
     find_program(DASSDL3_SPIRV_VAL NAMES spirv-val HINTS "$ENV{VULKAN_SDK}/Bin")
     set(_dsl_validator)
     if(DASSDL3_SPIRV_VAL)
@@ -32,7 +37,7 @@ if(BUILD_TESTING AND Python3_EXECUTABLE AND EXISTS "${CMAKE_SOURCE_DIR}/third_pa
     endif()
     add_test(NAME shader_dsl_compiler COMMAND "${Python3_EXECUTABLE}"
         "${CMAKE_SOURCE_DIR}/tests/test_shader_dsl_compile.py"
-        --daslang "${CMAKE_SOURCE_DIR}/third_party/daScript/bin/daslang.exe" ${_dsl_validator})
+        --daslang "${_dsl_daslang}" ${_dsl_validator})
     set_tests_properties(shader_dsl_compiler PROPERTIES TIMEOUT 90)
 endif()
 

@@ -1,16 +1,17 @@
 options gen2
+require gpu/file_shader_support
 require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_native_boost
 require daslib/defer
 
 def draw_frames(device : SDL_GPUDevice?; window : SDL_Window?; smoke : bool) : SdlStatus {
-    let spirv = (SDL_GetGPUShaderFormats(device) & SDL_GPU_SHADERFORMAT_SPIRV) != 0u
-    let ext = spirv ? "spv" : "dxil"
+    let backend = file_shader_backend(device)
+    let ext = backend.extension
     let base = "{SDL_GetBasePath()}assets/shaders/triangle"
     var shader = gpu_shader(
         "{base}.vert.{ext}",
-        spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL,
-        SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
+        backend.format,
+        SDL_GPUShaderStage.SHADERSTAGE_VERTEX) |> entrypoint(backend.entry)
     var vertex = device |> load_native_gpu_shader(shader) |> sdl_try
     {
         defer() { SDL_ReleaseGPUShader(device, vertex) }

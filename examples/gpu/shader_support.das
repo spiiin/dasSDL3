@@ -2,12 +2,12 @@ options gen2
 module shader_support shared public
 // Application-local backend selection. No shader files or per-frame compilation.
 require dassdl3/sdl3_shader_dsl public
-require ?sdl3_shadercross dassdl3/sdl3_shader_dsl_cross
+require ?sdl3_shadercross dassdl3/sdl3_shader_dsl_cross public
 require dassdl3/sdl3_try
 require daslib/defer
 
 def example_shader_formats : uint {
-    static_if (typeinfo module_exists(sdl3_shader_dsl_cross)) {return SDL_GPU_SHADERFORMAT_SPIRV | SDL_GPU_SHADERFORMAT_DXIL}
+    static_if (typeinfo module_exists(sdl3_shader_dsl_cross)) {return SDL_GPU_SHADERFORMAT_SPIRV | SDL_GPU_SHADERFORMAT_MSL | SDL_GPU_SHADERFORMAT_DXIL}
     else {return SDL_GPU_SHADERFORMAT_SPIRV}
 }
 
@@ -25,7 +25,7 @@ def private create_example_shader(device : SDL_GPUDevice?; words, reflection : a
             let resources = SDL_ShaderCross_GraphicsShaderResourceInfo(num_samplers = info.num_samplers, num_uniform_buffers = info.num_uniform_buffers)
             return compile_graphics_shader_spirv(device, bytes, "main", stage, resources)
         }
-    } else {return err(SdlError(operation = "GPU example shader", message = "D3D12 requires the libraries runner with shadercross"), type<SDL_GPUShader?>)}
+    } else {return err(SdlError(operation = "GPU example shader", message = "Metal/D3D12 requires the libraries runner with shadercross"), type<SDL_GPUShader?>)}
 }
 
 def with_example_shader(device : SDL_GPUDevice?; words, reflection : array<uint>;

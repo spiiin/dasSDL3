@@ -1,16 +1,17 @@
 options gen2
+require gpu/file_shader_support
 require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_native_boost
 require daslib/defer
 
 def compute_values(device : SDL_GPUDevice?) : SdlStatus {
-    let spirv = (SDL_GetGPUShaderFormats(device) & SDL_GPU_SHADERFORMAT_SPIRV) != 0u
-    let ext = spirv ? "spv" : "dxil"
-    var info = (gpu_compute_pipeline(spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL)
+    let backend = file_shader_backend(device)
+    let ext = backend.extension
+    var info = (gpu_compute_pipeline(backend.format)
         |> threadgroup(4u, 1u, 1u)
         |> readwrite_storage_buffers(1u)
         |> uniform_buffers(1u))
-    let pipeline = device |> load_native_gpu_compute_pipeline(info, "{SDL_GetBasePath()}assets/shaders/native.comp.{ext}", "main") |> sdl_try
+    let pipeline = device |> load_native_gpu_compute_pipeline(info, "{SDL_GetBasePath()}assets/shaders/native.comp.{ext}", backend.entry) |> sdl_try
     {
         defer() { SDL_ReleaseGPUComputePipeline(device, pipeline) }
         var buffer_info = SDL_GPUBufferCreateInfo(usage = SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE, size = 32u)

@@ -11,11 +11,17 @@ def main():
     parser.add_argument('--shadercross', type=Path, default=ROOT / 'build/macos-libraries/bin/shadercross')
     parser.add_argument('--check', action='store_true')
     args = parser.parse_args()
-    assets = ROOT / 'examples/libraries/shaders'
+    fixtures = [(ROOT / 'examples/libraries/shaders', 'ttf.vert', 'vertex'),
+                (ROOT / 'examples/libraries/shaders', 'ttf.frag', 'fragment')]
+    for name in ['attachments', 'bindings', 'vertex_color', 'mesh']:
+        fixtures += [(ROOT / 'examples/assets/shaders', name + '.vert', 'vertex'),
+                     (ROOT / 'examples/assets/shaders', name + '.frag', 'fragment')]
+    fixtures += [(ROOT / 'examples/assets/shaders', 'render_state.frag', 'fragment'),
+                 (ROOT / 'examples/assets/shaders', 'native.comp', 'compute')]
     with tempfile.TemporaryDirectory(prefix='dassdl3-msl-') as temporary:
-        for stage, suffix in [('vertex', 'vert'), ('fragment', 'frag')]:
-            generated = Path(temporary) / f'ttf.{suffix}.msl'
-            subprocess.run([str(args.shadercross.resolve()), str(assets / f'ttf.{suffix}.spv'),
+        for assets, name, stage in fixtures:
+            generated = Path(temporary) / f'{name}.msl'
+            subprocess.run([str(args.shadercross.resolve()), str(assets / f'{name}.spv'),
                             '-s', 'SPIRV', '-d', 'MSL', '-t', stage, '-e', 'main',
                             '-o', str(generated)], check=True)
             # Canonical EOF; the CLI emits one extra blank line.
