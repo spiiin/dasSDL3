@@ -7,7 +7,7 @@ if [[ "$(uname -s)" != Darwin || "$(uname -m)" != arm64 ]]; then
   echo "This profile requires native macOS arm64." >&2
   exit 1
 fi
-expected_sdk=35bf260c0d8a79b94c64005bd3d2435adcf7e261
+expected_sdk=ebac0ffe46ab30de6c9536f4b0af7a33ede45902
 if [[ "$(git -C third_party/daScript rev-parse HEAD)" != "$expected_sdk" ]]; then
   echo "Unexpected daScript revision; initialize the pinned submodule." >&2
   exit 1

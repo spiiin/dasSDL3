@@ -337,3 +337,18 @@ The complete CI script passed locally using existing build caches: three core
 headless checks, thirteen companion checks, twenty-seven DSL link/CPU/negative
 checks, binding freshness, record audit and all three relocated SDK consumer
 checks. Workflow YAML and shell syntax were also checked.
+
+## SDK update from origin/main
+
+The current daScript source pin is `ebac0ffe46ab30de6c9536f4b0af7a33ede45902`.
+It provides package platform metadata: repository packages declare `windows`
+and `darwin`, and native Mac staging declares `darwin`. Rebuild native packages
+and SDK consumers against this revision; the prior 35bf260 standalone archives
+and validation logs describe their original SDK and remain separate artifacts.
+
+After this SDK update, the full local headless CI script passed (core 3/3,
+companion 13/13, DSL link/CPU/negative 27/27, relocated SDK 3/3), including
+Mac snapshot freshness and the record audit. API-boundary and lifecycle
+regressions also passed. Explicit math_boost imports repair the relocated
+round_up helper used by shader storage/uniform packing. Native Cocoa/Metal
+results above remain evidence from the prior SDK until separately rerun.

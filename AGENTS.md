@@ -9,7 +9,7 @@ belong in examples; no public mesh/material/scene/batching or rendering plans.
 
 ## Sources and generation
 
-- SDL 3.4.16 and daScript 35bf260c0d8a79b94c64005bd3d2435adcf7e261 are pinned.
+- SDL 3.4.16 and daScript ebac0ffe46ab30de6c9536f4b0af7a33ede45902 are pinned.
   Do not patch dependencies to fix binding behavior.
 - Never hand-edit src/generated or docs/generated. Change policies/generators and
   regenerate both Windows backends; update separate web snapshots for header changes.

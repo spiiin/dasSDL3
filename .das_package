@@ -13,6 +13,10 @@ def package() {
     package_tag("sdl3")
     package_tag("graphics")
     package_tag("imgui")
+    // 0.6.4 is also used by older SDKs without platform metadata. The supported
+    // client revision and binary SDK fingerprints are documented in docs/daspkg.md.
+    package_platform("windows")
+    package_platform("darwin")
 }
 
 [export]

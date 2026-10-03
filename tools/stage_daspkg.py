@@ -69,7 +69,7 @@ def main():
             parser.error("Missing daScript headers")
         (output / "sdk.sha256").write_text("".join(
             f"{hashlib.sha256(p.read_bytes()).hexdigest()} {p.relative_to(sdk).as_posix()}\n"
-            for p in sdk_files), encoding="utf-8")
+            for p in sdk_files), encoding="utf-8", newline="\n")
         (output / "src").mkdir()
         for path in (ROOT / "src").glob("*.h"):
             shutil.copy2(path, output / "src" / path.name)
@@ -109,6 +109,8 @@ def main():
         '    package_name("dasSDL3")\n'
         f'    package_description("SDL3 core bindings: local {args.platform} Release package")\n'
         '    package_license("MIT")\n'
+        '    package_min_sdk("0.6.4")\n'
+        f'    package_platform("{"darwin" if args.platform == "macos" else "windows"}")\n'
         '    package_tag("sdl3")\n}\n\n[export]\ndef build() {\n    ' + ('cmake_build()' if args.source else 'no_build()') + '\n}\n',
         encoding="utf-8")
     with (output / ".das_package").open("a", encoding="utf-8") as manifest:
@@ -119,7 +121,7 @@ def main():
     (output / "profile.json").write_text(json.dumps({
         "version": (ROOT / "VERSION").read_text(encoding="utf-8").strip(),
         "profile": "macos-appleclang-release" if args.platform == "macos" else "windows-x64-msvc-release-md-avx2",
-        "sdl": "3.4.16", "binding_reference_revision": "35bf260c0d8a79b94c64005bd3d2435adcf7e261",
+        "sdl": "3.4.16", "binding_reference_revision": "ebac0ffe46ab30de6c9536f4b0af7a33ede45902",
         "sdk_runtime_sha256": hashlib.sha256(
             (args.sdk / ("lib/liblibDaScriptDyn_runtime.dylib" if args.platform == "macos" else "bin/libDaScriptDyn.dll")).read_bytes()).hexdigest() if args.sdk else None,
         "module_sha256": hashlib.sha256(source.read_bytes()).hexdigest() if source else None,

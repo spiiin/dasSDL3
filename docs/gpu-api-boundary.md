@@ -15,6 +15,10 @@ try/recover or native exception bridges. Native pointers retain SDL lifetime,
 thread, device and synchronization preconditions. Checked GPU IDs are a separate
 API; do not add a registry merely to expose a native SDL operation.
 
+Host lifecycle error handling is outside the script binding API. The private
+`sdl3_aot_recover.h` helper repairs upstream AOT catch ordering; it must not be
+exported to scripts or used to introduce protected SDL callback adapters.
+
 See [errors](error-handling.md), [native scopes](gpu-native-boost.md) and
 [coverage](api-coverage.md). tests/test_gpu_api_boundary.py rejects removed
 framework exports through negative compilation against the runner.

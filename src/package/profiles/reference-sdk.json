@@ -1,0 +1,11 @@
+{
+  "dascript_revision": "ebac0ffe46ab30de6c9536f4b0af7a33ede45902",
+  "platform": "windows-x64-msvc-release-md-avx2",
+  "compiler": "MSVC 19.38",
+  "archive": "dasSDL3-sdk-ebac0ffe-windows-x64-r1.zip",
+  "url": "https://github.com/spiiin/dasSDL3/releases/download/sdk-ebac0ffe-windows-x64-r1/dasSDL3-sdk-ebac0ffe-windows-x64-r1.zip",
+  "sha256": "a268a7607f2879cc6edf77246e726dde6f08e45bad36ee59ae7925cef40389e5",
+  "size": 15624878,
+  "archive_root": "dasSDL3-sdk-ebac0ffe-windows-x64-r1",
+  "profiles": ["core", "imgui"]
+}
