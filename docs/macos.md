@@ -44,12 +44,18 @@ remain in the source tree, as in the Windows development runner.
 
 ```sh
 cmake --build build/macos --target dasSDL3_macos_aot_runner --parallel 6
-ctest --test-dir build/macos -R '^macos_' --output-on-failure
+ctest --test-dir build/macos -L macos-headless --output-on-failure
+# Run this from a Terminal in a GUI login session:
+ctest --test-dir build/macos -L macos-native --output-on-failure
 ```
 
 The Mac test group runs real Metal transfer/readback, texture/format, volume,
-fence and swapchain contracts, MSL triangle pixels in interpreter/strict AOT,
-and strict AOT HID/peripheral coverage. Unavailable Metal
+fence and swapchain contracts in both interpreter and strict AOT, MSL triangle
+pixels in both modes, and strict AOT HID/peripheral and filesystem coverage.
+The three `macos-headless` cases check HID, filesystem and rejection of missing
+AOT code. The seven native strict-AOT cases also passed through Cocoa/Metal.
+AOT generation includes each imported boost module; the runner requires
+`aot=true`, `fail_on_no_aot=true` and an AOT `main`, with fallback disabled. Unavailable Metal
 is a test failure here, not a silent success. Use a GUI login session for graphics
 tests. Dummy video tests are separate from native Cocoa/Metal evidence.
 The native hit-test probe uses Windows messages and is registered only on Windows.

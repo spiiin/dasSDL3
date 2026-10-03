@@ -49,9 +49,15 @@ set_target_properties(dasSDL3_macos_aot_tool dasSDL3_macos_aot_runner PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 file(GLOB_RECURSE _macos_aot_dependencies CONFIGURE_DEPENDS
     "${CMAKE_SOURCE_DIR}/dassdl3/*.das" "${CMAKE_SOURCE_DIR}/third_party/daScript/daslib/*.das")
-foreach(script tests/peripherals tests/macos_msl dassdl3/sdl3_result dassdl3/sdl3_boost
+foreach(script tests/peripherals tests/filesystem tests/macos_msl
+        tests/gpu_transfer tests/gpu_texture_transfer tests/gpu_formats
+        tests/gpu_native_fences tests/gpu_swapchain tests/gpu_volume
+        dassdl3/sdl3_result dassdl3/sdl3_boost
         dassdl3/sdl3_init_boost dassdl3/sdl3_peripherals_boost dassdl3/sdl3_try
-        dassdl3/sdl3_gpu_result dassdl3/sdl3_gpu_boost dassdl3/sdl3_gpu_shader_boost)
+        dassdl3/sdl3_filesystem_boost dassdl3/sdl3_gpu_result dassdl3/sdl3_gpu_boost
+        dassdl3/sdl3_gpu_shader_boost dassdl3/sdl3_gpu_transfer_boost
+        dassdl3/sdl3_gpu_texture_transfer_boost dassdl3/sdl3_gpu_formats_boost
+        dassdl3/sdl3_gpu_volume_boost dassdl3/sdl3_gpu_swapchain_boost)
     string(REPLACE "/" "_" name "${script}")
     set(output "${CMAKE_CURRENT_BINARY_DIR}/${name}.macos.aot.cpp")
     add_custom_command(OUTPUT "${output}"
@@ -68,3 +74,29 @@ add_test(NAME macos_metal_msl_strict_aot COMMAND dasSDL3_macos_aot_runner
     "${CMAKE_SOURCE_DIR}/tests/macos_msl.das")
 set_tests_properties(macos_metal_msl_strict_aot PROPERTIES
     ENVIRONMENT "SDL_GPU_DRIVER=metal" TIMEOUT 90 RUN_SERIAL TRUE WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+
+add_test(NAME macos_filesystem_strict_aot COMMAND dasSDL3_macos_aot_runner
+    "${CMAKE_SOURCE_DIR}/tests/filesystem.das")
+set_tests_properties(macos_filesystem_strict_aot PROPERTIES TIMEOUT 60)
+foreach(script gpu_transfer gpu_texture_transfer gpu_formats gpu_native_fences gpu_swapchain gpu_volume)
+    add_test(NAME macos_metal_${script}_strict_aot COMMAND dasSDL3_macos_aot_runner
+        "${CMAKE_SOURCE_DIR}/tests/${script}.das")
+    set_tests_properties(macos_metal_${script}_strict_aot PROPERTIES
+        ENVIRONMENT "SDL_GPU_DRIVER=metal" TIMEOUT 90 RUN_SERIAL TRUE
+        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+endforeach()
+# This source deliberately has no generated/linked translation unit.
+add_test(NAME macos_missing_strict_aot COMMAND ${Python3_EXECUTABLE}
+    "${CMAKE_SOURCE_DIR}/tests/clangbind/expect_aot_failure.py"
+    $<TARGET_FILE:dasSDL3_macos_aot_runner> "${CMAKE_SOURCE_DIR}/tests/macos_missing_aot.das")
+set_tests_properties(macos_missing_strict_aot PROPERTIES TIMEOUT 60)
+
+# Keep GUI/Metal evidence separate from checks suitable for a headless runner.
+get_property(_macos_tests DIRECTORY PROPERTY TESTS)
+foreach(test IN LISTS _macos_tests)
+    if(test MATCHES "^macos_metal_")
+        set_tests_properties(${test} PROPERTIES LABELS "macos-native")
+    elseif(test MATCHES "^macos_")
+        set_tests_properties(${test} PROPERTIES LABELS "macos-headless")
+    endif()
+endforeach()
