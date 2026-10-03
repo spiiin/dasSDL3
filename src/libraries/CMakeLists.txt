@@ -224,4 +224,7 @@ endif()
 
 if(APPLE AND BUILD_TESTING)
     include("${PROJECT_SOURCE_DIR}/cmake/MacOSLibrariesAOTTests.cmake")
+    if(DASSDL3_WITH_SHADERCROSS)
+        include("${PROJECT_SOURCE_DIR}/cmake/MacOSShaderDSLAOTTests.cmake")
+    endif()
 endif()

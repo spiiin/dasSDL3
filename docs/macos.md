@@ -282,3 +282,31 @@ used loopback. The three affected interpreter checks also passed. The installed
 no-LLVM SDK consumer passed interpreter, strict AOT and missing-AOT rejection
 both before and after copying the SDK to a new prefix. Saved binding generation
 and the 122-record/840-field policy audit remained current.
+
+## Shader DSL and application strict AOT
+
+With shadercross enabled, `dasSDL3_macos_shader_dsl_aot_runner` compiles the
+shared Windows-parity source inventory against the native Mac binding. It also
+includes the Mac backend-selection helper and follows shared boost imports.
+Interpreter fallback is disabled. Source changes invalidate generated AOT code.
+
+```sh
+cmake --build build/macos-libraries --target dasSDL3_macos_shader_dsl_aot_runner --parallel 6
+SDL_VIDEODRIVER=dummy ctest --test-dir build/macos-libraries -L 'macos-dsl-(headless|link)' --output-on-failure
+# Ordinary Terminal in a GUI login session:
+SDL_VIDEODRIVER=cocoa ctest --test-dir build/macos-libraries -L macos-dsl-native --output-on-failure
+```
+
+Headless checks execute resource metadata/lowering, std430 storage and std140
+uniform byte contracts, plus missing-AOT rejection. Link checks load and simulate
+each script with strict AOT policy, then verify its entry point without calling
+it. They do not establish GPU execution. Native cases retain the existing CPU
+pixel/byte oracles for five shadercross contracts, four DSL examples and eleven
+application harnesses (SDF text requires TTF). Metal failures are not skipped.
+
+On Apple Silicon/macOS 15.3.1 all 23 strict entry-point link checks, four
+headless execution/negative checks and all 20 native Cocoa/Metal cases passed.
+This includes five shadercross pixel/byte contracts, all four DSL examples and
+eleven application harnesses, with interpreter fallback disabled. The existing
+oracles remain unchanged. After updating the shared runner, 13 companion and
+three restored core headless AOT regression checks also passed.
