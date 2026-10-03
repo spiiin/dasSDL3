@@ -2,32 +2,40 @@
 #include <vulkan/vulkan_core.h>
 #include <SDL3/SDL.h>
 #include <vector>
-#include <unordered_map>
-#include <mutex>
-#include <cstring>
+#include <algorithm>
 #include <atomic>
 namespace sdl3_vk_test {
 inline std::atomic<int> allocations{0};
-inline std::mutex allocation_mutex;
-inline std::unordered_map<void *,size_t> allocation_sizes;
+// Keep the allocation size so realloc can preserve data on every platform.
+struct AllocationHeader { void * base; size_t size; };
 inline void * VKAPI_PTR allocate(void *,size_t size,size_t alignment,VkSystemAllocationScope) {
-    void * p=SDL_aligned_alloc(alignment,size);
-    if(p) {std::lock_guard<std::mutex> lock(allocation_mutex);allocation_sizes[p]=size;++allocations;}
-    return p;
+    if (!alignment || (alignment & (alignment-1))) return nullptr;
+    if (alignment-1 > SIZE_MAX-sizeof(AllocationHeader)) return nullptr;
+    const size_t overhead=alignment-1+sizeof(AllocationHeader);
+    if (size > SIZE_MAX-overhead) return nullptr;
+    void * base=SDL_malloc(size+overhead);
+    if (!base) return nullptr;
+    const auto address=(reinterpret_cast<uintptr_t>(base)+sizeof(AllocationHeader)+alignment-1)&~(uintptr_t(alignment)-1);
+    void * p=reinterpret_cast<void *>(address);
+    AllocationHeader header{base,size};
+    SDL_memcpy(static_cast<char *>(p)-sizeof(header),&header,sizeof(header));
+    ++allocations;return p;
 }
 inline void VKAPI_PTR release(void *,void * p) {
-    if(p) {std::lock_guard<std::mutex> lock(allocation_mutex);allocation_sizes.erase(p);--allocations;SDL_aligned_free(p);}
+    if(p) {
+        AllocationHeader header;
+        SDL_memcpy(&header,static_cast<char *>(p)-sizeof(header),sizeof(header));
+        --allocations;SDL_free(header.base);
+    }
 }
 inline void * VKAPI_PTR resize(void *,void * p,size_t size,size_t alignment,VkSystemAllocationScope scope) {
     if(!size) {release(nullptr,p);return nullptr;}
     if(!p) return allocate(nullptr,size,alignment,scope);
-    size_t old_size;
-    {std::lock_guard<std::mutex> lock(allocation_mutex);old_size=allocation_sizes.at(p);}
-    auto replacement=allocate(nullptr,size,alignment,scope);
-    if(!replacement) return nullptr;
-    std::memcpy(replacement,p,std::min(size,old_size));
-    release(nullptr,p);
-    return replacement;
+    AllocationHeader header;
+    SDL_memcpy(&header,static_cast<char *>(p)-sizeof(header),sizeof(header));
+    void * next=allocate(nullptr,size,alignment,scope);
+    if(next) {SDL_memcpy(next,p,std::min(size,header.size));release(nullptr,p);}
+    return next;
 }
 inline const VkAllocationCallbacks * allocator() {
     static const VkAllocationCallbacks callbacks{nullptr,allocate,resize,release,nullptr,nullptr};return &callbacks;

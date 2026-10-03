@@ -21,9 +21,9 @@ def walk(node):
 
 def generate(clang, include, spec_path=None, clang_args=(), profile="windows"):
     spec = json.loads((spec_path or ROOT / "tools/bindings.json").read_text())
-    if profile == "macos":
+    if profile in ("macos", "linux"):
         # SDL_system.h declares these operations only on Windows.
-        windows_only = {"SDL_SetWindowsMessageHook", "SDL_GetDirect3D9AdapterIndex", "SDL_GetDXGIOutputInfo"}
+        windows_only = set(spec.get("platform_functions", {}).get("windows", []))
         spec["functions"] = [name for name in spec["functions"] if name not in windows_only]
     command = [clang, "-x", "c", "-std=c11", "-fsyntax-only", "-Wno-pragma-pack",
                "-I", str(include), "-Xclang", "-ast-dump=json",
@@ -143,11 +143,11 @@ def main():
     parser.add_argument("--sdl-include", required=True, type=Path)
     parser.add_argument("--check", action="store_true", help="Fail if committed output differs")
     parser.add_argument("--spec", type=Path)
-    parser.add_argument("--output", type=Path, default=ROOT / "src/generated")
+    parser.add_argument("--output", type=Path)
     parser.add_argument("--clang-arg", action="append", default=[])
-    parser.add_argument("--profile", choices=("windows", "macos"), default="windows")
+    parser.add_argument("--profile", "--platform", dest="profile", choices=("windows", "macos", "linux"), default="windows")
     args = parser.parse_args()
-    output = args.output
+    output = args.output or ROOT / ("src/generated" if args.profile == "windows" else "src/generated/" + args.profile)
     files = generate(args.clang, args.sdl_include.resolve(), args.spec, args.clang_arg, args.profile)
     if args.check:
         stale = [name for name, text in files.items()

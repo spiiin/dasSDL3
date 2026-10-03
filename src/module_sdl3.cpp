@@ -94,7 +94,9 @@
 #include "../tests/synchronization_probe.h"
 #include "../tests/thread_atomic_probe.h"
 #include "../tests/process_loadso_probe.h"
+#if defined(SDL_PLATFORM_WINDOWS)
 #include "../tests/platform_services_probe.h"
+#endif
 #include "../tests/event_queue_probe.h"
 #include "../tests/event_callbacks_probe.h"
 #include "../tests/joystick_gamepad_probe.h"
@@ -135,6 +137,11 @@ public:
         addConstant(*this, "SDL_HAS_DXGI_QUERY", true);
 #else
         addConstant(*this, "SDL_HAS_DXGI_QUERY", false);
+#endif
+#if defined(SDL_PLATFORM_WINDOWS)
+        addConstant(*this, "DASSDL3_WINDOWS", true);
+#else
+        addConstant(*this, "DASSDL3_WINDOWS", false);
 #endif
         #include "generated/gpu_handle_registration.inc"
         #ifdef DASSDL3_REGISTRATION_INCLUDE
@@ -301,7 +308,9 @@ public:
         addExtern<DAS_BIND_FUN(SDL_CreateTrayText)>(*this,lib,"SDL_CreateTrayText",SideEffects::worstDefault,"SDL_CreateTrayText");
         addExtern<DAS_BIND_FUN(SDL_MakeDialogFileFilter),SimNode_ExtFuncCallAndCopyOrMove>(*this,lib,"SDL_MakeDialogFileFilter",SideEffects::none,"SDL_MakeDialogFileFilter");
         addExtern<DAS_BIND_FUN(SDL_GetPowerInfoRef)>(*this,lib,"SDL_GetPowerInfoRef",SideEffects::worstDefault,"SDL_GetPowerInfoRef");
+#if defined(SDL_PLATFORM_WINDOWS) || defined(__APPLE__)
         addExtern<DAS_BIND_FUN(SDL_GetDXGIOutputInfoRef)>(*this,lib,"SDL_GetDXGIOutputInfoRef",SideEffects::worstDefault,"SDL_GetDXGIOutputInfoRef");
+#endif
         addExtern<DAS_BIND_FUN(SDL_GetPreferredLocalesCopy)>(*this,lib,"SDL_GetPreferredLocalesCopy",SideEffects::worstDefault,"SDL_GetPreferredLocalesCopy");
         addExtern<DAS_BIND_FUN(SDL_GetTrayEntriesCopy)>(*this,lib,"SDL_GetTrayEntriesCopy",SideEffects::worstDefault,"SDL_GetTrayEntriesCopy");
         addExtern<DAS_BIND_FUN(SDL_GetTrayEntryLabelCopy)>(*this,lib,"SDL_GetTrayEntryLabelCopy",SideEffects::worstDefault,"SDL_GetTrayEntryLabelCopy");
@@ -804,10 +813,12 @@ public:
         addExtern<DAS_BIND_FUN(sdl3_test::list_event),SimNode_ExtFuncCallAndCopyOrMove>(*this,lib,"SDLTestListEvent",SideEffects::worstDefault,"sdl3_test::list_event");
         addExtern<DAS_BIND_FUN(sdl3_test::hold_start)>(*this,lib,"SDLTestHoldStart",SideEffects::worstDefault,"sdl3_test::hold_start");
         addExtern<DAS_BIND_FUN(sdl3_test::hold_stop)>(*this,lib,"SDLTestHoldStop",SideEffects::worstDefault,"sdl3_test::hold_stop");
+#if defined(SDL_PLATFORM_WINDOWS)
         addExtern<DAS_BIND_FUN(sdl3_test::platform_reset)>(*this,lib,"SDLTestPlatformReset",SideEffects::worstDefault,"sdl3_test::platform_reset");
         addExtern<DAS_BIND_FUN(sdl3_test::platform_callback)>(*this,lib,"SDLTestPlatformCallback",SideEffects::worstDefault,"sdl3_test::platform_callback");
         addExtern<DAS_BIND_FUN(sdl3_test::platform_count)>(*this,lib,"SDLTestPlatformCount",SideEffects::worstDefault,"sdl3_test::platform_count");
         addExtern<DAS_BIND_FUN(sdl3_test::platform_post)>(*this,lib,"SDLTestPlatformPost",SideEffects::worstDefault,"sdl3_test::platform_post");
+#endif
         addExtern<DAS_BIND_FUN(sdl3_test::process_child_path)>(*this,lib,"SDLTestProcessChildPath",SideEffects::worstDefault,"sdl3_test::process_child_path");
         addExtern<DAS_BIND_FUN(sdl3_test::process_library_path)>(*this,lib,"SDLTestProcessLibraryPath",SideEffects::worstDefault,"sdl3_test::process_library_path");
         addExtern<DAS_BIND_FUN(sdl3_test::process_library_call)>(*this,lib,"SDLTestProcessLibraryCall",SideEffects::worstDefault,"sdl3_test::process_library_call");

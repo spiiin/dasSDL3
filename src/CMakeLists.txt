@@ -20,8 +20,18 @@ set(_python_profile windows)
 if(APPLE)
     set(_python_snapshot "${CMAKE_CURRENT_SOURCE_DIR}/generated/macos")
     set(_python_profile macos)
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    set(_python_snapshot "${CMAKE_CURRENT_SOURCE_DIR}/generated/linux")
+    set(_python_profile linux)
 endif()
 add_library(dasSDL3 STATIC module_sdl3.cpp)
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    # daScript is built without C++ RTTI on Linux; consumers must match.
+    target_compile_options(dasSDL3 PUBLIC $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>)
+    target_compile_definitions(dasSDL3 PRIVATE
+        DASSDL3_TYPES_INCLUDE="generated/linux/sdl3_types.inc"
+        DASSDL3_REGISTRATION_INCLUDE="generated/linux/sdl3_functions.inc")
+endif()
 if(MSVC)
     # Generated registrations exceed the standard COFF section limit.
     target_compile_options(dasSDL3 PRIVATE /bigobj)
@@ -148,6 +158,9 @@ if(Python3_FOUND AND DASSDL3_CLANG_EXECUTABLE)
 endif()
 endif()
 if(BUILD_TESTING)
+    if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+        find_package(Python3 REQUIRED COMPONENTS Interpreter)
+    endif()
     target_compile_definitions(dasSDL3 PRIVATE DASSDL3_TESTING=1)
     add_executable(dasSDL3_process_child ../tests/process_child.cpp)
     add_library(dasSDL3_process_library SHARED ../tests/process_library.cpp)
@@ -622,4 +635,12 @@ endforeach()
 
 if(APPLE AND BUILD_TESTING)
     include("${CMAKE_SOURCE_DIR}/cmake/MacOSTests.cmake")
+endif()
+
+if(BUILD_TESTING AND CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    add_subdirectory("${CMAKE_SOURCE_DIR}/tests/linux" "${CMAKE_BINARY_DIR}/tests/linux")
+    set_tests_properties(sdl3_boost_result_contracts sdl3_scope sdl3_events
+        sdl3_filesystem sdl3_peripherals sdl3_peripheral_events
+        sdl3_renderer_primitives sdl3_init_hints sdl3_properties sdl3_process_loadso
+        PROPERTIES LABELS linux-core)
 endif()

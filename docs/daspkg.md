@@ -1,5 +1,34 @@
 # Local daspkg core pilot
 
+## Platform readiness
+
+Repository and staged packages support Windows x64 and native macOS arm64.
+The standalone Linux source-runner port does not establish Linux package support.
+
+| Package profile / path | Current constraints |
+| --- | --- |
+| Repository `core` | Windows MSVC x64 Release `/MD` AVX2 or native macOS AppleClang Release; matching dynamic SDK fingerprint |
+| Repository `imgui` | Core constraints plus matching ImGui/Clipboard SDK modules |
+| Locally staged binary/source package | Same platform/SDK constraints as the corresponding repository profile |
+| Linux package | Not ported or validated; only the standalone core source build is currently ported |
+
+`package_platform` is absent from the pinned daScript revision
+`35bf260c0d8a79b94c64005bd3d2435adcf7e261`. The manifest therefore uses the supported
+client API and the package CMake build enforces platform, toolchain and SDK
+fingerprint restrictions. `package_min_sdk("0.6.4")` alone does not establish
+ABI compatibility. Repository installation, relocation and release have been
+checked for the native Mac core/ImGui profiles described below. A future move to
+platform metadata requires compatible clients and consistent repository/staged
+metadata; it must not silently widen supported build targets.
+
+A Linux daspkg port additionally needs ELF/shared-library SDK linkage instead
+of Windows `.lib` files, PIC and matching ABI/build flags, Linux binding
+snapshots in the package target, Linux SDK fingerprints, module output/loading
+and relocation checks. ImGui needs its own Linux profile validation. Removing
+the Windows CMake guard or adding `package_platform("linux")` is not sufficient.
+
+## Existing Windows package workflow
+
 Local binary/source staging remains available. A root .das_package and a
 consumer-SDK CMake entry point are now prepared for direct repository installs.
 These changes have not been published; a GitHub URL install cannot use them until

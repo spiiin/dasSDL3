@@ -1,13 +1,16 @@
 #pragma once
 #include "sdl3_video.h"
 #include <cwchar>
-
-#ifdef __APPLE__
-using SDL_HidChar = int32_t;
-#else
-using SDL_HidChar = uint16_t;
+#include <type_traits>
+// Match the native C wchar_t representation used by HID, including AOT storage.
+using SDL_HidChar = std::conditional_t<sizeof(wchar_t) == 2, uint16_t, int32_t>;
+static_assert(sizeof(SDL_HidChar) == sizeof(wchar_t));
+#if defined(__linux__)
+namespace das {
+template<> struct ToBasicType<wchar_t> { enum { type = Type::tInt }; };
+}
+static_assert(sizeof(wchar_t) == 4 && std::is_signed_v<wchar_t>);
 #endif
-static_assert(sizeof(SDL_HidChar) == sizeof(wchar_t), "Native HID character width");
 
 // Native pointer lifetimes and SDL thread rules apply. These helpers do not retain script storage.
 inline bool SDL_GetTouchDevicesCopy(das::TArray<uint64_t> & out,das::Context * ctx,das::LineInfoArg * at) {

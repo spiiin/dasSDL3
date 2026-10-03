@@ -2,11 +2,11 @@
 
 **SDL3 bindings for daScript (daslang)** — native SDL access with an idiomatic scripting layer for resource scopes, errors, events and buffers.
 
-[Getting started](#getting-started) · [Examples](examples/README.md) · [Documentation](docs/README.md) · [Coverage](docs/api-coverage.md) · [Roadmap](docs/full-binding-roadmap.md)
+[Platforms](#platform-support) · [Getting started](#getting-started) · [Examples](examples/README.md) · [Documentation](docs/README.md) · [Coverage](docs/api-coverage.md) · [Roadmap](docs/full-binding-roadmap.md)
 
 ## Features
 
-- Windows, 2D rendering, textures, surfaces, GPU, audio, input, events, files and platform services.
+- Window management, 2D rendering, textures, surfaces, GPU, audio, input, events, files and platform services.
 - Standard `Result` / `Option`, `sdl_try` for error propagation, and `sdl_scope` / `sdl_use` for resource acquisition and reverse-order cleanup.
 - Owned event variants, copied text payloads and lazy `poll_events()` iteration.
 - Copied query results and temporary scoped pixel views, including surface planes and row pitch.
@@ -25,7 +25,43 @@ The Windows inventory records **1,062 generated functions and 13 adapted functio
 
 The record audit classifies **840 fields across 122 complete records**, with no remaining `pending` or `partial` field-access entries. Some fields deliberately remain native-only or SDL-internal; classification does not imply unrestricted script access.
 
-Tests cover interpreter, both binding generators, strict AOT and a separate installed-SDK consumer. This is not a claim of complete SDL coverage or validation on every platform/device. See [coverage](docs/api-coverage.md), [remaining API decisions](docs/remaining-api-policy.md) and [record access](docs/record-field-accessibility.md).
+The Windows validation workflow covers interpreter execution, both binding generators, strict AOT and a separate installed-SDK consumer. Native macOS has interpreter/strict AOT, Metal, companion libraries, installed SDK, daspkg, standalone and live checks; Linux has the narrower regression profile described below. This is not a claim of complete SDL coverage or validation on every platform/device. See [coverage](docs/api-coverage.md), [remaining API decisions](docs/remaining-api-policy.md) and [record access](docs/record-field-accessibility.md).
+
+## Platform support
+
+Support is specific to the build profile and runtime environment. SDL's platform
+coverage does not by itself establish dasSDL3 support on those platforms.
+
+| Platform / toolchain | Status | Validated scope and limits |
+| --- | --- | --- |
+| Windows x64 / MSVC (VS 2022) | Primary desktop target | Interpreter, CppGenBind and Python snapshots, strict AOT, and the core installed SDK. Optional integrations have their own requirements. See [Getting started](#getting-started) and [SDK](docs/sdk.md). |
+| Linux x86-64 / GCC 13.3, Ubuntu 24.04 in WSL2 with WSLg | Core source-build profile validated | Minimal runner build without binding generators; 15 `linux-core` checks including interpreter, native-width HID Unicode, strict AOT and rejection of missing AOT code. The 2D square and Vulkan Shader DSL triangle smoke tests passed in this environment. See [Linux setup](docs/linux.md). |
+| Other Linux distributions, native desktop installations, other CPU architectures / compilers | Not yet validated | The WSL2 result does not establish native-driver, device, performance or distribution compatibility. |
+| Web / Emscripten 5.0.3, wasm32 | Experimental profile | Selected SDL Renderer, audio and daScript OpenGL examples. Single-threaded interpreter; no desktop API parity or SDL GPU/WebGPU backend. See [Web guide](web/README.md). |
+| macOS arm64 / Apple Clang 17, macOS 15.3.1 | Native profile validated | Cocoa/Metal, interpreter and strict AOT, companion libraries, installed SDK, core/ImGui daspkg, relocatable standalone apps and live reload/MCP/APNG. See [macOS](docs/macos.md). Intel Mac and MoltenVK are not validated. |
+| iOS, Android and other targets | Not yet validated | No tested dasSDL3 build/runtime profile is claimed. |
+
+Linux currently uses separate committed bindings and a source checkout.
+The installed SDK supports Windows and macOS; optional Linux integrations are not
+covered by the core test result. Windows-only raw DXGI, Direct3D9 and message-hook
+functions are absent from Linux bindings. Use `SDL_HidChar` for native HID wide
+buffers (`uint16` on Windows, `int32` on Linux/macOS); copied metadata remains UTF-8.
+
+Platform support also depends on how the project is consumed:
+
+| Delivery path | Windows x64 | macOS arm64 | Linux |
+| --- | --- | --- | --- |
+| Core runner from source | Primary profile | Native Cocoa/Metal validated | Validated WSL2 core profile above |
+| Installed C++/AOT SDK | Validated | Local AppleClang SDK validated | Not supported yet |
+| daspkg repository package (`core` / `imgui`) | Matching MSVC DLL SDK required | Matching local dynamic SDK validated | Not supported; the source-runner port does not port the package build |
+
+The pinned daspkg client does not provide `package_platform`. The repository
+manifest uses its supported API; package CMake validates the platform, compiler
+and matching SDK fingerprint. See [package platform readiness](docs/daspkg.md#platform-readiness).
+
+The focused Linux checks are not the full CTest suite. WSLg/Vulkan smoke success
+does not establish GPU performance, hardware acceleration, physical HID device
+behavior, or validation-layer coverage on other systems.
 
 ## Getting started
 
@@ -46,6 +82,14 @@ cmake --build build/ninja --target dasSDL3_runner --parallel 6
 For an existing checkout, run `git submodule update --init --recursive` first. CMake downloads the pinned SDL source through FetchContent. The default build uses committed binding snapshots and needs **neither LLVM nor Python**.
 
 SDL and daScript are linked statically; no SDL3.dll is needed. The development runner uses script modules and the standard library from the source checkout. For applications outside the repository, use the [installed SDK](docs/sdk.md).
+
+## Linux
+
+For Ubuntu 24.04 / WSL2, see [Linux setup and tests](docs/linux.md).
+The core runner uses committed Linux bindings and native-width HID strings.
+Build with `-DBUILD_TESTING=OFF` for a minimal consumer, or use the documented
+`linux-core` test label for interpreter and strict AOT regression checks.
+The installed SDK supports Windows and macOS; Linux SDK delivery is not ported.
 
 ## Script API
 
