@@ -46,6 +46,20 @@ covered by the core test result. Windows-only raw DXGI, Direct3D9 and message-ho
 functions are absent from Linux bindings. Use `SDL_HidChar` for native HID wide
 buffers (`uint16` on Windows, `int32` on Linux); copied metadata remains UTF-8.
 
+Platform support also depends on how the project is consumed:
+
+| Delivery path | Windows x64 | Linux |
+| --- | --- | --- |
+| Core runner from source | Primary profile | Validated WSL2 core profile above |
+| Installed C++/AOT SDK | Windows-only profile | Not supported yet |
+| daspkg repository package (`core` / `imgui`) | Declares `windows`; package build requires MSVC and a matching DLL SDK | Not supported; the source-runner port does not port the package build |
+
+**daspkg release preparation:** the current root manifest uses
+`package_platform`, which is absent from the pinned daScript revision's
+`daslib/daspkg`. Manifest compilation with that revision fails. A compatible
+daspkg client/SDK profile must be established before claiming the repository
+package is ready for installation. See [package platform readiness](docs/daspkg.md#platform-readiness).
+
 The focused Linux checks are not the full CTest suite. WSLg/Vulkan smoke success
 does not establish GPU performance, hardware acceleration, physical HID device
 behavior, or validation-layer coverage on other systems.
