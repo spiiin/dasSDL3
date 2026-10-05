@@ -1,4 +1,4 @@
-# Local daspkg core pilot
+# daspkg packages
 
 ## Platform readiness
 
@@ -8,11 +8,14 @@ reference and official v0.6.4 bundle, are no longer supported. Upstream still
 reports `0.6.4`, so `package_min_sdk("0.6.4")` is only a version floor; exact
 binary compatibility is checked by the SDK fingerprints.
 
-Root and staged binary/source manifests all declare `package_platform("windows")`.
-The metadata regression checks the exact platform list for both core and ImGui.
+The repository manifest declares `windows`, `darwin` and `linux`.
+Linux supports core only; CMake rejects its ImGui profile. Staged binary/source
+manifests declare the selected platform; the metadata regression checks these
+lists for both core and ImGui. Native Mac packages require the matching locally
+built dynamic SDK and fingerprint; see [Mac setup](macos.md).
 There is no fallback for clients without platform metadata.
 
-Validation on 2026-10-03 with this revision: root and staged binary/source
+Windows validation on 2026-10-03 with this revision: root and staged binary/source
 metadata for both profiles; core and ImGui native builds, actual daspkg
 install/check, all included imports, source and repository installs,
 relocation, rendering/resource cleanup and standalone releases with missing
@@ -26,7 +29,7 @@ also passes interpreter, strict AOT and missing-AOT checks with LLVM/Clang/Pytho
 package discovery disabled. These are not hardware/API-wide runtime tests.
 
 `.github/workflows/native.yml` runs the focused Windows tests plus core package
-metadata/install/source/relocation checks and the Linux core suite. CI stages
+metadata/install/source/relocation checks and the Linux core and package suites. CI stages
 against its own built SDK; exact reference binary fingerprints are checked
 by the local repository-install tests. The initial hosted Linux run exposed
 an implicit display requirement in the software-renderer test; that test now
@@ -34,15 +37,62 @@ explicitly uses SDL's dummy video driver.
 
 | Package path | Platforms | Requirements |
 | --- | --- | --- |
-| Repository core / ImGui | `windows` | MSVC x64, Release (Visual Studio or Ninja), `/MD`, AVX2, exact SDK fingerprint |
-| Staged binary / source | `windows` | Matching Windows DLL SDK; source staging records its fingerprint |
-| Linux | Not supported | The Linux source runner is a separate build profile |
+| Repository core / ImGui | `windows`, `darwin` | Matching native SDK fingerprint; MSVC x64 Release (Visual Studio or Ninja) `/MD` AVX2 or native AppleClang Release |
+| Repository core | `linux` | Ubuntu 24.04 x86_64, GCC 13.3, Release, exact SDK fingerprint |
+| Staged binary / source | Selected `windows`, `darwin` or `linux` | Matching native dynamic SDK; source staging records its fingerprint |
 
-A Linux daspkg port additionally needs ELF/shared-library SDK linkage instead
-of Windows `.lib` files, PIC and matching ABI/build flags, Linux binding
-snapshots in the package target, Linux SDK fingerprints, module output/loading
-and relocation checks. ImGui needs its own Linux profile validation. Removing
-the Windows CMake guard or adding `package_platform("linux")` is not sufficient.
+Linux core checks cover actual binary/source/repository installation, all 63
+boost imports, rendering with the dummy driver, package and SDK relocation,
+SDK mismatch rejection, ELF path auditing and missing-runtime rejection.
+Linux ImGui, standalone release, other distributions and architectures are not
+validated. This dynamic daScript SDK is distinct from the installed dasSDL3 C++/AOT SDK.
+
+## Linux core workflow
+
+Use the pinned revision and install the dependencies from [Linux setup](linux.md).
+Build a local SDK (a new output directory is required):
+
+```sh
+cmake -S . -B build/linux -G Ninja -DCMAKE_BUILD_TYPE=Release \
+  -DBUILD_TESTING=ON -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+  -DDAS_ENABLE_PIC=ON -DDAS_PUGIXML_DISABLED=OFF
+python3 tools/prepare_linux_daspkg_sdk.py --build build/linux --output build/linux-sdk
+cmake -S src/package -B build/linux-package -G Ninja -DCMAKE_BUILD_TYPE=Release \
+  -DDASLANG_DIR="$PWD/build/linux-sdk" -DDASSDL3_PACKAGE_FETCH_SDL=ON
+cmake --build build/linux-package --parallel 6
+ctest --test-dir build/linux-package --output-on-failure -R '^sdl3_daspkg_(manifest|consumer|source)$'
+python3 tests/test_linux_daspkg_sdk.py --sdk build/linux-sdk \
+  --module build/linux-package/module/dasSDL3.shared_module
+```
+
+The preparation script uses upstream installation and adds the complete pinned
+public header tree: upstream's explicit install list omits transitive headers
+such as `misc/das_asan.h`. No dependency sources are patched.
+
+For your own SDK build, stage a source package with its exact fingerprint:
+
+```sh
+python3 tools/stage_daspkg.py --source --sdk build/linux-sdk --output build/linux-source/dasSDL3
+```
+
+Run the CLI script from the SDK root, or pass its full path and `-dasroot`:
+
+```sh
+build/linux-sdk/bin/daslang -dasroot "$PWD/build/linux-sdk" \
+  build/linux-sdk/utils/daspkg/main.das -- install "$PWD/build/linux-source/dasSDL3" --root /path/to/consumer
+```
+
+For binary staging, replace `--source` with
+`--module build/linux-package/module/dasSDL3.shared_module`.
+The `.shared_module` suffix is intentional on Linux. Static SDL is built with PIC;
+modules use `$ORIGIN`, and SDK `bin/daslang` uses `$ORIGIN/../lib`.
+Runtime system libraries (glibc/libstdc++ and SDL platform dependencies) are not bundled.
+
+Repository installs require the exact reference SDK described in
+`src/package/profiles/reference-sdk-linux.json`; rebuilding the same source is
+not guaranteed to reproduce its binary hashes. Download the [Linux reference SDK](https://github.com/spiiin/dasSDL3/releases/tag/sdk-ebac0ffe-linux-x86_64-r1)
+and verify its archive checksum against the JSON descriptor. Linux core support is available on `main`. Use local source staging for your own SDK builds. `stage_reference_sdk.py` creates `tar.gz`, preserving
+permissions and symlinks, and verifies the committed Linux fingerprint first.
 
 ## Existing Windows package workflow
 
@@ -78,8 +128,7 @@ The input must also provide the built PUGIXML module in its standard SDK path.
 
 Local binary/source staging remains available. A root .das_package and a
 consumer-SDK CMake entry point are now prepared for direct repository installs.
-These changes have not been published; a GitHub URL install cannot use them until
-they are committed and pushed. The core package contains SDL 3.4.16 statically
+The core package contains SDL 3.4.16 statically
 linked into dasSDL3.shared_module and 63 core boost scripts.
 The interpreter discovers .das_module in the consumer's modules/dasSDL3;
 scripts use ordinary require dassdl3/..., without an SDL-specific host or
@@ -575,3 +624,19 @@ rendering and relocation, incremental descriptor restoration, and staged core
 source installation with SDK mismatch rejection. The Ninja staged core source
 regression also passes. These runs reused the pinned prebuilt SDL static library;
 Visual Studio 18 2026 and a cold SDL download were not exercised in this check.
+
+## Native macOS packages
+
+Core and ImGui packages use native AppleClang Release builds, Mac ABI bindings
+and dylib/shared-module linkage. Source staging uses `--platform macos`;
+repository installs require `DASSDL3_PACKAGE_SDK_FINGERPRINT` and the matching
+`DASSDL3_PACKAGE_PROFILE=core` or `imgui`. Windows fingerprints and the
+Windows reference SDK download do not apply to native Mac binaries.
+
+The earlier Mac package, live and standalone validations used the previous
+35bf260 SDK. After merging the ebac0ffe SDK update, native core/ImGui modules were rebuilt.
+All seven headless package checks passed: metadata (root and staged platforms),
+binary/source consumers, repository core/ImGui installs, SDK fingerprint
+rejection and relocation. Prior standalone bundles remain artifacts of their
+original SDK revision; native GPU/live/standalone execution must be rerun
+separately for ebac0ffe. See [Mac setup](macos.md).

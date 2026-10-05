@@ -1,22 +1,41 @@
 cmake_minimum_required(VERSION 3.24)
 project(dasSDL3Package LANGUAGES C CXX)
-if(NOT WIN32 OR NOT MSVC OR NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
-    message(FATAL_ERROR "Package pilot requires Windows x64 MSVC")
+if(NOT CMAKE_SIZEOF_VOID_P EQUAL 8 OR (NOT APPLE AND NOT CMAKE_SYSTEM_PROCESSOR MATCHES "^(AMD64|amd64|x86_64)$"))
+    message(FATAL_ERROR "Package requires 64-bit macOS or x86_64 Windows/Linux")
 endif()
-# The DLL SDK has a Release ABI. Multi-config generators must not offer Debug.
+if(APPLE AND CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
+    set(_sdk_compiler lib/liblibDaScriptDyn.dylib)
+    set(_sdk_runtime lib/liblibDaScriptDyn_runtime.dylib)
+    set(_package_options -fno-rtti)
+    set(_package_snapshot macos)
+elseif(WIN32 AND MSVC)
+    set(_sdk_compiler lib/libDaScriptDyn.lib)
+    set(_sdk_runtime lib/libDaScriptDyn_runtime.lib)
+    set(_package_options /bigobj /arch:AVX2 /wd4251 /wd4275)
+    set(_package_snapshot clangbind)
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    set(_sdk_compiler lib/liblibDaScriptDyn.so)
+    set(_sdk_runtime lib/liblibDaScriptDyn_runtime.so)
+    set(_package_options -fno-rtti)
+    set(_package_snapshot linux)
+    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+else()
+    message(FATAL_ERROR "Supported packages: macOS AppleClang, Windows MSVC and Linux x86_64")
+endif()
+# The dynamic SDK has a Release ABI. Visual Studio must not offer Debug.
 get_property(_package_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
-if(_package_multi_config)
+if(WIN32 AND MSVC AND _package_multi_config)
     set(CMAKE_CONFIGURATION_TYPES "Release" CACHE STRING "Supported package configurations" FORCE)
-elseif(NOT CMAKE_BUILD_TYPE STREQUAL "Release")
-    message(FATAL_ERROR "Use Release and the matching daScript DLL SDK")
+elseif(NOT CMAKE_BUILD_TYPE STREQUAL "Release" OR _package_multi_config)
+    message(FATAL_ERROR "Use Release (Visual Studio on Windows or single-config Ninja) and the matching daScript dynamic SDK")
 endif()
 set(CMAKE_CXX_STANDARD 17)
 set_property(GLOBAL PROPERTY JOB_POOLS package_compile=6 package_link=1)
 set(CMAKE_JOB_POOL_COMPILE package_compile)
 set(CMAKE_JOB_POOL_LINK package_link)
 set(CMAKE_MSVC_RUNTIME_LIBRARY MultiThreadedDLL)
-set(DASLANG_DIR "" CACHE PATH "Matching built daScript DLL SDK")
-foreach(required include/daScript/daScript.h lib/libDaScriptDyn.lib lib/libDaScriptDyn_runtime.lib)
+set(DASLANG_DIR "" CACHE PATH "Matching built daScript dynamic SDK")
+foreach(required include/daScript/daScript.h ${_sdk_compiler} ${_sdk_runtime})
     if(NOT EXISTS "${DASLANG_DIR}/${required}")
         message(FATAL_ERROR "Missing ${DASLANG_DIR}/${required}")
     endif()
@@ -77,23 +96,37 @@ endif()
 add_library(dasSDL3_package SHARED "${DASSDL3_SOURCE_DIR}/module_sdl3.cpp")
 target_include_directories(dasSDL3_package PRIVATE "${DASSDL3_SOURCE_DIR}" "${DASLANG_DIR}/include" "${DASLANG_DIR}/3rdparty/fmt/include")
 target_compile_definitions(dasSDL3_package PRIVATE DAS_ENABLE_DLL=1 DAS_MOD_EXPORTS
-    DAS_ENABLE_EXCEPTIONS=1 DAS_FUSION=2 DAS_NO_ASSERTIONS
-    DASSDL3_TYPES_INCLUDE="generated/clangbind/sdl3_types.inc"
-    DASSDL3_REGISTRATION_INCLUDE="generated/clangbind/sdl3_functions.inc")
-target_compile_options(dasSDL3_package PRIVATE /bigobj /arch:AVX2 /wd4251 /wd4275)
+    DAS_FUSION=2 DAS_NO_ASSERTIONS
+    DASSDL3_TYPES_INCLUDE="generated/${_package_snapshot}/sdl3_types.inc"
+    DASSDL3_REGISTRATION_INCLUDE="generated/${_package_snapshot}/sdl3_functions.inc")
+if(NOT APPLE)
+    target_compile_definitions(dasSDL3_package PRIVATE DAS_ENABLE_EXCEPTIONS=1)
+endif()
+target_compile_options(dasSDL3_package PRIVATE ${_package_options})
 target_link_libraries(dasSDL3_package PRIVATE SDL3::SDL3-static
-    "${DASLANG_DIR}/lib/libDaScriptDyn.lib" "${DASLANG_DIR}/lib/libDaScriptDyn_runtime.lib")
+    "${DASLANG_DIR}/${_sdk_compiler}" "${DASLANG_DIR}/${_sdk_runtime}")
 set_target_properties(dasSDL3_package PROPERTIES PREFIX "" SUFFIX ".shared_module"
     OUTPUT_NAME dasSDL3 RUNTIME_OUTPUT_DIRECTORY "${DASSDL3_PACKAGE_OUTPUT}"
-    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${DASSDL3_PACKAGE_OUTPUT}")
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${DASSDL3_PACKAGE_OUTPUT}"
+    LIBRARY_OUTPUT_DIRECTORY "${DASSDL3_PACKAGE_OUTPUT}")
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    set_target_properties(dasSDL3_package PROPERTIES BUILD_WITH_INSTALL_RPATH TRUE
+        INSTALL_RPATH "$ORIGIN")
+endif()
 
 
 # GUI variant uses the same SDL instance as the core binding.
 option(DASSDL3_PACKAGE_IMGUI "Include SDL platform/renderer backend for SDK dasImgui" OFF)
 if(DASSDL3_PACKAGE_IMGUI)
+    if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+        message(FATAL_ERROR "Linux daspkg currently supports only the core profile")
+    endif()
     set(_imgui "${DASLANG_DIR}/modules/dasImgui")
     set(_imgui_source "${_imgui}/imgui")
     set(_imgui_library "${DASLANG_DIR}/lib/dasModuleImgui.lib")
+    if(APPLE)
+        set(_imgui_library "${_imgui}/dasModuleImgui.shared_module")
+    endif()
     foreach(required "${_imgui_library}" "${_imgui}/dasModuleImgui.shared_module"
             "${_imgui_source}/imgui.h")
         if(NOT EXISTS "${required}")
@@ -105,7 +138,10 @@ if(DASSDL3_PACKAGE_IMGUI)
         "${_imgui_source}/backends/imgui_impl_sdlrenderer3.cpp")
     target_include_directories(dasSDL3_package PRIVATE "${DASSDL3_SOURCE_DIR}/libraries"
         "${_imgui_source}")
-    target_compile_definitions(dasSDL3_package PRIVATE "IMGUI_API=__declspec(dllimport)"
+    if(WIN32)
+        target_compile_definitions(dasSDL3_package PRIVATE "IMGUI_API=__declspec(dllimport)")
+    endif()
+    target_compile_definitions(dasSDL3_package PRIVATE
         "IMGUI_IMPL_API=" IMGUI_DISABLE_OBSOLETE_FUNCTIONS=1 IMGUI_ENABLE_FREETYPE=1 IMGUI_USE_WCHAR32=1)
     target_link_libraries(dasSDL3_package PRIVATE "${_imgui_library}")
 endif()
@@ -118,13 +154,17 @@ if(DASSDL3_DASPKG_CLI_SUPPORT)
     target_include_directories(daspkg_pugixml PRIVATE "${DASLANG_DIR}/include"
         "${DASLANG_DIR}/3rdparty/fmt/include" "${_pugi}/pugixml")
     target_compile_definitions(daspkg_pugixml PRIVATE DAS_ENABLE_DLL=1 DAS_MOD_EXPORTS
-        DAS_ENABLE_EXCEPTIONS=1 DAS_FUSION=2 DAS_NO_ASSERTIONS)
-    target_compile_options(daspkg_pugixml PRIVATE /bigobj /arch:AVX2 /wd4251 /wd4275)
-    target_link_libraries(daspkg_pugixml PRIVATE "${DASLANG_DIR}/lib/libDaScriptDyn.lib"
-        "${DASLANG_DIR}/lib/libDaScriptDyn_runtime.lib")
+        DAS_FUSION=2 DAS_NO_ASSERTIONS)
+    if(NOT APPLE)
+        target_compile_definitions(daspkg_pugixml PRIVATE DAS_ENABLE_EXCEPTIONS=1)
+    endif()
+    target_compile_options(daspkg_pugixml PRIVATE ${_package_options})
+    target_link_libraries(daspkg_pugixml PRIVATE "${DASLANG_DIR}/${_sdk_compiler}"
+        "${DASLANG_DIR}/${_sdk_runtime}")
     set_target_properties(daspkg_pugixml PROPERTIES PREFIX "" SUFFIX ".shared_module"
         OUTPUT_NAME dasModulePUGIXML RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/cli"
-        RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/cli")
+        RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/cli"
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/cli")
     file(COPY "${_pugi}/.das_module" "${_pugi}/daslib" DESTINATION "${CMAKE_BINARY_DIR}/cli")
     set(_cli_args --cli-module "${CMAKE_BINARY_DIR}/cli")
 endif()
@@ -146,6 +186,9 @@ if(BUILD_TESTING)
         --source --sdl-dir "${SDL3_DIR}" ${_cli_args})
     set_tests_properties(sdl3_daspkg_source PROPERTIES TIMEOUT 900 RUN_SERIAL TRUE)
     foreach(profile core imgui)
+        if(profile STREQUAL "imgui" AND CMAKE_SYSTEM_NAME STREQUAL "Linux")
+            continue()
+        endif()
         set(_profile_arg)
         if(profile STREQUAL "imgui")
             set(_profile_arg --imgui)

@@ -8,7 +8,7 @@ def main(smoke : bool) : int {
     let result = sdl_scope() {
         with_sdl() |> sdl_use
         with_shadercross() |> sdl_use
-        let device : SDL_GPUDevice? = with_native_gpu_device(SDL_GPU_SHADERFORMAT_DXIL, true, "direct3d12") |> sdl_use
+        let device : SDL_GPUDevice? = with_native_gpu_device(SDL_GetPlatform() == "macOS" ? SDL_GPU_SHADERFORMAT_MSL : SDL_GPU_SHADERFORMAT_DXIL, true, SDL_GetPlatform() == "macOS" ? "metal" : "direct3d12") |> sdl_use
         var compute : SDL_GPUComputePipeline? = device |> with_gpu_dsl_compute_pipeline_cross(resource_compute, resource_compute_reflect, resource_compute_access) |> sdl_use
         var rmw : SDL_GPUComputePipeline? = device |> with_gpu_dsl_compute_pipeline_cross(rmw_compute, rmw_compute_reflect, rmw_compute_access) |> sdl_use
         var vertex : SDL_GPUShader? = device |> with_gpu_dsl_shader_cross(resource_vertex, resource_vertex_reflect, resource_vertex_access) |> sdl_use

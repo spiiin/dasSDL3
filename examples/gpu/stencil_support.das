@@ -8,11 +8,11 @@ require daslib/defer
 def keep_stencil(compare : SDL_GPUCompareOp = SDL_GPUCompareOp.COMPAREOP_ALWAYS) : SDL_GPUStencilOpState {
     return SDL_GPUStencilOpState(fail_op = SDL_GPUStencilOp.STENCILOP_KEEP, pass_op = SDL_GPUStencilOp.STENCILOP_KEEP, depth_fail_op = SDL_GPUStencilOp.STENCILOP_KEEP, compare_op = compare)
 }
-def scene_pipeline(device : SDL_GPUDevice?; format, depth_format : SDL_GPUTextureFormat; state : SDL_GPUDepthStencilState; blend : int = 0; write_color : bool = true) {
+def scene_pipeline(device : SDL_GPUDevice?; format, depth_format : SDL_GPUTextureFormat; state : SDL_GPUDepthStencilState; blend : int = 0; write_color : bool = true; depth_bias : float = 0.0) {
     return sdl_scope() {
         var vs : SDL_GPUShader? = device |> with_example_shader(shaders::stencil_vertex, shaders::stencil_vertex_reflect) |> sdl_use
         var fs : SDL_GPUShader? = device |> with_example_shader(shaders::stencil_fragment, shaders::stencil_fragment_reflect) |> sdl_use
-        let info = SDL_GPUGraphicsPipelineCreateInfo(vertex_shader = vs, fragment_shader = fs, rasterizer_state = SDL_GPURasterizerState(enable_depth_clip = true, cull_mode = SDL_GPUCullMode.CULLMODE_NONE), depth_stencil_state = state, target_info = SDL_GPUGraphicsPipelineTargetInfo(has_depth_stencil_target = true, depth_stencil_format = depth_format))
+        let info = SDL_GPUGraphicsPipelineCreateInfo(vertex_shader = vs, fragment_shader = fs, rasterizer_state = SDL_GPURasterizerState(enable_depth_clip = true, cull_mode = SDL_GPUCullMode.CULLMODE_NONE, enable_depth_bias = depth_bias != 0.0, depth_bias_constant_factor = depth_bias), depth_stencil_state = state, target_info = SDL_GPUGraphicsPipelineTargetInfo(has_depth_stencil_target = true, depth_stencil_format = depth_format))
         let layout <- array(SDL_GPUVertexBufferDescription(pitch = 32u))
         let attrs <- array(SDL_GPUVertexAttribute(format = SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT3), SDL_GPUVertexAttribute(location = 1u, format = SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT3, offset = 12u))
         var blending = SDL_GPUColorTargetBlendState(color_blend_op = SDL_GPUBlendOp.BLENDOP_ADD, alpha_blend_op = SDL_GPUBlendOp.BLENDOP_ADD, enable_color_write_mask = !write_color, color_write_mask = 0u8)

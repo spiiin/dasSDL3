@@ -1,10 +1,53 @@
-"""Archive the exact Windows DLL SDK accepted by the repository package profiles."""
+"""Archive a reference dynamic SDK for the current host platform."""
 import argparse
 import hashlib
 import json
 from pathlib import Path
 import shutil
 import zipfile
+import sys
+import tarfile
+
+
+def stage_linux(sdk, output):
+    """Keep the installed ELF SDK layout, permissions and library aliases intact."""
+    archive = output.with_suffix(".tar.gz")
+    if output.exists() or archive.exists():
+        raise RuntimeError("Output directory and archive must not exist")
+    for line in (ROOT / "src/package/profiles/linux-x86_64-core.sha256").read_text().splitlines():
+        digest, relative = line.split(" ", 1)
+        if hashlib.sha256((sdk / relative).read_bytes()).hexdigest() != digest:
+            raise RuntimeError(f"SDK fingerprint mismatch: {relative}")
+    for name in ("bin/daslang", "lib/liblibDaScriptDyn.so",
+                 "lib/liblibDaScriptDyn_runtime.so", "include/daScript/daScript.h",
+                 "modules/dasPUGIXML/dasModulePUGIXML.shared_module"):
+        if not (sdk / name).is_file():
+            raise RuntimeError(f"Missing SDK input: {name}")
+    output.mkdir(parents=True)
+    for name in ("bin", "lib", "include", "3rdparty", "daslib", "utils", "modules"):
+        shutil.copytree(sdk / name, output / name, symlinks=True)
+    for path in sdk.iterdir():
+        if path.is_file() and any(word in path.name.lower() for word in
+                                  ("license", "licence", "copying", "notice")):
+            shutil.copy2(path, output / path.name)
+    shutil.copytree(ROOT / "licenses", output / "licenses")
+    (output / "dassdl3-profiles").mkdir()
+    shutil.copy2(ROOT / "src/package/profiles/linux-x86_64-core.sha256",
+                 output / "dassdl3-profiles/linux-x86_64-core.sha256")
+    (output / "SDK-README.txt").write_text(
+        "Linux x86_64 core SDK for dasSDL3, daScript ebac0ffe46ab30de6c9536f4b0af7a33ede45902.\n"
+        "Built and tested on Ubuntu 24.04 with GCC 13.3. Other distributions are unvalidated.\n"
+        "Keep the layout intact; use this directory as DASLANG_DIR.\n"
+        "Run bin/daslang utils/daspkg/main.das -- help. Source builds need CMake, Ninja and GCC.\n"
+        "ImGui and standalone release are not part of this Linux profile.\n")
+    manifest = {p.relative_to(output).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+                for p in sorted(output.rglob("*")) if p.is_file()}
+    (output / "SDK-SHA256.json").write_text(json.dumps(manifest, indent=2) + "\n")
+    with tarfile.open(archive, "w:gz") as tar:
+        tar.add(output, arcname=output.name)
+    digest = hashlib.sha256(archive.read_bytes()).hexdigest()
+    Path(str(archive) + ".sha256").write_text(f"{digest}  {archive.name}\n")
+    print(f"SDK archive: {archive}; SHA256: {digest}")
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -15,6 +58,9 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     sdk, output = args.sdk.resolve(), args.output.resolve()
+    if sys.platform == "linux":
+        stage_linux(sdk, output)
+        return
     archive = output.with_suffix(".zip")
     if output.exists() or archive.exists():
         parser.error("Output directory and ZIP must not exist")

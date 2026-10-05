@@ -11,7 +11,7 @@ def main(smoke : bool) : int {
     let result = sdl_scope() {
         with_sdl() |> sdl_use
         with_shadercross() |> sdl_use
-        let device : SDL_GPUDevice? = with_native_gpu_device(SDL_GPU_SHADERFORMAT_DXIL, true, "direct3d12") |> sdl_use
+        let device : SDL_GPUDevice? = with_native_gpu_device(SDL_GetPlatform() == "macOS" ? SDL_GPU_SHADERFORMAT_MSL : SDL_GPU_SHADERFORMAT_DXIL, true, SDL_GetPlatform() == "macOS" ? "metal" : "direct3d12") |> sdl_use
         var vertex : SDL_GPUShader? = device |> with_gpu_dsl_shader_cross(texture_vertex, texture_vertex_reflect) |> sdl_use
         var fragment : SDL_GPUShader? = device |> with_gpu_dsl_shader_cross(texture_fragment, texture_fragment_reflect) |> sdl_use
         return check_texture_pixels(device, vertex, fragment)

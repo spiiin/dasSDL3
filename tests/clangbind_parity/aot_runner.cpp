@@ -29,7 +29,7 @@ DECLARE_MODULE(Module_imgui_sdl3);
 DECLARE_MODULE(Module_LiveHost);
 #endif
 using namespace das;
-static int run(const char *path) {
+static int run(const char *path, bool check_only = false) {
     TextPrinter out; ModuleGroup modules;
     auto access = make_smart<FsFileAccess>();
     access->addFsRoot("dassdl3", DASSDL3_MODULE_ROOT);
@@ -44,6 +44,18 @@ static int run(const char *path) {
     if (program->failed()) { errors(); return 1; }
     Context context(program->getContextStackSize());
     if (!program->simulate(context,out)) { errors(); return 2; }
+#ifdef DASSDL3_AOT_LINK_CHECK
+    if (check_only) {
+        if (!dassdl3_host::entry_functions(context, *program->getThisModule(), "update").empty()) {
+            dassdl3_host::Lifecycle lifecycle(context, modules, *program->getThisModule(), out, true);
+            return lifecycle.valid ? 0 : 3;
+        }
+        auto fn = context.findFunction("main");
+        if (!fn || !fn->aot || !verifyCall<int32_t,bool>(fn->debugInfo,modules)) return 3;
+        out << "main AOT link verified; execution skipped\n";
+        return 0;
+    }
+#endif
     if (auto code = dassdl3_host::run_lifecycle(context, modules, *program->getThisModule(), out, true, true)) return *code;
     auto fn = context.findFunction("main");
     if (!fn || !fn->aot || !verifyCall<int32_t,bool>(fn->debugInfo,modules)) return 3;
@@ -54,7 +66,11 @@ static int run(const char *path) {
     return cast<int32_t>::to(value);
 }
 int main(int argc,char **argv) {
-    if (argc != 2) return 5;
+    bool check_only = false;
+#ifdef DASSDL3_AOT_LINK_CHECK
+    if (argc == 3 && !std::strcmp(argv[2], "--check-aot")) check_only = true;
+#endif
+    if (argc != 2 && !check_only) return 5;
     SDL_SetMainReady(); setDasRoot(DASSDL3_DAS_ROOT);
     NEED_ALL_DEFAULT_MODULES; NEED_MODULE(Module_dasSDL3);
 #ifdef DASSDL3_WITH_MIXER
@@ -82,5 +98,5 @@ int main(int argc,char **argv) {
     NEED_MODULE(Module_LiveHost);
 #endif
     Module::Initialize();
-    int result = run(argv[1]); SDL_Quit(); Module::Shutdown(); return result;
+    int result = run(argv[1], check_only); SDL_Quit(); Module::Shutdown(); return result;
 }

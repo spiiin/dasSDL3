@@ -19,7 +19,7 @@ resources; mesh tests also exercise offscreen output and automatic resize.
 
 ## Shader DSL and backends
 
-All ten examples use the 29 daScript shader entry points in [shaders](shaders/):
+All ten examples use the 31 daScript shader entry points in [shaders](shaders/):
 `metaballs_shaders.das`, `raymarch_shaders.das`, `bunny_shaders.das`,
 `cube_shaders.das`, `hdr_shaders.das`, `fontsdf_shaders.das`,
 `lod_shaders.das`, `stencil_scene_shaders.das` and `stencil_shaders.das`. They compile through upstream dasSpirv
@@ -40,6 +40,13 @@ $env:SDL_GPU_DRIVER = 'direct3d12'
 ./build/ninja/bin/dasSDL3_libraries_runner.exe examples/gpu/06_hdr.das
 ```
 
+Metal translates the same SPIR-V through the pinned shadercross build without DXC:
+
+```sh
+SDL_GPU_DRIVER=metal ./build/macos-libraries/bin/dasSDL3_libraries_runner examples/gpu/06_hdr.das
+SDL_GPU_DRIVER=metal ctest --test-dir build/macos-libraries -R '^macos_metal_bgfx_' --output-on-failure
+```
+
 [shader_support.das](shader_support.das) imports shadercross only when the native
 module is available. The core runner advertises SPIR-V only. There is no fallback
 to old binaries and no per-frame compilation. HDR uses three fullscreen vertex
@@ -50,7 +57,7 @@ ctest --test-dir build/ninja -R 'sdl3_tests_bgfx_|shader_dsl_gpu_examples_compil
 python tests/test_gpu_examples_dsl.py --runner build/ninja/bin/dasSDL3_runner.exe --spirv-val C:/VulkanSDK/<version>/Bin/spirv-val.exe
 ```
 
-Tests check deterministic compilation of all 29 shaders, pixel readback, animation,
+Tests check deterministic compilation of all 31 shaders, pixel readback, animation,
 instanced versus individual draws and HDR luminance. For the first six ports,
 migration captures match the previous HLSL images within 1 RGBA8 channel value on Vulkan and 2 on D3D12 (HDR).
 This is a measured comparison, not a bit-exact guarantee across drivers.
@@ -144,8 +151,9 @@ roundtrip at nonzero offsets, rejected ranges/null handles, and a null uniform
 command. The rendered example exercises positive uniform upload.
 
 CTest registers Vulkan/Direct3D12 runs, plus interpreter/CppGenBind/AOT parity.
-Tests reject Vulkan and D3D12 validation errors. No Metal or WebGPU execution is
-claimed. The bundled shader formats target the two tested Windows backends.
+Tests reject Vulkan and D3D12 validation errors. The native Metal harness also
+passed via shadercross; WebGPU execution is not validated. The Windows fixtures
+remain available independently of runtime translation.
 
 Local Windows validation: Vulkan and Direct3D12 smoke/readback, independent CPU
 field tests, float upload roundtrip, baseline/CppGenBind/AOT (fallback disabled),
@@ -273,7 +281,8 @@ resize tests. Decoder tests pass all four runners. The existing no-LLVM consumer
 passes Direct3D 12 after copying the new runtime assets; no consumer rebuild was
 needed. DSL compilation, spirv-val and deterministic OBJ conversion pass.
 At time 1.2 the offscreen image has 29,774 foreground pixels on both tested GPU
-backends. Keyboard controls are implemented but not automated; Metal is untested.
+backends. The harness also passed native Metal execution via shadercross.
+Keyboard controls are implemented but not automated.
 
 ## 04_instancing — bgfx 05-instancing
 
@@ -388,7 +397,8 @@ baseline/CppGenBind/strict-AOT tests passed across Vulkan and Direct3D 12.
 All three interactive apps opened, rendered, resized and closed successfully on
 both drivers. The existing no-LLVM consumer also passed the three Direct3D 12
 tests. Official das-fmt verification and both asset/shader reproducibility checks
-passed. Metal and other operating systems have not been validated here.
+passed. The three harnesses also passed native Metal execution via shadercross;
+other operating systems have not been validated here.
 
 Shader DSL examples are in [gpu_dsl](../gpu_dsl/README.md).
 
@@ -492,7 +502,11 @@ fixture, LOD thresholds/duration and complementary pixel selection,
 reflection and shadow changes, closed volume topology, agreement of the volume
 algorithms and an independent CPU segment/AABB shadow oracle, including a camera
 inside the volume. Interpreter, CppGenBind and strict AOT use the same rendering
-functions. These checks do not establish Metal or browser support.
+functions. All five harnesses also passed native Metal interpreter execution.
+Mac volume rendering uses explicit depth bias, and the translucent debug-edge
+comparison permits a symmetric one-pixel neighborhood as documented in
+[macOS](../../docs/macos.md). The Windows AOT results do not establish Mac AOT
+coverage for these application harnesses. Browser execution is not validated.
 
 ### Stencil scene fidelity
 

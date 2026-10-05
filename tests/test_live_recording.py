@@ -16,10 +16,23 @@ import zlib
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--upstream-port", action="store_true", help="Test proposed port overload on a disposable module copy")
 parser.add_argument("--visual-aids", action="store_true", help="Test backend-independent upstream visual overlays")
+parser.add_argument("--host", type=Path)
+parser.add_argument("--module", type=Path)
+parser.add_argument("--http-module", type=Path)
+parser.add_argument("--stb-module", type=Path)
+parser.add_argument("--daslang", type=Path)
 args = parser.parse_args()
 if args.visual_aids: args.upstream_port = True
 root = Path(__file__).resolve().parents[1]
 das = root / "third_party/daScript"
+native_macos = sys.platform == "darwin"
+live_build = root / "build" / ("macos-live" if native_macos else "ninja") / "live"
+http_build = root / "build" / ("macos-live-http" if native_macos else "live-http")
+host = (args.host or live_build / ("dasSDL3_live" if native_macos else "dasSDL3_live.exe")).resolve()
+module = (args.module or live_build / "module").resolve()
+http_module = (args.http_module or http_build / "dasHV").resolve()
+stb_module = (args.stb_module or http_build / "dasStbImage").resolve()
+daslang = (args.daslang or das / "bin" / ("daslang" if native_macos else "daslang.exe")).resolve()
 output = root / ("build/live-visual-aids" if args.visual_aids else "build/live-recording-port" if args.upstream_port else "build/live-recording")
 assets = output / "doc/source/_static/tutorials"
 assets.mkdir(parents=True, exist_ok=True)
@@ -127,9 +140,9 @@ with tempfile.TemporaryDirectory(prefix="sdl-record-") as folder:
         overlay += '        record_check(app, "caption accepted", post_command(app, "imgui_narrate", JV((text = "SDL drag and click", target = "MAIN/SPEED", frames = 180)))?["ok"] ?? false)\n'
         driver_path.write_text(driver.replace("        hold_content(app, 500u)", overlay+"        hold_content(app, 500u)",1))
     log = (output/"app.log").open("w",encoding="utf-8")
-    app = subprocess.Popen([str(root/"build/ninja/live/dasSDL3_live.exe"),"-dasroot",str(das),
-        "-load_module",str(root/"build/ninja/live/module"),"-load_module",str(root/"build/live-http/dasHV"),
-        "-load_module",str(root/"build/live-http/dasStbImage"),"-no-module-cache",
+    app = subprocess.Popen([str(host),"-dasroot",str(das),
+        "-load_module",str(module),"-load_module",str(http_module),
+        "-load_module",str(stb_module),"-no-module-cache",
         str(Path(folder)/"03_widgets_recording.das"),"--live-port",str(port)],cwd=folder,
         stdout=log,stderr=log,env=dict(os.environ,SDL_RENDER_DRIVER="software"))
     try:
@@ -143,8 +156,8 @@ with tempfile.TemporaryDirectory(prefix="sdl-record-") as folder:
             except (OSError,ValueError): pass
             assert time.monotonic()<deadline, (output/"app.log").read_text()
             time.sleep(.1)
-        driver=subprocess.run([str(das/"bin/daslang.exe"),"-dasroot",str(das),"-load_module",
-            str(root/"build/live-http/dasHV"),"-ignore-manifest",str(driver_path),
+        driver=subprocess.run([str(daslang),"-dasroot",str(das),"-load_module",
+            str(http_module),"-ignore-manifest",str(driver_path),
             "--","--output-root",str(output)],cwd=folder,capture_output=True,text=True,timeout=80)
         (output/"driver.log").write_text(driver.stdout+driver.stderr,encoding="utf-8")
         assert driver.returncode==0 and "recording PASS" in driver.stdout, driver.stdout+driver.stderr

@@ -55,9 +55,10 @@ Test GUI behavior with WSLg separately from tests using SDL's dummy driver.
   and the HID string getters. Buffer lengths remain counts of native characters.
   Copied HID metadata is UTF-8 on both platforms.
 * Linux consumers inherit `-fno-rtti`, matching the pinned daScript build.
-* `DASSDL3_INSTALL_SDK` remains the Windows SDK profile. Linux currently uses
-  a source checkout; optional integrations and packaged SDK export need their
-  own validation.
+* `DASSDL3_INSTALL_SDK` remains the Windows C++/AOT SDK profile. Linux core
+  also supports daspkg through a matching dynamic daScript SDK; see the
+  [Linux package workflow](daspkg.md#linux-core-workflow). Linux ImGui and
+  standalone application release still need their own validation.
 * WSLg 2D success does not validate Vulkan hardware support. GPU examples
   require a working Vulkan device and compatible driver features.
 

@@ -1,4 +1,5 @@
 options gen2
+require backend_support
 require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_native_boost
 require daslib/defer
@@ -8,8 +9,8 @@ require dassdl3/sdl3_shader_uniforms
 
 def draw_frames(device : SDL_GPUDevice?; window : SDL_Window?; smoke : bool) : SdlStatus {
     return sdl_scope() {
-        var vertex : SDL_GPUShader? = device |> with_gpu_dsl_shader(uniform_vertex, uniform_vertex_reflect) |> sdl_use
-        var fragment : SDL_GPUShader? = device |> with_gpu_dsl_shader(uniform_fragment, uniform_fragment_reflect) |> sdl_use
+        var vertex : SDL_GPUShader? = device |> with_dsl_example_shader(uniform_vertex, uniform_vertex_reflect) |> sdl_use
+        var fragment : SDL_GPUShader? = device |> with_dsl_example_shader(uniform_fragment, uniform_fragment_reflect) |> sdl_use
         return render_pipeline(device, window, vertex, fragment, smoke)
     }
 }
@@ -61,7 +62,7 @@ def main(smoke : bool) : int {
     let initialized = sdl_scope() {
         with_sdl() |> sdl_use
         let window : SDL_Window? = with_window("daScript shader DSL uniforms", 640, 480, 0ul) |> sdl_use
-        let device : SDL_GPUDevice? = with_native_gpu_device(SDL_GPU_SHADERFORMAT_SPIRV, true, "vulkan") |> sdl_use
+        let device : SDL_GPUDevice? = with_native_gpu_device(dsl_example_formats(), true, "") |> sdl_use
         if (!SDL_ClaimWindowForGPUDevice(device, window)) {return err(sdl_error("SDL_ClaimWindowForGPUDevice"), type<SdlUnit>)}
         { defer() { SDL_ReleaseWindowFromGPUDevice(device, window) }; return draw_frames(device, window, smoke) }
 

@@ -7,7 +7,7 @@ def package() {
     package_name("dasSDL3")
     package_author("spiiin")
     package_source("github.com/spiiin/dasSDL3")
-    package_description("SDL3 bindings for daslang: Windows x64 core and ImGui profiles")
+    package_description("SDL3 bindings for daslang: Windows/macOS core and ImGui, Linux x86_64 core")
     package_license("MIT")
     package_min_sdk("0.6.4")
     package_tag("sdl3")
@@ -16,6 +16,8 @@ def package() {
     // 0.6.4 is also used by older SDKs without platform metadata. The supported
     // client revision and binary SDK fingerprints are documented in docs/daspkg.md.
     package_platform("windows")
+    package_platform("darwin")
+    package_platform("linux")
 }
 
 [export]

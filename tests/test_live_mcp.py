@@ -6,6 +6,7 @@ from pathlib import Path
 import queue
 import shutil
 import struct
+import sys
 import zlib
 import socket
 import subprocess
@@ -158,10 +159,16 @@ with tempfile.TemporaryDirectory(prefix="dassdl3-mcp-") as folder:
             time.sleep(0.1)
         with urllib.request.urlopen(f"http://127.0.0.1:{port}/status", timeout=5) as response:
             assert response.status == 200
-        listeners = subprocess.check_output(["netstat", "-ano", "-p", "tcp"], text=True)
-        addresses = {parts[1] for line in listeners.splitlines()
-                     if len(parts := line.split()) >= 5 and parts[-1] == str(app.pid)
-                     and parts[1].endswith(":" + str(port)) and parts[3] == "LISTENING"}
+        if sys.platform == "darwin":
+            listeners = subprocess.check_output(
+                ["/usr/sbin/lsof", "-nP", "-a", "-p", str(app.pid), "-iTCP", "-sTCP:LISTEN", "-Fn"], text=True)
+            addresses = {line[1:] for line in listeners.splitlines()
+                         if line.startswith("n") and line.endswith(":" + str(port))}
+        else:
+            listeners = subprocess.check_output(["netstat", "-ano", "-p", "tcp"], text=True)
+            addresses = {parts[1] for line in listeners.splitlines()
+                         if len(parts := line.split()) >= 5 and parts[-1] == str(app.pid)
+                         and parts[1].endswith(":" + str(port)) and parts[3] == "LISTENING"}
         assert addresses == {f"127.0.0.1:{port}"}, addresses
         print("HTTP listener bound only to 127.0.0.1 PASS", flush=True)
         mcp = launch("mcp", [str(Path(a.daslang).resolve()), "-dasroot", str(das),

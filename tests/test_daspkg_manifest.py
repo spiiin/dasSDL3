@@ -35,7 +35,7 @@ def main {
     verify(meta.pkg_name == "dasSDL3" && meta.author == "spiiin")
     verify(meta.source == "github.com/spiiin/dasSDL3")
     verify(meta.license == "MIT" && meta.min_sdk == "0.6.4")
-    verify(length(meta.platforms) == 1 && meta.platforms[0] == "windows")
+    verify(length(meta.platforms) == 3 && meta.platforms[0] == "windows" && meta.platforms[1] == "darwin" && meta.platforms[2] == "linux")
     verify(!empty(meta.description) && length(meta.tags) == 3)
     for (version in ["", "latest", PACKAGE_VERSION, NEXT_VERSION]) {
         var resolution : ResolveResult
@@ -69,7 +69,7 @@ def main {
     script = work / "verify.das"
     script.write_text(source, encoding="utf-8")
     for profile in ("core", "imgui"):
-        result = subprocess.run([str(sdk / "bin/daslang.exe"), "-dasroot", str(sdk), str(script)],
+        result = subprocess.run([str(sdk / "bin" / ("daslang.exe" if os.name == "nt" else "daslang")), "-dasroot", str(sdk), str(script)],
                                 cwd=work, env=dict(os.environ, DASSDL3_PACKAGE_PROFILE=profile),
                                 capture_output=True, text=True, timeout=60)
         (work / f"{profile}.log").write_text(result.stdout + result.stderr, encoding="utf-8")
@@ -82,13 +82,19 @@ def main {
     placeholder.write_bytes(b"metadata fixture, not a loadable module")
     for profile, mode in (("core", "binary"), ("imgui", "binary"),
                           ("core", "source"), ("imgui", "source")):
+        if profile == "imgui" and sys.platform.startswith("linux"):
+            continue
         # A source ImGui fixture needs the built optional SDK module; binary
         # metadata remains testable with the minimal core SDK used by CI.
-        if profile == "imgui" and mode == "source" and not (sdk / "lib/dasModuleImgui.lib").is_file():
+        if profile == "imgui" and mode == "source" and not (sdk / (
+                "modules/dasImgui/dasModuleImgui.shared_module" if sys.platform == "darwin"
+                else "lib/dasModuleImgui.lib")).is_file():
             continue
         staged = work / f"staged-{profile}-{mode}"
         command = [sys.executable, str(ROOT / "tools/stage_daspkg.py"),
                    "--output", str(staged), "--sdk", str(sdk)]
+        if sys.platform == "darwin":
+            command += ["--platform", "macos"]
         command += ["--source"] if mode == "source" else ["--module", str(placeholder)]
         if profile == "imgui":
             command += ["--with-imgui"]
@@ -100,16 +106,17 @@ def main {
     var meta : PackageMeta
     verify(run_das_package_meta(MANIFEST, meta))
     verify(meta.pkg_name == "dasSDL3" && meta.min_sdk == "0.6.4")
-    verify(length(meta.platforms) == 1 && meta.platforms[0] == "windows")
+    verify(length(meta.platforms) == 1 && meta.platforms[0] == EXPECTED_PLATFORM)
     var info : PackageBuildInfo
     verify(run_das_package_build(MANIFEST, info) && info.is_cmake == SOURCE_BUILD)
     print("PASS: staged platform metadata\\n")
 }
 '''.replace("MANIFEST", json.dumps((staged / ".das_package").as_posix())).replace(
-            "SOURCE_BUILD", "true" if mode == "source" else "false")
+            "SOURCE_BUILD", "true" if mode == "source" else "false").replace(
+            "EXPECTED_PLATFORM", json.dumps("darwin" if sys.platform == "darwin" else "windows" if os.name == "nt" else "linux"))
         staged_script = work / f"verify-staged-{profile}-{mode}.das"
         staged_script.write_text(check, encoding="utf-8")
-        result = subprocess.run([str(sdk / "bin/daslang.exe"), "-dasroot", str(sdk), str(staged_script)],
+        result = subprocess.run([str(sdk / "bin" / ("daslang.exe" if os.name == "nt" else "daslang")), "-dasroot", str(sdk), str(staged_script)],
                                 cwd=work, capture_output=True, text=True, timeout=60)
         (work / f"staged-{profile}-{mode}.log").write_text(result.stdout + result.stderr, encoding="utf-8")
         if result.returncode or "PASS: staged" not in result.stdout:

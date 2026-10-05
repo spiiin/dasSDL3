@@ -1,4 +1,5 @@
 options gen2
+require gpu/file_shader_support
 require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_recording_boost
 require daslib/with_boost
@@ -48,14 +49,14 @@ def render_quad(device : SDL_GPUDevice?; pipeline : GpuPipelineHandle; target : 
 }
 
 def run(device : SDL_GPUDevice?; linear : bool) : SdlStatus {
-    let spirv = (SDL_GetGPUShaderFormats(device) & SDL_GPU_SHADERFORMAT_SPIRV) != 0u
-    let format = spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL
-    let extension = spirv ? "spv" : "dxil"
+    let backend = file_shader_backend(device)
+    let format = backend.format
+    let extension = backend.extension
     let base = "{SDL_GetBasePath()}assets/shaders/bindings"
-    var vi = (gpu_shader("{base}.vert.{extension}", format, SDL_GPUShaderStage.SHADERSTAGE_VERTEX)
+    var vi = (gpu_shader("{base}.vert.{extension}", format, SDL_GPUShaderStage.SHADERSTAGE_VERTEX) |> entrypoint(backend.entry)
         |> samplers(1u)
         |> uniform_buffers(1u))
-    var fi = (gpu_shader("{base}.frag.{extension}", format, SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT)
+    var fi = (gpu_shader("{base}.frag.{extension}", format, SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT) |> entrypoint(backend.entry)
         |> samplers(1u)
         |> uniform_buffers(1u))
     return sdl_scope() {

@@ -82,3 +82,23 @@ inline bool SDL_ReadU64LERef(SDL_IOStream * io,Uint64 & value) {return SDL_ReadU
 inline bool SDL_ReadS64LERef(SDL_IOStream * io,Sint64 & value) {return SDL_ReadS64LE(io,&value);}
 inline bool SDL_ReadU64BERef(SDL_IOStream * io,Uint64 & value) {return SDL_ReadU64BE(io,&value);}
 inline bool SDL_ReadS64BERef(SDL_IOStream * io,Sint64 & value) {return SDL_ReadS64BE(io,&value);}
+
+#ifdef __APPLE__
+// AOT storage bridge: native size_t and script uint64 have equal width on Mac,
+// but distinct C++ pointer types. Keep the raw interpreter signature unchanged.
+inline void * SDL_LoadFileSize64(const char * path,uint64_t * size) {
+    static_assert(sizeof(size_t)==sizeof(uint64_t));
+    size_t native_size=size?size_t(*size):0;
+    void * bytes=SDL_LoadFile(path,size?&native_size:nullptr);
+    if(size)*size=uint64_t(native_size);
+    return bytes;
+}
+inline void * SDL_LoadFile_IOSize64(SDL_IOStream * io,uint64_t * size,bool close_io) {
+    static_assert(sizeof(size_t)==sizeof(uint64_t));
+    size_t native_size=size?size_t(*size):0;
+    void * bytes=SDL_LoadFile_IO(io,size?&native_size:nullptr,close_io);
+    if(size)*size=uint64_t(native_size);
+    return bytes;
+}
+
+#endif

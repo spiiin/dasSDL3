@@ -27,6 +27,11 @@ inline bool shader_wrong_thread(SDL_GPUDevice * device,uint64_t id) {
     }); worker.join(); return rejected;
 }
 inline bool shader_invalid_metadata() {
+    const uint8_t embeddedNul[]={'x',0,'y','z'};
+    const uint8_t source[]={'m','s','l',' '};
+    if (!SDL_GPUValidateShaderBytes(source,sizeof(source),SDL_GPU_SHADERFORMAT_MSL) ||
+        SDL_GPUValidateShaderBytes(embeddedNul,sizeof(embeddedNul),SDL_GPU_SHADERFORMAT_MSL) ||
+        SDL_GPUValidateShaderBytes(source,sizeof(source),SDL_GPU_SHADERFORMAT_METALLIB)) return false;
     SDL_GPUShaderCreateInfo base{}; base.format=SDL_GPU_SHADERFORMAT_SPIRV;
     const uint8_t shortCode[]={3,2,35,7};
     if (SDL_GPUValidateShaderBytes(shortCode,4,base.format) ||

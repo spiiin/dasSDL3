@@ -1,8 +1,9 @@
-"""Stage a local Windows core binary or source package for a reference DLL SDK."""
+"""Stage a local core binary or source package for a matching native SDK."""
 import argparse
 import hashlib
 import json
 import re
+import sys
 from pathlib import Path
 import shutil
 
@@ -17,11 +18,17 @@ def main():
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--module", type=Path)
     mode.add_argument("--source", action="store_true")
-    parser.add_argument("--sdk", type=Path, help="Reference DLL SDK required by --source")
+    parser.add_argument("--sdk", type=Path, help="Matching dynamic SDK required by --source")
     parser.add_argument("--output", type=Path, required=True,
                         help="New or empty directory, normally ending in dasSDL3")
     parser.add_argument("--with-imgui", action="store_true", help="Combined SDL + SDK dasImgui profile")
+    parser.add_argument("--platform", choices=("windows", "macos", "linux"),
+                        default="windows" if sys.platform == "win32" else "macos" if sys.platform == "darwin" else "linux")
     args = parser.parse_args()
+    if args.platform == "linux" and args.with_imgui:
+        parser.error("Linux currently supports only core")
+    runtime = {"windows": "bin/libDaScriptDyn.dll", "macos": "lib/liblibDaScriptDyn_runtime.dylib",
+               "linux": "lib/liblibDaScriptDyn.so"}[args.platform]
     source = args.module.resolve() if args.module else None
     if (args.source or args.with_imgui) and not args.sdk:
         parser.error("--source and --with-imgui require --sdk")
@@ -49,23 +56,29 @@ def main():
         sdk = args.sdk.resolve()
         sdk_files = sorted(p for folder in ("include", "3rdparty/fmt/include")
                            for p in (sdk / folder).rglob("*") if p.is_file())
-        sdk_files += [sdk / name for name in (
-            "lib/libDaScriptDyn.lib", "lib/libDaScriptDyn_runtime.lib",
-            "bin/libDaScriptDyn.dll", "bin/libDaScriptDyn_runtime.dll")]
+        native_files = {
+            "windows": ("lib/libDaScriptDyn.lib", "lib/libDaScriptDyn_runtime.lib",
+                        "bin/libDaScriptDyn.dll", "bin/libDaScriptDyn_runtime.dll"),
+            "macos": ("lib/liblibDaScriptDyn.dylib", "lib/liblibDaScriptDyn_runtime.dylib"),
+            "linux": ("lib/liblibDaScriptDyn.so", "lib/liblibDaScriptDyn_runtime.so"),
+        }[args.platform]
+        sdk_files += [sdk / name for name in native_files]
         if args.with_imgui:
             sdk_files += sorted(p for p in (sdk / "modules/dasImgui/imgui").rglob("*")
                                 if p.is_file() and p.suffix in {".h", ".cpp"})
-            sdk_files += [sdk / "lib/dasModuleImgui.lib",
-                          sdk / "modules/dasImgui/dasModuleImgui.shared_module",
+            sdk_files += [sdk / "modules/dasImgui/dasModuleImgui.shared_module",
                           sdk / "modules/dasClipboard/dasModuleClipboard.shared_module"]
+            if args.platform == "windows":
+                sdk_files += [sdk / ("lib/dasModuleImgui.lib" if (sdk / "lib/dasModuleImgui.lib").is_file()
+                                    else "modules/dasImgui/dasModuleImgui.lib")]
         for path in sdk_files:
             if not path.is_file():
                 parser.error(f"Missing SDK input: {path}")
         if not (sdk / "include/daScript/daScript.h").is_file():
             parser.error("Missing daScript headers")
-        (output / "sdk.sha256").write_text("".join(
+        (output / "sdk.sha256").write_bytes("".join(
             f"{hashlib.sha256(p.read_bytes()).hexdigest()} {p.relative_to(sdk).as_posix()}\n"
-            for p in sdk_files), encoding="utf-8", newline="\n")
+            for p in sdk_files).encode("utf-8"))
         (output / "src").mkdir()
         for path in (ROOT / "src").glob("*.h"):
             shutil.copy2(path, output / "src" / path.name)
@@ -103,10 +116,10 @@ def main():
     (output / ".das_package").write_text(
         'options gen2\nrequire daslib/daspkg\n\n[export]\ndef package() {\n'
         '    package_name("dasSDL3")\n'
-        '    package_description("SDL3 core bindings: local Windows x64 Release DLL pilot")\n'
+        f'    package_description("SDL3 core bindings: local {args.platform} Release package")\n'
         '    package_license("MIT")\n'
         '    package_min_sdk("0.6.4")\n'
-        '    package_platform("windows")\n'
+        f'    package_platform("{"darwin" if args.platform == "macos" else args.platform}")\n'
         '    package_tag("sdl3")\n}\n\n[export]\ndef build() {\n    ' + ('cmake_build()' if args.source else 'no_build()') + '\n}\n',
         encoding="utf-8")
     with (output / ".das_package").open("a", encoding="utf-8") as manifest:
@@ -116,15 +129,16 @@ def main():
             manifest.write('\n[export]\ndef dependencies(version : string) {\n    require_package("dasImgui")\n}\n')
     (output / "profile.json").write_text(json.dumps({
         "version": (ROOT / "VERSION").read_text(encoding="utf-8").strip(),
-        "profile": "windows-x64-msvc-release-md-avx2",
+        "profile": {"macos": "macos-appleclang-release", "windows": "windows-x64-msvc-release-md-avx2",
+                    "linux": "linux-x86_64-release"}[args.platform],
         "sdl": "3.4.16", "binding_reference_revision": "ebac0ffe46ab30de6c9536f4b0af7a33ede45902",
         "sdk_runtime_sha256": hashlib.sha256(
-            (args.sdk / "bin/libDaScriptDyn.dll").read_bytes()).hexdigest() if args.sdk else None,
+            (args.sdk / runtime).read_bytes()).hexdigest() if args.sdk else None,
         "module_sha256": hashlib.sha256(source.read_bytes()).hexdigest() if source else None,
         "kind": "source" if args.source else "binary",
         "features": ["core", "imgui"] if args.with_imgui else ["core"],
         "modules": [s.stem for s in scripts],
-        "distribution": "local pilot; requires matching daScript DLL ABI",
+        "distribution": "local pilot; requires matching native daScript ABI",
     }, indent=2) + "\n", encoding="utf-8")
     print(f"Staged {len(scripts)} boost modules: {output}")
 

@@ -46,13 +46,18 @@ def main(smoke : bool) : int {
                 var rect : SDL_Rect
                 verify(SDL_GetWindowSafeAreaRef(window, rect) && rect.w > 0 && rect.h > 0)
                 var top = 0; var left = 0; var bottom = 0; var right = 0
-                verify(SDL_GetWindowBordersSizeRef(window, top, left, bottom, right))
+                // The pinned Cocoa backend does not implement border-size queries.
+                let supports_borders = SDL_GetPlatform() != "macOS"
+                verify(SDL_GetWindowBordersSizeRef(window, top, left, bottom, right) == supports_borders)
+                if (!supports_borders) {
+                    verify(SDL_GetError() != "")
+                }
                 unsafe {
                     verify(SDL_GetWindowMinimumSize(window, addr(w), addr(h)) && w == 100)
                     verify(SDL_GetWindowMaximumSize(window, addr(w), addr(h)) && w == 800)
                     verify(SDL_GetWindowAspectRatio(window, addr(low), addr(high)) && low == 0.0 && high == 0.0)
                     verify(SDL_GetWindowSafeArea(window, addr(rect)))
-                    verify(SDL_GetWindowBordersSize(window, addr(top), addr(left), addr(bottom), addr(right)))
+                    verify(SDL_GetWindowBordersSize(window, addr(top), addr(left), addr(bottom), addr(right)) == supports_borders)
                 }
                 verify(SDL_SetWindowBordered(window, false))
                 verify((SDL_GetWindowFlags(window) & SDL_WINDOW_BORDERLESS) != 0ul)

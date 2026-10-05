@@ -192,7 +192,13 @@ EOF/EAGAIN, read-only sample metadata, IO lifetime and tests.
 
 Enable `DASSDL3_WITH_SHADERCROSS=ON`, then build `dasSDL3_libraries_runner`.
 [09_shadercross.das](09_shadercross.das) compiles HLSL to SPIR-V, reflects inputs/outputs,
-and produces DXIL/MSL without creating a GPU device.
+and produces MSL without creating a GPU device. If HLSL compilation is unavailable,
+it uses the committed SPIR-V fixture. DXIL is produced only when shadercross
+advertises that capability. The default Mac profile needs no DXC:
+
+```sh
+./build/macos-libraries/bin/dasSDL3_libraries_runner examples/libraries/09_shadercross.das
+```
 
 ```powershell
 .\build\ninja\bin\dasSDL3_libraries_runner.exe .\examples\libraries\09_shadercross.das
@@ -201,3 +207,28 @@ and produces DXIL/MSL without creating a GPU device.
 DXC DLLs are copied beside the executable. The `shadercross` CLI and
 `dassdl3_shadercross_example_assets` build target prepare assets offline.
 See [dependency/ownership contracts](../../docs/sdl-shadercross.md).
+
+## Native Mac strict AOT
+
+After configuring the [Mac companion profile](../../docs/macos.md), build and run:
+
+```sh
+cmake --build build/macos-libraries --target dasSDL3_macos_libraries_aot_runner --parallel 6
+SDL_VIDEODRIVER=dummy ctest --test-dir build/macos-libraries -L macos-libraries-aot -E ttf_gpu --output-on-failure
+# Ordinary Terminal, GUI login session:
+ctest --test-dir build/macos-libraries -L macos-libraries-aot --output-on-failure
+```
+
+The AOT target follows the enabled companion options and shared boost imports.
+It uses the same strict generator/runner as the core checks, with interpreter
+fallback disabled. Cases cover raw IO, image, TTF/shaping/GPU text, loopback net,
+mixer/sound using dummy audio, ImGui lifetimes/widgets, shadercross without DXC,
+and rejection of a missing AOT main. Compiler success and dummy rendering do
+not establish Cocoa/Metal execution; native results are recorded separately.
+
+The pinned ImGui click coroutine exposes a lost lexical scope in the C++ emitter:
+a resume goto bypasses a local GetIO pointer initialization. Mac companion AOT
+generation restores exactly that two-statement scope and rejects changed or
+escaping temporaries. The widget test executes and resumes a real queued click.
+Dependency sources remain unchanged; this workaround must be reviewed when the
+pinned SDK changes. See [AOT compatibility](../../docs/clangbind-types-aot.md).

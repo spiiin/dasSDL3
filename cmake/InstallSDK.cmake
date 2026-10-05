@@ -1,11 +1,29 @@
-# One deliberately bounded, reproducible binary profile. Other profiles stay source builds.
-if(NOT WIN32 OR NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC" OR NOT CMAKE_SIZEOF_VOID_P EQUAL 8 OR
-   NOT CMAKE_CXX_COMPILER_ARCHITECTURE_ID STREQUAL "x64" OR
-   NOT CMAKE_BUILD_TYPE STREQUAL "Release" OR CMAKE_CONFIGURATION_TYPES)
-    message(FATAL_ERROR "SDK requires single-config MSVC Windows x64 Release (Ninja)")
+# Bounded native binary profiles; never mix architectures or binding ABIs.
+if(APPLE AND CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang" AND CMAKE_SIZEOF_VOID_P EQUAL 8)
+    set(DASSDL3_SDK_PLATFORM macos)
+    set(DASSDL3_SDK_ARCH "${CMAKE_SYSTEM_PROCESSOR}")
+    if(CMAKE_OSX_ARCHITECTURES)
+        set(DASSDL3_SDK_ARCH "${CMAKE_OSX_ARCHITECTURES}")
+    endif()
+    if(NOT DASSDL3_SDK_ARCH MATCHES "^(arm64|x86_64)$")
+        message(FATAL_ERROR "Mac SDK requires one arm64 or x86_64 architecture")
+    endif()
+    set(_sdk_binding python)
+    set(_sdk_types macos)
+elseif(WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "MSVC" AND CMAKE_SIZEOF_VOID_P EQUAL 8 AND
+       CMAKE_CXX_COMPILER_ARCHITECTURE_ID STREQUAL "x64")
+    set(DASSDL3_SDK_PLATFORM windows)
+    set(DASSDL3_SDK_ARCH x64)
+    set(_sdk_binding clangbind)
+    set(_sdk_types clangbind)
+else()
+    message(FATAL_ERROR "SDK requires AppleClang macOS or MSVC Windows x64")
 endif()
-if(BUILD_TESTING OR NOT DASSDL3_BINDING_BACKEND STREQUAL "clangbind")
-    message(FATAL_ERROR "SDK requires BUILD_TESTING=OFF and saved clangbind bindings")
+if(NOT CMAKE_BUILD_TYPE STREQUAL "Release" OR CMAKE_CONFIGURATION_TYPES)
+    message(FATAL_ERROR "SDK requires single-config Release (Ninja)")
+endif()
+if(BUILD_TESTING OR NOT DASSDL3_BINDING_BACKEND STREQUAL _sdk_binding)
+    message(FATAL_ERROR "SDK requires BUILD_TESTING=OFF and saved ${_sdk_binding} bindings")
 endif()
 foreach(feature IMGUI IMAGE TTF NET MIXER SOUND SHADERCROSS)
     if(DASSDL3_WITH_${feature})
@@ -29,7 +47,7 @@ install(EXPORT dasSDL3SDKTargets NAMESPACE dasSDL3:: DESTINATION lib/cmake/dasSD
 install(DIRECTORY src/ DESTINATION include/dasSDL3 COMPONENT dasSDL3SDK
     FILES_MATCHING PATTERN "*.h" PATTERN "*.inc" PATTERN "libraries" EXCLUDE
     PATTERN "generated" EXCLUDE)
-install(DIRECTORY src/generated/clangbind/ DESTINATION include/dasSDL3/generated/clangbind
+install(DIRECTORY src/generated/${_sdk_types}/ DESTINATION include/dasSDL3/generated/${_sdk_types}
     COMPONENT dasSDL3SDK FILES_MATCHING PATTERN "sdl3_types.inc")
 install(FILES src/generated/gpu_handle_adapters.h src/generated/gpu_handle_types.h DESTINATION include/dasSDL3/generated COMPONENT dasSDL3SDK)
 install(DIRECTORY third_party/daScript/include/ DESTINATION include COMPONENT dasSDL3SDK

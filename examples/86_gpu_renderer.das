@@ -1,4 +1,5 @@
 options gen2
+require gpu/file_shader_support
 require dassdl3/sdl3_render_surface_34_boost
 require dassdl3/sdl3_gpu_native_boost
 require dassdl3/sdl3_events
@@ -13,16 +14,16 @@ def run(smoke : bool) : SdlStatus {
         let window : SDL_Window? = with_window("SDL GPU Renderer - Escape to exit", 640, 480, 0ul) |> sdl_use
         let renderer : SDL_Renderer? = with_gpu_renderer(null, window) |> sdl_use
         let device = SDL_GetGPURendererDevice(renderer)// Borrowed; renderer owns this device.
-        let spirv = (SDL_GetGPUShaderFormats(device) & SDL_GPU_SHADERFORMAT_SPIRV) != 0u
-        let extension = spirv ? "spv" : "dxil"
+        let backend = file_shader_backend(device)
+        let extension = backend.extension
         let info = SDL_GPUShaderCreateInfo(
-            format = spirv ? SDL_GPU_SHADERFORMAT_SPIRV : SDL_GPU_SHADERFORMAT_DXIL,
+            format = backend.format,
             stage = SDL_GPUShaderStage.SHADERSTAGE_FRAGMENT,
             num_uniform_buffers = 1u)
         var shader : SDL_GPUShader? = device |> with_native_gpu_shader_file(
             info,
             "{SDL_GetBasePath()}assets/shaders/render_state.frag.{extension}",
-            "main") |> sdl_use
+            backend.entry) |> sdl_use
         var samplers : array<SDL_GPUTextureSamplerBinding>
         var textures : array<SDL_GPUTexture?>; var buffers : array<SDL_GPUBuffer?>
         let state : SDL_GPURenderState? = renderer |> with_gpu_render_state(shader, samplers, textures, buffers, 0u) |> sdl_use

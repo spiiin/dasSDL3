@@ -61,7 +61,9 @@
 #include "sdl3_remaining_34.h"
 #include "sdl3_rect.h"
 #include "sdl3_callback_types.h"
-#if defined(__linux__)
+#ifdef __APPLE__
+#include "generated/macos/sdl3_types.inc"
+#elif defined(__linux__)
 #include "generated/linux/sdl3_types.inc"
 #else
 #include "generated/clangbind/sdl3_types.inc"
