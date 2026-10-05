@@ -22,8 +22,12 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
 else()
     message(FATAL_ERROR "Supported packages: macOS AppleClang, Windows MSVC and Linux x86_64")
 endif()
-if(NOT CMAKE_BUILD_TYPE STREQUAL "Release" OR CMAKE_CONFIGURATION_TYPES)
-    message(FATAL_ERROR "Use single-config Ninja Release and the matching daScript dynamic SDK")
+# The dynamic SDK has a Release ABI. Visual Studio must not offer Debug.
+get_property(_package_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+if(WIN32 AND MSVC AND _package_multi_config)
+    set(CMAKE_CONFIGURATION_TYPES "Release" CACHE STRING "Supported package configurations" FORCE)
+elseif(NOT CMAKE_BUILD_TYPE STREQUAL "Release" OR _package_multi_config)
+    message(FATAL_ERROR "Use Release (Visual Studio on Windows or single-config Ninja) and the matching daScript dynamic SDK")
 endif()
 set(CMAKE_CXX_STANDARD 17)
 set_property(GLOBAL PROPERTY JOB_POOLS package_compile=6 package_link=1)
@@ -103,6 +107,7 @@ target_link_libraries(dasSDL3_package PRIVATE SDL3::SDL3-static
     "${DASLANG_DIR}/${_sdk_compiler}" "${DASLANG_DIR}/${_sdk_runtime}")
 set_target_properties(dasSDL3_package PROPERTIES PREFIX "" SUFFIX ".shared_module"
     OUTPUT_NAME dasSDL3 RUNTIME_OUTPUT_DIRECTORY "${DASSDL3_PACKAGE_OUTPUT}"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${DASSDL3_PACKAGE_OUTPUT}"
     LIBRARY_OUTPUT_DIRECTORY "${DASSDL3_PACKAGE_OUTPUT}")
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     set_target_properties(dasSDL3_package PROPERTIES BUILD_WITH_INSTALL_RPATH TRUE
@@ -158,6 +163,7 @@ if(DASSDL3_DASPKG_CLI_SUPPORT)
         "${DASLANG_DIR}/${_sdk_runtime}")
     set_target_properties(daspkg_pugixml PROPERTIES PREFIX "" SUFFIX ".shared_module"
         OUTPUT_NAME dasModulePUGIXML RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/cli"
+        RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/cli"
         LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/cli")
     file(COPY "${_pugi}/.das_module" "${_pugi}/daslib" DESTINATION "${CMAKE_BINARY_DIR}/cli")
     set(_cli_args --cli-module "${CMAKE_BINARY_DIR}/cli")

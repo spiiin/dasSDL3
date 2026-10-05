@@ -45,6 +45,8 @@ jobs:
         # Source staging fingerprints this CI SDK; committed repository profiles
         # deliberately require their exact reference binaries instead.
         run: ctest --test-dir build/package --output-on-failure -R '^sdl3_daspkg_(manifest|consumer|source)$'
+      - name: Visual Studio source package install and relocation
+        run: python tests/test_daspkg.py --module build/package/module/dasSDL3.shared_module --das-root third_party/daScript --cli-module build/package/cli --source --sdl-dir build/native/_deps/sdl3-build --generator "Visual Studio 17 2022"
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
