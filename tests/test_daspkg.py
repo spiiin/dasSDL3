@@ -26,6 +26,7 @@ def main():
     parser.add_argument("--llvm-dir", type=Path)
     parser.add_argument("--imgui", action="store_true")
     parser.add_argument("--repository", action="store_true", help="Clean HEAD export plus pending package entry files")
+    parser.add_argument("--generator", default="Ninja", help="CMake generator for source installs")
     args = parser.parse_args()
     if args.repository:
         args.source = True
@@ -47,7 +48,7 @@ def main():
     if args.repository:
         env["DASSDL3_PACKAGE_PROFILE"] = "imgui" if args.imgui else "core"
     if args.source:
-        env["CMAKE_GENERATOR"] = "Ninja"
+        env["CMAKE_GENERATOR"] = args.generator
         env["CMAKE_BUILD_PARALLEL_LEVEL"] = "6"
         if args.sdl_dir:
             env["SDL3_DIR"] = str(args.sdl_dir.resolve())
@@ -115,7 +116,7 @@ def main():
         good = fingerprint.read_text(encoding="utf-8")
         fingerprint.write_text("0" * 64 + good[64:], encoding="utf-8")
         bad = subprocess.run(["cmake", "-S", str(package), "-B", str(work / "reject"),
-                              "-G", "Ninja", "-DCMAKE_BUILD_TYPE=Release", f"-DDASLANG_DIR={das}"],
+                              "-G", args.generator, "-DCMAKE_BUILD_TYPE=Release", f"-DDASLANG_DIR={das}"],
                              env=env, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=60)
         (work / "sdk-rejection.log").write_text(bad.stdout, encoding="utf-8")
         if bad.returncode == 0 or "SDK fingerprint mismatch" not in bad.stdout:
@@ -134,13 +135,15 @@ def main():
         installed = consumer / "modules/dasSDL3"
         descriptor = installed / ".das_module"
         descriptor.rename(installed / ".das_module.test-original")
-        run("rebuild-descriptor", ["cmake", "--build", str(installed / "_build"), "--parallel", "6"], consumer)
+        run("rebuild-descriptor", ["cmake", "--build", str(installed / "_build"), "--config", "Release", "--parallel", "6"], consumer)
         if not descriptor.is_file():
             raise RuntimeError("Incremental build did not restore the module descriptor")
     if args.fetch_sdl:
         native_build = consumer / "modules/dasSDL3/_build"
         checkout = native_build / "_deps/sdl3-src"
         static_lib = native_build / "_deps/sdl3-build/SDL3-static.lib"
+        if not static_lib.is_file():
+            static_lib = native_build / "_deps/sdl3-build/Release/SDL3-static.lib"
         if not (checkout / ".git").exists() or not static_lib.is_file():
             raise RuntimeError("Cold install did not create its own SDL checkout and static library")
         git = ["git", "-c", f"safe.directory={checkout.as_posix()}", "-C", str(checkout)]

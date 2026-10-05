@@ -57,7 +57,7 @@ def main():
         "This is a focused SDK, not the complete upstream module bundle.\n"
         "Keep this directory intact; point DASLANG_DIR at this directory.\n"
         "Run bin/daslang.exe utils/daspkg/main.das -- help for package commands.\n"
-        "Source installation requires MSVC x64, CMake and Ninja.\n"
+        "Source installation requires MSVC x64 and CMake (Visual Studio or Ninja).\n"
         "Building standalone releases additionally requires LLVM tools.\n"
         "The Microsoft VC runtime remains a prerequisite.\n", encoding="utf-8")
     manifest = {p.relative_to(output).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()

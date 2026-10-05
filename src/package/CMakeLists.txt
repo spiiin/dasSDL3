@@ -3,8 +3,12 @@ project(dasSDL3Package LANGUAGES C CXX)
 if(NOT WIN32 OR NOT MSVC OR NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
     message(FATAL_ERROR "Package pilot requires Windows x64 MSVC")
 endif()
-if(NOT CMAKE_BUILD_TYPE STREQUAL "Release" OR CMAKE_CONFIGURATION_TYPES)
-    message(FATAL_ERROR "Use single-config Ninja Release and the matching daScript DLL SDK")
+# The DLL SDK has a Release ABI. Multi-config generators must not offer Debug.
+get_property(_package_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+if(_package_multi_config)
+    set(CMAKE_CONFIGURATION_TYPES "Release" CACHE STRING "Supported package configurations" FORCE)
+elseif(NOT CMAKE_BUILD_TYPE STREQUAL "Release")
+    message(FATAL_ERROR "Use Release and the matching daScript DLL SDK")
 endif()
 set(CMAKE_CXX_STANDARD 17)
 set_property(GLOBAL PROPERTY JOB_POOLS package_compile=6 package_link=1)
@@ -80,7 +84,8 @@ target_compile_options(dasSDL3_package PRIVATE /bigobj /arch:AVX2 /wd4251 /wd427
 target_link_libraries(dasSDL3_package PRIVATE SDL3::SDL3-static
     "${DASLANG_DIR}/lib/libDaScriptDyn.lib" "${DASLANG_DIR}/lib/libDaScriptDyn_runtime.lib")
 set_target_properties(dasSDL3_package PROPERTIES PREFIX "" SUFFIX ".shared_module"
-    OUTPUT_NAME dasSDL3 RUNTIME_OUTPUT_DIRECTORY "${DASSDL3_PACKAGE_OUTPUT}")
+    OUTPUT_NAME dasSDL3 RUNTIME_OUTPUT_DIRECTORY "${DASSDL3_PACKAGE_OUTPUT}"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${DASSDL3_PACKAGE_OUTPUT}")
 
 
 # GUI variant uses the same SDL instance as the core binding.
@@ -118,7 +123,8 @@ if(DASSDL3_DASPKG_CLI_SUPPORT)
     target_link_libraries(daspkg_pugixml PRIVATE "${DASLANG_DIR}/lib/libDaScriptDyn.lib"
         "${DASLANG_DIR}/lib/libDaScriptDyn_runtime.lib")
     set_target_properties(daspkg_pugixml PROPERTIES PREFIX "" SUFFIX ".shared_module"
-        OUTPUT_NAME dasModulePUGIXML RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/cli")
+        OUTPUT_NAME dasModulePUGIXML RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/cli"
+        RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/cli")
     file(COPY "${_pugi}/.das_module" "${_pugi}/daslib" DESTINATION "${CMAKE_BINARY_DIR}/cli")
     set(_cli_args --cli-module "${CMAKE_BINARY_DIR}/cli")
 endif()

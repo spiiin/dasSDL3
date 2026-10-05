@@ -34,7 +34,7 @@ explicitly uses SDL's dummy video driver.
 
 | Package path | Platforms | Requirements |
 | --- | --- | --- |
-| Repository core / ImGui | `windows` | MSVC x64, single-config Release, `/MD`, AVX2, exact SDK fingerprint |
+| Repository core / ImGui | `windows` | MSVC x64, Release (Visual Studio or Ninja), `/MD`, AVX2, exact SDK fingerprint |
 | Staged binary / source | `windows` | Matching Windows DLL SDK; source staging records its fingerprint |
 | Linux | Not supported | The Linux source runner is a separate build profile |
 
@@ -63,7 +63,8 @@ Expand-Archive sdk.zip -DestinationPath reference-sdk
 The SDK root is `reference-sdk/dasSDL3-sdk-ebac0ffe-windows-x64-r1`.
 Run its `bin/daslang.exe utils/daspkg/main.das -- ...` from that root;
 this archive needs no extra `-load_module` CLI helper. Install source packages
-from a VS x64 developer shell with CMake and Ninja on PATH. Keep the archive's
+with CMake and MSVC x64 installed. The Visual Studio generator does not require
+Ninja; Ninja users need a VS x64 developer shell and Ninja on PATH. Keep the archive's
 directory layout intact. Its per-file `SDK-SHA256.json` also covers the included
 notices. The archive URL, checksum and source revision are recorded in
 `src/package/profiles/reference-sdk.json`.
@@ -411,10 +412,10 @@ public package-index entry is created by this work. Until the entry files are
 committed and pushed, test the prepared local source/export instead of assuming
 the current remote branch contains them.
 
-After publication, from a VS x64 developer PowerShell, using the same SDK:
+Using the supported SDK and an installed Visual Studio C++ x64 toolchain:
 
 ~~~powershell
-$env:CMAKE_GENERATOR = "Ninja"
+# Optional: set CMAKE_GENERATOR to Ninja to use Ninja instead of Visual Studio.
 $env:DASSDL3_PACKAGE_PROFILE = "core"
 C:/path/to/daslang/bin/daslang.exe C:/path/to/daslang/utils/daspkg/main.das -- install github.com/spiiin/dasSDL3 --root C:/my-project
 ~~~
@@ -549,3 +550,28 @@ See [draft release notes](releases/0.1.0.md) and the
 [publication handoff](releases/publishing.md). VERSION defines the release number;
 daspkg resolves explicit @0.1.0 through the future v0.1.0 tag. No tag or index
 entry has been created. Manifest validation runs without publishing anything.
+
+## Visual Studio package builds
+
+Ninja is optional for repository and staged source packages. With no generator
+override, CMake can select the installed Visual Studio generator. For an explicit
+selection, set `$env:CMAKE_GENERATOR = "Visual Studio 17 2022"` (use the name for
+your installed version) and `$env:CMAKE_GENERATOR_PLATFORM = "x64"`.
+The package exposes only Release; daspkg already builds with `--config Release`.
+The native module is written beside `.das_module`, without a Release subdirectory.
+The matching reference DLL SDK and its fingerprints are still required.
+
+When changing generators after a failed install, remove only the package's
+`modules/dasSDL3/_build` directory before retrying; CMake caches the old generator.
+For direct CMake builds, pass `--config Release`; for CTest use `-C Release`.
+
+The source install/relocation test accepts `--generator "Visual Studio 17 2022"`;
+combine it with `--repository` to check the repository install and descriptor
+restoration. Its default remains Ninja.
+
+Validated on 2026-10-05 with Visual Studio 17 2022 / MSVC 19.38 and the
+reference SDK: repository core and ImGui install/check, all imports, consumer
+rendering and relocation, incremental descriptor restoration, and staged core
+source installation with SDK mismatch rejection. The Ninja staged core source
+regression also passes. These runs reused the pinned prebuilt SDL static library;
+Visual Studio 18 2026 and a cold SDL download were not exercised in this check.
