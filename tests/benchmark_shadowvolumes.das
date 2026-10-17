@@ -1,10 +1,10 @@
 options gen2
-require ../examples/gpu/shadowvolumes_scene.das as demo
+require ../examples/gpu_port_bgfx/example_10_shadowvolumes/shadowvolumes_scene.das as demo
 require dassdl3/sdl3_scope
 require dassdl3/sdl3_window_boost
 require daslib/defer
 require dassdl3/sdl3_init_boost
-require ../examples/gpu/stencil_support.das as support
+require ../examples/gpu_port_bgfx/common/stencil/stencil_support.das as support
 
 def benchmark(device : SDL_GPUDevice?; window : SDL_Window?) : SdlStatus {
     return demo::with_resources(device, SDL_GetGPUSwapchainTextureFormat(device, window)) $(var r) {

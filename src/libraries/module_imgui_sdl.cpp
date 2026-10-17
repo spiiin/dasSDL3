@@ -5,6 +5,9 @@
 MAKE_TYPE_FACTORY(SDL_Window, SDL_Window);
 MAKE_TYPE_FACTORY(SDL_Renderer, SDL_Renderer);
 MAKE_TYPE_FACTORY(SDL_Event, SDL_Event);
+MAKE_TYPE_FACTORY(SDL_GPUDevice, SDL_GPUDevice);
+MAKE_TYPE_FACTORY(SDL_GPUCommandBuffer, SDL_GPUCommandBuffer);
+MAKE_TYPE_FACTORY(SDL_GPURenderPass, SDL_GPURenderPass);
 
 namespace das {
 class Module_imgui_sdl3 : public Module {
@@ -22,6 +25,11 @@ public:
         lib.addModule(sdl);
         lib.addModule(imgui);
 #define BIND(F) addExtern<DAS_BIND_FUN(F)>(*this, lib, #F, SideEffects::worstDefault, #F)
+        BIND(ImGui_SDL3_GPU_Init);
+        BIND(ImGui_SDL3_GPU_Prepare);
+        BIND(ImGui_SDL3_GPU_Render);
+        BIND(ImGui_ImplSDLGPU3_NewFrame);
+        BIND(ImGui_ImplSDLGPU3_Shutdown);
         BIND(ImGui_SDL3_Init);
         BIND(ImGui_SDL3_ProcessEvent);
         BIND(ImGui_SDL3_Render);

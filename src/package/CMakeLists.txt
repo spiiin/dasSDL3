@@ -155,7 +155,8 @@ if(DASSDL3_PACKAGE_IMGUI)
     endforeach()
     target_sources(dasSDL3_package PRIVATE "${DASSDL3_SOURCE_DIR}/libraries/module_imgui_sdl.cpp"
         "${_imgui_source}/backends/imgui_impl_sdl3.cpp"
-        "${_imgui_source}/backends/imgui_impl_sdlrenderer3.cpp")
+        "${_imgui_source}/backends/imgui_impl_sdlrenderer3.cpp"
+        "${_imgui_source}/backends/imgui_impl_sdlgpu3.cpp")
     target_include_directories(dasSDL3_package PRIVATE "${DASSDL3_SOURCE_DIR}/libraries"
         "${_imgui_source}")
     if(WIN32)

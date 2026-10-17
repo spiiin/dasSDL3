@@ -1,5 +1,5 @@
 options gen2
-require ../examples/gpu/shadowmaps_app.das as demo
+require ../examples/gpu_port_bgfx/common/shadowmaps/shadowmaps_app.das as demo
 require bgfx_multipass_checks
 require daslib/defer
 

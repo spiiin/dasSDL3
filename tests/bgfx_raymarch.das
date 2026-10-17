@@ -1,8 +1,8 @@
 options gen2
-require ../examples/gpu/shaders/raymarch_shaders.das public
-require ../examples/gpu/shader_support.das public
+require ../examples/gpu_port_bgfx/example_02_raymarch/shaders/raymarch_shaders.das public
+require ../examples/gpu_port_bgfx/common/shader_support.das public
 // GPU regression harness; rendering functions come from the interactive example.
-require ../examples/gpu/raymarch_app.das as demo
+require ../examples/gpu_port_bgfx/example_02_raymarch/raymarch_app.das as demo
 // Port of bgfx examples/03-raymarch; BSD-2-Clause (LICENSE-bgfx.txt).
 require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_native_boost

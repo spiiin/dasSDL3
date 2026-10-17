@@ -1,6 +1,6 @@
 options gen2
-require ../examples/gpu/stencil_app.das as demo
-require ../examples/gpu/bgfx_support.das public
+require ../examples/gpu_port_bgfx/example_09_stencil/stencil_app.das as demo
+require ../examples/gpu_port_bgfx/common/bgfx_support.das public
 require bgfx_capture
 require dassdl3/sdl3_init_boost
 require daslib/defer

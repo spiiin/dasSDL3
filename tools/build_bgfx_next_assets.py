@@ -17,7 +17,7 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--source-dir", type=Path)
 parser.add_argument("--check", action="store_true")
 args = parser.parse_args()
-dest = ROOT / "examples/gpu/textures"
+dest = ROOT / "examples/gpu_port_bgfx/textures"
 dest.mkdir(exist_ok=True)
 manifest = {}
 for name, (source, digest) in SOURCES.items():

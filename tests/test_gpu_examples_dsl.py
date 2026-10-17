@@ -12,29 +12,39 @@ def main():
     parser.add_argument("--spirv-val")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
-    shaders = root / "examples/gpu/shaders"
-    modules = sorted(shaders.glob("*_shaders.das"))
-    assert len(modules) == 14
+    shaders = root / "examples/gpu_port_bgfx"
+    modules = sorted(shaders.rglob("*_shaders.das"))
+    assert len(modules) == 39
     names = []
+    compute_names = set()
+    access_names = set()
     with tempfile.TemporaryDirectory(prefix="gpu-example-dsl-") as directory:
         folder = Path(directory)
         imports = []
         for module in modules:
             source = module.read_text(encoding="utf-8")
+            compute_names.update(re.findall(r'compute_shader\([^)]*?name\s*=\s*"([^"\n]+)"', source))
+            access_names.update(re.findall(r'sdl_shader_access\(name\s*=\s*"([^"\n]+)"', source))
             (folder / module.name).write_text(source, encoding="utf-8")
             imports.append(f"require {module.stem}")
-            names.extend(re.findall(r'(?:vertex|fragment)_shader\(name\s*=\s*"([^"\n]+)"', source))
-        assert len(names) == 54 and len(set(names)) == len(names)
+            names.extend(re.findall(r'(?:vertex|fragment|compute)_shader\([^)]*?name\s*=\s*"([^"\n]+)"', source))
+        assert len(names) == 155 and len(set(names)) == len(names)
         calls = []
         for name in names:
-            calls.append(f'save("{folder.as_posix()}/{name}.spv", {name}, {name}_reflect)')
+            if name in compute_names:
+                calls.append(f'gpu_dsl_compute_info({name}_reflect, {name}_access) |> unwrap')
+            if name in access_names and name not in compute_names:
+                calls.append(f'gpu_dsl_shader_info({name}_reflect, {name}_access) |> unwrap')
+            storage = "true" if name in access_names else "false"
+            calls.append(f'save("{folder.as_posix()}/{name}.spv", {name}, {name}_reflect, {storage})')
         script = folder / "check.das"
         script.write_text("options gen2\n" + "\n".join(imports) + r'''
 require dassdl3/sdl3_shader_dsl
+require dassdl3/sdl3_shader_compute
 require daslib/fio
 
-def save(path : string; words, reflection : array<uint>) {
-    gpu_dsl_shader_info(reflection) |> unwrap
+def save(path : string; words, reflection : array<uint>; storage : bool) {
+    if (reflection[1] != 4u && !storage) { gpu_dsl_shader_info(reflection) |> unwrap }
     fopen(path, "wb") $(f) { verify(f != null); verify(fwrite(f, words) == length(words) * 4) }
 }
 [export]

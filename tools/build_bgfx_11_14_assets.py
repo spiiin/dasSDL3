@@ -81,7 +81,7 @@ def dds(data):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--source-dir',type=Path);p.add_argument('--check',action='store_true');args=p.parse_args()
-    folder=ROOT/'examples/gpu/assets';folder.mkdir(exist_ok=True)
+    folder=ROOT/'examples/gpu_port_bgfx/assets';folder.mkdir(exist_ok=True)
     manifest={'bgfx_commit':PIN,'files':{}}
     def read(path):
         return (args.source_dir/Path(path).name).read_bytes() if args.source_dir else urllib.request.urlopen(f'https://raw.githubusercontent.com/bkaradzic/bgfx/{PIN}/{path}').read()

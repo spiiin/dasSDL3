@@ -1,9 +1,9 @@
 options gen2
-require ../examples/gpu/shadowvolumes_scene.das as demo
-require ../examples/gpu/bgfx_support.das public
+require ../examples/gpu_port_bgfx/example_10_shadowvolumes/shadowvolumes_scene.das as demo
+require ../examples/gpu_port_bgfx/common/bgfx_support.das public
 require bgfx_capture
-require ../examples/gpu/port_geometry.das as geo
-require ../examples/gpu/shadowvolumes_geometry.das as oracle
+require ../examples/gpu_port_bgfx/common/port_geometry.das as geo
+require ../examples/gpu_port_bgfx/example_10_shadowvolumes/shadowvolumes_geometry.das as oracle
 require dassdl3/sdl3_init_boost
 require daslib/defer
 let WIDTH = 640u

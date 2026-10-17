@@ -1,0 +1,720 @@
+# bgfx example ports
+
+These are ports of bgfx examples to SDL GPU and the daScript shader DSL.
+The local numbering is stable; it is independent of the upstream bgfx numbering.
+Each numbered directory contains `main.das` and its own application code and
+`shaders/`, except where two ports share an implementation listed below.
+
+| Directory | Upstream bgfx example | Shared implementation |
+| --- | --- | --- |
+| [01_metaballs](example_01_metaballs/main.das) | 02-metaballs | Own application and shaders |
+| [02_raymarch](example_02_raymarch/main.das) | 03-raymarch | Own application and shaders |
+| [03_mesh](example_03_mesh/main.das) | 04-mesh | Own application and shaders |
+| [04_instancing](example_04_instancing/main.das) | 05-instancing | `common/cubes/` |
+| [05_bump](example_05_bump/main.das) | 06-bump | `common/cubes/` |
+| [06_hdr](example_06_hdr/main.das) | 09-hdr | Own application and shaders |
+| [07_fontsdf](example_07_fontsdf/main.das) | 11-fontsdf | Own application and shaders |
+| [08_lod](example_08_lod/main.das) | 12-lod | Own application and shaders |
+| [09_stencil](example_09_stencil/main.das) | 13-stencil | `common/stencil/` |
+| [10_shadowvolumes](example_10_shadowvolumes/main.das) | 14-shadowvolumes | `common/stencil/` |
+| [11_shadowmaps_simple](example_11_shadowmaps_simple/main.das) | 15-shadowmaps-simple | `common/shadowmaps/` |
+| [12_shadowmaps](example_12_shadowmaps/main.das) | 16-shadowmaps | `common/shadowmaps/` |
+| [13_ibl](example_13_ibl/main.das) | 18-ibl | Own application and shaders |
+| [14_oit](example_14_oit/main.das) | 19-oit | Own application and shaders |
+| [15_deferred](example_15_deferred/main.das) | 21-deferred | Own application and shaders |
+| [16_vectordisplay](example_16_vectordisplay/README.md) | 23-vectordisplay | Own application and shaders |
+| [17_nbody](example_17_nbody/README.md) | 24-nbody | Own application and shaders |
+| [18_occlusion](example_18_occlusion/README.md) | 26-occlusion | Own application and shaders |
+| [19_terrain](example_19_terrain/README.md) | 27-terrain | Own application and shaders |
+| [20_wireframe](example_20_wireframe/README.md) | 28-wireframe | Own application and shaders |
+| [21_picking](example_21_picking/README.md) | 30-picking | Own application and shaders |
+| [22_rsm](example_22_rsm/README.md) | 31-rsm | Own application and shaders |
+| [23_particles](example_23_particles/README.md) | 32-particles | Own application and shaders |
+| [24_pom](example_24_pom/README.md) | 33-pom | Own application and shaders |
+| [25_mvs](example_25_mvs/README.md) | 34-mvs | Own application and shaders |
+| [26_dynamic](example_26_dynamic/README.md) | 35-dynamic | Own application and shaders |
+| [27_sky](example_27_sky/README.md) | 36-sky | Own application and shaders |
+| [28_gpudrivenrendering](example_28_gpudrivenrendering/README.md) | 37-gpudrivenrendering | Own application and shaders |
+| [29_bloom](example_29_bloom/README.md) | 38-bloom | Own application and shaders |
+| [30_assao](example_30_assao/README.md) | 39-assao | Own application and shaders |
+| [31_svt](example_31_svt/README.md) | 40-svt | Own application and shaders |
+| [32_tess](example_32_tess/README.md) | 41-tess | Own application and shaders |
+| [33_bunnylod](example_33_bunnylod/README.md) | 42-bunnylod | Own application and shaders |
+| [34_denoise](example_34_denoise/README.md) | 43-denoise | `common/post_scene/` |
+| [35_sss](example_35_sss/README.md) | 44-sss | `common/post_scene/` |
+| [36_bokeh](example_36_bokeh/README.md) | 45-bokeh | `common/post_scene/` |
+| [37_pixelformats](example_37_pixelformats/README.md) | 47-pixelformats | Own application and shaders |
+| [38_drawindirect](example_38_drawindirect/README.md) | 48-drawindirect | Own application and shaders |
+| [39_hextile](example_39_hextile/README.md) | 49-hextile | Own application and shaders |
+
+`common/` contains shared GPU setup, geometry loaders and the explicitly shared
+renderers above. `assets/`, `models/` and `textures/` hold reusable source assets;
+`upstream/` records their upstream shader/example provenance. Build rules still
+copy runtime assets to `assets/bgfx` and `assets/meshes` beside the runner.
+Other GPU examples belong outside this group (shader DSL tutorials remain in
+`examples/gpu_dsl`).
+
+Rendering produces no capture files. Picking uses asynchronous pixel readback for selection. Entry points 11–39 accept `--smoke-test` for bounded startup checks (20 frames for SVT/tess, four for pixel formats, three for the others); otherwise they run until closed.
+The older entry points retain their unused bool runner convention.
+
+GPU regression harnesses live in `tests/bgfx_metaballs.das`, `tests/bgfx_raymarch.das`
+and the other `tests/bgfx_*.das` entry points; they import the application rendering functions and own
+the deterministic loops, readback/fences, captures and pixel assertions. CTest
+runs these harnesses, not the interactive entry points. Tests set up their own
+resources; mesh tests also exercise offscreen output and automatic resize.
+
+```powershell
+.\build\ninja\bin\dasSDL3_runner.exe .\tests\bgfx_metaballs.das --smoke-test
+```
+
+## Shader DSL and backends
+
+All thirty-nine examples use the 155 daScript shader entry points in the per-example and shared `shaders/` directories:
+`metaballs_shaders.das`, `raymarch_shaders.das`, `bunny_shaders.das`,
+`cube_shaders.das`, `hdr_shaders.das`, `fontsdf_shaders.das`,
+`lod_shaders.das`, `stencil_scene_shaders.das`, `stencil_shaders.das`,
+`shadowvolume_shaders.das`, `shadowmap_shaders.das`, `ibl_shaders.das`,
+`oit_shaders.das`, `deferred_shaders.das`, and the shader modules in ports 16–30. They compile through upstream dasSpirv
+when the script loads. Vertex layouts and uniforms retain their SDL contracts.
+
+Vulkan uses the core runner:
+
+```powershell
+$env:SDL_GPU_DRIVER = 'vulkan'
+./build/ninja/bin/dasSDL3_runner.exe examples/gpu_port_bgfx/example_01_metaballs/main.das
+```
+
+D3D12 translates the same generated SPIR-V through shadercross. Build with
+`DASSDL3_WITH_SHADERCROSS=ON` and use the libraries runner and its compiler DLLs:
+
+```powershell
+$env:SDL_GPU_DRIVER = 'direct3d12'
+./build/ninja/bin/dasSDL3_libraries_runner.exe examples/gpu_port_bgfx/example_06_hdr/main.das
+```
+
+Metal translates the same SPIR-V through the pinned shadercross build without DXC:
+
+```sh
+SDL_GPU_DRIVER=metal ./build/macos-libraries/bin/dasSDL3_libraries_runner examples/gpu_port_bgfx/example_06_hdr/main.das
+SDL_GPU_DRIVER=metal ctest --test-dir build/macos-libraries -R '^macos_metal_bgfx_' --output-on-failure
+```
+
+[common/shader_support.das](common/shader_support.das) imports shadercross only when the native
+module is available. The core runner advertises SPIR-V only. There is no fallback
+to old binaries and no per-frame compilation. HDR uses three fullscreen vertex
+entry points to match each fragment stage's varyings on D3D12.
+
+```powershell
+ctest --test-dir build/ninja -R 'sdl3_tests_bgfx_|shader_dsl_gpu_examples_compiler' --output-on-failure
+python tests/test_gpu_examples_dsl.py --runner build/ninja/bin/dasSDL3_runner.exe --spirv-val C:/VulkanSDK/<version>/Bin/spirv-val.exe
+```
+
+Tests check deterministic compilation of all 155 shaders, pixel readback, animation,
+instanced versus individual draws and HDR luminance. For the first six ports,
+migration captures match the previous HLSL images within 1 RGBA8 channel value on Vulkan and 2 on D3D12 (HDR).
+This is a measured comparison, not a bit-exact guarantee across drivers.
+
+The shader sources are the `.das` modules above. Upstream provenance and licenses
+are retained. See [shader DSL](../../docs/shader-dsl.md).
+
+## 01 — Metaballs
+
+[example_01_metaballs/main.das](example_01_metaballs/main.das) ports the CPU marching-cubes / transient-vertex
+scenario from [bgfx 02-metaballs](https://github.com/bkaradzic/bgfx/tree/81d81fba72c42d348c589514c774bbfe01e110fa/examples/02-metaballs)
+to daScript and SDL GPU. No bgfx runtime or renderer framework is involved.
+Original code and lookup table: Copyright 2011-2026 Branimir Karadzic;
+[BSD-2-Clause license](LICENSE-bgfx.txt). The copied table is isolated in
+[example_01_metaballs/metaballs_tables.das](example_01_metaballs/metaballs_tables.das); CPU field/triangulation is in
+[example_01_metaballs/metaballs_field.das](example_01_metaballs/metaballs_field.das).
+
+Run from the repository root after building `dasSDL3_runner`:
+
+```powershell
+.\build\ninja\bin\dasSDL3_runner.exe .\examples\gpu_port_bgfx\example_01_metaballs\main.das
+```
+
+Select a backend with `$env:SDL_GPU_DRIVER='vulkan'` or `'direct3d12'`.
+For the local RenderDoc-layer conflict, the optional runner argument
+`--disable-vulkan-layer=VK_LAYER_RENDERDOC_Capture` disables only that layer for
+this process, not Vulkan validation.
+
+Controls: Up/Down change ISO (0.1–4), Left/Right change grid size (8–32), Space
+pauses animation, R resets settings, Escape/window close exits. The title shows
+ISO, grid resolution, generated vertex count and CPU generation time. There is
+no ImGui dependency. Rendering uses a fixed 640×480 color/depth target and scales
+to the current window; non-4:3 windows stretch the image.
+
+### What was preserved and adapted
+
+- Sixteen animated metaballs, default 32³ grid and ISO=0.75, marching-cubes table,
+  interpolated normals, spatial color gradient, rotating model and specular light.
+- The field uses a sum of inverse squared distances, algebraically equivalent to
+  bgfx's product recurrence, with a small denominator floor at a sphere center.
+  Edge normals use one-sided differences rather than leaving boundary normals zero.
+- The light clamps its dot product before fractional powers to avoid NaNs.
+- Colors use float3 rather than normalized packed Uint8; vertex stride is 36 bytes.
+- One persistent vertex buffer and upload transfer buffer replace bgfx transient
+  allocation. Each upload cycles both transfer and vertex storage. There is no
+  per-frame GPU resource creation and no per-frame wait-idle.
+- Capacity covers the full marching-cubes upper bound for a 32³ grid (five
+  triangles per cell), unlike the upstream 32K-vertex truncation.
+- Shaders use [metaballs_shaders.das](example_01_metaballs/shaders/metaballs_shaders.das).
+
+### What this revealed about the binding
+
+Existing scopes cover device, shaders, pipeline, transfer/vertex buffers,
+color/depth textures, copy/render passes and swapchain acquisition/submission.
+Depth testing, buffer cycling, blit, fences and readback required no new raw SDL
+functions. `sdl_scope`/`sdl_use` and `sdl_try` keep creation and failure cleanup
+linear; `array(SDL_GPUColorTargetInfo(...))` and nested named initializers work.
+
+Two narrow float-array adapters were missing and added:
+`write_native_gpu_transfer_floats` and `push_native_gpu_vertex_uniforms`.
+They copy contiguous native 32-bit floats synchronously, with byte-count overflow
+checks. Capacity/offset are bytes; capacity must equal the actual transfer-buffer
+allocation. Vertex layout and shader uniform layout remain the caller's contract.
+These adapters do not serialize script objects or retain array pointers.
+Arbitrary POD/struct-array byte views and mapped GPU memory views remain future
+API work; this example deliberately uses a flat float array.
+
+Remaining syntax friction:
+
+- Native pointer values inserted into managed SDL descriptor fields require
+  mutable (`var`) parameters; native pointer aliases still have SDL lifetimes.
+- Raw bool-returning operations still need `sdl_status(...,"SDL_operation")`.
+- Swapchain scopes have several output arguments, so an explicit trailing block
+  is clearer here than forcing them into `sdl_use`.
+- GPU shader format/stage, pipeline descriptors and buffer layout are explicit.
+  They describe real SDL objects, not a new scene/mesh/material layer.
+- Marching cubes is CPU work in daScript. Interpreter cost is visible in the
+  title; lower the grid resolution or use AOT for performance comparisons.
+
+### Verification
+
+The separate `tests/bgfx_metaballs.das` test renders three deterministic animated frames, reads the last color
+texture back through a fence and checks foreground coverage. Set environment
+`DASSDL3_METABALLS_CAPTURE` to a writable filename to save that smoke image as
+640×480 RGBA8 bytes. This is diagnostic output, not needed for normal execution.
+
+[bgfx_metaballs_field.das](../../tests/bgfx_metaballs_field.das) checks all 256 topology rows,
+a radius-6 analytic sphere (positions/normals), empty isosurfaces and animation.
+[GPU upload tests](../../tests/gpu_float_upload.das) check float bytes after GPU
+roundtrip at nonzero offsets, rejected ranges/null handles, and a null uniform
+command. The rendered example exercises positive uniform upload.
+
+CTest registers Vulkan/Direct3D12 runs, plus interpreter/CppGenBind/AOT parity.
+Tests reject Vulkan and D3D12 validation errors. The native Metal harness also
+passed via shadercross; WebGPU execution is not validated. The Windows fixtures
+remain available independently of runtime translation.
+
+Local Windows validation: Vulkan and Direct3D12 smoke/readback, independent CPU
+field tests, float upload roundtrip, baseline/CppGenBind/AOT (fallback disabled),
+and a consumer built with LLVM/Clang/Python discovery disabled all pass. The fixed
+third frame contains 19,164 vertices and 47,324 foreground pixels; Vulkan and
+Direct3D12 readback bytes matched exactly on the tested machine. These are local
+results, not cross-driver pixel guarantees. The helper modules are explicitly
+named `shared public` modules and each is registered in the AOT build.
+
+## 02_raymarch — bgfx 03-raymarch
+
+Port of [bgfx 03-raymarch](https://github.com/bkaradzic/bgfx/tree/01dbbbc08c093f7ccf8adf7bd685739b344e9102/examples/03-raymarch),
+BSD-2-Clause; see LICENSE-bgfx.txt and upstream/raymarch-upstream.json.
+Preserves the rounded box and six spheres, 64-step sphere tracing, central-difference
+normals, three-sample ambient occlusion, diffuse/specular/Fresnel lighting, gamma,
+rotating model and light, interpolated four-color background, and distance/max-ray
+depth output. Analytical near/far rays with inverse bx XY rotation replace the
+inverse MVP matrix. Uniforms are updated on the CPU and consumed by the vertex
+shader; interpolated endpoints feed the fragment shader. A six-vertex procedural
+quad replaces transient vertex/index buffers. The bgfx/ImGui example-selector UI
+is omitted. Miss tracing exits early to avoid unbounded distances. Depth comparison
+is LESS_OR_EQUAL so background depth 1 passes the cleared depth target.
+
+Run from the repository:
+
+```powershell
+.\build\ninja\bin\dasSDL3_runner.exe .\examples\gpu_port_bgfx\example_02_raymarch\main.das
+.\build\ninja\bin\dasSDL3_runner.exe .\tests\bgfx_raymarch.das --smoke-test
+```
+
+Space pauses/resumes, R resets time, Escape/window close exits. Resize letterboxes
+the fixed 640x360 render target, preserving the 16:9 ray aspect ratio. The separate test renders
+times 0.6 and 1.2 and reads back both frames: grayscale foreground coverage,
+background corner orientation and changed image hashes must pass. Optional
+DASSDL3_RAYMARCH_CAPTURE writes the last RGBA8 image (640x360, top-down); the path
+must be writable. Pixel checks cover color, not independent depth readback.
+
+Shaders use [raymarch_shaders.das](example_02_raymarch/shaders/raymarch_shaders.das).
+
+### Wrapper ergonomics observed during this port
+
+- DSL reflection and shader scopes compose well
+  with sdl_scope/sdl_use. No manual shader destruction or bytecode lifetimes.
+- gpu_texture and the native topology/rasterizer/depth helpers remove repeated
+  zero/default fields without introducing renderer objects.
+- Typed float-array vertex uniforms avoid packing bytes or unsafe script code.
+- Remaining repetition: native pipeline creation requires empty vertex-layout
+  arrays for vertex-ID shaders. A narrow no-vertex-input overload could help.
+- Native SDL pointer fields require mutable pointers when initializing structs;
+  the resource function therefore takes var shader parameters. This is a daScript
+  pointer-constness constraint, not transfer of ownership.
+- Window/device claiming still uses explicit claim + defer release. A scoped
+  claim helper could shorten it while preserving SDL's device/window lifetime.
+- Readback remains verbose (transfer, copy pass, fence, bytes). It is deliberately
+  example-local; a future generic texture readback helper should specify pitch,
+  format and synchronization instead of assuming RGBA8.
+- Float-array upload convenience currently covers vertex uniforms. This example
+  naturally computes rays there; fragment/compute float overloads would be useful
+  for other ports. No new public API was necessary for this example.
+
+Local validation (2026-09-26): main CTest, CppGenBind interpreter and strict AOT
+passed on Vulkan and Direct3D 12 (six tests total); rebuilt no-LLVM consumer passed
+on Direct3D 12. At time 1.2, backend RGBA captures differed in 48 of 921600 bytes,
+maximum difference 1. DSL compilation and spirv-val passed. The legacy
+baseline runner could not rebuild because SDL_GPUVulkanOptions lacked a registered
+type in its snapshot; this unrelated baseline limitation is not counted as a pass.
+Keyboard controls are implemented; automated checks cover smoke rendering rather
+than synthetic input or interactive resize.
+
+## 03_mesh — bgfx 04-mesh
+
+[example_03_mesh/main.das](example_03_mesh/main.das) ports
+[bgfx 04-mesh](https://github.com/bkaradzic/bgfx/tree/7e3060ccb97959dcda3f091b96d82515197028e0/examples/04-mesh).
+Preserves the Stanford bunny, rotating model, animated normal displacement,
+position-dependent colors, diffuse/specular/Fresnel lighting and gamma correction.
+Code/shaders: Branimir Karadzic, BSD-2-Clause (LICENSE-bgfx.txt).
+The model has separate [provenance and terms](models/README.md).
+
+```powershell
+.\build\ninja\bin\dasSDL3_runner.exe .\examples\gpu_port_bgfx\example_03_mesh\main.das
+.\build\ninja\bin\dasSDL3_runner.exe .\tests\bgfx_mesh.das --smoke-test
+```
+
+Space pauses, R resets time, Escape/window close exits. The application uploads
+vertex and uint32 index buffers once, then issues one indexed draw per frame.
+Interactive rendering targets the swapchain at its actual pixel resolution;
+projection aspect and the D32 depth texture update on resize. No fixed-resolution
+upscaling, per-frame geometry upload or per-frame wait-idle. Back-face culling uses
+clockwise fronts for this OBJ and the port's left-handed projection.
+
+The offline converter uses the original OBJ instead of decoding bgfx's compressed
+binary mesh format. Normals are signed float3, not packed UNORM. The shader's model,
+view and projection transforms are expressed directly; a float4 vertex uniform
+contains time, aspect, near and far. Time reaches the fragment shader as a flat
+varying. The ImGui example selector is omitted. This is a visual/application port,
+not byte-for-byte compatibility with bgfx geometryc output.
+
+Shaders use [bunny_shaders.das](example_03_mesh/shaders/bunny_shaders.das).
+
+The separate `tests/bgfx_mesh.das` test renders deterministic times 0.6 and 1.2 into RGBA8 640x360 targets, waits on
+readback fences and checks foreground coverage, bright colored pixels, clear
+corners and changing image hashes. It then renders directly to the swapchain and
+resizes 960x540 to 800x600, requiring a changed depth-target size. Optional
+`DASSDL3_MESH_CAPTURE` writes the last offscreen image as top-down RGBA8 bytes.
+`tests/bgfx_mesh_data.das` tests valid decoding, missing files, truncated/extra payload,
+invalid header/counts/stride, non-finite vertices and out-of-range indices.
+
+### Wrapper findings
+
+No public API additions were required. Shader options, native resource scopes,
+pipeline/depth/rasterizer helpers, byte transfer adapters and indexed drawing cover
+this port. `sdl_use` keeps resource acquisition linear; `sdl_try` preserves cleanup
+on file/upload failures. Mesh decoding stays in an example-local shared module.
+
+Remaining friction: byte buffer upload needs transfer + command + copy scopes;
+dynamic depth replacement needs explicit lifetime management; SDL bool calls need
+`sdl_status`. Native pointers require mutable variables when placed in descriptors.
+These are narrow convenience opportunities, not reasons to introduce public mesh,
+material or renderer objects. The parser copies validated byte payloads; a bounded
+byte-slice upload API could remove those copies if profiling warrants it.
+
+Local validation (2026-09-26): main runner, legacy baseline, CppGenBind interpreter
+and strict AOT (fallback disabled) pass Vulkan and Direct3D 12 smoke/readback and
+resize tests. Decoder tests pass all four runners. The existing no-LLVM consumer
+passes Direct3D 12 after copying the new runtime assets; no consumer rebuild was
+needed. DSL compilation, spirv-val and deterministic OBJ conversion pass.
+At time 1.2 the offscreen image has 29,774 foreground pixels on both tested GPU
+backends. The harness also passed native Metal execution via shadercross.
+Keyboard controls are implemented but not automated.
+
+## 04_instancing — bgfx 05-instancing
+
+[example_04_instancing/main.das](example_04_instancing/main.das) ports the
+[upstream example](https://github.com/bkaradzic/bgfx/tree/7e3060ccb97959dcda3f091b96d82515197028e0/examples/05-instancing).
+The default 11x11 grid uses one indexed draw, with a real per-instance vertex
+buffer: four float4 matrix columns and a float4 tint (80-byte stride). CPU code
+updates the same animated XY rotations, positions and colors as bgfx. SDL upload
+and destination buffers are cycled each frame; there is no wait-idle per frame.
+
+I toggles between one instanced draw and one draw per cube using first_instance.
+Up/Down adjust the grid from 1x1 to 32x32; the camera remains at z=-35. Space pauses,
+R resets time, Escape closes. The title shows cube and draw counts. Rendering and
+depth storage use the current swapchain size.
+
+The shared cube has 24 vertices instead of bgfx's eight, because bump needs face
+normals/UVs/tangents. Position colors still match the original eight corner colors.
+Float4 vertex colors replace packed UNORM bytes. Persistent cycled buffers replace
+bgfx's transient allocator. The comparison path uses the same instance data for
+both modes so it isolates draw submission; ImGui/statistics menus are omitted.
+
+## 05_bump — bgfx 06-bump
+
+[example_05_bump/main.das](example_05_bump/main.das) ports the
+[upstream example](https://github.com/bkaradzic/bgfx/tree/7e3060ccb97959dcda3f091b96d82515197028e0/examples/06-bump).
+Nine rotating cubes use the original fieldstone color/normal textures, four animated
+colored point lights, radius/inner-radius attenuation, tangent-space normal
+reconstruction, linear-light shading and gamma output. Face tangents are analytic
+for the axis-aligned UV-mapped cube rather than computed by bgfx calcTangents.
+
+N toggles normal mapping, I toggles instancing, Space pauses, R resets and Escape
+closes. All nine cubes fit one instanced draw instead of the original three row
+draws. Light positions are evaluated from time in the fragment shader; their
+formulas/colors/radii are preserved. Textures use the original 512x512 TGA data
+converted offline to RGBA8, with linear filtering and one mip level, rather than
+the runtime compressed DDS/mip chain. No image decoding dependency is needed.
+
+## 06_hdr — bgfx 09-hdr
+
+[example_06_hdr/main.das](example_06_hdr/main.das) ports the
+[upstream example](https://github.com/bkaradzic/bgfx/tree/7e3060ccb97959dcda3f091b96d82515197028e0/examples/09-hdr).
+The Uffizi cubemap surrounds the reflective/color-modulated Stanford bunny.
+The camera orbits the bunny. The pass sequence is explicit SDL commands:
+
+1. Skybox and depth-tested bunny into a full-resolution RGBA16F target.
+2. Luminance at 128x128, then reductions to 64x64, 16x16, 4x4 and 1x1.
+3. Half-resolution bright extraction using middle gray, white point and threshold.
+4. Nine-tap vertical bloom filtering into an eighth-resolution texture.
+5. Horizontal bloom filtering combined with luminance-scaled Reinhard tone mapping
+   and gamma output to the swapchain.
+
+Up/Down change middle gray; Left/Right change bloom threshold; W/S change white
+point; B toggles bloom; Space pauses; R resets; Escape closes. Scene/depth and
+relative-size postprocess targets are recreated on window resize. The fixed
+luminance pyramid stays 128->64->16->4->1.
+
+RGBA16F replaces RGBE8/RE8 packing. This preserves values above 1 without encoding
+helpers, and avoids interpolating packed exponents. The 512x512x6 cubemap is
+unpacked offline from the original KTX RGBA16F payload; source hashes are pinned.
+Tiny negative source radiance values are clamped to zero. Fullscreen passes use
+a vertex-ID triangle instead of a transient screen quad. Single-sample rendering
+is used; the original ImGui, MSAA/VRS selectors and CPU luminance-readback UI are
+omitted. There is no GPU readback or test mode in the application modules.
+
+### Run and rebuild 04–06
+
+From the repository root:
+
+```powershell
+.\build\ninja\bin\dasSDL3_runner.exe .\examples\gpu_port_bgfx\example_04_instancing\main.das
+.\build\ninja\bin\dasSDL3_runner.exe .\examples\gpu_port_bgfx\example_05_bump\main.das
+.\build\ninja\bin\dasSDL3_runner.exe .\examples\gpu_port_bgfx\example_06_hdr\main.das
+```
+
+Use the backend-specific runners described above. Texture bytes are copied by
+CMake; shaders compile from the DSL. No bgfx runtime or network is needed.
+D3D12 requires shadercross.
+`tests/test_gpu_examples_dsl.py` verifies the DSL shaders with optional spirv-val.
+`tools/build_bgfx_next_assets.py --check` downloads the pinned sources and verifies
+conversion; `--source-dir` uses an offline directory containing the two TGAs and
+uffizi.ktx instead. Provenance: `upstream/bgfx-next-upstream.json` and
+`textures/manifest.json`; code license: LICENSE-bgfx.txt. The bunny's separate
+model terms remain in [models/README.md](models/README.md).
+
+### Tests and API findings
+
+`tests/bgfx_instancing.das` and `tests/bgfx_bump.das` call the same resource setup
+and draw functions as the apps. They check visible coverage, animated images,
+byte-identical instanced/individual output, and the effect of disabling normal
+mapping. `tests/bgfx_hdr.das` checks finite nonnegative FP16 scene data with values
+above 1, positive 1x1 luminance, bloom/exposure effects, animation and target resize.
+Readback/fences live only in `tests/bgfx_capture.das`. Set `DASSDL3_BGFX_CAPTURE` to
+an existing writable directory to retain raw test images: RGBA8 for final output,
+RGBA16F for HDR intermediate buffers. Frames 0–3 are 640x480; HDR frame 4 is 800x600.
+
+No public wrapper changes were necessary. Native array adapters support instance
+streams, indexed draws, samplers and cubemap face uploads; builders cover shaders,
+textures and pipeline state. `common/bgfx_support.das` contains only example-local SDL
+helpers. Resource structs in the apps are scoped bookkeeping, not public owning
+handles or a rendering framework. HDR records its passes directly without a graph
+or command-plan layer. Ordinary error returns clean up partial allocations.
+
+Remaining convenience gaps: upload setup and dynamic multi-target cleanup still
+need explicit code; shader ABI/vertex layout must match manually. Small arrays of
+float uniforms are now supported for vertex, fragment and compute stages through
+`push_native_gpu_*_uniforms`. These ports still pass their fragment parameters
+through flat varyings; changing that shader interface is optional. Shader/resource
+choices remain visible, and no unsafe script pointers are used.
+
+Local verification (Windows, 2026-09-26): all six main-runner tests and all 18
+baseline/CppGenBind/strict-AOT tests passed across Vulkan and Direct3D 12.
+All three interactive apps opened, rendered, resized and closed successfully on
+both drivers. The existing no-LLVM consumer also passed the three Direct3D 12
+tests. Official das-fmt verification and both asset/shader reproducibility checks
+passed. The three harnesses also passed native Metal execution via shadercross;
+other operating systems have not been validated here.
+
+Shader DSL examples are in [gpu_dsl](../gpu_dsl/README.md).
+
+## 07–10 — bgfx 11–14
+
+These are adaptations of [bgfx at 7e3060c](https://github.com/bkaradzic/bgfx/tree/7e3060ccb97959dcda3f091b96d82515197028e0/examples),
+using SDL GPU operations and daScript shader DSL. Existing example numbers stay
+stable. Algorithms and geometry helpers are local to these examples, not public
+binding abstractions. Keyboard controls replace bgfx's ImGui panels.
+
+| Script | Demonstration | Controls |
+| --- | --- | --- |
+| [example_07_fontsdf/main.das](example_07_fontsdf/main.das) | SDF glyphs, derivative antialiasing, outline and soft shadow; scaling and rotation | Arrows: scale/rotate; O: outline; S: shadow; PageUp/PageDown: scroll; R: reset |
+| [example_08_lod/main.das](example_08_lod/main.das) | Three original tree mesh levels, bark/leaves textures, alpha cutout and complementary 32-step screen-door transition | Up/Down: camera distance; T: transition; R: reset |
+| [example_09_stencil/main.das](example_09_stencil/main.das) | A finite stencil-masked mirror and planar projected shadows | Tab: mirror/shadow; E: effect; Space: pause; R: reset |
+| [example_10_shadowvolumes/main.das](example_10_shadowvolumes/main.das) | Two bgfx scenes, closed mesh volumes, colored lights, textures and fog | Tab/L/P/M: scene/lights/orbit/mesh; Z/E: algorithms; C/V/S: camera/volumes/shadows; Space: pause |
+
+Escape/window close exits each example. The title shows active controls. Targets
+follow the swapchain size. `bunny_shaders.das` is the vertex/fragment program of
+03_mesh, not a hardware mesh-shader stage.
+
+SDF requires `DASSDL3_WITH_TTF=ON` and the libraries runner:
+
+```powershell
+$env:SDL_GPU_DRIVER = 'vulkan'
+./build/ninja/bin/dasSDL3_libraries_runner.exe examples/gpu_port_bgfx/example_07_fontsdf/main.das
+./build/ninja/bin/dasSDL3_runner.exe examples/gpu_port_bgfx/example_08_lod/main.das
+./build/ninja/bin/dasSDL3_runner.exe examples/gpu_port_bgfx/example_09_stencil/main.das
+./build/ninja/bin/dasSDL3_runner.exe examples/gpu_port_bgfx/example_10_shadowvolumes/main.das
+```
+
+For D3D12 use the libraries runner with shadercross enabled for all four.
+The font atlas/layout comes from SDL_ttf rather than bgfx FontManager. The demo
+uses the existing JetBrains Mono asset ([OFL](../libraries/assets/OFL.txt)).
+The original Special Elite font remains in the pinned bgfx assets, but its complex
+contours produced visible SDF artifacts in the pinned SDL_ttf/FreeType path;
+clamping atlas UVs does not repair those distance fields. FreeType documents
+[limitations for intersecting contours](https://freetype.org/freetype2/docs/reference/ft2-properties.html#spread).
+SDL_ttf 3.2.2 explicitly disables the `sdf` overlap option internally; this example
+does not patch dependency internals or add a FreeType-specific public API. SDL_ttf
+3.2.2 tags FreeType's single-channel SDF glyphs as `IMAGE_ALPHA`; the example
+explicitly enables and checks `TTF_GetFontSDF`, then handles ALPHA/SDF sequences
+as distance data. Empty glyph sequences are skipped. Atlas textures are borrowed
+only for the submitted text draw and released by the text engine. Text wraps to
+the window width at the current scale, and scrolling stays within the text. Each
+glyph carries UV bounds: filtering is clamped to its texel centers and displaced
+shadow samples outside its rectangle are rejected, preventing atlas-neighbour bleed.
+
+The stencil scenes use the bunny, original columns, tiled floor and textured cubes.
+`example_10_shadowvolumes/main.das` reproduces bgfx 14's two scene compositions: the columned
+platform/ceiling with a bunny and 18 orbiting cubes, and nine bunnies on a tiled
+floor. It uses the original closed `bunny_decimated`, column and platform meshes,
+figure/fieldstone textures, animated colored lights, specular highlights and fog.
+One to five lights each get their own stencil clear, closed-volume draw and
+additive lighting pass. Cached adjacency makes silhouette construction linear;
+face-prism construction remains available for comparison. Local positions and
+anchored face planes are prepared once when each mesh is loaded. Instances share
+one immutable volume vertex buffer. Each frame computes inverse model matrices;
+per-light CPU work transforms the light to model space, classifies faces and
+emits uint32 indices. Reflected transforms account for reversed winding.
+`example_10_shadowvolumes/shaders/shadowvolume_shaders.das` transforms positions and extrudes far vertices
+on the GPU, retaining the 180-unit world-space extrusion under nonuniform scale.
+Only indices are uploaded each frame (64 MiB limit, cycled between lights).
+Pass and model uniforms use separate slots; packed model matrices are reused
+across lights within the frame.
+
+Tests retain the original CPU geometry oracle and exact cached/uncached world-space
+comparisons. Model-space rendering is compared against these reference images;
+classification checks cover nonuniform and negative scales. Reference rendering
+paths remain available to tests and benchmark comparisons.
+
+Tab switches scenes; L cycles lights; P changes their orbit; M switches bunny/cube;
+Z selects depth-fail/depth-pass; E switches silhouette/face prisms; C changes camera;
+V displays volumes; S toggles shadows; Space pauses; R resets; Escape closes.
+Depth-pass still has its inherent limitation when the camera enters a volume.
+The finite extrusion is 180 world units, with a far plane of 500.
+The original mixed algorithm, texture-based counter, high-poly mesh selection,
+ImGui controls and MSAA are not implemented. Scene 1 uses a centered 3x3 layout.
+
+The smaller cube scene in `example_10_shadowvolumes/shadowvolumes_app.das` remains a regression fixture:
+its independent CPU ray/box oracle tests both outside and inside cameras. The
+new scene tests validate asset adjacency, compare the fast cube extrusion to
+that reference, compare algorithms, and check shadows, lights, textures, specular,
+animation, cameras, mesh selection, volume display and the second scene.
+
+The original LOD/stencil/shadow-volume mesh and texture assets and Special Elite font are pinned in
+[assets/manifest.json](assets/manifest.json). Conversion is reproducible with
+`python tools/build_bgfx_11_14_assets.py`; an optional `--source-dir` uses an
+offline source cache and `--check` compares generated bytes. Normal builds only
+copy checked-in assets and never download/convert them. Font license:
+[SpecialElite-LICENSE.txt](assets/SpecialElite-LICENSE.txt), Copyright 2010
+Brian J. Bonislawsky DBA Astigmatic (AOETI); bgfx code/assets:
+[LICENSE-bgfx.txt](LICENSE-bgfx.txt). SDF: Copyright 2013 Jeremie Roy;
+LOD: Copyright 2013 Milos Tosic; stencil/volumes: Copyright 2013–2014 Dario Manesku.
+The short Sherlock Holmes excerpt is public domain.
+
+`tests/bgfx_fontsdf.das`, `bgfx_lod.das`, `bgfx_stencil.das` and
+`bgfx_shadowvolumes.das` and `bgfx_shadowvolumes_scene.das` exercise deterministic offscreen draws. They check glyph
+coverage/effects, layout margins and an adversarial empty-glyph atlas isolation
+fixture, LOD thresholds/duration and complementary pixel selection,
+reflection and shadow changes, closed volume topology, agreement of the volume
+algorithms and an independent CPU segment/AABB shadow oracle, including a camera
+inside the volume. Interpreter, CppGenBind and strict AOT use the same rendering
+functions. All five harnesses also passed native Metal interpreter execution.
+Mac volume rendering uses explicit depth bias, and the translucent debug-edge
+comparison permits a symmetric one-pixel neighborhood as documented in
+[macOS](../../docs/macos.md). The Windows AOT results do not establish Mac AOT
+coverage for these application harnesses. Browser execution is not validated.
+
+### Stencil scene fidelity
+
+`example_09_stencil/main.das` uses the original bgfx column OBJ, figure/flare DDS textures,
+fieldstone albedo and bunny. The reflection scene contains four columns and a
+rotating bunny; the projection scene contains the bunny and nine textured cubes.
+Up to five animated colored point lights use distance attenuation, diffuse and
+specular terms from bgfx 13. Light positions are reflected along with the geometry.
+The floor uses a stencil mask and bgfx's multiplicative reflection compositing;
+projected shadows use a separate cleared stencil and additive lighting pass per light.
+The stone texture has ten GPU-generated mip levels to avoid distant shimmer.
+
+Tab changes scene; E toggles reflection/shadows; L cycles 1–5 lights; Up/Down
+change reflection strength; Space pauses animation; R resets time; Escape closes.
+This port uses keyboard controls and single-sample rendering instead of bgfx's
+ImGui panel and MSAA. Its camera and normalized bunny asset can differ from the
+upstream image. All scene logic stays in the example, with explicit SDL passes.
+
+`tests/bgfx_stencil.das` checks reflection confinement, shadows that cannot brighten
+the reference, and visible texture/specular/light-count/animation changes. Captures
+0–3 compare disabled/enabled reflections and shadows; 4–7 disable textures,
+disable specular, select one light, and advance animation respectively.
+`tools/build_bgfx_11_14_assets.py --check` verifies pinned column/texture conversions.
+
+## Shadow maps, IBL, OIT and deferred (11–15)
+
+Ports of bgfx examples 15, 16, 18, 19 and 21 at revision
+`7e3060ccb97959dcda3f091b96d82515197028e0` (BSD-2-Clause).
+Run from the repository root with the core Vulkan runner:
+
+```powershell
+$env:SDL_GPU_DRIVER = 'vulkan'
+./build/ninja/bin/dasSDL3_runner.exe examples/gpu_port_bgfx/example_11_shadowmaps_simple/main.das
+./build/ninja/bin/dasSDL3_runner.exe examples/gpu_port_bgfx/example_12_shadowmaps/main.das
+./build/ninja/bin/dasSDL3_runner.exe examples/gpu_port_bgfx/example_13_ibl/main.das
+./build/ninja/bin/dasSDL3_runner.exe examples/gpu_port_bgfx/example_14_oit/main.das
+./build/ninja/bin/dasSDL3_runner.exe examples/gpu_port_bgfx/example_15_deferred/main.das
+```
+
+| Entry point / upstream | GPU implementation | Controls |
+|---|---|---|
+| 11 / [15-shadowmaps-simple](https://github.com/bkaradzic/bgfx/tree/7e3060ccb97959dcda3f091b96d82515197028e0/examples/15-shadowmaps-simple) | Directional shadow map, depth draw then forward lighting; hard/16-tap PCF | F filter, S shadows, D map, Space pause |
+| 12 / [16-shadowmaps](https://github.com/bkaradzic/bgfx/tree/7e3060ccb97959dcda3f091b96d82515197028e0/examples/16-shadowmaps) | Spot, four tetrahedral point-light views, four fitted directional cascades; hard/PCF/PCSS/VSM/ESM; separable GPU blur; projected/linear depth | L light, F filter (0–4), Z depth, S shadows, D first map, Space pause |
+| 13 / [18-ibl](https://github.com/bkaradzic/bgfx/tree/7e3060ccb97959dcda3f091b96d82515197028e0/examples/18-ibl) | Original cmft-filtered Kyoto radiance mip chain and irradiance cube; Fresnel, diffuse/specular IBL, direct lighting and filmic mapping in fragment shader | Left/Right gloss, Up/Down reflectivity, M metal/specular workflow, D/S IBL terms |
+| 14 / [19-oit](https://github.com/bkaradzic/bgfx/tree/7e3060ccb97959dcda3f091b96d82515197028e0/examples/19-oit) | Alpha blending, weighted color/revealage MRT and separate-weight MRT; independent blending and fullscreen GPU resolve | M mode, R reverse submission order |
+| 15 / [21-deferred](https://github.com/bkaradzic/bgfx/tree/7e3060ccb97959dcda3f091b96d82515197028e0/examples/21-deferred) | 11×11 textured cubes, albedo/normal MRT + sampled depth, additive light buffer, reconstruction and lighting in fragment shader; 512 lights initially | L 1–2048 lights, D G-buffer views, S scissor |
+
+Escape closes each example. Windows are resizable. GPU validation remains enabled.
+All five use static geometry buffers. No per-frame CPU vertex transforms,
+CPU lighting, CPU shadow filtering, image readback or synchronous GPU wait is used
+in application rendering. CPU work is matrices, controls and draw submission;
+deferred also computes conservative light bounds, as the upstream raster path does.
+Resource creation/shader compilation happens at startup or resize. Shared helpers
+are example-local SDL calls, not a public rendering framework.
+
+### Port choices and differences
+
+These are runnable algorithm ports, not complete reproductions of every upstream
+UI option. Keyboard controls replace ImGui and camera controls are fixed. Single
+sampling is used. Shadow scenes retain the original hollow cube/tree meshes and
+our normalized bunny; placement/scales differ. Shadow maps use 512×512 RGBA32F
+(depth, second moment, exponential depth) with D32 depth attachments rather than
+packed RGBA8/native comparison-sampler alternatives. PCF uses explicit GPU taps
+and receiver-plane depth compensation. Point-light views are separate textures,
+not the upstream packed stencil atlas. Cascades fit four fixed camera intervals;
+there is no configurable split count or stabilized/snap-to-texel option.
+
+IBL uses Kyoto, one bunny and both material workflows; upstream probe/model
+selectors, the material grid and ImGui color/exposure controls are not included.
+Prefiltered mip levels are preserved, never approximated with runtime box mipmaps.
+OIT uses unweighted alpha for revealage in the separate-weight variant: Vulkan
+floating-point blend factors must not receive the potentially >1 weighted alpha.
+Deferred implements the upstream raster/scissor path; optional compute lighting,
+texture arrays and scissor-outline overlays are not implemented. Material mipmaps
+are generated on the GPU; light/normal buffers use normalized RGBA8 as upstream.
+
+Assets are checked in and copied by CMake. Offline reproducibility checks:
+
+```powershell
+python tools/build_bgfx_ibl_assets.py --source-dir C:/src/bgfx --check
+python tools/build_bgfx_shadowmaps_assets.py --source-dir C:/src/bgfx --check
+```
+
+Both scripts validate pinned upstream SHA-256 hashes. There is no download,
+texture filtering or OBJ conversion during normal builds or example execution.
+
+Tests `bgfx_shadowmaps_simple`, `bgfx_shadowmaps`, `bgfx_ibl`, `bgfx_oit` and
+`bgfx_deferred` import exactly the rendering functions used by these examples.
+They exercise shadow/light/filter/depth modes, material changes, OIT order
+independence with a conventional alpha-blend negative control, and deferred
+scissor equivalence. Readback is confined to these tests. They are registered
+for interpreter/CppGenBind/strict AOT; registration alone is not runtime coverage.
+
+## Ports 16–20: vector display, compute, visibility and terrain
+
+### [16: vectordisplay](example_16_vectordisplay/README.md)
+
+CPU line tessellation and public-domain Hershey SIMPLEX strokes; GPU Gaussian blur, ping-pong phosphor history and composition. M selects glow+history, lines only, glow without history. Space freezes the rotating wheel; R clears history. The scene adapts the original test patterns; ImGui and the full original vector drawing API are not ported.
+
+### [17: nbody](example_17_nbody/README.md)
+
+GPU initialization, 512-thread shared-memory tiles for all-pairs gravity, Verlet integration, ping-pong buffers and additive instanced billboards. M selects sphere, cube or torus; Space pauses; R resets. Default count is 4096. The UI presets and optional indirect dispatch generator from bgfx are not ported; dispatch size is known on the CPU and particle state never returns to it during rendering. Simulation advances one explicit fixed step per rendered frame.
+
+### [18: occlusion](example_18_occlusion/README.md)
+
+SDL GPU has no occlusion-query or conditional-render entry points. This adaptation renders an occluder depth prepass, conservatively projects cube bounds in compute, scans the covered depth rectangle, and writes indexed indirect commands (instance count 0 or 1). M toggles culling/all objects; Space pauses the camera; R resets it. It uses current-frame depth, no CPU visibility/readback, and is an algorithmic replacement, not an implementation of bgfx queries. The original query result HUD and auxiliary view are not reproduced.
+
+### [19: terrain](example_19_terrain/README.md)
+
+128x128 editable heightfield. CPU brush edits match the responsibility split of bgfx; mode 0 samples an R8 height texture in the vertex shader, mode 1 uploads displaced vertices. Left mouse raises, right lowers, M changes mode, R flattens, Space suspends painting. Brush placement intersects the camera ray with the base plane. The original separate static/dynamic buffer UI variants are represented by one cycling vertex-buffer path.
+
+### [20: wireframe](example_20_wireframe/README.md)
+
+Barycentric shader wireframe over the original bunny mesh, with derivative-based line thickness. Mesh expansion happens once at load time, as in the original barycentric path; edge shading runs on the GPU. M cycles filled, filled+wire and wire-only; Space pauses rotation; R resets it. The newer bgfx storage-buffer vertex-pulling line-extrusion path is not included.
+
+Tests cover glow/history, CPU-oracle Verlet results, indirect command visibility with exact culled/unculled image parity, GPU/CPU height parity, and wireframe modes. Readback is confined to tests.
+
+## Ports 21–25
+
+All five techniques are supported by SDL GPU. Per-example READMEs describe scene and algorithm adaptations; these are technique ports, not visual replicas or performance-equivalent bgfx implementations. Picking, RSM, particles, POM and multiple vertex streams have offscreen regression tests.
+
+POM and particle textures are converted from pinned bgfx KTX files with `tools/build_bgfx_pom_assets.py --source-dir C:/src/bgfx --check`. Runtime loading needs no KTX decoder. Source hashes and conversion outputs are recorded in `assets/picking-pom-particles-manifest.json`.
+
+## Ports 26–30
+
+Dynamic buffers, Perez sky, GPU-driven rendering, bloom and ASSAO are applicable to SDL GPU. No example in this group was skipped. GPU-driven visibility/compaction/indirect commands and all included post-processing remain on the GPU. Dynamic geometry updates stay on the CPU as in bgfx.
+
+These are technique adaptations with per-example limitations, not full scene/UI replicas. Sky includes the original landscape/lightmap but omits calendar/day-night controls. ASSAO includes all five quality modes, depth mips, adaptive load budget and smart filtering, using storage buffers, the original 120-object scene, fieldstone material, camera and framebuffer gutter. See the per-example READMEs before comparing performance or image quality.
+
+## bgfx 40–45
+
+The six ports above require the libraries runner with ImGui; SVT also requires SDL_image.
+All shaders use daScript DSL. The same original scenes/assets are retained; implementation
+layout differences are documented in each example. `common/post_scene/` shares only the
+source scene geometry/materials for Denoise, SSS and Bokeh, not public SDL abstractions.
+
+Regenerate/verify assets with `python tools/build_bgfx_40_45_assets.py --bgfx C:/src/bgfx --check`.
+To rebuild the bunny collapse map, compile the original `42-bunnylod/progmesh.c` as a shared
+library exporting `ProgressiveMesh` and supply `--progressive-library <path>` without `--check`.
+Python conversion needs Pillow and NumPy. Consumers use the checked-in files directly;
+CMake copies assets next to the runner. Asset hashes and original source hashes are recorded.
+
+
+## Pixel formats, indirect drawing and hex tiling
+
+Ports 37–39 require the ImGui-enabled libraries runner. Their READMEs document
+SDL format availability, the absence of indirect-count draws, and the explicit
+isotropic LOD substitute for `textureGrad`. Computation remains in the shader DSL;
+pixel-format conversion is offline CPU work, as in bgfx's bimg conversion.
+
+Rebuild/check their texture assets with Pillow and NumPy:
+
+```powershell
+python tools/build_bgfx_47_49_assets.py --bgfx C:/src/bgfx --check
+```
+
+Omit `--check` to regenerate. `assets/ports47-49-manifest.json` records source and
+output hashes. Reconfigure CMake after adding assets so they are copied beside
+the runner. No bgfx runtime library is linked.

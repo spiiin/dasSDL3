@@ -320,7 +320,7 @@ if(BUILD_TESTING)
 endif()
 if(BUILD_TESTING)
     foreach(driver vulkan direct3d12)
-        foreach(script tests/gpu_native_adapters tests/gpu_native_array_operations examples/48_gpu_native_graphics examples/49_gpu_native_compute examples/50_gpu_native_transfer tests/bgfx_metaballs tests/bgfx_raymarch tests/bgfx_mesh tests/bgfx_instancing tests/bgfx_bump tests/bgfx_hdr tests/bgfx_fontsdf tests/bgfx_lod tests/bgfx_stencil tests/bgfx_shadowvolumes tests/bgfx_shadowvolumes_scene tests/bgfx_shadowmaps_simple tests/bgfx_shadowmaps tests/bgfx_ibl tests/bgfx_oit tests/bgfx_deferred tests/gpu_float_upload)
+        foreach(script tests/gpu_native_adapters tests/gpu_native_array_operations examples/48_gpu_native_graphics examples/49_gpu_native_compute examples/50_gpu_native_transfer tests/bgfx_metaballs tests/bgfx_raymarch tests/bgfx_mesh tests/bgfx_instancing tests/bgfx_bump tests/bgfx_hdr tests/bgfx_fontsdf tests/bgfx_lod tests/bgfx_stencil tests/bgfx_shadowvolumes tests/bgfx_shadowvolumes_scene tests/bgfx_shadowmaps_simple tests/bgfx_shadowmaps tests/bgfx_ibl tests/bgfx_oit tests/bgfx_deferred tests/bgfx_vectordisplay tests/bgfx_nbody tests/bgfx_occlusion tests/bgfx_terrain tests/bgfx_wireframe tests/bgfx_picking tests/bgfx_rsm tests/bgfx_particles tests/bgfx_pom tests/bgfx_mvs tests/bgfx_dynamic tests/bgfx_sky tests/bgfx_gpudrivenrendering tests/bgfx_bloom tests/bgfx_assao tests/gpu_float_upload)
             string(REPLACE "/" "_" name "${script}")
             set(_gpu_example_runner dasSDL3_runner)
             if(script MATCHES "^tests/bgfx_" AND driver STREQUAL "direct3d12")
@@ -606,7 +606,7 @@ if(BUILD_TESTING)
     endforeach()
 endif()
 
-configure_file("${CMAKE_SOURCE_DIR}/examples/gpu/models/bunny.msh" "${CMAKE_BINARY_DIR}/bin/assets/meshes/bunny.msh" COPYONLY)
+configure_file("${CMAKE_SOURCE_DIR}/examples/gpu_port_bgfx/models/bunny.msh" "${CMAKE_BINARY_DIR}/bin/assets/meshes/bunny.msh" COPYONLY)
 
 if(BUILD_TESTING)
     add_test(NAME sdl3_mesh_data COMMAND dasSDL3_runner ${CMAKE_SOURCE_DIR}/tests/bgfx_mesh_data.das --smoke-test)
@@ -615,7 +615,7 @@ endif()
 
 # Offline bgfx application assets: no shader compiler/download in consumer builds.
 foreach(texture fieldstone-n.rgba8 fieldstone-rgba.rgba8 uffizi.rgba16f kyoto_lod.rgba16f kyoto_irr.rgba16f)
-    configure_file("${CMAKE_SOURCE_DIR}/examples/gpu/textures/${texture}" "${CMAKE_BINARY_DIR}/bin/assets/bgfx/${texture}" COPYONLY)
+    configure_file("${CMAKE_SOURCE_DIR}/examples/gpu_port_bgfx/textures/${texture}" "${CMAKE_BINARY_DIR}/bin/assets/bgfx/${texture}" COPYONLY)
 endforeach()
 
 include("${CMAKE_SOURCE_DIR}/tests/shader_dsl.cmake")
@@ -626,7 +626,7 @@ if(DASSDL3_WITH_LIVE)
 endif()
 
 # Converted, pinned resources for bgfx 11/12 ports (offline at build/run time).
-file(GLOB _bgfx_next_assets "${CMAKE_SOURCE_DIR}/examples/gpu/assets/*")
+file(GLOB _bgfx_next_assets CONFIGURE_DEPENDS "${CMAKE_SOURCE_DIR}/examples/gpu_port_bgfx/assets/*")
 foreach(asset IN LISTS _bgfx_next_assets)
     get_filename_component(name "${asset}" NAME)
     configure_file("${asset}" "${CMAKE_BINARY_DIR}/bin/assets/bgfx/${name}" COPYONLY)
@@ -643,3 +643,7 @@ if(BUILD_TESTING AND CMAKE_SYSTEM_NAME STREQUAL "Linux")
         sdl3_renderer_primitives sdl3_init_hints sdl3_properties sdl3_process_loadso
         PROPERTIES LABELS linux-core)
 endif()
+
+include("${CMAKE_SOURCE_DIR}/tests/forge_examples.cmake")
+
+include("${CMAKE_SOURCE_DIR}/cmake/ForgeExamplesAOT.cmake")

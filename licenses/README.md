@@ -48,8 +48,8 @@ tests compare every shipped notice against this checked-in set.
 
 ## Other repository content and profiles
 
-Adapted bgfx examples retain examples/gpu/LICENSE-bgfx.txt; the Special Elite font
-retains examples/gpu/assets/SpecialElite-LICENSE.txt. SDL examples identify their
+Adapted bgfx examples retain examples/gpu_port_bgfx/LICENSE-bgfx.txt; the Special Elite font
+retains examples/gpu_port_bgfx/assets/SpecialElite-LICENSE.txt. The bunny progressive-mesh conversion retains examples/gpu_port_bgfx/assets/progmesh-LICENSE.txt. SDL examples identify their
 public-domain origin in source. These examples/assets are not shipped by the
 core/GUI consumer demos. Keep their notices when distributing them.
 

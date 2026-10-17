@@ -1,8 +1,8 @@
 options gen2
-require ../examples/gpu/fontsdf_app.das as demo
-require ../examples/gpu/bgfx_support.das public
+require ../examples/gpu_port_bgfx/example_07_fontsdf/fontsdf_app.das as demo
+require ../examples/gpu_port_bgfx/common/bgfx_support.das public
 require bgfx_capture
-require ../examples/gpu/shaders/fontsdf_shaders.das as shaders
+require ../examples/gpu_port_bgfx/example_07_fontsdf/shaders/fontsdf_shaders.das as shaders
 require dassdl3/sdl3_shader_uniforms
 require dassdl3/sdl3_init_boost
 require daslib/defer

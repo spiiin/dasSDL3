@@ -26,7 +26,7 @@ output=struct.pack('<4sIII',b'MSH1',len(vertices),len(indices),24)
 output+=b''.join(struct.pack('<6f',*v) for v in vertices)
 output+=struct.pack('<%dI'%len(indices),*indices)
 manifest={'source':URL,'source_sha256':SOURCE_SHA256,'vertices':len(vertices),'indices':len(indices),'stride':24,'sha256':hashlib.sha256(output).hexdigest()}
-folder=ROOT/'examples/gpu/models';folder.mkdir(exist_ok=True)
+folder=ROOT/'examples/gpu_port_bgfx/models';folder.mkdir(exist_ok=True)
 if a.check:
  assert (folder/'bunny.msh').read_bytes()==output,'Stale bunny.msh'
  assert json.loads((folder/'bunny.json').read_text())==manifest,'Stale manifest'

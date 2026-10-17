@@ -1,5 +1,5 @@
 options gen2
-require gpu/file_shader_support
+require ./gpu_port_bgfx/common/file_shader_support.das
 require dassdl3/sdl3_render_surface_34_boost
 require dassdl3/sdl3_gpu_native_boost
 require dassdl3/sdl3_events

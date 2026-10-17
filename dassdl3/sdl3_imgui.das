@@ -27,3 +27,26 @@ def public with_imgui(window : SDL_Window?; renderer : SDL_Renderer?;
     }
     return <- result
 }
+
+// The window must be claimed by device. Prepare draw data outside a render pass;
+// render it in a LOAD pass using that window's swapchain format, sample count 1.
+def public with_imgui_gpu(window : SDL_Window?; device : SDL_GPUDevice?;
+                      blk : block<() : $Result<auto(TT); SdlError>>) {
+    var previous = GetCurrentContext()
+    var context = CreateContext()
+    if (context == null) {
+        return err(SdlError(operation = "CreateContext", message = "Could not create ImGui context"), type<TT>)
+    }
+    var result : $Result<TT; SdlError>
+    {
+        defer() { DestroyContext(context); SetCurrentContext(previous) }
+        SetCurrentContext(context)
+        if (!ImGui_SDL3_GPU_Init(window, device)) { return err(sdl_error("ImGui_SDL3_GPU_Init"), type<TT>) }
+        {
+            defer() { ImGui_ImplSDLGPU3_Shutdown(); ImGui_ImplSDL3_Shutdown() }
+            static_if (typeinfo can_copy(type<$Result<TT; SdlError>>)) { result = blk() }
+            else { result <- blk() }
+        }
+    }
+    return <- result
+}

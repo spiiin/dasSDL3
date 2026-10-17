@@ -46,8 +46,8 @@ def main():
         shutil.copy2(ROOT / "examples/daspkg-gpu-consumer" / name, consumer / name)
     shutil.copy2(ROOT / "examples/46_gpu_texture_uniform_bindings.das", consumer / "texture_bindings.das")
     shutil.copy2(ROOT / "examples/86_gpu_renderer.das", consumer / "gpu_renderer.das")
-    (consumer / "gpu").mkdir()
-    shutil.copy2(ROOT / "examples/gpu/file_shader_support.das", consumer / "gpu/file_shader_support.das")
+    (consumer / "gpu_port_bgfx/common").mkdir(parents=True)
+    shutil.copy2(ROOT / "examples/gpu_port_bgfx/common/file_shader_support.das", consumer / "gpu_port_bgfx/common/file_shader_support.das")
     assets = consumer / "assets/shaders"
     assets.mkdir(parents=True)
     for name in SHADERS:

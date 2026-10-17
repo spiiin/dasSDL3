@@ -1,8 +1,8 @@
 options gen2
 // Diagnostic copy of shadowvolumes_scene::draw: coarse CPU timers only.
 // Keep this fixture aligned with that implementation; not an alternative renderer.
-require ../examples/gpu/shadowvolumes_scene.das
-require ../examples/gpu/shaders/stencil_scene_shaders.das as rich
+require ../examples/gpu_port_bgfx/example_10_shadowvolumes/shadowvolumes_scene.das
+require ../examples/gpu_port_bgfx/common/stencil/shaders/stencil_scene_shaders.das as rich
 require dassdl3/sdl3_window_boost
 require daslib/defer
 struct Profile {

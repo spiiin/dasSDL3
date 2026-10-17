@@ -1,5 +1,5 @@
 options gen2
-require ../examples/gpu/hdr_app.das as demo
+require ../examples/gpu_port_bgfx/example_06_hdr/hdr_app.das as demo
 require bgfx_capture
 require daslib/defer
 require math

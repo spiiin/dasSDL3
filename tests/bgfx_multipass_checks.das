@@ -15,7 +15,7 @@ def changed(a, b : array<uint8>; tolerance : int = 2) : int {
     return count
 }
 def visible(bytes : array<uint8>) {
-    var lo = 255; var hi = 0
+    var lo = 765; var hi = 0
     for (i in 0..length(bytes) / 4) { let c = int(bytes[i * 4]) + int(bytes[i * 4 + 1]) + int(bytes[i * 4 + 2]); lo = min(lo, c); hi = max(hi, c) }
     verify(hi - lo > 50, "Empty or constant image")
 }

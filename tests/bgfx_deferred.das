@@ -1,5 +1,5 @@
 options gen2
-require ../examples/gpu/deferred_app.das as demo
+require ../examples/gpu_port_bgfx/example_15_deferred/deferred_app.das as demo
 require bgfx_multipass_checks
 require daslib/defer
 
