@@ -1,0 +1,63 @@
+{
+  "repository": "https://github.com/bkaradzic/bgfx",
+  "commit": "7e3060ccb97959dcda3f091b96d82515197028e0",
+  "license": "../LICENSE-bgfx.txt",
+  "ports": [
+    {
+      "local": "example_21_picking",
+      "upstream": "examples/30-picking",
+      "adaptation": "GPU ID rendering and asynchronous one-pixel readback with a polled fence. Click a cube to select it; Space pauses rotation. Twelve cubes replace the original mesh collection. A full-resolution ID target and one-pixel query replace bgfx's tight 8x8 picking projection and majority vote. The interactive loop never waits for GPU completion.",
+      "source_sha256": {
+        "examples/30-picking/fs_picking_id.sc": "06adb65c9067a649768e3b121d295a19df2452eab26af87fafc19c356e5d3ac9",
+        "examples/30-picking/fs_picking_shaded.sc": "22b8bc64bc5a1b46c54abd414079298b977d1a14c1be4c6b93195356760c2557",
+        "examples/30-picking/picking.cpp": "f4d6cf57f85d0e6a828441cc50b3cd4e853c7a2edf4147226d6d3abc21bd80e8",
+        "examples/30-picking/varying.def.sc": "56ef5843f0ed95deebeb135fa5a6798d74af690a5bacd616c3246a13a403f619",
+        "examples/30-picking/vs_picking_shaded.sc": "d3c4d56c70b2e3164a46434da4174ed54e16a7c06f1b9730aa488a431c388fad"
+      }
+    },
+    {
+      "local": "example_22_rsm",
+      "upstream": "examples/31-rsm",
+      "adaptation": "Reflective shadow maps: position, normal and reflected flux MRTs from the light; camera G-buffer; shadowed direct illumination and 64 virtual point-light samples gathered in the final fragment shader. M cycles indirect+direct, direct only and reflected-flux preview; Space pauses cubes; R resets rotation. A Cornell-style room replaces the upstream scene. Fullscreen gathering replaces upstream instanced light-volume accumulation; both indirect lighting paths run on the GPU, but their quality and cost are not equivalent. RSM resolution is 256x256. A depth bias covers the low-resolution PCF footprint.",
+      "source_sha256": {
+        "examples/31-rsm/fs_rsm_combine.sc": "59a9e9b21c7773d2b0aa5f5054d18b623cc71614874714ebd61eaa8f9cf27c50",
+        "examples/31-rsm/fs_rsm_gbuffer.sc": "fa94eabddf68c6f9c73f7dce3fcf5e8d432edd44719c65de24c30058537d6467",
+        "examples/31-rsm/fs_rsm_lbuffer.sc": "85b709f8ca036a225423f3507c28097795052ca6f002c038a23c0c0630d0166e",
+        "examples/31-rsm/fs_rsm_shadow.sc": "73db3598ddaa6c6d6f5de4b3bf679655d0364ed5464a6c627c61169874c082e2",
+        "examples/31-rsm/reflectiveshadowmap.cpp": "31bd806caf962310729bb53e40ecd16c475aaf139d60daec843be1614303f7fb",
+        "examples/31-rsm/varying.def.sc": "36b7292fd1dd1b956f9c6e03a4df576466fc4ef53db55601b0d64e4fff6d5b08",
+        "examples/31-rsm/vs_rsm_combine.sc": "37b60abf7762ff8dadfcb4febe048bf2506275618455b9a36726688d58ae81f4",
+        "examples/31-rsm/vs_rsm_gbuffer.sc": "e9b383d9f3baf4d9ef530d737fa1a307ad16fa51f18cc5527c4726ec0e568830",
+        "examples/31-rsm/vs_rsm_lbuffer.sc": "4bf237d9075120a5a419fd4b3fa5c49ef35e94b15a4f5383016bfe27af7bdb84",
+        "examples/31-rsm/vs_rsm_shadow.sc": "b82405c5a8bb5fe9910a0965304723091db05614c6e4a55285123e84b246072f"
+      }
+    },
+    {
+      "local": "example_23_particles",
+      "upstream": "examples/32-particles",
+      "adaptation": "Four CPU emitters, particle lifetime and Bezier/gravity motion, CPU depth sorting, and one instanced GPU billboard draw with the original sprite. Simulation stays on the CPU as in bgfx examples/common/ps; it is not the compute N-body example. M cycles sphere, hemisphere, circle, disc and rectangle; A switches additive/premultiplied-alpha blending; Space pauses; R resets. This adapts emitter shapes and motion, rather than reproducing every upstream curve, material and ImGui parameter. Capacity is 4096 particles.",
+      "source_sha256": {
+        "examples/32-particles/particles.cpp": "f9fc5330d8ab6f8d06577e97cb2a833ac7733baa0dbd87caa2ee16bc1b32eb6f"
+      }
+    },
+    {
+      "local": "example_24_pom",
+      "upstream": "examples/33-pom",
+      "adaptation": "Normal, parallax, steep parallax and interpolated parallax occlusion mapping on the GPU, using the original diffuse/normal/height textures. M cycles flat, normal, parallax, steep and POM; Space pauses rotation; R resets it. A single rotating quad makes displacement easy to compare. Maps are decoded offline to RGBA8 base levels; the shader explicitly samples LOD 0 inside divergent ray marching. It does not reproduce upstream mip filtering, editable light/material controls or scene layout.",
+      "source_sha256": {
+        "examples/33-pom/fs_pom.sc": "b83ccafbc12f5eb6cb944a15edc0d7bf4f9cfcf44471bede26daa3c9cfbc6f8e",
+        "examples/33-pom/pom.cpp": "cc5794d714869e366707e6ec751f93e3ce6045ae4ad51b37fa46dbc29cc2324c",
+        "examples/33-pom/varying.def.sc": "528db65ed311747c4e5b7490b0b9c42f3951416907ecf624ea9e20c843b4bff8",
+        "examples/33-pom/vs_pom.sc": "36252668e6a10d390e197a9dc79a44d74dfedb6fd7f0a6f7fa78c86e3bacffca"
+      }
+    },
+    {
+      "local": "example_25_mvs",
+      "upstream": "examples/34-mvs",
+      "adaptation": "Multiple vertex streams: positions in slot 0, colors in slot 1, explicit SDL vertex attributes and 121 rotating cubes. M switches only the color buffer; Space pauses; R resets rotation. The port uses an expanded triangle list instead of the upstream indexed strip. Position data is unchanged when switching colors; streams are never interleaved on the CPU.",
+      "source_sha256": {
+        "examples/34-mvs/mvs.cpp": "6fdc7b24f2b98945fe065f0abbbcd0aa29501460bf562993f9339994efd184eb"
+      }
+    }
+  ]
+}

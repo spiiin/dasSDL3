@@ -1,5 +1,5 @@
 options gen2
-require ../examples/gpu/shadowvolumes_scene.das
+require ../examples/gpu_port_bgfx/example_10_shadowvolumes/shadowvolumes_scene.das
 [export]
 def main(unused : bool) : int {
     let status = sdl_scope() {

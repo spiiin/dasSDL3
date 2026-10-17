@@ -1,8 +1,8 @@
 options gen2
-require ../examples/gpu/shaders/metaballs_shaders.das public
-require ../examples/gpu/shader_support.das public
+require ../examples/gpu_port_bgfx/example_01_metaballs/shaders/metaballs_shaders.das public
+require ../examples/gpu_port_bgfx/common/shader_support.das public
 // GPU regression harness; rendering functions come from the interactive example.
-require ../examples/gpu/metaballs_app.das as demo
+require ../examples/gpu_port_bgfx/example_01_metaballs/metaballs_app.das as demo
 // Port of bgfx examples/02-metaballs; BSD-2-Clause (LICENSE-bgfx.txt).
 require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_native_boost
@@ -11,7 +11,7 @@ require dassdl3/sdl3_window_boost
 require dassdl3/sdl3_iostream_boost
 require daslib/match
 require daslib/defer
-require ../examples/gpu/metaballs_field.das
+require ../examples/gpu_port_bgfx/example_01_metaballs/metaballs_field.das
 require math
 require dassdl3/sdl3_init_boost
 

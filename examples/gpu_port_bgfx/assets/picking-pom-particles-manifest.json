@@ -1,0 +1,30 @@
+{
+  "parallax-d": {
+    "source": "examples/runtime/textures/parallax-d.ktx",
+    "source_sha256": "b9009b62ba8205ab9d52e263c06fa3d97e68dc3de29c73a9d4462ec42411c9a8",
+    "sha256": "40fc7b92416487f6644a7f9f478628927479ad57e2bbc806f41476062751ccfa",
+    "width": 256,
+    "height": 256
+  },
+  "parallax-n": {
+    "source": "examples/runtime/textures/parallax-n.ktx",
+    "source_sha256": "eb02c6e49d1bade912ead1ddbd183b1cb9ad52f66e423f4b260e882fa4817f2d",
+    "sha256": "fae64f060b3dce9a16055012ba458eb1f8d27797b5f65ffe30fe17f1bbd6a16c",
+    "width": 256,
+    "height": 256
+  },
+  "parallax-h": {
+    "source": "examples/runtime/textures/parallax-h.ktx",
+    "source_sha256": "f701a7861ef5788cd0008b71a96641de0b5751a1a20b9b335333c6d376b4bc8d",
+    "sha256": "af03412a673365580fc9de1c5defcb916ce65681afdba0ef2843d126fadeb535",
+    "width": 256,
+    "height": 256
+  },
+  "particle": {
+    "source": "examples/runtime/textures/particle.ktx",
+    "source_sha256": "95d1a189c31d7d94a07ec3a8662a6800ca11c7be63271746805d8f16cef1da29",
+    "sha256": "6455247d66070f09b87d247299be2f61a0a4c0045a36a572f1f3211b0c78561f",
+    "width": 256,
+    "height": 256
+  }
+}

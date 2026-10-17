@@ -1,0 +1,13 @@
+{
+  "commit": "7e3060ccb97959dcda3f091b96d82515197028e0",
+  "files": {
+    "examples/47-pixelformats/pixelformats.cpp": "fb72b5c93cdcfed2bf16e9d836d5252e0aee743ff9dd860679766b5feedb93a1",
+    "examples/48-drawindirect/cs_drawindirect.sc": "d8edf6d43f70cea33d1b2c1ab9130528c293f06ffe96419c6baebaf29919c6eb",
+    "examples/48-drawindirect/cs_drawindirect_count.sc": "493886b92e3f371b7b879601d3d5eff38f524f87ce6b003ee6f1653281825cd2",
+    "examples/48-drawindirect/drawindirect.cpp": "8d7b7146b6a82c01bc93a151aea4af6b6273049dada2b0ee760904373d9877fd",
+    "examples/49-hextile/fs_hextile.sc": "91b58dd7dc25a2cc4a4a6422731b0f82cd39b6a8bac3d21f0696350c3f8146c1",
+    "examples/49-hextile/hextile.cpp": "e63cc5b22d94b254334646a1bea2ea5a5fb0a3d1ad5eb319e786695ed662ba88",
+    "examples/49-hextile/varying.def.sc": "96f3c377081117ba284479beb3f79d3d491ef221d76f802143cfa0b405c1d809",
+    "examples/49-hextile/vs_hextile.sc": "b80875512b18dc8fc4b7d1ac2488d6c7e1437e013f235eeab8bbfec1a2b8a244"
+  }
+}

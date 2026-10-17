@@ -26,6 +26,11 @@ ctest --test-dir build/ninja -R '^sdl3_(image_io|tests_image|examples_libraries_
 
 ## 01 — daScript ImGui with SDL3
 
+For SDL GPU, use `with_imgui_gpu(window, device)` after claiming the window.
+Call `ImGui_SDL3_GPU_Prepare(command)` after `Render()` and outside a render pass,
+then `ImGui_SDL3_GPU_Render(command, pass)` in a matching swapchain-format LOAD pass.
+The [ASSAO settings panel](../gpu_port_bgfx/example_30_assao/README.md) demonstrates this backend.
+
 `01_imgui.das` uses the existing daScript `imgui` module and Dear ImGui's official
 SDL3 platform / SDLRenderer3 rendering backends. No GLFW window or OpenGL context
 is used by this example. Click the counter button, open the standard ImGui demo,

@@ -17,7 +17,7 @@ function(dassdl3_add_macos_shader_dsl_aot)
     file(GLOB_RECURSE dependencies CONFIGURE_DEPENDS
         "${ROOT}/dassdl3/*.das" "${ROOT}/third_party/daScript/daslib/*.das"
         "${ROOT}/third_party/daScript/modules/dasSpirv/spirv/*.das"
-        "${ROOT}/examples/gpu/*.das" "${ROOT}/examples/gpu_dsl/*.das"
+        "${ROOT}/examples/gpu_port_bgfx/*.das" "${ROOT}/examples/gpu_dsl/*.das"
         "${ROOT}/tests/shader_dsl*.das" "${ROOT}/tests/bgfx*.das")
     # Include shared boost imports, including optional backend selection imports.
     set(pending ${_dsl_scripts})

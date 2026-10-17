@@ -1,0 +1,50 @@
+{
+  "bgfx_commit": "7e3060ccb97959dcda3f091b96d82515197028e0",
+  "files": {
+    "post-bunny.msh": {
+      "source": "examples/assets/meshes/bunny.obj",
+      "source_sha256": "008348bca990dcf70f381a8c79bb3470b04cd447099cc3a7ced0bf472a4a0c4a",
+      "sha256": "900d95a0447753cb629f6e54be4007c4d8be2940b453b6605c7c31be7fa0b30f"
+    },
+    "post-unit_sphere.msh": {
+      "source": "examples/runtime/meshes/unit_sphere.bin",
+      "source_sha256": "0c464ef3713b54044aeb5ec7fcef2faebd204a16475faf33dd0679849e085ada",
+      "sha256": "59cb724abbd7fbe96b0ecfb5f53205eda83b6160e67c4c2cbe1c18a497ce9f6f"
+    },
+    "bunnylod.msh": {
+      "source": "examples/assets/meshes/bunny_patched.obj",
+      "source_sha256": "61f255a59a8a87638a0635e87d532170baac170ae656ad1eb93e99a1c98a3e7d",
+      "sha256": "95778651c752f5bd4e55cdff41df58080ba7757ea06bb21c0834cb1aee226ada"
+    },
+    "bunnylod-collapse.bin": {
+      "source": "examples/assets/meshes/bunny_patched.obj",
+      "source_sha256": "61f255a59a8a87638a0635e87d532170baac170ae656ad1eb93e99a1c98a3e7d",
+      "sha256": "fdd72f7725cfc52d9810c96b5736b44cfdc480cd4a64174e52580dcd1c2898d9"
+    },
+    "svt-pages-0.bin": {
+      "source": "examples/runtime/textures/8k_mars.jpg",
+      "source_sha256": "21c350a44431c6bb50f146406d566d05175c13c5825bc9b50ea5b650abbeddea",
+      "sha256": "3624c12610b4764e90af24e3ee680068358cdc60882f4ce44a475db7adb11e2c"
+    },
+    "svt-pages-1.bin": {
+      "source": "examples/runtime/textures/8k_mars.jpg",
+      "source_sha256": "21c350a44431c6bb50f146406d566d05175c13c5825bc9b50ea5b650abbeddea",
+      "sha256": "3c654c798b1778018c30d9f0884ea72bd900dc0d97bf3871fe0722c441b7dbd1"
+    },
+    "svt-pages-2.bin": {
+      "source": "examples/runtime/textures/8k_mars.jpg",
+      "source_sha256": "21c350a44431c6bb50f146406d566d05175c13c5825bc9b50ea5b650abbeddea",
+      "sha256": "69587e7fe8732c7368519fff345b42761f2a1319d7f64f04a44e76d2d877790a"
+    },
+    "svt-pages.idx": {
+      "source": "examples/runtime/textures/8k_mars.jpg",
+      "source_sha256": "21c350a44431c6bb50f146406d566d05175c13c5825bc9b50ea5b650abbeddea",
+      "sha256": "faf9330e84b7512eed9899591e19964e8e3c42de830799ff89a4e2c5f48e5610"
+    },
+    "tess-height.raw": {
+      "source": "examples/runtime/textures/dmap.png",
+      "source_sha256": "d1baba1785516ff6fe5553e47cb96e775f65cf2a8ef17e05d80fde05d5d141e3",
+      "sha256": "2703f5fccbdf560a2098d360fea198bb0376b4cda83c49a7b049534365febd88"
+    }
+  }
+}

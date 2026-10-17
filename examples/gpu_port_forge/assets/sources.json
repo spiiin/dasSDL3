@@ -1,0 +1,43 @@
+{
+  "revision": "31f44fce9b69cb124b38c1bc90177ef17f1342c8",
+  "inputs": {
+    "assets/models/Suzanne/Suzanne.gltf": "7e8ae013010aff530162ef2795cec74c2646019e224af17bcfb691664f0f0aec",
+    "assets/models/Suzanne/Suzanne.bin": "b85c2727aa41318e00673d8892f5879d46fb6e476e280f28ee1febd07602b6b8",
+    "assets/models/Suzanne/Suzanne_BaseColor.png": "1c009f45e53b260ceecd383f2c356ed08b08e05acd4633bcc713213319b2092b",
+    "assets/models/BoxTextured/BoxTextured.gltf": "1e9003a4a2a8822ff60da529357bd8e4dec4a59b1a479017993e7e2ad5fcebef",
+    "assets/models/BoxTextured/BoxTextured0.bin": "2e8c0483fa6665c686ec345f89dcbb2a694a587442584d09f8a83a59633327bc",
+    "assets/models/BoxTextured/CesiumLogoFlat.png": "9c22b05c5b136d03c5621a8765e50a8322be6c35b9de53e9fe22685840d7f469",
+    "assets/models/Duck/Duck.gltf": "98009069c87b165df92dbc8213d7c2b4f296074097ad2ec4efddf3dbc50cdcb0",
+    "assets/models/Duck/Duck0.bin": "4c851f5909095ecf77e66e0968c31d5354f17a49b62e1fad0c341e1635145ee9",
+    "assets/models/Duck/DuckCM.png": "8aedb428cbb815dffea650fe75bff032ea240f00ccad2f64dc8f62a0c5e30313",
+    "assets/models/CesiumMilkTruck/CesiumMilkTruck.gltf": "6442c628fd79be1d8560ac1b8e4cc2eba0bad567923973f8dc9f21ce0477dd0b",
+    "assets/models/CesiumMilkTruck/CesiumMilkTruck_data.bin": "6783d6e3151b9ca72c64cf694cdb6964de3a2cffcf62015c1d91e358df434046",
+    "assets/models/CesiumMilkTruck/CesiumMilkTruck.png": "0ee8d48455f0070b6f21b15821ca4abdb059b79d9a8e2e39646ff6758119d7fa",
+    "assets/models/space-shuttle/space-shuttle.obj": "37a54f4d5c7d471b81f9141531818ef7f076046b1755e8a7a163395ff03740d8",
+    "assets/models/space-shuttle/ShuttleDiffuseMap.png": "ae9a5ea5243b138639ec0f3c61ab0e49748049f6bc0366a0007697466e033e86",
+    "assets/skyboxes/milkyway/px.png": "80741267ffa46298ffbf19173635011b1f2680dc77bc56fd79dde51b9d8cc0f3",
+    "assets/skyboxes/milkyway/nx.png": "2d76fdf2f467bddbe1e52793ab3442c0b81aabc49c957ea7896b8c47121366c3",
+    "assets/skyboxes/milkyway/py.png": "7e8212063c357779bed5b4aa56c96336a1aa36093c4ddf21dd3406890d8c157c",
+    "assets/skyboxes/milkyway/ny.png": "13fb4e2da3448e8a707801a544c0578b2630b530e5df851cb3f0eb6a4a264f9f",
+    "assets/skyboxes/milkyway/pz.png": "0a327c6b76361b418b97dd5c27b16bdc3dd3febc6360c025015eaac289a1cc84",
+    "assets/skyboxes/milkyway/nz.png": "60b1e90791a482d9e5cfce23a79b891625f8d08b6a37427e73b2511922e3a029"
+  },
+  "outputs": {
+    "BoxTextured.fgm": "6407ce8bd642d8e4092a627e97794ad8aece2ec112960ce94ac8a2e19745d17f",
+    "BoxTextured.png": "9c22b05c5b136d03c5621a8765e50a8322be6c35b9de53e9fe22685840d7f469",
+    "CesiumMilkTruck.fgm": "37e74df68c6b42f141d11110de8e681d839d8f5791e8971319f2bfaa8c4287a2",
+    "CesiumMilkTruck.png": "009015949df7c1a4af287b7e96d6cf4990ea1d111df4f9f6323098055d0b3bac",
+    "Duck.fgm": "5b60410ea67e95fbcbaebc20cf397fbaf3b6458d986aaf96dcb07cd8bc02f0da",
+    "Duck.png": "8aedb428cbb815dffea650fe75bff032ea240f00ccad2f64dc8f62a0c5e30313",
+    "Shuttle.fgm": "9784f97fb5d9978f8a4975537884234ebd78069d1470b23f0587c9afdc79aa4e",
+    "Shuttle.png": "ae9a5ea5243b138639ec0f3c61ab0e49748049f6bc0366a0007697466e033e86",
+    "sky_nx.png": "2d76fdf2f467bddbe1e52793ab3442c0b81aabc49c957ea7896b8c47121366c3",
+    "sky_ny.png": "13fb4e2da3448e8a707801a544c0578b2630b530e5df851cb3f0eb6a4a264f9f",
+    "sky_nz.png": "60b1e90791a482d9e5cfce23a79b891625f8d08b6a37427e73b2511922e3a029",
+    "sky_px.png": "80741267ffa46298ffbf19173635011b1f2680dc77bc56fd79dde51b9d8cc0f3",
+    "sky_py.png": "7e8212063c357779bed5b4aa56c96336a1aa36093c4ddf21dd3406890d8c157c",
+    "sky_pz.png": "0a327c6b76361b418b97dd5c27b16bdc3dd3febc6360c025015eaac289a1cc84",
+    "Suzanne.fgm": "819fa24abe098dbbd6a805100d0959666fd4d506ac4cb4eaa5b5e075c89be9df",
+    "Suzanne.png": "1c009f45e53b260ceecd383f2c356ed08b08e05acd4633bcc713213319b2092b"
+  }
+}

@@ -78,7 +78,8 @@ if(DASSDL3_WITH_IMGUI)
 set(_imgui ${PROJECT_SOURCE_DIR}/third_party/daScript/modules/dasImgui)
 add_library(dasSDL3_imgui STATIC module_imgui_sdl.cpp
     ${_imgui}/imgui/backends/imgui_impl_sdl3.cpp
-    ${_imgui}/imgui/backends/imgui_impl_sdlrenderer3.cpp)
+    ${_imgui}/imgui/backends/imgui_impl_sdlrenderer3.cpp
+    ${_imgui}/imgui/backends/imgui_impl_sdlgpu3.cpp)
 target_include_directories(dasSDL3_imgui PUBLIC ${_imgui}/imgui ${_imgui}/src)
 target_link_libraries(dasSDL3_imgui PUBLIC dasSDL3 libDasModuleImgui)
 target_link_libraries(dasSDL3_libraries_runner PRIVATE dasSDL3_imgui libDasModuleLiveHost)
@@ -99,6 +100,9 @@ if(BUILD_TESTING)
         add_test(NAME sdl3_${name} COMMAND dasSDL3_libraries_runner ${PROJECT_SOURCE_DIR}/${script}.das --smoke-test)
         set_tests_properties(sdl3_${name} PROPERTIES ENVIRONMENT "SDL_RENDER_DRIVER=software" TIMEOUT 60)
     endforeach()
+    add_test(NAME sdl3_assao_gui COMMAND dasSDL3_libraries_runner
+        ${PROJECT_SOURCE_DIR}/tests/bgfx_assao_gui.das --smoke-test)
+    set_tests_properties(sdl3_assao_gui PROPERTIES ENVIRONMENT "SDL_GPU_DRIVER=vulkan;SDL_ASSERT=abort" TIMEOUT 120 RESOURCE_LOCK sdl_gpu)
     add_test(NAME sdl3_imgui_lifetimes COMMAND dasSDL3_libraries_runner
         ${PROJECT_SOURCE_DIR}/tests/imgui_lifetimes.das --smoke-test)
     set_tests_properties(sdl3_imgui_lifetimes PROPERTIES ENVIRONMENT "SDL_RENDER_DRIVER=software" TIMEOUT 60)
@@ -227,4 +231,25 @@ if(APPLE AND BUILD_TESTING)
     if(DASSDL3_WITH_SHADERCROSS)
         include("${PROJECT_SOURCE_DIR}/cmake/MacOSShaderDSLAOTTests.cmake")
     endif()
+endif()
+
+# bgfx 40-45 and 47-49 include ImGui settings in their offscreen test imports.
+if(BUILD_TESTING AND DASSDL3_WITH_IMGUI AND NOT APPLE)
+    set(_post_ports tess bunnylod denoise sss bokeh pixelformats drawindirect hextile)
+    if(DASSDL3_WITH_IMAGE)
+        list(APPEND _post_ports svt)
+    endif()
+    set(_post_drivers vulkan)
+    if(WIN32 AND DASSDL3_WITH_SHADERCROSS AND DASSDL3_SHADERCROSS_DXC)
+        list(APPEND _post_drivers direct3d12)
+    endif()
+    foreach(driver IN LISTS _post_drivers)
+        foreach(port IN LISTS _post_ports)
+            add_test(NAME sdl3_bgfx_${port}_${driver} COMMAND dasSDL3_libraries_runner
+                ${PROJECT_SOURCE_DIR}/tests/bgfx_${port}.das --smoke-test)
+            set_tests_properties(sdl3_bgfx_${port}_${driver} PROPERTIES
+                ENVIRONMENT "SDL_GPU_DRIVER=${driver};SDL_ASSERT=abort" TIMEOUT 120 RESOURCE_LOCK sdl_gpu
+                FAIL_REGULAR_EXPRESSION "VUID-;Validation Error;D3D12 ERROR;D3D12 CORRUPTION")
+        endforeach()
+    endforeach()
 endif()

@@ -121,7 +121,7 @@ independent pixel/byte checks. See [gpu raw tests](gpu-raw-tests.md).
 contiguous `array<float>` payloads without script byte packing. The transfer
 capacity must match its allocation; offsets/counts are checked in bytes and
 arrays are copied synchronously. Layout and valid live command/resource pointers
-remain caller preconditions. The [metaballs port](../examples/gpu/README.md) uses
+remain caller preconditions. The [metaballs port](../examples/gpu_port_bgfx/README.md) uses
 these helpers and documents remaining API friction.
 
 All three uniform helpers return SdlStatus and accept `(command, slot, values)`:

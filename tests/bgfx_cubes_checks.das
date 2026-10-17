@@ -1,6 +1,6 @@
 options gen2
 module bgfx_cubes_checks shared public
-require ../examples/gpu/cubes_app.das as demo
+require ../examples/gpu_port_bgfx/common/cubes/cubes_app.das as demo
 require bgfx_capture
 
 def check(device : SDL_GPUDevice?; bump : bool) : SdlStatus {

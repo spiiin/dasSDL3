@@ -1,8 +1,8 @@
 options gen2
-require ../examples/gpu/shaders/bunny_shaders.das public
-require ../examples/gpu/shader_support.das public
+require ../examples/gpu_port_bgfx/example_03_mesh/shaders/bunny_shaders.das public
+require ../examples/gpu_port_bgfx/common/shader_support.das public
 // GPU regression harness; rendering functions come from the interactive example.
-require ../examples/gpu/mesh_app.das as demo
+require ../examples/gpu_port_bgfx/example_03_mesh/mesh_app.das as demo
 // Port of bgfx examples/04-mesh; BSD-2-Clause (LICENSE-bgfx.txt).
 require dassdl3/sdl3_scope
 require dassdl3/sdl3_gpu_native_boost
@@ -14,7 +14,7 @@ require dassdl3/sdl3_init_boost
 require daslib/match
 require daslib/defer
 require math
-require ../examples/gpu/mesh_data.das
+require ../examples/gpu_port_bgfx/common/mesh_data.das
 
 let WIDTH = 640u
 let HEIGHT = 360u

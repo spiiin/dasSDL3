@@ -1,0 +1,37 @@
+{
+  "repository": "https://github.com/bkaradzic/bgfx",
+  "commit": "7e3060ccb97959dcda3f091b96d82515197028e0",
+  "license": "../LICENSE-bgfx.txt",
+  "ports": [
+    {
+      "local": "example_16_vectordisplay",
+      "upstream": "examples/23-vectordisplay",
+      "author": "2014 Kai Jourdan",
+      "adaptation": "CPU line tessellation and public-domain Hershey SIMPLEX strokes; GPU Gaussian blur, ping-pong phosphor history and composition. M selects glow+history, lines only, glow without history. Space freezes the rotating wheel; R clears history. The scene adapts the original test patterns; ImGui and the full original vector drawing API are not ported."
+    },
+    {
+      "local": "example_17_nbody",
+      "upstream": "examples/24-nbody",
+      "author": "2014 Stanlo Slasinski",
+      "adaptation": "GPU initialization, 512-thread shared-memory tiles for all-pairs gravity, Verlet integration, ping-pong buffers and additive instanced billboards. M selects sphere, cube or torus; Space pauses; R resets. Default count is 4096. The UI presets and optional indirect dispatch generator from bgfx are not ported; dispatch size is known on the CPU and particle state never returns to it during rendering. Simulation advances one explicit fixed step per rendered frame."
+    },
+    {
+      "local": "example_18_occlusion",
+      "upstream": "examples/26-occlusion",
+      "author": "2011-2026 Branimir Karadzic",
+      "adaptation": "SDL GPU has no occlusion-query or conditional-render entry points. This adaptation renders an occluder depth prepass, conservatively projects cube bounds in compute, scans the covered depth rectangle, and writes indexed indirect commands (instance count 0 or 1). M toggles culling/all objects; Space pauses the camera; R resets it. It uses current-frame depth, no CPU visibility/readback, and is an algorithmic replacement, not an implementation of bgfx queries. The original query result HUD and auxiliary view are not reproduced."
+    },
+    {
+      "local": "example_19_terrain",
+      "upstream": "examples/27-terrain",
+      "author": "2015 Andrew Mac",
+      "adaptation": "128x128 editable heightfield. CPU brush edits match the responsibility split of bgfx; mode 0 samples an R8 height texture in the vertex shader, mode 1 uploads displaced vertices. Left mouse raises, right lowers, M changes mode, R flattens, Space suspends painting. Brush placement intersects the camera ray with the base plane. The original separate static/dynamic buffer UI variants are represented by one cycling vertex-buffer path."
+    },
+    {
+      "local": "example_20_wireframe",
+      "upstream": "examples/28-wireframe",
+      "author": "2016 Dario Manesku",
+      "adaptation": "Barycentric shader wireframe over the original bunny mesh, with derivative-based line thickness. Mesh expansion happens once at load time, as in the original barycentric path; edge shading runs on the GPU. M cycles filled, filled+wire and wire-only; Space pauses rotation; R resets it. The newer bgfx storage-buffer vertex-pulling line-extrusion path is not included."
+    }
+  ]
+}

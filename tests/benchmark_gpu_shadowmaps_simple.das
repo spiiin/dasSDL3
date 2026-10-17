@@ -1,5 +1,5 @@
 options gen2
-require ../examples/gpu/shadowmaps_app.das as demo
+require ../examples/gpu_port_bgfx/common/shadowmaps/shadowmaps_app.das as demo
 require dassdl3/sdl3_scope
 require dassdl3/sdl3_window_boost
 require daslib/defer

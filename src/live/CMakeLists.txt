@@ -20,7 +20,8 @@ set_target_properties(dasSDL3_live PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${_live_o
 add_library(dasSDL3_live_module SHARED ../module_sdl3.cpp ../libraries/module_imgui_sdl.cpp
     ${PROJECT_SOURCE_DIR}/examples/live/host.cpp
     ${_imgui}/imgui/backends/imgui_impl_sdl3.cpp
-    ${_imgui}/imgui/backends/imgui_impl_sdlrenderer3.cpp)
+    ${_imgui}/imgui/backends/imgui_impl_sdlrenderer3.cpp
+    ${_imgui}/imgui/backends/imgui_impl_sdlgpu3.cpp)
 target_link_libraries(dasSDL3_live_module PRIVATE libDaScriptDyn SDL3::SDL3 dasModuleImgui)
 target_include_directories(dasSDL3_live_module PRIVATE .. ../libraries ${_imgui}/imgui ${_imgui}/src
     ${_das}/include ${_das}/3rdparty/fmt/include)

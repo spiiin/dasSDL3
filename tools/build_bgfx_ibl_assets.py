@@ -6,7 +6,7 @@ from pathlib import Path
 p=argparse.ArgumentParser(description=__doc__)
 p.add_argument('--source-dir',type=Path,required=True);p.add_argument('--check',action='store_true');a=p.parse_args()
 PINS={'examples/runtime/textures/kyoto_lod.dds': '53280151fb969ce6968ca2d8a5f31d6085df8c94ea58bc1f3e7d57b27e404cda', 'examples/runtime/textures/kyoto_irr.dds': 'f7850110ab96c45a4376b64b9271daff72d5c441d74ec9b3518a9a9880ca36dc'}
-root=Path(__file__).resolve().parents[1];dest=root/'examples/gpu/textures'
+root=Path(__file__).resolve().parents[1];dest=root/'examples/gpu_port_bgfx/textures'
 manifest={}
 for name in ('kyoto_lod','kyoto_irr'):
  path=Path('examples/runtime/textures')/(name+'.dds');b=(a.source_dir/path).read_bytes()

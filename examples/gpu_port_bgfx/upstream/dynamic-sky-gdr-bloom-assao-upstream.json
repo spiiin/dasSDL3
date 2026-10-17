@@ -1,0 +1,101 @@
+{
+  "repository": "https://github.com/bkaradzic/bgfx",
+  "commit": "7e3060ccb97959dcda3f091b96d82515197028e0",
+  "license": "../LICENSE-bgfx.txt",
+  "ports": [
+    {
+      "local": "example_26_dynamic",
+      "upstream": "examples/35-dynamic",
+      "author": "2011-2026 Branimir Karadzic",
+      "adaptation": "CPU updates vertex positions/colors and uploads selected persistent GPU buffers, as in bgfx. Rendering stays on the GPU. The default updates one of 121 cubes at 30 ticks/second; M switches to all 121. Space freezes updates and rotation; R resets the clock. Expanded indexed triangle lists replace the original shared triangle-strip indices. Upload buffers and destination storage are cycled explicitly through SDL; no per-frame buffer creation.",
+      "source_sha256": {
+        "examples/35-dynamic/dynamic.cpp": "773e6a3988af79388a658ced3982681312d117557e487791e205ce7acab73ee1"
+      }
+    },
+    {
+      "local": "example_27_sky",
+      "upstream": "examples/36-sky",
+      "author": "2017 Stanislav Pidhorskyi",
+      "adaptation": "Uses the upstream Preetham/Perez turbidity coefficients, xyY/XYZ conversion, sun disk and optional color dithering. The CPU computes coefficients and sun direction; evaluation runs in the fragment shader, rather than being interpolated from the original screen grid vertex shader. M selects clear, hazy or dithered clear sky; Space freezes the sun; R resets time. This is the sky-model portion: the landscape mesh/lightmap, geographic calendar controls and full day/night luminance table are not ported. Zenith luminance uses the upstream noon value.",
+      "source_sha256": {
+        "examples/36-sky/fs_sky.sc": "09d8efd9254e929356333caabadb403b167032a89131313a64259afbf82b8342",
+        "examples/36-sky/fs_sky_color_banding_fix.sc": "16a402e8b63ce9f055aeeb0d988ad83fe4ead8f8bef0b3b47e007b397fa90d4b",
+        "examples/36-sky/fs_sky_landscape.sc": "fd6f5eb44eb9faae03c334131e8bdc0a650424313c1bcbfcdef5582687836812",
+        "examples/36-sky/sky.cpp": "9dbe68572801a2f641970bbc74f1ce19aa53f12d6ae6fd16f373f60654237228",
+        "examples/36-sky/varying.def.sc": "3e36a93fde850b7f21a3400c5cb4ca4910305bc1cc89fc19744000ee24a32431",
+        "examples/36-sky/vs_sky.sc": "e8e8785276c9c07394f8245f14c6014c9a099c2627a10c83c017139ebee2bd09",
+        "examples/36-sky/vs_sky_landscape.sc": "6384dbfd094e1b3fad6d87e5439e2276808c36e149d31d8a9c33d1ce3cc4916c"
+      }
+    },
+    {
+      "local": "example_28_gpudrivenrendering",
+      "upstream": "examples/37-gpudrivenrendering",
+      "author": "2018 Kostas Anagnostou",
+      "adaptation": "Current-frame depth prepass, conservative maximum-depth pyramid, frustum/Hi-Z visibility, stable parallel prefix scan, compacted instance IDs, and indexed indirect draw all run on the GPU. No visibility or draw-count readback occurs in the interactive loop. M toggles culling/all instances; Space pauses the camera; R resets it. The scene uses 1024 cubes and one occluder. A 128x128 conservative base pyramid is packed into a storage buffer; every base cell includes all covered full-resolution pixels. This replaces upstream mipmapped textures, multiple prop types and matrix compaction with a single mesh and compacted IDs. Prefix scan uses 512 threads and 1024 elements. These are algorithm adaptations, not equal-work performance comparisons.",
+      "source_sha256": {
+        "examples/37-gpudrivenrendering/cs_gdr_copy_z.sc": "97eac66cc2553e123e542f50876e2ea9a8b5f6d6cd4eba3783202702fce943e2",
+        "examples/37-gpudrivenrendering/cs_gdr_downscale_hi_z.sc": "984264e3c6546fcde101df11a43d1e2373ad2655e2e9371ce7be705705b74c96",
+        "examples/37-gpudrivenrendering/cs_gdr_occlude_props.sc": "68fe29671654f40b1884e679de199676e47280304bfb40f38b4de3bfb01e6a12",
+        "examples/37-gpudrivenrendering/cs_gdr_stream_compaction.sc": "0f9b9c73da4afe7ac6718b1d5e066e00de1a105c9cc885d6e40c554b343650c7",
+        "examples/37-gpudrivenrendering/fs_gdr_instanced_indirect_rendering.sc": "f3963b78fef0e1fd2be65a68c9ee58d09ffcad2cc5cc3306f512e2534d7a9358",
+        "examples/37-gpudrivenrendering/gpudrivenrendering.cpp": "eceb068b49f0a9854896e3656bebd660da8ee4901ea8dc1303adf03e123948af",
+        "examples/37-gpudrivenrendering/varying.def.sc": "3d5009172ba3c8d0e83ee049847946d68bbd3e842845348da6f3f49134157794",
+        "examples/37-gpudrivenrendering/vs_gdr_instanced_indirect_rendering.sc": "63a4003ec2873b8ed7f181120e3e8a1e72cab1056c1ff3132eec10aed39e8e2f",
+        "examples/37-gpudrivenrendering/vs_gdr_render_occlusion.sc": "d41289d1cb51dc46694caa3542c27425eb5720986d629a0789e823e877ae0c64"
+      }
+    },
+    {
+      "local": "example_29_bloom",
+      "upstream": "examples/38-bloom",
+      "author": "2018 Eric Arnebäck",
+      "adaptation": "HDR scene followed by five downsample levels, weighted upsample accumulation and composition, entirely in GPU render passes. The 13-tap downsample and 9-tap upsample weights come from bgfx. Separate upsample targets replace additive blending into the downsample targets. M selects bloom, original scene or glow only; Space pauses; R resets rotation. A grid of emissive cubes replaces upstream geometry/textures. This port applies fixed bloom strength at final composition and exponential HDR mapping; it does not reproduce the original ImGui intensity controls.",
+      "source_sha256": {
+        "examples/38-bloom/bloom.cpp": "979963f25770e278d3be30b95ec662278932fcb87999157831e5623184c5fe69",
+        "examples/38-bloom/fs_albedo_output.sc": "5e1f78d3ef7e746de7cd4f7f4df676f8cd5dc163a6e11730ed0b52a18b935a98",
+        "examples/38-bloom/fs_bloom_combine.sc": "1506217ec3098f1a858594c11b5aa9af8941f359e5384b3459d685010a562652",
+        "examples/38-bloom/fs_downsample.sc": "ccfdaa5d1f29405bf43771af19056f35f8477a0723c21bf3d94902727c58819a",
+        "examples/38-bloom/fs_upsample.sc": "7ce43fd6dd81c047b7b79ef8bac1b4c0365c7e3f67910a47026ef753fe5c73c3",
+        "examples/38-bloom/varying.def.sc": "9d55d7928c0005fa8ebc050debb6e1fbc332c6baf883391ae9ad570af3994c87",
+        "examples/38-bloom/vs_albedo_output.sc": "3a93290317666f1def4ab79eb9e4922702e44cadcfd2308779bbec988fd2e0c2",
+        "examples/38-bloom/vs_deferred_combine.sc": "12fa65b96d7c647a75ee1294f4adfa6587446a477f0eb56dd785a9db9f0c5703",
+        "examples/38-bloom/vs_fullscreen.sc": "302365636ca26db8f8f25e9a38cecaad2a01cc3e5e0583ec46846995cb470bda"
+      }
+    },
+    {
+      "local": "example_30_assao",
+      "upstream": "examples/39-assao",
+      "author": "2018 Attila Kocsis",
+      "adaptation": "GPU G-buffer preparation, four parity layers, the original progressive 32-tap disk and obscurance/falloff formula, importance estimation, optional extra samples, depth/normal-aware blur and reinterleaving. M selects AO, disabled, AO-only or adaptive; Space pauses; R resets the camera. Storage buffers replace image arrays; the final reinterleave runs in the fragment shader. The base path uses 12 symmetric taps, adaptive uses 12–32 based on local importance. View-space positions/normals are supplied by the G-buffer. This is a reduced ASSAO adaptation, not the full upstream quality-preset implementation: depth mips, packed edge encoding, global adaptive load-budget reduction, detail AO, the full smart-apply filter and all quality presets are not included. The scene is a floor, wall and cubes. All included AO computations remain on the GPU.",
+      "source_sha256": {
+        "examples/39-assao/assao.cpp": "092d1e050a4950723debd649e3e081d9e34f97bf7b88553ec5f643b20f5f7f04",
+        "examples/39-assao/cs_assao_apply.sc": "e6024c72292400e9969ed92ca47c2e23f48be01477d319c67075bb97407578ea",
+        "examples/39-assao/cs_assao_generate_importance_map.sc": "53daf1dfc6af26198f719d2e9b2efbc40fc8f2d3ce7aacf2e2bbb9529ca9af5a",
+        "examples/39-assao/cs_assao_generate_q.sh": "3dd701630fb464fc53573f9f4c0cc424b0b69aef70efba61ea1b53b069107e1f",
+        "examples/39-assao/cs_assao_generate_q0.sc": "2a8aa146b50c67d5ca1167f480796f9e0797c1f116b3a8485f2bf04fc88366ba",
+        "examples/39-assao/cs_assao_generate_q1.sc": "3301ff503cb820dd756750b5cfaa1e697c8aa0868bd3c9304294c102a21aba12",
+        "examples/39-assao/cs_assao_generate_q2.sc": "10e402499a37936eab79aea02bfc2e1141013766d1ff49b42bee25b71b007a6a",
+        "examples/39-assao/cs_assao_generate_q3.sc": "5b51356a5975e1d84f49d55c87b68ff76ce6608c0c4c4439565334e041d73dda",
+        "examples/39-assao/cs_assao_generate_q3base.sc": "7ec902f9c0880f9ec39176a61932c0ee6c083593dfa5ae2e66b4c213e0d1dd86",
+        "examples/39-assao/cs_assao_load_counter_clear.sc": "8e8798bd7806d559f942a050384bc452e9eae269001cecc93acfe0da77758aa7",
+        "examples/39-assao/cs_assao_non_smart_apply.sc": "34c56698608683adc373e130a67556948eeff88add1058835c276a2bbd36fe5b",
+        "examples/39-assao/cs_assao_non_smart_blur.sc": "ca415d98d1253dc1dfc24191776d4434bf59f3b4667fd7f056b171a93e6adb4b",
+        "examples/39-assao/cs_assao_non_smart_half_apply.sc": "a0e4c1f9af361184833fd177534ab9a9ee2276116ccd8d6e9a9890a8f94fbb21",
+        "examples/39-assao/cs_assao_postprocess_importance_map_a.sc": "dc71062cbf3b793a3021fb7ec86bc76d5c66bdb7f61d44719f117738d4a597cd",
+        "examples/39-assao/cs_assao_postprocess_importance_map_b.sc": "a153d41745f103f08995c20ea6e1ec7da9b464320d1b1cda8358917671bca4ca",
+        "examples/39-assao/cs_assao_prepare_depth_mip.sc": "2f1d936fdf2b981fa8998db1695394f4ef84a9abe33421efbd73ff4a1229b58e",
+        "examples/39-assao/cs_assao_prepare_depths.sc": "f9c6425efc99211fe5b65e0acc8cb24b30c436ace09accef8516f0336bb81cca",
+        "examples/39-assao/cs_assao_prepare_depths_and_normals.sc": "64b6335e2f8ba7017e3ae9977ee6535bb19bcfcefe49e1e76b440aae1437e805",
+        "examples/39-assao/cs_assao_prepare_depths_and_normals_half.sc": "f55a93c7bf58ab708b30a03cd3e38a85018437e24a90123a532c099702900a03",
+        "examples/39-assao/cs_assao_prepare_depths_half.sc": "e87968cd3d41edc1e63249e96cef8c92453d86a1e41f203a34bdff4484e96263",
+        "examples/39-assao/cs_assao_smart_blur.sc": "0d9c6f94995225b5a74665a4c19f12187f859b032dd004ba2328ad5d1626b254",
+        "examples/39-assao/cs_assao_smart_blur_wide.sc": "2e10d6c846ddb2440329babe645ee6886305d587e38ae24d80bba3d86197b5e1",
+        "examples/39-assao/fs_assao_deferred_combine.sc": "b27f0418463acccbb5d66b5d15831abeff59065374dd3814832ad3c94cfb1afb",
+        "examples/39-assao/fs_assao_gbuffer.sc": "a320239d76611a89573708a5cc1f0092c2e02ece2d96abaaa513e2a78baa0a2c",
+        "examples/39-assao/uniforms.sh": "bbb06e7fb647866526588c063707d303bbf0d99421b6b820621086d2c55f10b9",
+        "examples/39-assao/varying.def.sc": "de7d0f6a6a10048780624e45158a4fff9395a36b22d0bba164d8ddf43575244c",
+        "examples/39-assao/vs_assao.sc": "a44d05ca917e06c83315e6ab2a3c19868e49878a11451e02883f07d55e4ea4ca",
+        "examples/39-assao/vs_assao_gbuffer.sc": "2f9daa255dcd3c2b0f643ef0be955b1a8427d4786f754f1e6faffc808f65de46"
+      }
+    }
+  ]
+}

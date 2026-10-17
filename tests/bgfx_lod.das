@@ -1,6 +1,6 @@
 options gen2
-require ../examples/gpu/lod_app.das as demo
-require ../examples/gpu/bgfx_support.das public
+require ../examples/gpu_port_bgfx/example_08_lod/lod_app.das as demo
+require ../examples/gpu_port_bgfx/common/bgfx_support.das public
 require bgfx_capture
 require dassdl3/sdl3_init_boost
 require daslib/defer

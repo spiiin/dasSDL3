@@ -132,3 +132,5 @@ error and platform limitations.
 - [Shader DSL](shader-dsl.md): existing daScript SPIR-V compiler, SDL resource layout and scoped shader creation.
 
 - [dasImgui v2 and SDL live integration](imgui-widgets-and-live.md).
+
+- [forge-gpu lessons 10–14](../examples/gpu_port_forge/README.md): lighting, compute plasma, procedural grid, instancing and environment mapping in daScript DSL.

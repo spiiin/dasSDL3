@@ -1,6 +1,6 @@
 options gen2
-require ../examples/gpu/metaballs_field.das
-require ../examples/gpu/metaballs_tables.das
+require ../examples/gpu_port_bgfx/example_01_metaballs/metaballs_field.das
+require ../examples/gpu_port_bgfx/example_01_metaballs/metaballs_tables.das
 require math
 
 [export]

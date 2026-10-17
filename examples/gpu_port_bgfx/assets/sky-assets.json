@@ -1,0 +1,22 @@
+{
+  "source": "https://github.com/bkaradzic/bgfx/tree/7e3060ccb97959dcda3f091b96d82515197028e0/examples/runtime",
+  "license": "../LICENSE-bgfx.txt",
+  "source_sha256": {
+    "meshes/test_scene.bin": "877b33ecdef407be7fd58278da197dae064f24da7b4b3060726d32b44434f79d",
+    "textures/lightmap.ktx": "1eb3bb0083ab0647b8728694be625b4097dde9ffbbc93a5b580f916e093a3f70"
+  },
+  "output_sha256": {
+    "sky-landscape.mesh": "5c3884d9180185ee6cccb0209bf7153930b8510d95bf7ec1d5289b2c6bea8e61",
+    "sky-lightmap.rgba8": "f58c0b72f6eee5eb48ffa181f84f185b79772db17fdacf9ef027788caed55f87"
+  },
+  "mesh": {
+    "vertices": 5247,
+    "indices": 7680,
+    "stride": 32
+  },
+  "lightmap": {
+    "width": 1024,
+    "height": 1024,
+    "format": "RGBA8"
+  }
+}
