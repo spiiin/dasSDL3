@@ -3,9 +3,11 @@
 Numbered scripts are interactive entry points. Their rendering implementation is
 in adjacent `metaballs_app.das`, `raymarch_app.das`, `mesh_app.das`,
 `cubes_app.das` (instancing/bump), `hdr_app.das`, `fontsdf_app.das`,
-`lod_app.das`, `stencil_app.das` and `shadowvolumes_scene.das` modules.
-They contain no smoke mode, pixel readback or capture output. The unused bool in
-`main` is only the current runner entry-point convention.
+`lod_app.das`, `stencil_app.das`, `shadowvolumes_scene.das`, `shadowmaps_app.das`,
+`ibl_app.das`, `oit_app.das` and `deferred_app.das` modules.
+Rendering contains no pixel readback or capture output. Entry points 11–15 accept
+`--smoke-test` for a three-frame startup check; otherwise they run until closed.
+The older entry points retain their unused bool runner convention.
 
 GPU regression harnesses live in `tests/bgfx_metaballs.das`, `tests/bgfx_raymarch.das`
 and the other `tests/bgfx_*.das` entry points; they import the application rendering functions and own
@@ -19,10 +21,12 @@ resources; mesh tests also exercise offscreen output and automatic resize.
 
 ## Shader DSL and backends
 
-All ten examples use the 31 daScript shader entry points in [shaders](shaders/):
+All fifteen examples use the 54 daScript shader entry points in [shaders](shaders/):
 `metaballs_shaders.das`, `raymarch_shaders.das`, `bunny_shaders.das`,
 `cube_shaders.das`, `hdr_shaders.das`, `fontsdf_shaders.das`,
-`lod_shaders.das`, `stencil_scene_shaders.das` and `stencil_shaders.das`. They compile through upstream dasSpirv
+`lod_shaders.das`, `stencil_scene_shaders.das`, `stencil_shaders.das`,
+`shadowvolume_shaders.das`, `shadowmap_shaders.das`, `ibl_shaders.das`,
+`oit_shaders.das` and `deferred_shaders.das`. They compile through upstream dasSpirv
 when the script loads. Vertex layouts and uniforms retain their SDL contracts.
 
 Vulkan uses the core runner:
@@ -530,3 +534,72 @@ the reference, and visible texture/specular/light-count/animation changes. Captu
 0–3 compare disabled/enabled reflections and shadows; 4–7 disable textures,
 disable specular, select one light, and advance animation respectively.
 `tools/build_bgfx_11_14_assets.py --check` verifies pinned column/texture conversions.
+
+## Shadow maps, IBL, OIT and deferred (11–15)
+
+Ports of bgfx examples 15, 16, 18, 19 and 21 at revision
+`7e3060ccb97959dcda3f091b96d82515197028e0` (BSD-2-Clause).
+Run from the repository root with the core Vulkan runner:
+
+```powershell
+$env:SDL_GPU_DRIVER = 'vulkan'
+./build/ninja/bin/dasSDL3_runner.exe examples/gpu/11_shadowmaps_simple.das
+./build/ninja/bin/dasSDL3_runner.exe examples/gpu/12_shadowmaps.das
+./build/ninja/bin/dasSDL3_runner.exe examples/gpu/13_ibl.das
+./build/ninja/bin/dasSDL3_runner.exe examples/gpu/14_oit.das
+./build/ninja/bin/dasSDL3_runner.exe examples/gpu/15_deferred.das
+```
+
+| Entry point / upstream | GPU implementation | Controls |
+|---|---|---|
+| 11 / [15-shadowmaps-simple](https://github.com/bkaradzic/bgfx/tree/7e3060ccb97959dcda3f091b96d82515197028e0/examples/15-shadowmaps-simple) | Directional shadow map, depth draw then forward lighting; hard/16-tap PCF | F filter, S shadows, D map, Space pause |
+| 12 / [16-shadowmaps](https://github.com/bkaradzic/bgfx/tree/7e3060ccb97959dcda3f091b96d82515197028e0/examples/16-shadowmaps) | Spot, four tetrahedral point-light views, four fitted directional cascades; hard/PCF/PCSS/VSM/ESM; separable GPU blur; projected/linear depth | L light, F filter (0–4), Z depth, S shadows, D first map, Space pause |
+| 13 / [18-ibl](https://github.com/bkaradzic/bgfx/tree/7e3060ccb97959dcda3f091b96d82515197028e0/examples/18-ibl) | Original cmft-filtered Kyoto radiance mip chain and irradiance cube; Fresnel, diffuse/specular IBL, direct lighting and filmic mapping in fragment shader | Left/Right gloss, Up/Down reflectivity, M metal/specular workflow, D/S IBL terms |
+| 14 / [19-oit](https://github.com/bkaradzic/bgfx/tree/7e3060ccb97959dcda3f091b96d82515197028e0/examples/19-oit) | Alpha blending, weighted color/revealage MRT and separate-weight MRT; independent blending and fullscreen GPU resolve | M mode, R reverse submission order |
+| 15 / [21-deferred](https://github.com/bkaradzic/bgfx/tree/7e3060ccb97959dcda3f091b96d82515197028e0/examples/21-deferred) | 11×11 textured cubes, albedo/normal MRT + sampled depth, additive light buffer, reconstruction and lighting in fragment shader; 512 lights initially | L 1–2048 lights, D G-buffer views, S scissor |
+
+Escape closes each example. Windows are resizable. GPU validation remains enabled.
+All five use static geometry buffers. No per-frame CPU vertex transforms,
+CPU lighting, CPU shadow filtering, image readback or synchronous GPU wait is used
+in application rendering. CPU work is matrices, controls and draw submission;
+deferred also computes conservative light bounds, as the upstream raster path does.
+Resource creation/shader compilation happens at startup or resize. Shared helpers
+are example-local SDL calls, not a public rendering framework.
+
+### Port choices and differences
+
+These are runnable algorithm ports, not complete reproductions of every upstream
+UI option. Keyboard controls replace ImGui and camera controls are fixed. Single
+sampling is used. Shadow scenes retain the original hollow cube/tree meshes and
+our normalized bunny; placement/scales differ. Shadow maps use 512×512 RGBA32F
+(depth, second moment, exponential depth) with D32 depth attachments rather than
+packed RGBA8/native comparison-sampler alternatives. PCF uses explicit GPU taps
+and receiver-plane depth compensation. Point-light views are separate textures,
+not the upstream packed stencil atlas. Cascades fit four fixed camera intervals;
+there is no configurable split count or stabilized/snap-to-texel option.
+
+IBL uses Kyoto, one bunny and both material workflows; upstream probe/model
+selectors, the material grid and ImGui color/exposure controls are not included.
+Prefiltered mip levels are preserved, never approximated with runtime box mipmaps.
+OIT uses unweighted alpha for revealage in the separate-weight variant: Vulkan
+floating-point blend factors must not receive the potentially >1 weighted alpha.
+Deferred implements the upstream raster/scissor path; optional compute lighting,
+texture arrays and scissor-outline overlays are not implemented. Material mipmaps
+are generated on the GPU; light/normal buffers use normalized RGBA8 as upstream.
+
+Assets are checked in and copied by CMake. Offline reproducibility checks:
+
+```powershell
+python tools/build_bgfx_ibl_assets.py --source-dir C:/src/bgfx --check
+python tools/build_bgfx_shadowmaps_assets.py --source-dir C:/src/bgfx --check
+```
+
+Both scripts validate pinned upstream SHA-256 hashes. There is no download,
+texture filtering or OBJ conversion during normal builds or example execution.
+
+Tests `bgfx_shadowmaps_simple`, `bgfx_shadowmaps`, `bgfx_ibl`, `bgfx_oit` and
+`bgfx_deferred` import exactly the rendering functions used by these examples.
+They exercise shadow/light/filter/depth modes, material changes, OIT order
+independence with a conventional alpha-blend negative control, and deferred
+scissor equivalence. Readback is confined to these tests. They are registered
+for interpreter/CppGenBind/strict AOT; registration alone is not runtime coverage.

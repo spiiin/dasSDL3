@@ -1,0 +1,20 @@
+{
+  "kyoto_lod.rgba16f": {
+    "source": "examples/runtime/textures/kyoto_lod.dds",
+    "source_sha256": "53280151fb969ce6968ca2d8a5f31d6085df8c94ea58bc1f3e7d57b27e404cda",
+    "sha256": "f5b85317824a0e48d94b802b0987cccb4aaaac11dea8ab7b7a748153d36222da",
+    "width": 256,
+    "height": 256,
+    "levels": 9,
+    "layout": "face-major, mip-major, RGBA16F, +X -X +Y -Y +Z -Z"
+  },
+  "kyoto_irr.rgba16f": {
+    "source": "examples/runtime/textures/kyoto_irr.dds",
+    "source_sha256": "f7850110ab96c45a4376b64b9271daff72d5c441d74ec9b3518a9a9880ca36dc",
+    "sha256": "87266f98d3230f69b9440af8e880f9f3c78cb19cc03b4d11726dd9586c113e63",
+    "width": 128,
+    "height": 128,
+    "levels": 1,
+    "layout": "face-major, mip-major, RGBA16F, +X -X +Y -Y +Z -Z"
+  }
+}

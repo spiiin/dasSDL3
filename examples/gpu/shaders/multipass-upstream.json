@@ -1,0 +1,74 @@
+{
+  "bgfx_commit": "7e3060ccb97959dcda3f091b96d82515197028e0",
+  "license": "BSD-2-Clause; ../LICENSE-bgfx.txt",
+  "files": {
+    "examples/15-shadowmaps-simple/shadowmaps_simple.cpp": {
+      "url": "https://github.com/bkaradzic/bgfx/blob/7e3060ccb97959dcda3f091b96d82515197028e0/examples/15-shadowmaps-simple/shadowmaps_simple.cpp",
+      "sha256": "76caabdb45229981de827fcb4a1716197640e4f25b7c3c3b5a036a2d61f918df"
+    },
+    "examples/15-shadowmaps-simple/fs_sms_shadow.sh": {
+      "url": "https://github.com/bkaradzic/bgfx/blob/7e3060ccb97959dcda3f091b96d82515197028e0/examples/15-shadowmaps-simple/fs_sms_shadow.sh",
+      "sha256": "c8f88aea8de5873978ddcc0e9ce9d56a1ddf1bf4e93cc150b8990102d0b566c4"
+    },
+    "examples/16-shadowmaps/shadowmaps.cpp": {
+      "url": "https://github.com/bkaradzic/bgfx/blob/7e3060ccb97959dcda3f091b96d82515197028e0/examples/16-shadowmaps/shadowmaps.cpp",
+      "sha256": "aaf378eae6b17b1e368a0845934340acb302f80a549635aef65e2b0901babd90"
+    },
+    "examples/16-shadowmaps/common.sh": {
+      "url": "https://github.com/bkaradzic/bgfx/blob/7e3060ccb97959dcda3f091b96d82515197028e0/examples/16-shadowmaps/common.sh",
+      "sha256": "84654e0055a1936583a516466a422821ba269d94320e4d8e135c6c5471a111ab"
+    },
+    "examples/18-ibl/ibl.cpp": {
+      "url": "https://github.com/bkaradzic/bgfx/blob/7e3060ccb97959dcda3f091b96d82515197028e0/examples/18-ibl/ibl.cpp",
+      "sha256": "f9669aafdc0dcab1b1d219467907c25bc5557756dad0ff5fae839782114761e7"
+    },
+    "examples/18-ibl/fs_ibl_mesh.sc": {
+      "url": "https://github.com/bkaradzic/bgfx/blob/7e3060ccb97959dcda3f091b96d82515197028e0/examples/18-ibl/fs_ibl_mesh.sc",
+      "sha256": "61bd0a98c61f54da309e5a59d417eb041420e38dd4eb10c1bda688072d602ebb"
+    },
+    "examples/18-ibl/fs_ibl_skybox.sc": {
+      "url": "https://github.com/bkaradzic/bgfx/blob/7e3060ccb97959dcda3f091b96d82515197028e0/examples/18-ibl/fs_ibl_skybox.sc",
+      "sha256": "b0622a1ce8060faef6ed08bfd519629e0758bbb41a9241526f7441857ac4c364"
+    },
+    "examples/19-oit/oit.cpp": {
+      "url": "https://github.com/bkaradzic/bgfx/blob/7e3060ccb97959dcda3f091b96d82515197028e0/examples/19-oit/oit.cpp",
+      "sha256": "56aaf95cd57c862159a64f99dbc71f1e387137de029f6189a606b8ed5a2282d9"
+    },
+    "examples/19-oit/fs_oit_wb.sc": {
+      "url": "https://github.com/bkaradzic/bgfx/blob/7e3060ccb97959dcda3f091b96d82515197028e0/examples/19-oit/fs_oit_wb.sc",
+      "sha256": "4b2645440245d65ed164cd5df804e6dcfaf88e950b8dfcb4c30261b720e1c4dd"
+    },
+    "examples/19-oit/fs_oit_wb_separate.sc": {
+      "url": "https://github.com/bkaradzic/bgfx/blob/7e3060ccb97959dcda3f091b96d82515197028e0/examples/19-oit/fs_oit_wb_separate.sc",
+      "sha256": "10027cdb6663a4ff5f92f68d24c907eaed9308b14fa462842e852c63f8693456"
+    },
+    "examples/19-oit/fs_oit_wb_blit.sc": {
+      "url": "https://github.com/bkaradzic/bgfx/blob/7e3060ccb97959dcda3f091b96d82515197028e0/examples/19-oit/fs_oit_wb_blit.sc",
+      "sha256": "35017c953ee7fdd5aa5b81a3ca070a4a7e0cb5daebda611c7d0a2dc351210b52"
+    },
+    "examples/19-oit/fs_oit_wb_separate_blit.sc": {
+      "url": "https://github.com/bkaradzic/bgfx/blob/7e3060ccb97959dcda3f091b96d82515197028e0/examples/19-oit/fs_oit_wb_separate_blit.sc",
+      "sha256": "d6d9a5a04ea5b0fcaf7e1922ceedf517fea71c5439501df133a59e070e6d188c"
+    },
+    "examples/21-deferred/deferred.cpp": {
+      "url": "https://github.com/bkaradzic/bgfx/blob/7e3060ccb97959dcda3f091b96d82515197028e0/examples/21-deferred/deferred.cpp",
+      "sha256": "54a03dcae642e846f0161d195167099c155cbfb0ef04cfd60ca41b81c782d27d"
+    },
+    "examples/21-deferred/common.sh": {
+      "url": "https://github.com/bkaradzic/bgfx/blob/7e3060ccb97959dcda3f091b96d82515197028e0/examples/21-deferred/common.sh",
+      "sha256": "157697ef471a87395741e6881f62d1cecedc4562794f98e12b6926ab5c71c5f4"
+    },
+    "examples/21-deferred/fs_deferred_geom.sc": {
+      "url": "https://github.com/bkaradzic/bgfx/blob/7e3060ccb97959dcda3f091b96d82515197028e0/examples/21-deferred/fs_deferred_geom.sc",
+      "sha256": "af7b37c71481eb01b3dbfc47ee268352f07464ab0bf14a5edca8c8e737ba5e72"
+    },
+    "examples/21-deferred/fs_deferred_light.sc": {
+      "url": "https://github.com/bkaradzic/bgfx/blob/7e3060ccb97959dcda3f091b96d82515197028e0/examples/21-deferred/fs_deferred_light.sc",
+      "sha256": "859a8a378530cecf950d1d6d176809e38138cda61082bfd61ce6ad925050489b"
+    },
+    "examples/21-deferred/fs_deferred_combine.sc": {
+      "url": "https://github.com/bkaradzic/bgfx/blob/7e3060ccb97959dcda3f091b96d82515197028e0/examples/21-deferred/fs_deferred_combine.sc",
+      "sha256": "e1480352ab6fd3f020c84bb583017f7ca519c49a47ba01a2b799b6c31345dcf5"
+    }
+  }
+}

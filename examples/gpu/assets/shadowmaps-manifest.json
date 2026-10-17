@@ -1,0 +1,12 @@
+{
+  "hollowcube.msh": {
+    "source": "examples/assets/meshes/hollowcube.obj",
+    "source_sha256": "20f57ed117f4b4ce3f870e7af7b442cdec87570c3d72095adc6d8b8d99b668e6",
+    "sha256": "4ab8c351c58c9420239ba3959243d64a4640f217d412796680d094113d9b354a"
+  },
+  "tree.msh": {
+    "source": "examples/assets/meshes/tree.obj",
+    "source_sha256": "89c456975f91c240e81651b4aa212dc8a2dad4be1cd2ca9919ba7e787f421dde",
+    "sha256": "13023590337a5766782a1f1706ba5775bff5ff9f8564e9951dea11fd0d1536c6"
+  }
+}

@@ -61,3 +61,12 @@ if(DASSDL3_TEST_TTF)
     list(APPEND _dsl_scripts examples/gpu/fontsdf_app examples/gpu/shaders/fontsdf_shaders
         tests/bgfx_fontsdf dassdl3/sdl3_ttf_boost)
 endif()
+
+list(APPEND _dsl_scripts
+    examples/gpu/multipass_support
+    examples/gpu/shadowmaps_app examples/gpu/shaders/shadowmap_shaders
+    examples/gpu/ibl_app examples/gpu/shaders/ibl_shaders
+    examples/gpu/oit_app examples/gpu/shaders/oit_shaders
+    examples/gpu/deferred_app examples/gpu/shaders/deferred_shaders
+    tests/bgfx_multipass_checks
+    tests/bgfx_shadowmaps_simple tests/bgfx_shadowmaps tests/bgfx_ibl tests/bgfx_oit tests/bgfx_deferred)
