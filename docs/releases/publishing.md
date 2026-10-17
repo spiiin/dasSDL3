@@ -4,7 +4,7 @@ Prepared artifacts:
 - VERSION is 0.1.0, also used by root CMake and the installed SDK version.
 - Root .das_package declares spiiin, MIT, minimum SDK 0.6.4, source and tags.
 - 0.1.0.md is the draft GitHub release body.
-- Source installation validates SDK fingerprints; minimum SDK alone is not ABI validation.
+- Source installation can validate SDK fingerprints with DASSDL3_VALIDATE_SDK_FINGERPRINT=ON; default source installs compile against the consumer SDK. Minimum SDK alone is not ABI validation.
 - LICENSE, VERSION and licenses/ are included in staged packages and releases.
 
 No release tag, GitHub release or daspkg-index PR has been created.

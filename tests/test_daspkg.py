@@ -43,6 +43,7 @@ def main():
     consumer = work / "consumer"
     consumer.mkdir()
     env = dict(os.environ, SDL_VIDEODRIVER="dummy", SDL_AUDIODRIVER="dummy")
+    env.pop("DASSDL3_VALIDATE_SDK_FINGERPRINT", None)
     if args.fetch_sdl:
         for key in list(env):
             if key.upper().startswith(("SDL3_", "FETCHCONTENT_")) or key.upper() == "CMAKE_PREFIX_PATH":
@@ -126,12 +127,13 @@ def main():
         good = fingerprint.read_text(encoding="utf-8")
         fingerprint.write_text("0" * 64 + good[64:], encoding="utf-8")
         bad = subprocess.run(["cmake", "-S", str(package), "-B", str(work / "reject"),
-                              "-G", args.generator, "-DCMAKE_BUILD_TYPE=Release", f"-DDASLANG_DIR={das}"],
+                              "-G", args.generator, "-DCMAKE_BUILD_TYPE=Release", "-DDASSDL3_VALIDATE_SDK_FINGERPRINT=ON", f"-DDASLANG_DIR={das}"],
                              env=env, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=60)
         (work / "sdk-rejection.log").write_text(bad.stdout, encoding="utf-8")
         if bad.returncode == 0 or "SDK fingerprint mismatch" not in bad.stdout:
             raise RuntimeError(f"SDK mismatch was not rejected correctly: {bad.stdout}")
-        fingerprint.write_text(good, encoding="utf-8")
+        # The same mismatch must not block the default source install below.
+        # Leave this deliberately invalid snapshot in the disposable package.
     example = "daspkg-imgui-consumer" if args.imgui else "daspkg-consumer"
     receipt = "ImGui backends, context and SDL resources released." if args.imgui else "daspkg SDL core: rendered; resources released."
     shutil.copy2(ROOT / "examples" / example / "main.das", consumer / "main.das")

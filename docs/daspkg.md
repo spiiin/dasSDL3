@@ -2,17 +2,52 @@
 
 ## Platform readiness
 
-The supported daScript client/source revision is
-`ebac0ffe46ab30de6c9536f4b0af7a33ede45902`. Older SDKs, including the previous
-reference and official v0.6.4 bundle, are no longer supported. Upstream still
-reports `0.6.4`, so `package_min_sdk("0.6.4")` is only a version floor; exact
-binary compatibility is checked by the SDK fingerprints.
+The reference/tested daScript client revision is
+`ebac0ffe46ab30de6c9536f4b0af7a33ede45902` (upstream version `0.6.4`).
+Source installs compile against the consumer SDK; exact reference file hashes
+are **not required by default**. This does not promise ABI compatibility with
+arbitrary SDK revisions or builds. Use matching headers, import libraries and
+runtime DLLs from one SDK, then test loading with that SDK's daslang.
+
+### Optional strict SDK validation
+
+For a repository or staged source install through daspkg:
+
+```powershell
+$env:DASSDL3_VALIDATE_SDK_FINGERPRINT = "ON"
+daspkg install dasSDL3
+Remove-Item Env:DASSDL3_VALIDATE_SDK_FINGERPRINT
+```
+
+For direct CMake configure use `-DDASSDL3_VALIDATE_SDK_FINGERPRINT=ON`.
+The default is OFF; cached CMake options override the environment. Windows/Linux
+repository installs select their reference snapshot; staged source packages use
+`sdk.sha256`. Strict macOS repository installs additionally require
+`DASSDL3_PACKAGE_SDK_FINGERPRINT`. Binary packages still require a matching SDK;
+this source-install option does not make precompiled modules portable across ABIs.
+
+fmt is discovered inside the selected SDK at `3rdparty/fmt/include`, `include`,
+`include/fmt/include` or `external/fmt/include` (each containing `fmt/format.h`).
+Direct CMake users can override `DASSDL3_FMT_INCLUDE_DIR`. System-wide fmt is not
+searched. Missing development headers produce a dependency error independently
+of fingerprint validation; disabling hashes cannot supply missing headers.
+
+Validation on 2026-10-17 (Windows x64, MSVC 19.38/Ninja): staged source
+installation with a deliberately wrong fingerprint and SDK fmt relocated to
+`include/fmt` passed actual daspkg install/check, all imports, rendering and
+consumer relocation. A repository snapshot with the proposed package files also
+passed installation, descriptor rebuild, imports, rendering and relocation.
+Strict mode rejected the wrong snapshot and accepted the reference SDK through
+the environment switch. Configure-only fixtures cover all four fmt layouts,
+missing fmt and strict mode without a profile (`sdl3_package_sdk_config`).
+SDL was reused from the existing static build; GitHub download, MSVC 19.51 and
+other platforms were not rerun for this change.
 
 The repository manifest declares `windows`, `darwin` and `linux`.
 Linux supports core only; CMake rejects its ImGui profile. Staged binary/source
 manifests declare the selected platform; the metadata regression checks these
 lists for both core and ImGui. Native Mac packages require the matching locally
-built dynamic SDK and fingerprint; see [Mac setup](macos.md).
+built dynamic SDK (fingerprint only in strict mode); see [Mac setup](macos.md).
 There is no fallback for clients without platform metadata.
 
 Windows validation on 2026-10-03 with this revision: root and staged binary/source
@@ -37,8 +72,8 @@ explicitly uses SDL's dummy video driver.
 
 | Package path | Platforms | Requirements |
 | --- | --- | --- |
-| Repository core / ImGui | `windows`, `darwin` | Matching native SDK fingerprint; MSVC x64 Release (Visual Studio or Ninja) `/MD` AVX2 or native AppleClang Release |
-| Repository core | `linux` | Ubuntu 24.04 x86_64, GCC 13.3, Release, exact SDK fingerprint |
+| Repository core / ImGui | `windows`, `darwin` | Matching native SDK; optional strict fingerprint; MSVC x64 Release (Visual Studio or Ninja) `/MD` AVX2 or native AppleClang Release |
+| Repository core | `linux` | Ubuntu 24.04 x86_64, GCC 13.3, Release; optional strict fingerprint |
 | Staged binary / source | Selected `windows`, `darwin` or `linux` | Matching native dynamic SDK; source staging records its fingerprint |
 
 Linux core checks cover actual binary/source/repository installation, all 63
@@ -239,7 +274,7 @@ opt-in network test downloads and builds SDL from scratch (see below).
 Ninja compile concurrency is capped at six even when daspkg passes --parallel.
 
 sdk.sha256 contains fingerprints of reference SDK headers (including fmt),
-import libraries and both daScript runtime DLLs. CMake rejects missing or changed
+import libraries and both daScript runtime DLLs. With strict validation enabled, CMake rejects missing or changed
 files before fetching SDL or compiling. An identical SDK at a different path is
 accepted. This deliberately strict check also rejects compatible rebuilds with
 different binary hashes; it is not general ABI inference or a signature proving
@@ -483,8 +518,9 @@ existing developer build stays unchanged. SDL is fetched unless SDL3_DIR selects
 an existing exact-version static build.
 
 The repository ships fixed fingerprints under src/package/profiles/: core.sha256
-and imgui.sha256 for the reference SDK. Each profile must match in full. These hashes are not derived from the SDK being installed
-against. Arbitrary releases/rebuilds remain rejected. ImGui's native
+and imgui.sha256 for the reference SDK. In optional strict mode each profile
+must match in full. These hashes are not derived from the SDK being installed
+against. Default source installs do not enforce them. ImGui's native
 headers/sources/import library/module are covered in its local profile.
 
 A build target depending on the native module installs .das_module at package
@@ -608,7 +644,7 @@ selection, set `$env:CMAKE_GENERATOR = "Visual Studio 17 2022"` (use the name fo
 your installed version) and `$env:CMAKE_GENERATOR_PLATFORM = "x64"`.
 The package exposes only Release; daspkg already builds with `--config Release`.
 The native module is written beside `.das_module`, without a Release subdirectory.
-The matching reference DLL SDK and its fingerprints are still required.
+A matching DLL SDK is still required; source-install fingerprints are now optional (see the current policy above).
 
 When changing generators after a failed install, remove only the package's
 `modules/dasSDL3/_build` directory before retrying; CMake caches the old generator.

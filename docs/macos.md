@@ -152,7 +152,7 @@ ctest --test-dir build/macos-package -R '^sdl3_daspkg_(manifest|consumer|source|
 The tests run the real upstream installer, compile all package imports, verify
 rendered pixels and cleanup, then move the source package and consumer directory.
 Source staging fingerprints headers and native dylibs and tests rejection of an
-altered fingerprint before compilation. Package output paths use `.shared_module`
+altered fingerprint in optional strict mode before compilation. Package output paths use `.shared_module`
 for both platforms; the Mac ImGui backend links the matching SDK module directly.
 
 For binary staging, pass `--platform macos` to `tools/stage_daspkg.py`.
@@ -163,8 +163,9 @@ python3 tools/stage_daspkg.py --source --platform macos \
   --sdk "$PWD/third_party/daScript" --with-imgui --output build/packages/dasSDL3
 ```
 
-Direct repository installs on Mac require `DASSDL3_PACKAGE_SDK_FINGERPRINT`
-to name that package's `sdk.sha256` and `DASSDL3_PACKAGE_PROFILE=core` or `imgui`.
+Direct repository installs on Mac use `DASSDL3_PACKAGE_PROFILE=core` or `imgui`.
+Only strict mode (`DASSDL3_VALIDATE_SDK_FINGERPRINT=ON`) requires
+`DASSDL3_PACKAGE_SDK_FINGERPRINT` to name that package's `sdk.sha256`.
 Use a fingerprint staged with `--with-imgui` for the ImGui profile. The Windows
 official SDK snapshots are preserved; an official Mac SDK archive has not been
 validated. Standalone daspkg release packaging is described below.

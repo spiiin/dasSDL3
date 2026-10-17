@@ -2,7 +2,10 @@
 
 The supported client/source revision is daScript
 `ebac0ffe46ab30de6c9536f4b0af7a33ede45902` (upstream version `0.6.4`).
-Older reference and official SDKs are no longer accepted.
+These identify tested reference builds, not every source-compatible SDK.
+Source installs enforce these snapshots only with
+`DASSDL3_VALIDATE_SDK_FINGERPRINT=ON` (CMake or environment).
+The default source install builds against the selected consumer SDK.
 
 Download the exact build from the [reference SDK release](https://github.com/spiiin/dasSDL3/releases/tag/sdk-ebac0ffe-windows-x64-r1).
 `reference-sdk.json` records its URL, archive checksum and layout. Consumers
@@ -15,7 +18,7 @@ The ImGui fingerprint additionally covers native headers/sources and its
 import library/module and Clipboard module.
 
 Fingerprints use the relative-path/SHA256 format emitted by
-`tools/stage_daspkg.py --source --sdk <SDK>`. They must match in full and are
+`tools/stage_daspkg.py --source --sdk <SDK>`. In strict mode they must match in full and are
 never regenerated during installation. Binary hashes deliberately reject
 other builds, even potentially compatible rebuilds of the same source commit.
 This is not a claim of general daScript ABI stability.
@@ -30,6 +33,6 @@ Committed reference hashes are platform-specific.
 ImGui and standalone release are outside this profile. Independently built SDKs
 use local source staging because their binary hashes may differ.
 
-Native Mac repository packages use a staged fingerprint supplied through
+Strict native Mac repository packages use a staged fingerprint supplied through
 `DASSDL3_PACKAGE_SDK_FINGERPRINT`, against the same pinned source revision.
 The Windows SDK archive cannot be used for native Mac package linkage.
