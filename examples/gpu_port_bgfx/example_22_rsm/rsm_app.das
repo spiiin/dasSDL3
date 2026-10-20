@@ -5,7 +5,7 @@ require ../common/multipass_support.das public
 require ./shaders/rsm_shaders.das as shaders
 require daslib/defer
 require daslib/match
-struct Settings { mode : int; paused : bool; reset : bool; bounce : float = 2.0 }
+struct Settings { mode : int; paused : bool; reset : bool; bounce : float = 0.25; radius : float = 3.0; azimuth : float = 215.0; elevation : float = 35.0 }
 struct Resources { cube : GeometryBuffers; gbuffer, reflective, combine : SDL_GPUGraphicsPipeline ?; gpos, gnormal, albedo, depth, rpos, rnormal, flux, shadow : SDL_GPUTexture ?; sampler : SDL_GPUSampler ?; size : uint2; angle : float }
 def with_resources(device : SDL_GPUDevice?; format : SDL_GPUTextureFormat; body : block<(var r : Resources) : SdlStatus>) : SdlStatus {
     var r = Resources()
@@ -51,12 +51,13 @@ def draw(device : SDL_GPUDevice?; command : SDL_GPUCommandBuffer?; var r : Resou
         t = texture(device, width, height, SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT, SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET) |> sdl_try; r.depth = t; r.size = uint2(width, height)
     }
     if (!settings.paused) { r.angle = time * 0.2 }; if (settings.reset) { r.angle = 0.0 }
-    let light = float3(0.0, 7.0, -4.0); let light_vp = ortho(12.0, 0.1, 40.0) * look_at_lh(light, float3(0.0, 0.0, 3.0), float3(0.0, 1.0, 0.0))
+    let el=settings.elevation*0.01745329252;let az=settings.azimuth*0.01745329252
+    let light=float3(cos(el)*cos(az),sin(el),cos(el)*sin(az))*10.0; let light_vp = ortho(12.0, 0.1, 40.0) * look_at_lh(light, float3(0.0, 0.0, 3.0), float3(0.0, 1.0, 0.0))
     let reflective <- array(attachment(r.rpos), attachment(r.rnormal), attachment(r.flux)); var depth = depth_attachment(r.shadow); depth.store_op = SDL_GPUStoreOp.STOREOP_STORE
     with_native_gpu_render_pass(command, reflective, depth) $(var pass_ : SDL_GPURenderPass?&) { SDL_BindGPUGraphicsPipeline(pass_, r.reflective); return scene(command, pass_, r, light_vp, light) } |> sdl_try
     let geometry <- array(attachment(r.gpos), attachment(r.gnormal), attachment(r.albedo)); depth = depth_attachment(r.depth)
     with_native_gpu_render_pass(command, geometry, depth) $(var pass_ : SDL_GPURenderPass?&) { SDL_BindGPUGraphicsPipeline(pass_, r.gbuffer); return scene(command, pass_, r, camera_matrix(width, height, float3(0.0, 3.0, -22.0), float3(0.0, 0.0, 3.0)), light) } |> sdl_try
-    push_gpu_dsl_fragment_uniform(command, 0u, shaders::Resolve(light_vp = light_vp, light = float4(light, 1.0), config = float4(float(settings.mode), settings.bounce, 0.0, 0.0))) |> sdl_try
+    push_gpu_dsl_fragment_uniform(command, 0u, shaders::Resolve(light_vp = light_vp, light = float4(light, 1.0), config = float4(float(settings.mode), settings.bounce, settings.radius, 0.0))) |> sdl_try
     var images <- array(r.gpos, r.gnormal, r.albedo, r.rpos, r.rnormal, r.flux, r.shadow)
     return fullscreen(command, r.combine, output, images, r.sampler)
 }

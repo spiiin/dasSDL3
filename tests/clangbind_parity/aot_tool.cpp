@@ -42,6 +42,12 @@ static int generate(const char *input, const char *output) {
     ModuleGroup scriptModules, compilerModules;
     CodeOfPolicies policy;
     policy.aot_module = true;
+#ifdef DASSDL3_AOT_STANDALONE_JSON_RTTI
+    // json_boost contains ast_typedecl macros when compiled as a standalone module.
+    // Application inputs keep their normal RTTI policy and AOT hashes.
+    if (std::string(input).find("/daslib/json_boost.das") != std::string::npos)
+        policy.rtti = true;
+#endif
 #ifdef DASSDL3_WITH_IMGUI
     // Live macro modules use ast_typedecl when generated as standalone inputs.
     policy.rtti = true;

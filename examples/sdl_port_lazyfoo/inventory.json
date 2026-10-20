@@ -1,0 +1,118 @@
+{
+  "index": "https://lazyfoo.net/tutorials/SDL3/index.php",
+  "checked": "2026-10-20",
+  "implementation": "Independent topic examples; no upstream source, media or prose copied",
+  "lessons": [
+    {
+      "number": 0,
+      "url": "https://lazyfoo.net/tutorials/SDL3/00-introduction/index.php",
+      "entry": null
+    },
+    {
+      "number": 1,
+      "url": "https://lazyfoo.net/tutorials/SDL3/01-hello-sdl3/index.php",
+      "entry": "01_hello-sdl3.das"
+    },
+    {
+      "number": 2,
+      "url": "https://lazyfoo.net/tutorials/SDL3/02-textures-and-extension-libraries/index.php",
+      "entry": "02_textures-and-extension-libraries.das"
+    },
+    {
+      "number": 3,
+      "url": "https://lazyfoo.net/tutorials/SDL3/03-key-presses-and-key-states/index.php",
+      "entry": "03_key-presses-and-key-states.das"
+    },
+    {
+      "number": 4,
+      "url": "https://lazyfoo.net/tutorials/SDL3/04-color-keying/index.php",
+      "entry": "04_color-keying.das"
+    },
+    {
+      "number": 5,
+      "url": "https://lazyfoo.net/tutorials/SDL3/05-sprite-clipping-and-stretching/index.php",
+      "entry": "05_sprite-clipping-and-stretching.das"
+    },
+    {
+      "number": 6,
+      "url": "https://lazyfoo.net/tutorials/SDL3/06-rotation-and-flipping/index.php",
+      "entry": "06_rotation-and-flipping.das"
+    },
+    {
+      "number": 7,
+      "url": "https://lazyfoo.net/tutorials/SDL3/07-color-modulation-and-alpha-blending/index.php",
+      "entry": "07_color-modulation-and-alpha-blending.das"
+    },
+    {
+      "number": 8,
+      "url": "https://lazyfoo.net/tutorials/SDL3/08-true-type-fonts/index.php",
+      "entry": "08_true-type-fonts.das"
+    },
+    {
+      "number": 9,
+      "url": "https://lazyfoo.net/tutorials/SDL3/09-mouse-events/index.php",
+      "entry": "09_mouse-events.das"
+    },
+    {
+      "number": 10,
+      "url": "https://lazyfoo.net/tutorials/SDL3/10-timing/index.php",
+      "entry": "10_timing.das"
+    },
+    {
+      "number": 11,
+      "url": "https://lazyfoo.net/tutorials/SDL3/11-advanced-timers/index.php",
+      "entry": "11_advanced-timers.das"
+    },
+    {
+      "number": 12,
+      "url": "https://lazyfoo.net/tutorials/SDL3/12-frame-rate-and-vsync/index.php",
+      "entry": "12_frame-rate-and-vsync.das"
+    },
+    {
+      "number": 13,
+      "url": "https://lazyfoo.net/tutorials/SDL3/13-motion/index.php",
+      "entry": "13_motion.das"
+    },
+    {
+      "number": 14,
+      "url": "https://lazyfoo.net/tutorials/SDL3/14-animation/index.php",
+      "entry": "14_animation.das"
+    },
+    {
+      "number": 15,
+      "url": "https://lazyfoo.net/tutorials/SDL3/15-sound-effects-and-music/index.php",
+      "entry": "15_sound-effects-and-music.das"
+    },
+    {
+      "number": 16,
+      "url": "https://lazyfoo.net/tutorials/SDL3/16-collision-detection/index.php",
+      "entry": "16_collision-detection.das"
+    },
+    {
+      "number": 17,
+      "url": "https://lazyfoo.net/tutorials/SDL3/17-text-input-and-clipboard-handling/index.php",
+      "entry": "17_text-input-and-clipboard-handling.das"
+    },
+    {
+      "number": 18,
+      "url": "https://lazyfoo.net/tutorials/SDL3/18-scrolling/index.php",
+      "entry": "18_scrolling.das"
+    },
+    {
+      "number": 19,
+      "url": "https://lazyfoo.net/tutorials/SDL3/19-state-machines/index.php",
+      "entry": "19_state-machines.das"
+    },
+    {
+      "number": 20,
+      "url": "https://lazyfoo.net/tutorials/SDL3/20-multiple-source-files/index.php",
+      "entry": "20_multiple-source-files.das"
+    }
+  ],
+  "assets": {
+    "assets\\melody.wav": "2189e7613f1783e29c4fcb75069f318ac25694ffdf5b4a3889a46c065e4715bf",
+    "assets\\sprites-alpha.png": "71fa1b5641cff0c662047d8577ba2c8e6004e0848f54421fe12e604c5ae5da6a",
+    "assets\\sprites.bmp": "8d69e2825c5dfd9673886f25e07c8a7ff6922d27431bacf1b0473fd490961552",
+    "assets\\sprites.png": "3ebe357586b263be985a3582cc49836b7e4e3c86ebeec7b5cadd5a907b18acc2"
+  }
+}

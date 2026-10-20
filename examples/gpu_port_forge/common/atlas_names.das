@@ -1,0 +1,3 @@
+options gen2
+module atlas_names shared public
+def atlas_names {return <- array("atlas_bark","atlas_brushed_steel","atlas_cobblestone","atlas_copper_patina","atlas_corrugated_metal","atlas_cracked_concrete","atlas_diamond_plate","atlas_dirt","atlas_flagstone","atlas_grass","atlas_gravel","atlas_hardwood_floor","atlas_herringbone_brick","atlas_leather","atlas_marble","atlas_old_brick_wall","atlas_parquet","atlas_plywood","atlas_red_brick","atlas_roof_tiles","atlas_rough_plaster","atlas_rough_rock","atlas_rusted_iron","atlas_sandstone","atlas_slate","atlas_smooth_concrete","atlas_stucco","atlas_weathered_planks","atlas_white_brick","atlas_woven_fabric")}

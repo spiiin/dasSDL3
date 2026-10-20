@@ -119,6 +119,7 @@ list(APPEND _dsl_scripts
     tests/bgfx_dynamic
     examples/gpu_port_bgfx/example_27_sky/sky_app
     examples/gpu_port_bgfx/example_27_sky/shaders/sky_shaders
+    examples/gpu_port_bgfx/example_27_sky/sky_calendar
     tests/bgfx_sky
     examples/gpu_port_bgfx/example_28_gpudrivenrendering/gpudrivenrendering_app
     examples/gpu_port_bgfx/example_28_gpudrivenrendering/shaders/gpudrivenrendering_shaders

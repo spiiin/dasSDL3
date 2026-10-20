@@ -1,0 +1,149 @@
+{
+  "materials": [
+    {
+      "name": "Metal046B",
+      "base": "pbr_Metal046B_base.ftex",
+      "normal": "pbr_Metal046B_normal.ftex",
+      "mr": "pbr_Metal046B_mr.ftex",
+      "ao": "pbr_Metal046B_ao.ftex",
+      "emissive": "pbr_emissive_grid.ftex",
+      "base_factor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissive_factor": [
+        1,
+        1,
+        1
+      ],
+      "metallic": 1,
+      "roughness": 1,
+      "normal_scale": 1,
+      "occlusion_strength": 1,
+      "alpha_cutoff": 0
+    },
+    {
+      "name": "Metal048A",
+      "base": "pbr_Metal048A_base.ftex",
+      "normal": "pbr_Metal048A_normal.ftex",
+      "mr": "pbr_Metal048A_mr.ftex",
+      "ao": "pbr_Metal048A_ao.ftex",
+      "emissive": "pbr_black_srgb.ftex",
+      "base_factor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "metallic": 1,
+      "roughness": 1,
+      "normal_scale": 1,
+      "occlusion_strength": 1,
+      "alpha_cutoff": 0
+    },
+    {
+      "name": "Metal061B",
+      "base": "pbr_Metal061B_base.ftex",
+      "normal": "pbr_Metal061B_normal.ftex",
+      "mr": "pbr_Metal061B_mr.ftex",
+      "ao": "pbr_Metal061B_ao.ftex",
+      "emissive": "pbr_black_srgb.ftex",
+      "base_factor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "metallic": 1,
+      "roughness": 1,
+      "normal_scale": 1,
+      "occlusion_strength": 1,
+      "alpha_cutoff": 0
+    },
+    {
+      "name": "ChristmasTreeOrnament021",
+      "base": "pbr_ChristmasTreeOrnament021_base.ftex",
+      "normal": "pbr_ChristmasTreeOrnament021_normal.ftex",
+      "mr": "pbr_ChristmasTreeOrnament021_mr.ftex",
+      "ao": "pbr_ChristmasTreeOrnament021_ao.ftex",
+      "emissive": "pbr_black_srgb.ftex",
+      "base_factor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "metallic": 1,
+      "roughness": 1,
+      "normal_scale": 1,
+      "occlusion_strength": 1,
+      "alpha_cutoff": 0
+    },
+    {
+      "name": "Rock026",
+      "base": "pbr_Rock026_base.ftex",
+      "normal": "pbr_Rock026_normal.ftex",
+      "mr": "pbr_Rock026_mr.ftex",
+      "ao": "pbr_Rock026_ao.ftex",
+      "emissive": "pbr_black_srgb.ftex",
+      "base_factor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "metallic": 1,
+      "roughness": 1,
+      "normal_scale": 1,
+      "occlusion_strength": 1,
+      "alpha_cutoff": 0
+    },
+    {
+      "name": "WoodFloor051",
+      "base": "pbr_WoodFloor051_base.ftex",
+      "normal": "pbr_WoodFloor051_normal.ftex",
+      "mr": "pbr_WoodFloor051_mr.ftex",
+      "ao": "pbr_WoodFloor051_ao.ftex",
+      "emissive": "pbr_black_srgb.ftex",
+      "base_factor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "metallic": 1,
+      "roughness": 1,
+      "normal_scale": 1,
+      "occlusion_strength": 1,
+      "alpha_cutoff": 0
+    }
+  ],
+  "part_materials": []
+}

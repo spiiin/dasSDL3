@@ -1,0 +1,296 @@
+{
+  "date": "2026-10-20",
+  "bgfx_commit": "7e3060ccb97959dcda3f091b96d82515197028e0",
+  "hardware": {
+    "gpu": "NVIDIA GeForce RTX 4080 Laptop GPU",
+    "driver": "566.26",
+    "cpu": "Intel Core i9-14900HX",
+    "os": "Windows x64"
+  },
+  "protocol": {
+    "api": "Vulkan",
+    "width": 1280,
+    "height": 720,
+    "configuration": "Release /O2",
+    "warmup_seconds": 2,
+    "measurement_seconds": 5,
+    "trials": 3,
+    "vsync": false,
+    "imgui": false,
+    "gpu_debug": false,
+    "sky_hour": 12,
+    "rsm_scene": "static default; different workloads in original and port",
+    "includes": "whole frame loop, presentation and final SDL GPU drain; excludes compilation and resource initialization"
+  },
+  "capture_checks": {
+    "sky_bgfx_mae_per_channel_255": 0.00075,
+    "sky_channels_within_2_fraction": 0.99999891,
+    "interpreter_aot_identical": true
+  },
+  "summary": {
+    "sky": {
+      "bgfx": {
+        "median_ms": 0.642868,
+        "min_ms": 0.614871,
+        "max_ms": 0.702233,
+        "median_fps": 1555.528
+      },
+      "interpreter": {
+        "median_ms": 0.517126581885856,
+        "min_ms": 0.5105912200102093,
+        "max_ms": 0.5522456934628975,
+        "median_fps": 1933.762515849025
+      },
+      "aot": {
+        "median_ms": 0.5669896735434142,
+        "min_ms": 0.5156328453608247,
+        "max_ms": 0.5936660493827159,
+        "median_fps": 1763.7005516352326
+      }
+    },
+    "rsm": {
+      "bgfx": {
+        "median_ms": 3.092735,
+        "min_ms": 3.091358,
+        "max_ms": 3.09861,
+        "median_fps": 323.338
+      },
+      "interpreter": {
+        "median_ms": 0.6674015030593243,
+        "min_ms": 0.6424943609505459,
+        "max_ms": 0.6954047546225497,
+        "median_fps": 1498.348438557699
+      },
+      "aot": {
+        "median_ms": 0.6789506990633909,
+        "min_ms": 0.6119951198630137,
+        "max_ms": 0.7078105985566718,
+        "median_fps": 1472.860991791444
+      }
+    }
+  },
+  "trials": [
+    {
+      "case": "sky",
+      "kind": "bgfx",
+      "trial": 0,
+      "values": {
+        "frames": 8132.0,
+        "seconds": 5.000129,
+        "fps": 1626.358,
+        "ms": 0.614871,
+        "cpu_render_ms": 0.536381,
+        "gpu_ms": 0.025063,
+        "draws": 3.0,
+        "triangles": 4482.0
+      }
+    },
+    {
+      "case": "sky",
+      "kind": "interpreter",
+      "trial": 0,
+      "values": {
+        "frames": 9672.0,
+        "seconds": 5.0016483,
+        "fps": 1933.762515849025,
+        "ms": 0.517126581885856
+      }
+    },
+    {
+      "case": "sky",
+      "kind": "aot",
+      "trial": 0,
+      "values": {
+        "frames": 8424.0,
+        "seconds": 5.0010428,
+        "fps": 1684.4486913809258,
+        "ms": 0.5936660493827159
+      }
+    },
+    {
+      "case": "sky",
+      "kind": "bgfx",
+      "trial": 1,
+      "values": {
+        "frames": 7779.0,
+        "seconds": 5.0008739,
+        "fps": 1555.528,
+        "ms": 0.642868,
+        "cpu_render_ms": 0.478995,
+        "gpu_ms": 0.025552,
+        "draws": 3.0,
+        "triangles": 4482.0
+      }
+    },
+    {
+      "case": "sky",
+      "kind": "interpreter",
+      "trial": 1,
+      "values": {
+        "frames": 9056.0,
+        "seconds": 5.001137,
+        "fps": 1810.7882267572354,
+        "ms": 0.5522456934628975
+      }
+    },
+    {
+      "case": "sky",
+      "kind": "aot",
+      "trial": 1,
+      "values": {
+        "frames": 8822.0,
+        "seconds": 5.0019829,
+        "fps": 1763.7005516352326,
+        "ms": 0.5669896735434142
+      }
+    },
+    {
+      "case": "sky",
+      "kind": "bgfx",
+      "trial": 2,
+      "values": {
+        "frames": 7121.0,
+        "seconds": 5.000601,
+        "fps": 1424.029,
+        "ms": 0.702233,
+        "cpu_render_ms": 0.464635,
+        "gpu_ms": 0.0273,
+        "draws": 3.0,
+        "triangles": 4482.0
+      }
+    },
+    {
+      "case": "sky",
+      "kind": "interpreter",
+      "trial": 2,
+      "values": {
+        "frames": 9795.0,
+        "seconds": 5.001241,
+        "fps": 1958.5138968508015,
+        "ms": 0.5105912200102093
+      }
+    },
+    {
+      "case": "sky",
+      "kind": "aot",
+      "trial": 2,
+      "values": {
+        "frames": 9700.0,
+        "seconds": 5.0016386,
+        "fps": 1939.3644314885128,
+        "ms": 0.5156328453608247
+      }
+    },
+    {
+      "case": "rsm",
+      "kind": "bgfx",
+      "trial": 0,
+      "values": {
+        "frames": 1617.0,
+        "seconds": 5.0009531,
+        "fps": 323.338,
+        "ms": 3.092735,
+        "cpu_render_ms": 2.771801,
+        "gpu_ms": 2.634475,
+        "draws": 1653.0,
+        "triangles": 14981675.0
+      }
+    },
+    {
+      "case": "rsm",
+      "kind": "interpreter",
+      "trial": 0,
+      "values": {
+        "frames": 7518.0,
+        "seconds": 5.0175245,
+        "fps": 1498.348438557699,
+        "ms": 0.6674015030593243
+      }
+    },
+    {
+      "case": "rsm",
+      "kind": "aot",
+      "trial": 0,
+      "values": {
+        "frames": 8176.0,
+        "seconds": 5.0036721,
+        "fps": 1633.9999577510284,
+        "ms": 0.6119951198630137
+      }
+    },
+    {
+      "case": "rsm",
+      "kind": "bgfx",
+      "trial": 1,
+      "values": {
+        "frames": 1618.0,
+        "seconds": 5.0018176,
+        "fps": 323.482,
+        "ms": 3.091358,
+        "cpu_render_ms": 2.653151,
+        "gpu_ms": 2.638422,
+        "draws": 1653.0,
+        "triangles": 14981675.0
+      }
+    },
+    {
+      "case": "rsm",
+      "kind": "interpreter",
+      "trial": 1,
+      "values": {
+        "frames": 7785.0,
+        "seconds": 5.0018186,
+        "fps": 1556.4338938641238,
+        "ms": 0.6424943609505459
+      }
+    },
+    {
+      "case": "rsm",
+      "kind": "aot",
+      "trial": 1,
+      "values": {
+        "frames": 7367.0,
+        "seconds": 5.0018298,
+        "fps": 1472.860991791444,
+        "ms": 0.6789506990633909
+      }
+    },
+    {
+      "case": "rsm",
+      "kind": "bgfx",
+      "trial": 2,
+      "values": {
+        "frames": 1614.0,
+        "seconds": 5.0011561,
+        "fps": 322.725,
+        "ms": 3.09861,
+        "cpu_render_ms": 2.807568,
+        "gpu_ms": 2.637135,
+        "draws": 1653.0,
+        "triangles": 14981675.0
+      }
+    },
+    {
+      "case": "rsm",
+      "kind": "interpreter",
+      "trial": 2,
+      "values": {
+        "frames": 7193.0,
+        "seconds": 5.0020464,
+        "fps": 1438.0114506734683,
+        "ms": 0.6954047546225497
+      }
+    },
+    {
+      "case": "rsm",
+      "kind": "aot",
+      "trial": 2,
+      "values": {
+        "frames": 7067.0,
+        "seconds": 5.0020975,
+        "fps": 1412.8073273261869,
+        "ms": 0.7078105985566718
+      }
+    }
+  ]
+}

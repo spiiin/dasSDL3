@@ -133,4 +133,8 @@ error and platform limitations.
 
 - [dasImgui v2 and SDL live integration](imgui-widgets-and-live.md).
 
-- [forge-gpu lessons 10–14](../examples/gpu_port_forge/README.md): lighting, compute plasma, procedural grid, instancing and environment mapping in daScript DSL.
+- [forge-gpu lessons 10–52](../examples/gpu_port_forge/README.md): lighting, compute plasma, grid, instancing, environment mapping, cascaded shadows, blending, normal maps, materials, debug lines and fog in daScript DSL.
+
+- [bgfx Sky/RSM audit](bgfx-sky-rsm-audit.md): reference fidelity, ImGui controls and measured performance.
+
+- [Forge 21–52 implementation notes](forge-ports-21-52.md): adaptations, assets, GPU readback contracts and strict AOT checks.

@@ -1,0 +1,720 @@
+{
+  "inputs": {
+    "assets/materials/Metal046B/Metal046B_Color.png": "3317cde97991f755d02630d993037e185768ea63cfb6127d6633741785e2726c",
+    "assets/materials/Metal046B/Metal046B_NormalGL.png": "dbf106390be078e89247f2d7a1dff599be26f0888bb1a54f23c89e6fa9e90f62",
+    "assets/materials/Metal046B/Metal046B_Roughness.png": "28086a4e7039fead59a82c2d7b6bc3078aa7faa152952ac7cf7f7c9508f9a57a",
+    "assets/materials/Metal046B/Metal046B_Metalness.png": "8b143c10959848c1512779d371cc9a1f1962ad58f3f9dd4325f0a25fb940b126",
+    "assets/materials/Metal048A/Metal048A_Color.png": "f684cdfcf155357e9746386b68dad5a5ff8f0f9636c95d90c5b4c232ba081c7d",
+    "assets/materials/Metal048A/Metal048A_NormalGL.png": "e24f513a346ffdb1c2413071b1b6cbc48d250fc314fbaedb45882a4958f36491",
+    "assets/materials/Metal048A/Metal048A_Roughness.png": "49716224c525ce684a3a8165c40ef5b62a8ba020af413962d60c229d18cabd10",
+    "assets/materials/Metal048A/Metal048A_Metalness.png": "1d60c2f7a229a6ccacf56eb7d55bf9903dfc423e5a2b001e44db0f920bc32697",
+    "assets/materials/Metal061B/Metal061B_Color.png": "e2858779fa943cde09fca57c6e2d9f3aef6fda788bc95934a81864983ebfe700",
+    "assets/materials/Metal061B/Metal061B_NormalGL.png": "1621f4d9e425d1b97012c0660f89a42cae689368926b9a28b3ecef9bbb4b2ff8",
+    "assets/materials/Metal061B/Metal061B_Roughness.png": "1a1a1d45d152b1fdffb0a085c30349fc88404c4f8ad738419454a67adb85214d",
+    "assets/materials/Metal061B/Metal061B_Metalness.png": "4d5019ec464d51f6836d66065bb67df530cc608b81056a5352e9159c197e70de",
+    "assets/materials/ChristmasTreeOrnament021/ChristmasTreeOrnament021_Color.png": "15140b6f40bdbf4306f60f71362ffd4ce4664b370b64547e8a64284090a69a49",
+    "assets/materials/ChristmasTreeOrnament021/ChristmasTreeOrnament021_NormalGL.png": "c08a6733b52a622921c465f3094c635ca9a8e39be96a42e4be82fd308b40ed41",
+    "assets/materials/ChristmasTreeOrnament021/ChristmasTreeOrnament021_Roughness.png": "7fa277384586e96681534544db965178d363f8c2f558e19a1219ed5d65636e7a",
+    "assets/materials/ChristmasTreeOrnament021/ChristmasTreeOrnament021_Metalness.png": "aaac5e3021e32ce1bd1163fe33f718bf314a11fd18c7abb35460082067d0a960",
+    "assets/materials/Rock026/Rock026_Color.png": "e4ad1fd86606519ca55f412d3ebb99e1ef590d2a2c53f3ea40406a2d21c33f06",
+    "assets/materials/Rock026/Rock026_NormalGL.png": "1d7ea84fcff531b37c92f9c0cce4db9fbea9b427db9a4f1f31874144c90c3390",
+    "assets/materials/Rock026/Rock026_Roughness.png": "ee19ef41120a15a92603bc1c0d130f3fb64b6851e31be3deea015752b91f9fe9",
+    "assets/materials/Rock026/Rock026_AmbientOcclusion.png": "a1ba2dcd7565a94ad3dfef7d6fa14de6638fc4139007615bae1346253fece970",
+    "assets/materials/WoodFloor051/WoodFloor051_Color.png": "b66fac74fa8fb0e2628dd2259f3290e453149b457bdf24ca46e1bb864168b664",
+    "assets/materials/WoodFloor051/WoodFloor051_NormalGL.png": "dcc2639b140a8e32245b83add988f850a98b28adaac474b68468ef1c7d1f677d",
+    "assets/materials/WoodFloor051/WoodFloor051_Roughness.png": "43414b6259c7906ace32da13988d928a00dc885b00e284ab805735a3d66750ea",
+    "assets/materials/WoodFloor051/WoodFloor051_AmbientOcclusion.png": "07e1eeadda0a18f002979a43310cd6a4b5210bda87985808702b752a5609a1f4"
+  },
+  "outputs": {
+    "pbr_white_srgb.ftex": {
+      "sha256": "9a03b5d8bdae07b0e514c97b7906f7dd40a783cc02d431e7955e14112a7a51ae",
+      "input_pixels": "36fe2698122d684edce5511db3e16d04c0776a0a4d0f5cad8b2ed2b3184f6877",
+      "format": 1,
+      "dimensions": [
+        4,
+        4
+      ],
+      "levels": 3,
+      "payload_bytes": 48
+    },
+    "pbr_flat_normal.ftex": {
+      "sha256": "a77937a88a09b7695971bc0817732c22717f0d9d683c2d2f804fa9078fdc4254",
+      "input_pixels": "64b655e41c333ed30dd69db086adfbf1e4aa3770f7b74469a536ae5fd03b7e03",
+      "format": 3,
+      "dimensions": [
+        4,
+        4
+      ],
+      "levels": 3,
+      "payload_bytes": 48
+    },
+    "pbr_white_linear.ftex": {
+      "sha256": "7b464fc34262668052f28ff368410924ff168abc6e91446ddd6708643753ed3c",
+      "input_pixels": "7a56f6e0091ecbd148d249b32c50d8e7507b472e40d68cbb495969c741efbf82",
+      "format": 2,
+      "dimensions": [
+        4,
+        4
+      ],
+      "levels": 3,
+      "payload_bytes": 48
+    },
+    "pbr_black_srgb.ftex": {
+      "sha256": "6afe6b02a7dae6bb62e82c6a8991229cc751a87e0195e576e6dd927c3cc59da6",
+      "input_pixels": "ac1c0b6e52fedf96c9220d7fdf23a10fc338ca0a6bf1455622b84510db276df8",
+      "format": 1,
+      "dimensions": [
+        4,
+        4
+      ],
+      "levels": 3,
+      "payload_bytes": 48
+    },
+    "pbr_Metal046B_base.ftex": {
+      "sha256": "a63f5edf8682638414ece1954529a247ba7921e4d117d875bf320a9fbabe0b85",
+      "input_pixels": "48138a14c4afc2c6653b1bb9f34907cc733b2451720ff4f1a29078075df1ae01",
+      "format": 1,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "levels": 11,
+      "payload_bytes": 1398128
+    },
+    "pbr_Metal046B_normal.ftex": {
+      "sha256": "e271cc656752553444b84445e2e9009e024279ed9c7a88fa5a09c0f8a41891cf",
+      "input_pixels": "eaf5b8fb815b5490bd7141086b22e9c7e9691bd421fa4798a1075bb581cc315a",
+      "format": 3,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "levels": 11,
+      "payload_bytes": 1398128
+    },
+    "pbr_Metal046B_mr.ftex": {
+      "sha256": "14f706879f6bac0bd1feb2e2a4fa92731b3e5c302f2e9311156e94a6b5d19cd3",
+      "input_pixels": "99ac4e635e5f42f9a578b2bbf941a0ea5fd1e2888f5c94390b40b8ac6976a2b2",
+      "format": 2,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "levels": 11,
+      "payload_bytes": 1398128
+    },
+    "pbr_Metal046B_ao.ftex": {
+      "sha256": "7b464fc34262668052f28ff368410924ff168abc6e91446ddd6708643753ed3c",
+      "input_pixels": "7a56f6e0091ecbd148d249b32c50d8e7507b472e40d68cbb495969c741efbf82",
+      "format": 2,
+      "dimensions": [
+        4,
+        4
+      ],
+      "levels": 3,
+      "payload_bytes": 48
+    },
+    "pbr_emissive_grid.ftex": {
+      "sha256": "15e5cb4098b78c546863c2b6db887ab3daf954862879695593a37134fbc879de",
+      "input_pixels": "f59adffa0e5c4d252580f8f647399468a22012b520e63297b0d8d5c2d44b6a28",
+      "format": 1,
+      "dimensions": [
+        64,
+        64
+      ],
+      "levels": 7,
+      "payload_bytes": 5488
+    },
+    "pbr_Metal048A_base.ftex": {
+      "sha256": "94dfb2707f3b748a7c947c0c51692e7711e2f62dfdab33734c74b5fb62f8c005",
+      "input_pixels": "464fbadf7f57ce8bcefd993639c7e2901d95a7dfcbbc7969c68f980ed1fcb29a",
+      "format": 1,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "levels": 11,
+      "payload_bytes": 1398128
+    },
+    "pbr_Metal048A_normal.ftex": {
+      "sha256": "7687ceb4db9086ab776af5b753665e5667adbbe814246fcda91ba4b51956c443",
+      "input_pixels": "7ec46b4a45d076eee4549399473ce37aa2ae56baf29954ef3c83f305e7e80d13",
+      "format": 3,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "levels": 11,
+      "payload_bytes": 1398128
+    },
+    "pbr_Metal048A_mr.ftex": {
+      "sha256": "2c3db345a0d612e03494a4a4db777049b84237d49a7b85e55c3a032cf14d891f",
+      "input_pixels": "61ec81a46b8211010df7b1ce648ea1dd2e96346fd18cf57cac0b1d9ce810a285",
+      "format": 2,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "levels": 11,
+      "payload_bytes": 1398128
+    },
+    "pbr_Metal048A_ao.ftex": {
+      "sha256": "7b464fc34262668052f28ff368410924ff168abc6e91446ddd6708643753ed3c",
+      "input_pixels": "7a56f6e0091ecbd148d249b32c50d8e7507b472e40d68cbb495969c741efbf82",
+      "format": 2,
+      "dimensions": [
+        4,
+        4
+      ],
+      "levels": 3,
+      "payload_bytes": 48
+    },
+    "pbr_Metal061B_base.ftex": {
+      "sha256": "20bd0d3959c79017a2214a5fca70d9e84e51df03efd7643980e75df48336da7b",
+      "input_pixels": "6c5ae0b1513fa3b1f60e822955ae5775a79e0be6e5a3db403b014f5d60f5615b",
+      "format": 1,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "levels": 11,
+      "payload_bytes": 1398128
+    },
+    "pbr_Metal061B_normal.ftex": {
+      "sha256": "bba196d4c6f112f646750f27faa4fbfa710ce638f82643003a9085ecad0b8f3e",
+      "input_pixels": "a8e7a78586ec6df569597003e72e127b4f55adb8545332018458279a262c0f85",
+      "format": 3,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "levels": 11,
+      "payload_bytes": 1398128
+    },
+    "pbr_Metal061B_mr.ftex": {
+      "sha256": "d30d9157adc1eea6951238c6171fb9cbfc0e8f0e3db9d7bd52b0120cc6756d86",
+      "input_pixels": "77e0a5d6a92fa7b85886e39f135ba9630b7af4b6bdeb80ea9bdc287483291e45",
+      "format": 2,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "levels": 11,
+      "payload_bytes": 1398128
+    },
+    "pbr_Metal061B_ao.ftex": {
+      "sha256": "7b464fc34262668052f28ff368410924ff168abc6e91446ddd6708643753ed3c",
+      "input_pixels": "7a56f6e0091ecbd148d249b32c50d8e7507b472e40d68cbb495969c741efbf82",
+      "format": 2,
+      "dimensions": [
+        4,
+        4
+      ],
+      "levels": 3,
+      "payload_bytes": 48
+    },
+    "pbr_ChristmasTreeOrnament021_base.ftex": {
+      "sha256": "4474c97fec155ce4dfd99cfba238e11b03aded9bf0dda29232eec25322b38ba9",
+      "input_pixels": "bf7ebc1b87aa408c80fa4a414cde2080d968738cb12a53404ca046a476fb19e8",
+      "format": 1,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "levels": 11,
+      "payload_bytes": 1398128
+    },
+    "pbr_ChristmasTreeOrnament021_normal.ftex": {
+      "sha256": "bf9a99fa6b0fae1542dbb63bf7495fd593863020e7ac1094917eee6a6296c165",
+      "input_pixels": "6c327c2905d7932d811624ca1f7e032b1cca52ff7ecce8ce22943efc41d7338f",
+      "format": 3,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "levels": 11,
+      "payload_bytes": 1398128
+    },
+    "pbr_ChristmasTreeOrnament021_mr.ftex": {
+      "sha256": "67a4dd0165b3832e84f45d9755094980c3565a421abf73bd426aed59334f0aa2",
+      "input_pixels": "36fe0976ced5b6c836af0442b4a9dc39d6b9e8b41cde267235d192da9a8d7173",
+      "format": 2,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "levels": 11,
+      "payload_bytes": 1398128
+    },
+    "pbr_ChristmasTreeOrnament021_ao.ftex": {
+      "sha256": "7b464fc34262668052f28ff368410924ff168abc6e91446ddd6708643753ed3c",
+      "input_pixels": "7a56f6e0091ecbd148d249b32c50d8e7507b472e40d68cbb495969c741efbf82",
+      "format": 2,
+      "dimensions": [
+        4,
+        4
+      ],
+      "levels": 3,
+      "payload_bytes": 48
+    },
+    "pbr_Rock026_base.ftex": {
+      "sha256": "4bbd14ab30e044a67170153198e749996a518ed3c502988d97ef0d5a2e282ddb",
+      "input_pixels": "6390e5eaff7799bfe472dc22471124791950c0f1e53b8d14f186a261775816ac",
+      "format": 1,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "levels": 11,
+      "payload_bytes": 1398128
+    },
+    "pbr_Rock026_normal.ftex": {
+      "sha256": "d26a15894a4e41c3f6179214c5e9113387c64e621f77194a02cbebe76d2fbe06",
+      "input_pixels": "2ba78768d83c94ffc89ee1ce576e481724f85fb77064297989f97592f9353107",
+      "format": 3,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "levels": 11,
+      "payload_bytes": 1398128
+    },
+    "pbr_Rock026_mr.ftex": {
+      "sha256": "f0b697d9d44f68bef9886bd451c25e40a67a1405f9897e0a0545ab76a8c7ea78",
+      "input_pixels": "fa04ba257c19bf34920c3e5d516fbfb5a0f23349e66ad7344eb3c8078c63eda4",
+      "format": 2,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "levels": 11,
+      "payload_bytes": 1398128
+    },
+    "pbr_Rock026_ao.ftex": {
+      "sha256": "feac4413d682a3366bfccffae95395bb357e83415e77b312b18fe9b633facc0a",
+      "input_pixels": "9dbdf41cc68c076fedb790cc6cf13a9398bb131be1e9907d23deac6bbca759eb",
+      "format": 2,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "levels": 11,
+      "payload_bytes": 1398128
+    },
+    "pbr_WoodFloor051_base.ftex": {
+      "sha256": "414c942f869c94bbdcdfae51fb439cc4f56cdf97591a88857dce43724865d64a",
+      "input_pixels": "d7e81baa8a04525cdd62ef04bbe638e11c59a3332be4a963abc9f72a218b9352",
+      "format": 1,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "levels": 11,
+      "payload_bytes": 1398128
+    },
+    "pbr_WoodFloor051_normal.ftex": {
+      "sha256": "fd63324defd16cc3f74f5b09fce1a4f4ba0b41a9bc5384b474bf85f79698859a",
+      "input_pixels": "3cc97851fb496dabafbc0ddbb3a5e60ee34ff5d31d25597fb5f65adc596a666d",
+      "format": 3,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "levels": 11,
+      "payload_bytes": 1398128
+    },
+    "pbr_WoodFloor051_mr.ftex": {
+      "sha256": "d484c58c3e43725bc1248fc874d9dc7d5da8af4bf09662e6958165c562c4123c",
+      "input_pixels": "be74363578e928f007bec921f579d1ab6d1b598ff26d383b6791f7097449c90f",
+      "format": 2,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "levels": 11,
+      "payload_bytes": 1398128
+    },
+    "pbr_WoodFloor051_ao.ftex": {
+      "sha256": "bf3af758c63726eaa30eb0751fd3ebcdc600ad0bfdd9691eecda64ea08f5206f",
+      "input_pixels": "7447ebc6a5e9de1dd6f81a73468a31f5855eed7ddf106abc419f3780493b79ef",
+      "format": 2,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "levels": 11,
+      "payload_bytes": 1398128
+    },
+    "pbr_material_sets.json": {
+      "sha256": "77fe60e056035c4a275b78fb5926de26d51cce211623a0321d8c7ae748f50913"
+    },
+    "extended_chess_2_bc7s.ftex": {
+      "sha256": "2acebb241a580352321e99f2ecc6567f6d2a08df40b04c76fdf423504bd92d1c",
+      "input_pixels": "0b645ed0af606912e08c0c5953cbabbdb20c946123c7e5d5bb2eb7f378c68c9c",
+      "format": 1,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_0_bc5.ftex": {
+      "sha256": "98169c17dc7dc7a86d5468f066b20a1a89c1ce83f8828bb3d8598c8cd0625c10",
+      "input_pixels": "20cdb1879aa6501d91dc4047159f92c3495c040fd9805f4a6e2f7ac9986051d6",
+      "format": 3,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_1_bc7l.ftex": {
+      "sha256": "cab00f4380ab0855f940d2570b8ea13b5dc77e5a72be9076b4d1e7b766643375",
+      "input_pixels": "850778d5c803545dc7b75e01493b981309a5c7071d1db8b6ace18c535b22a36d",
+      "format": 2,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_5_bc7s.ftex": {
+      "sha256": "4553ad67c166b2d875cc4efac838b2384289f238946e7e0b3b3d4b678f3a6f60",
+      "input_pixels": "476182d9a0cb9679ebdac699669d516effcb25f6aa22a921400d7fe17e76777f",
+      "format": 1,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_3_bc5.ftex": {
+      "sha256": "734837ada117f472334bffe73d995a5bfc0a93db38d35adedb132d4d49dc3ecc",
+      "input_pixels": "9872eaf06959d9ebd1efa34bd72fbb361683411c911073931629a2f5b31cd77d",
+      "format": 3,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_4_bc7l.ftex": {
+      "sha256": "a5948ec110736b2051a83dfe8aa0c61330b733d43e0d69f0c79373c8dfe4f31f",
+      "input_pixels": "688aec98a37b75592fe89b6590ce45f693983d7ebfd023ea6011ad71b032202d",
+      "format": 2,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_8_bc7s.ftex": {
+      "sha256": "b83cd333847c6faa6703601d47db3fc98d5081a0793856c847326465019697c6",
+      "input_pixels": "46c72ec5b29a932b612d0b63f2cfab1bf66f4bf41e4a0b83537bbed179d2d014",
+      "format": 1,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_6_bc5.ftex": {
+      "sha256": "5b8831e403e1e429ebe69f2bd819c9f1dbbfa113618d7fa36b119968d9cdb7dd",
+      "input_pixels": "dfcb01003cf28d5970aeb17b5d1ef2a88c65a19b7be8028f4464a56da52c3a41",
+      "format": 3,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_7_bc7l.ftex": {
+      "sha256": "040ab5d33e37108ba20858b3ce11b3ebb4360a7ba0d96d959688fb70ee876b69",
+      "input_pixels": "0abadd2c6cab40252445f5e9fb2d29d98b2390a7e9b856fa560619a51851a76d",
+      "format": 2,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_11_bc7s.ftex": {
+      "sha256": "f8c9b14c206407c9cf4baeb87716df2a7a983f2308ce0df053626b88e9222896",
+      "input_pixels": "93d57e52080ec0d58751728da190b403daf1dd76587b2ae401a8f7d6b5e94ded",
+      "format": 1,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_9_bc5.ftex": {
+      "sha256": "5aae515cceb4f311135e1f81194a9a4a1a9527b931f48200e6c4632b0abaeeba",
+      "input_pixels": "70dc4fba6d39ec9fba42ca9e0ca5fd6f74264d4673554cd21d5c4f3138ccf784",
+      "format": 3,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_10_bc7l.ftex": {
+      "sha256": "9398fa58e86f608633ada22490cb59f4dc602cdc61743a9c9e80837ca19d8965",
+      "input_pixels": "4408c37d2b36320ce60dd542541744dca8c342410eb7ad465a97b88048712d94",
+      "format": 2,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_14_bc7s.ftex": {
+      "sha256": "96dc8d31392273527f73296eb758a44cf713afce0f7275611c0456f78904ed97",
+      "input_pixels": "ead4511e079284c0a58bfe60619129ef196e9875d546970b85dfd5c16d35e55c",
+      "format": 1,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_12_bc5.ftex": {
+      "sha256": "f9730b48999cda15e972ba4a6ffd909f61650cfe4d9cabe1524d92ad56517d0b",
+      "input_pixels": "b4ce1d369a8ed3f4f5d4c1200296943aa4e35f404bed0982660b6078ca05df9f",
+      "format": 3,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_13_bc7l.ftex": {
+      "sha256": "56f6df16c60a639fea332e3705659ea1861c465d7748046fb5b4fb7bb0aaef3f",
+      "input_pixels": "0f76e8e6233c83c00d3d9280fecf9686fbc7f0d95a18d7c3d30eaafc130fe355",
+      "format": 2,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_15_bc5.ftex": {
+      "sha256": "2da935b983c4a2ba26271a07a593619e95678f3090dd775bc13c3b6290c126d7",
+      "input_pixels": "2d1b066d7f508c078683b98d6617e6175a8e86484912d5e9675b2dc73c55a507",
+      "format": 3,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_16_bc7l.ftex": {
+      "sha256": "364ae1f709933a2cc449336b6fee1e624996a6af1e75a0ce700f1ee412baef9d",
+      "input_pixels": "84dbade111bcec27347e156d8d9bf96551515dbf1c835cd0d89ed88d88cbd25c",
+      "format": 2,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_17_bc7s.ftex": {
+      "sha256": "ec44370feca805c09f734af3e572e6371cfcbaa46921046f1b9c97246a325117",
+      "input_pixels": "43eaed48cd65bc1575cf1a51b217a9f5e88f8fd07817244920bda99627776f5c",
+      "format": 1,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_18_bc7s.ftex": {
+      "sha256": "9307750639d9e268880ea2d4cb6d41ec89bb5499bd8a3551bebb876c535d4998",
+      "input_pixels": "182f5508965d4fd5100c27957c900d12e46732ab9adb7bfea446ad219d704686",
+      "format": 1,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_21_bc7s.ftex": {
+      "sha256": "356728689a170a58bb40271c3c66d90753a47e7cdbd25193806bbf7a997fdf7c",
+      "input_pixels": "43b7692b7ec624086631b2a6f5af9aea5a7a43fb154a4847f87e3c249da8e2de",
+      "format": 1,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_19_bc5.ftex": {
+      "sha256": "5eaf09c56d0dea1b34044623c743a39babda0763b67746bdb36ea4eef07238bf",
+      "input_pixels": "d84aaf81393f0ee0d5d9794ca0ffead6a16043a17fadece69f0ee1e04157454c",
+      "format": 3,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_20_bc7l.ftex": {
+      "sha256": "8daf4ca2180ffe7be6b8a58841383d50eaf14a5ebfacb5e146f63698083de08d",
+      "input_pixels": "37116f4bb1aeabeb4eadeebab05987f80bebcd8227de59aab7d5358114129bbf",
+      "format": 2,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_22_bc7s.ftex": {
+      "sha256": "333c666c75e9981ae46e14ecb61d39299fbe5bae28eb7090fbe9cdc430e9c4f5",
+      "input_pixels": "5383915af8cd2b1e05f374388a94952ae6606b4f68b5fa954d880c9ed0eb92c4",
+      "format": 1,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_25_bc7s.ftex": {
+      "sha256": "883453d64b18cd74e929b82350d7549e3948e232166398b497a2dd13d351d30c",
+      "input_pixels": "3b33ae9e684e10d3f7caab550cfd62a0624e9f26ddf783ca3d0a3d2d2c4fa946",
+      "format": 1,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_23_bc5.ftex": {
+      "sha256": "cb73e45d0160563392c445cc5ef71fda3b507b08a5f59e333e92528ac85c63e5",
+      "input_pixels": "afcdb7f53226cb5229f427d64d2c40a0fe836ce2c06f601eb3ee9926d1ef0972",
+      "format": 3,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_24_bc7l.ftex": {
+      "sha256": "ddab7790c779945af52f3bcaca62ca18e9718d0f543e1c5ebee3dc552feb55c2",
+      "input_pixels": "c4d36d42cad10a39c61bd10b2c066f0508fec8f84c714ded82e76acf092e2e26",
+      "format": 2,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_26_bc7s.ftex": {
+      "sha256": "6b2f09e32bd29cd260821898934e8b45ae533b2864ecf13c43056909f12a81f6",
+      "input_pixels": "046fe0afa4463b2658aedee797dd7ac09e4970bb085c2b0a10bb6d7c7cb994eb",
+      "format": 1,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_29_bc7s.ftex": {
+      "sha256": "3412c9248ab66d543c22bd02b4744a3756b5164e453e12620e2911a187bbd347",
+      "input_pixels": "0d582427b9004af3b1e1cbd11cf8fefaa0a59d0cbbe966bff98ff0a7aa41a986",
+      "format": 1,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_27_bc5.ftex": {
+      "sha256": "f6f6a0ec842f5b881e561aee46ee8977dd478a7777f7d95c933cf8812e5591b1",
+      "input_pixels": "f44e9bf144c0351b23c7556b040ac3b72536e1096e4d7748549a8461c5ce26aa",
+      "format": 3,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_28_bc7l.ftex": {
+      "sha256": "deb591b40c28296637912014462988ea1e169ec16412a08d85ef0a9caa5b3dd1",
+      "input_pixels": "ee68d9d12e73f491c829e892092db50fe39ddcab3fb958a91fc494e15c70301a",
+      "format": 2,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_32_bc7s.ftex": {
+      "sha256": "7226d403b5eedd3359854cc1fe1e3edefa4c4a1cff83be82107e0b5694895410",
+      "input_pixels": "2a405f451cc57c8092dbae00e088060aacac6f87c63446e0768e8af8a41b4942",
+      "format": 1,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_30_bc5.ftex": {
+      "sha256": "9dc419325441452cd5710793a16b8e7692241c93398aa5006d642fc60f520784",
+      "input_pixels": "0112c59090fe0741763a887c176211935a686c567a54cc27be670d197b6ce3e3",
+      "format": 3,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "extended_chess_31_bc7l.ftex": {
+      "sha256": "a3028eff922fc2294035c2a9df6e6484653171b5af4db2a50673e933c93c8baf",
+      "input_pixels": "3f61c2c080a3c93316e5051346caa481af29038f50f0d6e1ca1c9646221c962b",
+      "format": 2,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "levels": 12,
+      "payload_bytes": 5592432
+    },
+    "pbr_chess_materials.json": {
+      "sha256": "f52d8abce8623aaae9556febb071677b4b6b47b28c622e8ceae7bcddae9cefcc"
+    }
+  },
+  "encoder": "ispc_texcomp 1.0.1 basic",
+  "source_commit": "31f44fce9b69cb124b38c1bc90177ef17f1342c8"
+}

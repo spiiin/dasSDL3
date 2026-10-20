@@ -1,0 +1,148 @@
+{
+  "date": "2026-10-20",
+  "platform": "Windows x64 / MSVC",
+  "renderer": "software",
+  "video_driver": "dummy",
+  "audio_driver": "dummy",
+  "interpreter_cases": 21,
+  "strict_aot_cases": 21,
+  "aot_interpreter_fallback": false,
+  "equal_pixel_pairs": 20,
+  "asset_regeneration": "4/4 byte-identical",
+  "captures": [
+    {
+      "entry": "01_hello-sdl3.das",
+      "interpreter_aot_pixels_equal": true,
+      "rgb_sha256": "c6be7c7350b6df9c7ffd1064dc34141e0c3e0eb734955894198e023c2e1821cb"
+    },
+    {
+      "entry": "02_textures-and-extension-libraries.das",
+      "interpreter_aot_pixels_equal": true,
+      "rgb_sha256": "41159c8ed4b365bb1ef246629f2b68c0123a0521a3a6775ab805bd585b02c49a"
+    },
+    {
+      "entry": "03_key-presses-and-key-states.das",
+      "interpreter_aot_pixels_equal": true,
+      "rgb_sha256": "027d943c2be68e5e377e4441ad3ffc3a13a525f7bebfe0a188fca6a946327c7c"
+    },
+    {
+      "entry": "04_color-keying.das",
+      "interpreter_aot_pixels_equal": true,
+      "rgb_sha256": "31940195bf5e7d8986d52c79d415f617f9406f1d7c5abcb15a2bac0cbd177098"
+    },
+    {
+      "entry": "05_sprite-clipping-and-stretching.das",
+      "interpreter_aot_pixels_equal": true,
+      "rgb_sha256": "e8c7a522433cbcae547bc0905c65eb3eea406401fed235a681fce1115ed58e86"
+    },
+    {
+      "entry": "06_rotation-and-flipping.das",
+      "interpreter_aot_pixels_equal": true,
+      "rgb_sha256": "c2d8cdbfa57e83a802562ae423e90e5f7247c9d48719d0fddb9bbe2dc25df29e"
+    },
+    {
+      "entry": "07_color-modulation-and-alpha-blending.das",
+      "interpreter_aot_pixels_equal": true,
+      "rgb_sha256": "b9e7b6fde522553d3e81d347d672b2dd7b2ea49503527d53294323b23989698b"
+    },
+    {
+      "entry": "08_true-type-fonts.das",
+      "interpreter_aot_pixels_equal": true,
+      "rgb_sha256": "10b84f75adabff098c57aadccd09400e40f1ad95547524053c47b500b22966f7"
+    },
+    {
+      "entry": "09_mouse-events.das",
+      "interpreter_aot_pixels_equal": true,
+      "rgb_sha256": "760cb9c547315df87918c08c5de641e38d1221181838ede88981e060b1b17cab"
+    },
+    {
+      "entry": "10_timing.das",
+      "interpreter_aot_pixels_equal": true,
+      "rgb_sha256": "54b2250346fe2481aabc3f7fc6564f9c7421f109f92b9a25a812f0e64bbed10b"
+    },
+    {
+      "entry": "11_advanced-timers.das",
+      "interpreter_aot_pixels_equal": true,
+      "rgb_sha256": "f83ea1764af06c4bc6b8f2b0f4802ea563372adc0959bf5b8fcfc09824a7152d"
+    },
+    {
+      "entry": "12_frame-rate-and-vsync.das",
+      "interpreter_aot_pixels_equal": true,
+      "rgb_sha256": "8b116af2122b8eeb139cce072164bb506599735f24e1399dcbb6f12f700bd011"
+    },
+    {
+      "entry": "13_motion.das",
+      "interpreter_aot_pixels_equal": true,
+      "rgb_sha256": "c432de092c1978e88ebceee778bb480119af280f120b3748a96e032950468130"
+    },
+    {
+      "entry": "14_animation.das",
+      "interpreter_aot_pixels_equal": true,
+      "rgb_sha256": "baead0fe41f8a8d1be3d705d95caaae2a60047e7a9cafd7e19deef5e68e1d29d"
+    },
+    {
+      "entry": "15_sound-effects-and-music.das",
+      "interpreter_aot_pixels_equal": true,
+      "rgb_sha256": "55c17eb75a05cb144fdc6e226e399e6a2ec139cb2f47a813155ed166b9c38473"
+    },
+    {
+      "entry": "16_collision-detection.das",
+      "interpreter_aot_pixels_equal": true,
+      "rgb_sha256": "c0806f5ee4f132b30131c5cfdd43e83e3d7ba746c58adf20762e331824f18ec4"
+    },
+    {
+      "entry": "17_text-input-and-clipboard-handling.das",
+      "interpreter_aot_pixels_equal": true,
+      "rgb_sha256": "84a59f87ee7f256dde7ae63542d306970e93be09cdd7abe695e8112399747dfe"
+    },
+    {
+      "entry": "18_scrolling.das",
+      "interpreter_aot_pixels_equal": true,
+      "rgb_sha256": "10a2dc67cd40ff0f1885b46a0ce847a59d1c42fa294ec9f25a9866276c98fcc3"
+    },
+    {
+      "entry": "19_state-machines.das",
+      "interpreter_aot_pixels_equal": true,
+      "rgb_sha256": "a5dc3c1a2faf34ef8e288c1a0ed18419b325cc020c18d464aefb061cb9fcc743"
+    },
+    {
+      "entry": "20_multiple-source-files.das",
+      "interpreter_aot_pixels_equal": true,
+      "rgb_sha256": "c432de092c1978e88ebceee778bb480119af280f120b3748a96e032950468130"
+    }
+  ],
+  "source_sha256": {
+    "examples\\sdl_port_lazyfoo\\01_hello-sdl3.das": "e831de5dcfe6caa0143540f727a2a6c001b0574682e6e8aea0a6c0c66aeb9f2a",
+    "examples\\sdl_port_lazyfoo\\02_textures-and-extension-libraries.das": "d18d0a5519f0b2a5115a7413fd902944770087c3b572f04e0f084d0b15ec4351",
+    "examples\\sdl_port_lazyfoo\\03_key-presses-and-key-states.das": "65e380a21b2be47be19445b465113f992f99a0f3333ae5c6a050283ca6dc449b",
+    "examples\\sdl_port_lazyfoo\\04_color-keying.das": "7c562e8a470b836c2847d23b8035408ca3ba079ac07fc35d3320c2d3a947aa40",
+    "examples\\sdl_port_lazyfoo\\05_sprite-clipping-and-stretching.das": "b1517f314d35ebb86a920f17c4fb1c0a6e664d31b35c4501a39f1b52a298c317",
+    "examples\\sdl_port_lazyfoo\\06_rotation-and-flipping.das": "68a5358eac1a0fd8094405e85326a203357ac2f7b76d19a3a334705efbb05c80",
+    "examples\\sdl_port_lazyfoo\\07_color-modulation-and-alpha-blending.das": "9dcfd71894d4b24ee14d3807fdf7f5ed8d705ab3658bdbb06e9f8e1ca2d79dd6",
+    "examples\\sdl_port_lazyfoo\\08_true-type-fonts.das": "e7b5ea5580974b35de80b643676c813c0d0ec6e1892286e5c77ecd7578f22cb5",
+    "examples\\sdl_port_lazyfoo\\09_mouse-events.das": "41fd6ab0fe4b629f44f09f644ea0a9e37b157710d820517b5d01e4dda92b7214",
+    "examples\\sdl_port_lazyfoo\\10_timing.das": "4c4b2ef4939f688f9cfc42b5724fa10add60ff7ffc209dbb466c1fb138f70d78",
+    "examples\\sdl_port_lazyfoo\\11_advanced-timers.das": "13165f6815f494792b904179236bdd5f6e0243ce71d9931de14b742ff1bbc0ca",
+    "examples\\sdl_port_lazyfoo\\12_frame-rate-and-vsync.das": "34b1fc36067a251e537a70768b5e5ebf3981e4be7beebed58b2611437aceb958",
+    "examples\\sdl_port_lazyfoo\\13_motion.das": "4d66bd54add4d78c44d478470a7f94850b39275b6aa15b0f86a0b72a015992e8",
+    "examples\\sdl_port_lazyfoo\\14_animation.das": "c74aa84410433f9d14958ffe6e22ccb1c07b49d6fb8e298e52f14d00ee0d4b8c",
+    "examples\\sdl_port_lazyfoo\\15_sound-effects-and-music.das": "0f44ebebc8c975b292f2ae46ee03bf2a8339e7ea7cfc6389d00d95ea380fe54c",
+    "examples\\sdl_port_lazyfoo\\16_collision-detection.das": "5d81aad05b71191896d270c2ad5926501e7ebefecc4b203d077f12d6a85d1421",
+    "examples\\sdl_port_lazyfoo\\17_text-input-and-clipboard-handling.das": "1350562d137fc7a0dd550b9d74bf69b54fc56f4e0681f77739d02957934a8fa3",
+    "examples\\sdl_port_lazyfoo\\18_scrolling.das": "0cbd74411b6de8ed2bc6014c859f75a0555f8303f69c3380cf6f54431c0c4d54",
+    "examples\\sdl_port_lazyfoo\\19_state-machines.das": "88a38bc1846d61f89273dbe13407f29a93dc7a42961923b46c0ec1299c44c2e9",
+    "examples\\sdl_port_lazyfoo\\20_multiple-source-files.das": "fc65a18d8e82ca1339d30404b20e7cf5b1b5ab440b7c3c2a764e4cd70a3f50e2",
+    "examples\\sdl_port_lazyfoo\\common\\collision.das": "8b91360232ad456ec6f85ec72b027f5f2e55003319e1bf946f85eaf53fc5e2ad",
+    "examples\\sdl_port_lazyfoo\\common\\demo_support.das": "e633b562894cf01f92251626d4135cb46e4afe4d821048075cabb1aaba2a4577",
+    "examples\\sdl_port_lazyfoo\\common\\dot_motion.das": "89558232ff59359c612f55be845ad468db87ed1c7052b7c1ffc3abbf322a1570",
+    "examples\\sdl_port_lazyfoo\\common\\lesson_timer.das": "9097b1ffeea5a3ee87d267f4dedf30622afab929df42556a6e3b62d182475c32",
+    "examples\\sdl_port_lazyfoo\\common\\text_editing.das": "338f43475b2e1fab1fb5b5695c7315451fdbacab5546766ededc4efe676d09d7",
+    "tests\\lazyfoo_contracts.das": "23b82a341d643a9799bac43769e2a71167c3bb3c38e302eda43b055257c33735",
+    "tests\\test_lazyfoo_examples.py": "21aea0d8eda0efb1797ea26f0e47b573d43a6deafe6b6d2972ab038a76f332c2",
+    "tools\\prepare_lazyfoo_assets.py": "33e0b8a8e0138c4f01aeee87b72955ea23df8b0a0c2213e86b6bf880d3e41f19"
+  },
+  "limits": [
+    "Independent implementations of the twenty topics, not pixel-identical upstream ports.",
+    "No physical audio, OS clipboard, OS keyboard/mouse or other-platform validation claimed."
+  ]
+}

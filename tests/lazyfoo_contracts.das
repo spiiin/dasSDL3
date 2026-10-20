@@ -1,0 +1,46 @@
+options gen2
+require ../examples/sdl_port_lazyfoo/common/lesson_timer.das
+require ../examples/sdl_port_lazyfoo/common/collision.das
+require ../examples/sdl_port_lazyfoo/common/text_editing.das
+[export]
+def main(smoke : bool) : int {
+    var timer=LessonTimer()
+    verify(timer_ticks(timer,100ul)==0ul)
+    timer_start(timer,100ul)
+    verify(timer_ticks(timer,130ul)==30ul)
+    timer_pause(timer,140ul)
+    verify(timer_ticks(timer,900ul)==40ul)
+    timer_pause(timer,950ul)
+    timer_resume(timer,1000ul)
+    verify(timer_ticks(timer,1010ul)==50ul)
+    timer_resume(timer,2000ul)
+    verify(timer_ticks(timer,2010ul)==1050ul)
+    timer=LessonTimer()
+    verify(timer_ticks(timer,9999ul)==0ul)
+    var dot=Dot(position=float2(10,10))
+    dot_event(dot,SdlEvent(key_down=KeyEvent(keycode=SDLK_RIGHT)))
+    dot_event(dot,SdlEvent(key_down=KeyEvent(keycode=SDLK_RIGHT,repeat=true)))
+    verify(dot.velocity.x==180.0)
+    move_dot(dot,0.5,640.0,480.0)
+    verify(dot.position.x==100.0)
+    dot_event(dot,SdlEvent(key_up=KeyEvent(keycode=SDLK_RIGHT)))
+    verify(dot.velocity.x==0.0)
+    dot.velocity=float2(180,180)
+    dot_event(dot,SdlEvent(window=WindowEvent(event_type=SDL_EVENT_WINDOW_FOCUS_LOST)))
+    verify(dot.velocity==float2(0.0))
+    dot.position=float2(607,447);dot.velocity=float2(180,180)
+    move_dot(dot,1.0,640.0,480.0)
+    verify(dot.position==float2(608,448))
+    let wall=SDL_FRect(x=100.0,y=0.0,w=50.0,h=200.0)
+    dot.position=float2(67,20);dot.velocity=float2(180,180)
+    move_colliding(dot,wall,1.0/60.0)
+    verify(dot.position.x==67.0 && dot.position.y>20.0)
+    verify(!overlaps(SDL_FRect(x=68.0,y=20.0,w=32.0,h=32.0),wall))
+    verify(overlaps(SDL_FRect(x=69.0,y=20.0,w=32.0,h=32.0),wall))
+    verify(utf8_previous("café")==3)
+    verify(slice("café",0,utf8_previous("café"))=="caf")
+    verify(utf8_previous("猫")==0 && utf8_previous("🙂")==0)
+    verify(utf8_previous("a")==0)
+    print("Timer, input mutation, focus loss, bounds, collision and UTF-8 contracts passed.\n")
+    return 0
+}

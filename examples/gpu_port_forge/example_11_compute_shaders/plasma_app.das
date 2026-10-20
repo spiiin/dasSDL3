@@ -39,6 +39,7 @@ def run_plasma(smoke : bool) : int {
         let device : SDL_GPUDevice? = with_native_gpu_device(dsl_example_formats(),true,"") |> sdl_use
         sdl_status(SDL_ClaimWindowForGPUDevice(device,window),"SDL_ClaimWindowForGPUDevice") |> sdl_try
         {defer(){SDL_ReleaseWindowFromGPUDevice(device,window)}
+        configure_forge_swapchain(device,window) |> sdl_try
         return with_plasma_pipeline(device) $(var compute) {
             var display=device |> pipeline(shaders::fullscreen_vertex,shaders::fullscreen_vertex_reflect,shaders::fullscreen_fragment,shaders::fullscreen_fragment_reflect,SDL_GetGPUSwapchainTextureFormat(device,window),false,false,false) |> sdl_try
             {defer(){SDL_ReleaseGPUGraphicsPipeline(device,display)}

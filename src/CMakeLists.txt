@@ -647,3 +647,7 @@ endif()
 include("${CMAKE_SOURCE_DIR}/tests/forge_examples.cmake")
 
 include("${CMAKE_SOURCE_DIR}/cmake/ForgeExamplesAOT.cmake")
+
+include("${PROJECT_SOURCE_DIR}/cmake/SkyRsmAuditAOT.cmake")
+
+include("${CMAKE_SOURCE_DIR}/tests/lazyfoo_examples.cmake")

@@ -61,13 +61,13 @@ def combine_fs {
         for (i in 0..64) {
             let tc = (float2(float(i % 8), float(i / 8)) + float2(0.5)) / 8.0
             let source = textureLod(r_position, tc, 0.0); let delta = source.xyz - p; let d2 = dot(delta, delta)
-            if (source.w > 0.5 && d2 > 0.02) {
+            if (source.w > 0.5 && d2 > 0.02 && d2 < resolve.config.z*resolve.config.z) {
                 let dir = delta / sqrt(d2); let sender = textureLod(r_normal, tc, 0.0).xyz
                 let weight = max(dot(n, dir), 0.0) * max(dot(sender, -dir), 0.0) / max(d2, 0.2)
                 indirect += textureLod(r_flux, tc, 0.0).xyz * weight * (576.0 / 64.0 / 3.14159265)
             }
         }
     }
-    let rgb = albedo * (float3(0.02 + direct) + indirect * resolve.config.y)
-    color = float4(rgb / (float3(1.0) + rgb), 1.0)
+    let rgb = albedo * (resolve.config.x < 0.5 ? float3(direct)*(1.0-resolve.config.y)+indirect*resolve.config.y : float3(direct))
+    color = float4(rgb, 1.0)
 }

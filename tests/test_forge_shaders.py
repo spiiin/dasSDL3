@@ -11,7 +11,7 @@ def main():
    source=module.read_text();(root/module.name).write_text(source)
    imports.append(f'require {module.stem}')
    names.extend(re.findall(r'(?:vertex|fragment|compute)_shader\([^)]*?name\s*=\s*"([^"\n]+)"',source))
-  assert len(names)==10 and len(names)==len(set(names))
+  assert len(names)==89 and len(names)==len(set(names)), (len(names), "Update the stage inventory when adding shaders")
   body='\n'.join(f'write_shader("{(root/(name+".spv")).as_posix()}",{name})' for name in names)
   (root/'check.das').write_text('options gen2\n'+'\n'.join(imports)+r'''
 require daslib/fio
@@ -23,12 +23,18 @@ def write_shader(path : string;words : array<uint>) { fopen(path,"wb") $(f){veri
 def main(smoke : bool) : int {
     let graphics=gpu_dsl_shader_info(environment_fragment_reflect) |> unwrap
     verify(graphics.num_samplers==2u && graphics.num_uniform_buffers==1u)
+    let cascades=gpu_dsl_shader_info(cascade_fragment_reflect) |> unwrap
+    verify(cascades.num_samplers==4u && cascades.num_uniform_buffers==1u)
+    let normals=gpu_dsl_shader_info(normal_fragment_reflect) |> unwrap
+    verify(normals.num_samplers==2u && normals.num_uniform_buffers==1u)
+    let depth=gpu_dsl_shader_info(shadow_fragment_reflect) |> unwrap
+    verify(depth.num_samplers==0u && depth.num_uniform_buffers==0u)
     let compute=gpu_dsl_compute_info(plasma_compute_reflect,plasma_compute_access) |> unwrap
     verify(compute.num_readwrite_storage_textures==1u && compute.threadcount_x==8u && compute.threadcount_y==8u)
 '''+body+'\nreturn 0\n}\n')
   previous=None
   for _ in range(2):
-   proc=subprocess.run([a.runner,str(root/'check.das'),'--smoke-test'],text=True,capture_output=True,timeout=90)
+   proc=subprocess.run([a.runner,str(root/'check.das'),'--smoke-test'],text=True,capture_output=True,timeout=180)
    assert proc.returncode==0,proc.stdout+proc.stderr
    current=[(root/(name+'.spv')).read_bytes() for name in names]
    if previous is not None:assert previous==current,'Non-deterministic bytecode'
@@ -37,5 +43,5 @@ def main(smoke : bool) : int {
    for name in names:
     proc=subprocess.run([a.spirv_val,'--target-env','vulkan1.1',str(root/(name+'.spv'))],text=True,capture_output=True,timeout=30)
     assert proc.returncode==0,name+': '+proc.stdout+proc.stderr
- print('Forge DSL: 10 shaders, reflection and deterministic bytecode PASS; '+('SPIRV-Tools PASS' if a.spirv_val else 'validator not supplied'))
+ print(f'Forge DSL: {len(names)} shaders, reflection and deterministic bytecode PASS; '+('SPIRV-Tools PASS' if a.spirv_val else 'validator not supplied'))
 if __name__=='__main__':main()
