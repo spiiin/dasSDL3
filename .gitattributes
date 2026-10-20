@@ -1,2 +1,8 @@
 # Preserve upstream notice bytes and manifest SHA-256 across Windows checkouts.
 /licenses/** -text
+
+# Forge manifests hash the prepared assets and generated asset descriptions.
+/examples/gpu_port_forge/assets/** -text
+/examples/gpu_port_forge/common/*assets.das -text
+/examples/gpu_port_forge/common/atlas_names.das -text
+/examples/gpu_port_forge/common/ui_font.das -text

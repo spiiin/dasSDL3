@@ -1,5 +1,8 @@
 # Examples
 
+- [SDL3 tutorial topics](sdl_port_lazyfoo/README.md): twenty independent daScript
+  examples following the Lazy Foo SDL3 topic order, using the libraries runner.
+
 - [Optional library integrations](libraries/README.md): daScript ImGui with SDL3;
   uses the separate `dasSDL3_libraries_runner` host.
 

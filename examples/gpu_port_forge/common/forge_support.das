@@ -26,13 +26,15 @@ def model_matrix(position : float3; scale : float3; angle : float=0.0) : float4x
     m[2]=float4(-s*scale.z,0.0,c*scale.z,0.0);m[3]=float4(position,1.0);return m
 }
 def camera_matrix(width,height : uint; eye,at : float3) : float4x4 {
-    let q=200.0/199.9;var p : float4x4
+    let q=100.0/99.9;var p : float4x4
     p[0].x=1.7320508*float(height)/float(width);p[1].y=1.7320508
-    p[2]=float4(0.0,0.0,q,1.0);p[3].z=-0.1*q
-    return p*look_at_lh(eye,at,float3(0.0,1.0,0.0))
+    p[2]=float4(0.0,0.0,-q,-1.0);p[3].z=-0.1*q
+    return p*look_at_rh(eye,at,float3(0.0,1.0,0.0))
 }
-def texture(device : SDL_GPUDevice?; width,height : uint; usage : uint; cube : bool=false; srgb : bool=false) {
+def texture(device : SDL_GPUDevice?; width,height : uint; usage : uint; cube : bool=false; srgb : bool=false; levels : uint=1u) {
     var info=gpu_texture(width,height,srgb ? SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM_SRGB : SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM,usage)
+    info.num_levels=levels
+    if(levels>1u){info.usage = info.usage | SDL_GPU_TEXTUREUSAGE_COLOR_TARGET}
     if(cube){info <- info |> texture_shape(SDL_GPUTextureType.TEXTURETYPE_CUBE,6u)}
     var t=SDL_CreateGPUTextureRef(device,info)
     if(t==null){return err(sdl_error("SDL_CreateGPUTexture"),type<SDL_GPUTexture?>)}
@@ -59,22 +61,22 @@ def release(device : SDL_GPUDevice?; var mesh : MeshBuffers) {
 def word(bytes : array<uint8>; i : int) : uint {return uint(bytes[i])|(uint(bytes[i+1])<<8)|(uint(bytes[i+2])<<16)|(uint(bytes[i+3])<<24)}
 def load_mesh(device : SDL_GPUDevice?; name : string) {
     let bytes <- load_file(asset("{name}.fgm")) |> sdl_try
-    if(length(bytes)<16 || word(bytes,0)!=0x314d4746u || word(bytes,12)!=32u){return err(SdlError(operation=name,message="Invalid FGM1 header"),type<MeshBuffers>)}
-    let nv=word(bytes,4);let ni=word(bytes,8)
-    if(nv==0u || nv>1000000u || ni==0u || ni>3000000u || ni%3u!=0u || uint(length(bytes))!=16u+nv*32u+ni*4u){return err(SdlError(operation=name,message="Invalid FGM1 counts"),type<MeshBuffers>)}
-    for(i in 0u..ni){if(word(bytes,16+int(nv*32u+i*4u))>=nv){return err(SdlError(operation=name,message="Invalid index"),type<MeshBuffers>)}}
+    if(length(bytes)<16 || word(bytes,0)!=0x314d4746u || (word(bytes,12)!=32u && word(bytes,12)!=48u)){return err(SdlError(operation=name,message="Invalid FGM1 header"),type<MeshBuffers>)}
+    let nv=word(bytes,4);let ni=word(bytes,8);let stride=word(bytes,12)
+    if(nv==0u || nv>1000000u || ni==0u || ni>3000000u || ni%3u!=0u || uint(length(bytes))!=16u+nv*stride+ni*4u){return err(SdlError(operation=name,message="Invalid FGM1 counts"),type<MeshBuffers>)}
+    for(i in 0u..ni){if(word(bytes,16+int(nv*stride+i*4u))>=nv){return err(SdlError(operation=name,message="Invalid index"),type<MeshBuffers>)}}
     var result : MeshBuffers;var success=false
     defer(){if(!success){release(device,result)}}
-    var vb=device |> create_native_gpu_buffer(SDL_GPUBufferCreateInfo(usage=SDL_GPU_BUFFERUSAGE_VERTEX,size=nv*32u)) |> sdl_try;result.vb=vb
+    var vb=device |> create_native_gpu_buffer(SDL_GPUBufferCreateInfo(usage=SDL_GPU_BUFFERUSAGE_VERTEX,size=nv*stride)) |> sdl_try;result.vb=vb
     var ib=device |> create_native_gpu_buffer(SDL_GPUBufferCreateInfo(usage=SDL_GPU_BUFFERUSAGE_INDEX,size=ni*4u)) |> sdl_try;result.ib=ib;result.count=ni
-    var data : array<uint8>;resize(data,int(nv*32u))
+    var data : array<uint8>;resize(data,int(nv*stride))
     for(i in 0..length(data)){data[i]=bytes[16+i]}
     upload_bytes(device,result.vb,data) |> sdl_try
-    resize(data,int(ni*4u));for(i in 0..length(data)){data[i]=bytes[16+int(nv*32u)+i]}
+    resize(data,int(ni*4u));for(i in 0..length(data)){data[i]=bytes[16+int(nv*stride)+i]}
     upload_bytes(device,result.ib,data) |> sdl_try
     success=true;return <- move_ok(result,type<SdlError>)
 }
-def upload_png(device : SDL_GPUDevice?; var target : SDL_GPUTexture?; file : string; layer : uint=0u) : SdlStatus {
+def upload_png(device : SDL_GPUDevice?; var target : SDL_GPUTexture?; file : string; layer : uint=0u; mipmaps : bool=false) : SdlStatus {
     let surface=SDL_LoadPNG(asset(file))
     if(surface==null){return err(sdl_error("SDL_LoadPNG"),type<SdlUnit>)}
     {
@@ -92,19 +94,22 @@ def upload_png(device : SDL_GPUDevice?; var target : SDL_GPUTexture?; file : str
                 SDL_UploadToGPUTextureRef(copy_pass,SDL_GPUTextureTransferInfo(transfer_buffer=transfer,pixels_per_row=row,rows_per_layer=uint(size.y)),SDL_GPUTextureRegion(texture=target,layer=layer,w=uint(size.x),h=uint(size.y),d=1u),false)
                 return sdl_ok()
             } |> sdl_try
+            if(mipmaps){SDL_GenerateMipmapsForGPUTexture(command,target)}
             return native_gpu_submit(command)
         }
     }
 }
-def load_texture(device : SDL_GPUDevice?; name : string; cube : bool=false) {
+def load_texture(device : SDL_GPUDevice?; name : string; cube : bool=false; srgb : bool=true) {
     let probe=SDL_LoadPNG(asset(cube ? "sky_px.png" : "{name}.png"))
     if(probe==null){return err(sdl_error("SDL_LoadPNG"),type<SDL_GPUTexture?>)}
     var size : int2
     {defer(){SDL_DestroySurface(probe)};size=surface_size(probe) |> sdl_try}
-    var t=texture(device,uint(size.x),uint(size.y),SDL_GPU_TEXTUREUSAGE_SAMPLER,cube,true) |> sdl_try
+    var levels=1u
+    if(!cube){var extent=max(size.x,size.y);while(extent>1){extent=extent/2;levels++}}
+    var t=texture(device,uint(size.x),uint(size.y),SDL_GPU_TEXTUREUSAGE_SAMPLER,cube,srgb,levels) |> sdl_try
     var success=false;defer(){if(!success){SDL_ReleaseGPUTexture(device,t)}}
     if(cube){let faces=fixed_array("px","nx","py","ny","pz","nz");for(i in 0..6){upload_png(device,t,"sky_{faces[i]}.png",uint(i)) |> sdl_try}}
-    else{upload_png(device,t,"{name}.png") |> sdl_try}
+    else{upload_png(device,t,"{name}.png",0u,levels>1u) |> sdl_try}
     success=true;return <- move_ok(t,type<SdlError>)
 }
 def pipeline(device : SDL_GPUDevice?; vs,vr,fs,fr : array<uint>; format : SDL_GPUTextureFormat; geometry : bool=true; instances : bool=false; depth : bool=true) {
@@ -115,6 +120,8 @@ def pipeline(device : SDL_GPUDevice?; vs,vr,fs,fr : array<uint>; format : SDL_GP
         if(depth){info <- info |> depth_target(SDL_GPUTextureFormat.TEXTUREFORMAT_D32_FLOAT) |> depth_test(SDL_GPUCompareOp.COMPAREOP_LESS) |> depth_write(true)}
         var buffers : array<SDL_GPUVertexBufferDescription>;var attributes : array<SDL_GPUVertexAttribute>
         if(geometry){
+            info.rasterizer_state.cull_mode=SDL_GPUCullMode.CULLMODE_BACK
+            info.rasterizer_state.front_face=SDL_GPUFrontFace.FRONTFACE_COUNTER_CLOCKWISE
             buffers <- array(SDL_GPUVertexBufferDescription(pitch=32u))
             attributes <- array(SDL_GPUVertexAttribute(format=SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT3),SDL_GPUVertexAttribute(location=1u,offset=12u,format=SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT3),SDL_GPUVertexAttribute(location=2u,offset=24u,format=SDL_GPUVertexElementFormat.VERTEXELEMENTFORMAT_FLOAT2))
             if(instances){
@@ -126,7 +133,7 @@ def pipeline(device : SDL_GPUDevice?; vs,vr,fs,fr : array<uint>; format : SDL_GP
         return <- device |> create_native_gpu_graphics_pipeline(info,buffers,attributes,colors)
     }
 }
-def attachment(var t : SDL_GPUTexture?; load : bool=false) {return SDL_GPUColorTargetInfo(texture=t,clear_color=SDL_FColor(r=0.012,g=0.024,b=0.059,a=1.0),load_op=load ? SDL_GPULoadOp.LOADOP_LOAD : SDL_GPULoadOp.LOADOP_CLEAR,store_op=SDL_GPUStoreOp.STOREOP_STORE)}
+def attachment(var t : SDL_GPUTexture?; load : bool=false; clear : float4=float4(0.012,0.024,0.059,1.0)) {return SDL_GPUColorTargetInfo(texture=t,clear_color=SDL_FColor(r=clear.x,g=clear.y,b=clear.z,a=clear.w),load_op=load ? SDL_GPULoadOp.LOADOP_LOAD : SDL_GPULoadOp.LOADOP_CLEAR,store_op=SDL_GPUStoreOp.STOREOP_STORE)}
 def bind_images(pass_ : SDL_GPURenderPass?; var images : array<SDL_GPUTexture?>; var sampler : SDL_GPUSampler?) : SdlStatus {
     var bindings : array<SDL_GPUTextureSamplerBinding>;for(image in images){push(bindings,SDL_GPUTextureSamplerBinding(texture=image,sampler=sampler))}
     return sdl_status(SDL_BindGPUFragmentSamplersArray(pass_,0u,bindings),"SDL_BindGPUFragmentSamplersArray")
@@ -154,4 +161,13 @@ def read_image(device : SDL_GPUDevice?; var target : SDL_GPUTexture?; width,heig
         for(y in 0u..height){for(x in 0u..width*4u){bytes[int(y*width*4u+x)]=padded[int(y*row*4u+x)]}}
         return <- move_ok(bytes,type<SdlError>)
     }
+}
+
+// Match forge-gpu: shader output is linear, and SDR_LINEAR selects an sRGB attachment.
+// Keep upstream's fallback when the platform cannot supply that composition.
+def configure_forge_swapchain(device : SDL_GPUDevice?; window : SDL_Window?) : SdlStatus {
+    if(SDL_WindowSupportsGPUSwapchainComposition(device,window,SDL_GPUSwapchainComposition.SWAPCHAINCOMPOSITION_SDR_LINEAR)){
+        return sdl_status(SDL_SetGPUSwapchainParameters(device,window,SDL_GPUSwapchainComposition.SWAPCHAINCOMPOSITION_SDR_LINEAR,SDL_GPUPresentMode.PRESENTMODE_VSYNC),"SDL_SetGPUSwapchainParameters")
+    }
+    return sdl_ok()
 }

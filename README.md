@@ -144,7 +144,7 @@ Resource pointers inside scopes are borrowed, not unique owning types: do not re
 | --- | --- |
 | 2D rendering | [Moving square](examples/02_square.das), [textures](examples/04_textures.das), [geometry](examples/07_geometry.das) |
 | Result and events | [sdl_try](examples/results/02_sdl_try.das), [owned event iteration](examples/results/03_poll_events.das) |
-| SDL GPU | [bgfx example ports](examples/gpu_port_bgfx/README.md), [forge-gpu lessons 10–14](examples/gpu_port_forge/README.md) and [shader DSL tutorials](examples/gpu_dsl/README.md) |
+| SDL GPU | [bgfx example ports](examples/gpu_port_bgfx/README.md), [forge-gpu lessons 10–52](examples/gpu_port_forge/README.md) and [shader DSL tutorials](examples/gpu_dsl/README.md) |
 | Pixel memory | [Scoped surface bytes](examples/93_surface_bytes.das) |
 | Audio | [Audio stream](examples/08_audio.das) |
 | Companion libraries | [Library examples](examples/libraries/README.md) |

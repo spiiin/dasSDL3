@@ -17,7 +17,11 @@ def render(device : SDL_GPUDevice?; var r : demo::Resources; settings : demo::Se
 }
 def check(device : SDL_GPUDevice?) : SdlStatus {
  return demo::with_resources(device, SDL_GPUTextureFormat.TEXTUREFORMAT_R8G8B8A8_UNORM) $(var r) {
- var settings = demo::Settings()
+ verify(length(demo::sun_direction(12.0,50.0,5)-float3(0.450541,-0.892755,0.0))<0.0001,"Sun controller differs from bx quaternion convention")
+ verify(length(demo::sky_luminance(12.0)-float3(0.972385,1.0,1.798389))<0.000001,"Sky table differs from upstream")
+ verify(abs(demo::sun_luminance(6.0).y-6.4946965)<0.00001,"Sun interpolation differs from upstream")
+ verify(r.grid.count==5766u,"Expected the upstream 32x32 sky grid")
+ var settings = demo::Settings(prevent_banding=false)
  let clear <- render(device, r, settings, "sky-clear") |> sdl_try; visible(clear)
  settings.mode = 1
  let hazy <- render(device, r, settings, "sky-hazy") |> sdl_try; visible(hazy); verify(changed(clear, hazy) > 10000, "Turbidity has no effect")
@@ -32,6 +36,11 @@ def check(device : SDL_GPUDevice?) : SdlStatus {
  let unoccluded <- render(device, r, settings, "sky-no-lightmap") |> sdl_try
  verify(changed(clear, unoccluded) > 1000, "Landscape lightmap missing")
  verify(r.mesh.count == 7680u, "Original landscape mesh not loaded")
+ settings.lightmap=true;settings.month=0
+ let winter <- render(device,r,settings,"sky-winter",12.0) |> sdl_try
+ settings.month=5;settings.latitude=0.0
+ let equator <- render(device,r,settings,"sky-equator",12.0) |> sdl_try
+ verify(changed(winter,equator)>10000,"Calendar/latitude has no effect")
  let odd <- render(device, r, settings, "sky-odd", 0.6, 641u, 479u) |> sdl_try; visible(odd)
  return sdl_ok()
  }

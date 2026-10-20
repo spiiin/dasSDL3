@@ -1,0 +1,1575 @@
+{
+  "date": "2026-10-20",
+  "platform": "Windows x64",
+  "upstream": "31f44fce9b69cb124b38c1bc90177ef17f1342c8",
+  "dsl_stages": 89,
+  "manifest_entries_checked": 462,
+  "rebuilt_generated_or_copied_files": 392,
+  "total_files_unchanged_by_rebuild": 438,
+  "profiles": {
+    "vulkan_interpreter": [
+      {
+        "lesson": 21,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 698657
+      },
+      {
+        "lesson": 21,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 711018
+      },
+      {
+        "lesson": 22,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 921472
+      },
+      {
+        "lesson": 22,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 920783
+      },
+      {
+        "lesson": 23,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 686581
+      },
+      {
+        "lesson": 23,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 743138
+      },
+      {
+        "lesson": 23,
+        "case": "mode2",
+        "status": "PASS",
+        "visible_pixels": 743138
+      },
+      {
+        "lesson": 24,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 600203
+      },
+      {
+        "lesson": 24,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 637259
+      },
+      {
+        "lesson": 25,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 856800
+      },
+      {
+        "lesson": 25,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 905400
+      },
+      {
+        "lesson": 25,
+        "case": "mode2",
+        "status": "PASS",
+        "visible_pixels": 903834
+      },
+      {
+        "lesson": 26,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 920861
+      },
+      {
+        "lesson": 26,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 921546
+      },
+      {
+        "lesson": 26,
+        "case": "mode2",
+        "status": "PASS",
+        "visible_pixels": 921546
+      },
+      {
+        "lesson": 27,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 911852
+      },
+      {
+        "lesson": 27,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 911845
+      },
+      {
+        "lesson": 27,
+        "case": "mode2",
+        "status": "PASS",
+        "visible_pixels": 911852
+      },
+      {
+        "lesson": 28,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 687424
+      },
+      {
+        "lesson": 28,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 687424
+      },
+      {
+        "lesson": 29,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 527785
+      },
+      {
+        "lesson": 29,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 527785
+      },
+      {
+        "lesson": 29,
+        "case": "mode2",
+        "status": "PASS",
+        "visible_pixels": 527785
+      },
+      {
+        "lesson": 30,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 921590
+      },
+      {
+        "lesson": 30,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 921590
+      },
+      {
+        "lesson": 31,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 921485
+      },
+      {
+        "lesson": 31,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 921485
+      },
+      {
+        "lesson": 32,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 32,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 33,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 33,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 34,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 629799
+      },
+      {
+        "lesson": 34,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 629799
+      },
+      {
+        "lesson": 35,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 697354
+      },
+      {
+        "lesson": 35,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 697354
+      },
+      {
+        "lesson": 36,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 580582
+      },
+      {
+        "lesson": 36,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 580582
+      },
+      {
+        "lesson": 37,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 550181
+      },
+      {
+        "lesson": 37,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 550181
+      },
+      {
+        "lesson": 38,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 214492
+      },
+      {
+        "lesson": 38,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 214492
+      },
+      {
+        "lesson": 39,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 34635
+      },
+      {
+        "lesson": 39,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 69270
+      },
+      {
+        "lesson": 40,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 40,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 41,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 41,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 42,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 42,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 43,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 43,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 44,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 44,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 45,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 45,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 46,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 60844
+      },
+      {
+        "lesson": 46,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 60844
+      },
+      {
+        "lesson": 46,
+        "case": "mode2",
+        "status": "PASS",
+        "visible_pixels": 125299
+      },
+      {
+        "lesson": 47,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 68978
+      },
+      {
+        "lesson": 47,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 68978
+      },
+      {
+        "lesson": 48,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 640948
+      },
+      {
+        "lesson": 48,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 640948
+      },
+      {
+        "lesson": 49,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 650481
+      },
+      {
+        "lesson": 49,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 650419
+      },
+      {
+        "lesson": 50,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 418286
+      },
+      {
+        "lesson": 50,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 422201
+      },
+      {
+        "lesson": 51,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 51,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 52,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 52,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      }
+    ],
+    "direct3d12_interpreter": [
+      {
+        "lesson": 21,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 698668
+      },
+      {
+        "lesson": 21,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 711038
+      },
+      {
+        "lesson": 22,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 921472
+      },
+      {
+        "lesson": 22,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 920783
+      },
+      {
+        "lesson": 23,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 686581
+      },
+      {
+        "lesson": 23,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 743138
+      },
+      {
+        "lesson": 23,
+        "case": "mode2",
+        "status": "PASS",
+        "visible_pixels": 743138
+      },
+      {
+        "lesson": 24,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 600203
+      },
+      {
+        "lesson": 24,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 637259
+      },
+      {
+        "lesson": 25,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 856800
+      },
+      {
+        "lesson": 25,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 905400
+      },
+      {
+        "lesson": 25,
+        "case": "mode2",
+        "status": "PASS",
+        "visible_pixels": 903851
+      },
+      {
+        "lesson": 26,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 920849
+      },
+      {
+        "lesson": 26,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 921549
+      },
+      {
+        "lesson": 26,
+        "case": "mode2",
+        "status": "PASS",
+        "visible_pixels": 921549
+      },
+      {
+        "lesson": 27,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 911851
+      },
+      {
+        "lesson": 27,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 911844
+      },
+      {
+        "lesson": 27,
+        "case": "mode2",
+        "status": "PASS",
+        "visible_pixels": 911851
+      },
+      {
+        "lesson": 28,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 687424
+      },
+      {
+        "lesson": 28,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 687424
+      },
+      {
+        "lesson": 29,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 527785
+      },
+      {
+        "lesson": 29,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 527785
+      },
+      {
+        "lesson": 29,
+        "case": "mode2",
+        "status": "PASS",
+        "visible_pixels": 527785
+      },
+      {
+        "lesson": 30,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 921590
+      },
+      {
+        "lesson": 30,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 921590
+      },
+      {
+        "lesson": 31,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 921485
+      },
+      {
+        "lesson": 31,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 921485
+      },
+      {
+        "lesson": 32,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 32,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 33,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 33,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 34,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 629799
+      },
+      {
+        "lesson": 34,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 629799
+      },
+      {
+        "lesson": 35,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 697354
+      },
+      {
+        "lesson": 35,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 697354
+      },
+      {
+        "lesson": 36,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 580582
+      },
+      {
+        "lesson": 36,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 580582
+      },
+      {
+        "lesson": 37,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 550181
+      },
+      {
+        "lesson": 37,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 550181
+      },
+      {
+        "lesson": 38,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 214492
+      },
+      {
+        "lesson": 38,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 214492
+      },
+      {
+        "lesson": 39,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 34635
+      },
+      {
+        "lesson": 39,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 69270
+      },
+      {
+        "lesson": 40,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 40,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 41,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 41,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 42,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 42,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 43,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 43,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 44,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 44,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 45,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 45,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 46,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 61378
+      },
+      {
+        "lesson": 46,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 61378
+      },
+      {
+        "lesson": 46,
+        "case": "mode2",
+        "status": "PASS",
+        "visible_pixels": 125715
+      },
+      {
+        "lesson": 47,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 68978
+      },
+      {
+        "lesson": 47,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 68978
+      },
+      {
+        "lesson": 48,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 640948
+      },
+      {
+        "lesson": 48,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 640948
+      },
+      {
+        "lesson": 49,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 650481
+      },
+      {
+        "lesson": 49,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 650419
+      },
+      {
+        "lesson": 50,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 415314
+      },
+      {
+        "lesson": 50,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 417920
+      },
+      {
+        "lesson": 51,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 51,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 52,
+        "case": "changed",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 52,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      }
+    ],
+    "vulkan_strict_aot": [
+      {
+        "lesson": 21,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 711018
+      },
+      {
+        "lesson": 22,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 920783
+      },
+      {
+        "lesson": 23,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 743138
+      },
+      {
+        "lesson": 24,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 637259
+      },
+      {
+        "lesson": 25,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 905400
+      },
+      {
+        "lesson": 26,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 921546
+      },
+      {
+        "lesson": 27,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 911845
+      },
+      {
+        "lesson": 28,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 687424
+      },
+      {
+        "lesson": 29,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 527785
+      },
+      {
+        "lesson": 30,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 921590
+      },
+      {
+        "lesson": 31,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 921485
+      },
+      {
+        "lesson": 32,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 33,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 34,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 629799
+      },
+      {
+        "lesson": 35,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 697354
+      },
+      {
+        "lesson": 36,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 580582
+      },
+      {
+        "lesson": 37,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 550181
+      },
+      {
+        "lesson": 38,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 214492
+      },
+      {
+        "lesson": 39,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 69270
+      },
+      {
+        "lesson": 40,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 41,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 42,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 43,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 44,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 45,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 46,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 60844
+      },
+      {
+        "lesson": 47,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 68978
+      },
+      {
+        "lesson": 48,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 640948
+      },
+      {
+        "lesson": 49,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 650419
+      },
+      {
+        "lesson": 50,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 422201
+      },
+      {
+        "lesson": 51,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 52,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      }
+    ],
+    "direct3d12_strict_aot": [
+      {
+        "lesson": 21,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 711038
+      },
+      {
+        "lesson": 22,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 920783
+      },
+      {
+        "lesson": 23,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 743138
+      },
+      {
+        "lesson": 24,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 637259
+      },
+      {
+        "lesson": 25,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 905400
+      },
+      {
+        "lesson": 26,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 921549
+      },
+      {
+        "lesson": 27,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 911844
+      },
+      {
+        "lesson": 28,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 687424
+      },
+      {
+        "lesson": 29,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 527785
+      },
+      {
+        "lesson": 30,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 921590
+      },
+      {
+        "lesson": 31,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 921485
+      },
+      {
+        "lesson": 32,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 33,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 34,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 629799
+      },
+      {
+        "lesson": 35,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 697354
+      },
+      {
+        "lesson": 36,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 580582
+      },
+      {
+        "lesson": 37,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 550181
+      },
+      {
+        "lesson": 38,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 214492
+      },
+      {
+        "lesson": 39,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 69270
+      },
+      {
+        "lesson": 40,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 41,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 42,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 43,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 44,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 45,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 46,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 61378
+      },
+      {
+        "lesson": 47,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 68978
+      },
+      {
+        "lesson": 48,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 640948
+      },
+      {
+        "lesson": 49,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 650419
+      },
+      {
+        "lesson": 50,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 417920
+      },
+      {
+        "lesson": 51,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      },
+      {
+        "lesson": 52,
+        "case": "default",
+        "status": "PASS",
+        "visible_pixels": 916480
+      }
+    ]
+  },
+  "interpreter_aot_pixel_parity": {
+    "vulkan": [
+      {
+        "lesson": 21,
+        "rgb_mae": 2.9e-05,
+        "p99": 0.0
+      },
+      {
+        "lesson": 22,
+        "rgb_mae": 0.000168,
+        "p99": 0.0
+      },
+      {
+        "lesson": 23,
+        "rgb_mae": 0.000594,
+        "p99": 0.0
+      },
+      {
+        "lesson": 24,
+        "rgb_mae": 1e-06,
+        "p99": 0.0
+      },
+      {
+        "lesson": 25,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 26,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 27,
+        "rgb_mae": 0.001501,
+        "p99": 0.0
+      },
+      {
+        "lesson": 28,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 29,
+        "rgb_mae": 0.001155,
+        "p99": 0.0
+      },
+      {
+        "lesson": 30,
+        "rgb_mae": 0.00011,
+        "p99": 0.0
+      },
+      {
+        "lesson": 31,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 32,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 33,
+        "rgb_mae": 0.001027,
+        "p99": 0.0
+      },
+      {
+        "lesson": 34,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 35,
+        "rgb_mae": 0.000119,
+        "p99": 0.0
+      },
+      {
+        "lesson": 36,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 37,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 38,
+        "rgb_mae": 0.000616,
+        "p99": 0.0
+      },
+      {
+        "lesson": 39,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 40,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 41,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 42,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 43,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 44,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 45,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 46,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 47,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 48,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 49,
+        "rgb_mae": 8e-06,
+        "p99": 0.0
+      },
+      {
+        "lesson": 50,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 51,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 52,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      }
+    ],
+    "d3d12": [
+      {
+        "lesson": 21,
+        "rgb_mae": 2.9e-05,
+        "p99": 0.0
+      },
+      {
+        "lesson": 22,
+        "rgb_mae": 0.000168,
+        "p99": 0.0
+      },
+      {
+        "lesson": 23,
+        "rgb_mae": 0.000597,
+        "p99": 0.0
+      },
+      {
+        "lesson": 24,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 25,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 26,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 27,
+        "rgb_mae": 0.001535,
+        "p99": 0.0
+      },
+      {
+        "lesson": 28,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 29,
+        "rgb_mae": 0.001174,
+        "p99": 0.0
+      },
+      {
+        "lesson": 30,
+        "rgb_mae": 0.00011,
+        "p99": 0.0
+      },
+      {
+        "lesson": 31,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 32,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 33,
+        "rgb_mae": 0.001031,
+        "p99": 0.0
+      },
+      {
+        "lesson": 34,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 35,
+        "rgb_mae": 0.000119,
+        "p99": 0.0
+      },
+      {
+        "lesson": 36,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 37,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 38,
+        "rgb_mae": 0.000616,
+        "p99": 0.0
+      },
+      {
+        "lesson": 39,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 40,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 41,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 42,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 43,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 44,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 45,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 46,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 47,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 48,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 49,
+        "rgb_mae": 8e-06,
+        "p99": 0.0
+      },
+      {
+        "lesson": 50,
+        "rgb_mae": 1.5e-05,
+        "p99": 0.0
+      },
+      {
+        "lesson": 51,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      },
+      {
+        "lesson": 52,
+        "rgb_mae": 0.0,
+        "p99": 0.0
+      }
+    ]
+  },
+  "notes": [
+    "Three frames per capture; not a performance benchmark.",
+    "Targeted reruns replace the earlier failing captures after corrections.",
+    "Variable load-duration UI text is excluded from pixel parity.",
+    "Exact C-reference visual parity is not claimed; see docs/forge-ports-21-52.md."
+  ]
+}

@@ -1,0 +1,400 @@
+{
+  "materials": [
+    {
+      "base": "extended_chess_2_bc7s.ftex",
+      "normal": "extended_chess_0_bc5.ftex",
+      "mr": "extended_chess_1_bc7l.ftex",
+      "ao": "extended_chess_1_bc7l.ftex",
+      "emissive": "pbr_black_srgb.ftex",
+      "base_factor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "metallic": 1.0,
+      "roughness": 1.0,
+      "normal_scale": 1.0,
+      "occlusion_strength": 1.0,
+      "alpha_cutoff": 0.0
+    },
+    {
+      "base": "extended_chess_5_bc7s.ftex",
+      "normal": "extended_chess_3_bc5.ftex",
+      "mr": "extended_chess_4_bc7l.ftex",
+      "ao": "extended_chess_4_bc7l.ftex",
+      "emissive": "pbr_black_srgb.ftex",
+      "base_factor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "metallic": 1.0,
+      "roughness": 1.0,
+      "normal_scale": 1.0,
+      "occlusion_strength": 1.0,
+      "alpha_cutoff": 0.0
+    },
+    {
+      "base": "extended_chess_8_bc7s.ftex",
+      "normal": "extended_chess_6_bc5.ftex",
+      "mr": "extended_chess_7_bc7l.ftex",
+      "ao": "extended_chess_7_bc7l.ftex",
+      "emissive": "pbr_black_srgb.ftex",
+      "base_factor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "metallic": 1.0,
+      "roughness": 1.0,
+      "normal_scale": 1.0,
+      "occlusion_strength": 1.0,
+      "alpha_cutoff": 0.0
+    },
+    {
+      "base": "extended_chess_11_bc7s.ftex",
+      "normal": "extended_chess_9_bc5.ftex",
+      "mr": "extended_chess_10_bc7l.ftex",
+      "ao": "extended_chess_10_bc7l.ftex",
+      "emissive": "pbr_black_srgb.ftex",
+      "base_factor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "metallic": 1.0,
+      "roughness": 1.0,
+      "normal_scale": 1.0,
+      "occlusion_strength": 1.0,
+      "alpha_cutoff": 0.0
+    },
+    {
+      "base": "extended_chess_14_bc7s.ftex",
+      "normal": "extended_chess_12_bc5.ftex",
+      "mr": "extended_chess_13_bc7l.ftex",
+      "ao": "extended_chess_13_bc7l.ftex",
+      "emissive": "pbr_black_srgb.ftex",
+      "base_factor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "metallic": 1.0,
+      "roughness": 1.0,
+      "normal_scale": 1.0,
+      "occlusion_strength": 1.0,
+      "alpha_cutoff": 0.0
+    },
+    {
+      "base": "pbr_white_srgb.ftex",
+      "normal": "extended_chess_15_bc5.ftex",
+      "mr": "extended_chess_16_bc7l.ftex",
+      "ao": "pbr_white_linear.ftex",
+      "emissive": "pbr_black_srgb.ftex",
+      "base_factor": [
+        1,
+        1,
+        0.828000009059906,
+        1
+      ],
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "metallic": 1.0,
+      "roughness": 1.0,
+      "normal_scale": 1.0,
+      "occlusion_strength": 1.0,
+      "alpha_cutoff": 0.0
+    },
+    {
+      "base": "extended_chess_17_bc7s.ftex",
+      "normal": "extended_chess_15_bc5.ftex",
+      "mr": "extended_chess_16_bc7l.ftex",
+      "ao": "extended_chess_16_bc7l.ftex",
+      "emissive": "pbr_black_srgb.ftex",
+      "base_factor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "metallic": 1.0,
+      "roughness": 1.0,
+      "normal_scale": 1.0,
+      "occlusion_strength": 1.0,
+      "alpha_cutoff": 0.0
+    },
+    {
+      "base": "pbr_white_srgb.ftex",
+      "normal": "extended_chess_15_bc5.ftex",
+      "mr": "extended_chess_16_bc7l.ftex",
+      "ao": "pbr_white_linear.ftex",
+      "emissive": "pbr_black_srgb.ftex",
+      "base_factor": [
+        0.2994999885559082,
+        0.5,
+        0.44999998807907104,
+        1
+      ],
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "metallic": 1.0,
+      "roughness": 1.0,
+      "normal_scale": 1.0,
+      "occlusion_strength": 1.0,
+      "alpha_cutoff": 0.0
+    },
+    {
+      "base": "extended_chess_18_bc7s.ftex",
+      "normal": "extended_chess_15_bc5.ftex",
+      "mr": "extended_chess_16_bc7l.ftex",
+      "ao": "extended_chess_16_bc7l.ftex",
+      "emissive": "pbr_black_srgb.ftex",
+      "base_factor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "metallic": 1.0,
+      "roughness": 1.0,
+      "normal_scale": 1.0,
+      "occlusion_strength": 1.0,
+      "alpha_cutoff": 0.0
+    },
+    {
+      "base": "extended_chess_21_bc7s.ftex",
+      "normal": "extended_chess_19_bc5.ftex",
+      "mr": "extended_chess_20_bc7l.ftex",
+      "ao": "extended_chess_20_bc7l.ftex",
+      "emissive": "pbr_black_srgb.ftex",
+      "base_factor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "metallic": 1.0,
+      "roughness": 1.0,
+      "normal_scale": 1.0,
+      "occlusion_strength": 1.0,
+      "alpha_cutoff": 0.0
+    },
+    {
+      "base": "extended_chess_22_bc7s.ftex",
+      "normal": "extended_chess_19_bc5.ftex",
+      "mr": "extended_chess_20_bc7l.ftex",
+      "ao": "extended_chess_20_bc7l.ftex",
+      "emissive": "pbr_black_srgb.ftex",
+      "base_factor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "metallic": 1.0,
+      "roughness": 1.0,
+      "normal_scale": 1.0,
+      "occlusion_strength": 1.0,
+      "alpha_cutoff": 0.0
+    },
+    {
+      "base": "extended_chess_25_bc7s.ftex",
+      "normal": "extended_chess_23_bc5.ftex",
+      "mr": "extended_chess_24_bc7l.ftex",
+      "ao": "extended_chess_24_bc7l.ftex",
+      "emissive": "pbr_black_srgb.ftex",
+      "base_factor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "metallic": 1.0,
+      "roughness": 1.0,
+      "normal_scale": 1.0,
+      "occlusion_strength": 1.0,
+      "alpha_cutoff": 0.0
+    },
+    {
+      "base": "extended_chess_26_bc7s.ftex",
+      "normal": "extended_chess_23_bc5.ftex",
+      "mr": "extended_chess_24_bc7l.ftex",
+      "ao": "extended_chess_24_bc7l.ftex",
+      "emissive": "pbr_black_srgb.ftex",
+      "base_factor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "metallic": 1.0,
+      "roughness": 1.0,
+      "normal_scale": 1.0,
+      "occlusion_strength": 1.0,
+      "alpha_cutoff": 0.0
+    },
+    {
+      "base": "extended_chess_29_bc7s.ftex",
+      "normal": "extended_chess_27_bc5.ftex",
+      "mr": "extended_chess_28_bc7l.ftex",
+      "ao": "extended_chess_28_bc7l.ftex",
+      "emissive": "pbr_black_srgb.ftex",
+      "base_factor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "metallic": 1.0,
+      "roughness": 1.0,
+      "normal_scale": 1.0,
+      "occlusion_strength": 1.0,
+      "alpha_cutoff": 0.0
+    },
+    {
+      "base": "extended_chess_32_bc7s.ftex",
+      "normal": "extended_chess_30_bc5.ftex",
+      "mr": "extended_chess_31_bc7l.ftex",
+      "ao": "extended_chess_31_bc7l.ftex",
+      "emissive": "pbr_black_srgb.ftex",
+      "base_factor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "metallic": 1.0,
+      "roughness": 1.0,
+      "normal_scale": 1.0,
+      "occlusion_strength": 1.0,
+      "alpha_cutoff": 0.0
+    }
+  ],
+  "part_materials": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    6,
+    5,
+    6,
+    5,
+    6,
+    5,
+    6,
+    5,
+    6,
+    5,
+    6,
+    5,
+    6,
+    5,
+    6,
+    5,
+    8,
+    7,
+    8,
+    7,
+    8,
+    7,
+    8,
+    7,
+    8,
+    7,
+    8,
+    7,
+    8,
+    7,
+    8,
+    7,
+    9,
+    9,
+    10,
+    10,
+    11,
+    11,
+    12,
+    12,
+    13,
+    13,
+    14,
+    14
+  ]
+}

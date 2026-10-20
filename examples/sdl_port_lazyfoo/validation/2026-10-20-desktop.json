@@ -1,0 +1,195 @@
+{
+  "date": "2026-10-20",
+  "mode": "Visible interactive windows; no smoke flag; real Windows input",
+  "video_driver": "windows",
+  "renderer_probe": "direct3d11",
+  "audio_driver": "wasapi",
+  "cases": [
+    {
+      "script": "01_hello-sdl3.das",
+      "exit_code": 0
+    },
+    {
+      "script": "02_textures-and-extension-libraries.das",
+      "exit_code": 0
+    },
+    {
+      "script": "03_key-presses-and-key-states.das",
+      "exit_code": 0
+    },
+    {
+      "script": "04_color-keying.das",
+      "exit_code": 0
+    },
+    {
+      "script": "05_sprite-clipping-and-stretching.das",
+      "exit_code": 0
+    },
+    {
+      "script": "06_rotation-and-flipping.das",
+      "exit_code": 0
+    },
+    {
+      "script": "07_color-modulation-and-alpha-blending.das",
+      "exit_code": 0
+    },
+    {
+      "script": "08_true-type-fonts.das",
+      "exit_code": 0
+    },
+    {
+      "script": "09_mouse-events.das",
+      "exit_code": 0
+    },
+    {
+      "script": "10_timing.das",
+      "exit_code": 0
+    },
+    {
+      "script": "11_advanced-timers.das",
+      "exit_code": 0
+    },
+    {
+      "script": "12_frame-rate-and-vsync.das",
+      "exit_code": 0
+    },
+    {
+      "script": "13_motion.das",
+      "exit_code": 0
+    },
+    {
+      "script": "14_animation.das",
+      "exit_code": 0
+    },
+    {
+      "script": "15_sound-effects-and-music.das",
+      "exit_code": 0
+    },
+    {
+      "script": "16_collision-detection.das",
+      "exit_code": 0
+    },
+    {
+      "script": "17_text-input-and-clipboard-handling.das",
+      "exit_code": 0
+    },
+    {
+      "script": "18_scrolling.das",
+      "exit_code": 0
+    },
+    {
+      "script": "19_state-machines.das",
+      "exit_code": 0
+    },
+    {
+      "script": "20_multiple-source-files.das",
+      "exit_code": 0
+    }
+  ],
+  "visible_windows": [
+    {
+      "title": "01 hello sdl3",
+      "visible": true
+    },
+    {
+      "title": "02 textures and extension libraries",
+      "visible": true
+    },
+    {
+      "title": "03 key presses and key states",
+      "visible": true,
+      "input": "Arrow event reached window; directional selection requires keycode diagnostic"
+    },
+    {
+      "title": "04 color keying",
+      "visible": true
+    },
+    {
+      "title": "05 sprite clipping and stretching",
+      "visible": true
+    },
+    {
+      "title": "06 rotation and flipping",
+      "visible": true
+    },
+    {
+      "title": "07 color modulation and alpha blending",
+      "visible": true
+    },
+    {
+      "title": "08 true type fonts",
+      "visible": true
+    },
+    {
+      "title": "09 mouse events",
+      "visible": true
+    },
+    {
+      "title": "10 timing",
+      "visible": true
+    },
+    {
+      "title": "11 advanced timers",
+      "visible": true
+    },
+    {
+      "title": "12 frame rate and vsync",
+      "visible": true
+    },
+    {
+      "title": "13 motion",
+      "visible": true
+    },
+    {
+      "title": "14 animation",
+      "visible": true
+    },
+    {
+      "title": "15 sound effects and music",
+      "visible": true,
+      "input": "Space: track playing; P: paused; P: resumed; Return: effect; S: stopped; no SDL errors"
+    },
+    {
+      "title": "16 collision detection",
+      "visible": true
+    },
+    {
+      "title": "17 text input and clipboard handling",
+      "visible": true,
+      "input": "Physical key produced current-layout text; Backspace removed it. Unicode packet injection produced no text; clipboard untouched."
+    },
+    {
+      "title": "18 scrolling",
+      "visible": true
+    },
+    {
+      "title": "19 state machines",
+      "visible": true
+    },
+    {
+      "title": "20 multiple source files",
+      "visible": true
+    }
+  ],
+  "audio_hardware_trace": "AUDIO=wasapi; playback=12960; paused=12960; resumed=24960; stop verified",
+  "input_diagnostic": [
+    "VIDEO=windows AUDIO=wasapi RENDERER=direct3d11",
+    "KEY Keypad 6 code=0x4000005e scan=94 right=0x4000004f left=0x40000050",
+    "KEY Escape code=0x1b scan=41 right=0x4000004f left=0x40000050"
+  ],
+  "verified": [
+    "20 visible SDL windows, rendering observed, clean Escape shutdown",
+    "PNG/color key/clipping/flipping/alpha and TTF text",
+    "Mouse hover/click, timer start/pause/resume, VSync toggle",
+    "SDL_mixer music play/pause/resume/stop and effect dispatch",
+    "Physical key generated current-layout text; Backspace removed it",
+    "Real audio playback frame cursor advanced, froze on pause, advanced on resume"
+  ],
+  "limits": [
+    "Physical arrow navigation/motion/collision/camera not verified: automation Right produced SDL Keypad 6, scancode 94, rather than Right scancode 79.",
+    "Unicode packet injection through type_text did not produce SDL text events; physical-key text input did.",
+    "System clipboard not mutated.",
+    "Audio was sent to a real WASAPI playback device; acoustic audibility at speakers was not measured.",
+    "Desktop run used interpreter; prior strict-AOT dummy results remain separate."
+  ]
+}

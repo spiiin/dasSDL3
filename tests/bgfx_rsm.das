@@ -25,6 +25,12 @@ def check(device : SDL_GPUDevice?) : SdlStatus {
         settings.mode = 0; settings.bounce = 0.0
         let zero <- render(device, r, settings, "rsm-zero-bounce") |> sdl_try
         verify(changed(zero, direct, 0) == 0, "Zero bounce differs from direct-only")
+        settings.bounce=0.7;settings.radius=20.0
+        let wide <- render(device,r,settings,"rsm-wide-radius") |> sdl_try
+        verify(changed(indirect,wide)>500,"VPL radius/amount does not reach shader")
+        settings.azimuth=90.0;settings.elevation=80.0
+        let relit <- render(device,r,settings,"rsm-relit") |> sdl_try
+        verify(changed(wide,relit)>500,"Light controls have no effect")
         settings.mode = 2
         let flux <- render(device, r, settings, "rsm-flux") |> sdl_try; visible(flux)
         return sdl_ok()

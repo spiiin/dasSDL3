@@ -16,7 +16,7 @@
       "local": "example_27_sky",
       "upstream": "examples/36-sky",
       "author": "2017 Stanislav Pidhorskyi",
-      "adaptation": "Uses the upstream Preetham/Perez turbidity coefficients, xyY/XYZ conversion, sun disk and optional color dithering. The CPU computes coefficients and sun direction; evaluation runs in the fragment shader, rather than being interpolated from the original screen grid vertex shader. M selects clear, hazy or dithered clear sky; Space freezes the sun; R resets time. This is the sky-model portion: the landscape mesh/lightmap, geographic calendar controls and full day/night luminance table are not ported. Zenith luminance uses the upstream noon value.",
+      "adaptation": "Original Preetham/Perez model on the 32x32 vertex grid, calendar/latitude/time sun controller, complete interpolated day/night XYZ luminance tables, exposure 0.1, sun disk/bloom and gradient noise. Original landscape/lightmap and initial camera pose retained; camera remains fixed. ImGui exposes upstream controls plus landscape/lightmap/pause/reset; core runner retains keyboard fallback. Fixed-noon Vulkan reference MAE is 0.000750/255. Grid storage uses 32-byte vertices and 32-bit indices; depth is SDL D32. See docs/bgfx-sky-rsm-audit.md for scope and measurements.",
       "source_sha256": {
         "examples/36-sky/fs_sky.sc": "09d8efd9254e929356333caabadb403b167032a89131313a64259afbf82b8342",
         "examples/36-sky/fs_sky_color_banding_fix.sc": "16a402e8b63ce9f055aeeb0d988ad83fe4ead8f8bef0b3b47e007b397fa90d4b",

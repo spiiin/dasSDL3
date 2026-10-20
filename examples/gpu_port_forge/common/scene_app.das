@@ -7,14 +7,15 @@ require dassdl3/sdl3_window_boost
 require daslib/defer
 require daslib/match
 struct Instance { model : float4x4 }
-struct Scene { first,second : MeshBuffers; diffuse,other,environment,depth : SDL_GPUTexture?; sampler : SDL_GPUSampler?; mesh,grid,sky : SDL_GPUGraphicsPipeline?; boxes,ducks : SDL_GPUBuffer?; size : uint2; lesson : int }
-struct Settings { eye : float3; target : float3; ambient : float = 0.15; specular : float = 0.5; shininess : float = 64.0; reflectivity : float = 0.6; spacing : float = 1.0; show_grid : bool = true; show_objects : bool = true; box_count : uint = 47u; duck_count : uint = 256u }
+struct Scene { first,second : MeshBuffers; diffuse,other,environment,depth : SDL_GPUTexture?; sampler,cube_sampler : SDL_GPUSampler?; mesh,grid,sky : SDL_GPUGraphicsPipeline?; boxes,ducks : SDL_GPUBuffer?; size : uint2; lesson : int }
+struct Settings { eye : float3; target : float3; light : float3 = float3(1.0,0.7,1.0); model_scale : float3 = float3(1.0); ambient : float = 0.15; specular : float = 0.5; shininess : float = 64.0; reflectivity : float = 0.6; spacing : float = 1.0; show_grid : bool = true; show_objects : bool = true; box_count : uint = 47u; duck_count : uint = 256u }
 
 def release(device : SDL_GPUDevice?; var scene : Scene) {
     release(device,scene.first);release(device,scene.second)
     for(t in fixed_array(scene.diffuse,scene.other,scene.environment,scene.depth)){if(t!=null){SDL_ReleaseGPUTexture(device,t)}}
     for(p in fixed_array(scene.mesh,scene.grid,scene.sky)){if(p!=null){SDL_ReleaseGPUGraphicsPipeline(device,p)}}
     if(scene.sampler!=null){SDL_ReleaseGPUSampler(device,scene.sampler)}
+    if(scene.cube_sampler!=null){SDL_ReleaseGPUSampler(device,scene.cube_sampler)}
     if(scene.boxes!=null){SDL_ReleaseGPUBuffer(device,scene.boxes)};if(scene.ducks!=null){SDL_ReleaseGPUBuffer(device,scene.ducks)}
 }
 def instance_matrices(ducks : bool) {
@@ -31,7 +32,7 @@ def with_scene(device : SDL_GPUDevice?; format : SDL_GPUTextureFormat; lesson : 
     let model=lesson==10 ? "Suzanne" : (lesson==12 ? "CesiumMilkTruck" : (lesson==13 ? "BoxTextured" : "Shuttle"))
     var first=load_mesh(device,model) |> sdl_try;scene.first=first
     var diffuse=load_texture(device,model) |> sdl_try;scene.diffuse=diffuse
-    var sampler=SDL_CreateGPUSamplerRef(device,gpu_sampler_info(SDL_GPUFilter.FILTER_LINEAR))
+    var sampler=SDL_CreateGPUSamplerRef(device,gpu_sampler_info(SDL_GPUFilter.FILTER_LINEAR,SDL_GPUSamplerAddressMode.SAMPLERADDRESSMODE_REPEAT))
     if(sampler==null){return err(sdl_error("SDL_CreateGPUSampler"),type<SdlUnit>)};scene.sampler=sampler
     var p=device |> pipeline(lesson==13 ? shaders::instanced_vertex : shaders::lit_vertex,lesson==13 ? shaders::instanced_vertex_reflect : shaders::lit_vertex_reflect,
         lesson==14 ? shaders::environment_fragment : shaders::lit_fragment,lesson==14 ? shaders::environment_fragment_reflect : shaders::lit_fragment_reflect,format,true,lesson==13) |> sdl_try;scene.mesh=p
@@ -48,15 +49,19 @@ def with_scene(device : SDL_GPUDevice?; format : SDL_GPUTextureFormat; lesson : 
     }
     if(lesson==14){
         var cube=load_texture(device,"sky",true) |> sdl_try;scene.environment=cube
+        var cube_sampler=SDL_CreateGPUSamplerRef(device,gpu_sampler_info(SDL_GPUFilter.FILTER_LINEAR))
+        if(cube_sampler==null){return err(sdl_error("Create cubemap sampler"),type<SdlUnit>)};scene.cube_sampler=cube_sampler
         p=device |> pipeline(shaders::fullscreen_vertex,shaders::fullscreen_vertex_reflect,shaders::sky_fragment,shaders::sky_fragment_reflect,format,false,false,false) |> sdl_try;scene.sky=p
     }
     return body(scene)
 }
 def defaults(lesson : int) : Settings {
-    if(lesson==10){return Settings(eye=float3(0.0,0.0,4.0),target=float3(0.0))}
+    if(lesson==10){return Settings(eye=float3(0.0,0.0,4.0),target=float3(0.0),light=float3(1.0))}
     if(lesson==12){return Settings(eye=float3(10.0,6.0,10.0),target=float3(0.0,1.0,0.0),ambient=0.3)}
     if(lesson==13){return Settings(eye=float3(24.0,20.0,26.0),target=float3(0.0),ambient=0.3)}
-    return Settings(eye=float3(-35.0,21.0,28.0),target=float3(0.0),ambient=0.08)
+    let eye=float3(-35.0,21.0,28.0);let yaw=-51.0*0.01745329252;let pitch=-25.0*0.01745329252
+    let forward=float3(-sin(yaw)*cos(pitch),sin(pitch),-cos(yaw)*cos(pitch))
+    return Settings(eye=eye,target=eye+forward*50.0,ambient=0.08,light=float3(1.0,0.3,1.0))
 }
 def render_scene(device : SDL_GPUDevice?; command : SDL_GPUCommandBuffer?; var scene : Scene; var target : SDL_GPUTexture?; width,height : uint; time : float; settings : Settings) : SdlStatus {
     if(scene.size!=uint2(width,height)){
@@ -66,16 +71,17 @@ def render_scene(device : SDL_GPUDevice?; command : SDL_GPUCommandBuffer?; var s
     }
     let vp=camera_matrix(width,height,settings.eye,settings.target)
     if(scene.lesson==14){
-        let f=normalize(settings.target-settings.eye);let right=normalize(cross(float3(0.0,1.0,0.0),f));let up=cross(f,right)
+        let f=normalize(settings.target-settings.eye);let right=normalize(cross(f,float3(0.0,1.0,0.0)));let up=cross(right,f)
         push_gpu_dsl_fragment_uniform(command,0u,shaders::SkyParams(right=float4(right*(float(width)/float(height)/1.7320508),0.0),up=float4(up/1.7320508,0.0),forward=float4(f,0.0))) |> sdl_try
         let targets <- array(attachment(target))
         with_native_gpu_render_pass(command,targets) $(var pass_) {
             SDL_BindGPUGraphicsPipeline(pass_,scene.sky)
-            var images <- array(scene.environment);bind_images(pass_,images,scene.sampler) |> sdl_try
+            var images <- array(scene.environment);bind_images(pass_,images,scene.cube_sampler) |> sdl_try
             SDL_DrawGPUPrimitives(pass_,3u,1u,0u,0u);return sdl_ok()
         } |> sdl_try
     }
-    let targets <- array(attachment(target,scene.lesson==14))
+    let clear=scene.lesson==10 ? float4(0.02,0.02,0.04,1.0) : float4(0.012,0.024,0.059,1.0)
+    let targets <- array(attachment(target,scene.lesson==14,clear))
     let depth=SDL_GPUDepthStencilTargetInfo(texture=scene.depth,clear_depth=1.0,load_op=SDL_GPULoadOp.LOADOP_CLEAR,store_op=SDL_GPUStoreOp.STOREOP_STORE,stencil_load_op=SDL_GPULoadOp.LOADOP_DONT_CARE,stencil_store_op=SDL_GPUStoreOp.STOREOP_DONT_CARE)
     return with_native_gpu_render_pass(command,targets,depth) $(var pass_) {
         if(scene.grid!=null && settings.show_grid){
@@ -86,11 +92,14 @@ def render_scene(device : SDL_GPUDevice?; command : SDL_GPUCommandBuffer?; var s
         }
         if(settings.show_objects){
             SDL_BindGPUGraphicsPipeline(pass_,scene.mesh)
-            let model=scene.lesson==10 ? model_matrix(float3(0.0),float3(1.0,1.2,0.8),time*0.25) : identity_matrix()
+            let model=model_matrix(float3(0.0),settings.model_scale)
             push_gpu_dsl_vertex_uniform(command,0u,shaders::Transform(model=model,vp=vp)) |> sdl_try
-            push_gpu_dsl_fragment_uniform(command,0u,shaders::Lighting(base_color=float4(1.0),light_dir=float4(1.0,0.7,1.0,0.0),eye_pos=float4(settings.eye,1.0),has_texture=1u,shininess=settings.shininess,ambient=settings.ambient,specular=settings.specular,reflectivity=settings.reflectivity)) |> sdl_try
-            var images <- array(scene.diffuse);if(scene.lesson==14){push(images,scene.environment)}
-            bind_images(pass_,images,scene.sampler) |> sdl_try
+            push_gpu_dsl_fragment_uniform(command,0u,shaders::Lighting(base_color=float4(1.0),light_dir=float4(settings.light,0.0),eye_pos=float4(settings.eye,1.0),has_texture=1u,shininess=settings.shininess,ambient=settings.ambient,specular=settings.specular,reflectivity=settings.reflectivity)) |> sdl_try
+            var images <- array(scene.diffuse)
+            if(scene.lesson==14){
+                let bindings <- array(SDL_GPUTextureSamplerBinding(texture=scene.diffuse,sampler=scene.sampler),SDL_GPUTextureSamplerBinding(texture=scene.environment,sampler=scene.cube_sampler))
+                sdl_status(SDL_BindGPUFragmentSamplersArray(pass_,0u,bindings),"Bind diffuse and environment") |> sdl_try
+            }else{bind_images(pass_,images,scene.sampler) |> sdl_try}
             draw_mesh(pass_,scene.first,scene.lesson==13 ? settings.box_count : 1u,scene.boxes) |> sdl_try
             if(scene.lesson==13){
                 images <- array(scene.other);bind_images(pass_,images,scene.sampler) |> sdl_try
@@ -107,6 +116,7 @@ def run_scene(lesson : int; smoke : bool) : int {
         let device : SDL_GPUDevice? = with_native_gpu_device(dsl_example_formats(),true,"") |> sdl_use
         sdl_status(SDL_ClaimWindowForGPUDevice(device,window),"SDL_ClaimWindowForGPUDevice") |> sdl_try
         {defer(){SDL_ReleaseWindowFromGPUDevice(device,window)}
+        configure_forge_swapchain(device,window) |> sdl_try
         return with_scene(device,SDL_GetGPUSwapchainTextureFormat(device,window),lesson) $(var scene) {
             var settings=defaults(lesson);var running=true;var frames=0;let start=SDL_GetTicks()
             while(running){

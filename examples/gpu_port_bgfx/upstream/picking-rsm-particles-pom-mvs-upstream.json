@@ -18,7 +18,7 @@
     {
       "local": "example_22_rsm",
       "upstream": "examples/31-rsm",
-      "adaptation": "Reflective shadow maps: position, normal and reflected flux MRTs from the light; camera G-buffer; shadowed direct illumination and 64 virtual point-light samples gathered in the final fragment shader. M cycles indirect+direct, direct only and reflected-flux preview; Space pauses cubes; R resets rotation. A Cornell-style room replaces the upstream scene. Fullscreen gathering replaces upstream instanced light-volume accumulation; both indirect lighting paths run on the GPU, but their quality and cost are not equivalent. RSM resolution is 256x256. A depth bias covers the low-resolution PCF footprint.",
+      "adaptation": "Adapted RSM: 256x256 RGBA16F position/normal/flux MRTs, explicit camera position G-buffer, point-light PCF9 shadows and 64-sample fullscreen indirect gather. Cornell room and six boxes replace 222 upstream objects. Original uses 512x512 compact targets and 1024 individual sphere draws, not instancing. ImGui exposes amount/radius/azimuth/elevation with upstream ranges. Amount uses direct/indirect mix; unrelated ambient and tone mapping removed. Radius/falloff, formats, camera, shadow filtering and scene remain different; timings are not equal-work binding comparisons. See docs/bgfx-sky-rsm-audit.md.",
       "source_sha256": {
         "examples/31-rsm/fs_rsm_combine.sc": "59a9e9b21c7773d2b0aa5f5054d18b623cc71614874714ebd61eaa8f9cf27c50",
         "examples/31-rsm/fs_rsm_gbuffer.sc": "fa94eabddf68c6f9c73f7dce3fcf5e8d432edd44719c65de24c30058537d6467",
