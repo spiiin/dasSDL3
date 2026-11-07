@@ -26,22 +26,12 @@ repository installs select their reference snapshot; staged source packages use
 `DASSDL3_PACKAGE_SDK_FINGERPRINT`. Binary packages still require a matching SDK;
 this source-install option does not make precompiled modules portable across ABIs.
 
-fmt is discovered inside the selected SDK at `3rdparty/fmt/include`, `include`,
-`include/fmt/include` or `external/fmt/include` (each containing `fmt/format.h`).
-Direct CMake users can override `DASSDL3_FMT_INCLUDE_DIR`. System-wide fmt is not
-searched. Missing development headers produce a dependency error independently
-of fingerprint validation; disabling hashes cannot supply missing headers.
-
-Validation on 2026-10-17 (Windows x64, MSVC 19.38/Ninja): staged source
-installation with a deliberately wrong fingerprint and SDK fmt relocated to
-`include/fmt` passed actual daspkg install/check, all imports, rendering and
-consumer relocation. A repository snapshot with the proposed package files also
-passed installation, descriptor rebuild, imports, rendering and relocation.
-Strict mode rejected the wrong snapshot and accepted the reference SDK through
-the environment switch. Configure-only fixtures cover all four fmt layouts,
-missing fmt and strict mode without a profile (`sdl3_package_sdk_config`).
-SDL was reused from the existing static build; GitHub download, MSVC 19.51 and
-other platforms were not rerun for this change.
+The package compiles against the SDK's `include/` tree and links its `libDaScriptDyn`
+import libraries; it needs nothing else from the SDK. In particular it does not need
+fmt: daslang's public headers stopped including it in 2025, and the official SDK
+bundles (the release zip, brew, scoop, pip from 0.6.6) carry `include/` without it.
+The configure-only fixture (`sdl3_package_sdk_config`) covers the plain layout and
+strict mode without a profile.
 
 The repository manifest declares `windows`, `darwin` and `linux`.
 Linux supports core only; CMake rejects its ImGui profile. Staged binary/source
@@ -273,7 +263,7 @@ The default source integration test reuses the existing SDL build. A separate
 opt-in network test downloads and builds SDL from scratch (see below).
 Ninja compile concurrency is capped at six even when daspkg passes --parallel.
 
-sdk.sha256 contains fingerprints of reference SDK headers (including fmt),
+sdk.sha256 contains fingerprints of reference SDK headers,
 import libraries and both daScript runtime DLLs. With strict validation enabled, CMake rejects missing or changed
 files before fetching SDL or compiling. An identical SDK at a different path is
 accepted. This deliberately strict check also rejects compatible rebuilds with

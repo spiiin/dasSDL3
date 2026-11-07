@@ -54,8 +54,7 @@ def main():
         shutil.copy2(source, output / "dasSDL3.shared_module")
     else:
         sdk = args.sdk.resolve()
-        sdk_files = sorted(p for folder in ("include", "3rdparty/fmt/include")
-                           for p in (sdk / folder).rglob("*") if p.is_file())
+        sdk_files = sorted(p for p in (sdk / "include").rglob("*") if p.is_file())
         native_files = {
             "windows": ("lib/libDaScriptDyn.lib", "lib/libDaScriptDyn_runtime.lib",
                         "bin/libDaScriptDyn.dll", "bin/libDaScriptDyn_runtime.dll"),

@@ -32,17 +32,10 @@ def main():
         else:
             assert result.returncode == 0, result.stdout
         return result.stdout
-    configure('missing', error='Missing fmt headers in SDK')
-    for i, folder in enumerate(('include', '3rdparty/fmt/include', 'include/fmt/include', 'external/fmt/include')):
-        header = sdk / folder / 'fmt/format.h'
-        header.parent.mkdir(parents=True, exist_ok=True)
-        header.write_text('// configure fixture\n')
-        output = configure(f'layout-{i}')
-        assert f'SDK fmt headers: {(sdk / folder).as_posix()}' in output, output
-        header.rename(header.with_suffix('.hidden'))
+    configure('plain')
     configure('strict-no-profile', ['-DDASSDL3_VALIDATE_SDK_FINGERPRINT=ON'],
               error='Strict SDK validation requires')
-    print(f'PASS: four SDK fmt layouts, missing dependency and strict missing profile; logs: {work}')
+    print(f'PASS: plain SDK layout and strict missing profile; logs: {work}')
 
 if __name__ == '__main__':
     main()
