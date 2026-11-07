@@ -1008,7 +1008,11 @@ public:
         // Match the BGFX binder's promotion of small C integer arguments.
         // Standalone/JIT resolves externs by mangled name, so keep the registry
         // and module fingerprint consistent with the promoted public signature.
+        // daslang 0.6.5 dropped Module::cumulativeHash: the module's content hash
+        // is computed by the SDK itself (getOwnSemanticHash) and needs no help here.
+#if DAS_VERSION < 605
         cumulativeHash = 0;
+#endif
         for (auto & fn : functions.each()) {
             const auto oldName = fn->getMangledName();
             for (auto & arg : fn->arguments) {
@@ -1020,8 +1024,10 @@ public:
                 DAS_VERIFY(!functions.find(newName));
                 DAS_VERIFY(functions.refresh_key(hash64z(oldName.c_str()), hash64z(newName.c_str())));
             }
+#if DAS_VERSION < 605
             if (fn->builtIn)
                 cumulativeHash = wyhash(newName.c_str(), newName.size(), cumulativeHash);
+#endif
         }
     }
 };

@@ -88,17 +88,6 @@ if(DASSDL3_VALIDATE_SDK_FINGERPRINT)
         message(FATAL_ERROR "SDK fingerprint mismatch. No validated snapshot matched:${_sdk_failures}\nSee docs/daspkg.md for supported SDKs.")
     endif()
 endif()
-# Search only the selected SDK, never accidentally use a system fmt installation.
-find_path(DASSDL3_FMT_INCLUDE_DIR NAMES fmt/format.h
-    PATHS "${DASLANG_DIR}/3rdparty/fmt/include" "${DASLANG_DIR}/include"
-          "${DASLANG_DIR}/include/fmt/include" "${DASLANG_DIR}/external/fmt/include"
-    NO_DEFAULT_PATH)
-if(NOT DASSDL3_FMT_INCLUDE_DIR OR
-   NOT EXISTS "${DASSDL3_FMT_INCLUDE_DIR}/fmt/format.h")
-    message(FATAL_ERROR "Missing fmt headers in SDK ${DASLANG_DIR}. Expected include/fmt/format.h or 3rdparty/fmt/include/fmt/format.h. Install the SDK development headers or set DASSDL3_FMT_INCLUDE_DIR to the matching fmt include directory.")
-endif()
-message(STATUS "SDK fmt headers: ${DASSDL3_FMT_INCLUDE_DIR}")
-
 # Reuse an explicit SDL install, or fetch the pinned source for the source package.
 option(DASSDL3_PACKAGE_FETCH_SDL "Fetch pinned SDL when no SDL3_DIR is supplied" OFF)
 if(DASSDL3_PACKAGE_FETCH_SDL AND NOT SDL3_DIR AND NOT DEFINED ENV{SDL3_DIR})
@@ -114,7 +103,7 @@ else()
     find_package(SDL3 3.4.16 EXACT CONFIG REQUIRED COMPONENTS SDL3-static)
 endif()
 add_library(dasSDL3_package SHARED "${DASSDL3_SOURCE_DIR}/module_sdl3.cpp")
-target_include_directories(dasSDL3_package PRIVATE "${DASSDL3_SOURCE_DIR}" "${DASLANG_DIR}/include" "${DASSDL3_FMT_INCLUDE_DIR}")
+target_include_directories(dasSDL3_package PRIVATE "${DASSDL3_SOURCE_DIR}" "${DASLANG_DIR}/include")
 target_compile_definitions(dasSDL3_package PRIVATE DAS_ENABLE_DLL=1 DAS_MOD_EXPORTS
     DAS_FUSION=2 DAS_NO_ASSERTIONS
     DASSDL3_TYPES_INCLUDE="generated/${_package_snapshot}/sdl3_types.inc"
@@ -172,8 +161,7 @@ option(DASSDL3_DASPKG_CLI_SUPPORT "Build upstream PUGIXML separately for daspkg 
 if(DASSDL3_DASPKG_CLI_SUPPORT)
     set(_pugi "${DASLANG_DIR}/modules/dasPUGIXML")
     add_library(daspkg_pugixml SHARED "${_pugi}/src/dasPUGIXML.cpp" "${_pugi}/pugixml/pugixml.cpp")
-    target_include_directories(daspkg_pugixml PRIVATE "${DASLANG_DIR}/include"
-        "${DASSDL3_FMT_INCLUDE_DIR}" "${_pugi}/pugixml")
+    target_include_directories(daspkg_pugixml PRIVATE "${DASLANG_DIR}/include" "${_pugi}/pugixml")
     target_compile_definitions(daspkg_pugixml PRIVATE DAS_ENABLE_DLL=1 DAS_MOD_EXPORTS
         DAS_FUSION=2 DAS_NO_ASSERTIONS)
     if(NOT APPLE)
