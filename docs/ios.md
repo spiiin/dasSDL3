@@ -42,6 +42,23 @@ Verified on iPhone 16 (iOS 27.0.1): direct touch down, motion and up,
 text input from the on-screen numeric keyboard, and keyboard dismissal
 passed in both the interpreter and strict AOT.
 
+For the GPU Renderer smoke test, launch with `--gpu-renderer-smoke`.
+The existing example 86 draws four frames with a custom MSL fragment shader
+and updates its uniforms. An AOT build runs the example in both modes.
+
+For audio, launch with `--audio-interpreter` or `--audio-aot`. Example 08
+loops its bundled WAV through CoreAudio. Listen for the tone, lock and
+unlock the phone, then return to the app. When prompted, tap only if the
+tone is audible again. The prompt requires the original stream to consume
+queued audio after foregrounding. Queue progress and audible playback
+are reported separately. This checks lock/unlock, not a phone call or
+other system audio interruption.
+
+Verified on iPhone 16 (iOS 27.0.1): example 86 completed on Metal in the
+interpreter and strict AOT. In both CoreAudio runs, the existing stream
+consumed newly queued data after lock/unlock, and the tester confirmed the
+tone was audible. All three launches exited with code zero.
+
 Use full Xcode, CMake and Ninja. Build the AOT emitter on macOS first:
 
 ```sh

@@ -258,6 +258,83 @@ struct Screen {
         return SDL_APP_CONTINUE;
     }
 
+    das::SimFunction *audioTick = nullptr;
+    das::SimFunction *audioClose = nullptr;
+    bool audioNeedsCleanup = false;
+    unsigned audioRefills = 0;
+
+    bool startAudio(const das::string &root, bool aot) {
+        using namespace das;
+        if (!loadInteractive(root, "examples/08_audio.das", aot)) return false;
+        auto *open = context->findFunction("audio_open");
+        audioTick = context->findFunction("audio_tick");
+        audioClose = context->findFunction("audio_close");
+        if (!open || !audioTick || !audioClose ||
+            (aot && (!open->aot || !audioTick->aot || !audioClose->aot)) ||
+            !verifyCall<bool>(open->debugInfo, modules) ||
+            !verifyCall<int32_t>(audioTick->debugInfo, modules) ||
+            !verifyCall<void>(audioClose->debugInfo, modules)) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Invalid audio entry points (AOT=%d)", aot);
+            return false;
+        }
+
+        SDL_SetHintWithPriority(SDL_HINT_AUDIO_DRIVER, "coreaudio", SDL_HINT_OVERRIDE);
+        if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) ||
+            !SDL_CreateWindowAndRenderer("dasSDL3 iPhone audio", 640, 480, 0, &window, &renderer)) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Audio setup: %s", SDL_GetError());
+            return false;
+        }
+        const char *driver = SDL_GetCurrentAudioDriver();
+        if (!driver || SDL_strcmp(driver, "coreaudio") != 0) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Expected the CoreAudio playback driver");
+            return false;
+        }
+        audioNeedsCleanup = true;
+        const bool opened = cast<bool>::to(context->evalWithCatch(open, nullptr));
+        if (const char *error = context->getException()) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Audio open exception: %s", error);
+            return false;
+        }
+        if (!opened) return false;
+        SDL_Log("dasSDL3 audio ready: coreaudio (%s)", aot ? "strict AOT" : "interpreter");
+        return true;
+    }
+
+    SDL_AppResult drawAudio() {
+        using namespace das;
+        const unsigned resumed = SDL_GetAtomicInt(&resumeCount);
+        context->restart();
+        const int result = cast<int32_t>::to(context->evalWithCatch(audioTick, nullptr));
+        if (const char *error = context->getException()) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Audio frame exception: %s", error);
+            return SDL_APP_FAILURE;
+        }
+        if (result < 0 || !context->runWithCatchAndClear([&] { context->collectHeapIfMostlyFree(); })) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Audio frame failed");
+            return SDL_APP_FAILURE;
+        }
+        if (resumed != reportedResume) {
+            reportedResume = resumed;
+            audioRefills = 0;
+        }
+        // Multiple refills prove the existing stream is consuming newly queued
+        // data, rather than merely accepting a single write after foregrounding.
+        if (result > 0 && ++audioRefills == 3) {
+            SDL_Log("dasSDL3 audio stream consumed queued data PASS (cycle %u, %s)",
+                    resumed, audioTick->aot ? "strict AOT" : "interpreter");
+        }
+        const char *prompt = !resumed ? "Hear the tone, then lock and unlock"
+                         : audioRefills < 3 ? "Waiting for audio to resume"
+                         : "Tap if you hear the tone again";
+        if (!SDL_SetRenderDrawColor(renderer, 16, 32, 50, 255) || !SDL_RenderClear(renderer) ||
+            !SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255) ||
+            !SDL_RenderDebugText(renderer, 24, 104, prompt) || !SDL_RenderPresent(renderer)) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Audio screen: %s", SDL_GetError());
+            return SDL_APP_FAILURE;
+        }
+        return SDL_APP_CONTINUE;
+    }
+
     bool startTriangle(const das::string &root) {
         using namespace das;
         bool aot = false;
@@ -331,6 +408,23 @@ SDL_AppResult SDL_AppInit(void **state, int argc, char **argv) {
     NEED_MODULE(Module_dasSDL3);
     das::Module::Initialize();
     for (int i = 1; i < argc; ++i) {
+        if (SDL_strcmp(argv[i], "--gpu-renderer-smoke") == 0) {
+            SDL_SetHintWithPriority(SDL_HINT_GPU_DRIVER, "metal", SDL_HINT_OVERRIDE);
+            SDL_SetHint(SDL_HINT_RENDER_GPU_DEBUG, "1");
+            bool passed = run(root, "examples/86_gpu_renderer.das", false);
+#ifdef DASSDL3_IPHONE_STRICT_AOT
+            SDL_SetHintWithPriority(SDL_HINT_GPU_DRIVER, "metal", SDL_HINT_OVERRIDE);
+            SDL_SetHint(SDL_HINT_RENDER_GPU_DEBUG, "1");
+            passed = run(root, "examples/86_gpu_renderer.das", true) && passed;
+#endif
+            return passed ? SDL_APP_SUCCESS : SDL_APP_FAILURE;
+        }
+        if (SDL_strcmp(argv[i], "--audio-interpreter") == 0)
+            return screen->startAudio(root, false) ? SDL_APP_CONTINUE : SDL_APP_FAILURE;
+#ifdef DASSDL3_IPHONE_STRICT_AOT
+        if (SDL_strcmp(argv[i], "--audio-aot") == 0)
+            return screen->startAudio(root, true) ? SDL_APP_CONTINUE : SDL_APP_FAILURE;
+#endif
         if (SDL_strcmp(argv[i], "--input-interpreter") == 0)
             return screen->startInput(root, false) ? SDL_APP_CONTINUE : SDL_APP_FAILURE;
 #ifdef DASSDL3_IPHONE_STRICT_AOT
@@ -387,6 +481,7 @@ SDL_AppResult SDL_AppInit(void **state, int argc, char **argv) {
 SDL_AppResult SDL_AppIterate(void *state) {
     auto &screen = *static_cast<Screen *>(state);
     if (!SDL_GetAtomicInt(&screen.active)) return SDL_APP_CONTINUE;
+    if (screen.audioTick) return screen.drawAudio();
     if (screen.inputEvent) return screen.drawInput();
     if (screen.pipeline) return screen.drawTriangle();
     if (!SDL_SetRenderDrawColor(screen.renderer, screen.passed ? 20 : 165, screen.passed ? 130 : 20, 40, 255) ||
@@ -412,6 +507,13 @@ SDL_AppResult SDL_AppEvent(void *state, SDL_Event *event) {
         SDL_SetAtomicInt(&screen.active, 1);
     }
     if (event->type == SDL_EVENT_QUIT) return screen.passed ? SDL_APP_SUCCESS : SDL_APP_FAILURE;
+    if (screen.audioTick && event->type == SDL_EVENT_FINGER_UP && SDL_GetAtomicInt(&screen.active) &&
+        screen.reportedResume > 0 && screen.reportedResume == unsigned(SDL_GetAtomicInt(&screen.resumeCount)) &&
+        screen.audioRefills >= 3) {
+        SDL_Log("dasSDL3 user confirmed audible audio after resume PASS (%s)",
+                screen.audioTick->aot ? "strict AOT" : "interpreter");
+        return SDL_APP_SUCCESS;
+    }
     if (screen.inputEvent && SDL_GetAtomicInt(&screen.active)) return screen.handleInput(*event);
     return SDL_APP_CONTINUE;
 }
@@ -419,6 +521,12 @@ SDL_AppResult SDL_AppEvent(void *state, SDL_Event *event) {
 void SDL_AppQuit(void *state, SDL_AppResult) {
     std::unique_ptr<Screen> screen(static_cast<Screen *>(state));
     if (screen) {
+        if (screen->audioNeedsCleanup) {
+            screen->context->restart();
+            screen->context->evalWithCatch(screen->audioClose, nullptr);
+            if (const char *error = screen->context->getException())
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Audio cleanup exception: %s", error);
+        }
         if (screen->device) {
             if (!SDL_WaitForGPUIdle(screen->device))
                 SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Triangle cleanup: %s", SDL_GetError());
