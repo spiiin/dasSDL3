@@ -311,6 +311,50 @@ struct Screen {
         return SDL_APP_CONTINUE;
     }
 
+    das::SimFunction *clipboardExchange = nullptr;
+    bool clipboardRetry = false;
+
+    bool startClipboard(const das::string &root, bool aot) {
+        if (!loadInteractive(root, "ios/clipboard.das", aot)) return false;
+        clipboardExchange = context->findFunction("clipboard_exchange");
+        if (!clipboardExchange || (aot && !clipboardExchange->aot) ||
+            !das::verifyCall<int32_t>(clipboardExchange->debugInfo, modules))
+            return SDL_SetError("Invalid clipboard entry point (AOT=%d)", aot);
+        return SDL_Init(SDL_INIT_VIDEO) &&
+               SDL_CreateWindowAndRenderer("dasSDL3 clipboard", 640, 480, 0, &window, &renderer);
+    }
+
+    SDL_AppResult drawClipboard() {
+        SDL_Rect safe;
+        const char *prompt = clipboardRetry ? "Copy the accented word and try again" : "Tap to check the clipboard";
+        if (!SDL_GetRenderSafeArea(renderer, &safe) ||
+            !SDL_SetRenderDrawColor(renderer, 16, 32, 50, 255) || !SDL_RenderClear(renderer) ||
+            !SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255) ||
+            !SDL_RenderDebugText(renderer, float(safe.x + 16), float(safe.y + 52), prompt) ||
+            !SDL_RenderPresent(renderer)) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Clipboard screen: %s", SDL_GetError());
+            return SDL_APP_FAILURE;
+        }
+        return SDL_APP_CONTINUE;
+    }
+
+    SDL_AppResult exchangeClipboard() {
+        context->restart();
+        const int result = das::cast<int32_t>::to(context->evalWithCatch(clipboardExchange, nullptr));
+        if (result < 0 || context->getException()) {
+            const char *error = context->getException();
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL clipboard exchange: %s", error ? error : SDL_GetError());
+            return SDL_APP_FAILURE;
+        }
+        if (result == 0) {
+            clipboardRetry = true;
+            return SDL_APP_CONTINUE;
+        }
+        SDL_Log("dasSDL3 iPhone clipboard UTF-8 read and write PASS (%s)",
+                clipboardExchange->aot ? "strict AOT" : "interpreter");
+        return SDL_APP_SUCCESS;
+    }
+
     das::SimFunction *captureOpen = nullptr;
     das::SimFunction *captureTick = nullptr;
     das::SimFunction *captureClose = nullptr;
@@ -829,6 +873,15 @@ SDL_AppResult SDL_AppInit(void **state, int argc, char **argv) {
     das::Module::Initialize();
     for (int i = 1; i < argc; ++i) {
         const auto isArg = [&](const char *arg) { return SDL_strcmp(argv[i], arg) == 0; };
+        if (isArg("--clipboard")) {
+            bool aot = false;
+#ifdef DASSDL3_IPHONE_STRICT_AOT
+            aot = true;
+#endif
+            if (screen->startClipboard(root, aot)) return SDL_APP_CONTINUE;
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Clipboard setup: %s", SDL_GetError());
+            return SDL_APP_FAILURE;
+        }
         const bool camera = isArg("--camera-aot") || isArg("--camera-denied") || isArg("--camera-interpreter");
         const bool microphone = isArg("--microphone-aot") || isArg("--microphone-denied") || isArg("--microphone-interpreter");
         if (camera || microphone) {
@@ -936,16 +989,20 @@ SDL_AppResult SDL_AppInit(void **state, int argc, char **argv) {
         if (SDL_strcmp(argv[i], "--input-aot") == 0)
             return screen->startInput(root, true) ? SDL_APP_CONTINUE : SDL_APP_FAILURE;
 #endif
-        const bool write = SDL_strcmp(argv[i], "--persistence-write") == 0;
-        const bool read = SDL_strcmp(argv[i], "--persistence-read") == 0;
+        const bool storageWrite = SDL_strcmp(argv[i], "--storage-write") == 0;
+        const bool storageRead = SDL_strcmp(argv[i], "--storage-read") == 0;
+        const bool write = storageWrite || SDL_strcmp(argv[i], "--persistence-write") == 0;
+        const bool read = storageRead || SDL_strcmp(argv[i], "--persistence-read") == 0;
         if (!write && !read) continue;
         bool aot = false;
 #ifdef DASSDL3_IPHONE_STRICT_AOT
         aot = read;
 #endif
-        if (!run(root, "ios/persistence.das", aot, read ? Check::ReadSavedData : Check::Normal))
+        const bool storage = storageWrite || storageRead;
+        if (!run(root, storage ? "ios/storage.das" : "ios/persistence.das", aot,
+                 read ? Check::ReadSavedData : Check::Normal))
             return SDL_APP_FAILURE;
-        SDL_Log("dasSDL3 persistence %s PASS pid=%d mode=%s",
+        SDL_Log("dasSDL3 %s %s PASS pid=%d mode=%s", storage ? "storage" : "persistence",
                 write ? "write" : "read", int(getpid()), aot ? "strict-aot" : "interpreter");
         return SDL_APP_SUCCESS;
     }
@@ -990,6 +1047,7 @@ SDL_AppResult SDL_AppIterate(void *state) {
     if (screen.imguiInput) return drawImGuiInput();
 #endif
     if (screen.audioTick) return screen.drawAudio();
+    if (screen.clipboardExchange) return screen.drawClipboard();
     if (screen.captureTick) return screen.drawCapture();
     if (screen.motionDone) return screen.drawMotion();
     if (screen.inputEvent) return screen.drawInput();
@@ -1041,6 +1099,8 @@ SDL_AppResult SDL_AppEvent(void *state, SDL_Event *event) {
         return SDL_APP_SUCCESS;
     }
     if (screen.inputEvent && SDL_GetAtomicInt(&screen.active)) return screen.handleInput(*event);
+    if (screen.clipboardExchange && event->type == SDL_EVENT_FINGER_UP && SDL_GetAtomicInt(&screen.active))
+        return screen.exchangeClipboard();
     if (screen.motionEvent && event->type == SDL_EVENT_SENSOR_UPDATE && SDL_GetAtomicInt(&screen.active))
         return screen.handleMotion(*event);
     if (screen.motionDashboardReady && event->type == SDL_EVENT_FINGER_UP && SDL_GetAtomicInt(&screen.active))

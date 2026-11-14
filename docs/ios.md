@@ -175,6 +175,26 @@ With access disabled, SDL opened the stream but delivered zero samples over
 two seconds. The denial check passed in the interpreter and exited with code
 zero.
 
+## SDL Storage
+
+Install the app once. Launch with `--storage-write` to write a binary fixture
+to user storage in the interpreter. After the process exits, launch with
+`--storage-read` to check the exact bytes and remove the fixture. An AOT build
+runs the read phase in strict AOT. Both launches read the bundled WAV through
+title storage and verify that it rejects a write.
+On iPhone 16 both launches passed and exited with code zero. A fresh strict
+AOT process read back all seven bytes from `résumé.bin` and removed the file.
+
+## SDL system clipboard
+
+Copy `café` from Notes, launch with `--clipboard`, and tap the SDL app.
+Allow paste if iOS prompts. The script checks the exact UTF-8 text and
+replaces the clipboard contents with `SDL: café`. After the app exits,
+paste into Notes to verify the return path. An AOT build runs the script
+in strict AOT.
+On iPhone 16, the strict AOT run read `café` from Notes, wrote `SDL: café`,
+and exited with code zero. Pasting back into Notes produced `SDL: café`.
+
 ## SDL virtual gamepad
 
 Launch with `--gamepad-smoke` to run `tests/joystick_gamepad.das`,

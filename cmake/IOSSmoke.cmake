@@ -12,6 +12,8 @@ set(_audio "${_root}/examples/08_audio.das")
 set(_triangle "${_root}/examples/48_gpu_native_graphics.das")
 set(_input_smoke "${_root}/ios/input.das")
 set(_persistence "${_root}/ios/persistence.das")
+set(_storage "${_root}/ios/storage.das")
+set(_clipboard "${_root}/ios/clipboard.das")
 set(_filesystem "${_root}/tests/filesystem.das")
 set(_sensors "${_root}/ios/sensors.das")
 set(_camera "${_root}/ios/camera.das")
@@ -113,6 +115,8 @@ foreach(_script IN LISTS _gamepad_scripts)
     _iphone_resource("${_script}" "${_dir}")
 endforeach()
 _iphone_resource("${_persistence}" ios)
+_iphone_resource("${_storage}" ios)
+_iphone_resource("${_clipboard}" ios)
 _iphone_resource("${_input_smoke}" ios)
 # Bundle the negative fixture without generating or linking AOT for it.
 _iphone_resource("${_root}/tests/macos_missing_aot.das" tests)
@@ -213,7 +217,7 @@ if(DASSDL3_IOS_AOT_TOOL)
     # The application unit emits its own functions and template instances.
     # Shared imports also need their own registration units for strict linking.
     set(_pending ${_scripts} "${_audio}" "${_gpu_renderer}" "${_triangle}" "${_filesystem}" "${_sensors}" "${_camera}"
-        "${_microphone}" "${_persistence}" "${_input_smoke}" "${_support}" ${_gamepad_scripts}
+        "${_microphone}" "${_persistence}" "${_storage}" "${_clipboard}" "${_input_smoke}" "${_support}" ${_gamepad_scripts}
         ${_image_scripts} ${_ttf_scripts} ${_audio_scripts} ${_net_scripts})
     set(_aot_inputs)
     while(_pending)
