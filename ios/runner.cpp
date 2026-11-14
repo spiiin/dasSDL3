@@ -338,9 +338,16 @@ struct Screen {
     das::SimFunction *rendererClose = nullptr;
     bool rendererNeedsCleanup = false;
 
+    int layoutStep = 0;
+    bool checkLayout = false;
+    SDL_Point layoutSize{};
+    SDL_FRect layoutMarker{};
+
     bool callRenderer(das::SimFunction *function, bool &result) {
         using namespace das;
-        vec4f args[] = {cast<SDL_Renderer *>::from(renderer)};
+        vec4f args[] = {cast<SDL_Renderer *>::from(renderer), cast<float>::from(layoutMarker.x),
+                        cast<float>::from(layoutMarker.y), cast<float>::from(layoutMarker.w),
+                        cast<float>::from(layoutMarker.h)};
         context->restart();
         const auto value = context->evalWithCatch(function, args);
         if (const auto *error = context->getException()) {
@@ -355,20 +362,26 @@ struct Screen {
         using namespace das;
         if (!loadInteractive(root, "examples/86_gpu_renderer.das", aot)) return false;
         auto *open = context->findFunction("renderer_open");
-        rendererFrame = context->findFunction("renderer_frame");
+        rendererFrame = context->findFunction(checkLayout ? "renderer_layout_frame" : "renderer_frame");
         rendererClose = context->findFunction("renderer_close");
         if (!open || !rendererFrame || !rendererClose ||
             (aot && (!open->aot || !rendererFrame->aot || !rendererClose->aot)) ||
             !verifyCall<bool, SDL_Renderer *>(open->debugInfo, modules) ||
-            !verifyCall<bool, SDL_Renderer *>(rendererFrame->debugInfo, modules) ||
+            !(checkLayout ? verifyCall<bool, SDL_Renderer *, float, float, float, float>(rendererFrame->debugInfo, modules)
+                          : verifyCall<bool, SDL_Renderer *>(rendererFrame->debugInfo, modules)) ||
             !verifyCall<void, SDL_Renderer *>(rendererClose->debugInfo, modules)) {
             SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Invalid GPU Renderer entry points (AOT=%d)", aot);
             return false;
         }
         SDL_SetHintWithPriority(SDL_HINT_GPU_DRIVER, "metal", SDL_HINT_OVERRIDE);
         SDL_SetHint(SDL_HINT_RENDER_GPU_DEBUG, "1");
+        SDL_WindowFlags flags = SDL_WINDOW_HIGH_PIXEL_DENSITY;
+        if (checkLayout) {
+            SDL_SetHint(SDL_HINT_ORIENTATIONS, "Portrait LandscapeLeft LandscapeRight");
+            flags |= SDL_WINDOW_RESIZABLE;
+        }
         if (SDL_Init(SDL_INIT_VIDEO)) {
-            window = SDL_CreateWindow("SDL GPU Renderer", 640, 480, SDL_WINDOW_HIGH_PIXEL_DENSITY);
+            window = SDL_CreateWindow("SDL GPU Renderer", 640, 480, flags);
             if (window) renderer = SDL_CreateGPURenderer(nullptr, window);
         }
         if (!renderer || !SDL_SetRenderLogicalPresentation(renderer, 640, 480, SDL_LOGICAL_PRESENTATION_LETTERBOX)) {
@@ -385,8 +398,59 @@ struct Screen {
         return callRenderer(open, opened) && opened;
     }
 
+    bool updateLayoutMarker() {
+        layoutMarker = {};
+        SDL_Point pixels;
+        SDL_Point output;
+        SDL_Rect safe;
+        if (!SDL_GetWindowSize(window, &layoutSize.x, &layoutSize.y) ||
+            !SDL_GetWindowSizeInPixels(window, &pixels.x, &pixels.y) ||
+            !SDL_GetRenderOutputSize(renderer, &output.x, &output.y) ||
+            !SDL_GetWindowSafeArea(window, &safe)) return false;
+        const float density = SDL_GetWindowPixelDensity(window);
+        const bool landscape = layoutSize.x > layoutSize.y;
+        // Wait for the window and the renderer to agree during rotation.
+        if (layoutSize.x == layoutSize.y || landscape != (layoutStep == 1) ||
+            pixels.x != output.x || pixels.y != output.y ||
+            density <= 1.0f ||
+            SDL_fabsf(pixels.x - layoutSize.x * density) > 2.0f ||
+            SDL_fabsf(pixels.y - layoutSize.y * density) > 2.0f ||
+            safe.x < 0 || safe.y < 0 || safe.w <= 0 || safe.h <= 0 ||
+            safe.x + safe.w > layoutSize.x || safe.y + safe.h > layoutSize.y ||
+            (safe.w == layoutSize.x && safe.h == layoutSize.y)) return true;
+        SDL_Rect renderSafe;
+        if (!SDL_GetRenderSafeArea(renderer, &renderSafe)) return false;
+        if (renderSafe.w < 128 || renderSafe.h < 128) return true;
+        const float fraction = landscape ? 0.72f : 0.28f;
+        layoutMarker = {renderSafe.x + renderSafe.w * fraction - 24.0f,
+                        renderSafe.y + renderSafe.h * 0.35f - 24.0f, 48.0f, 48.0f};
+        return true;
+    }
+
+    SDL_AppResult checkLayoutTouch(const SDL_Event &event) {
+        if (layoutMarker.w <= 0 || event.tfinger.windowID != SDL_GetWindowID(window) ||
+            SDL_GetTouchDeviceType(event.tfinger.touchID) != SDL_TOUCH_DEVICE_DIRECT)
+            return SDL_APP_CONTINUE;
+        int width, height;
+        if (!SDL_GetWindowSize(window, &width, &height)) return SDL_APP_FAILURE;
+        if (width != layoutSize.x || height != layoutSize.y) return SDL_APP_CONTINUE;
+        SDL_Event converted = event;
+        if (!SDL_ConvertEventToRenderCoordinates(renderer, &converted)) return SDL_APP_FAILURE;
+        const SDL_FPoint touch{converted.tfinger.x, converted.tfinger.y};
+        if (!SDL_PointInRectFloat(&touch, &layoutMarker)) return SDL_APP_CONTINUE;
+        SDL_Log("dasSDL3 orientation step %d PASS (%s, %dx%d points, density %.2f, touch %.1f, %.1f)",
+                layoutStep + 1, width > height ? "landscape" : "portrait", width, height,
+                SDL_GetWindowPixelDensity(window), touch.x, touch.y);
+        layoutMarker = {};
+        return ++layoutStep == 3 ? SDL_APP_SUCCESS : SDL_APP_CONTINUE;
+    }
+
     SDL_AppResult drawRenderer() {
         const unsigned resumed = SDL_GetAtomicInt(&resumeCount);
+        if (checkLayout && !updateLayoutMarker()) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "GPU Renderer layout: %s", SDL_GetError());
+            return SDL_APP_FAILURE;
+        }
         bool drawn = false;
         if (!callRenderer(rendererFrame, drawn) || !drawn) return SDL_APP_FAILURE;
         if (!context->runWithCatchAndClear([&] { context->collectHeapIfMostlyFree(); })) {
@@ -536,7 +600,9 @@ SDL_AppResult SDL_AppInit(void **state, int argc, char **argv) {
 #endif
             return passed ? SDL_APP_SUCCESS : SDL_APP_FAILURE;
         }
-        if (SDL_strcmp(argv[i], "--gpu-renderer") == 0) {
+        if (SDL_strcmp(argv[i], "--gpu-renderer") == 0 ||
+            SDL_strcmp(argv[i], "--gpu-renderer-layout") == 0) {
+            screen->checkLayout = SDL_strcmp(argv[i], "--gpu-renderer-layout") == 0;
             bool aot = false;
 #ifdef DASSDL3_IPHONE_STRICT_AOT
             aot = true;
@@ -632,10 +698,11 @@ SDL_AppResult SDL_AppEvent(void *state, SDL_Event *event) {
         SDL_SetAtomicInt(&screen.active, 1);
     }
     if (event->type == SDL_EVENT_QUIT)
-        return screen.passed || (screen.rendererFrame && !screen.firstFrame) ? SDL_APP_SUCCESS : SDL_APP_FAILURE;
+        return screen.passed || (screen.rendererFrame && !screen.checkLayout && !screen.firstFrame)
+            ? SDL_APP_SUCCESS : SDL_APP_FAILURE;
     if (screen.rendererFrame && event->type == SDL_EVENT_FINGER_UP && !screen.firstFrame &&
         SDL_GetAtomicInt(&screen.active))
-        return SDL_APP_SUCCESS;
+        return screen.checkLayout ? screen.checkLayoutTouch(*event) : SDL_APP_SUCCESS;
     if (screen.audioTick && event->type == SDL_EVENT_FINGER_UP && SDL_GetAtomicInt(&screen.active) &&
         screen.reportedResume > 0 && screen.reportedResume == unsigned(SDL_GetAtomicInt(&screen.resumeCount)) &&
         screen.audioRefills >= 3) {

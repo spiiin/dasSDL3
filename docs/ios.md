@@ -59,6 +59,17 @@ On iPhone 16 (iOS 27.0.1), the continuous example animated after launch
 and after returning from the Home Screen. The strict AOT run released
 its resources and exited with code zero.
 
+For the rotation check, launch with `--gpu-renderer-layout` with orientation
+lock off. Tap the yellow square in portrait, landscape, and portrait again.
+Each square is drawn inside the current render safe area. The host checks
+that the window size in points, pixel density and renderer output agree
+before accepting a direct touch converted to logical render coordinates.
+
+Verified on iPhone 16 (iOS 27.0.1) with strict AOT. Metal rendered the touch
+target in all three positions. The window reported 393 × 852 points in
+portrait and 852 × 393 in landscape, with density 3.0 throughout. All three
+taps passed and the app released its resources and exited with code zero.
+
 For audio, launch with `--audio-interpreter` or `--audio-aot`. Example 08
 loops its bundled WAV through CoreAudio. Listen for the tone, lock and
 unlock the phone, then return to the app. When prompted, tap only if the
