@@ -69,6 +69,9 @@
 #include "sdl3_clipboard_hittest.h"
 #include "sdl3_result_adapters.h"
 #include "generated/gpu_handle_adapters.h"
+#if defined(DASSDL3_TESTING) || defined(DASSDL3_IOS_SMOKE_TESTING)
+#include "../tests/filesystem_probe.h"
+#endif
 #ifdef DASSDL3_TESTING
 #include "../tests/resource_probe.h"
 #include "../tests/gpu_handle_probe.h"
@@ -85,7 +88,6 @@
 #include "../tests/peripheral_events_probe.h"
 #include "../tests/peripherals_probe.h"
 #include "../tests/event_lists_probe.h"
-#include "../tests/filesystem_probe.h"
 #include "../tests/iostream_probe.h"
 #include "../tests/storage_probe.h"
 #include "../tests/audio_stream_controls_probe.h"
@@ -704,6 +706,12 @@ public:
         addExtern<DAS_BIND_FUN(SDL_InputWindowID)>(*this, lib, "SDL_InputWindowID", SideEffects::none, "SDL_InputWindowID")->args({"event"});
         addExtern<DAS_BIND_FUN(SDL_IsScancodeDown)>(*this, lib, "SDL_IsScancodeDown", SideEffects::worstDefault, "SDL_IsScancodeDown")->args({"scancode"});
         addExtern<DAS_BIND_FUN(SDL_GetMouseStateRef)>(*this, lib, "SDL_GetMouseStateRef", SideEffects::worstDefault, "SDL_GetMouseStateRef")->args({"x", "y"});
+#if defined(DASSDL3_TESTING) || defined(DASSDL3_IOS_SMOKE_TESTING)
+        addExtern<DAS_BIND_FUN(sdl3_test::filesystem_file)>(*this,lib,"SDLTestFilesystemFile",SideEffects::worstDefault,"sdl3_test::filesystem_file");
+        addExtern<DAS_BIND_FUN(sdl3_test::filesystem_callback_address)>(*this,lib,"SDLTestFilesystemCallback",SideEffects::worstDefault,"sdl3_test::filesystem_callback_address");
+        addExtern<DAS_BIND_FUN(sdl3_test::filesystem_userdata)>(*this,lib,"SDLTestFilesystemUserdata",SideEffects::worstDefault,"sdl3_test::filesystem_userdata");
+        addExtern<DAS_BIND_FUN(sdl3_test::filesystem_count)>(*this,lib,"SDLTestFilesystemCount",SideEffects::worstDefault,"sdl3_test::filesystem_count");
+#endif
 #ifdef DASSDL3_TESTING
         addExtern<DAS_BIND_FUN(sdl3_test::astc_footprints)>(*this, lib, "SDLTest_astc_footprints", SideEffects::worstDefault, "sdl3_test::astc_footprints");
         addExtern<DAS_BIND_FUN(sdl3_test::volume_fail_upload)>(*this, lib, "SDLTest_volume_fail_upload", SideEffects::worstDefault, "sdl3_test::volume_fail_upload");
@@ -854,10 +862,6 @@ public:
         addExtern<DAS_BIND_FUN(sdl3_test::io_callback)>(*this,lib,"SDLTestIOCallback",SideEffects::worstDefault,"sdl3_test::io_callback");
         addExtern<DAS_BIND_FUN(sdl3_test::io_closes)>(*this,lib,"SDLTestIOCloses",SideEffects::worstDefault,"sdl3_test::io_closes");
         addExtern<DAS_BIND_FUN(sdl3_test::io_pinned_short_save)>(*this,lib,"SDLTestIOPinnedShortSave",SideEffects::worstDefault,"sdl3_test::io_pinned_short_save");
-        addExtern<DAS_BIND_FUN(sdl3_test::filesystem_file)>(*this,lib,"SDLTestFilesystemFile",SideEffects::worstDefault,"sdl3_test::filesystem_file");
-        addExtern<DAS_BIND_FUN(sdl3_test::filesystem_callback_address)>(*this,lib,"SDLTestFilesystemCallback",SideEffects::worstDefault,"sdl3_test::filesystem_callback_address");
-        addExtern<DAS_BIND_FUN(sdl3_test::filesystem_userdata)>(*this,lib,"SDLTestFilesystemUserdata",SideEffects::worstDefault,"sdl3_test::filesystem_userdata");
-        addExtern<DAS_BIND_FUN(sdl3_test::filesystem_count)>(*this,lib,"SDLTestFilesystemCount",SideEffects::worstDefault,"sdl3_test::filesystem_count");
         addExtern<DAS_BIND_FUN(sdl3_test::reset_event_lists)>(*this,lib,"SDLTestResetEventLists",SideEffects::worstDefault,"sdl3_test::reset_event_lists");
         addExtern<DAS_BIND_FUN(sdl3_test::mutate_event_lists)>(*this,lib,"SDLTestMutateEventLists",SideEffects::worstDefault,"sdl3_test::mutate_event_lists");
         addExtern<DAS_BIND_FUN(sdl3_test::user_pointer)>(*this,lib,"SDLTestUserPointer",SideEffects::worstDefault,"sdl3_test::user_pointer");

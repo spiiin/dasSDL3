@@ -8,6 +8,9 @@
 #include <limits>
 #include <memory>
 #include <utility>
+#include <cerrno>
+#include <cstring>
+#include <unistd.h>
 
 DECLARE_MODULE(Module_dasSDL3);
 MAKE_TYPE_FACTORY(SDL_GPUDevice, SDL_GPUDevice);
@@ -89,7 +92,8 @@ bool run(const das::string &root, const char *path, bool aot, bool expectMissing
     vec4f args[] = {cast<bool>::from(true)};
     auto value = context.evalWithCatch(entry, args);
     if (auto *error = context.getException()) {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Script exception: %s", error);
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s (%s) exception: %s",
+                     path, aot ? "strict AOT" : "interpreter", error);
         return false;
     }
     const int code = cast<int32_t>::to(value);
@@ -99,6 +103,30 @@ bool run(const das::string &root, const char *path, bool aot, bool expectMissing
     }
     SDL_Log("dasSDL3 iPhone %s PASS (%s)", path, aot ? "strict AOT" : "interpreter");
     return true;
+}
+
+bool runFilesystem(const das::string &root) {
+    using SDLString = std::unique_ptr<char, decltype(&SDL_free)>;
+    SDLString previous(SDL_GetCurrentDirectory(), SDL_free);
+    SDLString pref(SDL_GetPrefPath("dasSDL3", "iPhone Smoke"), SDL_free);
+    // Give the test a writable working directory; the signed bundle is read-only.
+    if (!previous || !pref) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Filesystem test directory: %s", SDL_GetError());
+        return false;
+    }
+    if (chdir(pref.get()) != 0) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Enter writable app directory: %s", std::strerror(errno));
+        return false;
+    }
+    bool passed = run(root, "tests/filesystem.das", false);
+#ifdef DASSDL3_IPHONE_STRICT_AOT
+    passed = run(root, "tests/filesystem.das", true) && passed;
+#endif
+    if (chdir(previous.get()) != 0) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Restore working directory: %s", std::strerror(errno));
+        return false;
+    }
+    return passed;
 }
 
 struct Screen {
@@ -207,7 +235,7 @@ SDL_AppResult SDL_AppInit(void **state, int, char **) {
         "examples/46_gpu_texture_uniform_bindings.das",
         "examples/49_gpu_native_compute.das",
     };
-    screen->passed = true;
+    screen->passed = runFilesystem(root);
     for (const char *script : scripts) {
         // Each example owns its SDL scope; SDL_Quit also clears hints.
         SDL_SetHintWithPriority(SDL_HINT_GPU_DRIVER, "metal", SDL_HINT_OVERRIDE);

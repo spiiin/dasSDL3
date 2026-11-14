@@ -30,7 +30,10 @@ def main(smoke : bool) : int {
     if (length(home) > 0) { verify(is_ok(copied_home) && unwrap(copied_home) == home) }
     else { verify(is_err(copied_home)); print("Home folder unavailable: {unwrap_err(copied_home).message}\n") }
     verify(is_err(user_folder(SDL_Folder.FOLDER_COUNT)))
-    let root = "filesystem-test-{SDL_GetTicksNS()}"
+    // SDL's iOS backend resolves some relative paths against its preference
+    // directory. Use the same absolute directory for every operation.
+    let writable = current_directory() |> unwrap
+    let root = "{writable}/filesystem-test-{SDL_GetTicksNS()}"
     verify(SDL_CreateDirectory(root))
     {
         defer() { SDL_RemovePath("{root}/source-é.txt"); SDL_RemovePath("{root}/copy.txt"); SDL_RemovePath("{root}/renamed.txt"); SDL_RemovePath("{root}/sub"); SDL_RemovePath(root) }

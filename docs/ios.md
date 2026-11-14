@@ -12,6 +12,13 @@ The triangle was visible after both returns. UIKit logged an unbalanced
 appearance transition at startup, but the first frame and both resume checks
 completed. Companion libraries remain unverified.
 
+The existing `tests/filesystem.das` also passed in the interpreter and strict
+AOT on the same phone. It runs in the app's writable preferences directory and
+uses absolute paths because SDL 3.4.16 on iOS resolves some relative paths
+against a different directory. The test checks directory creation, file
+contents, copy/rename, enumeration and cleanup. Persistence between launches
+is a separate check.
+
 Use full Xcode, CMake and Ninja. Build the AOT emitter on macOS first:
 
 ```sh

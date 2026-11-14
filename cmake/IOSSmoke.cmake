@@ -8,9 +8,11 @@ set(_scripts
     "${_root}/examples/46_gpu_texture_uniform_bindings.das"
     "${_root}/examples/49_gpu_native_compute.das")
 set(_triangle "${_root}/examples/48_gpu_native_graphics.das")
+set(_filesystem "${_root}/tests/filesystem.das")
 set(_support "${_root}/examples/gpu_port_bgfx/common/file_shader_support.das")
 add_executable(dasSDL3_iphone MACOSX_BUNDLE "${_root}/ios/runner.cpp")
 target_link_libraries(dasSDL3_iphone PRIVATE dasSDL3)
+target_compile_definitions(dasSDL3 PRIVATE DASSDL3_IOS_SMOKE_TESTING=1)
 set_target_properties(dasSDL3_iphone PROPERTIES
     MACOSX_BUNDLE_INFO_PLIST "${_root}/ios/Info.plist.in"
     MACOSX_BUNDLE_GUI_IDENTIFIER "${DASSDL3_IOS_BUNDLE_ID}"
@@ -32,6 +34,7 @@ foreach(_script IN LISTS _scripts)
     _iphone_resource("${_script}" examples)
 endforeach()
 _iphone_resource("${_triangle}" examples)
+_iphone_resource("${_filesystem}" tests)
 # Bundle the negative fixture without generating or linking AOT for it.
 _iphone_resource("${_root}/tests/macos_missing_aot.das" tests)
 _iphone_resource("${_support}" examples/gpu_port_bgfx/common)
@@ -65,7 +68,7 @@ if(DASSDL3_IOS_AOT_TOOL)
     endif()
     # The application unit emits its own functions and template instances.
     # Shared imports also need their own registration units for strict linking.
-    set(_pending ${_scripts} "${_triangle}" "${_support}")
+    set(_pending ${_scripts} "${_triangle}" "${_filesystem}" "${_support}")
     set(_aot_inputs)
     while(_pending)
         list(POP_FRONT _pending _input)
