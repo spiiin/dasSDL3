@@ -134,6 +134,24 @@ in both modes. The Metal readback reported 3,561 ink pixels and zero
 differences from the CPU glyph mask in each run. The SDL_image suite also
 passed in both modes with both libraries enabled.
 
+## SDL_mixer and SDL_sound
+
+Enable `-DDASSDL3_WITH_MIXER=ON`, `-DDASSDL3_WITH_SOUND=ON`, or both in
+the macOS emitter and iPhone builds. Use the host
+`dasSDL3_macos_libraries_aot_tool` for the AOT build.
+
+Launch with `--mixer-smoke` to run the existing SDL_mixer tests and example
+07. They cover offline PCM, track controls, decoder and IO contracts, and
+two tracks completing on the default playback device. Launch with
+`--sound-smoke` to run the existing SDL_sound tests and example 08. They
+check decoding and play the bundled WAV through an SDL output stream.
+When AOT is configured, both suites run in the interpreter and strict AOT.
+
+On iPhone 16 (iOS 27.0.1), both suites passed in both modes in the same
+build. The mixer completed both tracks, SDL_sound decoded and queued 9,600
+bytes in each run, and the tester heard the playback. Both launches exited
+with code zero.
+
 ## Build a small app from source
 
 After building the host emitter above, configure the standalone example
@@ -182,5 +200,4 @@ The pinned runtime's desktop crash handler uses macOS-only Mach APIs, and its
 desktop file I/O module includes subprocess APIs unavailable on iOS. The
 iPhone profile uses the SDK's no-file-I/O build and reads packaged scripts
 through a read-only host file system. SDL file APIs are separate. LLVM, desktop
-package modules, and companion libraries other than SDL_image and SDL_ttf are outside
-this profile.
+package modules, and other companion libraries are outside this profile.

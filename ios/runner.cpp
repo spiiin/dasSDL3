@@ -9,6 +9,12 @@
 #include <unistd.h>
 
 DECLARE_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_MIXER
+DECLARE_MODULE(Module_sdl3_mixer);
+#endif
+#ifdef DASSDL3_WITH_SOUND
+DECLARE_MODULE(Module_sdl3_sound);
+#endif
 #ifdef DASSDL3_WITH_TTF
 DECLARE_MODULE(Module_sdl3_ttf);
 #endif
@@ -79,7 +85,8 @@ bool run(const das::string &root, const char *path, bool aot, Check check = Chec
     return true;
 }
 
-#if defined(DASSDL3_WITH_IMAGE) || defined(DASSDL3_WITH_TTF)
+#if defined(DASSDL3_WITH_IMAGE) || defined(DASSDL3_WITH_TTF) || \
+    defined(DASSDL3_WITH_MIXER) || defined(DASSDL3_WITH_SOUND)
 SDL_AppResult runCompanion(const das::string &root, std::initializer_list<const char *> scripts) {
     bool passed = true;
     for (const char *script : scripts) {
@@ -476,6 +483,12 @@ SDL_AppResult SDL_AppInit(void **state, int argc, char **argv) {
     das::setDasRoot(root.substr(0, root.size() - 1)); // SDL base path ends in '/'.
     NEED_ALL_DEFAULT_MODULES;
     NEED_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_MIXER
+    NEED_MODULE(Module_sdl3_mixer);
+#endif
+#ifdef DASSDL3_WITH_SOUND
+    NEED_MODULE(Module_sdl3_sound);
+#endif
 #ifdef DASSDL3_WITH_TTF
     NEED_MODULE(Module_sdl3_ttf);
 #endif
@@ -493,6 +506,14 @@ SDL_AppResult SDL_AppInit(void **state, int argc, char **argv) {
             return runCompanion(root, {"tests/ttf.das", "tests/ttf_shaping.das", "tests/ttf_gpu.das",
                                        "examples/libraries/03_ttf.das", "examples/libraries/04_ttf_shaping.das",
                                        "examples/libraries/05_ttf_gpu.das"});
+#endif
+#ifdef DASSDL3_WITH_MIXER
+        if (SDL_strcmp(argv[i], "--mixer-smoke") == 0)
+            return runCompanion(root, {"tests/mixer.das", "examples/libraries/07_mixer.das"});
+#endif
+#ifdef DASSDL3_WITH_SOUND
+        if (SDL_strcmp(argv[i], "--sound-smoke") == 0)
+            return runCompanion(root, {"tests/sound.das", "examples/libraries/08_sound.das"});
 #endif
         if (SDL_strcmp(argv[i], "--gpu-renderer-smoke") == 0) {
             SDL_SetHintWithPriority(SDL_HINT_GPU_DRIVER, "metal", SDL_HINT_OVERRIDE);
