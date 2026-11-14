@@ -42,6 +42,18 @@ Verified on iPhone 16 (iOS 27.0.1): direct touch down, motion and up,
 text input from the on-screen numeric keyboard, and keyboard dismissal
 passed in both the interpreter and strict AOT.
 
+For multitouch and Unicode, launch with `--multi-input-interpreter`, then
+repeat with `--multi-input-aot`. Place one finger, place a second while
+holding the first down, then lift the first. Move and lift the second.
+Type `café` (hold e to choose é) or `Привет 👋` on the on-screen keyboard. The script requires distinct
+overlapping contacts from the same direct touch device, motion from the
+second after the first is released, and the exact UTF-8 string reported by
+SDL text input. The host checks that the keyboard shows and dismisses.
+
+On iPhone 16 (iOS 27.0.1), both modes passed the two-finger gesture and
+received exactly `café` from the on-screen keyboard. The keyboard dismissed
+and both launches exited with code zero.
+
 For the GPU Renderer smoke test, launch with `--gpu-renderer-smoke`.
 The existing example 86 draws four frames with a custom MSL fragment shader
 and updates its uniforms. An AOT build runs the example in both modes.
@@ -108,9 +120,10 @@ and run with development signing. The device must trust the Mac and have
 Developer Mode enabled. The same target also builds an unsigned device app
 with Ninja and `-DCMAKE_BUILD_TYPE=Release`; use Xcode signing for installation.
 The iOS GitHub Actions workflow runs `bash tools/verify_ios_ci.sh` on macOS
-arm64. It builds the host AOT emitter, the `iphoneos` smoke app and a separate
-consumer project. It checks both Mach-O binaries, the consumer's bundle ID,
-AOT generation and bundled resources. Installation and rendering checks run
+arm64. It builds the host AOT emitter, the `iphoneos` smoke app with SDL_image, SDL_ttf,
+SDL_mixer, SDL_sound and SDL_net, and a separate core consumer project.
+It checks both Mach-O binaries, the consumer's bundle ID, AOT generation
+and bundled resources. Installation and rendering checks run
 separately on a device.
 
 ## SDL_image

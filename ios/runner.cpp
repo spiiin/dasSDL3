@@ -151,6 +151,7 @@ struct Screen {
     InputStep inputStep = InputStep::Drag;
     das::SimFunction *inputEvent = nullptr;
     bool inputAot = false;
+    bool multiInput = false;
 
     bool loadInteractive(const das::string &root, const char *path, bool aot) {
         using namespace das;
@@ -171,11 +172,12 @@ struct Screen {
         return true;
     }
 
-    bool startInput(const das::string &root, bool aot) {
+    bool startInput(const das::string &root, bool aot, bool multi = false) {
         using namespace das;
         inputAot = aot;
+        multiInput = multi;
         if (!loadInteractive(root, "ios/input.das", aot)) return false;
-        inputEvent = context->findFunction("input_event");
+        inputEvent = context->findFunction(multi ? "multi_input_event" : "input_event");
         if (!inputEvent || (aot && !inputEvent->aot) ||
             !verifyCall<int32_t, SDL_Window *, const SDL_Event &>(inputEvent->debugInfo, modules)) {
             SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Invalid input entry point (AOT=%d)", aot);
@@ -191,16 +193,20 @@ struct Screen {
             SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Screen keyboard is unsupported");
             return false;
         }
-        SDL_Log("dasSDL3 input ready (%s): slide one finger and lift it", aot ? "strict AOT" : "interpreter");
+        SDL_Log("dasSDL3 input ready (%s): %s", aot ? "strict AOT" : "interpreter",
+                multi ? "place two fingers, lift the first, then move and lift the second" : "slide one finger and lift it");
         return true;
     }
 
     SDL_AppResult drawInput() {
         if (inputStep == InputStep::Hide && !SDL_ScreenKeyboardShown(window) && !SDL_TextInputActive(window)) {
-            SDL_Log("dasSDL3 touch and screen keyboard PASS (%s)", inputAot ? "strict AOT" : "interpreter");
+            SDL_Log("dasSDL3 %s PASS (%s)", multiInput ? "multitouch and Unicode keyboard" : "touch and screen keyboard",
+                    inputAot ? "strict AOT" : "interpreter");
             return SDL_APP_SUCCESS;
         }
-        const char *prompt = inputStep == InputStep::Drag ? "Slide one finger and lift it" : "Type 42 using the screen keyboard";
+        const char *prompt = inputStep == InputStep::Drag
+            ? (multiInput ? "Two fingers. Lift first. Slide and lift second." : "Slide one finger and lift it")
+            : (multiInput ? "Type cafe with an accented e" : "Type 42 using the screen keyboard");
         if (!SDL_SetRenderDrawColor(renderer, 16, 32, 50, 255) || !SDL_RenderClear(renderer) ||
             !SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255) ||
             !SDL_RenderDebugText(renderer, 24, 104, prompt) || !SDL_RenderPresent(renderer)) {
@@ -235,19 +241,24 @@ struct Screen {
                 SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Text input properties: %s", SDL_GetError());
                 return SDL_APP_FAILURE;
             }
-            const bool started = SDL_SetNumberProperty(props, SDL_PROP_TEXTINPUT_TYPE_NUMBER, SDL_TEXTINPUT_TYPE_NUMBER) &&
+            const bool started = SDL_SetNumberProperty(props, SDL_PROP_TEXTINPUT_TYPE_NUMBER,
+                                                       multiInput ? SDL_TEXTINPUT_TYPE_TEXT : SDL_TEXTINPUT_TYPE_NUMBER) &&
+                                 (!multiInput ||
+                                  (SDL_SetBooleanProperty(props, SDL_PROP_TEXTINPUT_AUTOCORRECT_BOOLEAN, false) &&
+                                   SDL_SetNumberProperty(props, SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER, SDL_CAPITALIZE_NONE))) &&
                                  SDL_StartTextInputWithProperties(window, props);
             if (!started) SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Start text input: %s", SDL_GetError());
             SDL_DestroyProperties(props);
             if (!started) return SDL_APP_FAILURE;
-            SDL_Log("dasSDL3 direct touch PASS; type 42 on the iPhone keyboard");
+            SDL_Log("dasSDL3 gesture PASS; type %s on the iPhone keyboard", multiInput ? "café or Привет 👋" : "42");
         }
         if (result == 2 && inputStep == InputStep::Type) {
             if (!SDL_TextInputActive(window) || !SDL_ScreenKeyboardShown(window)) {
-                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Received 42 without an active screen keyboard");
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Received text without an active screen keyboard");
                 return SDL_APP_FAILURE;
             }
-            SDL_Log("dasSDL3 received 42 through SDL_TEXTINPUT with screen keyboard shown");
+            SDL_Log("%s", multiInput ? "dasSDL3 received exact UTF-8 through SDL_TEXTINPUT with screen keyboard shown"
+                                   : "dasSDL3 received 42 through SDL_TEXTINPUT with screen keyboard shown");
             inputStep = InputStep::Hide;
             if (!SDL_StopTextInput(window)) {
                 SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Stop text input: %s", SDL_GetError());
@@ -615,9 +626,13 @@ SDL_AppResult SDL_AppInit(void **state, int argc, char **argv) {
         if (SDL_strcmp(argv[i], "--audio-aot") == 0)
             return screen->startAudio(root, true) ? SDL_APP_CONTINUE : SDL_APP_FAILURE;
 #endif
+        if (SDL_strcmp(argv[i], "--multi-input-interpreter") == 0)
+            return screen->startInput(root, false, true) ? SDL_APP_CONTINUE : SDL_APP_FAILURE;
         if (SDL_strcmp(argv[i], "--input-interpreter") == 0)
             return screen->startInput(root, false) ? SDL_APP_CONTINUE : SDL_APP_FAILURE;
 #ifdef DASSDL3_IPHONE_STRICT_AOT
+        if (SDL_strcmp(argv[i], "--multi-input-aot") == 0)
+            return screen->startInput(root, true, true) ? SDL_APP_CONTINUE : SDL_APP_FAILURE;
         if (SDL_strcmp(argv[i], "--input-aot") == 0)
             return screen->startInput(root, true) ? SDL_APP_CONTINUE : SDL_APP_FAILURE;
 #endif
