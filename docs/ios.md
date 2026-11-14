@@ -30,6 +30,18 @@ Verified on iPhone 16 (iOS 27.0.1): the interpreter wrote the fixture, then a
 fresh strict AOT process read the same seven bytes after the writer exited.
 Both processes exited successfully.
 
+To check real touch and the on-screen keyboard, launch the installed app with
+`--input-interpreter`, then repeat with `--input-aot` in a build with AOT.
+Drag one finger and lift it, then type `42` on the phone's numeric keyboard.
+The script must see down, motion and up from the same direct touch, then
+receive the digits through SDL text input. The host checks that the keyboard
+is shown during entry and hidden after stopping text input. Each mode exits
+after reporting its own PASS.
+
+Verified on iPhone 16 (iOS 27.0.1): direct touch down, motion and up,
+text input from the on-screen numeric keyboard, and keyboard dismissal
+passed in both the interpreter and strict AOT.
+
 Use full Xcode, CMake and Ninja. Build the AOT emitter on macOS first:
 
 ```sh
