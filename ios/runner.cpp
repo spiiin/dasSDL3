@@ -311,84 +311,97 @@ struct Screen {
         return SDL_APP_CONTINUE;
     }
 
-    das::SimFunction *cameraOpen = nullptr;
-    das::SimFunction *cameraTick = nullptr;
-    das::SimFunction *cameraClose = nullptr;
-    Uint64 cameraDeadline = 0;
-    bool cameraExpectDenied = false;
-    bool cameraOpened = false;
+    das::SimFunction *captureOpen = nullptr;
+    das::SimFunction *captureTick = nullptr;
+    das::SimFunction *captureClose = nullptr;
+    Uint64 captureDeadline = 0;
+    bool captureExpectDenied = false;
+    bool captureOpened = false;
+    dassdl3_ios::CaptureDevice captureDevice = dassdl3_ios::CaptureDevice::Camera;
 
-    bool startCamera(const das::string &root, bool aot, bool expectDenied) {
+    const char *captureName() const {
+        return captureDevice == dassdl3_ios::CaptureDevice::Camera ? "camera" : "microphone";
+    }
+
+    bool startCapture(const das::string &root, bool aot, bool expectDenied, dassdl3_ios::CaptureDevice device) {
         using namespace das;
-        if (!loadInteractive(root, "ios/camera.das", aot)) return false;
-        cameraOpen = context->findFunction("camera_open");
-        cameraTick = context->findFunction("camera_tick");
-        auto *close = context->findFunction("camera_close");
-        if (!cameraOpen || !cameraTick || !close ||
-            (aot && (!cameraOpen->aot || !cameraTick->aot || !close->aot)) ||
-            !verifyCall<int32_t, bool>(cameraOpen->debugInfo, modules) ||
-            !verifyCall<int32_t, bool>(cameraTick->debugInfo, modules) ||
+        captureDevice = device;
+        const bool camera = device == dassdl3_ios::CaptureDevice::Camera;
+        if (!loadInteractive(root, camera ? "ios/camera.das" : "ios/microphone.das", aot)) return false;
+        captureOpen = context->findFunction(camera ? "camera_open" : "microphone_open");
+        captureTick = context->findFunction(camera ? "camera_tick" : "microphone_tick");
+        auto *close = context->findFunction(camera ? "camera_close" : "microphone_close");
+        if (!captureOpen || !captureTick || !close ||
+            (aot && (!captureOpen->aot || !captureTick->aot || !close->aot)) ||
+            !verifyCall<int32_t, bool>(captureOpen->debugInfo, modules) ||
+            !verifyCall<int32_t, bool>(captureTick->debugInfo, modules) ||
             !verifyCall<void>(close->debugInfo, modules))
-            return SDL_SetError("Invalid camera entry points (AOT=%d)", aot);
-        SDL_SetHintWithPriority(SDL_HINT_CAMERA_DRIVER, "coremedia", SDL_HINT_OVERRIDE);
-        if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_CAMERA) ||
-            !SDL_CreateWindowAndRenderer("dasSDL3 camera", 640, 480, 0, &window, &renderer)) return false;
-        cameraClose = close;
-        cameraExpectDenied = expectDenied;
-        cameraDeadline = SDL_GetTicks() + 45000;
-        if (dassdl3_ios::cameraPermission() == dassdl3_ios::CameraPermission::Pending)
-            dassdl3_ios::requestCameraPermission();
+            return SDL_SetError("Invalid %s entry points (AOT=%d)", captureName(), aot);
+        SDL_SetHintWithPriority(camera ? SDL_HINT_CAMERA_DRIVER : SDL_HINT_AUDIO_DRIVER,
+                                camera ? "coremedia" : "coreaudio", SDL_HINT_OVERRIDE);
+        if (!SDL_Init(SDL_INIT_VIDEO | (camera ? SDL_INIT_CAMERA : SDL_INIT_AUDIO)) ||
+            !SDL_CreateWindowAndRenderer(captureName(), 640, 480, 0, &window, &renderer)) return false;
+        captureClose = close;
+        captureExpectDenied = expectDenied;
+        captureDeadline = SDL_GetTicks() + 45000;
+        if (dassdl3_ios::capturePermission(captureDevice) == dassdl3_ios::CapturePermission::Pending)
+            dassdl3_ios::requestCapturePermission(captureDevice);
         return true;
     }
 
-    bool closeCamera() {
-        if (!cameraClose) return true;
+    bool closeCapture() {
+        if (!captureClose) return true;
         context->restart();
-        context->evalWithCatch(cameraClose, nullptr);
-        cameraClose = nullptr;
+        context->evalWithCatch(captureClose, nullptr);
+        captureClose = nullptr;
         if (const char *error = context->getException()) {
-            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Camera cleanup: %s", error);
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s cleanup: %s", captureName(), error);
             return false;
         }
         return true;
     }
 
-    SDL_AppResult drawCamera() {
+    SDL_AppResult drawCapture() {
         using namespace das;
-        using dassdl3_ios::CameraPermission;
-        if (SDL_GetTicks() >= cameraDeadline) {
-            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Timed out waiting for camera permission or frames");
+        using dassdl3_ios::CapturePermission;
+        if (SDL_GetTicks() >= captureDeadline) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Timed out waiting for %s permission or data", captureName());
             return SDL_APP_FAILURE;
         }
-        const auto permission = dassdl3_ios::cameraPermission();
-        if (permission != CameraPermission::Pending) {
-            if ((permission == CameraPermission::Denied) != cameraExpectDenied) {
-                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Camera permission is %s; expected %s",
-                            permission == CameraPermission::Denied ? "denied" : "approved",
-                            cameraExpectDenied ? "denied" : "approved");
+        const auto permission = dassdl3_ios::capturePermission(captureDevice);
+        if (permission != CapturePermission::Pending) {
+            if ((permission == CapturePermission::Denied) != captureExpectDenied) {
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s permission is %s; expected %s", captureName(),
+                            permission == CapturePermission::Denied ? "denied" : "approved",
+                            captureExpectDenied ? "denied" : "approved");
                 return SDL_APP_FAILURE;
             }
             context->restart();
-            vec4f args[] = {cast<bool>::from(cameraExpectDenied)};
-            const int result = cast<int32_t>::to(context->evalWithCatch(cameraOpened ? cameraTick : cameraOpen, args));
+            vec4f args[] = {cast<bool>::from(captureExpectDenied)};
+            const int result = cast<int32_t>::to(context->evalWithCatch(captureOpened ? captureTick : captureOpen, args));
             if (result < 0 || context->getException()) {
                 const char *error = context->getException();
-                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL camera check: %s", error ? error : "unexpected camera result");
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL %s check: %s", captureName(), error ? error : "unexpected capture result");
                 return SDL_APP_FAILURE;
             }
-            cameraOpened = true;
+            captureOpened = true;
             if (result > 0) {
-                if (!closeCamera()) return SDL_APP_FAILURE;
-                SDL_Log("dasSDL3 iPhone camera %s PASS (%s)", cameraExpectDenied ? "denied" : "frames",
-                        cameraTick->aot ? "strict AOT" : "interpreter");
+                if (!closeCapture()) return SDL_APP_FAILURE;
+                const char *data = captureDevice == dassdl3_ios::CaptureDevice::Camera ? "frames" : "samples";
+                SDL_Log("dasSDL3 iPhone %s %s PASS (%s)", captureName(), captureExpectDenied ? "denied" : data,
+                        captureTick->aot ? "strict AOT" : "interpreter");
                 return SDL_APP_SUCCESS;
             }
         }
-        const char *prompt = permission == CameraPermission::Pending ? "Waiting for camera permission" : "Checking SDL camera";
+        const char *prompt = "Waiting for permission";
+        if (permission != CapturePermission::Pending) {
+            prompt = captureDevice == dassdl3_ios::CaptureDevice::Camera ? "Checking SDL camera" :
+                     captureExpectDenied ? "Checking microphone denial" : "Speak or clap several times";
+        }
         if (!SDL_SetRenderDrawColor(renderer, 16, 32, 50, 255) || !SDL_RenderClear(renderer) ||
             !SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255) ||
             !SDL_RenderDebugText(renderer, 24, 104, prompt) || !SDL_RenderPresent(renderer)) {
-            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Camera screen: %s", SDL_GetError());
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Capture screen: %s", SDL_GetError());
             return SDL_APP_FAILURE;
         }
         return SDL_APP_CONTINUE;
@@ -815,14 +828,18 @@ SDL_AppResult SDL_AppInit(void **state, int argc, char **argv) {
 #endif
     das::Module::Initialize();
     for (int i = 1; i < argc; ++i) {
-        const bool cameraAot = SDL_strcmp(argv[i], "--camera-aot") == 0;
-        const bool cameraDeny = SDL_strcmp(argv[i], "--camera-denied") == 0;
-        if (cameraAot || cameraDeny || SDL_strcmp(argv[i], "--camera-interpreter") == 0) {
+        const auto isArg = [&](const char *arg) { return SDL_strcmp(argv[i], arg) == 0; };
+        const bool camera = isArg("--camera-aot") || isArg("--camera-denied") || isArg("--camera-interpreter");
+        const bool microphone = isArg("--microphone-aot") || isArg("--microphone-denied") || isArg("--microphone-interpreter");
+        if (camera || microphone) {
+            const auto device = camera ? dassdl3_ios::CaptureDevice::Camera : dassdl3_ios::CaptureDevice::Microphone;
+            const bool aot = isArg("--camera-aot") || isArg("--microphone-aot");
+            const bool denied = isArg("--camera-denied") || isArg("--microphone-denied");
 #ifndef DASSDL3_IPHONE_STRICT_AOT
-            if (cameraAot) return SDL_APP_FAILURE;
+            if (aot) return SDL_APP_FAILURE;
 #endif
-            if (screen->startCamera(root, cameraAot, cameraDeny)) return SDL_APP_CONTINUE;
-            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Camera setup: %s", SDL_GetError());
+            if (screen->startCapture(root, aot, denied, device)) return SDL_APP_CONTINUE;
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Capture setup: %s", SDL_GetError());
             return SDL_APP_FAILURE;
         }
         const bool motionAot = SDL_strcmp(argv[i], "--sensors-aot") == 0;
@@ -973,7 +990,7 @@ SDL_AppResult SDL_AppIterate(void *state) {
     if (screen.imguiInput) return drawImGuiInput();
 #endif
     if (screen.audioTick) return screen.drawAudio();
-    if (screen.cameraTick) return screen.drawCamera();
+    if (screen.captureTick) return screen.drawCapture();
     if (screen.motionDone) return screen.drawMotion();
     if (screen.inputEvent) return screen.drawInput();
     if (screen.rendererFrame) return screen.drawRenderer();
@@ -1043,7 +1060,7 @@ void SDL_AppQuit(void *state, SDL_AppResult) {
             if (const char *error = screen->context->getException())
                 SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Motion sensor cleanup: %s", error);
         }
-        screen->closeCamera();
+        screen->closeCapture();
         if (screen->audioNeedsCleanup) {
             screen->context->restart();
             screen->context->evalWithCatch(screen->audioClose, nullptr);

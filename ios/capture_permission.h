@@ -1,7 +1,8 @@
 #pragma once
 
 namespace dassdl3_ios {
-enum class CameraPermission { Pending, Approved, Denied };
-CameraPermission cameraPermission();
-void requestCameraPermission();
+enum class CaptureDevice { Camera, Microphone };
+enum class CapturePermission { Pending, Approved, Denied };
+CapturePermission capturePermission(CaptureDevice device);
+void requestCapturePermission(CaptureDevice device);
 }

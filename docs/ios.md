@@ -157,6 +157,24 @@ the interpreter and strict AOT runs. Both runs exited with code zero.
 With camera access disabled, SDL_OpenCamera failed in the interpreter and
 the denial check exited with code zero.
 
+## SDL microphone
+
+Launch with `--microphone-interpreter` and `--microphone-aot`. Allow microphone
+access if prompted and speak or clap after each launch. The script opens an SDL
+CoreAudio recording stream and reads mono floating-point samples at 24 kHz.
+It checks the signal in memory and closes the stream before reporting PASS.
+For `--microphone-denied`, disable the app's microphone access in iOS Settings.
+The denial test accepts an SDL open or resume failure. If SDL opens the
+stream, the test checks for a two-second window without input signal and logs
+how many samples SDL delivered in that window.
+
+With microphone access allowed on iPhone 16, SDL delivered live audio in
+both the interpreter and strict AOT. Each run closed the stream and exited
+with code zero.
+With access disabled, SDL opened the stream but delivered zero samples over
+two seconds. The denial check passed in the interpreter and exited with code
+zero.
+
 ## SDL virtual gamepad
 
 Launch with `--gamepad-smoke` to run `tests/joystick_gamepad.das`,

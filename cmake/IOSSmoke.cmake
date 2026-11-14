@@ -15,6 +15,7 @@ set(_persistence "${_root}/ios/persistence.das")
 set(_filesystem "${_root}/tests/filesystem.das")
 set(_sensors "${_root}/ios/sensors.das")
 set(_camera "${_root}/ios/camera.das")
+set(_microphone "${_root}/ios/microphone.das")
 set(_gamepad_scripts
     "${_root}/tests/joystick_gamepad.das"
     "${_root}/tests/joystick_gamepad_scopes.das"
@@ -105,6 +106,7 @@ _iphone_resource("${_root}/examples/assets/tone.wav" assets)
 _iphone_resource("${_filesystem}" tests)
 _iphone_resource("${_sensors}" ios)
 _iphone_resource("${_camera}" ios)
+_iphone_resource("${_microphone}" ios)
 foreach(_script IN LISTS _gamepad_scripts)
     file(RELATIVE_PATH _path "${_root}" "${_script}")
     get_filename_component(_dir "${_path}" DIRECTORY)
@@ -211,7 +213,7 @@ if(DASSDL3_IOS_AOT_TOOL)
     # The application unit emits its own functions and template instances.
     # Shared imports also need their own registration units for strict linking.
     set(_pending ${_scripts} "${_audio}" "${_gpu_renderer}" "${_triangle}" "${_filesystem}" "${_sensors}" "${_camera}"
-        "${_persistence}" "${_input_smoke}" "${_support}" ${_gamepad_scripts}
+        "${_microphone}" "${_persistence}" "${_input_smoke}" "${_support}" ${_gamepad_scripts}
         ${_image_scripts} ${_ttf_scripts} ${_audio_scripts} ${_net_scripts})
     set(_aot_inputs)
     while(_pending)

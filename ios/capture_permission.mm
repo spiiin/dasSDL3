@@ -2,15 +2,19 @@
 #import <AVFoundation/AVFoundation.h>
 
 namespace dassdl3_ios {
-CameraPermission cameraPermission() {
-    switch ([AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo]) {
-    case AVAuthorizationStatusNotDetermined: return CameraPermission::Pending;
-    case AVAuthorizationStatusAuthorized: return CameraPermission::Approved;
-    default: return CameraPermission::Denied;
+static AVMediaType mediaType(CaptureDevice device) {
+    return device == CaptureDevice::Camera ? AVMediaTypeVideo : AVMediaTypeAudio;
+}
+
+CapturePermission capturePermission(CaptureDevice device) {
+    switch ([AVCaptureDevice authorizationStatusForMediaType:mediaType(device)]) {
+    case AVAuthorizationStatusNotDetermined: return CapturePermission::Pending;
+    case AVAuthorizationStatusAuthorized: return CapturePermission::Approved;
+    default: return CapturePermission::Denied;
     }
 }
 
-void requestCameraPermission() {
-    [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL) {}];
+void requestCapturePermission(CaptureDevice device) {
+    [AVCaptureDevice requestAccessForMediaType:mediaType(device) completionHandler:^(BOOL) {}];
 }
 }

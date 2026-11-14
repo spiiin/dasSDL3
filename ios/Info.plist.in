@@ -12,6 +12,7 @@
     <key>LSRequiresIPhoneOS</key><true/>
     <key>NSMotionUsageDescription</key><string>Check accelerometer and gyroscope input through SDL.</string>
     <key>NSCameraUsageDescription</key><string>Read test frames from the iPhone camera through SDL.</string>
+    <key>NSMicrophoneUsageDescription</key><string>Check live audio input through SDL. The test samples are discarded.</string>
     <key>UILaunchScreen</key><dict/>
     <key>UISupportedInterfaceOrientations</key>
     <array>
