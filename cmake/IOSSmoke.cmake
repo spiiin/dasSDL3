@@ -13,9 +13,16 @@ set(_triangle "${_root}/examples/48_gpu_native_graphics.das")
 set(_input_smoke "${_root}/ios/input.das")
 set(_persistence "${_root}/ios/persistence.das")
 set(_filesystem "${_root}/tests/filesystem.das")
+set(_sensors "${_root}/ios/sensors.das")
+set(_camera "${_root}/ios/camera.das")
+set(_gamepad_scripts
+    "${_root}/tests/joystick_gamepad.das"
+    "${_root}/tests/joystick_gamepad_scopes.das"
+    "${_root}/examples/71_virtual_gamepad.das")
 set(_support "${_root}/examples/gpu_port_bgfx/common/file_shader_support.das")
-add_executable(dasSDL3_iphone MACOSX_BUNDLE "${_root}/ios/runner.cpp")
-target_link_libraries(dasSDL3_iphone PRIVATE dasSDL3)
+add_executable(dasSDL3_iphone MACOSX_BUNDLE "${_root}/ios/runner.cpp" "${_root}/ios/capture_permission.mm")
+find_library(_avfoundation AVFoundation REQUIRED)
+target_link_libraries(dasSDL3_iphone PRIVATE dasSDL3 "${_avfoundation}")
 target_compile_definitions(dasSDL3 PRIVATE DASSDL3_IOS_SMOKE_TESTING=1)
 set_target_properties(dasSDL3_iphone PROPERTIES
     MACOSX_BUNDLE_INFO_PLIST "${_root}/ios/Info.plist.in"
@@ -96,6 +103,13 @@ _iphone_resource("${_audio}" examples)
 _iphone_resource("${_gpu_renderer}" examples)
 _iphone_resource("${_root}/examples/assets/tone.wav" assets)
 _iphone_resource("${_filesystem}" tests)
+_iphone_resource("${_sensors}" ios)
+_iphone_resource("${_camera}" ios)
+foreach(_script IN LISTS _gamepad_scripts)
+    file(RELATIVE_PATH _path "${_root}" "${_script}")
+    get_filename_component(_dir "${_path}" DIRECTORY)
+    _iphone_resource("${_script}" "${_dir}")
+endforeach()
 _iphone_resource("${_persistence}" ios)
 _iphone_resource("${_input_smoke}" ios)
 # Bundle the negative fixture without generating or linking AOT for it.
@@ -196,7 +210,9 @@ if(DASSDL3_IOS_AOT_TOOL)
     endif()
     # The application unit emits its own functions and template instances.
     # Shared imports also need their own registration units for strict linking.
-    set(_pending ${_scripts} "${_audio}" "${_gpu_renderer}" "${_triangle}" "${_filesystem}" "${_persistence}" "${_input_smoke}" "${_support}" ${_image_scripts} ${_ttf_scripts} ${_audio_scripts} ${_net_scripts})
+    set(_pending ${_scripts} "${_audio}" "${_gpu_renderer}" "${_triangle}" "${_filesystem}" "${_sensors}" "${_camera}"
+        "${_persistence}" "${_input_smoke}" "${_support}" ${_gamepad_scripts}
+        ${_image_scripts} ${_ttf_scripts} ${_audio_scripts} ${_net_scripts})
     set(_aot_inputs)
     while(_pending)
         list(POP_FRONT _pending _input)

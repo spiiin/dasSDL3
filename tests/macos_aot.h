@@ -3,6 +3,7 @@
 #include "peripherals_probe.h"
 #include "gpu_shader_probe.h"
 #include "filesystem_probe.h"
+#include "joystick_gamepad_probe.h"
 #include "gpu_native_fences_probe.h"
 #include "gpu_volume_probe.h"
 #include "iostream_probe.h"

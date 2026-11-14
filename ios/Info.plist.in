@@ -10,6 +10,8 @@
     <key>CFBundleShortVersionString</key><string>${PROJECT_VERSION}</string>
     <key>CFBundleVersion</key><string>1</string>
     <key>LSRequiresIPhoneOS</key><true/>
+    <key>NSMotionUsageDescription</key><string>Check accelerometer and gyroscope input through SDL.</string>
+    <key>NSCameraUsageDescription</key><string>Read test frames from the iPhone camera through SDL.</string>
     <key>UILaunchScreen</key><dict/>
     <key>UISupportedInterfaceOrientations</key>
     <array>

@@ -1,5 +1,7 @@
 // On-device host for the existing Metal pixel, compute and strict AOT tests.
 #include "bundle_scripts.h"
+#include "capture_permission.h"
+#include "sensor_dashboard.h"
 #define SDL_MAIN_USE_CALLBACKS 1
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
@@ -103,9 +105,7 @@ bool run(const das::string &root, const char *path, bool aot, Check check = Chec
     return true;
 }
 
-#if defined(DASSDL3_WITH_IMAGE) || defined(DASSDL3_WITH_TTF) || \
-    defined(DASSDL3_WITH_MIXER) || defined(DASSDL3_WITH_SOUND) || defined(DASSDL3_WITH_NET)
-SDL_AppResult runCompanion(const das::string &root, std::initializer_list<const char *> scripts) {
+SDL_AppResult runSmokeTests(const das::string &root, std::initializer_list<const char *> scripts) {
     bool passed = true;
     for (const char *script : scripts) {
         // Each script owns SDL; SDL_Quit clears these hints.
@@ -120,8 +120,6 @@ SDL_AppResult runCompanion(const das::string &root, std::initializer_list<const 
     }
     return passed ? SDL_APP_SUCCESS : SDL_APP_FAILURE;
 }
-#endif
-
 bool runFilesystem(const das::string &root) {
     using SDLString = std::unique_ptr<char, decltype(&SDL_free)>;
     SDLString previous(SDL_GetCurrentDirectory(), SDL_free);
@@ -309,6 +307,195 @@ struct Screen {
                 SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Stop text input: %s", SDL_GetError());
                 return SDL_APP_FAILURE;
             }
+        }
+        return SDL_APP_CONTINUE;
+    }
+
+    das::SimFunction *cameraOpen = nullptr;
+    das::SimFunction *cameraTick = nullptr;
+    das::SimFunction *cameraClose = nullptr;
+    Uint64 cameraDeadline = 0;
+    bool cameraExpectDenied = false;
+    bool cameraOpened = false;
+
+    bool startCamera(const das::string &root, bool aot, bool expectDenied) {
+        using namespace das;
+        if (!loadInteractive(root, "ios/camera.das", aot)) return false;
+        cameraOpen = context->findFunction("camera_open");
+        cameraTick = context->findFunction("camera_tick");
+        auto *close = context->findFunction("camera_close");
+        if (!cameraOpen || !cameraTick || !close ||
+            (aot && (!cameraOpen->aot || !cameraTick->aot || !close->aot)) ||
+            !verifyCall<int32_t, bool>(cameraOpen->debugInfo, modules) ||
+            !verifyCall<int32_t, bool>(cameraTick->debugInfo, modules) ||
+            !verifyCall<void>(close->debugInfo, modules))
+            return SDL_SetError("Invalid camera entry points (AOT=%d)", aot);
+        SDL_SetHintWithPriority(SDL_HINT_CAMERA_DRIVER, "coremedia", SDL_HINT_OVERRIDE);
+        if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_CAMERA) ||
+            !SDL_CreateWindowAndRenderer("dasSDL3 camera", 640, 480, 0, &window, &renderer)) return false;
+        cameraClose = close;
+        cameraExpectDenied = expectDenied;
+        cameraDeadline = SDL_GetTicks() + 45000;
+        if (dassdl3_ios::cameraPermission() == dassdl3_ios::CameraPermission::Pending)
+            dassdl3_ios::requestCameraPermission();
+        return true;
+    }
+
+    bool closeCamera() {
+        if (!cameraClose) return true;
+        context->restart();
+        context->evalWithCatch(cameraClose, nullptr);
+        cameraClose = nullptr;
+        if (const char *error = context->getException()) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Camera cleanup: %s", error);
+            return false;
+        }
+        return true;
+    }
+
+    SDL_AppResult drawCamera() {
+        using namespace das;
+        using dassdl3_ios::CameraPermission;
+        if (SDL_GetTicks() >= cameraDeadline) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Timed out waiting for camera permission or frames");
+            return SDL_APP_FAILURE;
+        }
+        const auto permission = dassdl3_ios::cameraPermission();
+        if (permission != CameraPermission::Pending) {
+            if ((permission == CameraPermission::Denied) != cameraExpectDenied) {
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Camera permission is %s; expected %s",
+                            permission == CameraPermission::Denied ? "denied" : "approved",
+                            cameraExpectDenied ? "denied" : "approved");
+                return SDL_APP_FAILURE;
+            }
+            context->restart();
+            vec4f args[] = {cast<bool>::from(cameraExpectDenied)};
+            const int result = cast<int32_t>::to(context->evalWithCatch(cameraOpened ? cameraTick : cameraOpen, args));
+            if (result < 0 || context->getException()) {
+                const char *error = context->getException();
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL camera check: %s", error ? error : "unexpected camera result");
+                return SDL_APP_FAILURE;
+            }
+            cameraOpened = true;
+            if (result > 0) {
+                if (!closeCamera()) return SDL_APP_FAILURE;
+                SDL_Log("dasSDL3 iPhone camera %s PASS (%s)", cameraExpectDenied ? "denied" : "frames",
+                        cameraTick->aot ? "strict AOT" : "interpreter");
+                return SDL_APP_SUCCESS;
+            }
+        }
+        const char *prompt = permission == CameraPermission::Pending ? "Waiting for camera permission" : "Checking SDL camera";
+        if (!SDL_SetRenderDrawColor(renderer, 16, 32, 50, 255) || !SDL_RenderClear(renderer) ||
+            !SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255) ||
+            !SDL_RenderDebugText(renderer, 24, 104, prompt) || !SDL_RenderPresent(renderer)) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Camera screen: %s", SDL_GetError());
+            return SDL_APP_FAILURE;
+        }
+        return SDL_APP_CONTINUE;
+    }
+
+    das::SimFunction *motionEvent = nullptr;
+    das::SimFunction *motionDone = nullptr;
+    das::SimFunction *motionClose = nullptr;
+    das::SimFunction *motionValues = nullptr;
+    bool motionDashboardReady = false;
+    Uint64 motionDeadline = 0;
+
+    bool startMotion(const das::string &root, bool aot, bool live = false) {
+        using namespace das;
+        if (!loadInteractive(root, "ios/sensors.das", aot)) return false;
+        auto *open = context->findFunction("motion_open");
+        motionEvent = context->findFunction("motion_event");
+        motionDone = context->findFunction("motion_done");
+        auto *close = context->findFunction("motion_close");
+        if (!open || !motionEvent || !motionDone || !close ||
+            (aot && (!open->aot || !motionEvent->aot || !motionDone->aot || !close->aot)) ||
+            !verifyCall<bool>(open->debugInfo, modules) ||
+            !verifyCall<bool, const SDL_Event &>(motionEvent->debugInfo, modules) ||
+            !verifyCall<int32_t>(motionDone->debugInfo, modules) ||
+            !verifyCall<void>(close->debugInfo, modules)) {
+            return SDL_SetError("Invalid motion sensor entry points (AOT=%d)", aot);
+        }
+        if (live) {
+            motionValues = context->findFunction("motion_values");
+            if (!motionValues || !verifyCall<float4, bool>(motionValues->debugInfo, modules))
+                return SDL_SetError("Invalid motion dashboard entry point");
+        }
+        if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_SENSOR) ||
+            !SDL_CreateWindowAndRenderer("dasSDL3 motion sensors", 640, 480,
+                                         live ? SDL_WINDOW_HIGH_PIXEL_DENSITY : 0, &window, &renderer))
+            return false;
+        motionClose = close;
+        const bool opened = cast<bool>::to(context->evalWithCatch(open, nullptr));
+        if (const char *error = context->getException()) return SDL_SetError("%s", error);
+        if (!opened) return SDL_SetError("Could not open both motion sensors");
+        motionDeadline = SDL_GetTicks() + 45000;
+        SDL_Log("dasSDL3 motion sensors ready (%s); tilt the phone several times", aot ? "strict AOT" : "interpreter");
+        return true;
+    }
+
+    SDL_AppResult handleMotion(const SDL_Event &event) {
+        using namespace das;
+        context->restart();
+        vec4f args[] = {cast<const SDL_Event &>::from(event)};
+        const bool ok = cast<bool>::to(context->evalWithCatch(motionEvent, args));
+        if (!ok || context->getException()) {
+            const char *error = context->getException();
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Motion sensor event: %s", error ? error : "invalid sample or timestamp");
+            return SDL_APP_FAILURE;
+        }
+        return SDL_APP_CONTINUE;
+    }
+
+    SDL_AppResult drawMotion() {
+        using namespace das;
+        if (motionValues) {
+            auto latest = [&](bool gyro, float4 &sample) {
+                context->restart();
+                vec4f args[] = {cast<bool>::from(gyro)};
+                sample = cast<float4>::to(context->evalWithCatch(motionValues, args));
+                if (const char *error = context->getException()) return SDL_SetError("%s", error);
+                return true;
+            };
+            float4 accel, gyro;
+            if (!latest(false, accel) || !latest(true, gyro)) {
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Motion dashboard read: %s", SDL_GetError());
+                return SDL_APP_FAILURE;
+            }
+            const float accelAxes[] = {accel.x, accel.y, accel.z};
+            const float gyroAxes[] = {gyro.x, gyro.y, gyro.z};
+            if (!dassdl3_ios::drawSensorDashboard(renderer, SDL_GetWindowPixelDensity(window),
+                                                 accelAxes, accel.w > 0, gyroAxes, gyro.w > 0)) {
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Motion dashboard render: %s", SDL_GetError());
+                return SDL_APP_FAILURE;
+            }
+            if (!motionDashboardReady && accel.w > 0 && gyro.w > 0) {
+                motionDashboardReady = true;
+                SDL_Log("dasSDL3 iPhone motion dashboard rendered both sensors");
+            }
+            return SDL_APP_CONTINUE;
+        }
+        context->restart();
+        const int result = cast<int32_t>::to(context->evalWithCatch(motionDone, nullptr));
+        if (result < 0 || context->getException()) {
+            const char *error = context->getException();
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Motion sensor read: %s", error ? error : "invalid sample");
+            return SDL_APP_FAILURE;
+        }
+        if (result > 0) {
+            SDL_Log("dasSDL3 iPhone accelerometer and gyroscope PASS (%s)",
+                    motionDone->aot ? "strict AOT" : "interpreter");
+            return SDL_APP_SUCCESS;
+        }
+        if (SDL_GetTicks() >= motionDeadline) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Timed out waiting for movement from both iPhone sensors");
+            return SDL_APP_FAILURE;
+        }
+        if (!SDL_SetRenderDrawColor(renderer, 16, 32, 50, 255) || !SDL_RenderClear(renderer) ||
+            !SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255) ||
+            !SDL_RenderDebugText(renderer, 24, 104, "Tilt the phone several times") || !SDL_RenderPresent(renderer)) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Motion sensor screen: %s", SDL_GetError());
+            return SDL_APP_FAILURE;
         }
         return SDL_APP_CONTINUE;
     }
@@ -628,6 +815,29 @@ SDL_AppResult SDL_AppInit(void **state, int argc, char **argv) {
 #endif
     das::Module::Initialize();
     for (int i = 1; i < argc; ++i) {
+        const bool cameraAot = SDL_strcmp(argv[i], "--camera-aot") == 0;
+        const bool cameraDeny = SDL_strcmp(argv[i], "--camera-denied") == 0;
+        if (cameraAot || cameraDeny || SDL_strcmp(argv[i], "--camera-interpreter") == 0) {
+#ifndef DASSDL3_IPHONE_STRICT_AOT
+            if (cameraAot) return SDL_APP_FAILURE;
+#endif
+            if (screen->startCamera(root, cameraAot, cameraDeny)) return SDL_APP_CONTINUE;
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Camera setup: %s", SDL_GetError());
+            return SDL_APP_FAILURE;
+        }
+        const bool motionAot = SDL_strcmp(argv[i], "--sensors-aot") == 0;
+        const bool motionLive = SDL_strcmp(argv[i], "--sensors-live") == 0;
+        if (motionAot || motionLive || SDL_strcmp(argv[i], "--sensors-interpreter") == 0) {
+#ifndef DASSDL3_IPHONE_STRICT_AOT
+            if (motionAot) return SDL_APP_FAILURE;
+#endif
+            if (screen->startMotion(root, motionAot, motionLive)) return SDL_APP_CONTINUE;
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Motion sensor setup: %s", SDL_GetError());
+            return SDL_APP_FAILURE;
+        }
+        if (SDL_strcmp(argv[i], "--gamepad-smoke") == 0)
+            return runSmokeTests(root, {"tests/joystick_gamepad.das", "tests/joystick_gamepad_scopes.das",
+                                       "examples/71_virtual_gamepad.das"});
 #ifdef DASSDL3_WITH_IMGUI
         if (SDL_strcmp(argv[i], "--imgui-widgets-smoke") == 0) {
             SDL_SetHintWithPriority(SDL_HINT_RENDER_DRIVER, "metal", SDL_HINT_OVERRIDE);
@@ -653,25 +863,25 @@ SDL_AppResult SDL_AppInit(void **state, int argc, char **argv) {
 #endif
 #ifdef DASSDL3_WITH_IMAGE
         if (SDL_strcmp(argv[i], "--image-smoke") == 0)
-            return runCompanion(root, {"tests/image.das", "examples/libraries/02_image.das"});
+            return runSmokeTests(root, {"tests/image.das", "examples/libraries/02_image.das"});
 #endif
 #ifdef DASSDL3_WITH_TTF
         if (SDL_strcmp(argv[i], "--ttf-smoke") == 0)
-            return runCompanion(root, {"tests/ttf.das", "tests/ttf_shaping.das", "tests/ttf_gpu.das",
+            return runSmokeTests(root, {"tests/ttf.das", "tests/ttf_shaping.das", "tests/ttf_gpu.das",
                                        "examples/libraries/03_ttf.das", "examples/libraries/04_ttf_shaping.das",
                                        "examples/libraries/05_ttf_gpu.das"});
 #endif
 #ifdef DASSDL3_WITH_MIXER
         if (SDL_strcmp(argv[i], "--mixer-smoke") == 0)
-            return runCompanion(root, {"tests/mixer.das", "examples/libraries/07_mixer.das"});
+            return runSmokeTests(root, {"tests/mixer.das", "examples/libraries/07_mixer.das"});
 #endif
 #ifdef DASSDL3_WITH_SOUND
         if (SDL_strcmp(argv[i], "--sound-smoke") == 0)
-            return runCompanion(root, {"tests/sound.das", "examples/libraries/08_sound.das"});
+            return runSmokeTests(root, {"tests/sound.das", "examples/libraries/08_sound.das"});
 #endif
 #ifdef DASSDL3_WITH_NET
         if (SDL_strcmp(argv[i], "--net-smoke") == 0)
-            return runCompanion(root, {"tests/net.das", "examples/libraries/06_net.das"});
+            return runSmokeTests(root, {"tests/net.das", "examples/libraries/06_net.das"});
 #endif
         if (SDL_strcmp(argv[i], "--gpu-renderer-smoke") == 0) {
             SDL_SetHintWithPriority(SDL_HINT_GPU_DRIVER, "metal", SDL_HINT_OVERRIDE);
@@ -763,6 +973,8 @@ SDL_AppResult SDL_AppIterate(void *state) {
     if (screen.imguiInput) return drawImGuiInput();
 #endif
     if (screen.audioTick) return screen.drawAudio();
+    if (screen.cameraTick) return screen.drawCamera();
+    if (screen.motionDone) return screen.drawMotion();
     if (screen.inputEvent) return screen.drawInput();
     if (screen.rendererFrame) return screen.drawRenderer();
     if (screen.pipeline) return screen.drawTriangle();
@@ -812,6 +1024,10 @@ SDL_AppResult SDL_AppEvent(void *state, SDL_Event *event) {
         return SDL_APP_SUCCESS;
     }
     if (screen.inputEvent && SDL_GetAtomicInt(&screen.active)) return screen.handleInput(*event);
+    if (screen.motionEvent && event->type == SDL_EVENT_SENSOR_UPDATE && SDL_GetAtomicInt(&screen.active))
+        return screen.handleMotion(*event);
+    if (screen.motionDashboardReady && event->type == SDL_EVENT_FINGER_UP && SDL_GetAtomicInt(&screen.active))
+        return SDL_APP_SUCCESS;
     return SDL_APP_CONTINUE;
 }
 
@@ -821,6 +1037,13 @@ void SDL_AppQuit(void *state, SDL_AppResult) {
 #ifdef DASSDL3_IOS_IMGUI_INPUT
         if (screen->imguiInput) stopImGuiInput();
 #endif
+        if (screen->motionClose) {
+            screen->context->restart();
+            screen->context->evalWithCatch(screen->motionClose, nullptr);
+            if (const char *error = screen->context->getException())
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Motion sensor cleanup: %s", error);
+        }
+        screen->closeCamera();
         if (screen->audioNeedsCleanup) {
             screen->context->restart();
             screen->context->evalWithCatch(screen->audioClose, nullptr);

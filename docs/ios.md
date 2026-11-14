@@ -126,6 +126,47 @@ It checks both Mach-O binaries, the consumer's bundle ID, AOT generation
 and bundled resources. Installation and rendering checks run
 separately on a device.
 
+## SDL motion sensors
+
+Launch with `--sensors-interpreter` and then `--sensors-aot`. Tilt the phone
+back and forth after each launch. The script opens the accelerometer and
+gyroscope, checks incoming SDL events and their timestamps, and reads both
+devices directly before reporting PASS. Each run exits after receiving
+enough motion or after a 45-second timeout.
+Both modes passed on iPhone 16. Each received events from both sensors,
+read the current samples, and exited with code zero.
+
+Launch with `--sensors-live` for a live display of both sensors. The colored
+bars show the direction and magnitude of X, Y, and Z around a zero line.
+The labels show signed values in m/s² and rad/s. Tilt the phone to see them
+change. Tap the screen to close the example.
+The interactive mode displayed samples from both sensors on iPhone 16 and
+exited with code zero after a tap.
+
+## SDL camera
+
+Launch with `--camera-interpreter` and `--camera-aot`. Allow access if iOS
+prompts. daScript opens the camera through SDL CoreMedia, acquires and
+releases three frames with increasing timestamps, and closes the camera.
+For the denial case, disable the app's camera access in iOS Settings and
+launch with `--camera-denied`. The host checks the system authorization
+state before the script verifies SDL's response.
+
+On iPhone 16 the rear camera returned three 1920 × 1080 frames in each of
+the interpreter and strict AOT runs. Both runs exited with code zero.
+With camera access disabled, SDL_OpenCamera failed in the interpreter and
+the denial check exited with code zero.
+
+## SDL virtual gamepad
+
+Launch with `--gamepad-smoke` to run `tests/joystick_gamepad.das`,
+`tests/joystick_gamepad_scopes.das`, and `examples/71_virtual_gamepad.das`.
+These scripts exercise SDL's virtual controller, including mappings, axis
+and button events, touchpad and sensor data, effect callbacks, and cleanup.
+An AOT build runs all three scripts in both the interpreter and strict AOT.
+All six runs passed on iPhone 16. The example received the expected axis and
+button events and detached its virtual controller before the app exited.
+
 ## SDL_image
 
 Enable `-DDASSDL3_WITH_IMAGE=ON` for both the macOS emitter and the iPhone
