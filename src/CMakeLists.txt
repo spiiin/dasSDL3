@@ -42,7 +42,7 @@ if(DASSDL3_BINDING_BACKEND STREQUAL "clangbind")
         DASSDL3_REGISTRATION_INCLUDE="generated/clangbind/sdl3_functions.inc")
 elseif(APPLE)
     set(_macos_aot_header "sdl3_aot.h")
-    if(BUILD_TESTING)
+    if(BUILD_TESTING AND NOT IOS)
         set(_macos_aot_header "../tests/macos_aot.h")
     endif()
     target_compile_definitions(dasSDL3 PRIVATE
@@ -52,8 +52,8 @@ elseif(APPLE)
 endif()
 target_include_directories(dasSDL3 PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/third_party/daScript/include>
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/third_party/daScript/3rdparty/fmt/include>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/third_party/daScript/include>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/third_party/daScript/3rdparty/fmt/include>
     $<INSTALL_INTERFACE:include/dasSDL3>
     $<INSTALL_INTERFACE:include>)
 target_link_libraries(dasSDL3 PUBLIC libDaScript SDL3::SDL3)
@@ -68,6 +68,14 @@ endif()
 if(WIN32)
     # Match daScript's ABI and exception handling configuration.
     target_compile_definitions(dasSDL3 PUBLIC DAS_ENABLE_EXCEPTIONS=1)
+endif()
+
+if(IOS)
+    target_compile_definitions(dasSDL3 PUBLIC DAS_USE_BASE_CRASH_HANDLER=0 DAS_NO_FILEIO=1 DAS_BIND_EXTERNAL=0)
+    if(PROJECT_IS_TOP_LEVEL)
+        include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/IOSSmoke.cmake)
+    endif()
+    return()
 endif()
 
 # Editor validation host: same native SDL bindings as the application runner,
