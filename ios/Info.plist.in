@@ -10,6 +10,22 @@
     <key>CFBundleShortVersionString</key><string>${PROJECT_VERSION}</string>
     <key>CFBundleVersion</key><string>1</string>
     <key>LSRequiresIPhoneOS</key><true/>
+    <key>NSMotionUsageDescription</key><string>Check accelerometer and gyroscope input through SDL.</string>
+    <key>NSCameraUsageDescription</key><string>Read test frames from the iPhone camera through SDL.</string>
+    <key>NSMicrophoneUsageDescription</key><string>Check live audio input through SDL. The test samples are discarded.</string>
     <key>UILaunchScreen</key><dict/>
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationPortraitUpsideDown</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
 </dict>
 </plist>

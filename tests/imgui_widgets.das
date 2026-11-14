@@ -83,8 +83,15 @@ def run_test(renderer : SDL_Renderer?) : SdlStatus {
 def main(smoke : bool) : int {
     let result = sdl_scope() {
         with_sdl(SDL_INIT_VIDEO) |> sdl_use
-        let window : SDL_Window? = with_window("SDL widgets test", 320, 240, SDL_WINDOW_HIDDEN) |> sdl_use
+        let ios = SDL_GetPlatform() == "iOS"
+        // The Metal renderer needs a drawable for the framebuffer readback.
+        let flags = ios ? 0ul : SDL_WINDOW_HIDDEN
+        let window : SDL_Window? = with_window("SDL widgets test", 320, 240, flags) |> sdl_use
         let renderer : SDL_Renderer? = window |> with_renderer() |> sdl_use
+        if (ios) {
+            verify(SDL_GetRendererName(renderer) == "metal")
+            print("Widgets: Metal renderer\n")
+        }
         with_imgui(window, renderer) |> sdl_use
         return run_test(renderer)
     }

@@ -71,6 +71,7 @@
 #include "generated/gpu_handle_adapters.h"
 #if defined(DASSDL3_TESTING) || defined(DASSDL3_IOS_SMOKE_TESTING)
 #include "../tests/filesystem_probe.h"
+#include "../tests/joystick_gamepad_probe.h"
 #endif
 #ifdef DASSDL3_TESTING
 #include "../tests/resource_probe.h"
@@ -101,7 +102,6 @@
 #endif
 #include "../tests/event_queue_probe.h"
 #include "../tests/event_callbacks_probe.h"
-#include "../tests/joystick_gamepad_probe.h"
 #include "../tests/audio_probe.h"
 #include "../tests/geometry_probe.h"
 #include "../tests/gpu_probe.h"
@@ -711,6 +711,8 @@ public:
         addExtern<DAS_BIND_FUN(sdl3_test::filesystem_callback_address)>(*this,lib,"SDLTestFilesystemCallback",SideEffects::worstDefault,"sdl3_test::filesystem_callback_address");
         addExtern<DAS_BIND_FUN(sdl3_test::filesystem_userdata)>(*this,lib,"SDLTestFilesystemUserdata",SideEffects::worstDefault,"sdl3_test::filesystem_userdata");
         addExtern<DAS_BIND_FUN(sdl3_test::filesystem_count)>(*this,lib,"SDLTestFilesystemCount",SideEffects::worstDefault,"sdl3_test::filesystem_count");
+        addExtern<DAS_BIND_FUN(sdl3_test::virtual_desc), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDLTestVirtualJoystickDesc", SideEffects::worstDefault, "sdl3_test::virtual_desc");
+        addExtern<DAS_BIND_FUN(sdl3_test::virtual_counts)>(*this, lib, "SDLTestVirtualCounts", SideEffects::worstDefault, "sdl3_test::virtual_counts");
 #endif
 #ifdef DASSDL3_TESTING
         addExtern<DAS_BIND_FUN(sdl3_test::astc_footprints)>(*this, lib, "SDLTest_astc_footprints", SideEffects::worstDefault, "sdl3_test::astc_footprints");
@@ -868,8 +870,6 @@ public:
         addExtern<DAS_BIND_FUN(sdl3_test::user_pointers_alive)>(*this,lib,"SDLTestUserPointersAlive",SideEffects::worstDefault,"sdl3_test::user_pointers_alive");
         addExtern<DAS_BIND_FUN(sdl3_test::controller_event), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDLTestControllerEvent", SideEffects::worstDefault, "sdl3_test::controller_event")->args({"type"});
         addExtern<DAS_BIND_FUN(sdl3_test::input_event), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDLTestInputEvent", SideEffects::worstDefault, "sdl3_test::input_event")->args({"type", "window_id"});
-        addExtern<DAS_BIND_FUN(sdl3_test::virtual_desc), SimNode_ExtFuncCallAndCopyOrMove>(*this, lib, "SDLTestVirtualJoystickDesc", SideEffects::worstDefault, "sdl3_test::virtual_desc");
-        addExtern<DAS_BIND_FUN(sdl3_test::virtual_counts)>(*this, lib, "SDLTestVirtualCounts", SideEffects::worstDefault, "sdl3_test::virtual_counts");
         addExtern<DAS_BIND_FUN(sdl3_test::event_filter_address)>(*this, lib, "SDLTestEventFilterAddress", SideEffects::worstDefault, "sdl3_test::event_filter_address");
         addExtern<DAS_BIND_FUN(sdl3_test::event_watch_address)>(*this, lib, "SDLTestEventWatchAddress", SideEffects::worstDefault, "sdl3_test::event_watch_address");
         addExtern<DAS_BIND_FUN(sdl3_test::event_cookie)>(*this, lib, "SDLTestEventCookie", SideEffects::worstDefault, "sdl3_test::event_cookie");

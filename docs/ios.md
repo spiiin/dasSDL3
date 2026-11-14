@@ -10,7 +10,7 @@ also ran in strict AOT: the device log recorded the first swapchain submission
 and a new submission after each of two cycles (Home Screen and lock/unlock).
 The triangle was visible after both returns. UIKit logged an unbalanced
 appearance transition at startup, but the first frame and both resume checks
-completed. Companion libraries remain unverified.
+completed.
 
 The existing `tests/filesystem.das` also passed in the interpreter and strict
 AOT on the same phone. It runs in the app's writable preferences directory and
@@ -42,6 +42,18 @@ Verified on iPhone 16 (iOS 27.0.1): direct touch down, motion and up,
 text input from the on-screen numeric keyboard, and keyboard dismissal
 passed in both the interpreter and strict AOT.
 
+For multitouch and Unicode, launch with `--multi-input-interpreter`, then
+repeat with `--multi-input-aot`. Place one finger, place a second while
+holding the first down, then lift the first. Move and lift the second.
+Type `café` (hold e to choose é) or `Привет 👋` on the on-screen keyboard. The script requires distinct
+overlapping contacts from the same direct touch device, motion from the
+second after the first is released, and the exact UTF-8 string reported by
+SDL text input. The host checks that the keyboard shows and dismisses.
+
+On iPhone 16 (iOS 27.0.1), both modes passed the two-finger gesture and
+received exactly `café` from the on-screen keyboard. The keyboard dismissed
+and both launches exited with code zero.
+
 For the GPU Renderer smoke test, launch with `--gpu-renderer-smoke`.
 The existing example 86 draws four frames with a custom MSL fragment shader
 and updates its uniforms. An AOT build runs the example in both modes.
@@ -58,6 +70,17 @@ An AOT build runs this mode with strict AOT.
 On iPhone 16 (iOS 27.0.1), the continuous example animated after launch
 and after returning from the Home Screen. The strict AOT run released
 its resources and exited with code zero.
+
+For the rotation check, launch with `--gpu-renderer-layout` with orientation
+lock off. Tap the yellow square in portrait, landscape, and portrait again.
+Each square is drawn inside the current render safe area. The host checks
+that the window size in points, pixel density and renderer output agree
+before accepting a direct touch converted to logical render coordinates.
+
+Verified on iPhone 16 (iOS 27.0.1) with strict AOT. Metal rendered the touch
+target in all three positions. The window reported 393 × 852 points in
+portrait and 852 × 393 in landscape, with density 3.0 throughout. All three
+taps passed and the app released its resources and exited with code zero.
 
 For audio, launch with `--audio-interpreter` or `--audio-aot`. Example 08
 loops its bundled WAV through CoreAudio. Listen for the tone, lock and
@@ -97,10 +120,183 @@ and run with development signing. The device must trust the Mac and have
 Developer Mode enabled. The same target also builds an unsigned device app
 with Ninja and `-DCMAKE_BUILD_TYPE=Release`; use Xcode signing for installation.
 The iOS GitHub Actions workflow runs `bash tools/verify_ios_ci.sh` on macOS
-arm64. It builds the host AOT emitter, the `iphoneos` smoke app and a separate
-consumer project. It checks both Mach-O binaries, the consumer's bundle ID,
-AOT generation and bundled resources. Installation and rendering checks run
+arm64. It builds the host AOT emitter, the `iphoneos` smoke app with SDL_image, SDL_ttf,
+SDL_mixer, SDL_sound and SDL_net, and a separate core consumer project.
+It checks both Mach-O binaries, the consumer's bundle ID, AOT generation
+and bundled resources. Installation and rendering checks run
 separately on a device.
+
+## SDL motion sensors
+
+Launch with `--sensors-interpreter` and then `--sensors-aot`. Tilt the phone
+back and forth after each launch. The script opens the accelerometer and
+gyroscope, checks incoming SDL events and their timestamps, and reads both
+devices directly before reporting PASS. Each run exits after receiving
+enough motion or after a 45-second timeout.
+Both modes passed on iPhone 16. Each received events from both sensors,
+read the current samples, and exited with code zero.
+
+Launch with `--sensors-live` for a live display of both sensors. The colored
+bars show the direction and magnitude of X, Y, and Z around a zero line.
+The labels show signed values in m/s² and rad/s. Tilt the phone to see them
+change. Tap the screen to close the example.
+The interactive mode displayed samples from both sensors on iPhone 16 and
+exited with code zero after a tap.
+
+## SDL camera
+
+Launch with `--camera-interpreter` and `--camera-aot`. Allow access if iOS
+prompts. daScript opens the camera through SDL CoreMedia, acquires and
+releases three frames with increasing timestamps, and closes the camera.
+For the denial case, disable the app's camera access in iOS Settings and
+launch with `--camera-denied`. The host checks the system authorization
+state before the script verifies SDL's response.
+
+On iPhone 16 the rear camera returned three 1920 × 1080 frames in each of
+the interpreter and strict AOT runs. Both runs exited with code zero.
+With camera access disabled, SDL_OpenCamera failed in the interpreter and
+the denial check exited with code zero.
+
+## SDL microphone
+
+Launch with `--microphone-interpreter` and `--microphone-aot`. Allow microphone
+access if prompted and speak or clap after each launch. The script opens an SDL
+CoreAudio recording stream and reads mono floating-point samples at 24 kHz.
+It checks the signal in memory and closes the stream before reporting PASS.
+For `--microphone-denied`, disable the app's microphone access in iOS Settings.
+The denial test accepts an SDL open or resume failure. If SDL opens the
+stream, the test checks for a two-second window without input signal and logs
+how many samples SDL delivered in that window.
+
+With microphone access allowed on iPhone 16, SDL delivered live audio in
+both the interpreter and strict AOT. Each run closed the stream and exited
+with code zero.
+With access disabled, SDL opened the stream but delivered zero samples over
+two seconds. The denial check passed in the interpreter and exited with code
+zero.
+
+## SDL Storage
+
+Install the app once. Launch with `--storage-write` to write a binary fixture
+to user storage in the interpreter. After the process exits, launch with
+`--storage-read` to check the exact bytes and remove the fixture. An AOT build
+runs the read phase in strict AOT. Both launches read the bundled WAV through
+title storage and verify that it rejects a write.
+On iPhone 16 both launches passed and exited with code zero. A fresh strict
+AOT process read back all seven bytes from `résumé.bin` and removed the file.
+
+## SDL system clipboard
+
+Copy `café` from Notes, launch with `--clipboard`, and tap the SDL app.
+Allow paste if iOS prompts. The script checks the exact UTF-8 text and
+replaces the clipboard contents with `SDL: café`. After the app exits,
+paste into Notes to verify the return path. An AOT build runs the script
+in strict AOT.
+On iPhone 16, the strict AOT run read `café` from Notes, wrote `SDL: café`,
+and exited with code zero. Pasting back into Notes produced `SDL: café`.
+
+## SDL virtual gamepad
+
+Launch with `--gamepad-smoke` to run `tests/joystick_gamepad.das`,
+`tests/joystick_gamepad_scopes.das`, and `examples/71_virtual_gamepad.das`.
+These scripts exercise SDL's virtual controller, including mappings, axis
+and button events, touchpad and sensor data, effect callbacks, and cleanup.
+An AOT build runs all three scripts in both the interpreter and strict AOT.
+All six runs passed on iPhone 16. The example received the expected axis and
+button events and detached its virtual controller before the app exited.
+
+## SDL_image
+
+Enable `-DDASSDL3_WITH_IMAGE=ON` for both the macOS emitter and the iPhone
+build. Build `dasSDL3_macos_libraries_aot_tool` on macOS and pass its path as
+`DASSDL3_IOS_AOT_TOOL` to the iPhone build. This profile uses SDL_image's
+built-in codecs.
+
+Launch with `--image-smoke`. The app runs the existing
+`tests/image.das` and `examples/libraries/02_image.das` in the interpreter
+and, when configured, strict AOT. The test checks decoded PNG and SVG pixels,
+alpha blending, PNG and JPEG round trips, GIF animation and IO ownership.
+It writes temporary images to the app's preferences directory. The example
+loads PNG and SVG textures from the bundle and renders three frames through
+SDL's Metal renderer. On iPhone 16 (iOS 27.0.1), both scripts passed in
+the interpreter and strict AOT, and the app exited with code zero.
+
+## SDL_ttf
+
+Enable `-DDASSDL3_WITH_TTF=ON` for both the macOS emitter and the iPhone
+build, then use the host `dasSDL3_macos_libraries_aot_tool`. The build uses
+the pinned FreeType and HarfBuzz dependencies and packages the two test
+fonts and the MSL shaders in the app.
+
+Launch with `--ttf-smoke` to run the existing SDL_ttf tests and examples
+03, 04 and 05. The suite checks font metrics and stream ownership, Arabic
+and Latin shaping, GPU atlas data across multiple pages and rendered text
+against a CPU glyph mask. It runs in the interpreter and strict AOT when
+the emitter is configured. On iPhone 16 (iOS 27.0.1), all six scripts passed
+in both modes. The Metal readback reported 3,561 ink pixels and zero
+differences from the CPU glyph mask in each run. The SDL_image suite also
+passed in both modes with both libraries enabled.
+
+## SDL_mixer and SDL_sound
+
+Enable `-DDASSDL3_WITH_MIXER=ON`, `-DDASSDL3_WITH_SOUND=ON`, or both in
+the macOS emitter and iPhone builds. Use the host
+`dasSDL3_macos_libraries_aot_tool` for the AOT build.
+
+Launch with `--mixer-smoke` to run the existing SDL_mixer tests and example
+07. They cover offline PCM, track controls, decoder and IO contracts, and
+two tracks completing on the default playback device. Launch with
+`--sound-smoke` to run the existing SDL_sound tests and example 08. They
+check decoding and play the bundled WAV through an SDL output stream.
+When AOT is configured, both suites run in the interpreter and strict AOT.
+
+On iPhone 16 (iOS 27.0.1), both suites passed in both modes in the same
+build. The mixer completed both tracks, SDL_sound decoded and queued 9,600
+bytes in each run, and the tester heard the playback. Both launches exited
+with code zero.
+
+## SDL_net
+
+Enable `-DDASSDL3_WITH_NET=ON` in the macOS emitter and iPhone builds. Use
+the host `dasSDL3_macos_libraries_aot_tool` for AOT. Launch with
+`--net-smoke` to run `tests/net.das` and `examples/libraries/06_net.das` on
+loopback (`127.0.0.1`). The test checks TCP payloads and peer closure, UDP
+datagram contents and ownership, and address and error handling. When AOT
+is configured, both scripts run in the interpreter and strict AOT.
+On iPhone 16 (iOS 27.0.1), TCP and UDP passed in all four runs, and
+the app exited with code zero.
+
+## dasImgui v2 widget test
+
+Enable `-DDASSDL3_WITH_IMGUI=ON` and launch the iPhone app with
+`--imgui-widgets-smoke`. It runs `tests/imgui_widgets.das` in the interpreter
+and requires the SDL Metal renderer. The test reads back rendered pixels and
+checks synthetic clicks, widget snapshots, and slider updates. The iOS target
+links the daScript bindings and SDL backends used by this test.
+On iPhone 16, the test selected Metal, passed the pixel and widget checks,
+and exited with code zero.
+
+To try the screen keyboard with a daScript v2 widget, also enable
+`-DDASSDL3_IOS_IMGUI_INPUT=ON` and launch with `--imgui-widgets-input`. Tap the
+field and type `caféx` or `приветт`. Press Backspace once, then Return. The test
+checks the widget value after typing and after deletion, then checks the exact
+UTF-8 value including the final newline.
+The manual run on iPhone 16 passed all three checks in the interpreter and
+exited with code zero.
+
+## Dear ImGui keyboard smoke test
+
+Enable `-DDASSDL3_IOS_IMGUI_INPUT=ON` on the iPhone build and launch with
+`--imgui-input`. Tap the multiline field, type `café` or `привет`, and
+press Return. The test bundles JetBrains Mono for accented Latin and Cyrillic
+glyphs. It checks the SDL text and Return events and compares the native ImGui
+buffer with the expected text followed by a newline. The renderer uses Metal.
+During testing on iPhone 16, the on-screen keyboard appeared after quitting
+Xcode Device Hub on the Mac. Close Device Hub if the keyboard stays hidden
+when you tap the field on the phone.
+In a manual run on iPhone 16, Backspace removed one Cyrillic character and
+the log confirmed that Return appended a newline. Since the text had been
+edited, the exact-string check did not report PASS in that run.
 
 ## Build a small app from source
 
@@ -150,4 +346,4 @@ The pinned runtime's desktop crash handler uses macOS-only Mach APIs, and its
 desktop file I/O module includes subprocess APIs unavailable on iOS. The
 iPhone profile uses the SDK's no-file-I/O build and reads packaged scripts
 through a read-only host file system. SDL file APIs are separate. LLVM, desktop
-package modules, and optional SDL companion libraries are outside this profile.
+package modules, and other companion libraries are outside this profile.

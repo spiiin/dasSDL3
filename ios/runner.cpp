@@ -1,18 +1,48 @@
 // On-device host for the existing Metal pixel, compute and strict AOT tests.
 #include "bundle_scripts.h"
+#include "capture_permission.h"
+#include "sensor_dashboard.h"
 #define SDL_MAIN_USE_CALLBACKS 1
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <cerrno>
+#include <initializer_list>
 #include <cstring>
 #include <unistd.h>
 
 DECLARE_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_IMGUI
+DECLARE_MODULE(Module_dasIMGUI);
+DECLARE_MODULE(Module_imgui_sdl3);
+DECLARE_MODULE(Module_LiveHost);
+#endif
+#ifdef DASSDL3_WITH_NET
+DECLARE_MODULE(Module_sdl3_net);
+#endif
+#ifdef DASSDL3_WITH_MIXER
+DECLARE_MODULE(Module_sdl3_mixer);
+#endif
+#ifdef DASSDL3_WITH_SOUND
+DECLARE_MODULE(Module_sdl3_sound);
+#endif
+#ifdef DASSDL3_WITH_TTF
+DECLARE_MODULE(Module_sdl3_ttf);
+#endif
+#ifdef DASSDL3_WITH_IMAGE
+DECLARE_MODULE(Module_sdl3_image);
+#endif
 MAKE_TYPE_FACTORY(SDL_GPUDevice, SDL_GPUDevice);
 MAKE_TYPE_FACTORY(SDL_Window, SDL_Window);
 MAKE_TYPE_FACTORY(SDL_Renderer, SDL_Renderer);
 MAKE_TYPE_FACTORY(SDL_Event, SDL_Event);
 MAKE_TYPE_FACTORY(SDL_GPUGraphicsPipeline, SDL_GPUGraphicsPipeline);
+
+#ifdef DASSDL3_IOS_IMGUI_INPUT
+#include "imgui_input.h"
+#ifdef DASSDL3_WITH_IMGUI
+MAKE_TYPE_FACTORY(SDL_FRect, SDL_FRect);
+#endif
+#endif
 
 namespace {
 using dassdl3_ios::BundleAccess;
@@ -27,6 +57,9 @@ bool run(const das::string &root, const char *path, bool aot, Check check = Chec
     auto access = make_smart<BundleAccess>();
     access->addFileSystem(new BundleScripts(root), true, false);
     access->addFsRoot("dassdl3", root + "dassdl3");
+#ifdef DASSDL3_WITH_IMGUI
+    access->addFsRoot("imgui", root + "imgui");
+#endif
     CodeOfPolicies policy;
     policy.aot = aot;
     policy.fail_on_no_aot = aot;
@@ -72,6 +105,21 @@ bool run(const das::string &root, const char *path, bool aot, Check check = Chec
     return true;
 }
 
+SDL_AppResult runSmokeTests(const das::string &root, std::initializer_list<const char *> scripts) {
+    bool passed = true;
+    for (const char *script : scripts) {
+        // Each script owns SDL; SDL_Quit clears these hints.
+        SDL_SetHintWithPriority(SDL_HINT_RENDER_DRIVER, "metal", SDL_HINT_OVERRIDE);
+        SDL_SetHintWithPriority(SDL_HINT_GPU_DRIVER, "metal", SDL_HINT_OVERRIDE);
+        passed = run(root, script, false) && passed;
+#ifdef DASSDL3_IPHONE_STRICT_AOT
+        SDL_SetHintWithPriority(SDL_HINT_RENDER_DRIVER, "metal", SDL_HINT_OVERRIDE);
+        SDL_SetHintWithPriority(SDL_HINT_GPU_DRIVER, "metal", SDL_HINT_OVERRIDE);
+        passed = run(root, script, true) && passed;
+#endif
+    }
+    return passed ? SDL_APP_SUCCESS : SDL_APP_FAILURE;
+}
 bool runFilesystem(const das::string &root) {
     using SDLString = std::unique_ptr<char, decltype(&SDL_free)>;
     SDLString previous(SDL_GetCurrentDirectory(), SDL_free);
@@ -108,6 +156,9 @@ struct Screen {
     bool claimed = false;
     bool passed = false;
     bool firstFrame = true;
+#ifdef DASSDL3_IOS_IMGUI_INPUT
+    bool imguiInput = false;
+#endif
     SDL_AtomicInt active{1};
     SDL_AtomicInt resumeCount{0};
     unsigned reportedResume = 0;
@@ -116,6 +167,7 @@ struct Screen {
     InputStep inputStep = InputStep::Drag;
     das::SimFunction *inputEvent = nullptr;
     bool inputAot = false;
+    bool multiInput = false;
 
     bool loadInteractive(const das::string &root, const char *path, bool aot) {
         using namespace das;
@@ -123,6 +175,9 @@ struct Screen {
         auto access = make_smart<BundleAccess>();
         access->addFileSystem(new BundleScripts(root), true, false);
         access->addFsRoot("dassdl3", root + "dassdl3");
+#ifdef DASSDL3_WITH_IMGUI
+        access->addFsRoot("imgui", root + "imgui");
+#endif
         CodeOfPolicies policy;
         policy.aot = policy.fail_on_no_aot = policy.tune_frozen = aot;
         program = compileDaScript(root + path, access, diagnostics, modules, policy);
@@ -136,11 +191,36 @@ struct Screen {
         return true;
     }
 
-    bool startInput(const das::string &root, bool aot) {
+#if defined(DASSDL3_IOS_IMGUI_INPUT) && defined(DASSDL3_WITH_IMGUI)
+    bool startImGuiWidgetsInput(const das::string &root) {
+        using namespace das;
+        if (!loadInteractive(root, "ios/imgui_widgets_input.das", false)) return false;
+        auto *frame = context->findFunction("input_frame");
+        if (!frame || !verifyCall<int32_t, SDL_Renderer *, const SDL_FRect &, bool, SDL_FRect &>(
+                          frame->debugInfo, modules)) {
+            return SDL_SetError("Invalid dasImgui v2 input_frame entry point");
+        }
+        return startImGuiInput([this, frame](SDL_Renderer *target, const SDL_FRect &bounds,
+                                            bool focus, SDL_FRect &field) {
+            vec4f args[] = {cast<SDL_Renderer *>::from(target), cast<const SDL_FRect &>::from(bounds),
+                            cast<bool>::from(focus), cast<SDL_FRect &>::from(field)};
+            context->restart();
+            const int32_t result = cast<int32_t>::to(context->evalWithCatch(frame, args));
+            if (const auto *error = context->getException()) {
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "dasImgui v2 input frame: %s", error);
+                return ImGuiInputFrame::Failed;
+            }
+            return static_cast<ImGuiInputFrame>(result);
+        });
+    }
+#endif
+
+    bool startInput(const das::string &root, bool aot, bool multi = false) {
         using namespace das;
         inputAot = aot;
+        multiInput = multi;
         if (!loadInteractive(root, "ios/input.das", aot)) return false;
-        inputEvent = context->findFunction("input_event");
+        inputEvent = context->findFunction(multi ? "multi_input_event" : "input_event");
         if (!inputEvent || (aot && !inputEvent->aot) ||
             !verifyCall<int32_t, SDL_Window *, const SDL_Event &>(inputEvent->debugInfo, modules)) {
             SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Invalid input entry point (AOT=%d)", aot);
@@ -156,16 +236,20 @@ struct Screen {
             SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Screen keyboard is unsupported");
             return false;
         }
-        SDL_Log("dasSDL3 input ready (%s): slide one finger and lift it", aot ? "strict AOT" : "interpreter");
+        SDL_Log("dasSDL3 input ready (%s): %s", aot ? "strict AOT" : "interpreter",
+                multi ? "place two fingers, lift the first, then move and lift the second" : "slide one finger and lift it");
         return true;
     }
 
     SDL_AppResult drawInput() {
         if (inputStep == InputStep::Hide && !SDL_ScreenKeyboardShown(window) && !SDL_TextInputActive(window)) {
-            SDL_Log("dasSDL3 touch and screen keyboard PASS (%s)", inputAot ? "strict AOT" : "interpreter");
+            SDL_Log("dasSDL3 %s PASS (%s)", multiInput ? "multitouch and Unicode keyboard" : "touch and screen keyboard",
+                    inputAot ? "strict AOT" : "interpreter");
             return SDL_APP_SUCCESS;
         }
-        const char *prompt = inputStep == InputStep::Drag ? "Slide one finger and lift it" : "Type 42 using the screen keyboard";
+        const char *prompt = inputStep == InputStep::Drag
+            ? (multiInput ? "Two fingers. Lift first. Slide and lift second." : "Slide one finger and lift it")
+            : (multiInput ? "Type cafe with an accented e" : "Type 42 using the screen keyboard");
         if (!SDL_SetRenderDrawColor(renderer, 16, 32, 50, 255) || !SDL_RenderClear(renderer) ||
             !SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255) ||
             !SDL_RenderDebugText(renderer, 24, 104, prompt) || !SDL_RenderPresent(renderer)) {
@@ -200,24 +284,275 @@ struct Screen {
                 SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Text input properties: %s", SDL_GetError());
                 return SDL_APP_FAILURE;
             }
-            const bool started = SDL_SetNumberProperty(props, SDL_PROP_TEXTINPUT_TYPE_NUMBER, SDL_TEXTINPUT_TYPE_NUMBER) &&
+            const bool started = SDL_SetNumberProperty(props, SDL_PROP_TEXTINPUT_TYPE_NUMBER,
+                                                       multiInput ? SDL_TEXTINPUT_TYPE_TEXT : SDL_TEXTINPUT_TYPE_NUMBER) &&
+                                 (!multiInput ||
+                                  (SDL_SetBooleanProperty(props, SDL_PROP_TEXTINPUT_AUTOCORRECT_BOOLEAN, false) &&
+                                   SDL_SetNumberProperty(props, SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER, SDL_CAPITALIZE_NONE))) &&
                                  SDL_StartTextInputWithProperties(window, props);
             if (!started) SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Start text input: %s", SDL_GetError());
             SDL_DestroyProperties(props);
             if (!started) return SDL_APP_FAILURE;
-            SDL_Log("dasSDL3 direct touch PASS; type 42 on the iPhone keyboard");
+            SDL_Log("dasSDL3 gesture PASS; type %s on the iPhone keyboard", multiInput ? "café or Привет 👋" : "42");
         }
         if (result == 2 && inputStep == InputStep::Type) {
             if (!SDL_TextInputActive(window) || !SDL_ScreenKeyboardShown(window)) {
-                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Received 42 without an active screen keyboard");
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Received text without an active screen keyboard");
                 return SDL_APP_FAILURE;
             }
-            SDL_Log("dasSDL3 received 42 through SDL_TEXTINPUT with screen keyboard shown");
+            SDL_Log("%s", multiInput ? "dasSDL3 received exact UTF-8 through SDL_TEXTINPUT with screen keyboard shown"
+                                   : "dasSDL3 received 42 through SDL_TEXTINPUT with screen keyboard shown");
             inputStep = InputStep::Hide;
             if (!SDL_StopTextInput(window)) {
                 SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Stop text input: %s", SDL_GetError());
                 return SDL_APP_FAILURE;
             }
+        }
+        return SDL_APP_CONTINUE;
+    }
+
+    das::SimFunction *clipboardExchange = nullptr;
+    bool clipboardRetry = false;
+
+    bool startClipboard(const das::string &root, bool aot) {
+        if (!loadInteractive(root, "ios/clipboard.das", aot)) return false;
+        clipboardExchange = context->findFunction("clipboard_exchange");
+        if (!clipboardExchange || (aot && !clipboardExchange->aot) ||
+            !das::verifyCall<int32_t>(clipboardExchange->debugInfo, modules))
+            return SDL_SetError("Invalid clipboard entry point (AOT=%d)", aot);
+        return SDL_Init(SDL_INIT_VIDEO) &&
+               SDL_CreateWindowAndRenderer("dasSDL3 clipboard", 640, 480, 0, &window, &renderer);
+    }
+
+    SDL_AppResult drawClipboard() {
+        SDL_Rect safe;
+        const char *prompt = clipboardRetry ? "Copy the accented word and try again" : "Tap to check the clipboard";
+        if (!SDL_GetRenderSafeArea(renderer, &safe) ||
+            !SDL_SetRenderDrawColor(renderer, 16, 32, 50, 255) || !SDL_RenderClear(renderer) ||
+            !SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255) ||
+            !SDL_RenderDebugText(renderer, float(safe.x + 16), float(safe.y + 52), prompt) ||
+            !SDL_RenderPresent(renderer)) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Clipboard screen: %s", SDL_GetError());
+            return SDL_APP_FAILURE;
+        }
+        return SDL_APP_CONTINUE;
+    }
+
+    SDL_AppResult exchangeClipboard() {
+        context->restart();
+        const int result = das::cast<int32_t>::to(context->evalWithCatch(clipboardExchange, nullptr));
+        if (result < 0 || context->getException()) {
+            const char *error = context->getException();
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL clipboard exchange: %s", error ? error : SDL_GetError());
+            return SDL_APP_FAILURE;
+        }
+        if (result == 0) {
+            clipboardRetry = true;
+            return SDL_APP_CONTINUE;
+        }
+        SDL_Log("dasSDL3 iPhone clipboard UTF-8 read and write PASS (%s)",
+                clipboardExchange->aot ? "strict AOT" : "interpreter");
+        return SDL_APP_SUCCESS;
+    }
+
+    das::SimFunction *captureOpen = nullptr;
+    das::SimFunction *captureTick = nullptr;
+    das::SimFunction *captureClose = nullptr;
+    Uint64 captureDeadline = 0;
+    bool captureExpectDenied = false;
+    bool captureOpened = false;
+    dassdl3_ios::CaptureDevice captureDevice = dassdl3_ios::CaptureDevice::Camera;
+
+    const char *captureName() const {
+        return captureDevice == dassdl3_ios::CaptureDevice::Camera ? "camera" : "microphone";
+    }
+
+    bool startCapture(const das::string &root, bool aot, bool expectDenied, dassdl3_ios::CaptureDevice device) {
+        using namespace das;
+        captureDevice = device;
+        const bool camera = device == dassdl3_ios::CaptureDevice::Camera;
+        if (!loadInteractive(root, camera ? "ios/camera.das" : "ios/microphone.das", aot)) return false;
+        captureOpen = context->findFunction(camera ? "camera_open" : "microphone_open");
+        captureTick = context->findFunction(camera ? "camera_tick" : "microphone_tick");
+        auto *close = context->findFunction(camera ? "camera_close" : "microphone_close");
+        if (!captureOpen || !captureTick || !close ||
+            (aot && (!captureOpen->aot || !captureTick->aot || !close->aot)) ||
+            !verifyCall<int32_t, bool>(captureOpen->debugInfo, modules) ||
+            !verifyCall<int32_t, bool>(captureTick->debugInfo, modules) ||
+            !verifyCall<void>(close->debugInfo, modules))
+            return SDL_SetError("Invalid %s entry points (AOT=%d)", captureName(), aot);
+        SDL_SetHintWithPriority(camera ? SDL_HINT_CAMERA_DRIVER : SDL_HINT_AUDIO_DRIVER,
+                                camera ? "coremedia" : "coreaudio", SDL_HINT_OVERRIDE);
+        if (!SDL_Init(SDL_INIT_VIDEO | (camera ? SDL_INIT_CAMERA : SDL_INIT_AUDIO)) ||
+            !SDL_CreateWindowAndRenderer(captureName(), 640, 480, 0, &window, &renderer)) return false;
+        captureClose = close;
+        captureExpectDenied = expectDenied;
+        captureDeadline = SDL_GetTicks() + 45000;
+        if (dassdl3_ios::capturePermission(captureDevice) == dassdl3_ios::CapturePermission::Pending)
+            dassdl3_ios::requestCapturePermission(captureDevice);
+        return true;
+    }
+
+    bool closeCapture() {
+        if (!captureClose) return true;
+        context->restart();
+        context->evalWithCatch(captureClose, nullptr);
+        captureClose = nullptr;
+        if (const char *error = context->getException()) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s cleanup: %s", captureName(), error);
+            return false;
+        }
+        return true;
+    }
+
+    SDL_AppResult drawCapture() {
+        using namespace das;
+        using dassdl3_ios::CapturePermission;
+        if (SDL_GetTicks() >= captureDeadline) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Timed out waiting for %s permission or data", captureName());
+            return SDL_APP_FAILURE;
+        }
+        const auto permission = dassdl3_ios::capturePermission(captureDevice);
+        if (permission != CapturePermission::Pending) {
+            if ((permission == CapturePermission::Denied) != captureExpectDenied) {
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s permission is %s; expected %s", captureName(),
+                            permission == CapturePermission::Denied ? "denied" : "approved",
+                            captureExpectDenied ? "denied" : "approved");
+                return SDL_APP_FAILURE;
+            }
+            context->restart();
+            vec4f args[] = {cast<bool>::from(captureExpectDenied)};
+            const int result = cast<int32_t>::to(context->evalWithCatch(captureOpened ? captureTick : captureOpen, args));
+            if (result < 0 || context->getException()) {
+                const char *error = context->getException();
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL %s check: %s", captureName(), error ? error : "unexpected capture result");
+                return SDL_APP_FAILURE;
+            }
+            captureOpened = true;
+            if (result > 0) {
+                if (!closeCapture()) return SDL_APP_FAILURE;
+                const char *data = captureDevice == dassdl3_ios::CaptureDevice::Camera ? "frames" : "samples";
+                SDL_Log("dasSDL3 iPhone %s %s PASS (%s)", captureName(), captureExpectDenied ? "denied" : data,
+                        captureTick->aot ? "strict AOT" : "interpreter");
+                return SDL_APP_SUCCESS;
+            }
+        }
+        const char *prompt = "Waiting for permission";
+        if (permission != CapturePermission::Pending) {
+            prompt = captureDevice == dassdl3_ios::CaptureDevice::Camera ? "Checking SDL camera" :
+                     captureExpectDenied ? "Checking microphone denial" : "Speak or clap several times";
+        }
+        if (!SDL_SetRenderDrawColor(renderer, 16, 32, 50, 255) || !SDL_RenderClear(renderer) ||
+            !SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255) ||
+            !SDL_RenderDebugText(renderer, 24, 104, prompt) || !SDL_RenderPresent(renderer)) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Capture screen: %s", SDL_GetError());
+            return SDL_APP_FAILURE;
+        }
+        return SDL_APP_CONTINUE;
+    }
+
+    das::SimFunction *motionEvent = nullptr;
+    das::SimFunction *motionDone = nullptr;
+    das::SimFunction *motionClose = nullptr;
+    das::SimFunction *motionValues = nullptr;
+    bool motionDashboardReady = false;
+    Uint64 motionDeadline = 0;
+
+    bool startMotion(const das::string &root, bool aot, bool live = false) {
+        using namespace das;
+        if (!loadInteractive(root, "ios/sensors.das", aot)) return false;
+        auto *open = context->findFunction("motion_open");
+        motionEvent = context->findFunction("motion_event");
+        motionDone = context->findFunction("motion_done");
+        auto *close = context->findFunction("motion_close");
+        if (!open || !motionEvent || !motionDone || !close ||
+            (aot && (!open->aot || !motionEvent->aot || !motionDone->aot || !close->aot)) ||
+            !verifyCall<bool>(open->debugInfo, modules) ||
+            !verifyCall<bool, const SDL_Event &>(motionEvent->debugInfo, modules) ||
+            !verifyCall<int32_t>(motionDone->debugInfo, modules) ||
+            !verifyCall<void>(close->debugInfo, modules)) {
+            return SDL_SetError("Invalid motion sensor entry points (AOT=%d)", aot);
+        }
+        if (live) {
+            motionValues = context->findFunction("motion_values");
+            if (!motionValues || !verifyCall<float4, bool>(motionValues->debugInfo, modules))
+                return SDL_SetError("Invalid motion dashboard entry point");
+        }
+        if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_SENSOR) ||
+            !SDL_CreateWindowAndRenderer("dasSDL3 motion sensors", 640, 480,
+                                         live ? SDL_WINDOW_HIGH_PIXEL_DENSITY : 0, &window, &renderer))
+            return false;
+        motionClose = close;
+        const bool opened = cast<bool>::to(context->evalWithCatch(open, nullptr));
+        if (const char *error = context->getException()) return SDL_SetError("%s", error);
+        if (!opened) return SDL_SetError("Could not open both motion sensors");
+        motionDeadline = SDL_GetTicks() + 45000;
+        SDL_Log("dasSDL3 motion sensors ready (%s); tilt the phone several times", aot ? "strict AOT" : "interpreter");
+        return true;
+    }
+
+    SDL_AppResult handleMotion(const SDL_Event &event) {
+        using namespace das;
+        context->restart();
+        vec4f args[] = {cast<const SDL_Event &>::from(event)};
+        const bool ok = cast<bool>::to(context->evalWithCatch(motionEvent, args));
+        if (!ok || context->getException()) {
+            const char *error = context->getException();
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Motion sensor event: %s", error ? error : "invalid sample or timestamp");
+            return SDL_APP_FAILURE;
+        }
+        return SDL_APP_CONTINUE;
+    }
+
+    SDL_AppResult drawMotion() {
+        using namespace das;
+        if (motionValues) {
+            auto latest = [&](bool gyro, float4 &sample) {
+                context->restart();
+                vec4f args[] = {cast<bool>::from(gyro)};
+                sample = cast<float4>::to(context->evalWithCatch(motionValues, args));
+                if (const char *error = context->getException()) return SDL_SetError("%s", error);
+                return true;
+            };
+            float4 accel, gyro;
+            if (!latest(false, accel) || !latest(true, gyro)) {
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Motion dashboard read: %s", SDL_GetError());
+                return SDL_APP_FAILURE;
+            }
+            const float accelAxes[] = {accel.x, accel.y, accel.z};
+            const float gyroAxes[] = {gyro.x, gyro.y, gyro.z};
+            if (!dassdl3_ios::drawSensorDashboard(renderer, SDL_GetWindowPixelDensity(window),
+                                                 accelAxes, accel.w > 0, gyroAxes, gyro.w > 0)) {
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Motion dashboard render: %s", SDL_GetError());
+                return SDL_APP_FAILURE;
+            }
+            if (!motionDashboardReady && accel.w > 0 && gyro.w > 0) {
+                motionDashboardReady = true;
+                SDL_Log("dasSDL3 iPhone motion dashboard rendered both sensors");
+            }
+            return SDL_APP_CONTINUE;
+        }
+        context->restart();
+        const int result = cast<int32_t>::to(context->evalWithCatch(motionDone, nullptr));
+        if (result < 0 || context->getException()) {
+            const char *error = context->getException();
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Motion sensor read: %s", error ? error : "invalid sample");
+            return SDL_APP_FAILURE;
+        }
+        if (result > 0) {
+            SDL_Log("dasSDL3 iPhone accelerometer and gyroscope PASS (%s)",
+                    motionDone->aot ? "strict AOT" : "interpreter");
+            return SDL_APP_SUCCESS;
+        }
+        if (SDL_GetTicks() >= motionDeadline) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Timed out waiting for movement from both iPhone sensors");
+            return SDL_APP_FAILURE;
+        }
+        if (!SDL_SetRenderDrawColor(renderer, 16, 32, 50, 255) || !SDL_RenderClear(renderer) ||
+            !SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255) ||
+            !SDL_RenderDebugText(renderer, 24, 104, "Tilt the phone several times") || !SDL_RenderPresent(renderer)) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Motion sensor screen: %s", SDL_GetError());
+            return SDL_APP_FAILURE;
         }
         return SDL_APP_CONTINUE;
     }
@@ -303,9 +638,16 @@ struct Screen {
     das::SimFunction *rendererClose = nullptr;
     bool rendererNeedsCleanup = false;
 
+    int layoutStep = 0;
+    bool checkLayout = false;
+    SDL_Point layoutSize{};
+    SDL_FRect layoutMarker{};
+
     bool callRenderer(das::SimFunction *function, bool &result) {
         using namespace das;
-        vec4f args[] = {cast<SDL_Renderer *>::from(renderer)};
+        vec4f args[] = {cast<SDL_Renderer *>::from(renderer), cast<float>::from(layoutMarker.x),
+                        cast<float>::from(layoutMarker.y), cast<float>::from(layoutMarker.w),
+                        cast<float>::from(layoutMarker.h)};
         context->restart();
         const auto value = context->evalWithCatch(function, args);
         if (const auto *error = context->getException()) {
@@ -320,20 +662,26 @@ struct Screen {
         using namespace das;
         if (!loadInteractive(root, "examples/86_gpu_renderer.das", aot)) return false;
         auto *open = context->findFunction("renderer_open");
-        rendererFrame = context->findFunction("renderer_frame");
+        rendererFrame = context->findFunction(checkLayout ? "renderer_layout_frame" : "renderer_frame");
         rendererClose = context->findFunction("renderer_close");
         if (!open || !rendererFrame || !rendererClose ||
             (aot && (!open->aot || !rendererFrame->aot || !rendererClose->aot)) ||
             !verifyCall<bool, SDL_Renderer *>(open->debugInfo, modules) ||
-            !verifyCall<bool, SDL_Renderer *>(rendererFrame->debugInfo, modules) ||
+            !(checkLayout ? verifyCall<bool, SDL_Renderer *, float, float, float, float>(rendererFrame->debugInfo, modules)
+                          : verifyCall<bool, SDL_Renderer *>(rendererFrame->debugInfo, modules)) ||
             !verifyCall<void, SDL_Renderer *>(rendererClose->debugInfo, modules)) {
             SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Invalid GPU Renderer entry points (AOT=%d)", aot);
             return false;
         }
         SDL_SetHintWithPriority(SDL_HINT_GPU_DRIVER, "metal", SDL_HINT_OVERRIDE);
         SDL_SetHint(SDL_HINT_RENDER_GPU_DEBUG, "1");
+        SDL_WindowFlags flags = SDL_WINDOW_HIGH_PIXEL_DENSITY;
+        if (checkLayout) {
+            SDL_SetHint(SDL_HINT_ORIENTATIONS, "Portrait LandscapeLeft LandscapeRight");
+            flags |= SDL_WINDOW_RESIZABLE;
+        }
         if (SDL_Init(SDL_INIT_VIDEO)) {
-            window = SDL_CreateWindow("SDL GPU Renderer", 640, 480, SDL_WINDOW_HIGH_PIXEL_DENSITY);
+            window = SDL_CreateWindow("SDL GPU Renderer", 640, 480, flags);
             if (window) renderer = SDL_CreateGPURenderer(nullptr, window);
         }
         if (!renderer || !SDL_SetRenderLogicalPresentation(renderer, 640, 480, SDL_LOGICAL_PRESENTATION_LETTERBOX)) {
@@ -350,8 +698,59 @@ struct Screen {
         return callRenderer(open, opened) && opened;
     }
 
+    bool updateLayoutMarker() {
+        layoutMarker = {};
+        SDL_Point pixels;
+        SDL_Point output;
+        SDL_Rect safe;
+        if (!SDL_GetWindowSize(window, &layoutSize.x, &layoutSize.y) ||
+            !SDL_GetWindowSizeInPixels(window, &pixels.x, &pixels.y) ||
+            !SDL_GetRenderOutputSize(renderer, &output.x, &output.y) ||
+            !SDL_GetWindowSafeArea(window, &safe)) return false;
+        const float density = SDL_GetWindowPixelDensity(window);
+        const bool landscape = layoutSize.x > layoutSize.y;
+        // Wait for the window and the renderer to agree during rotation.
+        if (layoutSize.x == layoutSize.y || landscape != (layoutStep == 1) ||
+            pixels.x != output.x || pixels.y != output.y ||
+            density <= 1.0f ||
+            SDL_fabsf(pixels.x - layoutSize.x * density) > 2.0f ||
+            SDL_fabsf(pixels.y - layoutSize.y * density) > 2.0f ||
+            safe.x < 0 || safe.y < 0 || safe.w <= 0 || safe.h <= 0 ||
+            safe.x + safe.w > layoutSize.x || safe.y + safe.h > layoutSize.y ||
+            (safe.w == layoutSize.x && safe.h == layoutSize.y)) return true;
+        SDL_Rect renderSafe;
+        if (!SDL_GetRenderSafeArea(renderer, &renderSafe)) return false;
+        if (renderSafe.w < 128 || renderSafe.h < 128) return true;
+        const float fraction = landscape ? 0.72f : 0.28f;
+        layoutMarker = {renderSafe.x + renderSafe.w * fraction - 24.0f,
+                        renderSafe.y + renderSafe.h * 0.35f - 24.0f, 48.0f, 48.0f};
+        return true;
+    }
+
+    SDL_AppResult checkLayoutTouch(const SDL_Event &event) {
+        if (layoutMarker.w <= 0 || event.tfinger.windowID != SDL_GetWindowID(window) ||
+            SDL_GetTouchDeviceType(event.tfinger.touchID) != SDL_TOUCH_DEVICE_DIRECT)
+            return SDL_APP_CONTINUE;
+        int width, height;
+        if (!SDL_GetWindowSize(window, &width, &height)) return SDL_APP_FAILURE;
+        if (width != layoutSize.x || height != layoutSize.y) return SDL_APP_CONTINUE;
+        SDL_Event converted = event;
+        if (!SDL_ConvertEventToRenderCoordinates(renderer, &converted)) return SDL_APP_FAILURE;
+        const SDL_FPoint touch{converted.tfinger.x, converted.tfinger.y};
+        if (!SDL_PointInRectFloat(&touch, &layoutMarker)) return SDL_APP_CONTINUE;
+        SDL_Log("dasSDL3 orientation step %d PASS (%s, %dx%d points, density %.2f, touch %.1f, %.1f)",
+                layoutStep + 1, width > height ? "landscape" : "portrait", width, height,
+                SDL_GetWindowPixelDensity(window), touch.x, touch.y);
+        layoutMarker = {};
+        return ++layoutStep == 3 ? SDL_APP_SUCCESS : SDL_APP_CONTINUE;
+    }
+
     SDL_AppResult drawRenderer() {
         const unsigned resumed = SDL_GetAtomicInt(&resumeCount);
+        if (checkLayout && !updateLayoutMarker()) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "GPU Renderer layout: %s", SDL_GetError());
+            return SDL_APP_FAILURE;
+        }
         bool drawn = false;
         if (!callRenderer(rendererFrame, drawn) || !drawn) return SDL_APP_FAILURE;
         if (!context->runWithCatchAndClear([&] { context->collectHeapIfMostlyFree(); })) {
@@ -451,8 +850,109 @@ SDL_AppResult SDL_AppInit(void **state, int argc, char **argv) {
     das::setDasRoot(root.substr(0, root.size() - 1)); // SDL base path ends in '/'.
     NEED_ALL_DEFAULT_MODULES;
     NEED_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_IMGUI
+    NEED_MODULE(Module_dasIMGUI);
+    NEED_MODULE(Module_imgui_sdl3);
+    NEED_MODULE(Module_LiveHost);
+#endif
+#ifdef DASSDL3_WITH_NET
+    NEED_MODULE(Module_sdl3_net);
+#endif
+#ifdef DASSDL3_WITH_MIXER
+    NEED_MODULE(Module_sdl3_mixer);
+#endif
+#ifdef DASSDL3_WITH_SOUND
+    NEED_MODULE(Module_sdl3_sound);
+#endif
+#ifdef DASSDL3_WITH_TTF
+    NEED_MODULE(Module_sdl3_ttf);
+#endif
+#ifdef DASSDL3_WITH_IMAGE
+    NEED_MODULE(Module_sdl3_image);
+#endif
     das::Module::Initialize();
     for (int i = 1; i < argc; ++i) {
+        const auto isArg = [&](const char *arg) { return SDL_strcmp(argv[i], arg) == 0; };
+        if (isArg("--clipboard")) {
+            bool aot = false;
+#ifdef DASSDL3_IPHONE_STRICT_AOT
+            aot = true;
+#endif
+            if (screen->startClipboard(root, aot)) return SDL_APP_CONTINUE;
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Clipboard setup: %s", SDL_GetError());
+            return SDL_APP_FAILURE;
+        }
+        const bool camera = isArg("--camera-aot") || isArg("--camera-denied") || isArg("--camera-interpreter");
+        const bool microphone = isArg("--microphone-aot") || isArg("--microphone-denied") || isArg("--microphone-interpreter");
+        if (camera || microphone) {
+            const auto device = camera ? dassdl3_ios::CaptureDevice::Camera : dassdl3_ios::CaptureDevice::Microphone;
+            const bool aot = isArg("--camera-aot") || isArg("--microphone-aot");
+            const bool denied = isArg("--camera-denied") || isArg("--microphone-denied");
+#ifndef DASSDL3_IPHONE_STRICT_AOT
+            if (aot) return SDL_APP_FAILURE;
+#endif
+            if (screen->startCapture(root, aot, denied, device)) return SDL_APP_CONTINUE;
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Capture setup: %s", SDL_GetError());
+            return SDL_APP_FAILURE;
+        }
+        const bool motionAot = SDL_strcmp(argv[i], "--sensors-aot") == 0;
+        const bool motionLive = SDL_strcmp(argv[i], "--sensors-live") == 0;
+        if (motionAot || motionLive || SDL_strcmp(argv[i], "--sensors-interpreter") == 0) {
+#ifndef DASSDL3_IPHONE_STRICT_AOT
+            if (motionAot) return SDL_APP_FAILURE;
+#endif
+            if (screen->startMotion(root, motionAot, motionLive)) return SDL_APP_CONTINUE;
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Motion sensor setup: %s", SDL_GetError());
+            return SDL_APP_FAILURE;
+        }
+        if (SDL_strcmp(argv[i], "--gamepad-smoke") == 0)
+            return runSmokeTests(root, {"tests/joystick_gamepad.das", "tests/joystick_gamepad_scopes.das",
+                                       "examples/71_virtual_gamepad.das"});
+#ifdef DASSDL3_WITH_IMGUI
+        if (SDL_strcmp(argv[i], "--imgui-widgets-smoke") == 0) {
+            SDL_SetHintWithPriority(SDL_HINT_RENDER_DRIVER, "metal", SDL_HINT_OVERRIDE);
+            return run(root, "tests/imgui_widgets.das", false) ? SDL_APP_SUCCESS : SDL_APP_FAILURE;
+        }
+#endif
+#ifdef DASSDL3_IOS_IMGUI_INPUT
+#ifdef DASSDL3_WITH_IMGUI
+        if (SDL_strcmp(argv[i], "--imgui-widgets-input") == 0) {
+            screen->imguiInput = true;
+            SDL_SetHintWithPriority(SDL_HINT_RENDER_DRIVER, "metal", SDL_HINT_OVERRIDE);
+            if (screen->startImGuiWidgetsInput(root)) return SDL_APP_CONTINUE;
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "dasImgui v2 input setup: %s", SDL_GetError());
+            return SDL_APP_FAILURE;
+        }
+#endif
+        if (SDL_strcmp(argv[i], "--imgui-input") == 0) {
+            screen->imguiInput = true;
+            if (startImGuiInput()) return SDL_APP_CONTINUE;
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "ImGui input setup: %s", SDL_GetError());
+            return SDL_APP_FAILURE;
+        }
+#endif
+#ifdef DASSDL3_WITH_IMAGE
+        if (SDL_strcmp(argv[i], "--image-smoke") == 0)
+            return runSmokeTests(root, {"tests/image.das", "examples/libraries/02_image.das"});
+#endif
+#ifdef DASSDL3_WITH_TTF
+        if (SDL_strcmp(argv[i], "--ttf-smoke") == 0)
+            return runSmokeTests(root, {"tests/ttf.das", "tests/ttf_shaping.das", "tests/ttf_gpu.das",
+                                       "examples/libraries/03_ttf.das", "examples/libraries/04_ttf_shaping.das",
+                                       "examples/libraries/05_ttf_gpu.das"});
+#endif
+#ifdef DASSDL3_WITH_MIXER
+        if (SDL_strcmp(argv[i], "--mixer-smoke") == 0)
+            return runSmokeTests(root, {"tests/mixer.das", "examples/libraries/07_mixer.das"});
+#endif
+#ifdef DASSDL3_WITH_SOUND
+        if (SDL_strcmp(argv[i], "--sound-smoke") == 0)
+            return runSmokeTests(root, {"tests/sound.das", "examples/libraries/08_sound.das"});
+#endif
+#ifdef DASSDL3_WITH_NET
+        if (SDL_strcmp(argv[i], "--net-smoke") == 0)
+            return runSmokeTests(root, {"tests/net.das", "examples/libraries/06_net.das"});
+#endif
         if (SDL_strcmp(argv[i], "--gpu-renderer-smoke") == 0) {
             SDL_SetHintWithPriority(SDL_HINT_GPU_DRIVER, "metal", SDL_HINT_OVERRIDE);
             SDL_SetHint(SDL_HINT_RENDER_GPU_DEBUG, "1");
@@ -464,7 +964,9 @@ SDL_AppResult SDL_AppInit(void **state, int argc, char **argv) {
 #endif
             return passed ? SDL_APP_SUCCESS : SDL_APP_FAILURE;
         }
-        if (SDL_strcmp(argv[i], "--gpu-renderer") == 0) {
+        if (SDL_strcmp(argv[i], "--gpu-renderer") == 0 ||
+            SDL_strcmp(argv[i], "--gpu-renderer-layout") == 0) {
+            screen->checkLayout = SDL_strcmp(argv[i], "--gpu-renderer-layout") == 0;
             bool aot = false;
 #ifdef DASSDL3_IPHONE_STRICT_AOT
             aot = true;
@@ -477,22 +979,30 @@ SDL_AppResult SDL_AppInit(void **state, int argc, char **argv) {
         if (SDL_strcmp(argv[i], "--audio-aot") == 0)
             return screen->startAudio(root, true) ? SDL_APP_CONTINUE : SDL_APP_FAILURE;
 #endif
+        if (SDL_strcmp(argv[i], "--multi-input-interpreter") == 0)
+            return screen->startInput(root, false, true) ? SDL_APP_CONTINUE : SDL_APP_FAILURE;
         if (SDL_strcmp(argv[i], "--input-interpreter") == 0)
             return screen->startInput(root, false) ? SDL_APP_CONTINUE : SDL_APP_FAILURE;
 #ifdef DASSDL3_IPHONE_STRICT_AOT
+        if (SDL_strcmp(argv[i], "--multi-input-aot") == 0)
+            return screen->startInput(root, true, true) ? SDL_APP_CONTINUE : SDL_APP_FAILURE;
         if (SDL_strcmp(argv[i], "--input-aot") == 0)
             return screen->startInput(root, true) ? SDL_APP_CONTINUE : SDL_APP_FAILURE;
 #endif
-        const bool write = SDL_strcmp(argv[i], "--persistence-write") == 0;
-        const bool read = SDL_strcmp(argv[i], "--persistence-read") == 0;
+        const bool storageWrite = SDL_strcmp(argv[i], "--storage-write") == 0;
+        const bool storageRead = SDL_strcmp(argv[i], "--storage-read") == 0;
+        const bool write = storageWrite || SDL_strcmp(argv[i], "--persistence-write") == 0;
+        const bool read = storageRead || SDL_strcmp(argv[i], "--persistence-read") == 0;
         if (!write && !read) continue;
         bool aot = false;
 #ifdef DASSDL3_IPHONE_STRICT_AOT
         aot = read;
 #endif
-        if (!run(root, "ios/persistence.das", aot, read ? Check::ReadSavedData : Check::Normal))
+        const bool storage = storageWrite || storageRead;
+        if (!run(root, storage ? "ios/storage.das" : "ios/persistence.das", aot,
+                 read ? Check::ReadSavedData : Check::Normal))
             return SDL_APP_FAILURE;
-        SDL_Log("dasSDL3 persistence %s PASS pid=%d mode=%s",
+        SDL_Log("dasSDL3 %s %s PASS pid=%d mode=%s", storage ? "storage" : "persistence",
                 write ? "write" : "read", int(getpid()), aot ? "strict-aot" : "interpreter");
         return SDL_APP_SUCCESS;
     }
@@ -533,7 +1043,13 @@ SDL_AppResult SDL_AppInit(void **state, int argc, char **argv) {
 SDL_AppResult SDL_AppIterate(void *state) {
     auto &screen = *static_cast<Screen *>(state);
     if (!SDL_GetAtomicInt(&screen.active)) return SDL_APP_CONTINUE;
+#ifdef DASSDL3_IOS_IMGUI_INPUT
+    if (screen.imguiInput) return drawImGuiInput();
+#endif
     if (screen.audioTick) return screen.drawAudio();
+    if (screen.clipboardExchange) return screen.drawClipboard();
+    if (screen.captureTick) return screen.drawCapture();
+    if (screen.motionDone) return screen.drawMotion();
     if (screen.inputEvent) return screen.drawInput();
     if (screen.rendererFrame) return screen.drawRenderer();
     if (screen.pipeline) return screen.drawTriangle();
@@ -559,11 +1075,22 @@ SDL_AppResult SDL_AppEvent(void *state, SDL_Event *event) {
         SDL_Log("dasSDL3 iPhone foreground: waiting for frame (cycle %d)", cycle);
         SDL_SetAtomicInt(&screen.active, 1);
     }
+#ifdef DASSDL3_IOS_IMGUI_INPUT
+    if (screen.imguiInput) {
+        if (event->type == SDL_EVENT_QUIT) return SDL_APP_FAILURE;
+        if (SDL_GetAtomicInt(&screen.active) && !passImGuiInputEvent(*event)) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "ImGui input event: %s", SDL_GetError());
+            return SDL_APP_FAILURE;
+        }
+        return SDL_APP_CONTINUE;
+    }
+#endif
     if (event->type == SDL_EVENT_QUIT)
-        return screen.passed || (screen.rendererFrame && !screen.firstFrame) ? SDL_APP_SUCCESS : SDL_APP_FAILURE;
+        return screen.passed || (screen.rendererFrame && !screen.checkLayout && !screen.firstFrame)
+            ? SDL_APP_SUCCESS : SDL_APP_FAILURE;
     if (screen.rendererFrame && event->type == SDL_EVENT_FINGER_UP && !screen.firstFrame &&
         SDL_GetAtomicInt(&screen.active))
-        return SDL_APP_SUCCESS;
+        return screen.checkLayout ? screen.checkLayoutTouch(*event) : SDL_APP_SUCCESS;
     if (screen.audioTick && event->type == SDL_EVENT_FINGER_UP && SDL_GetAtomicInt(&screen.active) &&
         screen.reportedResume > 0 && screen.reportedResume == unsigned(SDL_GetAtomicInt(&screen.resumeCount)) &&
         screen.audioRefills >= 3) {
@@ -572,12 +1099,28 @@ SDL_AppResult SDL_AppEvent(void *state, SDL_Event *event) {
         return SDL_APP_SUCCESS;
     }
     if (screen.inputEvent && SDL_GetAtomicInt(&screen.active)) return screen.handleInput(*event);
+    if (screen.clipboardExchange && event->type == SDL_EVENT_FINGER_UP && SDL_GetAtomicInt(&screen.active))
+        return screen.exchangeClipboard();
+    if (screen.motionEvent && event->type == SDL_EVENT_SENSOR_UPDATE && SDL_GetAtomicInt(&screen.active))
+        return screen.handleMotion(*event);
+    if (screen.motionDashboardReady && event->type == SDL_EVENT_FINGER_UP && SDL_GetAtomicInt(&screen.active))
+        return SDL_APP_SUCCESS;
     return SDL_APP_CONTINUE;
 }
 
 void SDL_AppQuit(void *state, SDL_AppResult) {
     std::unique_ptr<Screen> screen(static_cast<Screen *>(state));
     if (screen) {
+#ifdef DASSDL3_IOS_IMGUI_INPUT
+        if (screen->imguiInput) stopImGuiInput();
+#endif
+        if (screen->motionClose) {
+            screen->context->restart();
+            screen->context->evalWithCatch(screen->motionClose, nullptr);
+            if (const char *error = screen->context->getException())
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Motion sensor cleanup: %s", error);
+        }
+        screen->closeCapture();
         if (screen->audioNeedsCleanup) {
             screen->context->restart();
             screen->context->evalWithCatch(screen->audioClose, nullptr);

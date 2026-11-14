@@ -32,7 +32,7 @@ def open_renderer(renderer : SDL_Renderer?) : SdlStatus {
     return sdl_status(state != null, "SDL_CreateGPURenderStateArrays")
 }
 
-def draw_renderer_frame(renderer : SDL_Renderer?) : SdlStatus {
+def draw_renderer_frame(renderer : SDL_Renderer?; marker : SDL_FRect = SDL_FRect()) : SdlStatus {
     let phase = float(SDL_GetTicks()) / 1000.0
     var tint <- array<float>(0.5 + 0.5 * sin(phase), 0.4, 0.5 + 0.5 * cos(phase), 1.0)
     state |> set_gpu_render_state_fragment_uniforms(0u, tint) |> sdl_try
@@ -40,6 +40,11 @@ def draw_renderer_frame(renderer : SDL_Renderer?) : SdlStatus {
     renderer |> clear() |> sdl_try
     renderer |> set_gpu_render_state(state) |> sdl_try
     sdl_status(SDL_RenderFillRectRef(renderer, SDL_FRect(x = 80.0, y = 60.0, w = 480.0, h = 360.0)), "SDL_RenderFillRect") |> sdl_try
+    if (marker.w > 0.0) {
+        renderer |> set_gpu_render_state(null) |> sdl_try
+        renderer |> set_color(uint4(255u, 220u, 30u, 255u)) |> sdl_try
+        renderer |> fill_rect(marker) |> sdl_try
+    }
     return renderer |> present()
 }
 
@@ -58,6 +63,11 @@ def renderer_open(renderer : SDL_Renderer?) : bool {
 [export]
 def renderer_frame(renderer : SDL_Renderer?) : bool {
     return report(draw_renderer_frame(renderer))
+}
+
+[export]
+def renderer_layout_frame(renderer : SDL_Renderer?; x, y, w, h : float) : bool {
+    return report(draw_renderer_frame(renderer, SDL_FRect(x = x, y = y, w = w, h = h)))
 }
 
 [export]

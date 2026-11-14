@@ -21,7 +21,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Build the iPhone smoke app and minimal consumer with AOT
+      - name: Build the iPhone smoke app with companion libraries and the minimal consumer
         run: bash tools/verify_ios_ci.sh
       - name: Upload diagnostics
         if: always()

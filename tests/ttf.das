@@ -5,6 +5,7 @@ require dassdl3/sdl3_scope
 require dassdl3/sdl3_pixels_boost
 require dassdl3/sdl3_window_io_boost
 require dassdl3/sdl3_iostream_boost
+require dassdl3/sdl3_renderer_primitives_boost
 
 // Pixel oracle checks real glyph rasterization, not just successful calls.
 def check_ink(surface : SDL_Surface?) {
@@ -84,7 +85,7 @@ def main(smoke : bool) : int {
     let before = TTF_WasInit()
     let assets = "{SDL_GetBasePath()}assets/libraries/"
     let result = sdl_scope() {
-        with_sdl(SDL_INIT_VIDEO) |> sdl_use
+        with_sdl(0u) |> sdl_use
         with_ttf() |> sdl_use
         verify(TTF_WasInit() == before + 1)
         var called = false
@@ -96,8 +97,8 @@ def main(smoke : bool) : int {
         let saved = unwrap_err(missing)
         SDL_ClearError()
         verify(saved.operation == "TTF_OpenFont" && saved.message != "")
-        let window : SDL_Window? = with_window("SDL_ttf test", 320, 160, SDL_WINDOW_HIDDEN) |> sdl_use
-        let renderer : SDL_Renderer? = window |> with_renderer() |> sdl_use
+        let target : SDL_Surface? = with_surface(320, 160, SDL_PixelFormat.PIXELFORMAT_RGBA32) |> sdl_use
+        let renderer : SDL_Renderer? = target |> with_software_renderer() |> sdl_use
         SDL_SetErrorMessage("stale SDL error")
         with_font("{assets}JetBrainsMono-Regular.ttf", 24.0) $(font : TTF_Font?) {
             with_font("{assets}JetBrainsMono-Regular.ttf", 16.0) $(small : TTF_Font?) {
