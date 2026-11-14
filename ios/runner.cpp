@@ -9,6 +9,11 @@
 #include <unistd.h>
 
 DECLARE_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_IMGUI
+DECLARE_MODULE(Module_dasIMGUI);
+DECLARE_MODULE(Module_imgui_sdl3);
+DECLARE_MODULE(Module_LiveHost);
+#endif
 #ifdef DASSDL3_WITH_NET
 DECLARE_MODULE(Module_sdl3_net);
 #endif
@@ -30,6 +35,13 @@ MAKE_TYPE_FACTORY(SDL_Renderer, SDL_Renderer);
 MAKE_TYPE_FACTORY(SDL_Event, SDL_Event);
 MAKE_TYPE_FACTORY(SDL_GPUGraphicsPipeline, SDL_GPUGraphicsPipeline);
 
+#ifdef DASSDL3_IOS_IMGUI_INPUT
+#include "imgui_input.h"
+#ifdef DASSDL3_WITH_IMGUI
+MAKE_TYPE_FACTORY(SDL_FRect, SDL_FRect);
+#endif
+#endif
+
 namespace {
 using dassdl3_ios::BundleAccess;
 using dassdl3_ios::BundleScripts;
@@ -43,6 +55,9 @@ bool run(const das::string &root, const char *path, bool aot, Check check = Chec
     auto access = make_smart<BundleAccess>();
     access->addFileSystem(new BundleScripts(root), true, false);
     access->addFsRoot("dassdl3", root + "dassdl3");
+#ifdef DASSDL3_WITH_IMGUI
+    access->addFsRoot("imgui", root + "imgui");
+#endif
     CodeOfPolicies policy;
     policy.aot = aot;
     policy.fail_on_no_aot = aot;
@@ -143,6 +158,9 @@ struct Screen {
     bool claimed = false;
     bool passed = false;
     bool firstFrame = true;
+#ifdef DASSDL3_IOS_IMGUI_INPUT
+    bool imguiInput = false;
+#endif
     SDL_AtomicInt active{1};
     SDL_AtomicInt resumeCount{0};
     unsigned reportedResume = 0;
@@ -159,6 +177,9 @@ struct Screen {
         auto access = make_smart<BundleAccess>();
         access->addFileSystem(new BundleScripts(root), true, false);
         access->addFsRoot("dassdl3", root + "dassdl3");
+#ifdef DASSDL3_WITH_IMGUI
+        access->addFsRoot("imgui", root + "imgui");
+#endif
         CodeOfPolicies policy;
         policy.aot = policy.fail_on_no_aot = policy.tune_frozen = aot;
         program = compileDaScript(root + path, access, diagnostics, modules, policy);
@@ -171,6 +192,30 @@ struct Screen {
         }
         return true;
     }
+
+#if defined(DASSDL3_IOS_IMGUI_INPUT) && defined(DASSDL3_WITH_IMGUI)
+    bool startImGuiWidgetsInput(const das::string &root) {
+        using namespace das;
+        if (!loadInteractive(root, "ios/imgui_widgets_input.das", false)) return false;
+        auto *frame = context->findFunction("input_frame");
+        if (!frame || !verifyCall<int32_t, SDL_Renderer *, const SDL_FRect &, bool, SDL_FRect &>(
+                          frame->debugInfo, modules)) {
+            return SDL_SetError("Invalid dasImgui v2 input_frame entry point");
+        }
+        return startImGuiInput([this, frame](SDL_Renderer *target, const SDL_FRect &bounds,
+                                            bool focus, SDL_FRect &field) {
+            vec4f args[] = {cast<SDL_Renderer *>::from(target), cast<const SDL_FRect &>::from(bounds),
+                            cast<bool>::from(focus), cast<SDL_FRect &>::from(field)};
+            context->restart();
+            const int32_t result = cast<int32_t>::to(context->evalWithCatch(frame, args));
+            if (const auto *error = context->getException()) {
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "dasImgui v2 input frame: %s", error);
+                return ImGuiInputFrame::Failed;
+            }
+            return static_cast<ImGuiInputFrame>(result);
+        });
+    }
+#endif
 
     bool startInput(const das::string &root, bool aot, bool multi = false) {
         using namespace das;
@@ -561,6 +606,11 @@ SDL_AppResult SDL_AppInit(void **state, int argc, char **argv) {
     das::setDasRoot(root.substr(0, root.size() - 1)); // SDL base path ends in '/'.
     NEED_ALL_DEFAULT_MODULES;
     NEED_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_IMGUI
+    NEED_MODULE(Module_dasIMGUI);
+    NEED_MODULE(Module_imgui_sdl3);
+    NEED_MODULE(Module_LiveHost);
+#endif
 #ifdef DASSDL3_WITH_NET
     NEED_MODULE(Module_sdl3_net);
 #endif
@@ -578,6 +628,29 @@ SDL_AppResult SDL_AppInit(void **state, int argc, char **argv) {
 #endif
     das::Module::Initialize();
     for (int i = 1; i < argc; ++i) {
+#ifdef DASSDL3_WITH_IMGUI
+        if (SDL_strcmp(argv[i], "--imgui-widgets-smoke") == 0) {
+            SDL_SetHintWithPriority(SDL_HINT_RENDER_DRIVER, "metal", SDL_HINT_OVERRIDE);
+            return run(root, "tests/imgui_widgets.das", false) ? SDL_APP_SUCCESS : SDL_APP_FAILURE;
+        }
+#endif
+#ifdef DASSDL3_IOS_IMGUI_INPUT
+#ifdef DASSDL3_WITH_IMGUI
+        if (SDL_strcmp(argv[i], "--imgui-widgets-input") == 0) {
+            screen->imguiInput = true;
+            SDL_SetHintWithPriority(SDL_HINT_RENDER_DRIVER, "metal", SDL_HINT_OVERRIDE);
+            if (screen->startImGuiWidgetsInput(root)) return SDL_APP_CONTINUE;
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "dasImgui v2 input setup: %s", SDL_GetError());
+            return SDL_APP_FAILURE;
+        }
+#endif
+        if (SDL_strcmp(argv[i], "--imgui-input") == 0) {
+            screen->imguiInput = true;
+            if (startImGuiInput()) return SDL_APP_CONTINUE;
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "ImGui input setup: %s", SDL_GetError());
+            return SDL_APP_FAILURE;
+        }
+#endif
 #ifdef DASSDL3_WITH_IMAGE
         if (SDL_strcmp(argv[i], "--image-smoke") == 0)
             return runCompanion(root, {"tests/image.das", "examples/libraries/02_image.das"});
@@ -686,6 +759,9 @@ SDL_AppResult SDL_AppInit(void **state, int argc, char **argv) {
 SDL_AppResult SDL_AppIterate(void *state) {
     auto &screen = *static_cast<Screen *>(state);
     if (!SDL_GetAtomicInt(&screen.active)) return SDL_APP_CONTINUE;
+#ifdef DASSDL3_IOS_IMGUI_INPUT
+    if (screen.imguiInput) return drawImGuiInput();
+#endif
     if (screen.audioTick) return screen.drawAudio();
     if (screen.inputEvent) return screen.drawInput();
     if (screen.rendererFrame) return screen.drawRenderer();
@@ -712,6 +788,16 @@ SDL_AppResult SDL_AppEvent(void *state, SDL_Event *event) {
         SDL_Log("dasSDL3 iPhone foreground: waiting for frame (cycle %d)", cycle);
         SDL_SetAtomicInt(&screen.active, 1);
     }
+#ifdef DASSDL3_IOS_IMGUI_INPUT
+    if (screen.imguiInput) {
+        if (event->type == SDL_EVENT_QUIT) return SDL_APP_FAILURE;
+        if (SDL_GetAtomicInt(&screen.active) && !passImGuiInputEvent(*event)) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "ImGui input event: %s", SDL_GetError());
+            return SDL_APP_FAILURE;
+        }
+        return SDL_APP_CONTINUE;
+    }
+#endif
     if (event->type == SDL_EVENT_QUIT)
         return screen.passed || (screen.rendererFrame && !screen.checkLayout && !screen.firstFrame)
             ? SDL_APP_SUCCESS : SDL_APP_FAILURE;
@@ -732,6 +818,9 @@ SDL_AppResult SDL_AppEvent(void *state, SDL_Event *event) {
 void SDL_AppQuit(void *state, SDL_AppResult) {
     std::unique_ptr<Screen> screen(static_cast<Screen *>(state));
     if (screen) {
+#ifdef DASSDL3_IOS_IMGUI_INPUT
+        if (screen->imguiInput) stopImGuiInput();
+#endif
         if (screen->audioNeedsCleanup) {
             screen->context->restart();
             screen->context->evalWithCatch(screen->audioClose, nullptr);

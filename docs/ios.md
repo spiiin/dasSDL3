@@ -187,6 +187,38 @@ is configured, both scripts run in the interpreter and strict AOT.
 On iPhone 16 (iOS 27.0.1), TCP and UDP passed in all four runs, and
 the app exited with code zero.
 
+## dasImgui v2 widget test
+
+Enable `-DDASSDL3_WITH_IMGUI=ON` and launch the iPhone app with
+`--imgui-widgets-smoke`. It runs `tests/imgui_widgets.das` in the interpreter
+and requires the SDL Metal renderer. The test reads back rendered pixels and
+checks synthetic clicks, widget snapshots, and slider updates. The iOS target
+links the daScript bindings and SDL backends used by this test.
+On iPhone 16, the test selected Metal, passed the pixel and widget checks,
+and exited with code zero.
+
+To try the screen keyboard with a daScript v2 widget, also enable
+`-DDASSDL3_IOS_IMGUI_INPUT=ON` and launch with `--imgui-widgets-input`. Tap the
+field and type `caféx` or `приветт`. Press Backspace once, then Return. The test
+checks the widget value after typing and after deletion, then checks the exact
+UTF-8 value including the final newline.
+The manual run on iPhone 16 passed all three checks in the interpreter and
+exited with code zero.
+
+## Dear ImGui keyboard smoke test
+
+Enable `-DDASSDL3_IOS_IMGUI_INPUT=ON` on the iPhone build and launch with
+`--imgui-input`. Tap the multiline field, type `café` or `привет`, and
+press Return. The test bundles JetBrains Mono for accented Latin and Cyrillic
+glyphs. It checks the SDL text and Return events and compares the native ImGui
+buffer with the expected text followed by a newline. The renderer uses Metal.
+During testing on iPhone 16, the on-screen keyboard appeared after quitting
+Xcode Device Hub on the Mac. Close Device Hub if the keyboard stays hidden
+when you tap the field on the phone.
+In a manual run on iPhone 16, Backspace removed one Cyrillic character and
+the log confirmed that Return appended a newline. Since the text had been
+edited, the exact-string check did not report PASS in that run.
+
 ## Build a small app from source
 
 After building the host emitter above, configure the standalone example

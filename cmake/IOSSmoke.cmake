@@ -24,6 +24,33 @@ set_target_properties(dasSDL3_iphone PROPERTIES
     XCODE_GENERATE_SCHEME ON
     XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "${DASSDL3_IOS_BUNDLE_ID}"
     XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "1,2")
+option(DASSDL3_IOS_IMGUI_INPUT "Build the ImGui keyboard smoke tests" OFF)
+if(DASSDL3_WITH_IMGUI)
+    target_link_libraries(dasSDL3_iphone PRIVATE dasSDL3_imgui libDasModuleLiveHost)
+    target_compile_definitions(dasSDL3_iphone PRIVATE DASSDL3_WITH_IMGUI=1)
+endif()
+if(DASSDL3_IOS_IMGUI_INPUT AND NOT DASSDL3_WITH_IMGUI)
+    include(FetchContent)
+    FetchContent_Declare(ios_imgui
+        URL https://github.com/ocornut/imgui/archive/refs/tags/v1.92.6-docking.tar.gz
+        URL_HASH SHA256=5e84cdaa6a6041586a0d11a3071b749734a0439d66fdbdad37ae5b27e37d396c
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE)
+    FetchContent_MakeAvailable(ios_imgui)
+    target_sources(dasSDL3_iphone PRIVATE
+        "${ios_imgui_SOURCE_DIR}/imgui.cpp"
+        "${ios_imgui_SOURCE_DIR}/imgui_draw.cpp"
+        "${ios_imgui_SOURCE_DIR}/imgui_tables.cpp"
+        "${ios_imgui_SOURCE_DIR}/imgui_widgets.cpp"
+        "${ios_imgui_SOURCE_DIR}/backends/imgui_impl_sdl3.cpp"
+        "${ios_imgui_SOURCE_DIR}/backends/imgui_impl_sdlrenderer3.cpp")
+    target_include_directories(dasSDL3_iphone PRIVATE
+        "${ios_imgui_SOURCE_DIR}" "${ios_imgui_SOURCE_DIR}/backends")
+    target_compile_definitions(dasSDL3_iphone PRIVATE IMGUI_USE_WCHAR32=1)
+endif()
+if(DASSDL3_IOS_IMGUI_INPUT)
+    target_sources(dasSDL3_iphone PRIVATE "${_root}/ios/imgui_input.cpp")
+    target_compile_definitions(dasSDL3_iphone PRIVATE DASSDL3_IOS_IMGUI_INPUT=1)
+endif()
 if(DASSDL3_IOS_TEAM)
     set_target_properties(dasSDL3_iphone PROPERTIES
         XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "${DASSDL3_IOS_TEAM}"
@@ -35,6 +62,32 @@ function(_iphone_resource path subdir)
     set_source_files_properties("${path}" PROPERTIES
         MACOSX_PACKAGE_LOCATION "Resources/${subdir}")
 endfunction()
+if(DASSDL3_WITH_IMGUI)
+    _iphone_resource("${_root}/tests/imgui_widgets.das" tests)
+    set(_modules "${_root}/third_party/daScript/modules")
+    file(GLOB _imgui_scripts CONFIGURE_DEPENDS "${_modules}/dasImgui/widgets/*.das")
+    foreach(_file IN LISTS _imgui_scripts)
+        _iphone_resource("${_file}" imgui)
+    endforeach()
+    foreach(_script live_vars live_commands)
+        _iphone_resource("${_modules}/dasLiveHost/live/${_script}.das" modules/dasLiveHost/live)
+    endforeach()
+    foreach(_notice IMGUI FREETYPE_FTL MD4C)
+        _iphone_resource("${_modules}/dasImgui/licenses/${_notice}.txt" notices/ImGui)
+    endforeach()
+elseif(DASSDL3_IOS_IMGUI_INPUT)
+    _iphone_resource("${ios_imgui_SOURCE_DIR}/LICENSE.txt" notices/ImGui)
+endif()
+if(DASSDL3_IOS_IMGUI_INPUT)
+    if(DASSDL3_WITH_IMGUI)
+        _iphone_resource("${_root}/ios/imgui_widgets_input.das" ios)
+    endif()
+    if(NOT DASSDL3_WITH_TTF)
+        foreach(_asset JetBrainsMono-Regular.ttf OFL.txt AUTHORS.txt)
+            _iphone_resource("${_root}/examples/libraries/assets/${_asset}" assets/libraries)
+        endforeach()
+    endif()
+endif()
 foreach(_script IN LISTS _scripts)
     _iphone_resource("${_script}" examples)
 endforeach()
