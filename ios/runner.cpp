@@ -1,13 +1,8 @@
 // On-device host for the existing Metal pixel, compute and strict AOT tests.
-#include "daScript/daScript.h"
-#include "daScript/simulate/fs_file_info.h"
+#include "bundle_scripts.h"
 #define SDL_MAIN_USE_CALLBACKS 1
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
-#include <filesystem>
-#include <limits>
-#include <memory>
-#include <utility>
 #include <cerrno>
 #include <cstring>
 #include <unistd.h>
@@ -15,44 +10,13 @@
 DECLARE_MODULE(Module_dasSDL3);
 MAKE_TYPE_FACTORY(SDL_GPUDevice, SDL_GPUDevice);
 MAKE_TYPE_FACTORY(SDL_Window, SDL_Window);
+MAKE_TYPE_FACTORY(SDL_Renderer, SDL_Renderer);
 MAKE_TYPE_FACTORY(SDL_Event, SDL_Event);
 MAKE_TYPE_FACTORY(SDL_GPUGraphicsPipeline, SDL_GPUGraphicsPipeline);
 
 namespace {
-class BundleAccess final : public das::FsFileAccess {
-public:
-    das::ModuleInfo getModuleInfo(const das::string &request, const das::string &from) const override {
-        // The SDK's no-file-I/O build omits source-relative import resolution.
-        const std::filesystem::path path(request.c_str());
-        if (request.compare(0, 2, "./") == 0 && path.extension() == ".das") {
-            const auto file = (std::filesystem::path(from.c_str()).parent_path() / path).lexically_normal();
-            das::ModuleInfo info;
-            info.fileName = file.generic_string().c_str();
-            info.moduleName = info.importName = file.stem().generic_string().c_str();
-            return info;
-        }
-        return FsFileAccess::getModuleInfo(request, from);
-    }
-};
-
-class BundleScripts final : public das::AnyFileSystem {
-public:
-    explicit BundleScripts(das::string root) : root_(std::move(root)) {}
-    das::FileInfo *tryOpenFile(const das::string &name) override {
-        // Only packaged .das files, through the module resolver's absolute paths.
-        if (name.compare(0, root_.size(), root_) != 0 || name.find("..") != das::string::npos ||
-            name.size() < 4 || name.compare(name.size() - 4, 4, ".das") != 0) return nullptr;
-        size_t length = 0;
-        std::unique_ptr<void, decltype(&SDL_free)> bytes(SDL_LoadFile(name.c_str(), &length), SDL_free);
-        if (!bytes || length > std::numeric_limits<uint32_t>::max()) return nullptr;
-        auto *source = static_cast<char *>(das_aligned_alloc16(length + 1));
-        if (!source) return nullptr;
-        SDL_memcpy(source, bytes.get(), length + 1); // SDL_LoadFile appends NUL.
-        return new das::TextFileInfo(source, static_cast<uint32_t>(length), true);
-    }
-private:
-    das::string root_;
-};
+using dassdl3_ios::BundleAccess;
+using dassdl3_ios::BundleScripts;
 
 enum class Check { Normal, MissingAot, ReadSavedData };
 
@@ -335,6 +299,87 @@ struct Screen {
         return SDL_APP_CONTINUE;
     }
 
+    das::SimFunction *rendererFrame = nullptr;
+    das::SimFunction *rendererClose = nullptr;
+    bool rendererNeedsCleanup = false;
+
+    bool callRenderer(das::SimFunction *function, bool &result) {
+        using namespace das;
+        vec4f args[] = {cast<SDL_Renderer *>::from(renderer)};
+        context->restart();
+        const auto value = context->evalWithCatch(function, args);
+        if (const auto *error = context->getException()) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s exception: %s", function->name, error);
+            return false;
+        }
+        result = cast<bool>::to(value);
+        return true;
+    }
+
+    bool startRenderer(const das::string &root, bool aot) {
+        using namespace das;
+        if (!loadInteractive(root, "examples/86_gpu_renderer.das", aot)) return false;
+        auto *open = context->findFunction("renderer_open");
+        rendererFrame = context->findFunction("renderer_frame");
+        rendererClose = context->findFunction("renderer_close");
+        if (!open || !rendererFrame || !rendererClose ||
+            (aot && (!open->aot || !rendererFrame->aot || !rendererClose->aot)) ||
+            !verifyCall<bool, SDL_Renderer *>(open->debugInfo, modules) ||
+            !verifyCall<bool, SDL_Renderer *>(rendererFrame->debugInfo, modules) ||
+            !verifyCall<void, SDL_Renderer *>(rendererClose->debugInfo, modules)) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Invalid GPU Renderer entry points (AOT=%d)", aot);
+            return false;
+        }
+        SDL_SetHintWithPriority(SDL_HINT_GPU_DRIVER, "metal", SDL_HINT_OVERRIDE);
+        SDL_SetHint(SDL_HINT_RENDER_GPU_DEBUG, "1");
+        if (SDL_Init(SDL_INIT_VIDEO)) {
+            window = SDL_CreateWindow("SDL GPU Renderer", 640, 480, SDL_WINDOW_HIGH_PIXEL_DENSITY);
+            if (window) renderer = SDL_CreateGPURenderer(nullptr, window);
+        }
+        if (!renderer || !SDL_SetRenderLogicalPresentation(renderer, 640, 480, SDL_LOGICAL_PRESENTATION_LETTERBOX)) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "GPU Renderer setup: %s", SDL_GetError());
+            return false;
+        }
+        const char *driver = SDL_GetGPUDeviceDriver(SDL_GetGPURendererDevice(renderer));
+        if (!driver || SDL_strcmp(driver, "metal") != 0) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "GPU Renderer requires the Metal backend");
+            return false;
+        }
+        rendererNeedsCleanup = true;
+        bool opened = false;
+        return callRenderer(open, opened) && opened;
+    }
+
+    SDL_AppResult drawRenderer() {
+        const unsigned resumed = SDL_GetAtomicInt(&resumeCount);
+        bool drawn = false;
+        if (!callRenderer(rendererFrame, drawn) || !drawn) return SDL_APP_FAILURE;
+        if (!context->runWithCatchAndClear([&] { context->collectHeapIfMostlyFree(); })) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "GPU Renderer garbage collection failed");
+            return SDL_APP_FAILURE;
+        }
+        if (firstFrame) {
+            firstFrame = false;
+            SDL_Log("dasSDL3 GPU Renderer first frame on Metal (%s)", rendererFrame->aot ? "strict AOT" : "interpreter");
+        }
+        if (resumed != reportedResume) {
+            reportedResume = resumed;
+            SDL_Log("dasSDL3 GPU Renderer frame after foreground (cycle %u)", resumed);
+        }
+        return SDL_APP_CONTINUE;
+    }
+
+    void closeRenderer() {
+        context->restart();
+        vec4f args[] = {das::cast<SDL_Renderer *>::from(renderer)};
+        context->evalWithCatch(rendererClose, args);
+        if (const auto *error = context->getException()) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "GPU Renderer cleanup exception: %s", error);
+            return;
+        }
+        SDL_Log("dasSDL3 GPU Renderer resources released");
+    }
+
     bool startTriangle(const das::string &root) {
         using namespace das;
         bool aot = false;
@@ -419,6 +464,13 @@ SDL_AppResult SDL_AppInit(void **state, int argc, char **argv) {
 #endif
             return passed ? SDL_APP_SUCCESS : SDL_APP_FAILURE;
         }
+        if (SDL_strcmp(argv[i], "--gpu-renderer") == 0) {
+            bool aot = false;
+#ifdef DASSDL3_IPHONE_STRICT_AOT
+            aot = true;
+#endif
+            return screen->startRenderer(root, aot) ? SDL_APP_CONTINUE : SDL_APP_FAILURE;
+        }
         if (SDL_strcmp(argv[i], "--audio-interpreter") == 0)
             return screen->startAudio(root, false) ? SDL_APP_CONTINUE : SDL_APP_FAILURE;
 #ifdef DASSDL3_IPHONE_STRICT_AOT
@@ -483,6 +535,7 @@ SDL_AppResult SDL_AppIterate(void *state) {
     if (!SDL_GetAtomicInt(&screen.active)) return SDL_APP_CONTINUE;
     if (screen.audioTick) return screen.drawAudio();
     if (screen.inputEvent) return screen.drawInput();
+    if (screen.rendererFrame) return screen.drawRenderer();
     if (screen.pipeline) return screen.drawTriangle();
     if (!SDL_SetRenderDrawColor(screen.renderer, screen.passed ? 20 : 165, screen.passed ? 130 : 20, 40, 255) ||
         !SDL_RenderClear(screen.renderer) ||
@@ -506,7 +559,11 @@ SDL_AppResult SDL_AppEvent(void *state, SDL_Event *event) {
         SDL_Log("dasSDL3 iPhone foreground: waiting for frame (cycle %d)", cycle);
         SDL_SetAtomicInt(&screen.active, 1);
     }
-    if (event->type == SDL_EVENT_QUIT) return screen.passed ? SDL_APP_SUCCESS : SDL_APP_FAILURE;
+    if (event->type == SDL_EVENT_QUIT)
+        return screen.passed || (screen.rendererFrame && !screen.firstFrame) ? SDL_APP_SUCCESS : SDL_APP_FAILURE;
+    if (screen.rendererFrame && event->type == SDL_EVENT_FINGER_UP && !screen.firstFrame &&
+        SDL_GetAtomicInt(&screen.active))
+        return SDL_APP_SUCCESS;
     if (screen.audioTick && event->type == SDL_EVENT_FINGER_UP && SDL_GetAtomicInt(&screen.active) &&
         screen.reportedResume > 0 && screen.reportedResume == unsigned(SDL_GetAtomicInt(&screen.resumeCount)) &&
         screen.audioRefills >= 3) {
@@ -527,6 +584,7 @@ void SDL_AppQuit(void *state, SDL_AppResult) {
             if (const char *error = screen->context->getException())
                 SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Audio cleanup exception: %s", error);
         }
+        if (screen->rendererNeedsCleanup) screen->closeRenderer();
         if (screen->device) {
             if (!SDL_WaitForGPUIdle(screen->device))
                 SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Triangle cleanup: %s", SDL_GetError());
