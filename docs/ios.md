@@ -16,8 +16,19 @@ The existing `tests/filesystem.das` also passed in the interpreter and strict
 AOT on the same phone. It runs in the app's writable preferences directory and
 uses absolute paths because SDL 3.4.16 on iOS resolves some relative paths
 against a different directory. The test checks directory creation, file
-contents, copy/rename, enumeration and cleanup. Persistence between launches
-is a separate check.
+contents, copy/rename, enumeration and cleanup.
+
+To check persistence, install the build once and use `devicectl device process
+launch` with `--console` to start the app twice: pass `--persistence-write`
+to the first launch and wait for it to exit, then pass `--persistence-read`
+to the second. The first process writes seven binary bytes with the
+interpreter. The second only reads and compares the bytes (using strict AOT
+when the AOT tool is configured). Both phases must log PASS with different
+process IDs. Do not reinstall the app between the two launches.
+
+Verified on iPhone 16 (iOS 27.0.1): the interpreter wrote the fixture, then a
+fresh strict AOT process read the same seven bytes after the writer exited.
+Both processes exited successfully.
 
 Use full Xcode, CMake and Ninja. Build the AOT emitter on macOS first:
 

@@ -53,7 +53,9 @@ private:
     das::string root_;
 };
 
-bool run(const das::string &root, const char *path, bool aot, bool expectMissingAot = false) {
+enum class Check { Normal, MissingAot, ReadSavedData };
+
+bool run(const das::string &root, const char *path, bool aot, Check check = Check::Normal) {
     using namespace das;
     TextWriter diagnostics;
     ModuleGroup modules;
@@ -75,7 +77,7 @@ bool run(const das::string &root, const char *path, bool aot, bool expectMissing
     if (program->failed()) return report();
     Context context(program->getContextStackSize());
     const bool simulated = program->simulate(context, diagnostics);
-    if (expectMissingAot) {
+    if (check == Check::MissingAot) {
         bool expectedFailure = !simulated && !program->errors.empty();
         for (const auto &error : program->errors)
             expectedFailure = expectedFailure && error.cerr == CompilationError::missing_aot;
@@ -89,7 +91,7 @@ bool run(const das::string &root, const char *path, bool aot, bool expectMissing
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Incorrect or missing smoke entry (AOT=%d)", aot);
         return false;
     }
-    vec4f args[] = {cast<bool>::from(true)};
+    vec4f args[] = {cast<bool>::from(check != Check::ReadSavedData)};
     auto value = context.evalWithCatch(entry, args);
     if (auto *error = context.getException()) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s (%s) exception: %s",
@@ -220,7 +222,7 @@ struct Screen {
 };
 }
 
-SDL_AppResult SDL_AppInit(void **state, int, char **) {
+SDL_AppResult SDL_AppInit(void **state, int argc, char **argv) {
     auto *screen = new Screen;
     *state = screen;
     const char *path = SDL_GetBasePath();
@@ -230,6 +232,20 @@ SDL_AppResult SDL_AppInit(void **state, int, char **) {
     NEED_ALL_DEFAULT_MODULES;
     NEED_MODULE(Module_dasSDL3);
     das::Module::Initialize();
+    for (int i = 1; i < argc; ++i) {
+        const bool write = SDL_strcmp(argv[i], "--persistence-write") == 0;
+        const bool read = SDL_strcmp(argv[i], "--persistence-read") == 0;
+        if (!write && !read) continue;
+        bool aot = false;
+#ifdef DASSDL3_IPHONE_STRICT_AOT
+        aot = read;
+#endif
+        if (!run(root, "ios/persistence.das", aot, read ? Check::ReadSavedData : Check::Normal))
+            return SDL_APP_FAILURE;
+        SDL_Log("dasSDL3 persistence %s PASS pid=%d mode=%s",
+                write ? "write" : "read", int(getpid()), aot ? "strict-aot" : "interpreter");
+        return SDL_APP_SUCCESS;
+    }
     constexpr const char *scripts[] = {
         "examples/44_gpu_render_pass.das",
         "examples/46_gpu_texture_uniform_bindings.das",
@@ -246,7 +262,7 @@ SDL_AppResult SDL_AppInit(void **state, int, char **) {
 #endif
     }
 #ifdef DASSDL3_IPHONE_STRICT_AOT
-    screen->passed = run(root, "tests/macos_missing_aot.das", true, true) && screen->passed;
+    screen->passed = run(root, "tests/macos_missing_aot.das", true, Check::MissingAot) && screen->passed;
 #endif
     if (!SDL_Init(SDL_INIT_VIDEO)) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
