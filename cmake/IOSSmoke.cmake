@@ -1,5 +1,5 @@
 # Device app, not a desktop runner. The emitter is a macOS executable.
-set(DASSDL3_IOS_AOT_TOOL "" CACHE FILEPATH "Host dasSDL3_macos_aot_tool for the iOS smoke app")
+set(DASSDL3_IOS_AOT_TOOL "" CACHE FILEPATH "Matching macOS AOT emitter for the iOS smoke app")
 set(DASSDL3_IOS_BUNDLE_ID "org.dassdl3.iphone-smoke" CACHE STRING "iOS smoke bundle identifier")
 set(DASSDL3_IOS_TEAM "" CACHE STRING "Apple development team for automatic Xcode signing")
 set(_root "${PROJECT_SOURCE_DIR}")
@@ -72,13 +72,25 @@ foreach(_dep SDL daScript)
     endforeach()
 endforeach()
 
+if(DASSDL3_WITH_IMAGE)
+    target_link_libraries(dasSDL3_iphone PRIVATE dasSDL3_image)
+    target_compile_definitions(dasSDL3_iphone PRIVATE DASSDL3_WITH_IMAGE=1)
+    set(_image_scripts "${_root}/tests/image.das" "${_root}/examples/libraries/02_image.das")
+    _iphone_resource("${_root}/tests/image.das" tests)
+    _iphone_resource("${_root}/examples/libraries/02_image.das" examples/libraries)
+    foreach(_asset alpha.png sample.svg two_frames.gif invalid.bin)
+        _iphone_resource("${_root}/examples/libraries/assets/${_asset}" assets/libraries)
+    endforeach()
+    _iphone_resource("${SDL3_image_SOURCE_DIR}/LICENSE.txt" notices/SDL_image)
+endif()
+
 if(DASSDL3_IOS_AOT_TOOL)
     if(NOT EXISTS "${DASSDL3_IOS_AOT_TOOL}")
         message(FATAL_ERROR "Build the macOS AOT emitter before configuring the iOS app")
     endif()
     # The application unit emits its own functions and template instances.
     # Shared imports also need their own registration units for strict linking.
-    set(_pending ${_scripts} "${_audio}" "${_gpu_renderer}" "${_triangle}" "${_filesystem}" "${_persistence}" "${_input_smoke}" "${_support}")
+    set(_pending ${_scripts} "${_audio}" "${_gpu_renderer}" "${_triangle}" "${_filesystem}" "${_persistence}" "${_input_smoke}" "${_support}" ${_image_scripts})
     set(_aot_inputs)
     while(_pending)
         list(POP_FRONT _pending _input)

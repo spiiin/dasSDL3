@@ -4,6 +4,8 @@ require dassdl3/sdl3_init_boost
 require dassdl3/sdl3_scope
 require dassdl3/sdl3_pixels_boost
 require dassdl3/sdl3_iostream_boost
+require dassdl3/sdl3_filesystem_boost
+require dassdl3/sdl3_renderer_primitives_boost
 require daslib/defer
 require math
 
@@ -49,6 +51,17 @@ def test_images(renderer : SDL_Renderer?; assets : string) {
     SDL_SetErrorMessage("stale error")
     with_image("{assets}alpha.png") $(surface : SDL_Surface?) { return check_png(surface) } |> sdl_try
 
+    with_image("{assets}sample.svg") $(surface : SDL_Surface?) {
+        let size = surface_size(surface) |> sdl_try
+        verify(size == int2(32, 32))
+        var bytes : array<uint8>
+        resize(bytes, 4096)
+        copy_surface_rgba8(surface, bytes, 128) |> sdl_try
+        let i = (16 * 32 + 16) * 4
+        verify(uint4(uint(bytes[i]), uint(bytes[i + 1]), uint(bytes[i + 2]), uint(bytes[i + 3])) == uint4(220u, 40u, 70u, 255u))
+        return sdl_ok()
+    } |> sdl_try
+
     // Borrowed IO remains usable after sniffing, success and failure.
     with_io_file("{assets}alpha.png", "rb") $(io : SDL_IOStream?) {
         let before = SDL_TellIO(io)
@@ -66,8 +79,14 @@ def test_images(renderer : SDL_Renderer?; assets : string) {
     } |> sdl_try
 
     with_image("{assets}alpha.png") $(surface : SDL_Surface?) {
-        let png = "{SDL_GetBasePath()}image-{SDL_GetTicksNS()}.png"
-        let jpg = "{SDL_GetBasePath()}image-{SDL_GetTicksNS()}.jpg"
+        // On iOS the signed app bundle is read-only.
+        var output = SDL_GetBasePath()
+        if (SDL_GetPlatform() == "iOS") {
+            output = pref_path("dasSDL3", "Image Tests") |> sdl_try
+        }
+        let stamp = SDL_GetTicksNS()
+        let png = "{output}image-{stamp}.png"
+        let jpg = "{output}image-{stamp}.jpg"
         defer() { SDL_RemovePath(png); SDL_RemovePath(jpg) }
         surface |> save_image_png(png) |> sdl_try
         surface |> save_image_jpg(jpg, 95) |> sdl_try
@@ -141,9 +160,9 @@ def test_images(renderer : SDL_Renderer?; assets : string) {
 def main(smoke : bool) : int {
     verify(IMG_Version() == 3002004)
     let result = sdl_scope() {
-        with_sdl(SDL_INIT_VIDEO) |> sdl_use
-        let window : SDL_Window? = with_window("SDL_image tests", 64, 64, SDL_WINDOW_HIDDEN) |> sdl_use
-        let renderer : SDL_Renderer? = window |> with_renderer() |> sdl_use
+        with_sdl(0u) |> sdl_use
+        let target : SDL_Surface? = with_surface(64, 64, SDL_PixelFormat.PIXELFORMAT_RGBA32) |> sdl_use
+        let renderer : SDL_Renderer? = target |> with_software_renderer() |> sdl_use
         return test_images(renderer, "{SDL_GetBasePath()}assets/libraries/")
     }
     if (is_err(result)) {
@@ -151,6 +170,6 @@ def main(smoke : bool) : int {
         print("{error.operation}: {error.message}\n")
         return 1
     }
-    print("SDL_image: PNG pixels/alpha, JPEG, IO, GIF frames, errors and scopes passed.\n")
+    print("SDL_image: PNG pixels/alpha, SVG, JPEG, IO, GIF frames, errors and scopes passed.\n")
     return 0
 }

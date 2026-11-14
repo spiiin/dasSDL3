@@ -10,7 +10,7 @@ also ran in strict AOT: the device log recorded the first swapchain submission
 and a new submission after each of two cycles (Home Screen and lock/unlock).
 The triangle was visible after both returns. UIKit logged an unbalanced
 appearance transition at startup, but the first frame and both resume checks
-completed. Companion libraries remain unverified.
+completed.
 
 The existing `tests/filesystem.das` also passed in the interpreter and strict
 AOT on the same phone. It runs in the app's writable preferences directory and
@@ -102,6 +102,22 @@ consumer project. It checks both Mach-O binaries, the consumer's bundle ID,
 AOT generation and bundled resources. Installation and rendering checks run
 separately on a device.
 
+## SDL_image
+
+Enable `-DDASSDL3_WITH_IMAGE=ON` for both the macOS emitter and the iPhone
+build. Build `dasSDL3_macos_libraries_aot_tool` on macOS and pass its path as
+`DASSDL3_IOS_AOT_TOOL` to the iPhone build. This profile uses SDL_image's
+built-in codecs.
+
+Launch with `--image-smoke`. The app runs the existing
+`tests/image.das` and `examples/libraries/02_image.das` in the interpreter
+and, when configured, strict AOT. The test checks decoded PNG and SVG pixels,
+alpha blending, PNG and JPEG round trips, GIF animation and IO ownership.
+It writes temporary images to the app's preferences directory. The example
+loads PNG and SVG textures from the bundle and renders three frames through
+SDL's Metal renderer. On iPhone 16 (iOS 27.0.1), both scripts passed in
+the interpreter and strict AOT, and the app exited with code zero.
+
 ## Build a small app from source
 
 After building the host emitter above, configure the standalone example
@@ -150,4 +166,5 @@ The pinned runtime's desktop crash handler uses macOS-only Mach APIs, and its
 desktop file I/O module includes subprocess APIs unavailable on iOS. The
 iPhone profile uses the SDK's no-file-I/O build and reads packaged scripts
 through a read-only host file system. SDL file APIs are separate. LLVM, desktop
-package modules, and optional SDL companion libraries are outside this profile.
+package modules, and companion libraries other than SDL_image are outside
+this profile.
