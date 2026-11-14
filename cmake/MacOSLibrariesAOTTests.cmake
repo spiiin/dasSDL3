@@ -25,7 +25,8 @@ if(DASSDL3_WITH_IMAGE)
     list(APPEND _library_scripts examples/libraries/02_image)
 endif()
 if(DASSDL3_WITH_TTF)
-    list(APPEND _library_scripts tests/ttf_shaping tests/ttf_gpu)
+    list(APPEND _library_scripts tests/ttf_shaping tests/ttf_gpu
+        examples/libraries/03_ttf examples/libraries/04_ttf_shaping examples/libraries/05_ttf_gpu)
     list(APPEND _library_modules dassdl3/sdl3_window_io_boost
         dassdl3/sdl3_gpu_native_boost dassdl3/sdl3_gpu_boost
         dassdl3/sdl3_gpu_result dassdl3/sdl3_properties_boost)
@@ -98,7 +99,7 @@ foreach(script IN LISTS _library_scripts)
     set_tests_properties(macos_libraries_${name}_strict_aot PROPERTIES
         ENVIRONMENT "SDL_RENDER_DRIVER=software;SDL_AUDIODRIVER=dummy" TIMEOUT 90 RUN_SERIAL TRUE
         LABELS "macos-libraries-aot" WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}")
-    if(script STREQUAL "tests/ttf_gpu")
+    if(script MATCHES "ttf_gpu$")
         set_property(TEST macos_libraries_${name}_strict_aot APPEND PROPERTY
             ENVIRONMENT "SDL_GPU_DRIVER=metal")
     endif()

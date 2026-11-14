@@ -118,6 +118,22 @@ loads PNG and SVG textures from the bundle and renders three frames through
 SDL's Metal renderer. On iPhone 16 (iOS 27.0.1), both scripts passed in
 the interpreter and strict AOT, and the app exited with code zero.
 
+## SDL_ttf
+
+Enable `-DDASSDL3_WITH_TTF=ON` for both the macOS emitter and the iPhone
+build, then use the host `dasSDL3_macos_libraries_aot_tool`. The build uses
+the pinned FreeType and HarfBuzz dependencies and packages the two test
+fonts and the MSL shaders in the app.
+
+Launch with `--ttf-smoke` to run the existing SDL_ttf tests and examples
+03, 04 and 05. The suite checks font metrics and stream ownership, Arabic
+and Latin shaping, GPU atlas data across multiple pages and rendered text
+against a CPU glyph mask. It runs in the interpreter and strict AOT when
+the emitter is configured. On iPhone 16 (iOS 27.0.1), all six scripts passed
+in both modes. The Metal readback reported 3,561 ink pixels and zero
+differences from the CPU glyph mask in each run. The SDL_image suite also
+passed in both modes with both libraries enabled.
+
 ## Build a small app from source
 
 After building the host emitter above, configure the standalone example
@@ -166,5 +182,5 @@ The pinned runtime's desktop crash handler uses macOS-only Mach APIs, and its
 desktop file I/O module includes subprocess APIs unavailable on iOS. The
 iPhone profile uses the SDK's no-file-I/O build and reads packaged scripts
 through a read-only host file system. SDL file APIs are separate. LLVM, desktop
-package modules, and companion libraries other than SDL_image are outside
+package modules, and companion libraries other than SDL_image and SDL_ttf are outside
 this profile.

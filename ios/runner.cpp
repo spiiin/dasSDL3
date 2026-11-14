@@ -4,10 +4,14 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <cerrno>
+#include <initializer_list>
 #include <cstring>
 #include <unistd.h>
 
 DECLARE_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_TTF
+DECLARE_MODULE(Module_sdl3_ttf);
+#endif
 #ifdef DASSDL3_WITH_IMAGE
 DECLARE_MODULE(Module_sdl3_image);
 #endif
@@ -74,6 +78,24 @@ bool run(const das::string &root, const char *path, bool aot, Check check = Chec
     SDL_Log("dasSDL3 iPhone %s PASS (%s)", path, aot ? "strict AOT" : "interpreter");
     return true;
 }
+
+#if defined(DASSDL3_WITH_IMAGE) || defined(DASSDL3_WITH_TTF)
+SDL_AppResult runCompanion(const das::string &root, std::initializer_list<const char *> scripts) {
+    bool passed = true;
+    for (const char *script : scripts) {
+        // Each script owns SDL; SDL_Quit clears these hints.
+        SDL_SetHintWithPriority(SDL_HINT_RENDER_DRIVER, "metal", SDL_HINT_OVERRIDE);
+        SDL_SetHintWithPriority(SDL_HINT_GPU_DRIVER, "metal", SDL_HINT_OVERRIDE);
+        passed = run(root, script, false) && passed;
+#ifdef DASSDL3_IPHONE_STRICT_AOT
+        SDL_SetHintWithPriority(SDL_HINT_RENDER_DRIVER, "metal", SDL_HINT_OVERRIDE);
+        SDL_SetHintWithPriority(SDL_HINT_GPU_DRIVER, "metal", SDL_HINT_OVERRIDE);
+        passed = run(root, script, true) && passed;
+#endif
+    }
+    return passed ? SDL_APP_SUCCESS : SDL_APP_FAILURE;
+}
+#endif
 
 bool runFilesystem(const das::string &root) {
     using SDLString = std::unique_ptr<char, decltype(&SDL_free)>;
@@ -454,25 +476,23 @@ SDL_AppResult SDL_AppInit(void **state, int argc, char **argv) {
     das::setDasRoot(root.substr(0, root.size() - 1)); // SDL base path ends in '/'.
     NEED_ALL_DEFAULT_MODULES;
     NEED_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_TTF
+    NEED_MODULE(Module_sdl3_ttf);
+#endif
 #ifdef DASSDL3_WITH_IMAGE
     NEED_MODULE(Module_sdl3_image);
 #endif
     das::Module::Initialize();
     for (int i = 1; i < argc; ++i) {
 #ifdef DASSDL3_WITH_IMAGE
-        if (SDL_strcmp(argv[i], "--image-smoke") == 0) {
-            constexpr const char *scripts[] = {"tests/image.das", "examples/libraries/02_image.das"};
-            bool passed = true;
-            for (const char *script : scripts) {
-                SDL_SetHintWithPriority(SDL_HINT_RENDER_DRIVER, "metal", SDL_HINT_OVERRIDE);
-                passed = run(root, script, false) && passed;
-#ifdef DASSDL3_IPHONE_STRICT_AOT
-                SDL_SetHintWithPriority(SDL_HINT_RENDER_DRIVER, "metal", SDL_HINT_OVERRIDE);
-                passed = run(root, script, true) && passed;
+        if (SDL_strcmp(argv[i], "--image-smoke") == 0)
+            return runCompanion(root, {"tests/image.das", "examples/libraries/02_image.das"});
 #endif
-            }
-            return passed ? SDL_APP_SUCCESS : SDL_APP_FAILURE;
-        }
+#ifdef DASSDL3_WITH_TTF
+        if (SDL_strcmp(argv[i], "--ttf-smoke") == 0)
+            return runCompanion(root, {"tests/ttf.das", "tests/ttf_shaping.das", "tests/ttf_gpu.das",
+                                       "examples/libraries/03_ttf.das", "examples/libraries/04_ttf_shaping.das",
+                                       "examples/libraries/05_ttf_gpu.das"});
 #endif
         if (SDL_strcmp(argv[i], "--gpu-renderer-smoke") == 0) {
             SDL_SetHintWithPriority(SDL_HINT_GPU_DRIVER, "metal", SDL_HINT_OVERRIDE);
