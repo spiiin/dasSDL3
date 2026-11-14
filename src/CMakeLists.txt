@@ -52,8 +52,8 @@ elseif(APPLE)
 endif()
 target_include_directories(dasSDL3 PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/third_party/daScript/include>
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/third_party/daScript/3rdparty/fmt/include>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/third_party/daScript/include>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/third_party/daScript/3rdparty/fmt/include>
     $<INSTALL_INTERFACE:include/dasSDL3>
     $<INSTALL_INTERFACE:include>)
 target_link_libraries(dasSDL3 PUBLIC libDaScript SDL3::SDL3)
@@ -71,7 +71,10 @@ if(WIN32)
 endif()
 
 if(IOS)
-    include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/IOSSmoke.cmake)
+    target_compile_definitions(dasSDL3 PUBLIC DAS_USE_BASE_CRASH_HANDLER=0 DAS_NO_FILEIO=1 DAS_BIND_EXTERNAL=0)
+    if(PROJECT_IS_TOP_LEVEL)
+        include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/IOSSmoke.cmake)
+    endif()
     return()
 endif()
 

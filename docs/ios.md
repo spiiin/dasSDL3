@@ -46,6 +46,19 @@ For the GPU Renderer smoke test, launch with `--gpu-renderer-smoke`.
 The existing example 86 draws four frames with a custom MSL fragment shader
 and updates its uniforms. An AOT build runs the example in both modes.
 
+Launch with `--gpu-renderer` for continuous rendering of the same example.
+The iPhone host uses SDL callbacks to run one frame at a time. The color of
+the rectangle should keep changing. Go to the Home Screen, reopen the app
+and check that the colors are changing again. Tap the screen to exit.
+The console logs the first frame, a frame after foregrounding and cleanup.
+The visual check confirms presentation because SDL Renderer can return
+success even when the swapchain drawable is temporarily unavailable.
+An AOT build runs this mode with strict AOT.
+
+On iPhone 16 (iOS 27.0.1), the continuous example animated after launch
+and after returning from the Home Screen. The strict AOT run released
+its resources and exited with code zero.
+
 For audio, launch with `--audio-interpreter` or `--audio-aot`. Example 08
 loops its bundled WAV through CoreAudio. Listen for the tone, lock and
 unlock the phone, then return to the app. When prompted, tap only if the
@@ -83,6 +96,36 @@ Use your own bundle identifier and development team. Open the generated
 and run with development signing. The device must trust the Mac and have
 Developer Mode enabled. The same target also builds an unsigned device app
 with Ninja and `-DCMAKE_BUILD_TYPE=Release`; use Xcode signing for installation.
+The iOS GitHub Actions workflow runs `bash tools/verify_ios_ci.sh` on macOS
+arm64. It builds the host AOT emitter, the `iphoneos` smoke app and a separate
+consumer project. It checks both Mach-O binaries, the consumer's bundle ID,
+AOT generation and bundled resources. Installation and rendering checks run
+separately on a device.
+
+## Build a small app from source
+
+After building the host emitter above, configure the standalone example
+as its own CMake project:
+
+```sh
+cmake -S examples/ios-consumer -B build/ios-hello -G Xcode \
+  -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphoneos \
+  -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET=15.0 \
+  -DBUILD_TESTING=OFF \
+  -DDASSDL3_IOS_AOT_TOOL="$PWD/build/ios-host/bin/dasSDL3_macos_aot_tool" \
+  -DCONSUMER_BUNDLE_ID=com.example.hello -DCONSUMER_TEAM=YOUR_TEAM_ID
+```
+
+Open `build/ios-hello/HelloDasSDL3.xcodeproj` and select `HelloDasSDL3` and
+your device. The app runs its own strict-AOT script, which reads the blue
+channel from the bundled `assets/color.txt` to set the window's background
+color. To use the example from a different directory, copy its four files
+and set `DASSDL3_SOURCE_DIR` to the absolute path to the dasSDL3 checkout.
+The project links the core binding with `add_subdirectory` and
+`target_link_libraries`. The same checkout supplies the runtime's script
+library and the bundle file loader.
+
+## Smoke app behavior
 
 The app runs the existing examples without modifying their checks:
 `44_gpu_render_pass.das` (triangle pixels), `46_gpu_texture_uniform_bindings.das`
