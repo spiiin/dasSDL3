@@ -8,6 +8,7 @@ error and platform limitations.
 - [dasSDL3](../README.md)
 - [Examples](../examples/README.md)
 - [Installed core SDK](sdk.md)
+- [iPhone Metal smoke test](ios.md)
 - [Local daspkg core package](daspkg.md)
 - [dasSDL3 Web examples](../web/README.md)
 - [Remaining work](full-binding-roadmap.md)

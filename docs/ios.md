@@ -1,0 +1,63 @@
+# iPhone device smoke test
+
+This experimental source build targets physical arm64 iPhones (iOS 15+ for
+this profile). SDL 3.4.16 documents Metal GPU support on iOS 13+ with A9+
+hardware. SDL GPU's Metal backend does not support the iOS simulator.
+Verified on iPhone 16 with iOS 27.0.1: all three Metal examples passed in the
+interpreter and in strict AOT with fallback disabled. The negative test also
+confirmed rejection of a script without AOT code. The on-screen triangle
+also ran in strict AOT: the device log recorded the first swapchain submission
+and a new submission after each of two cycles (Home Screen and lock/unlock).
+The triangle was visible after both returns. UIKit logged an unbalanced
+appearance transition at startup, but the first frame and both resume checks
+completed. Companion libraries remain unverified.
+
+Use full Xcode, CMake and Ninja. Build the AOT emitter on macOS first:
+
+```sh
+cmake -S . -B build/ios-host -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON
+cmake --build build/ios-host --target dasSDL3_macos_aot_tool --parallel 6
+```
+
+Then configure the separate iPhone build:
+
+```sh
+cmake -S . -B build/iphone -G Xcode \
+  -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphoneos \
+  -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET=15.0 \
+  -DBUILD_TESTING=OFF \
+  -DDASSDL3_IOS_AOT_TOOL="$PWD/build/ios-host/bin/dasSDL3_macos_aot_tool" \
+  -DDASSDL3_IOS_BUNDLE_ID=com.example.dassdl3-smoke \
+  -DDASSDL3_IOS_TEAM=YOUR_TEAM_ID
+```
+
+Use your own bundle identifier and development team. Open the generated
+`dasSDL3.xcodeproj`, select the `dasSDL3_iphone` scheme and your connected device,
+and run with development signing. The device must trust the Mac and have
+Developer Mode enabled. The same target also builds an unsigned device app
+with Ninja and `-DCMAKE_BUILD_TYPE=Release`; use Xcode signing for installation.
+
+The app runs the existing examples without modifying their checks:
+`44_gpu_render_pass.das` (triangle pixels), `46_gpu_texture_uniform_bindings.das`
+(texture and uniform bindings with pixel readback), and `49_gpu_native_compute.das`
+(compute output bytes). Each runs in the interpreter and strict AOT. The
+existing `tests/macos_missing_aot.das` fixture is bundled without AOT code; the
+strict host must report a missing-AOT error without invoking it.
+
+After the automated checks pass, the app displays the triangle from
+`48_gpu_native_graphics.das` on the Metal swapchain. A red status screen
+indicates an automated check failed; see the device console for the specific
+failure. Without `DASSDL3_IOS_AOT_TOOL`, the app runs in the interpreter only.
+
+With the console attached, go to the Home Screen and reopen the app. Then
+lock the device, unlock it and return to the app again. Check that the triangle
+is visible each time. For each cycle, the console should report
+`background: rendering paused`, `foreground: waiting for frame`, then
+`swapchain resumed frame PASS`. The last message requires an actual swapchain
+image and a successful submission; an unavailable drawable does not count.
+
+The pinned runtime's desktop crash handler uses macOS-only Mach APIs, and its
+desktop file I/O module includes subprocess APIs unavailable on iOS. The
+iPhone profile uses the SDK's no-file-I/O build and reads packaged scripts
+through a read-only host file system. SDL file APIs are separate. LLVM, desktop
+package modules, and optional SDL companion libraries are outside this profile.

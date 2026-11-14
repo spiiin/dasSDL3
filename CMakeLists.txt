@@ -1,13 +1,16 @@
 cmake_minimum_required(VERSION 3.24)
 file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/VERSION" DASSDL3_VERSION LIMIT_COUNT 1)
 project(dasSDL3 VERSION "${DASSDL3_VERSION}" LANGUAGES C CXX)
-if(APPLE AND NOT CMAKE_OSX_DEPLOYMENT_TARGET)
+if(CMAKE_SYSTEM_NAME STREQUAL "Darwin" AND NOT CMAKE_OSX_DEPLOYMENT_TARGET)
     # Set one baseline before dependencies; SDL otherwise sets it too late.
     set(CMAKE_OSX_DEPLOYMENT_TARGET "11.0" CACHE STRING "Minimum macOS version" FORCE)
 endif()
 
 # daspkg supplies the consumer SDK; do not configure our developer SDK/submodule.
 if(DEFINED DASLANG_DIR)
+    if(IOS)
+        message(FATAL_ERROR "iOS uses the static source build; desktop daspkg SDKs are not supported")
+    endif()
     include(src/package/repository.cmake)
     return()
 endif()
@@ -23,12 +26,33 @@ foreach(feature FLEX_BISON CLANG_BIND LLVM SMT HV GLFW IMGUI VULKAN AUDIO
         TREE_SITTER TERMINAL AOT_EXAMPLES TUTORIAL TESTS)
     set(DAS_${feature}_DISABLED ON CACHE BOOL "Minimal dasSDL3 build")
 endforeach()
-set(DAS_TOOLS_DISABLED OFF CACHE BOOL "Build the standalone language executable")
+if(IOS)
+    # The pinned daScript desktop crash handler uses Mach APIs unavailable
+    # on iOS. Its no-file-I/O profile also excludes subprocess builtins.
+    # The iOS host supplies read-only access to bundled script sources.
+    add_compile_definitions(DAS_USE_BASE_CRASH_HANDLER=0 DAS_NO_FILEIO=1 DAS_BIND_EXTERNAL=0)
+    set(DAS_TOOLS_DISABLED ON)
+else()
+    set(DAS_TOOLS_DISABLED OFF CACHE BOOL "Build the standalone language executable")
+endif()
 option(DASSDL3_WITH_IMGUI "Build the optional daScript ImGui + SDL Renderer example host" OFF)
 option(DASSDL3_WITH_IMAGE "Build the optional SDL_image bindings" OFF)
 option(DASSDL3_WITH_TTF "Build the optional SDL_ttf bindings" OFF)
 option(DASSDL3_WITH_NET "Build the optional SDL_net bindings" OFF)
 option(DASSDL3_WITH_MIXER "Build the optional SDL_mixer bindings" OFF)
+option(DASSDL3_WITH_SOUND "Build optional SDL_sound decoding bindings" OFF)
+option(DASSDL3_WITH_SHADERCROSS "Build optional shader translation bindings and CLI" OFF)
+option(DASSDL3_INSTALL_SDK "Install the core native Release SDK" OFF)
+if(IOS)
+    foreach(feature IMGUI IMAGE TTF NET MIXER SOUND SHADERCROSS LIVE)
+        if(DASSDL3_WITH_${feature})
+            message(FATAL_ERROR "The initial iOS profile supports core only: disable DASSDL3_WITH_${feature}")
+        endif()
+    endforeach()
+    if(DASSDL3_INSTALL_SDK)
+        message(FATAL_ERROR "The desktop SDK install is not available for iOS")
+    endif()
+endif()
 if(DASSDL3_WITH_IMGUI)
     # Upstream's ImGui CMake requires these modules even when its GLFW host
     # is unused. Keep the dependencies scoped to this opt-in configuration.
@@ -38,6 +62,24 @@ if(DASSDL3_WITH_IMGUI)
     set(DAS_LIVE_HOST_DISABLED OFF) # Backend-independent v2 widget runtime.
 endif()
 add_subdirectory(third_party/daScript EXCLUDE_FROM_ALL)
+if(IOS)
+    if(CMAKE_GENERATOR STREQUAL "Xcode")
+        # Xcode enables these diagnostics even though Ninja does not.
+        foreach(target libDaScript libDaScript_runtime)
+            target_compile_options(${target} PRIVATE
+                -Wno-error=shorten-64-to-32 -Wno-error=missing-field-initializers)
+        endforeach()
+    endif()
+    # daScript normally puts these archives in the shared source checkout.
+    # Keep iPhone objects out of the macOS SDK used by the host AOT emitter.
+    foreach(target libDaScript libDaScript_runtime libUriParser
+            libDasModuleLiveHost libDasModuleMinfft libDasModuleUnitTest)
+        if(TARGET ${target})
+            set_target_properties(${target} PROPERTIES
+                ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
+        endif()
+    endforeach()
+endif()
 if(MSVC)
     # MSVC 19.38 diagnoses intentional assignments in upstream's type inference.
     # Keep upstream /WX, suppress only this warning in the affected translation unit.
@@ -154,7 +196,6 @@ if(DASSDL3_WITH_MIXER)
         DOWNLOAD_EXTRACT_TIMESTAMP TRUE)
     FetchContent_MakeAvailable(SDL3_mixer)
 endif()
-option(DASSDL3_WITH_SOUND "Build optional SDL_sound decoding bindings" OFF)
 if(DASSDL3_WITH_SOUND)
     # SDL_sound unconditionally calls find_package; reuse our already-built SDL.
     file(WRITE "${CMAKE_FIND_PACKAGE_REDIRECTS_DIR}/sdl3-config.cmake"
@@ -178,13 +219,11 @@ if(DASSDL3_WITH_SOUND)
         target_compile_definitions(SDL3_sound-static PRIVATE "${symbol}=dassdl_sound_${symbol}")
     endforeach()
 endif()
-option(DASSDL3_WITH_SHADERCROSS "Build optional shader translation bindings and CLI" OFF)
 if(DASSDL3_WITH_SHADERCROSS)
     include(cmake/ShaderCross.cmake)
 endif()
 add_subdirectory(src)
 
-option(DASSDL3_INSTALL_SDK "Install the core native Release SDK" OFF)
 if(DASSDL3_INSTALL_SDK)
     include(cmake/InstallSDK.cmake)
 endif()
