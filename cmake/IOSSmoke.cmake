@@ -128,13 +128,22 @@ if(_audio_scripts)
     _iphone_resource("${_root}/examples/libraries/assets/mixer-tone.wav" assets/libraries)
 endif()
 
+if(DASSDL3_WITH_NET)
+    target_link_libraries(dasSDL3_iphone PRIVATE dasSDL3_net)
+    target_compile_definitions(dasSDL3_iphone PRIVATE DASSDL3_WITH_NET=1)
+    set(_net_scripts "${_root}/tests/net.das" "${_root}/examples/libraries/06_net.das")
+    _iphone_resource("${_root}/tests/net.das" tests)
+    _iphone_resource("${_root}/examples/libraries/06_net.das" examples/libraries)
+    _iphone_resource("${SDL3_net_SOURCE_DIR}/LICENSE.txt" notices/SDL_net)
+endif()
+
 if(DASSDL3_IOS_AOT_TOOL)
     if(NOT EXISTS "${DASSDL3_IOS_AOT_TOOL}")
         message(FATAL_ERROR "Build the macOS AOT emitter before configuring the iOS app")
     endif()
     # The application unit emits its own functions and template instances.
     # Shared imports also need their own registration units for strict linking.
-    set(_pending ${_scripts} "${_audio}" "${_gpu_renderer}" "${_triangle}" "${_filesystem}" "${_persistence}" "${_input_smoke}" "${_support}" ${_image_scripts} ${_ttf_scripts} ${_audio_scripts})
+    set(_pending ${_scripts} "${_audio}" "${_gpu_renderer}" "${_triangle}" "${_filesystem}" "${_persistence}" "${_input_smoke}" "${_support}" ${_image_scripts} ${_ttf_scripts} ${_audio_scripts} ${_net_scripts})
     set(_aot_inputs)
     while(_pending)
         list(POP_FRONT _pending _input)

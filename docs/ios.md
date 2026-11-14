@@ -152,6 +152,17 @@ build. The mixer completed both tracks, SDL_sound decoded and queued 9,600
 bytes in each run, and the tester heard the playback. Both launches exited
 with code zero.
 
+## SDL_net
+
+Enable `-DDASSDL3_WITH_NET=ON` in the macOS emitter and iPhone builds. Use
+the host `dasSDL3_macos_libraries_aot_tool` for AOT. Launch with
+`--net-smoke` to run `tests/net.das` and `examples/libraries/06_net.das` on
+loopback (`127.0.0.1`). The test checks TCP payloads and peer closure, UDP
+datagram contents and ownership, and address and error handling. When AOT
+is configured, both scripts run in the interpreter and strict AOT.
+On iPhone 16 (iOS 27.0.1), TCP and UDP passed in all four runs, and
+the app exited with code zero.
+
 ## Build a small app from source
 
 After building the host emitter above, configure the standalone example

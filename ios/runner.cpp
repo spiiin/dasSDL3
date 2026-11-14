@@ -9,6 +9,9 @@
 #include <unistd.h>
 
 DECLARE_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_NET
+DECLARE_MODULE(Module_sdl3_net);
+#endif
 #ifdef DASSDL3_WITH_MIXER
 DECLARE_MODULE(Module_sdl3_mixer);
 #endif
@@ -86,7 +89,7 @@ bool run(const das::string &root, const char *path, bool aot, Check check = Chec
 }
 
 #if defined(DASSDL3_WITH_IMAGE) || defined(DASSDL3_WITH_TTF) || \
-    defined(DASSDL3_WITH_MIXER) || defined(DASSDL3_WITH_SOUND)
+    defined(DASSDL3_WITH_MIXER) || defined(DASSDL3_WITH_SOUND) || defined(DASSDL3_WITH_NET)
 SDL_AppResult runCompanion(const das::string &root, std::initializer_list<const char *> scripts) {
     bool passed = true;
     for (const char *script : scripts) {
@@ -483,6 +486,9 @@ SDL_AppResult SDL_AppInit(void **state, int argc, char **argv) {
     das::setDasRoot(root.substr(0, root.size() - 1)); // SDL base path ends in '/'.
     NEED_ALL_DEFAULT_MODULES;
     NEED_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_NET
+    NEED_MODULE(Module_sdl3_net);
+#endif
 #ifdef DASSDL3_WITH_MIXER
     NEED_MODULE(Module_sdl3_mixer);
 #endif
@@ -514,6 +520,10 @@ SDL_AppResult SDL_AppInit(void **state, int argc, char **argv) {
 #ifdef DASSDL3_WITH_SOUND
         if (SDL_strcmp(argv[i], "--sound-smoke") == 0)
             return runCompanion(root, {"tests/sound.das", "examples/libraries/08_sound.das"});
+#endif
+#ifdef DASSDL3_WITH_NET
+        if (SDL_strcmp(argv[i], "--net-smoke") == 0)
+            return runCompanion(root, {"tests/net.das", "examples/libraries/06_net.das"});
 #endif
         if (SDL_strcmp(argv[i], "--gpu-renderer-smoke") == 0) {
             SDL_SetHintWithPriority(SDL_HINT_GPU_DRIVER, "metal", SDL_HINT_OVERRIDE);
