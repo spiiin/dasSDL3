@@ -19,12 +19,25 @@ def is_sdl_try_function(fn : Function?) : bool {
     return origin != null && origin.name == "sdl_try" && origin._module.name == "sdl3_try"
 }
 
+def is_sdl_error(error_type : TypeDeclPtr) : bool {
+    return (error_type.baseType == Type.tStructure && error_type.structType.name == "SdlError"
+        && error_type.structType._module.name == "sdl3_result")
+}
+
+// daslib/result is tuple<_is_ok; _value; _error> up to daslang 0.6.4 and variant<err; ok> from
+// 0.6.5 on. Either way the value type is argTypes[1]; the expansion below goes through the
+// Result API both shapes share. The value leaves the macro's own temporary with move_unwrap:
+// unwrap takes its Result const, which a pointer payload does not survive.
 def is_sdl_result(rt : TypeDeclPtr) : bool {
-    if (rt == null || rt.baseType != Type.tTuple || length(rt.argTypes) != 3 || length(rt.argNames) != 3) { return false }
-    let error_type = rt.argTypes[2]
-    return (rt.argNames[0] == "_is_ok" && rt.argNames[1] == "_value" && rt.argNames[2] == "_error"
-        && rt.argTypes[0].baseType == Type.tBool && error_type.baseType == Type.tStructure
-        && error_type.structType.name == "SdlError" && error_type.structType._module.name == "sdl3_result")
+    if (rt == null) { return false }
+    if (rt.baseType == Type.tTuple && length(rt.argTypes) == 3 && length(rt.argNames) == 3) {
+        return (rt.argNames[0] == "_is_ok" && rt.argNames[1] == "_value" && rt.argNames[2] == "_error"
+            && rt.argTypes[0].baseType == Type.tBool && is_sdl_error(rt.argTypes[2]))
+    }
+    if (rt.baseType == Type.tVariant && length(rt.argTypes) == 2 && length(rt.argNames) == 2) {
+        return rt.argNames[0] == "err" && rt.argNames[1] == "ok" && is_sdl_error(rt.argTypes[0])
+    }
+    return false
 }
 
 class SdlTryVisitor : AstVisitor {
@@ -70,8 +83,8 @@ class SdlTryVisitor : AstVisitor {
                 let output = rt.argTypes[1]
                 var prefix = qmacro_block() {
                     var $i(tmp) <- $e(call.arguments[0])
-                    if (!$i(tmp)._is_ok) {
-                        return result::err($i(tmp)._error, type<$t(output)>)
+                    if (!result::is_ok($i(tmp))) {
+                        return result::err(result::unwrap_err($i(tmp)), type<$t(output)>)
                     }
                 }
                 // Copy scalar/string/pointer results, consume move-only results.
@@ -82,15 +95,15 @@ class SdlTryVisitor : AstVisitor {
                     expanded |> emplace(copy)
                 }
                 if (stmt is ExprLet) {
-                    (stmt as ExprLet).variables[0].init = qmacro($i(tmp)._value)
+                    (stmt as ExprLet).variables[0].init = qmacro(result::move_unwrap($i(tmp)))
                     var copy = stmt
                     expanded |> emplace(copy)
                 } elif (stmt is ExprCopy) {
-                    (stmt as ExprCopy).right = qmacro($i(tmp)._value)
+                    (stmt as ExprCopy).right = qmacro(result::move_unwrap($i(tmp)))
                     var copy = stmt
                     expanded |> emplace(copy)
                 } elif (stmt is ExprMove) {
-                    (stmt as ExprMove).right = qmacro($i(tmp)._value)
+                    (stmt as ExprMove).right = qmacro(result::move_unwrap($i(tmp)))
                     var copy = stmt
                     expanded |> emplace(copy)
                 }

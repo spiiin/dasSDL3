@@ -79,7 +79,7 @@ def main(smoke : bool) : int {
     verify(trace == "acquire1;between;acquire2;acquire3;body;release3;release2;release1;")
     trace = ""
     var moved <- moving(trace)
-    verify(is_ok(moved) && length(moved._value) == 2 && moved._value[1] == 2)
+    verify(is_ok(moved) && length(unwrap(moved)) == 2 && unwrap(moved)[1] == 2)
     verify(trace == "acquire1;acquire2;release2;release1;")
     let mutated = sdl_scope() {
         var value : int& = sdl_use(with_mutable())
