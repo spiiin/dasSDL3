@@ -222,7 +222,7 @@ def upload_volume(device : SDL_GPUDevice?; command : SDL_GPUCommandBuffer?; var 
         if (is_err(transfer_result)) { SDL_ReleaseGPUBuffer(device, vb); return err(unwrap_err(transfer_result), type<SdlUnit>) }
         if (r.volume != null) { SDL_ReleaseGPUBuffer(device, r.volume) }
         if (r.transfer != null) { SDL_ReleaseGPUTransferBuffer(device, r.transfer) }
-        r.volume = vb; r.transfer = transfer_result._value; r.capacity = capacity
+        r.volume = vb; r.transfer = move_unwrap(transfer_result); r.capacity = capacity
     }
     return upload_floats(device, command, r.volume, r.transfer, r.capacity, values)
 }
@@ -246,7 +246,7 @@ def upload_volume_indices(device : SDL_GPUDevice?; command : SDL_GPUCommandBuffe
         if (is_err(transfer)) { SDL_ReleaseGPUBuffer(device, buffer); return err(unwrap_err(transfer), type<SdlUnit>) }
         if (r.index_buffer != null) { SDL_ReleaseGPUBuffer(device, r.index_buffer) }
         if (r.index_transfer != null) { SDL_ReleaseGPUTransferBuffer(device, r.index_transfer) }
-        r.index_buffer = buffer; r.index_transfer = transfer._value; r.index_capacity = capacity
+        r.index_buffer = buffer; r.index_transfer = move_unwrap(transfer); r.index_capacity = capacity
     }
     sdl_status(SDL_WriteGPUTransferBufferBytes(device, r.index_transfer, r.index_capacity, 0u, r.volume_indices, true), "volume indices") |> sdl_try
     return with_native_gpu_copy_pass(command) $(var pass_) {

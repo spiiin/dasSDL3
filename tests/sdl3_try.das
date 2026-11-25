@@ -28,7 +28,7 @@ def values {
     push(input, v)
     var result <- move_ok(input, type<SdlError>)
     let extracted <- result |> sdl_try
-    verify(length(result._value) == 0)
+    verify(!is_ok(result) || length(unwrap(result)) == 0)
     verify(length(extracted) == 1 && extracted[0] == 7 && text == "owned string")
     let optional = ok(none(type<int>), type<SdlError>) |> sdl_try
     verify(is_none(optional))
