@@ -1,5 +1,5 @@
 // On-device host for the existing Metal pixel, compute and strict AOT tests.
-#include "bundle_scripts.h"
+#include "../mobile/bundle_scripts.h"
 #include "capture_permission.h"
 #include "sensor_dashboard.h"
 #define SDL_MAIN_USE_CALLBACKS 1
@@ -45,8 +45,8 @@ MAKE_TYPE_FACTORY(SDL_FRect, SDL_FRect);
 #endif
 
 namespace {
-using dassdl3_ios::BundleAccess;
-using dassdl3_ios::BundleScripts;
+using dassdl3_mobile::BundleAccess;
+using dassdl3_mobile::BundleScripts;
 
 enum class Check { Normal, MissingAot, ReadSavedData };
 

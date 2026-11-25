@@ -1,4 +1,6 @@
 /build/
+/android/.gradle/
+/android/local.properties
 /tools/.venv/
 /logs/
 __pycache__/

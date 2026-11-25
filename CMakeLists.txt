@@ -8,8 +8,8 @@ endif()
 
 # daspkg supplies the consumer SDK; do not configure our developer SDK/submodule.
 if(DEFINED DASLANG_DIR)
-    if(IOS)
-        message(FATAL_ERROR "iOS uses the static source build; desktop daspkg SDKs are not supported")
+    if(IOS OR ANDROID)
+        message(FATAL_ERROR "${CMAKE_SYSTEM_NAME} uses the static source build; configure without DASLANG_DIR")
     endif()
     include(src/package/repository.cmake)
     return()
@@ -26,10 +26,8 @@ foreach(feature FLEX_BISON CLANG_BIND LLVM SMT HV GLFW IMGUI VULKAN AUDIO
         TREE_SITTER TERMINAL AOT_EXAMPLES TUTORIAL TESTS)
     set(DAS_${feature}_DISABLED ON CACHE BOOL "Minimal dasSDL3 build")
 endforeach()
-if(IOS)
-    # The pinned daScript desktop crash handler uses Mach APIs unavailable
-    # on iOS. Its no-file-I/O profile also excludes subprocess builtins.
-    # The iOS host supplies read-only access to bundled script sources.
+if(IOS OR ANDROID)
+    # Mobile hosts supply packaged scripts. Omit desktop crash and subprocess APIs.
     add_compile_definitions(DAS_USE_BASE_CRASH_HANDLER=0 DAS_NO_FILEIO=1 DAS_BIND_EXTERNAL=0)
     set(DAS_TOOLS_DISABLED ON)
 else()
@@ -43,6 +41,19 @@ option(DASSDL3_WITH_MIXER "Build the optional SDL_mixer bindings" OFF)
 option(DASSDL3_WITH_SOUND "Build optional SDL_sound decoding bindings" OFF)
 option(DASSDL3_WITH_SHADERCROSS "Build optional shader translation bindings and CLI" OFF)
 option(DASSDL3_INSTALL_SDK "Install the core native Release SDK" OFF)
+if(ANDROID)
+    if(NOT CMAKE_ANDROID_ARCH_ABI STREQUAL "arm64-v8a")
+        message(FATAL_ERROR "The Android binding profile requires arm64-v8a")
+    endif()
+    foreach(feature IMGUI IMAGE TTF NET MIXER SOUND SHADERCROSS LIVE)
+        if(DASSDL3_WITH_${feature})
+            message(FATAL_ERROR "The Android core profile requires DASSDL3_WITH_${feature}=OFF")
+        endif()
+    endforeach()
+    if(DASSDL3_INSTALL_SDK)
+        message(FATAL_ERROR "Use the Android source target instead of the desktop SDK install")
+    endif()
+endif()
 if(IOS)
     foreach(feature SHADERCROSS LIVE)
         if(DASSDL3_WITH_${feature})
@@ -65,7 +76,7 @@ if(DASSDL3_WITH_IMGUI AND IOS)
     set(DAS_LIVE_HOST_DISABLED OFF)
 endif()
 add_subdirectory(third_party/daScript EXCLUDE_FROM_ALL)
-if(IOS)
+if(IOS OR ANDROID)
     if(CMAKE_GENERATOR STREQUAL "Xcode")
         # Xcode enables these diagnostics even though Ninja does not.
         foreach(target libDaScript libDaScript_runtime libDasModuleLiveHost)
@@ -76,7 +87,7 @@ if(IOS)
         endforeach()
     endif()
     # daScript normally puts these archives in the shared source checkout.
-    # Keep iPhone objects out of the macOS SDK used by the host AOT emitter.
+    # Keep mobile objects out of the SDK used by the host AOT emitter.
     foreach(target libDaScript libDaScript_runtime libUriParser
             libDasModuleLiveHost libDasModuleMinfft libDasModuleUnitTest)
         if(TARGET ${target})
@@ -95,8 +106,14 @@ if(MSVC)
 endif()
 
 include(FetchContent)
-set(SDL_SHARED OFF CACHE BOOL "" FORCE)
-set(SDL_STATIC ON CACHE BOOL "" FORCE)
+if(ANDROID)
+    # SDLActivity loads SDL3 for JNI before loading the application's libmain.
+    set(SDL_SHARED ON CACHE BOOL "" FORCE)
+    set(SDL_STATIC OFF CACHE BOOL "" FORCE)
+else()
+    set(SDL_SHARED OFF CACHE BOOL "" FORCE)
+    set(SDL_STATIC ON CACHE BOOL "" FORCE)
+endif()
 set(SDL_TEST_LIBRARY OFF CACHE BOOL "" FORCE)
 set(SDL_TESTS OFF CACHE BOOL "" FORCE)
 FetchContent_Declare(SDL3

@@ -16,7 +16,7 @@ add_subdirectory("${DASSDL3_SOURCE_DIR}" dasSDL3 EXCLUDE_FROM_ALL)
 
 add_executable(HelloDasSDL3 MACOSX_BUNDLE main.cpp)
 target_link_libraries(HelloDasSDL3 PRIVATE dasSDL3)
-target_include_directories(HelloDasSDL3 PRIVATE "${DASSDL3_SOURCE_DIR}/ios")
+target_include_directories(HelloDasSDL3 PRIVATE "${DASSDL3_SOURCE_DIR}/mobile")
 set_target_properties(HelloDasSDL3 PROPERTIES
     MACOSX_BUNDLE_INFO_PLIST "${DASSDL3_SOURCE_DIR}/ios/Info.plist.in"
     MACOSX_BUNDLE_GUI_IDENTIFIER "${CONSUMER_BUNDLE_ID}"

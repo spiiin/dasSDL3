@@ -20,13 +20,13 @@ set(_python_profile windows)
 if(APPLE)
     set(_python_snapshot "${CMAKE_CURRENT_SOURCE_DIR}/generated/macos")
     set(_python_profile macos)
-elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux" OR ANDROID)
     set(_python_snapshot "${CMAKE_CURRENT_SOURCE_DIR}/generated/linux")
     set(_python_profile linux)
 endif()
 add_library(dasSDL3 STATIC module_sdl3.cpp)
-if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    # daScript is built without C++ RTTI on Linux; consumers must match.
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux" OR ANDROID)
+    # Android arm64 reproduces the Linux snapshot with the NDK headers.
     target_compile_options(dasSDL3 PUBLIC $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>)
     target_compile_definitions(dasSDL3 PRIVATE
         DASSDL3_TYPES_INCLUDE="generated/linux/sdl3_types.inc"
@@ -70,9 +70,9 @@ if(WIN32)
     target_compile_definitions(dasSDL3 PUBLIC DAS_ENABLE_EXCEPTIONS=1)
 endif()
 
-if(IOS)
+if(IOS OR ANDROID)
     target_compile_definitions(dasSDL3 PUBLIC DAS_USE_BASE_CRASH_HANDLER=0 DAS_NO_FILEIO=1 DAS_BIND_EXTERNAL=0)
-    if(PROJECT_IS_TOP_LEVEL)
+    if(IOS AND PROJECT_IS_TOP_LEVEL)
         include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/IOSSmoke.cmake)
     endif()
     return()
