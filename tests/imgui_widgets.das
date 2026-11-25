@@ -85,7 +85,7 @@ def main(smoke : bool) : int {
         with_sdl(SDL_INIT_VIDEO) |> sdl_use
         let ios = SDL_GetPlatform() == "iOS"
         // The Metal renderer needs a drawable for the framebuffer readback.
-        let flags = ios ? 0ul : SDL_WINDOW_HIDDEN
+        let flags = (ios || SDL_GetPlatform() == "Android") ? 0ul : SDL_WINDOW_HIDDEN
         let window : SDL_Window? = with_window("SDL widgets test", 320, 240, flags) |> sdl_use
         let renderer : SDL_Renderer? = window |> with_renderer() |> sdl_use
         if (ios) {

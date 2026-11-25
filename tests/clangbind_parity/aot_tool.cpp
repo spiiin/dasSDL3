@@ -1,6 +1,7 @@
 #include "daScript/daScript.h"
 #include <fstream>
 #include <iostream>
+#include <set>
 #ifdef DASSDL3_AOT_IMGUI_COROUTINE_SCOPE
 #include <regex>
 #endif
@@ -116,8 +117,42 @@ static int generate(const char *input, const char *output) {
     file << generated;
     return file ? 0 : 6;
 }
+static bool applySdlEnumProfile(const char *path) {
+    TextWriter header;
+    if (Module::require("sdl3")->aotRequire(header) != ModuleAotType::cpp) {
+        std::cerr << "The host sdl3 module must enable its C++ AOT header to emit Android code\n";
+        return false;
+    }
+    std::ifstream file(path);
+    std::string owner, name, sign;
+    std::set<Module *> changed;
+    while (file >> owner) {
+        auto *module = Module::require(owner);
+        if (!(file >> name >> sign) || !module || !module->findEnum(name) || (sign != "i" && sign != "u")) {
+            std::cerr << "Invalid target enum profile entry: " << owner << "/" << name << '\n';
+            return false;
+        }
+        module->findEnum(name)->baseType = sign == "u" ? Type::tUInt : Type::tInt;
+        changed.insert(module);
+    }
+    if (changed.empty() || !file.eof()) return false;
+    // The module seals managed records during registration. A record's cached
+    // semantic hash includes the native enum types of its fields.
+    for (auto *module : changed) {
+        for (auto &handle : module->handleTypes) {
+            if (!handle.second->rtti_isHandledTypeAnnotation()) continue;
+            auto *type = static_cast<TypeAnnotation *>(handle.second);
+            HashBuilder hash;
+            das_set<Structure *> structures;
+            das_set<Annotation *> annotations;
+            type->ownSemanticHash = type->getOwnSemanticHash(hash, structures, annotations);
+        }
+    }
+    return true;
+}
+
 int main(int argc, char **argv) {
-    if (argc != 3) return 7;
+    if (argc != 3 && (argc != 5 || std::string(argv[3]) != "--sdl-enum-profile")) return 7;
     setDasRoot(DASSDL3_DAS_ROOT);
     NEED_ALL_DEFAULT_MODULES;
     NEED_MODULE(Module_dasSDL3);
@@ -146,7 +181,7 @@ int main(int argc, char **argv) {
     NEED_MODULE(Module_LiveHost);
 #endif
     Module::Initialize();
-    int result = generate(argv[1], argv[2]);
+    int result = argc == 5 && !applySdlEnumProfile(argv[4]) ? 7 : generate(argv[1], argv[2]);
     Module::Shutdown();
     return result;
 }

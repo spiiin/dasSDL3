@@ -1,0 +1,25 @@
+cmake_minimum_required(VERSION 3.24)
+project(AndroidConsumer LANGUAGES C CXX)
+set(DASSDL3_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../.." CACHE PATH "dasSDL3 checkout")
+set(DASSDL3_HOST_AOT_TOOL "" CACHE FILEPATH "Host AOT emitter")
+if(NOT ANDROID OR NOT EXISTS "${DASSDL3_HOST_AOT_TOOL}")
+    message(FATAL_ERROR "Configure with the Android NDK and a built DASSDL3_HOST_AOT_TOOL")
+endif()
+get_filename_component(root "${DASSDL3_SOURCE_DIR}" ABSOLUTE)
+set(BUILD_TESTING OFF)
+add_subdirectory("${root}" dasSDL3 EXCLUDE_FROM_ALL)
+include("${root}/cmake/AndroidAOT.cmake")
+dassdl3_android_enum_profile(profile)
+set(aot "${CMAKE_CURRENT_BINARY_DIR}/hello.aot.cpp")
+add_custom_command(OUTPUT "${aot}"
+    COMMAND "${DASSDL3_HOST_AOT_TOOL}" "${CMAKE_CURRENT_SOURCE_DIR}/hello.das" "${aot}" --sdl-enum-profile "${profile}"
+    DEPENDS hello.das "${DASSDL3_HOST_AOT_TOOL}" "${profile}" VERBATIM)
+add_executable(android_consumer main.cpp "${aot}")
+target_include_directories(android_consumer PRIVATE "${root}/mobile")
+target_link_libraries(android_consumer PRIVATE dasSDL3)
+install(TARGETS android_consumer SDL3-shared RUNTIME DESTINATION . COMPONENT consumer
+    LIBRARY DESTINATION . COMPONENT consumer)
+install(FILES "${CMAKE_SYSROOT}/usr/lib/${CMAKE_LIBRARY_ARCHITECTURE}/libc++_shared.so" DESTINATION . COMPONENT consumer)
+install(FILES hello.das DESTINATION app COMPONENT consumer)
+install(DIRECTORY "${root}/third_party/daScript/daslib/" DESTINATION app/daslib COMPONENT consumer
+    FILES_MATCHING PATTERN "*.das")

@@ -3,6 +3,7 @@
 #include "imgui_impl_sdl3.h"
 #include "imgui_impl_sdlrenderer3.h"
 #include <memory>
+#include <limits>
 #include <utility>
 
 namespace {
@@ -19,6 +20,7 @@ struct InputProbe {
     bool receivedReturn = false;
     bool receivedBackspace = false;
     ImGuiInputDraw draw;
+    std::unique_ptr<void, decltype(&SDL_free)> fontBytes{nullptr, SDL_free};
     SDL_FRect field{};
     char input[128]{};
 
@@ -57,7 +59,15 @@ bool startImGuiInput(ImGuiInputDraw draw) {
     const int length = SDL_snprintf(fontPath, sizeof(fontPath), "%sassets/libraries/JetBrainsMono-Regular.ttf", basePath);
     if (length < 0 || static_cast<size_t>(length) >= sizeof(fontPath))
         return SDL_SetError("ImGui font path is too long");
-    io.FontDefault = io.Fonts->AddFontFromFileTTF(fontPath, 17.0f);
+    size_t fontSize = 0;
+    // SDL can also open a font packaged inside an Android APK.
+    input->fontBytes.reset(SDL_LoadFile(fontPath, &fontSize));
+    if (!input->fontBytes || !fontSize || fontSize > std::numeric_limits<int>::max())
+        return SDL_SetError("Unable to load the ImGui test font");
+    ImFontConfig fontConfig;
+    fontConfig.FontDataOwnedByAtlas = false;
+    io.FontDefault = io.Fonts->AddFontFromMemoryTTF(input->fontBytes.get(), static_cast<int>(fontSize),
+                                                    17.0f, &fontConfig);
     if (!io.FontDefault || !io.FontDefault->IsGlyphInFont(U'é') ||
         !io.FontDefault->IsGlyphInFont(U'П') || !io.FontDefault->IsGlyphInFont(U'п') ||
         !io.FontDefault->IsGlyphInFont(U'р') ||
@@ -95,7 +105,7 @@ bool passImGuiInputEvent(const SDL_Event &event) {
                     SDL_StartTextInputWithProperties(input->window, props);
                 SDL_DestroyProperties(props);
                 if (!started) return false;
-                SDL_Log("ImGui requested the iPhone screen keyboard");
+                SDL_Log("ImGui requested the screen keyboard");
             }
         }
     }
@@ -111,7 +121,7 @@ bool passImGuiInputEvent(const SDL_Event &event) {
         event.key.windowID == SDL_GetWindowID(input->window) &&
         event.key.scancode == SDL_SCANCODE_RETURN && SDL_ScreenKeyboardShown(input->window)) {
         input->receivedReturn = true;
-        SDL_Log("ImGui received Return from the iPhone keyboard (SDL keycode %u, modifiers %#x)",
+        SDL_Log("ImGui received Return from the screen keyboard (SDL keycode %u, modifiers %#x)",
                 static_cast<unsigned>(event.key.key), static_cast<unsigned>(event.key.mod));
     }
     return true;

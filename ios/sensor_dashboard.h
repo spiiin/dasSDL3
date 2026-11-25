@@ -34,7 +34,8 @@ inline bool drawSensorPanel(SDL_Renderer *renderer, const SDL_FRect &panel, cons
 
 inline bool drawSensorDashboard(SDL_Renderer *renderer, float density,
                                 const float (&accel)[3], bool accelReady,
-                                const float (&gyro)[3], bool gyroReady) {
+                                const float (&gyro)[3], bool gyroReady,
+                                const char *instruction = "Tilt the phone. Tap to finish.") {
     SDL_Rect safe;
     const float scale = density * 1.5f;
     if (!SDL_SetRenderScale(renderer, scale, scale) || !SDL_GetRenderSafeArea(renderer, &safe)) return false;
@@ -55,7 +56,7 @@ inline bool drawSensorDashboard(SDL_Renderer *renderer, float density,
            drawSensorPanel(renderer, left, "Accelerometer (m/s^2)", accel, accelReady, 12.0f) &&
            drawSensorPanel(renderer, right, "Gyroscope (rad/s)", gyro, gyroReady, 4.0f) &&
            SDL_SetRenderDrawColor(renderer, 164, 187, 204, 255) &&
-           SDL_RenderDebugText(renderer, x, right.y + cardHeight + gap, "Tilt the phone. Tap to finish.") &&
+           SDL_RenderDebugText(renderer, x, right.y + cardHeight + gap, instruction) &&
            SDL_RenderPresent(renderer);
 }
 }

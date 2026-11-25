@@ -5,12 +5,16 @@ param(
     [string]$AndroidSdk = $env:ANDROID_HOME,
     [string]$JavaHome = $env:JAVA_HOME,
     [switch]$Run,
+    [switch]$WithImgui,
+    [switch]$WithCompanions,
     [string]$Serial
 )
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path "$PSScriptRoot/..").Path
 $native = "$root/build/android-native"
 $stage = "$root/build/android-stage"
+if ($WithImgui) { $stage = "$root/build/android-stage-imgui" }
+if ($WithCompanions) { $stage += "-companions" }
 if (!$AndroidSdk) { $AndroidSdk = "$env:LOCALAPPDATA/Android/Sdk" }
 if (!$JavaHome) { $JavaHome = "$env:ProgramFiles/Android/Android Studio/jbr" }
 $env:ANDROID_HOME = (Resolve-Path $AndroidSdk).Path
@@ -29,11 +33,15 @@ if ($SdlSource) { $sourceOverride = (Resolve-Path $SdlSource).Path }
 Invoke-Checked "$bin/cmake.exe" @('-S', "$root/android", '-B', $native, '-G', 'Ninja',
     "-DCMAKE_MAKE_PROGRAM=$bin/ninja.exe", "-DCMAKE_TOOLCHAIN_FILE=$ndk/build/cmake/android.toolchain.cmake",
     '-DANDROID_ABI=arm64-v8a', '-DANDROID_PLATFORM=android-28', '-DANDROID_STL=c++_shared',
-    '-DCMAKE_BUILD_TYPE=Release', "-DDASSDL3_HOST_AOT_TOOL=$tool", "-DFETCHCONTENT_SOURCE_DIR_SDL3=$sourceOverride")
+    '-DCMAKE_BUILD_TYPE=Release', "-DDASSDL3_WITH_IMGUI=$([int]$WithImgui.IsPresent)",
+    "-DDASSDL3_HOST_AOT_TOOL=$tool", "-DFETCHCONTENT_SOURCE_DIR_SDL3=$sourceOverride"
+    foreach ($feature in 'IMAGE', 'TTF', 'NET', 'MIXER', 'SOUND') {
+        "-DDASSDL3_WITH_${feature}=$([int]$WithCompanions.IsPresent)"
+    })
 Invoke-Checked "$bin/cmake.exe" @('--build', $native, '--target', 'main', '--parallel', '6')
 Invoke-Checked "$bin/cmake.exe" @('--install', $native, '--strip', '--component', 'android-apk', '--prefix', $stage)
 if (!$SdlSource) { $SdlSource = "$native/_deps/sdl3-src" }
-Invoke-Checked "$SdlSource/android-project/gradlew.bat" @('-p', "$root/android", 'assembleDebug')
+Invoke-Checked "$SdlSource/android-project/gradlew.bat" @('-p', "$root/android", "-PnativeStage=$stage", 'assembleDebug')
 $apk = (Get-Item "$root/build/android-apk/outputs/apk/debug/*.apk").FullName
 Write-Host "Android smoke APK: $apk"
 if (!$Run) { return }

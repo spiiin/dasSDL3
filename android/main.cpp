@@ -1,8 +1,27 @@
-#include "../mobile/bundle_scripts.h"
-#define SDL_MAIN_USE_CALLBACKS 1
+#include "script_host.h"
 #include <SDL3/SDL_main.h>
 
 DECLARE_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_IMAGE
+DECLARE_MODULE(Module_sdl3_image);
+#endif
+#ifdef DASSDL3_WITH_TTF
+DECLARE_MODULE(Module_sdl3_ttf);
+#endif
+#ifdef DASSDL3_WITH_MIXER
+DECLARE_MODULE(Module_sdl3_mixer);
+#endif
+#ifdef DASSDL3_WITH_SOUND
+DECLARE_MODULE(Module_sdl3_sound);
+#endif
+#ifdef DASSDL3_WITH_NET
+DECLARE_MODULE(Module_sdl3_net);
+#endif
+#ifdef DASSDL3_WITH_IMGUI
+DECLARE_MODULE(Module_dasIMGUI);
+DECLARE_MODULE(Module_imgui_sdl3);
+DECLARE_MODULE(Module_LiveHost);
+#endif
 MAKE_TYPE_FACTORY(SDL_Renderer, SDL_Renderer);
 
 namespace {
@@ -18,34 +37,16 @@ bool checkScript(SDL_Renderer *renderer, Mode mode) {
     using namespace das;
     const bool aot = mode != Mode::Interpreter;
     const bool negative = mode == Mode::MissingAot;
-    const char *path = negative ? "app/macos_missing_aot.das" : "app/smoke.das";
-    auto access = make_smart<dassdl3_mobile::BundleAccess>();
-    access->addFileSystem(new dassdl3_mobile::BundleScripts("app/"), true, false);
-    access->addFsRoot("dassdl3", "app/dassdl3");
-    ModuleGroup modules;
-    TextWriter log;
-    CodeOfPolicies policy;
-    policy.aot = policy.fail_on_no_aot = policy.tune_frozen = aot;
-    auto program = compileDaScript(path, access, log, modules, policy);
-    auto report = [&] {
-        for (const auto &e : program->errors)
-            log << reportError(e.at, e.what, e.extra, e.fixme, e.cerr);
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s: %s", path, log.str().c_str());
-        return false;
-    };
-    if (program->failed()) return report();
-    Context context(program->getContextStackSize());
-    bool ready = program->simulate(context, log);
+    const char *path = negative ? "app/macos_missing_aot.das" : "app/android/smoke.das";
+    android_host::Script script;
+    if (!script.load(path, aot, negative)) return false;
     if (negative) {
-        if (ready || program->errors.empty()) return SDL_SetError("Expected missing AOT");
-        for (const auto &e : program->errors)
-            if (e.cerr != CompilationError::missing_aot) return report();
         SDL_Log("dasSDL3 Android missing AOT rejected");
         return true;
     }
-    if (!ready) return report();
+    auto &context = *script.context;
     auto *paint = context.findFunction("paint");
-    if (!paint || (aot && !paint->aot) || !verifyCall<bool, SDL_Renderer *, uint32_t>(paint->debugInfo, modules))
+    if (!paint || (aot && !paint->aot) || !verifyCall<bool, SDL_Renderer *, uint32_t>(paint->debugInfo, script.modules))
         return SDL_SetError("Invalid paint entry (AOT=%d)", aot);
     const Uint8 blue = aot ? 192 : 64;
     vec4f args[] = {cast<SDL_Renderer *>::from(renderer), cast<uint32_t>::from(blue)};
@@ -68,10 +69,6 @@ bool checkScript(SDL_Renderer *renderer, Mode mode) {
 SDL_AppResult SDL_AppInit(void **state, int, char **) {
     auto *app = new App;
     *state = app;
-    das::setDasRoot("app");
-    NEED_ALL_DEFAULT_MODULES;
-    NEED_MODULE(Module_dasSDL3);
-    das::Module::Initialize();
     SDL_SetHint(SDL_HINT_MAIN_CALLBACK_RATE, "30");
     if (!SDL_Init(SDL_INIT_VIDEO) ||
         !SDL_CreateWindowAndRenderer("dasSDL3 Android", 640, 480, 0, &app->window, &app->renderer)) {
@@ -110,6 +107,36 @@ void SDL_AppQuit(void *state, SDL_AppResult) {
     if (app) {
         if (app->renderer) SDL_DestroyRenderer(app->renderer);
         if (app->window) SDL_DestroyWindow(app->window);
-        das::Module::Shutdown();
     }
+}
+
+int main(int argc, char **argv) {
+    das::setDasRoot("app");
+    NEED_ALL_DEFAULT_MODULES;
+    NEED_MODULE(Module_dasSDL3);
+#ifdef DASSDL3_WITH_IMAGE
+    NEED_MODULE(Module_sdl3_image);
+#endif
+#ifdef DASSDL3_WITH_TTF
+    NEED_MODULE(Module_sdl3_ttf);
+#endif
+#ifdef DASSDL3_WITH_MIXER
+    NEED_MODULE(Module_sdl3_mixer);
+#endif
+#ifdef DASSDL3_WITH_SOUND
+    NEED_MODULE(Module_sdl3_sound);
+#endif
+#ifdef DASSDL3_WITH_NET
+    NEED_MODULE(Module_sdl3_net);
+#endif
+#ifdef DASSDL3_WITH_IMGUI
+    NEED_MODULE(Module_dasIMGUI);
+    NEED_MODULE(Module_imgui_sdl3);
+    NEED_MODULE(Module_LiveHost);
+#endif
+    das::Module::Initialize();
+    const int code = argc > 1 ? android_host::runMode(argv[1]) :
+        SDL_EnterAppMainCallbacks(argc, argv, SDL_AppInit, SDL_AppIterate, SDL_AppEvent, SDL_AppQuit);
+    das::Module::Shutdown();
+    return code;
 }

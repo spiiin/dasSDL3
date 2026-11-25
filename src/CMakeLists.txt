@@ -78,6 +78,26 @@ if(IOS OR ANDROID)
     return()
 endif()
 
+option(DASSDL3_BUILD_ANDROID_AOT_TOOL "Build the native AOT emitter for Android apps" OFF)
+if(DASSDL3_BUILD_ANDROID_AOT_TOOL)
+    if(WIN32 OR (CMAKE_SYSTEM_NAME STREQUAL "Linux" AND NOT BUILD_TESTING))
+        target_compile_definitions(dasSDL3 PRIVATE DASSDL3_AOT_HEADER="sdl3_aot.h")
+    endif()
+    add_executable(dasSDL3_android_aot_tool "${PROJECT_SOURCE_DIR}/tests/clangbind_parity/aot_tool.cpp")
+    target_link_libraries(dasSDL3_android_aot_tool PRIVATE dasSDL3)
+    target_compile_definitions(dasSDL3_android_aot_tool PRIVATE
+        DASSDL3_DAS_ROOT="${PROJECT_SOURCE_DIR}/third_party/daScript"
+        DASSDL3_MODULE_ROOT="${PROJECT_SOURCE_DIR}/dassdl3")
+    foreach(feature IMAGE TTF NET MIXER SOUND)
+        if(DASSDL3_WITH_${feature})
+            string(TOLOWER "${feature}" library)
+            target_link_libraries(dasSDL3_android_aot_tool PRIVATE dasSDL3_${library})
+            target_compile_definitions(dasSDL3_android_aot_tool PRIVATE DASSDL3_WITH_${feature}=1)
+        endif()
+    endforeach()
+    set_target_properties(dasSDL3_android_aot_tool PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+endif()
+
 # Editor validation host: same native SDL bindings as the application runner,
 # with a void main() entry point and command-line arguments for the VS Code LSP.
 add_executable(dasSDL3_language_server language_server.cpp)

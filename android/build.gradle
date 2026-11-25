@@ -18,7 +18,7 @@ android {
     }
     sourceSets.main {
         manifest.srcFile 'AndroidManifest.xml'
-        java.srcDirs = [new File(stage, 'java')]
+        java.srcDirs = ['java', new File(stage, 'java')]
         assets.srcDirs = [new File(stage, 'assets')]
         jniLibs.srcDirs = [new File(stage, 'jniLibs')]
     }
@@ -26,7 +26,7 @@ android {
 
 tasks.named('preBuild') {
     doFirst {
-        for (path in ['java/org/libsdl/app/SDLActivity.java', 'assets/app/smoke.das',
+        for (path in ['java/org/libsdl/app/SDLActivity.java', 'assets/app/android/smoke.das',
                       'jniLibs/arm64-v8a/libmain.so', 'jniLibs/arm64-v8a/libSDL3.so']) {
             if (!new File(stage, path).isFile()) {
                 throw new GradleException("Missing ${path} in ${stage}. Install the android-apk CMake component first.")
