@@ -76,7 +76,7 @@ def run_gui(renderer : SDL_Renderer?; smoke : bool) {
 def main(smoke : bool) : int {
     let result = sdl_scope() {
         with_sdl(SDL_INIT_VIDEO) |> sdl_use
-        let flags = smoke ? SDL_WINDOW_HIDDEN : SDL_WINDOW_RESIZABLE
+        let flags = smoke && SDL_GetPlatform() != "Android" ? SDL_WINDOW_HIDDEN : SDL_WINDOW_RESIZABLE
         let window : SDL_Window? = with_window("SDL3 + daScript ImGui", 960, 640, flags) |> sdl_use
         let renderer : SDL_Renderer? = window |> with_renderer() |> sdl_use
         with_imgui(window, renderer) |> sdl_use

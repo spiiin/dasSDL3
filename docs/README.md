@@ -9,6 +9,7 @@ error and platform limitations.
 - [Examples](../examples/README.md)
 - [Installed core SDK](sdk.md)
 - [iPhone Metal smoke test](ios.md)
+- [Android arm64 source build and device test](android.md)
 - [Local daspkg core package](daspkg.md)
 - [dasSDL3 Web examples](../web/README.md)
 - [Remaining work](full-binding-roadmap.md)

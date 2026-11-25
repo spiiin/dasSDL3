@@ -20,7 +20,8 @@ def select_camera() : uint {
 
 [export]
 def camera_open(expect_denied : bool) : int {
-    if (SDL_GetCurrentCameraDriverCopy() != "coremedia") { return -1 }
+    let driver = SDL_GetPlatform() == "Android" ? "android" : "coremedia"
+    if (SDL_GetCurrentCameraDriverCopy() != driver) { return -1 }
     let id = select_camera()
     if (id == 0u) {
         print("SDL found no camera to test.\n")

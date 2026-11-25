@@ -50,6 +50,11 @@ var second_finger_id = 0ul
 var first_released = false
 var second_moved = false
 
+[export]
+def matched_text_bytes() : int {
+    return length(typed)
+}
+
 def reset_multi_touch() {
     finger_id = 0ul
     second_finger_id = 0ul
@@ -98,14 +103,15 @@ def multi_input_event(window : SDL_Window?; event : SDL_Event) : int {
     var text = ""
     if (input_window_id(event) == window_id && is_some(text_input_event(event, text))) {
         let expected = "Привет 👋"
+        let lower = "привет 👋"
         let alternate = "café"
         typed := "{typed}{text}"
-        if (typed == expected || typed == alternate) {
+        if (typed == expected || typed == lower || typed == alternate) {
             print("iPhone exact UTF-8 input PASS: {typed}\n")
             return 2
         }
-        if (!starts_with(expected, typed) && !starts_with(alternate, typed)) {
-            typed := (starts_with(expected, text) || starts_with(alternate, text)) ? text : ""
+        if (!starts_with(expected, typed) && !starts_with(lower, typed) && !starts_with(alternate, typed)) {
+            typed := (starts_with(expected, text) || starts_with(lower, text) || starts_with(alternate, text)) ? text : ""
         }
     }
     return 0

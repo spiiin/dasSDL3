@@ -8,7 +8,7 @@
 #include <memory>
 #include <utility>
 
-namespace dassdl3_ios {
+namespace dassdl3_mobile {
 class BundleAccess final : public das::FsFileAccess {
 public:
     das::ModuleInfo getModuleInfo(const das::string &request, const das::string &from) const override {
@@ -29,7 +29,7 @@ class BundleScripts final : public das::AnyFileSystem {
 public:
     explicit BundleScripts(das::string root) : root_(std::move(root)) {}
     das::FileInfo *tryOpenFile(const das::string &name) override {
-        // Only packaged .das files, through the module resolver's absolute paths.
+        // Only packaged .das files below the root supplied by the mobile host.
         if (name.compare(0, root_.size(), root_) != 0 || name.find("..") != das::string::npos ||
             name.size() < 4 || name.compare(name.size() - 4, 4, ".das") != 0) return nullptr;
         size_t length = 0;

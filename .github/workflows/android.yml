@@ -1,0 +1,50 @@
+name: Android arm64
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: android-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  apk:
+    runs-on: windows-2022
+    timeout-minutes: 100
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: ilammy/msvc-dev-cmd@v1
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Install the pinned SDK and NDK
+        shell: pwsh
+        run: |
+          & "$env:ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager.bat" 'platforms;android-35' 'build-tools;35.0.1' 'cmake;3.31.6' 'ndk;28.2.13676358'
+          exit $LASTEXITCODE
+      - name: Build the host emitter and device APK
+        shell: pwsh
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          cmake -S . -B build/android-host -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DDAS_LLVM_DISABLED=ON -DDASSDL3_BUILD_ANDROID_AOT_TOOL=ON -DDASSDL3_WITH_IMAGE=ON -DDASSDL3_WITH_TTF=ON -DDASSDL3_WITH_NET=ON -DDASSDL3_WITH_MIXER=ON -DDASSDL3_WITH_SOUND=ON
+          cmake --build build/android-host --target dasSDL3_android_aot_tool --parallel 6
+          ./tools/build_android.ps1 -AotTool build/android-host/bin/dasSDL3_android_aot_tool.exe -WithImgui -WithCompanions
+      - name: Build the independent consumer
+        shell: pwsh
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          $cmake = "$env:ANDROID_HOME/cmake/3.31.6/bin/cmake.exe"
+          $emitter = (Resolve-Path build/android-host/bin/dasSDL3_android_aot_tool.exe).Path
+          & $cmake -S examples/android-consumer -B build/android-consumer -G Ninja "-DCMAKE_TOOLCHAIN_FILE=$env:ANDROID_HOME/ndk/28.2.13676358/build/cmake/android.toolchain.cmake" -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=android-28 -DANDROID_STL=c++_shared -DCMAKE_BUILD_TYPE=Release "-DDASSDL3_HOST_AOT_TOOL=$emitter" "-DFETCHCONTENT_SOURCE_DIR_SDL3=$PWD/build/android-native/_deps/sdl3-src"
+          & $cmake --build build/android-consumer --target android_consumer --parallel 6
+          & $cmake --install build/android-consumer --strip --component consumer --prefix build/android-consumer-stage
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dasSDL3-android-arm64
+          path: |
+            build/android-apk/outputs/apk/debug/*.apk
+            build/android-consumer-stage/

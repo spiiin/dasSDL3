@@ -13,7 +13,7 @@ FetchContent_Declare(md4c_src
 FetchContent_MakeAvailable(ios_imgui md4c_src)
 if(NOT TARGET freetype)
     foreach(_feature ZLIB BZIP2 PNG HARFBUZZ BROTLI)
-        set(FT_DISABLE_${_feature} ON CACHE BOOL "Minimal iOS FreeType profile")
+        set(FT_DISABLE_${_feature} ON CACHE BOOL "Minimal mobile FreeType profile")
     endforeach()
     FetchContent_Declare(freetype_src
         URL https://download.savannah.gnu.org/releases/freetype/freetype-2.14.3.tar.xz
@@ -24,17 +24,17 @@ endif()
 
 # The pinned dasImgui desktop build adds ImVector::data() for daScript's managed
 # vector annotation. Apply the same compatibility change to a build-local copy.
-set(_imgui "${CMAKE_CURRENT_BINARY_DIR}/imgui-ios")
+set(_imgui "${CMAKE_CURRENT_BINARY_DIR}/imgui-mobile")
 file(COPY "${ios_imgui_SOURCE_DIR}/" DESTINATION "${_imgui}"
-    FILES_MATCHING PATTERN "*.h" PATTERN "*.cpp")
+    FILES_MATCHING PATTERN "*.h" PATTERN "*.cpp" PATTERN "imgui.h" EXCLUDE)
 file(READ "${ios_imgui_SOURCE_DIR}/imgui.h" _header)
 if(NOT _header MATCHES "inline T\\* +data\\(\\)")
     string(REPLACE
         "inline T*           end()"
         "inline T*           data()                              { return Data; }\n    inline const T*     data() const                        { return Data; }\n    inline T*           end()"
         _header "${_header}")
-    file(WRITE "${_imgui}/imgui.h" "${_header}")
 endif()
+file(GENERATE OUTPUT "${_imgui}/imgui.h" CONTENT "${_header}")
 
 file(GLOB _bindings CONFIGURE_DEPENDS "${_das_imgui}/src/dasIMGUI*.cpp")
 add_library(dasSDL3_imgui STATIC module_imgui_sdl.cpp ${_bindings}

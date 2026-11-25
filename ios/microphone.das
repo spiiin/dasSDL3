@@ -10,7 +10,8 @@ var denial_deadline : uint64
 
 [export]
 def microphone_open(expect_denied : bool) : int {
-    if (SDL_GetCurrentAudioDriverCopy() != "coreaudio") { return -1 }
+    let driver = SDL_GetPlatform() == "Android" ? "AAudio" : "coreaudio"
+    if (SDL_GetCurrentAudioDriverCopy() != driver) { return -1 }
     let spec = audio_spec(SDL_AUDIO_F32, 1, 24000)
     var opened <- open_audio_device_stream(SDL_AUDIO_DEVICE_DEFAULT_RECORDING, spec)
     if (is_err(opened)) {
@@ -26,7 +27,7 @@ def microphone_open(expect_denied : bool) : int {
     }
     resize(samples, 512)
     if (expect_denied) { denial_deadline = SDL_GetTicks() + 2000ul }
-    print("SDL CoreAudio recording stream opened (mono, 24000 Hz).\n")
+    print("SDL {driver} recording stream opened (mono, 24000 Hz).\n")
     return 0
 }
 

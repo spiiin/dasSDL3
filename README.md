@@ -40,7 +40,8 @@ coverage does not by itself establish dasSDL3 support on those platforms.
 | Web / Emscripten 5.0.3, wasm32 | Experimental profile | Selected SDL Renderer, audio and daScript OpenGL examples. Single-threaded interpreter; no desktop API parity or SDL GPU/WebGPU backend. See [Web guide](web/README.md). |
 | macOS arm64 / Apple Clang 17, macOS 15.3.1 | Native profile validated | Cocoa/Metal, interpreter and strict AOT, companion libraries, installed SDK, core/ImGui daspkg, relocatable standalone apps and live reload/MCP/APNG. See [macOS](docs/macos.md). Intel Mac and MoltenVK are not validated. |
 | iOS arm64 / iPhone 16, iOS 27.0.1 | Experimental device profile | Static core with Metal render-pass, texture and compute checks in the interpreter and strict AOT; missing AOT code is rejected. On-screen Metal rendering resumed after both Home Screen and lock/unlock cycles. See [iPhone setup](docs/ios.md). |
-| Android and other targets | Not yet validated | No tested dasSDL3 build/runtime profile is claimed. |
+| Android arm64-v8a / NDK r28c | Experimental device profile | On a Redmi Note 13 running Android 15, SDL Renderer (OpenGL ES) pixel readback passed in the interpreter and strict AOT. The runtime rejected missing AOT code. See [Android setup](docs/android.md). |
+| Other targets | Not yet validated | No tested dasSDL3 build/runtime profile is claimed. |
 
 Linux uses separate committed bindings; its core daspkg profile supports an ELF SDK on Ubuntu 24.04 x86_64.
 The installed SDK supports Windows and macOS; optional Linux integrations are not

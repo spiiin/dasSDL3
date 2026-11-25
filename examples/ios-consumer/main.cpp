@@ -21,8 +21,8 @@ int loadBlue() {
     }
     const string root(base);
     setDasRoot(root.substr(0, root.size() - 1));
-    auto access = make_smart<dassdl3_ios::BundleAccess>();
-    access->addFileSystem(new dassdl3_ios::BundleScripts(root), true, false);
+    auto access = make_smart<dassdl3_mobile::BundleAccess>();
+    access->addFileSystem(new dassdl3_mobile::BundleScripts(root), true, false);
     TextWriter diagnostics;
     ModuleGroup modules;
     CodeOfPolicies policy;

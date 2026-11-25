@@ -3,13 +3,14 @@
 #include <cwchar>
 #include <type_traits>
 // Match the native C wchar_t representation used by HID, including AOT storage.
-using SDL_HidChar = std::conditional_t<sizeof(wchar_t) == 2, uint16_t, int32_t>;
+using SDL_HidChar = std::conditional_t<sizeof(wchar_t) == 2, uint16_t,
+    std::conditional_t<std::is_signed_v<wchar_t>, int32_t, uint32_t>>;
 static_assert(sizeof(SDL_HidChar) == sizeof(wchar_t));
 #if defined(__linux__)
 namespace das {
-template<> struct ToBasicType<wchar_t> { enum { type = Type::tInt }; };
+template<> struct ToBasicType<wchar_t> : ToBasicType<SDL_HidChar> {};
 }
-static_assert(sizeof(wchar_t) == 4 && std::is_signed_v<wchar_t>);
+static_assert(sizeof(wchar_t) == 4);
 #endif
 
 // Native pointer lifetimes and SDL thread rules apply. These helpers do not retain script storage.

@@ -20,13 +20,13 @@ set(_python_profile windows)
 if(APPLE)
     set(_python_snapshot "${CMAKE_CURRENT_SOURCE_DIR}/generated/macos")
     set(_python_profile macos)
-elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux" OR ANDROID)
     set(_python_snapshot "${CMAKE_CURRENT_SOURCE_DIR}/generated/linux")
     set(_python_profile linux)
 endif()
 add_library(dasSDL3 STATIC module_sdl3.cpp)
-if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    # daScript is built without C++ RTTI on Linux; consumers must match.
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux" OR ANDROID)
+    # Android arm64 reproduces the Linux snapshot with the NDK headers.
     target_compile_options(dasSDL3 PUBLIC $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>)
     target_compile_definitions(dasSDL3 PRIVATE
         DASSDL3_TYPES_INCLUDE="generated/linux/sdl3_types.inc"
@@ -70,12 +70,32 @@ if(WIN32)
     target_compile_definitions(dasSDL3 PUBLIC DAS_ENABLE_EXCEPTIONS=1)
 endif()
 
-if(IOS)
+if(IOS OR ANDROID)
     target_compile_definitions(dasSDL3 PUBLIC DAS_USE_BASE_CRASH_HANDLER=0 DAS_NO_FILEIO=1 DAS_BIND_EXTERNAL=0)
-    if(PROJECT_IS_TOP_LEVEL)
+    if(IOS AND PROJECT_IS_TOP_LEVEL)
         include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/IOSSmoke.cmake)
     endif()
     return()
+endif()
+
+option(DASSDL3_BUILD_ANDROID_AOT_TOOL "Build the native AOT emitter for Android apps" OFF)
+if(DASSDL3_BUILD_ANDROID_AOT_TOOL)
+    if(WIN32 OR (CMAKE_SYSTEM_NAME STREQUAL "Linux" AND NOT BUILD_TESTING))
+        target_compile_definitions(dasSDL3 PRIVATE DASSDL3_AOT_HEADER="sdl3_aot.h")
+    endif()
+    add_executable(dasSDL3_android_aot_tool "${PROJECT_SOURCE_DIR}/tests/clangbind_parity/aot_tool.cpp")
+    target_link_libraries(dasSDL3_android_aot_tool PRIVATE dasSDL3)
+    target_compile_definitions(dasSDL3_android_aot_tool PRIVATE
+        DASSDL3_DAS_ROOT="${PROJECT_SOURCE_DIR}/third_party/daScript"
+        DASSDL3_MODULE_ROOT="${PROJECT_SOURCE_DIR}/dassdl3")
+    foreach(feature IMAGE TTF NET MIXER SOUND)
+        if(DASSDL3_WITH_${feature})
+            string(TOLOWER "${feature}" library)
+            target_link_libraries(dasSDL3_android_aot_tool PRIVATE dasSDL3_${library})
+            target_compile_definitions(dasSDL3_android_aot_tool PRIVATE DASSDL3_WITH_${feature}=1)
+        endif()
+    endforeach()
+    set_target_properties(dasSDL3_android_aot_tool PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 endif()
 
 # Editor validation host: same native SDL bindings as the application runner,

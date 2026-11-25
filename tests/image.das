@@ -79,9 +79,9 @@ def test_images(renderer : SDL_Renderer?; assets : string) {
     } |> sdl_try
 
     with_image("{assets}alpha.png") $(surface : SDL_Surface?) {
-        // On iOS the signed app bundle is read-only.
+        // Save generated images in the writable application directory on mobile.
         var output = SDL_GetBasePath()
-        if (SDL_GetPlatform() == "iOS") {
+        if (SDL_GetPlatform() == "iOS" || SDL_GetPlatform() == "Android") {
             output = pref_path("dasSDL3", "Image Tests") |> sdl_try
         }
         let stamp = SDL_GetTicksNS()
